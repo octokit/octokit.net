@@ -19,7 +19,7 @@ namespace Octokit
         /// Get the public signing key to encrypt secrets for a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#get-a-repository-public-key">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
@@ -40,7 +40,7 @@ namespace Octokit
         /// List the secrets for a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-repository-secrets">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#list-repository-secrets">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
@@ -61,7 +61,7 @@ namespace Octokit
         /// Get a secret from a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-a-repository-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#get-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
@@ -84,7 +84,7 @@ namespace Octokit
         /// Create or update a secret in a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#create-or-update-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
@@ -113,7 +113,7 @@ namespace Octokit
         /// Delete a secret in a repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#delete-a-repository-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>

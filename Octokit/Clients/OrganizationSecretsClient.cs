@@ -9,7 +9,7 @@ namespace Octokit
     /// A client for GitHub's Organization Secrets API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/actions/secrets/">Organization Secrets API documentation</a> for more details.
+    /// See the <a href="http://docs.github.com/v3/actions#secrets/">Organization Secrets API documentation</a> for more details.
     /// </remarks>
     public class OrganizationSecretsClient : ApiClient, IOrganizationSecretsClient
     {
@@ -19,7 +19,7 @@ namespace Octokit
         /// Get the public signing key to encrypt secrets for an organization.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#get-an-organization-public-key">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -36,7 +36,7 @@ namespace Octokit
         /// List the secrets for an organization.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-organization-secrets">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#list-organization-secrets">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -53,7 +53,7 @@ namespace Octokit
         /// Get a secret from an organization.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#get-an-organization-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#get-an-organization-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
@@ -72,7 +72,7 @@ namespace Octokit
         /// Create or update a secret in an organization.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#create-or-update-an-organization-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
@@ -97,7 +97,7 @@ namespace Octokit
         /// Delete a secret in an organization.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#delete-an-organization-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
@@ -115,7 +115,7 @@ namespace Octokit
         /// Get the list of selected sites that have access to a secret.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#list-selected-repositories-for-an-organization-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
@@ -133,7 +133,7 @@ namespace Octokit
         /// Set the list of selected sites that have access to a secret.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#set-selected-repositories-for-an-organization-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
@@ -155,7 +155,7 @@ namespace Octokit
         /// Add a selected site to the visibility list of a secret.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#add-selected-repository-to-an-organization-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
@@ -175,7 +175,7 @@ namespace Octokit
         /// ARemoved a selected site from the visibility list of a secret.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/v3/actions#remove-selected-repository-from-an-organization-secret">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
