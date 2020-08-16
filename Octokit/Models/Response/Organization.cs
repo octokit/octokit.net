@@ -21,6 +21,18 @@ namespace Octokit
         /// an organization.
         /// </summary>
         public string BillingAddress { get; protected set; }
+        public string ReposUrl { get; protected set; }
+        public string EventsUrl { get; protected set; }
+        public string HooksUrl { get; protected set; }
+        public string IssuesUrl { get; protected set; }
+        public string MembersUrl { get; protected set; }
+        public string PublicMembersUrl { get; protected set; }
+        public string Description { get; protected set; }
+        public bool IsVerified { get; protected set; }
+        public bool HasOrganizationProjects { get; protected set; }
+        public bool HasRepositoryProjects { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; protected set; }
+
 
         internal string DebuggerDisplay
         {
