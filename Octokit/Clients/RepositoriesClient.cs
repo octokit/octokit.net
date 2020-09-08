@@ -741,7 +741,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Get<List<string>>(endpoint).ConfigureAwait(false);
+            var data = await ApiConnection.Get<List<string>>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
 
             return data ?? new List<string>();
         }
@@ -766,7 +766,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyEnumerable(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Put<List<string>>(endpoint, topics).ConfigureAwait(false);
+            var data = await ApiConnection.Put<List<string>>(endpoint, topics,null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
 
             return data ?? new List<string>();
         }
