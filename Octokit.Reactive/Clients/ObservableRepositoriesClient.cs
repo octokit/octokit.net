@@ -893,9 +893,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<IReadOnlyList<string>> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
+        public IObservable<string> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
         {
-            return _client.ReplaceAllTopics(repositoryId, topics).ToObservable();
+            return _client.ReplaceAllTopics(repositoryId, topics).Result.ToObservable();
         }
 
         /// <summary>
@@ -910,9 +910,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<IReadOnlyList<string>> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
+        public IObservable<string> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
         {
-            return _client.ReplaceAllTopics(owner, name, topics).ToObservable();
+            return _client.ReplaceAllTopics(owner, name, topics).Result.ToObservable();
         }
     }
 }
