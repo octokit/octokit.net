@@ -605,5 +605,32 @@ namespace Octokit.Reactive
         /// <returns>All topics associated with the repository.</returns>
         IObservable<string> GetAllTopics(long repositoryId);
 
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        IObservable<IReadOnlyList<string>> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics);
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        IObservable<IReadOnlyList<string>> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics);
+
     }
 }
