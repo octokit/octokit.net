@@ -181,6 +181,16 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "archived:{0}", Archived.ToString().ToLower()));
             }
 
+            if (Topic != null)
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "topic:{0}", Topic.ToLower()));
+            }
+
+            if (Topics != null)
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "topics:{0}", Topics.ToString().ToLower()));
+            }
+
             return parameters;
         }
 
