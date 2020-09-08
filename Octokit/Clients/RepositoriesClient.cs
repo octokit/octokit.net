@@ -50,6 +50,7 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/user/repos")]
         public Task<Repository> Create(NewRepository newRepository)
         {
@@ -68,6 +69,7 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/orgs/{org}/repos")]
         public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
         {
@@ -177,6 +179,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/transfer")]
         public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
         {
@@ -196,6 +199,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/repositories/{id}/transfer")]
         public Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
         {
@@ -211,6 +215,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("PATCH", "/repos/{owner}/{repo}")]
         public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
         {
@@ -228,6 +233,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("PATCH", "/repositories/{id}")]
         public Task<Repository> Edit(long repositoryId, RepositoryUpdate update)
         {
@@ -246,6 +252,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("GET", "/repos/{owner}/{repo}")]
         public Task<Repository> Get(string owner, string name)
         {
@@ -264,6 +271,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId)
         {
