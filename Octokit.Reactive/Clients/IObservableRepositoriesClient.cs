@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
@@ -556,5 +558,52 @@ namespace Octokit.Reactive
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
         /// </remarks>
         IObservableProjectsClient Project { get; }
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        IObservable<string> GetAllTopics(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        IObservable<string> GetAllTopics(string owner, string name);
+
+
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        IObservable<string> GetAllTopics(long repositoryId, ApiOptions options);
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        IObservable<string> GetAllTopics(long repositoryId);
+
     }
 }
