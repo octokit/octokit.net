@@ -123,7 +123,7 @@ namespace Octokit
         public string Topic { get; set; }
 
         /// <summary>
-        /// Filters on whether repositories are tagged with the given topics.
+        /// Filters on the number of topics that a repository is associated with.
         /// </summary>
         public Range Topics { get; set; }
 
