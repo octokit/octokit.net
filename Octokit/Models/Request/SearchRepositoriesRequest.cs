@@ -117,6 +117,16 @@ namespace Octokit
         /// </summary>
         public bool? Archived { get; set; }
 
+        /// <summary>
+        /// Filters on whether repositories are tagged with the given topic.
+        /// </summary>
+        public string Topic { get; set; }
+
+        /// <summary>
+        /// Filters on whether repositories are tagged with the given topics.
+        /// </summary>
+        public Range Topics { get; set; }
+
         public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
