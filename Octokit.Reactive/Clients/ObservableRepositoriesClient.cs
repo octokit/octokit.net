@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
 using Octokit.Reactive.Clients;
 using Octokit.Reactive.Internal;
 
@@ -891,9 +893,10 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<IReadOnlyList<string>> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
+        public async Task<IObservable<string>> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
         {
-            return _client.ReplaceAllTopics(repositoryId, topics).ToObservable();
+            var result= await _client.ReplaceAllTopics(repositoryId, topics).ConfigureAwait(false);
+                return result.ToObservable();
         }
 
         /// <summary>
@@ -908,9 +911,10 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<IReadOnlyList<string>> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
+        public async Task<IObservable<string>> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
         {
-            return _client.ReplaceAllTopics(owner, name, topics).ToObservable();
+            var result= await _client.ReplaceAllTopics(owner, name, topics).ConfigureAwait(false);
+            return result.ToObservable();
         }
     }
 }
