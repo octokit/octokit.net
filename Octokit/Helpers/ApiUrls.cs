@@ -1913,6 +1913,16 @@ namespace Octokit
             return "repos/{0}/{1}/topics".FormatUri(owner, name);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository topics.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>the <see cref="Uri"/> for repository topics.</returns>
+        public static Uri RepositoryTopics(long repositoryId)
+        {
+            return "repositories/{0}/topics".FormatUri(repositoryId);
+        }
+
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository languages.
