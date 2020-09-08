@@ -59,7 +59,7 @@ namespace Octokit
             AllowMergeCommit = allowMergeCommit;
             Archived = archived;
             WatchersCount = watchersCount;
-            Topics = new ReadOnlyCollection<string>(topics.ToList());
+            Topics = topics.ToList();
         }
 
         public string Url { get; protected set; }
@@ -146,7 +146,7 @@ namespace Octokit
 
         public bool Archived { get; protected set; }
 
-        public ReadOnlyCollection<string> Topics { get; protected set; }
+        public IReadOnlyList<string> Topics { get; protected set; }
 
         internal string DebuggerDisplay
         {
