@@ -743,6 +743,20 @@ namespace Octokit
             return data ?? new List<string>();
         }
 
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repositories/{id}/topics")]
+
+        public Task<IReadOnlyList<string>> GetAllTopics(long repositoryId)
+        {
+            return GetAllTopics(repositoryId, ApiOptions.None);
+        }
 
         /// <summary>
         /// Gets all topics for the specified owner and repository name.
@@ -765,6 +779,23 @@ namespace Octokit
 
             return data ?? new List<string>();
         }
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
+
+        public Task<IReadOnlyList<string>> GetAllTopics(string owner, string name)
+        {
+            return GetAllTopics(owner, name, ApiOptions.None);
+        }
+
 
         /// <summary>
         /// Replaces all topics for the specified repository.
