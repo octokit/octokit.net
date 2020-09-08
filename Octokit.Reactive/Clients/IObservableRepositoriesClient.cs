@@ -616,7 +616,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        Task<IObservable<string>> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics);
+        IObservable<IReadOnlyList<string>> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics);
 
         /// <summary>
         /// Replaces all topics for the specified repository.
@@ -630,7 +630,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        Task<IObservable<string>> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics);
+        IObservable<IReadOnlyList<string>> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics);
 
     }
 }
