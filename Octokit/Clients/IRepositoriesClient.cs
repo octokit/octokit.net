@@ -630,8 +630,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        Task<IReadOnlyList<string>> GetAllTopics(string owner, string name);
+        Task<IReadOnlyList<string>> GetAllTopics(string owner, string name, ApiOptions options);
 
 
         /// <summary>
@@ -641,8 +642,9 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        Task<IReadOnlyList<string>> GetAllTopics(long repositoryId);
+        Task<IReadOnlyList<string>> GetAllTopics(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Replaces all topics for the specified repository.
