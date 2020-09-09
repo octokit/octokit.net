@@ -1379,9 +1379,9 @@ public class RepositoriesClientTests
             var github = Helper.GetAnonymousClient();
             var result = await github.Repository.GetAllTopics("SeanKilleen", "seankilleen.github.io");
 
-            Assert.Contains("blog", result);
-            Assert.Contains("ruby", result);
-            Assert.Contains("jekyll", result);
+            Assert.Contains("blog", result.Names);
+            Assert.Contains("ruby", result.Names);
+            Assert.Contains("jekyll", result.Names);
         }
 
         [IntegrationTest]
@@ -1391,9 +1391,9 @@ public class RepositoriesClientTests
             var repo = await github.Repository.Get("SeanKilleen", "seankilleen.github.io");
             var result = await github.Repository.GetAllTopics(repo.Id);
 
-            Assert.Contains("blog", result);
-            Assert.Contains("ruby", result);
-            Assert.Contains("jekyll", result);
+            Assert.Contains("blog", result.Names);
+            Assert.Contains("ruby", result.Names);
+            Assert.Contains("jekyll", result.Names);
         }
 
     }

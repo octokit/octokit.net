@@ -836,8 +836,7 @@ namespace Octokit.Reactive
         /// <returns>All topics associated with the repository.</returns>
         public IObservable<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options)
         {
-            var url = ApiUrls.RepositoryTopics(owner, name);
-            return _connection.GetAndFlattenAllPages<string>(url, null, AcceptHeaders.RepositoryTopicsPreview, options);
+            return _client.GetAllTopics(owner, name, options).ToObservable();
         }
 
         /// <summary>
@@ -865,8 +864,7 @@ namespace Octokit.Reactive
         /// <returns>All topics associated with the repository.</returns>
         public IObservable<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
         {
-            var url = ApiUrls.RepositoryTopics(repositoryId);
-            return _connection.GetAndFlattenAllPages<string>(url, null, AcceptHeaders.RepositoryTopicsPreview, options);
+            return _client.GetAllTopics(repositoryId, options).ToObservable();
         }
 
         /// <summary>
@@ -893,9 +891,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
+        public IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
         {
-            return _client.ReplaceAllTopics(repositoryId, topics).Result.ToObservable();
+            return _client.ReplaceAllTopics(repositoryId, topics).ToObservable();
         }
 
         /// <summary>
@@ -910,9 +908,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
+        public IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
         {
-            return _client.ReplaceAllTopics(owner, name, topics).Result.ToObservable();
+            return _client.ReplaceAllTopics(owner, name, topics).ToObservable();
         }
     }
 }
