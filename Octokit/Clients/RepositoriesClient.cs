@@ -735,12 +735,12 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/topics")]
-        public async Task<IReadOnlyList<string>> GetAllTopics(long repositoryId, ApiOptions options)
+        public async Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
         {
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
-            var data = await ApiConnection.GetAll<string>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview, options).ConfigureAwait(false);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint,null,AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
 
-            return data ?? new List<string>();
+            return data ?? new RepositoryTopics();
         }
 
         /// <summary>
@@ -753,7 +753,7 @@ namespace Octokit
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/topics")]
 
-        public Task<IReadOnlyList<string>> GetAllTopics(long repositoryId)
+        public Task<RepositoryTopics> GetAllTopics(long repositoryId)
         {
             return GetAllTopics(repositoryId, ApiOptions.None);
         }
@@ -769,15 +769,15 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
-        public async Task<IReadOnlyList<string>> GetAllTopics(string owner, string name, ApiOptions options)
+        public async Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.GetAll<string>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview, options).ConfigureAwait(false);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
 
-            return data ?? new List<string>();
+            return data ?? new RepositoryTopics();
         }
 
         /// <summary>
@@ -791,7 +791,7 @@ namespace Octokit
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
 
-        public Task<IReadOnlyList<string>> GetAllTopics(string owner, string name)
+        public Task<RepositoryTopics> GetAllTopics(string owner, string name)
         {
             return GetAllTopics(owner, name, ApiOptions.None);
         }
@@ -810,16 +810,16 @@ namespace Octokit
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/topics")]
-        public async Task<IReadOnlyList<string>> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
+        public async Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNullOrEmptyEnumerable(topics, nameof(topics));
+            Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Put<List<string>>(endpoint, topics,null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics,null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
 
-            return data ?? new List<string>();
+            return data ?? new RepositoryTopics();
         }
 
         /// <summary>
@@ -834,14 +834,14 @@ namespace Octokit
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
         [ManualRoute("PUT", "/repositories/{id}/topics")]
-        public async Task<IReadOnlyList<string>> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
+        public async Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
         {
-            Ensure.ArgumentNotNullOrEmptyEnumerable(topics, nameof(topics));
+            Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
-            var data = await ApiConnection.Put<List<string>>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
 
-            return data ?? new List<string>();
+            return data ?? new RepositoryTopics();
         }
 
 

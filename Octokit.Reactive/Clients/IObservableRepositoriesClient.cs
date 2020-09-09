@@ -569,7 +569,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        IObservable<string> GetAllTopics(string owner, string name, ApiOptions options);
+        IObservable<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options);
 
         /// <summary>
         /// Gets all topics for the specified owner and repository name.
@@ -580,7 +580,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All topics associated with the repository.</returns>
-        IObservable<string> GetAllTopics(string owner, string name);
+        IObservable<RepositoryTopics> GetAllTopics(string owner, string name);
 
 
 
@@ -593,7 +593,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        IObservable<string> GetAllTopics(long repositoryId, ApiOptions options);
+        IObservable<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options);
 
         /// <summary>
         /// Gets all topics for the specified repository ID.
@@ -603,7 +603,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <returns>All topics associated with the repository.</returns>
-        IObservable<string> GetAllTopics(long repositoryId);
+        IObservable<RepositoryTopics> GetAllTopics(long repositoryId);
 
         /// <summary>
         /// Replaces all topics for the specified repository.
@@ -616,7 +616,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        IObservable<string> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics);
+        IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics);
 
         /// <summary>
         /// Replaces all topics for the specified repository.
@@ -630,7 +630,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        IObservable<string> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics);
+        IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics);
 
     }
 }

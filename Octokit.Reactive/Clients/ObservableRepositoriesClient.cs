@@ -834,7 +834,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<string> GetAllTopics(string owner, string name, ApiOptions options)
+        public IObservable<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options)
         {
             var url = ApiUrls.RepositoryTopics(owner, name);
             return _connection.GetAndFlattenAllPages<string>(url, null, AcceptHeaders.RepositoryTopicsPreview, options);
@@ -849,7 +849,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<string> GetAllTopics(string owner, string name)
+        public IObservable<RepositoryTopics> GetAllTopics(string owner, string name)
         {
             return GetAllTopics(owner, name, ApiOptions.None);
         }
@@ -863,7 +863,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<string> GetAllTopics(long repositoryId, ApiOptions options)
+        public IObservable<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
         {
             var url = ApiUrls.RepositoryTopics(repositoryId);
             return _connection.GetAndFlattenAllPages<string>(url, null, AcceptHeaders.RepositoryTopicsPreview, options);
@@ -877,7 +877,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<string> GetAllTopics(long repositoryId)
+        public IObservable<RepositoryTopics> GetAllTopics(long repositoryId)
         {
             return GetAllTopics(repositoryId, ApiOptions.None);
         }
@@ -893,7 +893,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<string> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
+        public IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, IEnumerable<string> topics)
         {
             return _client.ReplaceAllTopics(repositoryId, topics).Result.ToObservable();
         }
@@ -910,7 +910,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<string> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
+        public IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, IEnumerable<string> topics)
         {
             return _client.ReplaceAllTopics(owner, name, topics).Result.ToObservable();
         }
