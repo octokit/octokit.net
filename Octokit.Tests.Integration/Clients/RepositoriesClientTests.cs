@@ -1371,6 +1371,33 @@ public class RepositoriesClientTests
         }
     }
 
+    public class TheGetAllTopicsMethod
+    {
+        [IntegrationTest]
+        public async Task GetsTopicsByOwnerAndName()
+        {
+            var github = Helper.GetAnonymousClient();
+            var result = await github.Repository.GetAllTopics("SeanKilleen", "seankilleen.github.io");
+
+            Assert.Contains("blog", result);
+            Assert.Contains("ruby", result);
+            Assert.Contains("jekyll", result);
+        }
+
+        [IntegrationTest]
+        public async Task GetsTopicsByRepoID()
+        {
+            var github = Helper.GetAnonymousClient();
+            var repo = await github.Repository.Get("SeanKilleen", "seankilleen.github.io");
+            var result = await github.Repository.GetAllTopics(repo.Id);
+
+            Assert.Contains("blog", result);
+            Assert.Contains("ruby", result);
+            Assert.Contains("jekyll", result);
+        }
+
+    }
+
     public class TheGetAllTagsMethod
     {
         [IntegrationTest]
