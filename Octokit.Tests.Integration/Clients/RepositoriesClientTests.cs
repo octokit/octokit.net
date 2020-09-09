@@ -1371,9 +1371,31 @@ public class RepositoriesClientTests
         }
     }
 
+    public class TheReplaceAllTopicsMethod : IDisposable
+    {
+        readonly IGitHubClient _github = Helper.GetAuthenticatedClient();
+        readonly RepositoryTopics _defaultTopics = new RepositoryTopics(new List<string> { "blog", "ruby", "jekyll" });
+        const string theRepoOwner = "SeanKilleen";
+        const string theRepository = "seankilleen.github.io";
+
+        [Fact]
+        public async Task ClearsTopicsWithAnEmptyList()
+        {
+            var result = await _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, new RepositoryTopics());
+            Assert.Empty(result.Names);
+
+            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            Assert.Empty((doubleCheck.Names));
+        }
+
+        public async void Dispose()
+        {
+            await _github.Repository.ReplaceAllTopics("SeanKilleen", "seankilleen.github.io", _defaultTopics).ConfigureAwait(false);
+        }
+    }
     public class TheGetAllTopicsMethod
     {
-        [IntegrationTest]
+        [Fact]
         public async Task GetsTopicsByOwnerAndName()
         {
             var github = Helper.GetAnonymousClient();
@@ -1384,7 +1406,7 @@ public class RepositoriesClientTests
             Assert.Contains("jekyll", result.Names);
         }
 
-        [IntegrationTest]
+        [Fact]
         public async Task GetsTopicsByRepoID()
         {
             var github = Helper.GetAnonymousClient();
