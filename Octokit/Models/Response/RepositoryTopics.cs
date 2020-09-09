@@ -10,7 +10,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RepositoryTopics
     {
-        public RepositoryTopics() { }
+        public RepositoryTopics() { Names = new List<string>(); }
 
         public RepositoryTopics(IEnumerable<string> names)
         {
