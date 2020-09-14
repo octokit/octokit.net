@@ -1236,5 +1236,26 @@ namespace Octokit.Tests.Clients
                     .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, "application/vnd.github.v3.sha");
             }
         }
+
+        public class TheGetAllTopicsMethod
+        {
+            readonly RepositoriesClient _client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics(123, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics(null, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics("owner", null, ApiOptions.None));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                await Assert.ThrowsAsync<ArgumentException>(() => _client.GetAllTopics(string.Empty, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => _client.GetAllTopics("owner", string.Empty, ApiOptions.None));
+            }
+        }
     }
 }

@@ -737,6 +737,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/topics")]
         public async Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
         {
+            Ensure.ArgumentNotNull(options, nameof(options));
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
             var data = await ApiConnection.Get<RepositoryTopics>(endpoint,null,AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
 
@@ -773,6 +774,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
             var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
