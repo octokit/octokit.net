@@ -1335,7 +1335,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics(1234, _emptyTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics, "application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics, null, "application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
