@@ -1284,9 +1284,16 @@ namespace Octokit.Tests.Clients
 
         public class TheReplaceAllTopicsMethod
         {
-            readonly RepositoriesClient _client = new RepositoriesClient(Substitute.For<IApiConnection>());
             readonly RepositoryTopics _emptyTopics = new RepositoryTopics();
             readonly RepositoryTopics _listOfTopics = new RepositoryTopics(new List<string> { "one", "two", "three" });
+            readonly IApiConnection _connection;
+            readonly RepositoriesClient _client;
+
+            public TheReplaceAllTopicsMethod()
+            {
+                _connection = Substitute.For<IApiConnection>();
+                _client = new RepositoriesClient(_connection);
+            }
 
             [Fact]
             public async Task EnsuresNonNullArguments()
@@ -1307,48 +1314,36 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheCorrectUrlForOwnerAndRepoWithEmptyTopics()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
+                await _client.ReplaceAllTopics("owner", "name", _emptyTopics);
 
-                await client.ReplaceAllTopics("owner", "name", _emptyTopics);
-
-                connection.Received()
+                _connection.Received()
                     .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics, null,"application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
             public async Task RequestsTheCorrectUrlForOwnerAndRepoWithListOfTopics()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
+                await _client.ReplaceAllTopics("owner", "name", _listOfTopics);
 
-                await client.ReplaceAllTopics("owner", "name", _listOfTopics);
-
-                connection.Received()
+                _connection.Received()
                     .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics,null, "application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
             public async Task RequestsTheCorrectUrlForRepoIdWithEmptyTopics()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
+                await _client.ReplaceAllTopics(1234, _emptyTopics);
 
-                await client.ReplaceAllTopics(1234, _emptyTopics);
-
-                connection.Received()
+                _connection.Received()
                     .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics, "application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
             public async Task RequestsTheCorrectUrlForRepoIdWithListOfTopics()
             {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
+                await _client.ReplaceAllTopics(1234,_listOfTopics);
 
-                await client.ReplaceAllTopics(1234,_listOfTopics);
-
-                connection.Received()
+                _connection.Received()
                     .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics,null, "application/vnd.github.mercy-preview+json");
             }
         }
