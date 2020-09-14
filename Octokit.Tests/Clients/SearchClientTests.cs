@@ -702,6 +702,24 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d =>
                         string.IsNullOrEmpty(d["q"])));
             }
+
+            [Fact]
+            public async Task TestingTheTopicQualifier()
+            {
+                throw new NotImplementedException();
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithOneTopic()
+            {
+                throw new NotImplementedException();
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithMultipleTopics()
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class TheSearchIssuesMethod
