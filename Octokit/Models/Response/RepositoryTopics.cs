@@ -14,8 +14,8 @@ namespace Octokit
 
         public RepositoryTopics(IEnumerable<string> names)
         {
-            Ensure.ArgumentNotNull(names, "names");
-            Names = new ReadOnlyCollection<string>(names.ToList());
+            var initialItems = names?.ToList() ?? new List<string>();
+            Names = new ReadOnlyCollection<string>(initialItems);
         }
 
         public IReadOnlyList<string> Names { get; protected set; }
