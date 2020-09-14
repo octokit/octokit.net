@@ -1388,9 +1388,22 @@ public class RepositoriesClientTests
             Assert.Empty((doubleCheck.Names));
         }
 
-        public async void Dispose()
+        [Fact]
+        public async Task ReplacesTopicsWithAList()
         {
-            await _github.Repository.ReplaceAllTopics("SeanKilleen", "seankilleen.github.io", _defaultTopics).ConfigureAwait(false);
+            var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
+            var result = await _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, defaultTopicsList);
+
+            Assert.NotEmpty(result.Names);
+            Assert.Contains(result.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+
+            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            Assert.Contains(doubleCheck.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+        }
+
+        public void Dispose()
+        {
+            _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, _defaultTopics).ConfigureAwait(false);
         }
     }
     public class TheGetAllTopicsMethod
