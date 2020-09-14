@@ -1378,7 +1378,7 @@ public class RepositoriesClientTests
         const string theRepoOwner = "SeanKilleen";
         const string theRepository = "seankilleen.github.io";
 
-        [Fact]
+        [IntegrationTest]
         public async Task ClearsTopicsWithAnEmptyList()
         {
             var result = await _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, new RepositoryTopics());
@@ -1388,7 +1388,7 @@ public class RepositoriesClientTests
             Assert.Empty((doubleCheck.Names));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task ClearsTopicsWithAnEmptyListWhenUsingRepoId()
         {
             var repo = await _github.Repository.Get(theRepoOwner, theRepository);
@@ -1399,7 +1399,7 @@ public class RepositoriesClientTests
             Assert.Empty((doubleCheck.Names));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task ReplacesTopicsWithAList()
         {
             var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
@@ -1412,7 +1412,7 @@ public class RepositoriesClientTests
             Assert.Contains(doubleCheck.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task ReplacesTopicsWithAListWhenUsingRepoId()
         {
             var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
@@ -1433,7 +1433,7 @@ public class RepositoriesClientTests
     }
     public class TheGetAllTopicsMethod
     {
-        [Fact]
+        [IntegrationTest]
         public async Task GetsTopicsByOwnerAndName()
         {
             var github = Helper.GetAnonymousClient();
@@ -1444,7 +1444,7 @@ public class RepositoriesClientTests
             Assert.Contains("jekyll", result.Names);
         }
 
-        [Fact]
+        [IntegrationTest]
         public async Task GetsTopicsByRepoID()
         {
             var github = Helper.GetAnonymousClient();
