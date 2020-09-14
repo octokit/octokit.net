@@ -1389,10 +1389,35 @@ public class RepositoriesClientTests
         }
 
         [Fact]
+        public async Task ClearsTopicsWithAnEmptyListWhenUsingRepoId()
+        {
+            var repo = await _github.Repository.Get(theRepoOwner, theRepository);
+            var result = await _github.Repository.ReplaceAllTopics(repo.Id, new RepositoryTopics());
+            Assert.Empty(result.Names);
+
+            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            Assert.Empty((doubleCheck.Names));
+        }
+
+        [Fact]
         public async Task ReplacesTopicsWithAList()
         {
             var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
             var result = await _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, defaultTopicsList);
+
+            Assert.NotEmpty(result.Names);
+            Assert.Contains(result.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+
+            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            Assert.Contains(doubleCheck.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+        }
+
+        [Fact]
+        public async Task ReplacesTopicsWithAListWhenUsingRepoId()
+        {
+            var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
+            var repo = await _github.Repository.Get(theRepoOwner, theRepository);
+            var result = await _github.Repository.ReplaceAllTopics(repo.Id, defaultTopicsList);
 
             Assert.NotEmpty(result.Names);
             Assert.Contains(result.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
