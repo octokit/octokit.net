@@ -25,6 +25,27 @@ public class SearchClientTests
     }
 
     [IntegrationTest]
+    public async Task SearchForSingleTopic()
+    {
+        var request = new SearchRepositoriesRequest { Topic = "csharp" };
+
+        var repos = await _gitHubClient.Search.SearchRepo(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
+
+    [IntegrationTest]
+    public async Task SearchForMoreThan2Topics()
+    {
+        var request = new SearchRepositoriesRequest { Topics = Octokit.Range.GreaterThanOrEquals(2) };
+
+        var repos = await _gitHubClient.Search.SearchRepo(request);
+
+        Assert.NotEmpty(repos.Items);
+    }
+
+
+    [IntegrationTest]
     public async Task SearchForCSharpRepositoriesUpdatedIn2020()
     {
         var request = new SearchRepositoriesRequest("csharp")
@@ -639,4 +660,5 @@ public class SearchClientTests
 
         Assert.NotEmpty(labels.Items);
     }
+
 }
