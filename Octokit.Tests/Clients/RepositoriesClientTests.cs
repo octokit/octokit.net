@@ -1256,6 +1256,30 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => _client.GetAllTopics(string.Empty, "repo", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => _client.GetAllTopics("owner", string.Empty, ApiOptions.None));
             }
+
+            [Fact]
+            public void RequestsTheCorrectUrlForOwnerAndRepo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTopics("owner", "name");
+
+                connection.Received()
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), null, "application/vnd.github.mercy-preview+json");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlForRepoId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTopics(1234);
+
+                connection.Received()
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), null, "application/vnd.github.mercy-preview+json");
+            }
         }
     }
 }
