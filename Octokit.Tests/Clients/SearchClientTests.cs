@@ -738,7 +738,6 @@ namespace Octokit.Tests.Clients
 
                 Assert.Contains("topics:<=2", request.MergedQualifiers());
             }
-
         }
 
         public class TheSearchIssuesMethod
