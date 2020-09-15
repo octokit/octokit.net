@@ -659,5 +659,4 @@ public class SearchClientTests
 
         Assert.NotEmpty(labels.Items);
     }
-
 }
