@@ -706,20 +706,39 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task TestingTheTopicQualifier()
             {
-                throw new NotImplementedException();
+                var request = new SearchRepositoriesRequest("github");
+                request.Topic = "TheTopic";
+
+                Assert.Contains("topic:thetopic", request.MergedQualifiers());
             }
 
             [Fact]
-            public void TestingTheTopicsQualifierWithOneTopic()
+            public void TestingTheTopicsQualifierWithGreaterThanOneTopic()
             {
-                throw new NotImplementedException();
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = Range.GreaterThan(1);
+
+                Assert.Contains("topics:>1", request.MergedQualifiers());
             }
 
             [Fact]
-            public void TestingTheTopicsQualifierWithMultipleTopics()
+            public void TestingTheTopicsQualifierWithExactlyOneTopic()
             {
-                throw new NotImplementedException();
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = new Range(1);
+
+                Assert.Contains("topics:1", request.MergedQualifiers());
             }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithTwoOrLessTopics()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = Range.LessThanOrEquals(2);
+
+                Assert.Contains("topics:<=2", request.MergedQualifiers());
+            }
+
         }
 
         public class TheSearchIssuesMethod
