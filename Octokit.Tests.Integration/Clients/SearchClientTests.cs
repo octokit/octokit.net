@@ -44,7 +44,6 @@ public class SearchClientTests
         Assert.NotEmpty(repos.Items);
     }
 
-
     [IntegrationTest]
     public async Task SearchForCSharpRepositoriesUpdatedIn2020()
     {
