@@ -1923,7 +1923,6 @@ namespace Octokit
             return "repositories/{0}/topics".FormatUri(repositoryId);
         }
 
-
         /// <summary>
         /// Returns the <see cref="Uri"/> for repository languages.
         /// </summary>
