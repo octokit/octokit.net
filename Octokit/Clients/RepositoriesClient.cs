@@ -846,7 +846,6 @@ namespace Octokit
             return data ?? new RepositoryTopics();
         }
 
-
         /// <summary>
         /// Gets all languages for the specified repository.
         /// </summary>
