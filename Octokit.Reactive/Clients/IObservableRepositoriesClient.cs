@@ -582,8 +582,6 @@ namespace Octokit.Reactive
         /// <returns>All topics associated with the repository.</returns>
         IObservable<RepositoryTopics> GetAllTopics(string owner, string name);
 
-
-
         /// <summary>
         /// Gets all topics for the specified repository ID.
         /// </summary>
