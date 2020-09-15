@@ -645,8 +645,6 @@ namespace Octokit
         /// <returns>All topics associated with the repository.</returns>
         Task<RepositoryTopics> GetAllTopics(string owner, string name);
 
-
-
         /// <summary>
         /// Gets all topics for the specified repository ID.
         /// </summary>
