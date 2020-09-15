@@ -666,7 +666,6 @@ namespace Octokit
         /// <returns>All topics associated with the repository.</returns>
         Task<RepositoryTopics> GetAllTopics(long repositoryId);
 
-
         /// <summary>
         /// Replaces all topics for the specified repository.
         /// </summary>
