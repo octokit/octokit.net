@@ -798,7 +798,6 @@ namespace Octokit
             return GetAllTopics(owner, name, ApiOptions.None);
         }
 
-
         /// <summary>
         /// Replaces all topics for the specified repository.
         /// </summary>
