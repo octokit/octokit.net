@@ -5,7 +5,7 @@ using Octokit.Models.Response;
 namespace Octokit
 {
     /// <summary>
-    /// A client for GitHub's Workflows API.
+    /// A client for GitHub's Action Workflows API.
     /// </summary>
     /// <remarks>
     /// See the <a href="https://developer.github.com/v3/actions/workflows/">Workflows API documentation</a> for more information.
@@ -44,14 +44,14 @@ namespace Octokit
         /// <param name="workflowId">The ID of the workflow</param>
         /// <param name="workflowDispatchEvent">The input to the workflow dispatch event creation</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches")]
-        public void CreateWorkflowDispatchEvent(string owner, string name, string workflowId, WorkflowDispatchEvent workflowDispatchEvent)
+        public Task CreateWorkflowDispatchEvent(string owner, string name, string workflowId, WorkflowDispatchEvent workflowDispatchEvent)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(workflowId, nameof(workflowId));
             Ensure.ArgumentNotNull(workflowDispatchEvent, nameof(workflowDispatchEvent));
             
-            ApiConnection.Post(ApiUrls.CreateWorkflowDispatchEvent(owner, name, workflowId), workflowDispatchEvent);
+            return ApiConnection.Post(ApiUrls.CreateWorkflowDispatchEvent(owner, name, workflowId), workflowDispatchEvent);
         }
         
     }
