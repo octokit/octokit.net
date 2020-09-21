@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reactive;
+using System.Threading.Tasks;
 using Octokit.Models.Response;
 
 namespace Octokit.Reactive
@@ -31,6 +33,6 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="workflowId">The ID of the workflow</param>
         /// <param name="workflowDispatchEvent">The input to the workflow dispatch event creation</param>
-        void CreateWorkflowDispatchEvent(string owner, string name, string workflowId, WorkflowDispatchEvent workflowDispatchEvent);
+        IObservable<Unit> CreateWorkflowDispatchEvent(string owner, string name, string workflowId, WorkflowDispatchEvent workflowDispatchEvent);
     }
 }

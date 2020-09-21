@@ -50,6 +50,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(workflowId, nameof(workflowId));
             Ensure.ArgumentNotNull(workflowDispatchEvent, nameof(workflowDispatchEvent));
+            Ensure.ArgumentNotNullOrEmptyString(workflowDispatchEvent.Ref, nameof(workflowDispatchEvent.Ref));
             
             return ApiConnection.Post(ApiUrls.CreateWorkflowDispatchEvent(owner, name, workflowId), workflowDispatchEvent);
         }

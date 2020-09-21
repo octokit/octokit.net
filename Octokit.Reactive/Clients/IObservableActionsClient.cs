@@ -5,6 +5,6 @@
     /// </summary>
     public interface IObservableActionsClient
     {
-        IObservableWorkflowsClient Blob { get; }
+        IObservableWorkflowsClient Workflows { get; }
     }
 }
