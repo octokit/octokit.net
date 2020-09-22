@@ -25,6 +25,15 @@ namespace Octokit.Reactive.Clients
             return _client.GetAllForRepository(owner, name).ToObservable();
         }
 
+        public IObservable<IReadOnlyList<Workflow>> GetAllForRepository(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _client.GetAllForRepository(owner, name, options).ToObservable();
+        }
+
         public IObservable<Unit> CreateWorkflowDispatchEvent(string owner, string name, string workflowId, WorkflowDispatchEvent workflowDispatchEvent)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
