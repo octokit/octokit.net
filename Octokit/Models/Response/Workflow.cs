@@ -1,10 +1,15 @@
 using System;
+using System.Globalization;
 using Octokit.Internal;
 
 namespace Octokit.Models.Response
 {
     public class Workflow   
     {
+        public Workflow()
+        {
+        }
+        
         public Workflow(int id, string nodeId, string name, string path, string state, DateTimeOffset createdAt, DateTimeOffset updatedAt, string url, string htmlUrl, string badgeUrl)
         {
             Id = id;
@@ -34,5 +39,13 @@ namespace Octokit.Models.Response
         public string HtmlUrl { get; protected set; }
         [Parameter(Key = "badge_url")]
         public string BadgeUrl { get; protected set; } 
+        
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, $"ID: {Id}");
+            }
+        }
     }
 }
