@@ -23,7 +23,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<IReadOnlyList<Workflow>> GetAllForRepository(string owner, string name);
+        IObservable<Workflow> GetAllForRepository(string owner, string name);
 
         /// <summary>
         /// list repository workflows
@@ -34,7 +34,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<IReadOnlyList<Workflow>> GetAllForRepository(string owner, string name, ApiOptions options);
+        IObservable<Workflow> GetAllForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
         /// create a workflow dispatch event
