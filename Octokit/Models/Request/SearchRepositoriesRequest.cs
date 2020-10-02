@@ -113,7 +113,7 @@ namespace Octokit
         public DateRange Updated { get; set; }
 
         /// <summary>
-        /// Filters repositoreis based on license
+        /// Filters repositories based on license
         /// https://help.github.com/articles/searching-repositories#search-by-license
         /// </summary>
         public RepoSearchLicense? License { get; set; }
@@ -512,7 +512,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// lanuages that can be searched on in github
+    /// Languages that can be searched on in GitHub
     /// https://help.github.com/articles/searching-repositories#languages
     /// </summary>
     public enum Language
@@ -876,6 +876,7 @@ namespace Octokit
 
     /// <summary>
     /// Licenses than can be searched on GitHub
+    /// https://help.github.com/articles/searching-repositories#search-by-license
     /// </summary>
     public enum RepoSearchLicense
     {
