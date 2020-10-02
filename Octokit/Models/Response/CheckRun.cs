@@ -46,7 +46,7 @@ namespace Octokit
         public string ExternalId { get; protected set; }
 
         /// <summary>
-        /// The GitHub Api URL of the check run
+        /// The GitHub API URL of the check run
         /// </summary>
         public string Url { get; protected set; }
 

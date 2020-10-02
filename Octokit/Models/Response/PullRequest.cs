@@ -197,7 +197,7 @@ namespace Octokit
 
         /// <summary>
         /// The value of this field changes depending on the state of the pull request.
-        /// Not Merged - the hash of the test commit used to determine mergability.
+        /// Not Merged - the hash of the test commit used to determine mergeability.
         /// Merged with merge commit - the hash of said merge commit.
         /// Merged via squashing - the hash of the squashed commit added to the base branch.
         /// Merged via rebase - the hash of the commit that the base branch was updated to.

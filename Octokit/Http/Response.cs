@@ -10,12 +10,12 @@ namespace Octokit.Internal
     /// </summary>
     internal class Response : IResponse
     {
-        [Obsolete("Use the constuctor with maximum parameters to avoid shortcuts")]
+        [Obsolete("Use the constructor with maximum parameters to avoid shortcuts")]
         public Response() : this(new Dictionary<string, string>())
         {
         }
 
-        [Obsolete("Use the constuctor with maximum parameters to avoid shortcuts")]
+        [Obsolete("Use the constructor with maximum parameters to avoid shortcuts")]
         public Response(IDictionary<string, string> headers)
         {
             Ensure.ArgumentNotNull(headers, nameof(headers));

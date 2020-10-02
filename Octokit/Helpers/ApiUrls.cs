@@ -3714,7 +3714,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice referrers.
+        /// Returns the <see cref="Uri"/> for repository traffic referrers.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>

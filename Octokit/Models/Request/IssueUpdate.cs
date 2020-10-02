@@ -62,7 +62,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Adds the specified assigness to the issue.
+        /// Adds the specified assignees to the issue.
         /// </summary>
         /// <param name="name">The login of the assignee.</param>
         public void AddAssignee(string name)

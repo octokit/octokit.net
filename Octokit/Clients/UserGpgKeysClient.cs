@@ -14,7 +14,7 @@ namespace Octokit
     public class UserGpgKeysClient : ApiClient, IUserGpgKeysClient
     {
         /// <summary>
-        /// Instatiates a new GitHub User GPG Keys API client.
+        /// Instantiates a new GitHub User GPG Keys API client.
         /// </summary>
         /// <param name="apiConnection">The API connection.</param>
         public UserGpgKeysClient(IApiConnection apiConnection) : base(apiConnection)
