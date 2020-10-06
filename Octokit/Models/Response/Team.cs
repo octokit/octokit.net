@@ -12,9 +12,10 @@ namespace Octokit
     {
         public Team() { }
 
-        public Team(string url, int id, string nodeId, string slug, string name, string description, TeamPrivacy privacy, PermissionLevel permission, int membersCount, int reposCount, Organization organization, Team parent, string ldapDistinguishedName)
+        public Team(string url, string htmlUrl, int id, string nodeId, string slug, string name, string description, TeamPrivacy privacy, PermissionLevel permission, int membersCount, int reposCount, Organization organization, Team parent, string ldapDistinguishedName)
         {
             Url = url;
+            HtmlUrl = htmlUrl;
             Id = id;
             NodeId = nodeId;
             Slug = slug;
@@ -33,6 +34,11 @@ namespace Octokit
         /// url for this team
         /// </summary>
         public string Url { get; protected set; }
+
+        /// <summary>
+        /// The HTML URL for this team.
+        /// </summary>
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// team id
