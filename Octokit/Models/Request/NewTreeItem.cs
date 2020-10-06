@@ -35,7 +35,7 @@ namespace Octokit
         public string Sha { get; set; }
 
         /// <summary>
-        /// Gets or sets the The content you want this file to have. GitHub will write this blob out and use that SHA 
+        /// Gets or sets the content you want this file to have. GitHub will write this blob out and use that SHA 
         /// for this entry. Use either this, or tree.sha.
         /// </summary>
         /// <value>

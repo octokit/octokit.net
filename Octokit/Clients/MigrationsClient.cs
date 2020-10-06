@@ -43,7 +43,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets the list of the most recent migrations of the the organization.
+        /// Gets the list of the most recent migrations of the organization.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#get-a-list-of-migrations
@@ -57,7 +57,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets the list of the most recent migrations of the the organization.
+        /// Gets the list of the most recent migrations of the organization.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/migration/migrations/#get-a-list-of-migrations

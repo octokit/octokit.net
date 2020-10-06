@@ -9,10 +9,11 @@ namespace Octokit
     {
         public Project() { }
 
-        public Project(string ownerUrl, string url, int id, string nodeId, string name, string body, int number, ItemState state, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public Project(string ownerUrl, string url, string htmlUrl, int id, string nodeId, string name, string body, int number, ItemState state, User creator, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             OwnerUrl = ownerUrl;
             Url = url;
+            HtmlUrl = htmlUrl;
             Id = id;
             NodeId = nodeId;
             Name = name;
@@ -28,6 +29,11 @@ namespace Octokit
         /// The URL for this projects repository.
         /// </summary>
         public string OwnerUrl { get; protected set; }
+
+        /// <summary>
+        /// The HTML URL for this project.
+        /// </summary>
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// The URL for this project.

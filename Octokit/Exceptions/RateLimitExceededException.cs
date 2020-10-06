@@ -93,7 +93,7 @@ namespace Octokit
         /// <remarks>
         /// The return value is calculated using server time data from the 
         /// response in order to provide a best-effort estimate that is 
-        /// independant from eventual inaccuracies in the client's clock.
+        /// independent from eventual inaccuracies in the client's clock.
         /// </remarks>
         public TimeSpan GetRetryAfterTimeSpan()
         {

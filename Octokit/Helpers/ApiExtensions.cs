@@ -17,7 +17,7 @@ namespace Octokit
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
         /// <param name="connection">The connection to use</param>
         /// <param name="uri">URI of the API resource to get</param>
-        /// <returns><see cref="IReadOnlyList{T}"/> of the The API resources in the list.</returns>
+        /// <returns><see cref="IReadOnlyList{T}"/> of the API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         public static Task<IReadOnlyList<T>> GetAll<T>(this IApiConnection connection, Uri uri)
         {

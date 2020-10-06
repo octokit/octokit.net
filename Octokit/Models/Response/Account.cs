@@ -91,7 +91,7 @@ namespace Octokit
         /// <summary>
         /// Indicates whether the account is currently hireable.
         /// </summary>
-        /// <value>True if the account is hirable; otherwise, false.</value>
+        /// <value>True if the account is hireable; otherwise, false.</value>
         public bool? Hireable { get; protected set; }
 
         /// <summary>

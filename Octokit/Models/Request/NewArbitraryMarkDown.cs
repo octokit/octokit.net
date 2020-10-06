@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Octokit
 {
     /// <summary>
-    /// Used to create anarbitrary markdown
+    /// Used to create an arbitrary markdown
     /// </summary>
     /// <remarks>
     /// API: https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
