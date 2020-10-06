@@ -102,7 +102,7 @@ namespace Octokit
         Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options);
 
         /// <summary>
-        /// Updates Check Suites prefrences on a repository, such as disabling automatic creation when code is pushed
+        /// Updates Check Suites preferences on a repository, such as disabling automatic creation when code is pushed
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/suites/#set-preferences-for-check-suites-on-a-repository">Check Suites API documentation</a> for more information.
@@ -113,7 +113,7 @@ namespace Octokit
         Task<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences);
 
         /// <summary>
-        /// Updates Check Suites prefrences on a repository, such as disabling automatic creation when code is pushed
+        /// Updates Check Suites preferences on a repository, such as disabling automatic creation when code is pushed
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/checks/suites/#set-preferences-for-check-suites-on-a-repository">Check Suites API documentation</a> for more information.

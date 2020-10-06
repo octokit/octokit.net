@@ -58,7 +58,7 @@ namespace Octokit
         public string GitignoreTemplate { get; set; }
 
         /// <summary>
-        /// Optional. Gets or sets the desired Desired LICENSE template to apply. Use the name of the template without
+        /// Optional. Gets or sets the desired LICENSE template to apply. Use the name of the template without
         /// the extension. For example, “mit” or “mozilla”.
         /// </summary>
         /// <remarks>

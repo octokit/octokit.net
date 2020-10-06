@@ -201,7 +201,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Helper class in generating the range values for a qualifer e.g. In or Size qualifiers
+    /// Helper class in generating the range values for a qualifier e.g. In or Size qualifiers
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Range

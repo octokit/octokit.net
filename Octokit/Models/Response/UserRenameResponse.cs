@@ -18,7 +18,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Message indiating if the Rename request was queued
+        /// Message indicating if the Rename request was queued
         /// </summary>
         public string Message { get; protected set; }
 

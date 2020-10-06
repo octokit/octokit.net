@@ -52,7 +52,7 @@ namespace Octokit
         public StringEnum<CheckConclusion>? Conclusion { get; protected set; }
 
         /// <summary>
-        /// The GitHub Api URL of the check suite
+        /// The GitHub API URL of the check suite
         /// </summary>
         public string Url { get; protected set; }
 
