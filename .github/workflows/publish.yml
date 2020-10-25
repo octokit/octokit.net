@@ -1,26 +1,13 @@
-name: Publish Release to NuGet
-
+name: Post productivity note
 on:
-  push:
-    tags:
-      - v*
-
+  pull_request:
+    branches: [ main ]
+    types: [ opened, closed, reopened, synchronize ]
 jobs:
-  build:
-
+  devrating:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.4.0
+    - uses: actions/checkout@v2
       with:
-        dotnet-version: 3.1.201
-
-    - name: Build with dotnet
-      run: ./build.sh --linksources=true --verbosity=verbose
-      shell: bash
-
-    - name: Publish to NuGet
-      run: dotnet nuget push packaging/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }}
-      shell: bash
+        fetch-depth: 0  # important
+    - uses: victorx64/devrating-gh-action@0
