@@ -22,8 +22,8 @@ namespace Octokit.Tests.Integration.Clients
         /// <summary>
         /// Fill these in for tests to work
         /// </summary>
-        internal const string OWNER = "";
-        internal const string REPO = "";
+        internal const string OWNER = "octokit";
+        internal const string REPO = "octokit.net";
 
         public class GetPublicKeyMethod
         {
