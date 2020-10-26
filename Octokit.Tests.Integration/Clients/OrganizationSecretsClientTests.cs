@@ -13,10 +13,6 @@ namespace Octokit.Tests.Integration.Clients
 {
     public class OrganizationSecretsClientTests
     {
-        /// <summary>
-        /// Fill these in for tests to work
-        /// </summary>
-        internal const string ORG = "";
 
         public class GetPublicKeyMethod
         {
@@ -25,7 +21,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(Helper.Organization);
 
                 Assert.True(!string.IsNullOrWhiteSpace(key.KeyId));
             }
@@ -38,7 +34,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var secrets = await github.Organization.Actions.Secrets.GetAll(ORG);
+                var secrets = await github.Organization.Actions.Secrets.GetAll(Helper.Organization);
 
                 Assert.NotEmpty(secrets.Secrets);
             }
@@ -54,7 +50,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var secret = await github.Organization.Actions.Secrets.Get(ORG, "TEST");
+                var secret = await github.Organization.Actions.Secrets.Get(Helper.Organization, "TEST");
 
                 Assert.NotNull(secret);
                 Assert.True(secret.Name == "TEST");
@@ -70,10 +66,10 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
                 var now = DateTime.Now;
 
-                var publicKey = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var publicKey = await github.Organization.Actions.Secrets.GetPublicKey(Helper.Organization);
                 var upsertValue = GetSecretForCreate("value", publicKey);
 
-                var secret = await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, "UPSERT_TEST", upsertValue);
+                var secret = await github.Organization.Actions.Secrets.CreateOrUpdate(Helper.Organization, "UPSERT_TEST", upsertValue);
 
                 Assert.NotNull(secret);
                 Assert.True(secret.UpdatedAt > now);
@@ -91,11 +87,11 @@ namespace Octokit.Tests.Integration.Clients
 
                 var secretName = "DELETE_TEST";
 
-                var publicKey = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var publicKey = await github.Organization.Actions.Secrets.GetPublicKey(Helper.Organization);
                 var upsertValue = GetSecretForCreate("value", publicKey);
 
-                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertValue);
-                await github.Organization.Actions.Secrets.Delete(ORG, secretName);
+                await github.Organization.Actions.Secrets.CreateOrUpdate(Helper.Organization, secretName, upsertValue);
+                await github.Organization.Actions.Secrets.Delete(Helper.Organization, secretName);
 
             }
 #endif
@@ -113,11 +109,11 @@ namespace Octokit.Tests.Integration.Clients
 
                 var repo = await CreateRepoIfNotExists(github, "list-secrets-selected-repo-test");
 
-                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(Helper.Organization);
                 var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo });
-                var secret = await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+                var secret = await github.Organization.Actions.Secrets.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
 
-                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
             }
@@ -137,13 +133,13 @@ namespace Octokit.Tests.Integration.Clients
                 var repo1 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-1");
                 var repo2 = await CreateRepoIfNotExists(github, "set-secrets-selected-repo-test-2");
 
-                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(Helper.Organization);
                 var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1 });
-                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+                await github.Organization.Actions.Secrets.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
 
-                await github.Organization.Actions.Secrets.SetSelectedRepositoriesForSecret(ORG, secretName, new SelectedRepositoryCollection(new long[] { repo1.Id, repo2.Id }));
+                await github.Organization.Actions.Secrets.SetSelectedRepositoriesForSecret(Helper.Organization, secretName, new SelectedRepositoryCollection(new long[] { repo1.Id, repo2.Id }));
 
-                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
                 Assert.Equal(2, visibilityRepos.Count);
@@ -164,13 +160,13 @@ namespace Octokit.Tests.Integration.Clients
                 var repo1 = await CreateRepoIfNotExists(github, "add-secrets-selected-repo-test-1");
                 var repo2 = await CreateRepoIfNotExists(github, "add-secrets-selected-repo-test-2");
 
-                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(Helper.Organization);
                 var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1 });
-                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+                await github.Organization.Actions.Secrets.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
 
-                await github.Organization.Actions.Secrets.AddRepoToOrganizationSecret(ORG, secretName, repo2.Id);
+                await github.Organization.Actions.Secrets.AddRepoToOrganizationSecret(Helper.Organization, secretName, repo2.Id);
 
-                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
                 Assert.Equal(2, visibilityRepos.Count);
@@ -191,13 +187,13 @@ namespace Octokit.Tests.Integration.Clients
                 var repo1 = await CreateRepoIfNotExists(github, "remove-secrets-selected-repo-test-1");
                 var repo2 = await CreateRepoIfNotExists(github, "remove-secrets-selected-repo-test-2");
 
-                var key = await github.Organization.Actions.Secrets.GetPublicKey(ORG);
+                var key = await github.Organization.Actions.Secrets.GetPublicKey(Helper.Organization);
                 var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1, repo2 });
-                await github.Organization.Actions.Secrets.CreateOrUpdate(ORG, secretName, upsertSecret);
+                await github.Organization.Actions.Secrets.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
 
-                await github.Organization.Actions.Secrets.RemoveRepoFromOrganizationSecret(ORG, secretName, repo2.Id);
+                await github.Organization.Actions.Secrets.RemoveRepoFromOrganizationSecret(Helper.Organization, secretName, repo2.Id);
 
-                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityRepos = await github.Organization.Actions.Secrets.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
                 Assert.Equal(1, visibilityRepos.Count);
@@ -246,12 +242,12 @@ namespace Octokit.Tests.Integration.Clients
         {
             try
             {
-                var existingRepo = await github.Repository.Get(ORG, name);
+                var existingRepo = await github.Repository.Get(Helper.Organization, name);
                 return existingRepo;
             }
             catch
             {
-                var newRepo = await github.Repository.Create(ORG, new NewRepository(name));
+                var newRepo = await github.Repository.Create(Helper.Organization, new NewRepository(name));
                 return newRepo;
             }
         }
