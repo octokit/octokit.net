@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -103,7 +104,8 @@ namespace Octokit
 
         static bool IsEnterpriseResponse(IResponse response)
         {
-            return response.Headers.ContainsKey("X-GitHub-Request-Id");
+            // Use fix from https://github.com/octokit/octokit.net/pull/2175
+            return response.Headers.Any(h => string.Equals(h.Key, "X-GitHub-Request-Id", StringComparison.OrdinalIgnoreCase));
         }
     }
 
