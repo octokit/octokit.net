@@ -15,11 +15,6 @@ namespace Octokit.Tests.Integration.Reactive
 {
     public class ObservableOrganizationSecretsClientTests
     {
-        /// <summary>
-        /// Fill these in for tests to work
-        /// </summary>
-        internal const string ORG = "";
-
         public class GetPublicKeyMethod
         {
             [OrganizationTest]
@@ -28,7 +23,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var github = Helper.GetAuthenticatedClient();
                 var clients = new ObservableOrganizationSecretsClient(github);
 
-                var keyObservable = clients.GetPublicKey(ORG);
+                var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
 
                 Assert.True(!string.IsNullOrWhiteSpace(key.KeyId));
@@ -43,7 +38,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var github = Helper.GetAuthenticatedClient();
                 var clients = new ObservableOrganizationSecretsClient(github);
 
-                var secretsObservable = clients.GetAll(ORG);
+                var secretsObservable = clients.GetAll(Helper.Organization);
                 var secrets = await secretsObservable;
 
                 Assert.NotEmpty(secrets.Secrets);
@@ -61,7 +56,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var github = Helper.GetAuthenticatedClient();
                 var clients = new ObservableOrganizationSecretsClient(github);
 
-                var secretObservable = clients.Get(ORG, "TEST");
+                var secretObservable = clients.Get(Helper.Organization, "TEST");
                 var secret = await secretObservable;
 
                 Assert.NotNull(secret);
@@ -79,12 +74,12 @@ namespace Octokit.Tests.Integration.Reactive
                 var clients = new ObservableOrganizationSecretsClient(github);
                 var now = DateTime.Now;
 
-                var keyObservable = clients.GetPublicKey(ORG);
+                var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
 
                 var upsertValue = GetSecretForCreate("value", key);
 
-                var secretObservable = clients.CreateOrUpdate(ORG, "REACTIVE_UPSERT_TEST", upsertValue);
+                var secretObservable = clients.CreateOrUpdate(Helper.Organization, "REACTIVE_UPSERT_TEST", upsertValue);
                 var secret = await secretObservable;
 
                 Assert.NotNull(secret);
@@ -104,14 +99,14 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var secretName = "REACTIVE_DELETE_TEST";
 
-                var keyObservable = clients.GetPublicKey(ORG);
+                var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
                 var upsertValue = GetSecretForCreate("value", key);
 
-                var createSecretObservable = clients.CreateOrUpdate(ORG, secretName, upsertValue);
+                var createSecretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertValue);
                 await createSecretObservable;
 
-                var deleteSecretObservable = clients.Delete(ORG, secretName);
+                var deleteSecretObservable = clients.Delete(Helper.Organization, secretName);
                 await deleteSecretObservable;
             }
 #endif
@@ -131,14 +126,14 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var repo = await CreateRepoIfNotExists(repoClients, "reactive-list-secrets-selected-repo-test");
 
-                var keyObservable = clients.GetPublicKey(ORG);
+                var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
                 var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo });
 
-                var secretObservable = clients.CreateOrUpdate(ORG, secretName, upsertSecret);
+                var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
 
-                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
                 var visibilityRepos = await visibilityReposObservable;
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
@@ -161,17 +156,17 @@ namespace Octokit.Tests.Integration.Reactive
                 var repo1 = await CreateRepoIfNotExists(repoClients, "reactive-set-secrets-selected-repo-test-1");
                 var repo2 = await CreateRepoIfNotExists(repoClients, "reactive-set-secrets-selected-repo-test-2");
 
-                var keyObservable = clients.GetPublicKey(ORG);
+                var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
                 var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo1 });
 
-                var secretObservable = clients.CreateOrUpdate(ORG, secretName, upsertSecret);
+                var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
 
-                var setRepoListObservable = clients.SetSelectedRepositoriesForSecret(ORG, secretName, new SelectedRepositoryCollection(new long[] { repo1.Id, repo2.Id }));
+                var setRepoListObservable = clients.SetSelectedRepositoriesForSecret(Helper.Organization, secretName, new SelectedRepositoryCollection(new long[] { repo1.Id, repo2.Id }));
                 await setRepoListObservable;
 
-                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
                 var visibilityRepos = await visibilityReposObservable;
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
@@ -195,17 +190,17 @@ namespace Octokit.Tests.Integration.Reactive
                 var repo1 = await CreateRepoIfNotExists(repoClients, "reactive-add-secrets-selected-repo-test-1");
                 var repo2 = await CreateRepoIfNotExists(repoClients, "reactive-add-secrets-selected-repo-test-2");
 
-                var keyObservable = clients.GetPublicKey(ORG);
+                var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
                 var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo1 });
 
-                var secretObservable = clients.CreateOrUpdate(ORG, secretName, upsertSecret);
+                var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
 
-                var addRepoListObservable = clients.AddRepoToOrganizationSecret(ORG, secretName, repo2.Id);
+                var addRepoListObservable = clients.AddRepoToOrganizationSecret(Helper.Organization, secretName, repo2.Id);
                 await addRepoListObservable;
 
-                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
                 var visibilityRepos = await visibilityReposObservable;
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
@@ -229,17 +224,17 @@ namespace Octokit.Tests.Integration.Reactive
                 var repo1 = await CreateRepoIfNotExists(repoClients, "reactive-remove-secrets-selected-repo-test-1");
                 var repo2 = await CreateRepoIfNotExists(repoClients, "reactive-remove-secrets-selected-repo-test-2");
 
-                var keyObservable = clients.GetPublicKey(ORG);
+                var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
                 var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1, repo2 });
 
-                var secretObservable = clients.CreateOrUpdate(ORG, secretName, upsertSecret);
+                var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
 
-                var removeRepoListObservable = clients.RemoveRepoFromOrganizationSecret(ORG, secretName, repo2.Id);
+                var removeRepoListObservable = clients.RemoveRepoFromOrganizationSecret(Helper.Organization, secretName, repo2.Id);
                 await removeRepoListObservable;
 
-                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(ORG, secretName);
+                var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
                 var visibilityRepos = await visibilityReposObservable;
 
                 Assert.NotEmpty(visibilityRepos.Repositories);
@@ -289,12 +284,12 @@ namespace Octokit.Tests.Integration.Reactive
         {
             try
             {
-                var existingRepo = client.Get(ORG, name);
+                var existingRepo = client.Get(Helper.Organization, name);
                 return await existingRepo;
             }
             catch
             {
-                var newRepo = client.Create(ORG, new NewRepository(name));
+                var newRepo = client.Create(Helper.Organization, new NewRepository(name));
                 return await newRepo;
             }
         }
