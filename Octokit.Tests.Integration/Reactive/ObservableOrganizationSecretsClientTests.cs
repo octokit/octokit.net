@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Octokit.Reactive;
 using Xunit;
 using System.Linq;
+using Octokit.Tests.Integration.Helpers;
 
 #if SODIUM_CORE_AVAILABLE
 using Sodium;
@@ -120,15 +121,15 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var github = Helper.GetAuthenticatedClient();
                 var clients = new ObservableOrganizationSecretsClient(github);
-                var repoClients = new ObservableRepositoriesClient(github);
 
                 var secretName = "REACTIVE_LIST_SELECTED_REPO_TEST";
 
-                var repo = await CreateRepoIfNotExists(repoClients, "reactive-list-secrets-selected-repo-test");
+                var repoName = Helper.MakeNameWithTimestamp("reactive-add-secrets-selected-repo-test");
+                var repo = await github.CreateRepositoryContext(new NewRepository(repoName));
 
                 var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
-                var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo });
+                var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo.Repository });
 
                 var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
@@ -149,21 +150,23 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var github = Helper.GetAuthenticatedClient();
                 var clients = new ObservableOrganizationSecretsClient(github);
-                var repoClients = new ObservableRepositoriesClient(github);
 
                 var secretName = "REACTIVE_SET_SELECTED_REPO_TEST";
 
-                var repo1 = await CreateRepoIfNotExists(repoClients, "reactive-set-secrets-selected-repo-test-1");
-                var repo2 = await CreateRepoIfNotExists(repoClients, "reactive-set-secrets-selected-repo-test-2");
+                var repo1Name = Helper.MakeNameWithTimestamp("reactive-add-secrets-selected-repo-test-1");
+                var repo2Name = Helper.MakeNameWithTimestamp("reactive-add-secrets-selected-repo-test-2");
+
+                var repo1 = await github.CreateRepositoryContext(new NewRepository(repo1Name));
+                var repo2 = await github.CreateRepositoryContext(new NewRepository(repo2Name));
 
                 var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
-                var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo1 });
+                var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo1.Repository });
 
                 var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
 
-                var setRepoListObservable = clients.SetSelectedRepositoriesForSecret(Helper.Organization, secretName, new SelectedRepositoryCollection(new long[] { repo1.Id, repo2.Id }));
+                var setRepoListObservable = clients.SetSelectedRepositoriesForSecret(Helper.Organization, secretName, new SelectedRepositoryCollection(new long[] { repo1.RepositoryId, repo2.RepositoryId }));
                 await setRepoListObservable;
 
                 var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
@@ -183,21 +186,23 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var github = Helper.GetAuthenticatedClient();
                 var clients = new ObservableOrganizationSecretsClient(github);
-                var repoClients = new ObservableRepositoriesClient(github);
 
                 var secretName = "REACTIVE_ADD_SELECTED_REPO_TEST";
 
-                var repo1 = await CreateRepoIfNotExists(repoClients, "reactive-add-secrets-selected-repo-test-1");
-                var repo2 = await CreateRepoIfNotExists(repoClients, "reactive-add-secrets-selected-repo-test-2");
+                var repo1Name = Helper.MakeNameWithTimestamp("reactive-add-secrets-selected-repo-test-1");
+                var repo2Name = Helper.MakeNameWithTimestamp("reactive-add-secrets-selected-repo-test-2");
+
+                var repo1 = await github.CreateRepositoryContext(new NewRepository(repo1Name));
+                var repo2 = await github.CreateRepositoryContext(new NewRepository(repo2Name));
 
                 var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
-                var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo1 });
+                var upsertSecret = GetSecretForCreate("value", key, new Repository[] { repo1.Repository });
 
                 var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
 
-                var addRepoListObservable = clients.AddRepoToOrganizationSecret(Helper.Organization, secretName, repo2.Id);
+                var addRepoListObservable = clients.AddRepoToOrganizationSecret(Helper.Organization, secretName, repo2.RepositoryId);
                 await addRepoListObservable;
 
                 var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
@@ -217,21 +222,23 @@ namespace Octokit.Tests.Integration.Reactive
             {
                 var github = Helper.GetAuthenticatedClient();
                 var clients = new ObservableOrganizationSecretsClient(github);
-                var repoClients = new ObservableRepositoriesClient(github);
 
                 var secretName = "REACTIVE_REMOVE_SELECTED_REPO_TEST";
 
-                var repo1 = await CreateRepoIfNotExists(repoClients, "reactive-remove-secrets-selected-repo-test-1");
-                var repo2 = await CreateRepoIfNotExists(repoClients, "reactive-remove-secrets-selected-repo-test-2");
+                var repo1Name = Helper.MakeNameWithTimestamp("reactive-add-secrets-selected-repo-test-1");
+                var repo2Name = Helper.MakeNameWithTimestamp("reactive-add-secrets-selected-repo-test-2");
+
+                var repo1 = await github.CreateRepositoryContext(new NewRepository(repo1Name));
+                var repo2 = await github.CreateRepositoryContext(new NewRepository(repo2Name));
 
                 var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
-                var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1, repo2 });
+                var upsertSecret = GetSecretForCreate("secret", key, new Repository[] { repo1.Repository, repo2.Repository });
 
                 var secretObservable = clients.CreateOrUpdate(Helper.Organization, secretName, upsertSecret);
                 await secretObservable;
 
-                var removeRepoListObservable = clients.RemoveRepoFromOrganizationSecret(Helper.Organization, secretName, repo2.Id);
+                var removeRepoListObservable = clients.RemoveRepoFromOrganizationSecret(Helper.Organization, secretName, repo2.RepositoryId);
                 await removeRepoListObservable;
 
                 var visibilityReposObservable = clients.GetSelectedRepositoriesForSecret(Helper.Organization, secretName);
@@ -279,19 +286,5 @@ namespace Octokit.Tests.Integration.Reactive
             return upsertValue;
         }
 #endif
-
-        private static async Task<Repository> CreateRepoIfNotExists(ObservableRepositoriesClient client, string name)
-        {
-            try
-            {
-                var existingRepo = client.Get(Helper.Organization, name);
-                return await existingRepo;
-            }
-            catch
-            {
-                var newRepo = client.Create(Helper.Organization, new NewRepository(name));
-                return await newRepo;
-            }
-        }
     }
 }
