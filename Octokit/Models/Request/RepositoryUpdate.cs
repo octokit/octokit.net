@@ -77,6 +77,8 @@ namespace Octokit
         /// Optional. Allows the "Create a merge commit" merge method to be used.
         /// </summary>
         public bool? AllowMergeCommit { get; set; }
+        
+        public bool? DeleteBranchOnMerge { get; set; }
 
         /// <summary>
         /// Optional. True to archive this repository.  Note: you cannot unarchive repositories through the API.
