@@ -1154,6 +1154,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for creating the event.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="workflowId">The ID of the workflow</param>
+        /// <returns></returns>
+        public static Uri CreateWorkflowDispatchEvent(string owner, string repo, string workflowId)
+        {
+            return "repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches".FormatUri(owner, repo, workflowId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns the list of public events.
         /// </summary>
         /// <returns></returns>
@@ -4256,6 +4268,17 @@ namespace Octokit
         public static Uri Meta()
         {
             return "meta".FormatUri();
+        }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the workflows for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri Workflows(string owner, string name)
+        {
+            return "repos/{0}/{1}/actions/workflows".FormatUri(owner, name);
         }
     }
 }

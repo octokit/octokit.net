@@ -160,6 +160,15 @@ namespace Octokit
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
         Task<T> Post<T>(Uri uri);
+        
+        /// <summary>
+        /// Creates a new API resource in the list at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
+        /// <returns><seealso cref="HttpStatusCode"/>Representing the received HTTP response</returns>
+        /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
+        Task Post(Uri uri, object data);
 
         /// <summary>
         /// Creates a new API resource in the list at the specified URI.
