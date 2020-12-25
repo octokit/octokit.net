@@ -9,7 +9,7 @@
 
 ![logo](octokit-dotnet_2.png)
 
-Octokit is a client library targeting .NET Framework 4.5+ and .NET Standard 1+
+Octokit is a client library targeting .NET Framework 4.6 or greater and .NET Standard 2.0 
 and above that provides an easy way to interact with the
 [GitHub API](http://developer.github.com/v3/).
 
