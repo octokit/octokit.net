@@ -59,6 +59,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that create a repository using a template.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Repositories(string owner, string repo)
+        {
+            return "repos/{0}/{1}/generate".FormatUri(owner, repo);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the specified organization in
         /// response to a GET request. A POST to this URL creates a new repository for the organization.
         /// </summary>

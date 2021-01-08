@@ -50,6 +50,7 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
+        [Preview(AcceptHeaders.TemplateRepositoryPreviewCodeName)]
         [ManualRoute("POST", "/user/repos")]
         public Task<Repository> Create(NewRepository newRepository)
         {
@@ -68,6 +69,7 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
+        [Preview(AcceptHeaders.TemplateRepositoryPreviewCodeName)]
         [ManualRoute("POST", "/orgs/{org}/repos")]
         public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
         {
@@ -79,11 +81,24 @@ namespace Octokit
             return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
         }
 
+        [Preview(AcceptHeaders.TemplateRepositoryPreviewCodeName)]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/generate")]
+        public Task<Repository> Generate(string owner, string repo, NewRepositoryFromTemplate newRepository)
+        {
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repo, nameof(repo));
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            return ApiConnection.Post<Repository>(ApiUrls.Repositories(owner, repo), newRepository, AcceptHeaders.TemplateRepositoryPreview);
+        }
+
         async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
         {
             try
             {
-                return await ApiConnection.Post<Repository>(url, newRepository).ConfigureAwait(false);
+                return await ApiConnection.Post<Repository>(url, newRepository, AcceptHeaders.TemplateRepositoryPreview).ConfigureAwait(false);
             }
             catch (ApiValidationException e)
             {
@@ -246,6 +261,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview(AcceptHeaders.TemplateRepositoryPreviewCodeName)]
         [ManualRoute("GET", "/repos/{owner}/{repo}")]
         public Task<Repository> Get(string owner, string name)
         {
@@ -264,6 +280,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview(AcceptHeaders.TemplateRepositoryPreviewCodeName)]
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId)
         {

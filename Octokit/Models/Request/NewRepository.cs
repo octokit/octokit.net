@@ -47,6 +47,11 @@ namespace Octokit
         public bool? HasWiki { get; set; }
 
         /// <summary>
+        /// Either true to make this repo available as a template repository or false to prevent it. Default: false.
+        /// </summary>
+        public bool? IsTemplate { get; set; }
+
+        /// <summary>
         /// Optional. Gets or sets the new repository's optional website.
         /// </summary>
         public string Homepage { get; set; }
