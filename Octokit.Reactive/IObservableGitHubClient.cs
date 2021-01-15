@@ -33,5 +33,6 @@ namespace Octokit.Reactive
         IObservableMigrationClient Migration { get; }
         IObservableReactionsClient Reaction { get; }
         IObservableChecksClient Check { get; }
+        IObservableCodesOfConductClient CodesOfConduct { get; }
     }
 }

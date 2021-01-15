@@ -111,6 +111,7 @@ namespace Octokit
             User = new UsersClient(apiConnection);
             Reaction = new ReactionsClient(apiConnection);
             Check = new ChecksClient(apiConnection);
+            CodesOfConduct = new CodesOfConductClient(apiConnection);
         }
 
         /// <summary>
@@ -304,6 +305,15 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
         /// </remarks>
         public IChecksClient Check { get; private set; }
+
+
+        /// <summary>
+        /// Access GitHub's Codes of Conduct API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/codes_of_conduct/
+        /// </remarks>
+        public ICodesOfConductClient CodesOfConduct { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {
