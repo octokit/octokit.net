@@ -658,6 +658,11 @@ namespace Octokit
         {
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
+            return await Run(request, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected virtual async Task<IResponse> Run(IRequest request, CancellationToken cancellationToken)
+        {
             var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
             if (response != null)
             {
