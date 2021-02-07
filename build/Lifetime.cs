@@ -53,6 +53,7 @@ public class Lifetime : FrostingLifetime<Context>
         };
 
         context.GitVersionToolPath = ToolInstaller.DotNetCoreToolInstall(context, "GitVersion.Tool", "5.1.3", "dotnet-gitversion");
+        ToolInstaller.DotNetCoreToolInstall(context, "coverlet.console", "1.7.2", "coverlet");
 
         // Calculate semantic version.
         context.Version = BuildVersion.Calculate(context);
