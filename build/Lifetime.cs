@@ -4,6 +4,7 @@ using Cake.Common.Build;
 using Cake.Common.Diagnostics;
 using Cake.Frosting;
 using Cake.Core.Diagnostics;
+using Cake.Core;
 
 public class Lifetime : FrostingLifetime<Context>
 {
@@ -81,5 +82,9 @@ public class Lifetime : FrostingLifetime<Context>
             arg = context.Argument<string>(argumentName, null);
         }
         return arg;
+    }
+
+    public override void Teardown(Context context, ITeardownContext info)
+    {
     }
 }
