@@ -9,7 +9,7 @@ init:
 
 build_script:
   - dotnet --info
-  - dotnet tool install --global coverlet.console
+  - dotnet tool install --global coverlet.console --version 1.7.2
   - ps: .\build.ps1 -LinkSources -Verbosity Verbose
 
 test: off
