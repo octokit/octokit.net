@@ -9,6 +9,18 @@ namespace Octokit.Tests.Models
     public class DeploymentTests
     {
         [Fact]
+        public void CanSerialize()
+        {
+            var deployment = new NewDeployment("ref")
+            {
+                Payload = new Dictionary<string, string> {{"environment", "production"}}
+            };
+            var deserialized = new SimpleJsonSerializer().Serialize(deployment);
+            
+            Assert.Equal(@"{""ref"":""ref"",""task"":""deploy"",""payload"":{""environment"":""production""}}", deserialized);
+        }
+
+        [Fact]
         public void CanDeserialize()
         {
             const string json = @"{
