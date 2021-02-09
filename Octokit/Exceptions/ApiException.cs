@@ -136,6 +136,14 @@ namespace Octokit
             }
             catch (Exception)
             {
+                try
+                {
+                    return new ApiError(_jsonSerializer.Deserialize<ApiError.SimpleApiError>(responseContent));
+
+                }
+                catch (Exception)
+                {
+                }
             }
 
             return new ApiError(responseContent);
