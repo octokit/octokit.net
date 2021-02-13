@@ -30,16 +30,16 @@ Console.WriteLine(user.Followers + " folks love the half ogre!");
 
 ## Getting Started
 
-Octokit is a GitHub API client library for .NET and is available on NuGet:
+Octokit is a GitHub API client library for .NET and is [available on NuGet](https://www.nuget.org/packages/Octokit/):
 
 ```
-Install-Package Octokit
+dotnet add package Octokit
 ```
 
 There is also an IObservable based GitHub API client library for .NET using Reactive Extensions:
 
 ```
-Install-Package Octokit.Reactive
+dotnet add package Octokit.Reactive
 ```
 
 
