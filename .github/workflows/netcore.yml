@@ -20,9 +20,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1.4.0
-      with:
-        dotnet-version: 3.1.201
+      uses: actions/setup-dotnet@v1
+
     - name: Build with dotnet
       run: ./build.sh --linksources=true --verbosity=verbose
       shell: bash
