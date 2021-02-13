@@ -1981,7 +1981,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d =>
-                        d["q"] == "something+path:tools/FAKE.core+org:johnDoe+org:janeDoe+repo:octokit/octokit.net"));
+                        d["q"] == "something+path:tools/FAKE.core+repo:octokit/octokit.net+org:johnDoe+org:janeDoe"));
             }
 
             [Fact]
