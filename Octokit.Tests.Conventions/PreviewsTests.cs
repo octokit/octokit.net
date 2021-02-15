@@ -58,6 +58,7 @@ namespace Octokit.Tests.Conventions
             };
 
             var previewAcceptHeaders = previewKeys.Select(k => $"application/vnd.github.{k}-preview+json");
+            var nonStandardPreviewAcceptHeaders = new string[] { $"application/vnd.github.cloak-preview" };
 
             var defaultHeaders = new string[]
             {
@@ -73,7 +74,7 @@ namespace Octokit.Tests.Conventions
                 "application/vnd.github.v3.star+json"
             };
 
-            var validHeaders = defaultHeaders.Concat(previewAcceptHeaders);
+            var validHeaders = defaultHeaders.Concat(previewAcceptHeaders).Concat(nonStandardPreviewAcceptHeaders);
 
             var notAllowedHeaders = values.Values.ToList().Except(validHeaders).OrderBy(k => k);
             if (notAllowedHeaders.Any())
