@@ -17,7 +17,7 @@ public sealed class ValidateLINQPadSamples : FrostingTask<Context>
             .Combine("Octokit.Reactive")
             .Combine("bin")
             .Combine(context.Configuration)
-            .Combine("net46")
+            .Combine("net472")
             .MakeAbsolute(context.Environment)
             .FullPath;
 
