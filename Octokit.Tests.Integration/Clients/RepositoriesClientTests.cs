@@ -219,6 +219,21 @@ public class RepositoriesClientTests
             }
         }
 
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithDeleteBranchOnMergeEnabled()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("repo-with-delete-branch-on-merge");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName) { DeleteBranchOnMerge = true }))
+            {
+                var createdRepository = context.Repository;
+
+                Assert.True(createdRepository.DeleteBranchOnMerge);
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.True(repository.DeleteBranchOnMerge);
+            }
+        }
 
         [IntegrationTest]
         public async Task ThrowsInvalidGitIgnoreExceptionForInvalidTemplateNames()
@@ -612,6 +627,46 @@ public class RepositoriesClientTests
                 Assert.False(repository.AllowRebaseMerge);
             }
         }
+        
+        [IntegrationTest]
+        public async Task UpdatesDeleteBranchOnMergeMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                {
+                    DeleteBranchOnMerge = true
+                };
+
+                var editedRepository = await github.Repository.Edit(context.RepositoryOwner, context.RepositoryName, updateRepository);
+                Assert.True(editedRepository.DeleteBranchOnMerge);
+
+                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
+                Assert.True(repository.DeleteBranchOnMerge);
+            }
+        }
+        
+        [IntegrationTest]
+        public async Task UpdatesDeleteBranchOnMergeMethodWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                {
+                    DeleteBranchOnMerge = true
+                };
+
+                var editedRepository = await github.Repository.Edit(context.RepositoryId, updateRepository);
+                Assert.True(editedRepository.DeleteBranchOnMerge);
+
+                var repository = await github.Repository.Get(context.RepositoryId);
+                Assert.True(repository.DeleteBranchOnMerge);
+            }
+        }
 
         public void Dispose()
         {
@@ -789,6 +844,32 @@ public class RepositoriesClientTests
             Assert.NotNull(repository.License);
             Assert.Equal("mit", repository.License.Key);
             Assert.Equal("MIT License", repository.License.Name);
+        }
+        
+        [IntegrationTest]
+        public async Task ReturnsRepositoryDeleteBranchOnMergeOptions()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
+
+                Assert.NotNull(repository.DeleteBranchOnMerge);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsRepositoryDeleteBranchOnMergeOptionsWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            {
+                var repository = await github.Repository.Get(context.RepositoryId);
+
+                Assert.NotNull(repository.DeleteBranchOnMerge);
+            }
         }
     }
 

@@ -1,5 +1,8 @@
 image: Visual Studio 2019
 
+environment:
+  IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
+
 branches:
   only:
     - main

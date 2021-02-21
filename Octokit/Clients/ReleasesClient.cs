@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Octokit
 {
@@ -398,9 +399,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
         /// <param name="data">Description of the asset with its data</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("POST", "{server}/repos/{owner}/{repo}/releases/{release_id}/assets")]
-        public Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
+        public Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(release, nameof(release));
             Ensure.ArgumentNotNull(data, nameof(data));
@@ -414,14 +416,16 @@ namespace Octokit
                     data.RawData,
                     AcceptHeaders.StableVersion,
                     data.ContentType,
-                    data.Timeout.GetValueOrDefault());
+                    data.Timeout.GetValueOrDefault(),
+                    cancellationToken);
             }
 
             return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
                 AcceptHeaders.StableVersion,
-                data.ContentType);
+                data.ContentType,
+                cancellationToken);
         }
 
         /// <summary>
