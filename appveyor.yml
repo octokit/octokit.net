@@ -1,5 +1,8 @@
 image: Visual Studio 2019
 
+environment:
+  IGNORE_NORMALISATION_GIT_HEAD_MOVE: 1
+
 branches:
   only:
     - main
@@ -9,7 +12,6 @@ init:
 
 build_script:
   - dotnet --info
-  - dotnet tool install --global coverlet.console
   - ps: .\build.ps1 -LinkSources -Verbosity Verbose
 
 test: off

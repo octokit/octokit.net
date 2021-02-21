@@ -51,7 +51,7 @@ public sealed class CodeCoverage : FrostingTask<Context>
 
                 var userProfilePath = context.EnvironmentVariable("USERPROFILE");
                 var codecovPath = new DirectoryPath(userProfilePath)
-                    .CombineWithFilePath(".nuget\\packages\\codecov\\1.10.0\\tools\\codecov.exe");
+                    .CombineWithFilePath(".nuget\\packages\\codecov\\1.12.4\\tools\\codecov.exe");
 
                 context.Tools.RegisterFile(codecovPath);
 

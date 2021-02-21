@@ -216,13 +216,14 @@ namespace Octokit
         /// Creates a new API resource in the list at the specified URI.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="HttpStatusCode"/>Representing the received HTTP response</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task Post(Uri uri)
+        public Task Post(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return Connection.Post(uri);
+            return Connection.Post(uri, cancellationToken);
         }
 
         /// <summary>
@@ -230,13 +231,14 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Post<T>(Uri uri)
+        public async Task<T> Post<T>(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await Connection.Post<T>(uri).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -246,14 +248,15 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<T> Post<T>(Uri uri, object data)
+        public Task<T> Post<T>(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            return Post<T>(uri, data, null, null);
+            return Post<T>(uri, data, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -263,11 +266,12 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<T> Post<T>(Uri uri, object data, string accepts)
+        public Task<T> Post<T>(Uri uri, object data, string accepts, CancellationToken cancellationToken = default)
         {
-            return Post<T>(uri, data, accepts, null);
+            return Post<T>(uri, data, accepts, null, cancellationToken);
         }
 
         /// <summary>
@@ -278,14 +282,15 @@ namespace Octokit
         /// <param name="data">Object that describes the new API resource; this will be serialized and used as the request's body</param>
         /// <param name="accepts">Accept header to use for the API request</param>
         /// <param name="contentType">Content type of the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType)
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var response = await Connection.Post<T>(uri, data, accepts, contentType).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType, cancellationToken: cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -298,25 +303,26 @@ namespace Octokit
         /// <param name="accepts">Accept header to use for the API request</param>
         /// <param name="contentType">Content type of the API request</param>
         /// <param name="twoFactorAuthenticationCode">Two Factor Authentication Code</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, string twoFactorAuthenticationCode)
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
             Ensure.ArgumentNotNull(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
-            var response = await Connection.Post<T>(uri, data, accepts, contentType, twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType, twoFactorAuthenticationCode, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
 
-        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout)
+        public async Task<T> Post<T>(Uri uri, object data, string accepts, string contentType, TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var response = await Connection.Post<T>(uri, data, accepts, contentType, timeout).ConfigureAwait(false);
+            var response = await Connection.Post<T>(uri, data, accepts, contentType, timeout, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 

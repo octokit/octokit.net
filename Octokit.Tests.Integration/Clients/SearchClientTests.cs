@@ -102,9 +102,10 @@ public class SearchClientTests
     [IntegrationTest]
     public async Task SearchForFilesInOrganization()
     {
+        var orgs = new[] { "octokit", "github" };
         var request = new SearchCodeRequest()
         {
-            Organization = "octokit",
+            Organizations = orgs,
             FileName = "readme.md"
         };
 
@@ -112,7 +113,25 @@ public class SearchClientTests
 
         foreach (var searchResult in searchResults.Items)
         {
-            Assert.Equal("octokit", searchResult.Repository.Owner.Login);
+            Assert.Contains(searchResult.Repository.Owner.Login, orgs);
+        }
+    }
+
+    [IntegrationTest]
+    public async Task SearchForFilesInUsers()
+    {
+        var users = new[] { "octokit", "github" };
+        var request = new SearchCodeRequest()
+        {
+            Users = users,
+            FileName = "readme.md"
+        };
+
+        var searchResults = await _gitHubClient.Search.SearchCode(request);
+
+        foreach (var searchResult in searchResults.Items)
+        {
+            Assert.Contains(searchResult.Repository.Owner.Login, users);
         }
     }
 

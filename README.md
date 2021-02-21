@@ -9,7 +9,7 @@
 
 ![logo](octokit-dotnet_2.png)
 
-Octokit is a client library targeting .NET Framework 4.5+ and .NET Standard 1+
+Octokit is a client library targeting .NET Framework 4.6 or greater and .NET Standard 2.0 
 and above that provides an easy way to interact with the
 [GitHub API](http://developer.github.com/v3/).
 
@@ -30,16 +30,16 @@ Console.WriteLine(user.Followers + " folks love the half ogre!");
 
 ## Getting Started
 
-Octokit is a GitHub API client library for .NET and is available on NuGet:
+Octokit is a GitHub API client library for .NET and is [available on NuGet](https://www.nuget.org/packages/Octokit/):
 
 ```
-Install-Package Octokit
+dotnet add package Octokit
 ```
 
 There is also an IObservable based GitHub API client library for .NET using Reactive Extensions:
 
 ```
-Install-Package Octokit.Reactive
+dotnet add package Octokit.Reactive
 ```
 
 
