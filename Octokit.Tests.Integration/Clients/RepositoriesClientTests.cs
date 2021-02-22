@@ -1548,7 +1548,6 @@ public class RepositoriesClientTests
             Assert.Contains("ruby", result.Names);
             Assert.Contains("jekyll", result.Names);
         }
-
     }
 
     public class TheGetAllTagsMethod
