@@ -1299,10 +1299,10 @@ namespace Octokit.Tests.Clients
 
         public class TheReplaceAllTopicsMethod
         {
-            readonly RepositoryTopics _emptyTopics = new RepositoryTopics();
-            readonly RepositoryTopics _listOfTopics = new RepositoryTopics(new List<string> { "one", "two", "three" });
-            readonly IApiConnection _connection;
-            readonly RepositoriesClient _client;
+            private readonly RepositoryTopics _emptyTopics = new RepositoryTopics();
+            private readonly RepositoryTopics _listOfTopics = new RepositoryTopics(new List<string> { "one", "two", "three" });
+            private readonly IApiConnection _connection;
+            private readonly RepositoriesClient _client;
 
             public TheReplaceAllTopicsMethod()
             {
