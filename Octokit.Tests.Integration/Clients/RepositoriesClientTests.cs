@@ -1457,35 +1457,35 @@ public class RepositoriesClientTests
         readonly IGitHubClient _github = Helper.GetAuthenticatedClient();
         private readonly RepositoryTopics _defaultTopics = new RepositoryTopics(new List<string> { "blog", "ruby", "jekyll" });
         private readonly RepositoryContext _context;
-        private readonly string theRepository;
-        private readonly string theRepoOwner;
+        private readonly string _theRepository;
+        private readonly string _theRepoOwner;
 
         public TheReplaceAllTopicsMethod()
         {
-            theRepoOwner = Helper.Organization;
-            theRepository = Helper.MakeNameWithTimestamp("topics");
-            _context = _github.CreateRepositoryContext(theRepoOwner, new NewRepository(theRepository)).Result;
+            _theRepoOwner = Helper.Organization;
+            _theRepository = Helper.MakeNameWithTimestamp("topics");
+            _context = _github.CreateRepositoryContext(_theRepoOwner, new NewRepository(_theRepository)).Result;
             var defaultTopicAssignmentResult = _github.Repository.ReplaceAllTopics(_context.RepositoryId, _defaultTopics).Result;
         }
 
         [IntegrationTest]
         public async Task ClearsTopicsWithAnEmptyList()
         {
-            var result = await _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, new RepositoryTopics());
+            var result = await _github.Repository.ReplaceAllTopics(_theRepoOwner, _theRepository, new RepositoryTopics());
             Assert.Empty(result.Names);
 
-            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
             Assert.Empty((doubleCheck.Names));
         }
 
         [IntegrationTest]
         public async Task ClearsTopicsWithAnEmptyListWhenUsingRepoId()
         {
-            var repo = await _github.Repository.Get(theRepoOwner, theRepository);
+            var repo = await _github.Repository.Get(_theRepoOwner, _theRepository);
             var result = await _github.Repository.ReplaceAllTopics(repo.Id, new RepositoryTopics());
             Assert.Empty(result.Names);
 
-            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
             Assert.Empty((doubleCheck.Names));
         }
 
@@ -1493,12 +1493,12 @@ public class RepositoriesClientTests
         public async Task ReplacesTopicsWithAList()
         {
             var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
-            var result = await _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, defaultTopicsList);
+            var result = await _github.Repository.ReplaceAllTopics(_theRepoOwner, _theRepository, defaultTopicsList);
 
             Assert.NotEmpty(result.Names);
             Assert.Contains(result.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
 
-            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
             Assert.Contains(doubleCheck.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
         }
 
@@ -1506,13 +1506,13 @@ public class RepositoriesClientTests
         public async Task ReplacesTopicsWithAListWhenUsingRepoId()
         {
             var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
-            var repo = await _github.Repository.Get(theRepoOwner, theRepository);
+            var repo = await _github.Repository.Get(_theRepoOwner, _theRepository);
             var result = await _github.Repository.ReplaceAllTopics(repo.Id, defaultTopicsList);
 
             Assert.NotEmpty(result.Names);
             Assert.Contains(result.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
 
-            var doubleCheck = await _github.Repository.GetAllTopics(theRepoOwner, theRepository);
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
             Assert.Contains(doubleCheck.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
         }
 
