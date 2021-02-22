@@ -1455,9 +1455,18 @@ public class RepositoriesClientTests
     public class TheReplaceAllTopicsMethod : IDisposable
     {
         readonly IGitHubClient _github = Helper.GetAuthenticatedClient();
-        readonly RepositoryTopics _defaultTopics = new RepositoryTopics(new List<string> { "blog", "ruby", "jekyll" });
-        const string theRepoOwner = "SeanKilleen";
-        const string theRepository = "seankilleen.github.io";
+        private readonly RepositoryTopics _defaultTopics = new RepositoryTopics(new List<string> { "blog", "ruby", "jekyll" });
+        private readonly RepositoryContext _context;
+        private readonly string theRepository;
+        private readonly string theRepoOwner;
+
+        public TheReplaceAllTopicsMethod()
+        {
+            theRepoOwner = Helper.Organization;
+            theRepository = Helper.MakeNameWithTimestamp("topics");
+            _context = _github.CreateRepositoryContext(theRepoOwner, new NewRepository(theRepository)).Result;
+            var defaultTopicAssignmentResult = _github.Repository.ReplaceAllTopics(_context.RepositoryId, _defaultTopics).Result;
+        }
 
         [IntegrationTest]
         public async Task ClearsTopicsWithAnEmptyList()
@@ -1509,7 +1518,7 @@ public class RepositoriesClientTests
 
         public void Dispose()
         {
-            _github.Repository.ReplaceAllTopics(theRepoOwner, theRepository, _defaultTopics).ConfigureAwait(false);
+            _context.Dispose();
         }
     }
     public class TheGetAllTopicsMethod
