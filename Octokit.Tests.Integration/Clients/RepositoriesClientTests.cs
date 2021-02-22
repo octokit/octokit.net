@@ -1523,11 +1523,14 @@ public class RepositoriesClientTests
     }
     public class TheGetAllTopicsMethod
     {
+        private readonly string _repoOwner = "SeanKilleen";
+        private readonly string _repoName = "seankilleen.github.io";
+
         [IntegrationTest]
         public async Task GetsTopicsByOwnerAndName()
         {
             var github = Helper.GetAnonymousClient();
-            var result = await github.Repository.GetAllTopics("SeanKilleen", "seankilleen.github.io");
+            var result = await github.Repository.GetAllTopics(_repoOwner, _repoName);
 
             Assert.Contains("blog", result.Names);
             Assert.Contains("ruby", result.Names);
@@ -1538,7 +1541,7 @@ public class RepositoriesClientTests
         public async Task GetsTopicsByRepoID()
         {
             var github = Helper.GetAnonymousClient();
-            var repo = await github.Repository.Get("SeanKilleen", "seankilleen.github.io");
+            var repo = await github.Repository.Get(_repoOwner, _repoName);
             var result = await github.Repository.GetAllTopics(repo.Id);
 
             Assert.Contains("blog", result.Names);
