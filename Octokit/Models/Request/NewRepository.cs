@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Octokit.Internal;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -81,8 +82,13 @@ namespace Octokit
         /// Optional. Gets or sets the Id of the team to grant access to this repository. This is only valid when creating a repository for an organization.
         /// </summary>
         public int? TeamId { get; set; }
-        
+
         public bool? DeleteBranchOnMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository is public, private, or internal. A value provided here overrides any value set in the existing private field.
+        /// </summary>
+        public RepositoryVisibility? Visibility { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -91,5 +97,29 @@ namespace Octokit
                 return string.Format(CultureInfo.InvariantCulture, "Name: {0} Description: {1}", Name, Description);
             }
         }
+    }
+
+    /// <summary>
+    /// The properties that repositories can be visible by.
+    /// </summary>
+    public enum RepositoryVisibility
+    {
+        /// <summary>
+        /// Sets repository visibility to public
+        /// </summary>
+        [Parameter(Value = "public")]
+        Public,
+
+        /// <summary>
+        /// Sets repository visibility to private
+        /// </summary>
+        [Parameter(Value = "private")]
+        Private,
+
+        /// <summary>
+        /// Sets repository visibility to internal
+        /// </summary>
+        [Parameter(Value = "internal")]
+        Internal,
     }
 }

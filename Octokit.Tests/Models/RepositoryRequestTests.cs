@@ -26,7 +26,7 @@ namespace Octokit.Tests.Models
                 request = new RepositoryRequest
                 {
                     Affiliation = RepositoryAffiliation.All,
-                    Visibility = RepositoryVisibility.Public
+                    Visibility = RepositoryRequestVisibility.Public
                 };
 
                 parameters = request.ToParametersDictionary();

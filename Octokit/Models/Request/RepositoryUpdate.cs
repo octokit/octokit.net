@@ -85,6 +85,11 @@ namespace Octokit
         /// </summary>
         public bool? Archived { get; set; }
 
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository is public, private, or internal. A value provided here overrides any value set in the existing private field.
+        /// </summary>
+        public RepositoryVisibility? Visibility { get; set; }
+
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal string DebuggerDisplay
         {

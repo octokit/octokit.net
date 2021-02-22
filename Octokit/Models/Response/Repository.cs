@@ -17,7 +17,7 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, int watchersCount, IEnumerable<string> topics, bool? deleteBranchOnMerge)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, int watchersCount, bool? deleteBranchOnMerge, RepositoryVisibility visibility, IEnumerable<string> topics)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -61,6 +61,7 @@ namespace Octokit
             WatchersCount = watchersCount;
             Topics = topics.ToList();
             DeleteBranchOnMerge = deleteBranchOnMerge;
+            Visibility = visibility;
         }
 
         public string Url { get; protected set; }
@@ -150,6 +151,8 @@ namespace Octokit
         public IReadOnlyList<string> Topics { get; protected set; }
 
         public bool? DeleteBranchOnMerge { get; protected set; }
+
+        public RepositoryVisibility? Visibility { get; protected set; }
 
         internal string DebuggerDisplay
         {
