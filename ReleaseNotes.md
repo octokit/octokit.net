@@ -253,9 +253,9 @@ Response Models
 
 - Octokit.net has been ported to dotnetcore :tada: providing libraries targetting `netstandard1.1` and `net45` frameworks
 
-- `Enum` fields in Octokit response classes are now wrapped in an `StringEnum<TEnum>` helper class, to provide more robustness in dealing with unknown API values for these fields.  Whilst the changes are backwards compatible, please consult the guidance on [working with Enums](https://github.com/octokit/octokit.net/blob/master/docs/working-with-enums.md) for more information
+- `Enum` fields in Octokit response classes are now wrapped in an `StringEnum<TEnum>` helper class, to provide more robustness in dealing with unknown API values for these fields.  Whilst the changes are backwards compatible, please consult the guidance on [working with Enums](https://github.com/octokit/octokit.net/blob/main/docs/working-with-enums.md) for more information
 
-- `IncludeAdmins` field is no longer present in `BranchProtectionRequiredStatusChecks` and `BranchProtectionRequiredStatusChecksUpdate` classes, instead use the new `EnforceAdmins` field on `BranchProtectionSettingsUpdate` or the [new explicit methods](https://github.com/octokit/octokit.net/blob/master/Octokit/Clients/IRepositoryBranchesClient.cs#L304-L365) for configuring Admin Enforcement on protected branches.  This was an [upstream API breaking change](https://developer.github.com/changes/2017-05-02-adoption-of-admin-enforced/) so we couldn't follow our normal deprecation schedule
+- `IncludeAdmins` field is no longer present in `BranchProtectionRequiredStatusChecks` and `BranchProtectionRequiredStatusChecksUpdate` classes, instead use the new `EnforceAdmins` field on `BranchProtectionSettingsUpdate` or the [new explicit methods](https://github.com/octokit/octokit.net/blob/main/Octokit/Clients/IRepositoryBranchesClient.cs#L304-L365) for configuring Admin Enforcement on protected branches.  This was an [upstream API breaking change](https://developer.github.com/changes/2017-05-02-adoption-of-admin-enforced/) so we couldn't follow our normal deprecation schedule
 
 ## Release Notes
 
@@ -350,18 +350,18 @@ Response Models
 
 **Breaking Changes**
 
- - Creating and Editing Issues (and PullRequests) using `NewIssue` and `IssueUpdate` requests 
-should now use the `Assignees` collection rather than the now deprecated 'Assignee` field. 
-Both fields can't be specified on the same request, so any code still using `Assignee` will 
+ - Creating and Editing Issues (and PullRequests) using `NewIssue` and `IssueUpdate` requests
+should now use the `Assignees` collection rather than the now deprecated 'Assignee` field.
+Both fields can't be specified on the same request, so any code still using `Assignee` will
 need to explicitly set `Assignees` to `null` to avoid Api validation errors.
 
- - `OrganizationsClient.GetAll(string user)` has been marked obsolete in favour of 
+ - `OrganizationsClient.GetAll(string user)` has been marked obsolete in favour of
 `OrganizationsClient.GetAllForUser(string user)`
 
  - `PullRequest.Comment` has been marked obsolete in favour of `PullRequest.ReviewComment`
 
-- Several `EventsClient` methods previously returned the incorrect `Activity` response class. 
-This has been corrected to `IssueEvent` which although is now correct could break calling 
+- Several `EventsClient` methods previously returned the incorrect `Activity` response class.
+This has been corrected to `IssueEvent` which although is now correct could break calling
 code that was written assuming this previous incorrect return type.
 
 ### New in 0.23.0 (released 07/10/2016)
@@ -413,7 +413,7 @@ you want to change the merge behaviour when merging a pull request.
 
 **Breaking Changes**
 
-The new Branches client added in #1437 means that existing methods on 
+The new Branches client added in #1437 means that existing methods on
 I(Observable)RepositoryClient are now marked as obsolete. Please update your
 usages to the new endpoints as these will be removed in a future release:
 
@@ -421,13 +421,13 @@ usages to the new endpoints as these will be removed in a future release:
  - `client.Repository.GetAllBranches()` => `client.Repository.Branch.GetAll()`
  - `client.Repository.EditBranch()` => `client.Repository.Branch.Edit()`
 
-There is also a change in how branch protection works with the API, due to 
+There is also a change in how branch protection works with the API, due to
 upstream changes. The existing methods have been marked as obsolete, but for
 the sake of brevity here are the details about what you should be doing today.
 
 The process for inspecting branch protection is now two steps:
 
- - first, check the branch returned by `client.Repository.Branch.Get()` or 
+ - first, check the branch returned by `client.Repository.Branch.Get()` or
    `client.Repository.Branch.GetAll()` has it's `Protected` property set to `true`.
 
  - then, a call to `client.Repository.Branch.GetBranchProtection()` will return
@@ -441,7 +441,7 @@ The process for inspecting branch protection is now two steps:
 Due to a programming error in the tool to generate these release notes, additional
 features were not properly documented for the previous release:
 
- - Reactions preview API support for issues, issue comments, commit comments and PR comments - #1335, #1341, #1405 via @maddin2016, @alfhenrik 
+ - Reactions preview API support for issues, issue comments, commit comments and PR comments - #1335, #1341, #1405 via @maddin2016, @alfhenrik
  - Repository Invitation preview API support - #1410 via @maddin2016
  - Added new fields for signature verification to Git Data Commit API - #1398 via @Sarmad93
 
@@ -484,7 +484,7 @@ exist in other parts of the API surface:
  - `I(Observable)GitHubClient.Repository.RepoCollaborators`
  - `I(Observable)GitHubClient.Repository.Commits`
 
-This method is no longer supported through the API and has been removed from Octokit.net.: 
+This method is no longer supported through the API and has been removed from Octokit.net.:
 
  - `I(Observable)GitHubClient.Authorization.RevokeAllApplicationAuthentications()`
 
@@ -510,12 +510,12 @@ documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#paginat
  - Add additional methods to `IEventsClient` - #1288 via @drasticactions
  - Add Organization Permissions preview API - #1342 via @ryangribble
  - Add GPG Keys preview API - #1343 via @alfhenrik
- 
+
 **Fixes**
 
  - Renamed `IUserKeysClient.GetAll()` to `IUserKeysClient.GetAllForCurrent()` - #1139 via @M-Zuber
  - Add `ItemStateFilter` enum to differentiate between search and list endpoints - #1140 via @prayankmathur
- - `RepositoriesClient.GetAllPublic()` fails for Enterprise instanes due to URI structure - #1204 via @ryangribble 
+ - `RepositoriesClient.GetAllPublic()` fails for Enterprise instanes due to URI structure - #1204 via @ryangribble
  - `ConfigureAwait(false)` usages added, eliminating deadlocks - #1248 via @shiftkey
  - Renamed `CompareResult.MergedBaseCommit` to fix serialization issue - #1265 via @kivancmuslu
  - Activity Feed now returns issues and repository events - #1288 via @drasticactions
@@ -525,11 +525,11 @@ documentation: http://octokitnet.readthedocs.io/en/latest/extensibility/#paginat
  - Add `ClosedBy` property to `Issue` - #1353 via @maddin2016
 
 **Other**
- 
+
  - Deleting now-obsolete code - #1224 via @M-Zuber
  - Centralize and cleanup the `Uri`s created in Octokit - #1287, #1290 via @dampir
- - Updated documentation links - #1289 via @radu-matei, #1250 via @SamTheDev 
- 
+ - Updated documentation links - #1289 via @radu-matei, #1250 via @SamTheDev
+
 **Breaking Changes**
 
  - `IUserKeysClient.GetAll()` was named incorrectly when it was originally implemented

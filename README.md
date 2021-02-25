@@ -1,15 +1,15 @@
-# Octokit - GitHub API Client Library for .NET 
+# Octokit - GitHub API Client Library for .NET
 
 ![Build status](https://github.com/octokit/octokit.net/workflows/CI%20Build/badge.svg)
-[![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/master?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/master)
-[![codecov](https://codecov.io/gh/octokit/octokit.net/branch/master/graph/badge.svg)](https://codecov.io/gh/octokit/octokit.net)
+[![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/main?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/main)
+[![codecov](https://codecov.io/gh/octokit/octokit.net/branch/main/graph/badge.svg)](https://codecov.io/gh/octokit/octokit.net)
 [![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NuGet](http://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
 [![NuGet](http://img.shields.io/nuget/v/Octokit.Reactive.svg)](https://www.nuget.org/packages/Octokit.Reactive)
 
 ![logo](octokit-dotnet_2.png)
 
-Octokit is a client library targeting .NET Framework 4.6 or greater and .NET Standard 2.0 
+Octokit is a client library targeting .NET Framework 4.6 or greater and .NET Standard 2.0
 and above that provides an easy way to interact with the
 [GitHub API](http://developer.github.com/v3/).
 
@@ -57,7 +57,7 @@ Documentation is available at http://octokitnet.readthedocs.io/en/latest/.
 
 Octokit is a single assembly designed to be easy to deploy anywhere.
 
-To clone and build it locally click the "Clone in Desktop" button above or run the 
+To clone and build it locally click the "Clone in Desktop" button above or run the
 following git commands.
 
 ```
@@ -97,7 +97,7 @@ problem.
 
 ## Related Projects
 
- - [ScriptCs.OctoKit](https://github.com/hnrkndrssn/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs 
+ - [ScriptCs.OctoKit](https://github.com/hnrkndrssn/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs
  - [ScriptCs.OctokitLibrary](https://github.com/ryanrousseau/ScriptCs.OctokitLibrary) - a [script library](https://github.com/scriptcs/scriptcs/wiki/Script-Libraries) to use Octokit in scriptcs
 
 ## Copyright and License
