@@ -50,6 +50,8 @@ namespace Octokit
 
         public const string OAuthApplicationsPreview = "application/vnd.github.doctor-strange-preview+json";
 
+        public const string RepositoryTopicsPreview = "application/vnd.github.mercy-preview+json";
+
         public const string VisibilityPreview = "application/vnd.github.nebula-preview+json";
 
         /// <summary>

@@ -1452,6 +1452,104 @@ public class RepositoriesClientTests
         }
     }
 
+    public class TheReplaceAllTopicsMethod : IDisposable
+    {
+        readonly IGitHubClient _github = Helper.GetAuthenticatedClient();
+        private readonly RepositoryTopics _defaultTopics = new RepositoryTopics(new List<string> { "blog", "ruby", "jekyll" });
+        private readonly RepositoryContext _context;
+        private readonly string _theRepository;
+        private readonly string _theRepoOwner;
+
+        public TheReplaceAllTopicsMethod()
+        {
+            _theRepoOwner = Helper.Organization;
+            _theRepository = Helper.MakeNameWithTimestamp("topics");
+            _context = _github.CreateRepositoryContext(_theRepoOwner, new NewRepository(_theRepository)).Result;
+            var defaultTopicAssignmentResult = _github.Repository.ReplaceAllTopics(_context.RepositoryId, _defaultTopics).Result;
+        }
+
+        [IntegrationTest]
+        public async Task ClearsTopicsWithAnEmptyList()
+        {
+            var result = await _github.Repository.ReplaceAllTopics(_theRepoOwner, _theRepository, new RepositoryTopics());
+            Assert.Empty(result.Names);
+
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
+            Assert.Empty((doubleCheck.Names));
+        }
+
+        [IntegrationTest]
+        public async Task ClearsTopicsWithAnEmptyListWhenUsingRepoId()
+        {
+            var repo = await _github.Repository.Get(_theRepoOwner, _theRepository);
+            var result = await _github.Repository.ReplaceAllTopics(repo.Id, new RepositoryTopics());
+            Assert.Empty(result.Names);
+
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
+            Assert.Empty((doubleCheck.Names));
+        }
+
+        [IntegrationTest]
+        public async Task ReplacesTopicsWithAList()
+        {
+            var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
+            var result = await _github.Repository.ReplaceAllTopics(_theRepoOwner, _theRepository, defaultTopicsList);
+
+            Assert.NotEmpty(result.Names);
+            Assert.Contains(result.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
+            Assert.Contains(doubleCheck.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+        }
+
+        [IntegrationTest]
+        public async Task ReplacesTopicsWithAListWhenUsingRepoId()
+        {
+            var defaultTopicsList = new RepositoryTopics(_defaultTopics.Names);
+            var repo = await _github.Repository.Get(_theRepoOwner, _theRepository);
+            var result = await _github.Repository.ReplaceAllTopics(repo.Id, defaultTopicsList);
+
+            Assert.NotEmpty(result.Names);
+            Assert.Contains(result.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+
+            var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
+            Assert.Contains(doubleCheck.Names, item => _defaultTopics.Names.Contains(item, StringComparer.InvariantCultureIgnoreCase));
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
+    }
+    public class TheGetAllTopicsMethod
+    {
+        private readonly string _repoOwner = "SeanKilleen";
+        private readonly string _repoName = "seankilleen.github.io";
+
+        [IntegrationTest]
+        public async Task GetsTopicsByOwnerAndName()
+        {
+            var github = Helper.GetAnonymousClient();
+            var result = await github.Repository.GetAllTopics(_repoOwner, _repoName);
+
+            Assert.Contains("blog", result.Names);
+            Assert.Contains("ruby", result.Names);
+            Assert.Contains("jekyll", result.Names);
+        }
+
+        [IntegrationTest]
+        public async Task GetsTopicsByRepoID()
+        {
+            var github = Helper.GetAnonymousClient();
+            var repo = await github.Repository.Get(_repoOwner, _repoName);
+            var result = await github.Repository.GetAllTopics(repo.Id);
+
+            Assert.Contains("blog", result.Names);
+            Assert.Contains("ruby", result.Names);
+            Assert.Contains("jekyll", result.Names);
+        }
+    }
+
     public class TheGetAllTagsMethod
     {
         [IntegrationTest]

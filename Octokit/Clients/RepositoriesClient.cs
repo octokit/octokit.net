@@ -179,6 +179,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/transfer")]
         public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
         {
@@ -198,6 +199,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/repositories/{id}/transfer")]
         public Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
         {
@@ -231,6 +233,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("PATCH", "/repositories/{id}")]
         public Task<Repository> Edit(long repositoryId, RepositoryUpdate update)
         {
@@ -268,6 +271,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId)
         {
@@ -725,6 +729,126 @@ namespace Octokit
                 parameters.Add("anon", "1");
 
             return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(repositoryId), parameters, options);
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repositories/{id}/topics")]
+        public async Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            var endpoint = ApiUrls.RepositoryTopics(repositoryId);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint,null,AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repositories/{id}/topics")]
+
+        public Task<RepositoryTopics> GetAllTopics(long repositoryId)
+        {
+            return GetAllTopics(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
+        public async Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var endpoint = ApiUrls.RepositoryTopics(owner, name);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
+
+        public Task<RepositoryTopics> GetAllTopics(string owner, string name)
+        {
+            return GetAllTopics(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        [ManualRoute("PUT", "/repos/{owner}/{repo}/topics")]
+        public async Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(topics, nameof(topics));
+
+            var endpoint = ApiUrls.RepositoryTopics(owner, name);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics,null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        [ManualRoute("PUT", "/repositories/{id}/topics")]
+        public async Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
+        {
+            Ensure.ArgumentNotNull(topics, nameof(topics));
+
+            var endpoint = ApiUrls.RepositoryTopics(repositoryId);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
         }
 
         /// <summary>

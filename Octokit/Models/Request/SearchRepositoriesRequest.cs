@@ -123,6 +123,16 @@ namespace Octokit
         /// </summary>
         public bool? Archived { get; set; }
 
+        /// <summary>
+        /// Filters on whether repositories are tagged with the given topic.
+        /// </summary>
+        public string Topic { get; set; }
+
+        /// <summary>
+        /// Filters on the number of topics that a repository is associated with.
+        /// </summary>
+        public Range Topics { get; set; }
+
         public override IReadOnlyList<string> MergedQualifiers()
         {
             var parameters = new List<string>();
@@ -177,6 +187,15 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "archived:{0}", Archived.ToString().ToLower()));
             }
 
+            if (Topic != null)
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "topic:{0}", Topic.ToLower()));
+            }
+
+            if (Topics != null)
+            {
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "topics:{0}", Topics.ToString().ToLower()));
+            }
             if (License != null)
             {
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "license:{0}", License.ToParameter()));

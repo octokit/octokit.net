@@ -702,6 +702,42 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d =>
                         string.IsNullOrEmpty(d["q"])));
             }
+
+            [Fact]
+            public async Task TestingTheTopicQualifier()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topic = "TheTopic";
+
+                Assert.Contains("topic:thetopic", request.MergedQualifiers());
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithGreaterThanOneTopic()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = Range.GreaterThan(1);
+
+                Assert.Contains("topics:>1", request.MergedQualifiers());
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithExactlyOneTopic()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = new Range(1);
+
+                Assert.Contains("topics:1", request.MergedQualifiers());
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithTwoOrLessTopics()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = Range.LessThanOrEquals(2);
+
+                Assert.Contains("topics:<=2", request.MergedQualifiers());
+            }
         }
 
         public class TheSearchIssuesMethod
