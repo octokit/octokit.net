@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Octokit.Helpers
@@ -40,6 +41,7 @@ namespace Octokit.Helpers
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="branchName">The new branch name</param>
+        [Obsolete("This function is hard-coded to master branch, which is no longer a valid assumption for the base branch. Instead of making a second request to figure out the default branch, this extension method will be removed in a future release. Please check the default branch on the repository and use a different overload")]
         public static async Task<Reference> CreateBranch(this IReferencesClient referencesClient, string owner, string name, string branchName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
