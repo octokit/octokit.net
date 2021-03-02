@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -30,6 +31,24 @@ namespace Octokit
         /// The list of scopes the token includes.
         /// </summary>
         public IReadOnlyList<string> Scope { get; protected set; }
+
+        /// <summary>
+        /// Gets or sets the error code or the response.
+        /// </summary>
+        [Parameter(Key = "error")]
+        public string Error { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error description.
+        /// </summary>
+        [Parameter(Key = "error_description")]
+        public string ErrorDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the error uri.
+        /// </summary>
+        [Parameter(Key = "error_uri")]
+        public string ErrorUri { get; set; }
 
         internal string DebuggerDisplay
         {

@@ -131,6 +131,68 @@ public class OauthClientTests
         }
 
         [Fact]
+        public async Task InitiateDeviceFlowPostsWithCorrectBodyAndContentType()
+        {
+            var responseToken = new OauthDeviceFlowResponse("devicecode", "usercode", "uri", 10, 5);
+            var response = Substitute.For<IApiResponse<OauthDeviceFlowResponse>>();
+            response.Body.Returns(responseToken);
+            var connection = Substitute.For<IConnection>();
+            connection.BaseAddress.Returns(new Uri("https://api.github.com/"));
+            Uri calledUri = null;
+            FormUrlEncodedContent calledBody = null;
+            Uri calledHostAddress = null;
+            connection.Post<OauthDeviceFlowResponse>(
+                Arg.Do<Uri>(uri => calledUri = uri),
+                Arg.Do<object>(body => calledBody = body as FormUrlEncodedContent),
+                "application/json",
+                null,
+                Arg.Do<Uri>(uri => calledHostAddress = uri))
+                .Returns(_ => Task.FromResult(response));
+            var client = new OauthClient(connection);
+
+            var token = await client.InitiateDeviceFlow(new OauthDeviceFlowRequest("clientid"));
+
+            Assert.Same(responseToken, token);
+            Assert.Equal("login/device/code", calledUri.ToString());
+            Assert.NotNull(calledBody);
+            Assert.Equal("https://github.com/", calledHostAddress.ToString());
+            Assert.Equal(
+                "client_id=clientid",
+                await calledBody.ReadAsStringAsync());
+        }
+
+        [Fact]
+        public async Task CreateAccessTokenForDeviceFlowPostsWithCorrectBodyAndContentType()
+        {
+            var responseToken = new OauthToken(null, null, null);
+            var response = Substitute.For<IApiResponse<OauthToken>>();
+            response.Body.Returns(responseToken);
+            var connection = Substitute.For<IConnection>();
+            connection.BaseAddress.Returns(new Uri("https://api.github.com/"));
+            Uri calledUri = null;
+            FormUrlEncodedContent calledBody = null;
+            Uri calledHostAddress = null;
+            connection.Post<OauthToken>(
+                Arg.Do<Uri>(uri => calledUri = uri),
+                Arg.Do<object>(body => calledBody = body as FormUrlEncodedContent),
+                "application/json",
+                null,
+                Arg.Do<Uri>(uri => calledHostAddress = uri))
+                .Returns(_ => Task.FromResult(response));
+            var client = new OauthClient(connection);
+
+            var token = await client.CreateAccessTokenForDeviceFlow("clientid", new OauthDeviceFlowResponse("devicecode", "usercode", "uri", 10, 5));
+
+            Assert.Same(responseToken, token);
+            Assert.Equal("login/oauth/access_token", calledUri.ToString());
+            Assert.NotNull(calledBody);
+            Assert.Equal("https://github.com/", calledHostAddress.ToString());
+            Assert.Equal(
+                "client_id=clientid&device_code=devicecode&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code",
+                await calledBody.ReadAsStringAsync());
+        }
+
+        [Fact]
         public async Task DeserializesOAuthScopeFormat()
         {
             var responseText =
