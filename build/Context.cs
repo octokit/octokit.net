@@ -14,8 +14,6 @@ public class Context : FrostingContext
     public BuildVersion Version { get; set; }
 
     public DirectoryPath Artifacts { get; set; }
-    public DirectoryPath CodeCoverage { get; set; }
-
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
     public bool IsOriginalRepo { get; set; }

@@ -16,7 +16,6 @@ public class Lifetime : FrostingLifetime<Context>
         context.FormatCode = context.Argument("formatCode", false);
 
         context.Artifacts = "./packaging/";
-        context.CodeCoverage = "./coverage-results/";
 
         // Build system information.
         var buildSystem = context.BuildSystem();
