@@ -19,6 +19,6 @@ namespace Octokit
         public long Size { get; protected set; }
         public string HtmlUrl { get; protected set; }
         public string Url { get; protected set; }
-        public string Encoding { get; protected set; }    
+        public string Encoding { get; protected set; }
     }
 }
