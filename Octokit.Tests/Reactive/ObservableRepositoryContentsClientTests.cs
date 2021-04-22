@@ -34,6 +34,7 @@ namespace Octokit.Tests.Reactive
                 var readmeInfo = new ReadmeResponse(
                     encodedContent,
                     "README.md",
+                    100,
                     "https://github.example.com/readme",
                     "https://github.example.com/readme.md",
                     "base64");
@@ -52,8 +53,7 @@ namespace Octokit.Tests.Reactive
 
                 var readme = await contentsClient.GetReadme("fake", "repo");
 
-                Assert.Equal("README.md", readme.Name);
-
+                Assert.Equal("README.md", readme.Name);                
                 gitHubClient.Repository.Content.Received(1).GetReadme("fake", "repo");
                 gitHubClient.Connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
                     Args.EmptyDictionary);
@@ -70,6 +70,7 @@ namespace Octokit.Tests.Reactive
                 var readmeInfo = new ReadmeResponse(
                     encodedContent,
                     "README.md",
+                    100,
                     "https://github.example.com/readme",
                     "https://github.example.com/readme.md",
                     "base64");
@@ -88,7 +89,7 @@ namespace Octokit.Tests.Reactive
 
                 var readme = await contentsClient.GetReadme(1);
 
-                Assert.Equal("README.md", readme.Name);
+                Assert.Equal("README.md", readme.Name);                
 
                 gitHubClient.Repository.Content.Received(1).GetReadme(1);
                 gitHubClient.Connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
@@ -348,7 +349,7 @@ namespace Octokit.Tests.Reactive
                 connection.Get<List<RepositoryContent>>(Args.Uri, null, null)
                     .Returns(Task.FromResult(response));
 
-                var contents = await contentsClient.GetAllContentsByRef("fake", "repo", "master").ToList();
+                var contents = await contentsClient.GetAllContentsByRef("fake", "repo", "master").ToList();                
 
                 connection.Received().Get<List<RepositoryContent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/?ref=master"), null, null);
                 Assert.Equal(1, contents.Count);

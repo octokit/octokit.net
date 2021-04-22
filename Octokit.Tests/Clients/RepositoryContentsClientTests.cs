@@ -28,6 +28,7 @@ namespace Octokit.Tests.Clients
                 var readmeInfo = new ReadmeResponse(
                     encodedContent,
                     "README.md",
+                    100,
                     "https://github.example.com/readme",
                     "https://github.example.com/readme.md",
                     "base64");
@@ -55,6 +56,7 @@ namespace Octokit.Tests.Clients
                 var readmeInfo = new ReadmeResponse(
                     encodedContent,
                     "README.md",
+                    100,
                     "https://github.example.com/readme",
                     "https://github.example.com/readme.md",
                     "base64");
