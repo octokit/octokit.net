@@ -70,6 +70,64 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the secrets for the specified organization in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositorySecrets(string organization)
+        {
+            return "orgs/{0}/actions/secrets".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a secret for the specified organization in
+        /// response to a GET request. A POST to this URL creates a new secret for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="secret">The name of the secret</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositorySecret(string organization, string secret)
+        {
+            return "orgs/{0}/actions/secrets/{1}".FormatUri(organization,secret);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns the public key for signing secrets for the specified organization in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositorySecretPublicKey(string organization)
+        {
+            return "orgs/{0}/actions/secrets/public-key".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a list of repositories for a secret for the specified organization in
+        /// response to a GET request. A POST to this URL sets the full repository list for a secret in the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="secret">The name of the secret</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositorySecretRepositories(string organization, string secret)
+        {
+            return "orgs/{0}/actions/secrets/{1}/repositories".FormatUri(organization, secret);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that adds (PUT) or removes (DELETE) a repository from the visibility list of a secret.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="secret">The name of the secret</param>
+        /// <param name="repoId">The id of the repo to target</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositorySecretRepository(string organization, string secret, long repoId)
+        {
+            return "orgs/{0}/actions/secrets/{1}/repositories/{2}".FormatUri(organization, secret, repoId.ToString());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
         /// </summary>
         /// <returns></returns>
@@ -4185,6 +4243,40 @@ namespace Octokit
         public static Uri CheckSuitePreferences(string owner, string repo)
         {
             return "repos/{0}/{1}/check-suites/preferences".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository secrets for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <param name="secret">The name of the secret</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositorySecret(string owner, string repo, string secret)
+        {
+            return "repos/{0}/{1}/actions/secrets/{2}".FormatUri(owner, repo, secret);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository secrets for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositorySecrets(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/secrets".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository secrets for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositorySecretsPublicKey(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/secrets/public-key".FormatUri(owner, repo);
         }
 
         /// <summary>

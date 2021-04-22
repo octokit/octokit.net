@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <DefineConstants>$(DefineConstants);GITHUBJWT_HELPER_AVAILABLE</DefineConstants>
+    <DefineConstants>$(DefineConstants);GITHUBJWT_HELPER_AVAILABLE;SODIUM_CORE_AVAILABLE</DefineConstants>
   </PropertyGroup>
   
   <ItemGroup>
@@ -48,10 +48,13 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
     <PackageReference Include="GitHubJwt" Version="0.0.4" />
+    <PackageReference Include="Sodium.Core">
+      <Version>1.2.3</Version>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0"  PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

@@ -22,6 +22,7 @@ namespace Octokit
             Team = new TeamsClient(apiConnection);
             Hook = new OrganizationHooksClient(apiConnection);
             OutsideCollaborator = new OrganizationOutsideCollaboratorsClient(apiConnection);
+            Actions = new OrganizationActionsClient(apiConnection);
         }
 
         /// <summary>
@@ -33,6 +34,11 @@ namespace Octokit
         /// Returns a client to manage teams of an organization.
         /// </summary>
         public ITeamsClient Team { get; private set; }
+
+        /// <summary>
+        /// Returns a client to manage organization actions.
+        /// </summary>
+        public IOrganizationActionsClient Actions { get; private set; }
 
         /// <summary>
         /// Returns a client to manage outside collaborators of an organization.

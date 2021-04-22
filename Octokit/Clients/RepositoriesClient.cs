@@ -39,6 +39,7 @@ namespace Octokit
             Branch = new RepositoryBranchesClient(apiConnection);
             Traffic = new RepositoryTrafficClient(apiConnection);
             Project = new ProjectsClient(apiConnection);
+            Actions = new RepositoryActionsClient(apiConnection);
         }
 
         /// <summary>
@@ -467,6 +468,14 @@ namespace Octokit
 
             return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.VisibilityPreview, options);
         }
+
+        /// <summary>
+        /// Client for managing Actions in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/actions/">Repository Actions API documentation</a> for more information.
+        /// </remarks>
+        public IRepositoryActionsClient Actions { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repository Branches API.

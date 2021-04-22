@@ -36,6 +36,11 @@ namespace Octokit
         IOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
 
         /// <summary>
+        /// Returns a client to manage organization actions.
+        /// </summary>
+        IOrganizationActionsClient Actions { get; }
+
+        /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
         /// <param name="org">login of the organization to get</param>

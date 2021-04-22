@@ -40,6 +40,7 @@ namespace Octokit.Reactive
             Invitation = new ObservableRepositoryInvitationsClient(client);
             Traffic = new ObservableRepositoryTrafficClient(client);
             Project = new ObservableProjectsClient(client);
+            Actions = new ObservableRepositoryActionsClient(client);
         }
 
         /// <summary>
@@ -743,6 +744,14 @@ namespace Octokit.Reactive
         {
             return _client.Commit.Compare(owner, name, @base, head).ToObservable();
         }
+
+        /// <summary>
+        /// A client for GitHub's Repository Actions API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions">Actions API documentation</a> for more details
+        /// </remarks>
+        public IObservableRepositoryActionsClient Actions { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repository Branches API.

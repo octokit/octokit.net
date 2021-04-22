@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -21,6 +22,7 @@ namespace Octokit.Reactive
             Team = new ObservableTeamsClient(client);
             Hook = new ObservableOrganizationHooksClient(client);
             OutsideCollaborator = new ObservableOrganizationOutsideCollaboratorsClient(client);
+            Actions = new ObservableOrganizationActionsClient(client);
 
             _client = client.Organization;
             _connection = client.Connection;
@@ -46,6 +48,11 @@ namespace Octokit.Reactive
         /// Returns a client to manage outside collaborators of an organization.
         /// </summary>
         public IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; private set; }
+
+        /// <summary>
+        /// Returns a client to manage organization actions.
+        /// </summary>
+        public IObservableOrganizationActionsClient Actions { get; private set; }
 
         /// <summary>
         /// Returns the specified organization.

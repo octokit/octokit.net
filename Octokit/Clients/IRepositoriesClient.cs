@@ -9,7 +9,7 @@ namespace Octokit
     /// A client for GitHub's Repositories API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/">Repositories API documentation</a> for more details.
+    /// See the <https://docs.github.com/en/rest/reference/repos">Repositories API documentation</a> for more details.
     /// </remarks>
     public interface IRepositoriesClient
     {
@@ -17,9 +17,17 @@ namespace Octokit
         /// Client for managing pull requests.
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/pulls/">Pull Requests API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/en/rest/reference/pulls/">Pull Requests API documentation</a> for more details
         /// </remarks>
         IPullRequestsClient PullRequest { get; }
+
+        /// <summary>
+        /// Client for managing Actions in a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions">Repository Actions API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryActionsClient Actions { get; }
 
         /// <summary>
         /// Client for managing branches in a repository.
