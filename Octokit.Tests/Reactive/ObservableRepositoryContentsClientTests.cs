@@ -53,7 +53,8 @@ namespace Octokit.Tests.Reactive
 
                 var readme = await contentsClient.GetReadme("fake", "repo");
 
-                Assert.Equal("README.md", readme.Name);                
+                Assert.Equal("README.md", readme.Name);
+                Assert.Equal(100, readme.Size);
                 gitHubClient.Repository.Content.Received(1).GetReadme("fake", "repo");
                 gitHubClient.Connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
                     Args.EmptyDictionary);
@@ -90,6 +91,7 @@ namespace Octokit.Tests.Reactive
                 var readme = await contentsClient.GetReadme(1);
 
                 Assert.Equal("README.md", readme.Name);
+                Assert.Equal(100, readme.Size);
 
                 gitHubClient.Repository.Content.Received(1).GetReadme(1);
                 gitHubClient.Connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),

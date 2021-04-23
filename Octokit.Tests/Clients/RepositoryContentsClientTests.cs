@@ -40,6 +40,7 @@ namespace Octokit.Tests.Clients
                 var readme = await contentsClient.GetReadme("fake", "repo");
 
                 Assert.Equal("README.md", readme.Name);
+                Assert.Equal(100, readme.Size);
                 connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/readme"),
                     null);
                 connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
@@ -68,6 +69,7 @@ namespace Octokit.Tests.Clients
                 var readme = await contentsClient.GetReadme(1);
 
                 Assert.Equal("README.md", readme.Name);
+                Assert.Equal(100, readme.Size);
                 connection.Received().Get<ReadmeResponse>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/readme"),
                     null);
                 connection.DidNotReceive().GetHtml(Arg.Is<Uri>(u => u.ToString() == "https://github.example.com/readme"),
