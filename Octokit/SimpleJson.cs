@@ -1483,13 +1483,20 @@ namespace Octokit
                     {
                         if (type == typeof(object))
                             obj = value;
+                        else if (type == typeof(string))
+                            obj = value.ToString();
                         else
                         {
                             obj = ConstructorCache[type]();
                             foreach (KeyValuePair<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> setter in SetCache[type])
                             {
                                 object jsonValue;
-                                if (jsonObject.TryGetValue(setter.Key, out jsonValue))
+                                var key = setter.Key;
+                                if (key.Contains("_octokit_"))
+                                {
+                                    key = key.Substring(0, key.IndexOf("_octokit_"));
+                                }
+                                if (jsonObject.TryGetValue(key, out jsonValue))
                                 {
                                     jsonValue = DeserializeObject(jsonValue, setter.Value.Key);
                                     setter.Value.Value(obj, jsonValue);

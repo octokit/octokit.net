@@ -11,15 +11,26 @@ namespace Octokit
     {
         public static string GetJsonFieldName(this MemberInfo memberInfo)
         {
-            var memberName = memberInfo.Name;
-            var paramAttr = memberInfo.GetCustomAttribute<ParameterAttribute>();
+            // Default to the member name, converted to "ruby case"
+            var memberName = memberInfo.Name.ToRubyCase();
 
-            if (paramAttr != null && !string.IsNullOrEmpty(paramAttr.Key))
+            // If a [Parameter(Key = "new_name")] attribute exists, use it instead of member name
+            var paramAttr = memberInfo.GetCustomAttribute<ParameterAttribute>();
+            if (!string.IsNullOrEmpty(paramAttr?.Key))
             {
-                memberName = paramAttr.Key;
+                if (paramAttr.AllowDuplicates)
+                {
+                    // De-dupe parameter key by appending unique "octokit" suffix
+                    memberName = $"{paramAttr.Key}_octokit_{memberName}";
+                }
+                else
+                {
+                    // Take the Parameter key as is
+                    memberName = paramAttr.Key;
+                }
             }
 
-            return memberName.ToRubyCase();
+            return memberName;
         }
 
         public static IEnumerable<PropertyOrField> GetPropertiesAndFields(this Type type)
