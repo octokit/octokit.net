@@ -21,6 +21,7 @@ pages:
   - 'Issues' : 'issues.md'
   - 'Labels' : 'labels.md'
   - 'Milestones' : 'milestones.md'
+  - 'Actions' : 'actions.md'
   - 'Releases' : 'releases.md'
   - 'Search' : 'search.md'
   - 'Git Database' : 'git-database.md'

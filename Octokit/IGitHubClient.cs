@@ -157,5 +157,13 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
         /// </remarks>
         IChecksClient Check { get; }
+
+        /// <summary>
+        /// Access GitHub's Actions API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/actions/
+        /// </remarks>
+        IActionsClient Action { get; }
     }
 }
