@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 #if NET_45
 using System.Collections.ObjectModel;
 #endif
@@ -87,6 +88,28 @@ namespace Octokit.Tests.Clients
             {
                 var userEndpoint = new UsersClient(Substitute.For<IApiConnection>());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => userEndpoint.Update(null));
+            }
+        }
+
+        public class TheGetAllMethod
+        {
+            [Fact]
+            public void RequestsCorrectUrl()
+            {
+                var endpoint = new Uri("users?since=1", UriKind.Relative);
+                var client = Substitute.For<IApiConnection>();
+                var usersClient = new UsersClient(client);
+
+                usersClient.GetAll("1");
+
+                client.Received().Get<IReadOnlyList<User>>(endpoint);
+            }
+
+            [Fact]
+            public async Task ThrowsIfGivenNullSince()
+            {
+                var userEndpoint = new UsersClient(Substitute.For<IApiConnection>());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => userEndpoint.GetAll(null));
             }
         }
 

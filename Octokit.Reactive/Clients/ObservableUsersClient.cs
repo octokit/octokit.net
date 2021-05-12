@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -53,6 +54,18 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(user, nameof(user));
 
             return _client.Update(user).ToObservable();
+        }
+
+        /// <summary>
+        /// Returns list of all <see cref="User"/>, in the order that they signed up on GitHub after specified ID.
+        /// </summary>
+        /// <param name="since">ID after which the returned list begin</param>
+        /// <returns>A list of <see cref="User"/> after specified ID</returns>
+        public IObservable<User> GetAll(string since)
+        {
+            Ensure.ArgumentNotNull(since, nameof(since));
+
+            return _client.GetAll(since).ToObservable().SelectMany(u => u);
         }
 
         /// <summary>

@@ -29,6 +29,13 @@ namespace Octokit.Reactive
         IObservable<User> Update(UserUpdate user);
 
         /// <summary>
+        /// Returns list of all <see cref="User"/>, in the order that they signed up on GitHub after specified ID.
+        /// </summary>
+        /// <param name="since">ID after which the returned list begin</param>
+        /// <returns>A list of <see cref="User"/> after specified ID</returns>
+        IObservable<User> GetAll(string since);
+
+        /// <summary>
         /// A client for GitHub's User Followers API
         /// </summary>
         /// <remarks>
