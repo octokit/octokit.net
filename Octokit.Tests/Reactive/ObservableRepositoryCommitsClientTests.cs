@@ -98,5 +98,73 @@ namespace Octokit.Tests.Reactive
                     .GetAll(1);
             }
         }
+
+        public class ThePullRequestsMethod
+        {
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var client = new ObservableRepositoryCommitsClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.PullRequests("", "name", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.PullRequests("owner", "", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.PullRequests("owner", "name", "").ToTask());
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryCommitsClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.PullRequests(null, "name", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.PullRequests("owner", null, "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.PullRequests("owner", "name", null).ToTask());
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommitsClient(githubClient);
+                var options = new ApiOptions();
+
+                client.PullRequests("fake", "repo", "reference", options);
+                githubClient.Received().Repository.Commit.PullRequests("fake", "repo", "reference", options);
+            }
+        }
+
+        public class TheBranchesWhereHeadMethod
+        {
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var client = new ObservableRepositoryCommitsClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.BranchesWhereHead("", "name", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.BranchesWhereHead("owner", "", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.BranchesWhereHead("owner", "name", "").ToTask());
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoryCommitsClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.BranchesWhereHead(null, "name", "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.BranchesWhereHead("owner", null, "reference").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.BranchesWhereHead("owner", "name", null).ToTask());
+            }
+
+            [Fact]
+            public void GetsCorrectUrl()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoryCommitsClient(githubClient);
+                var options = new ApiOptions();
+
+                client.BranchesWhereHead("fake", "repo", "reference", options);
+                githubClient.Received().Repository.Commit.BranchesWhereHead("fake", "repo", "reference", options);
+            }
+        }
     }
 }

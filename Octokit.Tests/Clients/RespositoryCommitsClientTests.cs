@@ -352,5 +352,63 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetSha1(1, ""));
             }
         }
+
+        public class ThePullRequestsMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.PullRequests("fake", "repo", "ref", options);
+
+                connection.Received().GetAll<CommitPullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/pulls"),
+                    null, "application/vnd.github.groot-preview+json", options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                await client.PullRequests(1, "ref", options);
+
+                connection.Received().GetAll<CommitPullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/pulls"),
+                    null, "application/vnd.github.groot-preview+json", options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoryCommitsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.PullRequests(null, "name", "ref"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.PullRequests("owner", null, "ref"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.PullRequests("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.PullRequests(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.PullRequests("", "name", "ref"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.PullRequests("owner", "", "ref"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.PullRequests("owner", "name", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.PullRequests(1, ""));
+            }
+        }
     }
 }
