@@ -1735,6 +1735,26 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for team discussion
+        /// use for getting, updating, or deleting a <see cref="TeamDiscussion"/>.
+        /// </summary>
+        /// <param name="teamId">The team id</param>
+        /// <param name="discussionNumber">The team discussion number.</param>
+        public static Uri TeamDiscussion(int teamId, int discussionNumber)
+        {
+            return "teams/{0}/discussions/{1}".FormatUri(teamId, discussionNumber);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for list of <see cref="TeamDiscussion"/>.
+        /// </summary>
+        /// <param name="teamId">The team id</param>
+        public static Uri TeamDiscussions(int teamId)
+        {
+            return "teams/{0}/discussions".FormatUri(teamId);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for team member
         /// </summary>
         /// <param name="id">The team id</param>
