@@ -20,6 +20,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(client, nameof(client));
 
             Name = response.Name;
+            Size = response.Size;
             Url = response.Url;
             HtmlUrl = response.HtmlUrl;
             if (response.Encoding.Equals("base64", StringComparison.OrdinalIgnoreCase))
@@ -30,17 +31,19 @@ namespace Octokit
             htmlContent = new Lazy<Task<string>>(async () => await client.GetHtml(new Uri(Url)).ConfigureAwait(false));
         }
 
-        public Readme(Lazy<Task<string>> htmlContent, string content, string name, string htmlUrl, string url)
+        public Readme(Lazy<Task<string>> htmlContent, string content, string name, long size, string htmlUrl, string url)
         {
             this.htmlContent = htmlContent;
             Content = content;
             Name = name;
+            Size = size;
             HtmlUrl = htmlUrl;
             Url = url;
         }
 
         public string Content { get; private set; }
         public string Name { get; private set; }
+        public long Size { get; private set; }
         public string HtmlUrl { get; private set; }
         public string Url { get; private set; }
 
