@@ -2351,6 +2351,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates the relative <see cref="Uri"/> for initiating the OAuth device Flow
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OauthDeviceCode()
+        {
+            return "login/device/code".FormatUri();
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> to request an OAuth access token.
         /// </summary>
         /// <returns></returns>
