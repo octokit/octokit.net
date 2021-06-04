@@ -26,6 +26,13 @@ namespace Octokit.Tests.Integration.Helpers
             return new RepositoryContext(client.Connection, repo);
         }
 
+        internal static async Task<RepositoryContext> Generate(this IGitHubClient client, string owner, string repoName, NewRepositoryFromTemplate newRepository)
+        {
+            var repo = await client.Repository.Generate(owner, repoName, newRepository);
+
+            return new RepositoryContext(client.Connection, repo);
+        }
+
         internal static async Task<TeamContext> CreateTeamContext(this IGitHubClient client, string organization, NewTeam newTeam)
         {
             newTeam.Privacy = TeamPrivacy.Closed;

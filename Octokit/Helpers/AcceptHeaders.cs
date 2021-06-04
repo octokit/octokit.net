@@ -54,6 +54,8 @@ namespace Octokit
 
         public const string VisibilityPreview = "application/vnd.github.nebula-preview+json";
 
+        public const string TemplatePreview = "application/vnd.github.baptiste-preview+json";
+
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.
