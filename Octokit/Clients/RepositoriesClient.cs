@@ -82,6 +82,13 @@ namespace Octokit
             return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
         }
 
+        /// <summary>
+        /// Creates a new repository from a template
+        /// </summary>
+        /// <param name="owner">The organization or person who will own the new repository. To create a new repository in an organization, the authenticated user must be a member of the specified organization.</param>
+        /// <param name="repo">The name of the new repository.</param>
+        /// <param name="newRepository"></param>
+        /// <returns></returns>
         [Preview("baptiste")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/generate")]
         public Task<Repository> Generate(string owner, string repo, NewRepositoryFromTemplate newRepository)

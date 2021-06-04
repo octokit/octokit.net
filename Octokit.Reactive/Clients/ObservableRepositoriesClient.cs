@@ -73,6 +73,24 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Create a new repository from a template
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="repo"></param>
+        /// <param name="newRepository"></param>
+        /// <returns></returns>
+        public IObservable<Repository> Generate(string owner, string repo, NewRepositoryFromTemplate newRepository)
+        {
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repo, nameof(repo));
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            return _client.Generate(owner, repo, newRepository).ToObservable();
+        }
+
+        /// <summary>
         /// Deletes a repository for the specified owner and name.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

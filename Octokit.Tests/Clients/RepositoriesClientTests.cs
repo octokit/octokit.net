@@ -214,6 +214,44 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGenerateMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Generate(null, null, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Generate("asd", null, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Generate("asd", "asd", null));
+            }
+
+            [Fact]
+            public void UsesTheUserReposUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.Generate("asd", "asd", new NewRepositoryFromTemplate("aName"));
+
+                connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/asd/asd/generate"),
+                    Arg.Any<NewRepositoryFromTemplate>(),
+                    "application/vnd.github.baptiste-preview+json");
+            }
+
+            [Fact]
+            public void TheNewRepositoryDescription()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var newRepository = new NewRepositoryFromTemplate("aName");
+
+                client.Generate("anOwner", "aRepo", newRepository);
+
+                connection.Received().Post<Repository>(Args.Uri, newRepository, "application/vnd.github.baptiste-preview+json");
+            }
+        }
+
         public class TheTransferMethod
         {
             [Fact]
@@ -1332,7 +1370,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics("owner", "name", _emptyTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics, null,"application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics, null, "application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -1341,7 +1379,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics("owner", "name", _listOfTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics,null, "application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics, null, "application/vnd.github.mercy-preview+json");
             }
 
             [Fact]
@@ -1356,10 +1394,10 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheCorrectUrlForRepoIdWithListOfTopics()
             {
-                await _client.ReplaceAllTopics(1234,_listOfTopics);
+                await _client.ReplaceAllTopics(1234, _listOfTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics,null, "application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics, null, "application/vnd.github.mercy-preview+json");
             }
         }
     }
