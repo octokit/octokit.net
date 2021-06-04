@@ -78,13 +78,13 @@ namespace Octokit
         Task<Repository> Create(string organizationLogin, NewRepository newRepository);
 
         /// <summary>
-        /// Creates a new repository using a repository template.
+        /// Creates a new repository from a template
         /// </summary>
-        /// <param name="owner">The owner of the template</param>
-        /// <param name="repo">The name of the template</param>
+        /// <param name="templateOwner">The organization or person who will owns the template</param>
+        /// <param name="templateRepo">The name of template repository to work from</param>
         /// <param name="newRepository"></param>
         /// <returns></returns>
-        Task<Repository> Generate(string owner, string repo, NewRepositoryFromTemplate newRepository);
+        Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository);
 
 
         /// <summary>

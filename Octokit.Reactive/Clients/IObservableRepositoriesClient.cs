@@ -26,11 +26,11 @@ namespace Octokit.Reactive
         /// <summary>
         /// Creates a new repository using a repository template.
         /// </summary>
-        /// <param name="owner">The owner of the template</param>
-        /// <param name="repo">The name of the template</param>
+        /// <param name="templateOwner">The owner of the template</param>
+        /// <param name="templateRepo">The name of the template</param>
         /// <param name="newRepository"></param>
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
-        IObservable<Repository> Generate(string owner, string repo, NewRepositoryFromTemplate newRepository);
+        IObservable<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository);
 
         /// <summary>
         /// Deletes a repository for the specified owner and name.

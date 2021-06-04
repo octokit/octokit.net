@@ -85,21 +85,21 @@ namespace Octokit
         /// <summary>
         /// Creates a new repository from a template
         /// </summary>
-        /// <param name="owner">The organization or person who will own the new repository. To create a new repository in an organization, the authenticated user must be a member of the specified organization.</param>
-        /// <param name="repo">The name of the new repository.</param>
+        /// <param name="templateOwner">The organization or person who will owns the template</param>
+        /// <param name="templateRepo">The name of template repository to work from</param>
         /// <param name="newRepository"></param>
         /// <returns></returns>
         [Preview("baptiste")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/generate")]
-        public Task<Repository> Generate(string owner, string repo, NewRepositoryFromTemplate newRepository)
+        public Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository)
         {
-            Ensure.ArgumentNotNull(owner, nameof(owner));
-            Ensure.ArgumentNotNull(repo, nameof(repo));
+            Ensure.ArgumentNotNull(templateOwner, nameof(templateOwner));
+            Ensure.ArgumentNotNull(templateRepo, nameof(templateRepo));
             Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.Repositories(owner, repo), newRepository, AcceptHeaders.TemplatePreview);
+            return ApiConnection.Post<Repository>(ApiUrls.Repositories(templateOwner, templateRepo), newRepository, AcceptHeaders.TemplatePreview);
         }
 
         async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
