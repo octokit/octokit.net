@@ -10,7 +10,10 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiErrorDetail
     {
-        public ApiErrorDetail() { }
+        public ApiErrorDetail(string message)
+        {
+            Message = message;
+        }
 
         public ApiErrorDetail(string message, string code, string field, string resource)
         {

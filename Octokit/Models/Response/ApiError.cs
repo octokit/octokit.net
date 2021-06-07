@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -28,6 +29,13 @@ namespace Octokit
             Errors = errors;
         }
 
+        internal ApiError(SimpleApiError simpleApiError)
+        {
+            Message = simpleApiError.Message;
+            DocumentationUrl = simpleApiError.DocumentationUrl;
+            Errors = simpleApiError.Errors.Select(e => new ApiErrorDetail(e)).ToArray();
+        }
+
         /// <summary>
         /// The error message
         /// </summary>
@@ -49,6 +57,19 @@ namespace Octokit
             {
                 return string.Format(CultureInfo.InvariantCulture, "Message: {0}", Message);
             }
+        }
+
+        /// <summary>
+        /// Simple API Error class to deserialize errors as plain string
+        /// </summary>
+        internal class SimpleApiError
+        {
+            public SimpleApiError() { }
+
+            public string Message { get; protected set; }
+            public string DocumentationUrl { get; protected set; }
+
+            public IReadOnlyList<string> Errors { get; protected set; }
         }
     }
 }

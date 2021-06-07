@@ -29,6 +29,20 @@ namespace Octokit.Tests.Exceptions
             }
 
             [Fact]
+            public void CreatesGitHubErrorFromJsonValidationResponse()
+            {
+                var response = CreateResponse((HttpStatusCode)422, @"{""message"":""Unprocessable Entity"",""errors"":[""Can not approve your own pull request""],""documentation_url"":""https://docs.github.com/rest/reference/pulls#create-a-review-for-a-pull-request""}");
+
+                var exception = new ApiValidationException(response);
+
+                Assert.Equal("Unprocessable Entity", exception.Message);
+                Assert.Equal("Unprocessable Entity", exception.ApiError.Message);
+                Assert.Equal("Can not approve your own pull request", exception.ApiError.Errors.First().Message);
+                Assert.Equal("https://docs.github.com/rest/reference/pulls#create-a-review-for-a-pull-request", exception.ApiError.DocumentationUrl);
+            }
+
+
+            [Fact]
             public void ProvidesDefaultMessage()
             {
                 var response = CreateResponse((HttpStatusCode)422);
