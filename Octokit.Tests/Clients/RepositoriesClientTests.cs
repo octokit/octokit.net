@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
@@ -354,6 +357,55 @@ namespace Octokit.Tests.Clients
                         Arg.Any<Uri>(),
                         Arg.Any<RepositoryTransfer>())
                         ;
+            }
+        }
+
+        public class TheAreVulnerabilityAlertsEnabledMethod
+        {
+            [Theory]
+            [InlineData(HttpStatusCode.NoContent, true)]
+            [InlineData(HttpStatusCode.NotFound, false)]
+            public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
+            {
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+                var connection = Substitute.For<IConnection>();
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/vulnerability-alerts"),
+                    null, AcceptHeaders.DependencyAlertsPreview).Returns(responseTask);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+                var client = new RepositoriesClient(apiConnection);
+
+                var result = await client.AreVulnerabilityAlertsEnabled("owner", "name");
+
+                Assert.Equal(expected, result);
+            }
+
+            [Fact]
+            public async Task ThrowsExceptionForInvalidStatusCode()
+            {
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+                var connection = Substitute.For<IConnection>();
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/vulnerability-alerts"),
+                    null, null).Returns(responseTask);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+                var client = new RepositoriesClient(apiConnection);
+
+                await Assert.ThrowsAsync<ApiException>(() => client.AreVulnerabilityAlertsEnabled("owner", "name"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled(null, "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled( "owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("owner", ""));
             }
         }
 
