@@ -134,8 +134,10 @@ namespace Octokit
                     return _jsonSerializer.Deserialize<ApiError>(responseContent) ?? new ApiError(responseContent);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                // Complete handling or remove catch block
+                throw;
             }
 
             return new ApiError(responseContent);
@@ -200,7 +202,7 @@ namespace Octokit
                 return HttpResponse != null
                        && !HttpResponse.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase)
                        && HttpResponse.Body is string bodyString
-                    ? bodyString : string.Empty;
+                    ? bodyst : string.Empty;
             }
         }
 
