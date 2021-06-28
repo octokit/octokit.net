@@ -199,8 +199,8 @@ namespace Octokit
             {
                 return HttpResponse != null
                        && !HttpResponse.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase)
-                       && HttpResponse.Body is string
-                    ? (string)HttpResponse.Body : string.Empty;
+                       && HttpResponse.Body is string bodyString
+                    ? bodyString : string.Empty;
             }
         }
 
