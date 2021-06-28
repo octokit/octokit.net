@@ -10,8 +10,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(dictionary, nameof(dictionary));
 
-            TValue value;
-            return dictionary.TryGetValue(key, out value) ? value : default(TValue);
+            return dictionary.TryGetValue(key, out TValue value) ? value : default;
         }
 
         public static IList<string> Clone(this IReadOnlyList<string> input)
