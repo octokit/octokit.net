@@ -51,12 +51,8 @@ namespace Octokit.Tests.Conventions
             }
 
             var obsolete = method.GetCustomAttribute<ObsoleteAttribute>();
-            if (obsolete != null)
-            {
-                return true;
-            }
 
-            return false;
+            return obsolete != null;
         }
 
         static bool IsNotBoilerplateMethod(MethodInfo method)
