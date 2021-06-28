@@ -261,7 +261,7 @@ public class ObservableTeamsClientTests
                 var observable = client.GetAllRepositories(_team.Id, ApiOptions.None);
                 var repos = await observable.ToList();
 
-                Assert.True(repos.Count() > 0);
+                Assert.True(repos.Any());
                 Assert.NotNull(repos[0].Permissions);
             }
         }
