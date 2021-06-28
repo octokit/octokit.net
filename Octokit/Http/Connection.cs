@@ -168,7 +168,7 @@ namespace Octokit
             // on thread writing to the object while another was reading.  Now we are cloning the ApiInfo on request - thus removing the need (or overhead)
             // of putting locks in place.
             // See https://github.com/octokit/octokit.net/pull/855#discussion_r36774884
-            return _lastApiInfo == null ? null : _lastApiInfo.Clone();
+            return _lastApiInfo?.Clone();
         }
         private ApiInfo _lastApiInfo;
 
