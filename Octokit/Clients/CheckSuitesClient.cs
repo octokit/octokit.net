@@ -274,12 +274,9 @@ namespace Octokit
 
             var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRerequest(owner, name, checkSuiteId), null, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);
 
-            if (httpStatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode);
-            }
-
-            return httpStatusCode == HttpStatusCode.Created;
+            return httpStatusCode != HttpStatusCode.Created
+                ? throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode)
+                : httpStatusCode == HttpStatusCode.Created;
         }
 
         /// <summary>
@@ -296,12 +293,9 @@ namespace Octokit
         {
             var httpStatusCode = await Connection.Post(ApiUrls.CheckSuiteRerequest(repositoryId, checkSuiteId), null, AcceptHeaders.ChecksApiPreview).ConfigureAwait(false);
 
-            if (httpStatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode);
-            }
-
-            return httpStatusCode == HttpStatusCode.Created;
+            return httpStatusCode != HttpStatusCode.Created
+                ? throw new ApiException("Invalid Status Code returned. Expected a 201", httpStatusCode)
+                : httpStatusCode == HttpStatusCode.Created;
         }
     }
 }
