@@ -276,7 +276,7 @@ namespace Octokit.Tests.Clients
                 Assert.NotNull(calledBody);
                 var fingerprintProperty = ((IEnumerable<PropertyInfo>)calledBody.GetType().DeclaredProperties).FirstOrDefault(x => x.Name == "fingerprint");
                 Assert.NotNull(fingerprintProperty);
-                Assert.Equal(fingerprintProperty.GetValue(calledBody), "ha-ha-fingerprint");
+                Assert.Equal("ha-ha-fingerprint", fingerprintProperty.GetValue(calledBody));
             }
         }
 
