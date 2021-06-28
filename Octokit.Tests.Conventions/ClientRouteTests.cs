@@ -62,12 +62,7 @@ namespace Octokit.Tests.Conventions
                 return false;
             }
 
-            if (method.Name == "GetType" || method.Name == "ToString" || method.Name == "GetHashCode" || method.Name == "Equals")
-            {
-                return false;
-            }
-
-            return true;
+            return method.Name != "GetType" && method.Name != "ToString" && method.Name != "GetHashCode" && method.Name != "Equals";
         }
 
         public static IEnumerable<object[]> GetClientClasses()
