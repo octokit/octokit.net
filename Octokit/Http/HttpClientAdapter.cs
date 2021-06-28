@@ -205,9 +205,9 @@ namespace Octokit.Internal
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (disposing && _http != null)
             {
-                if (_http != null) _http.Dispose();
+                _http.Dispose();
             }
         }
 
@@ -222,7 +222,7 @@ namespace Octokit.Internal
             var receivedTime = DateTimeOffset.Now;
             // Since Properties are stored as objects, serialize to HTTP round-tripping string (Format: r)
             // Resolution is limited to one-second, matching the resolution of the HTTP Date header
-            request.Properties[ApiInfoParser.ReceivedTimeHeaderName] = 
+            request.Properties[ApiInfoParser.ReceivedTimeHeaderName] =
                 receivedTime.ToString("r", CultureInfo.InvariantCulture);
 
             // Can't redirect without somewhere to redirect to.
