@@ -143,7 +143,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Put<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("client_secret").GetValue(o).ToString() == "secret"),
+                    Arg.Is<object>(o => o.GetType().GetProperty("client_secret").GetValue(o).ToString() == "secret"),
                     "two-factor");
             }
 
@@ -292,7 +292,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Post<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
+                    Arg.Is<object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
                     "application/vnd.github.doctor-strange-preview+json");
             }
 
@@ -321,7 +321,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Patch<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
+                    Arg.Is<object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
                     "application/vnd.github.doctor-strange-preview+json");
             }
 
@@ -350,7 +350,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "applications/clientId/token"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
+                    Arg.Is<object>(o => o.GetType().GetProperty("access_token").GetValue(o).ToString() == "accessToken"),
                     "application/vnd.github.doctor-strange-preview+json");
             }
 
