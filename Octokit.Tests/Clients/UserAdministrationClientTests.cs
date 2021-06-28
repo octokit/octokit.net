@@ -150,8 +150,8 @@ namespace Octokit.Tests.Clients
                     Arg.Any<Uri>(),
                     Arg.Is<NewImpersonationToken>(a =>
                         a.Scopes.Count() == scopes.Length &&
-                        a.Scopes.ToList().All(s => scopes.Contains(s)) &&
-                        scopes.ToList().All(s => a.Scopes.Contains(s))));
+                        a.Scopes.All(s => scopes.Contains(s)) &&
+                        scopes.All(s => a.Scopes.Contains(s))));
             }
         }
 
