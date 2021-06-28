@@ -93,12 +93,10 @@ namespace Octokit
             var endpoint = ApiUrls.EnterpriseLdapTeamSync(teamId);
 
             var response = await Connection.Post<LdapSyncResponse>(endpoint).ConfigureAwait(false);
-            if (response.HttpResponse.StatusCode != HttpStatusCode.Created)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode);
-            }
 
-            return response.Body;
+            return response.HttpResponse.StatusCode != HttpStatusCode.Created
+                ? throw new ApiException("Invalid Status Code returned. Expected a 201", response.HttpResponse.StatusCode)
+                : response.Body;
         }
     }
 }
