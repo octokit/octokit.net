@@ -7,7 +7,7 @@ namespace Octokit
     public static class AuthorizationExtensions
     {
         /// <summary>
-        /// This method will create a new authorization for the specified OAuth application, only if an authorization 
+        /// This method will create a new authorization for the specified OAuth application, only if an authorization
         /// for that application doesn’t already exist for the user. It returns the user’s token for the application
         /// if one exists. Otherwise, it creates a new one.
         /// </summary>
@@ -17,7 +17,7 @@ namespace Octokit
         /// the user. Typically the callback is used to show some user interface to the user.
         /// </para>
         /// <para>
-        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> 
+        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a>
         /// for more details.
         /// </para>
         /// </remarks>
@@ -56,8 +56,8 @@ namespace Octokit
         }
 
         /// <summary>
-        /// This method will create a new authorization for the specified OAuth application. If an authorization 
-        /// for that application already exists for the user and fingerprint, it'll delete the existing one and 
+        /// This method will create a new authorization for the specified OAuth application. If an authorization
+        /// for that application already exists for the user and fingerprint, it'll delete the existing one and
         /// recreate it.
         /// </summary>
         /// <remarks>
@@ -67,7 +67,7 @@ namespace Octokit
         /// the user. Typically the callback is used to show some user interface to the user.
         /// </para>
         /// <para>
-        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a> 
+        /// See <a href="http://developer.github.com/v3/oauth/#list-your-authorizations">API documentation</a>
         /// for more details.
         /// </para>
         /// </remarks>
@@ -111,10 +111,10 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
             Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
-            // If retryInvalidTwoFactorCode is false, then we only show the TwoFactorDialog when we catch 
-            // a TwoFactorRequiredException. If it's true, we show it for TwoFactorRequiredException and 
+            // If retryInvalidTwoFactorCode is false, then we only show the TwoFactorDialog when we catch
+            // a TwoFactorRequiredException. If it's true, we show it for TwoFactorRequiredException and
             // TwoFactorChallengeFailedException
-            Func<TwoFactorAuthorizationException, IObservable<TwoFactorChallengeResult>> twoFactorHandler = ex =>
+            IObservable<TwoFactorChallengeResult> HandleTwoFactor(TwoFactorAuthorizationException ex) =>
                 retryInvalidTwoFactorCode || ex is TwoFactorRequiredException
                     ? twoFactorChallengeHandler(ex)
                     : Observable.Throw<TwoFactorChallengeResult>(ex);
@@ -125,21 +125,21 @@ namespace Octokit
                 newAuthorization,
                 twoFactorAuthenticationCode)
                 .Catch<ApplicationAuthorization, TwoFactorAuthorizationException>(
-                    exception => twoFactorHandler(exception)
+                    exception => HandleTwoFactor(exception)
                     .SelectMany(result =>
                         result.ResendCodeRequested
                             ? authorizationsClient.CreateAndDeleteExistingApplicationAuthorization(
                                 clientId,
                                 clientSecret,
                                 newAuthorization,
-                                twoFactorHandler,
+                                HandleTwoFactor,
                                 null, // twoFactorAuthenticationCode
                                 retryInvalidTwoFactorCode)
                             : authorizationsClient.CreateAndDeleteExistingApplicationAuthorization(
                                     clientId,
                                     clientSecret,
                                     newAuthorization,
-                                    twoFactorHandler,
+                                    HandleTwoFactor,
                                     result.AuthenticationCode,
                                     retryInvalidTwoFactorCode)));
         }
