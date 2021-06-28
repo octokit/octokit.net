@@ -74,7 +74,7 @@ namespace Octokit
                                OauthScopes.Clone(),
                                AcceptedOauthScopes.Clone(),
                                Etag != null ? new string(Etag.ToCharArray()) : null,
-                               RateLimit != null ? RateLimit.Clone() : null,
+                               RateLimit?.Clone(),
                                ServerTimeDifference);
         }
     }

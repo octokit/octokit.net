@@ -837,7 +837,7 @@ public class PullRequestReviewCommentsClientTests : IDisposable
     {
         Assert.Equal(bodies.Count, comments.Count);
 
-        for (var i = 0; i < bodies.Count; i = i + 1)
+        for (var i = 0; i < bodies.Count; i++)
         {
             AssertComment(comments[i], bodies[i], position);
         }

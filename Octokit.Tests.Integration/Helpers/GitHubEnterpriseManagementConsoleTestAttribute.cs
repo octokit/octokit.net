@@ -24,7 +24,7 @@ namespace Octokit.Tests.Integration
             if (!EnterpriseHelper.IsGitHubEnterpriseEnabled)
                 return Enumerable.Empty<IXunitTestCase>();
 
-            if (String.IsNullOrEmpty(EnterpriseHelper.ManagementConsolePassword))
+            if (string.IsNullOrEmpty(EnterpriseHelper.ManagementConsolePassword))
                 return Enumerable.Empty<IXunitTestCase>();
 
             return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), TestMethodDisplayOptions.None, testMethod) };

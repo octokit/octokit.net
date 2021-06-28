@@ -51,12 +51,8 @@ namespace Octokit.Tests.Conventions
             }
 
             var obsolete = method.GetCustomAttribute<ObsoleteAttribute>();
-            if (obsolete != null)
-            {
-                return true;
-            }
 
-            return false;
+            return obsolete != null;
         }
 
         static bool IsNotBoilerplateMethod(MethodInfo method)
@@ -66,12 +62,7 @@ namespace Octokit.Tests.Conventions
                 return false;
             }
 
-            if (method.Name == "GetType" || method.Name == "ToString" || method.Name == "GetHashCode" || method.Name == "Equals")
-            {
-                return false;
-            }
-
-            return true;
+            return method.Name != "GetType" && method.Name != "ToString" && method.Name != "GetHashCode" && method.Name != "Equals";
         }
 
         public static IEnumerable<object[]> GetClientClasses()

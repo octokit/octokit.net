@@ -75,7 +75,7 @@ namespace Octokit.Tests.Conventions
 
             var validHeaders = defaultHeaders.Concat(previewAcceptHeaders);
 
-            var notAllowedHeaders = values.Values.ToList().Except(validHeaders).OrderBy(k => k);
+            var notAllowedHeaders = values.Values.Except(validHeaders).OrderBy(k => k);
             if (notAllowedHeaders.Any())
             {
                 throw new InvalidAcceptHeadersFound(notAllowedHeaders);

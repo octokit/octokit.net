@@ -96,8 +96,7 @@
         public static bool TryParse(string input,
             out ProductHeaderValue parsedValue)
         {
-            System.Net.Http.Headers.ProductHeaderValue value;
-            var result = System.Net.Http.Headers.ProductHeaderValue.TryParse(input, out value);
+            var result = System.Net.Http.Headers.ProductHeaderValue.TryParse(input, out System.Net.Http.Headers.ProductHeaderValue value);
             parsedValue = result ? Parse(input) : null;
             return result;
         }

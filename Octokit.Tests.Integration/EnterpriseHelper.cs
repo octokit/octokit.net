@@ -53,7 +53,7 @@ namespace Octokit.Tests.Integration
         static readonly Lazy<bool> _gitHubEnterpriseEnabled = new Lazy<bool>(() =>
         {
             string enabled = Environment.GetEnvironmentVariable("OCTOKIT_GHE_ENABLED");
-            return !String.IsNullOrWhiteSpace(enabled);
+            return !string.IsNullOrWhiteSpace(enabled);
         });
 
         static readonly Lazy<Uri> _gitHubEnterpriseUrl = new Lazy<Uri>(() =>
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Integration
         {
             get
             {
-                return !String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_GHE_OAUTHTOKEN"));
+                return !string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("OCTOKIT_GHE_OAUTHTOKEN"));
             }
         }
 

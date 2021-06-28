@@ -39,9 +39,9 @@
 
         static T GetBodyAsObject(IResponse response)
         {
-            var body = response.Body;
-            if (body is T) return (T)body;
-            return default(T);
+            return response.Body is T tBody
+                ? tBody
+                : default;
         }
     }
 }

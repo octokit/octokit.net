@@ -49,8 +49,7 @@ namespace Octokit
             var header = response.Headers.FirstOrDefault(h => string.Equals(h.Key, "Retry-After", StringComparison.OrdinalIgnoreCase));
             if (header.Equals(default(KeyValuePair<string, string>))) { return null; }
 
-            int retrySeconds;
-            if (!int.TryParse(header.Value, out retrySeconds)) { return null; }
+            if (!int.TryParse(header.Value, out int retrySeconds)) { return null; }
             if (retrySeconds < 0) { return null; }
 
             return retrySeconds;
