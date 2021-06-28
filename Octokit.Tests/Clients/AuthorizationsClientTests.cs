@@ -129,7 +129,7 @@ namespace Octokit.Tests.Clients
 
                 client.Received().Put<ApplicationAuthorization>(
                     Arg.Is<Uri>(u => u.ToString() == "authorizations/clients/clientId"),
-                    Arg.Is<Object>(o => o.GetType().GetProperty("client_secret").GetValue(o).ToString() == "secret"));
+                    Arg.Is<object>(o => o.GetType().GetProperty("client_secret").GetValue(o).ToString() == "secret"));
             }
 
             [Fact]
