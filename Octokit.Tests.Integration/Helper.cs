@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration
         static readonly Lazy<bool> _gitHubAppsEnabled = new Lazy<bool>(() =>
         {
             string enabled = Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_ENABLED");
-            return !String.IsNullOrWhiteSpace(enabled);
+            return !string.IsNullOrWhiteSpace(enabled);
         });
 
         static readonly Lazy<Credentials> _githubAppCredentials = new Lazy<Credentials>(() =>
