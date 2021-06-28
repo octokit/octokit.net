@@ -1486,7 +1486,7 @@ public class RepositoriesClientTests
             Assert.Empty(result.Names);
 
             var doubleCheck = await _github.Repository.GetAllTopics(_theRepoOwner, _theRepository);
-            Assert.Empty((doubleCheck.Names));
+            Assert.Empty(doubleCheck.Names);
         }
 
         [IntegrationTest]
