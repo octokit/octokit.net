@@ -84,12 +84,10 @@ namespace Octokit
             {
                 // GitHub does not recognize title-case boolean values as arguments.
                 // We need to convert them to lowercase.
-                return (prop, value) => value != null ? value.ToString().ToLowerInvariant() : null;
+                return (prop, value) => value?.ToString().ToLowerInvariant();
             }
 
-            return (prop, value) => value != null
-                ? value.ToString()
-                : null;
+            return (prop, value) => value?.ToString();
         }
 
         static string GetParameterAttributeValueForEnumName(Type enumType, string name)
@@ -100,7 +98,7 @@ namespace Octokit
             var attribute = member.GetCustomAttributes(typeof(ParameterAttribute), false)
                 .Cast<ParameterAttribute>()
                 .FirstOrDefault();
-            return attribute != null ? attribute.Value : null;
+            return attribute?.Value;
         }
 
         class PropertyParameter

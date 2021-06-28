@@ -39,9 +39,7 @@ namespace Octokit
         {
             get
             {
-                return EncodedContent != null
-                    ? EncodedContent.FromBase64String()
-                    : null;
+                return EncodedContent?.FromBase64String();
             }
         }
 

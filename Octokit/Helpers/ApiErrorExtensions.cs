@@ -9,7 +9,7 @@ namespace Octokit
             if (apiError == null) return null;
             if (apiError.Errors == null) return apiError.Message;
             var firstError = apiError.Errors.FirstOrDefault();
-            return firstError == null ? null : firstError.Message;
+            return firstError?.Message;
         }
     }
 }

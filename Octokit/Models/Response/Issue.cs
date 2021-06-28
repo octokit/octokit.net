@@ -170,13 +170,9 @@ namespace Octokit
                 ? new int?()
                 : Milestone.Number;
 
-            var assignees = Assignees == null
-                ? null
-                : Assignees.Select(x => x.Login);
+            var assignees = Assignees?.Select(x => x.Login);
 
-            var labels = Labels == null
-                ? null
-                : Labels.Select(x => x.Name);
+            var labels = Labels?.Select(x => x.Name);
 
             ItemState state;
             var issueUpdate = new IssueUpdate
