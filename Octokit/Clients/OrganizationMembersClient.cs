@@ -351,13 +351,12 @@ namespace Octokit
             {
                 var response = await Connection.Get<object>(ApiUrls.CheckMember(org, user), null, null).ConfigureAwait(false);
                 var statusCode = response.HttpResponse.StatusCode;
-                if (statusCode != HttpStatusCode.NotFound
-                    && statusCode != HttpStatusCode.NoContent
-                    && statusCode != HttpStatusCode.Found)
-                {
-                    throw new ApiException("Invalid Status Code returned. Expected a 204, a 302 or a 404", statusCode);
-                }
-                return statusCode == HttpStatusCode.NoContent;
+
+                return statusCode == HttpStatusCode.NotFound
+                    || statusCode == HttpStatusCode.NoContent
+                    || statusCode == HttpStatusCode.Found
+                    ? statusCode == HttpStatusCode.NoContent
+                    : throw new ApiException("Invalid Status Code returned. Expected a 204, a 302 or a 404", statusCode);
             }
             catch (NotFoundException)
             {
