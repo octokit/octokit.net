@@ -180,12 +180,9 @@ namespace Octokit
         {
             get
             {
-                if (ApiError != null && !string.IsNullOrWhiteSpace(ApiError.Message))
-                {
-                    return ApiError.Message;
-                }
-
-                return null;
+                return ApiError != null && !string.IsNullOrWhiteSpace(ApiError.Message)
+                    ? ApiError.Message
+                    : null;
             }
         }
 
