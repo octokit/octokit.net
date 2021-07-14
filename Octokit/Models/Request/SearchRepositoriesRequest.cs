@@ -840,6 +840,8 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "SuperCollider")]
         [Parameter(Value = "SuperCollider")]
         SuperCollider,
+        [Parameter(Value = "Swift")]
+        Swift,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tcl")]
         Tcl,
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tcsh")]
