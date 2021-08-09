@@ -47,7 +47,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="GitHubJwt" Version="0.0.4" />
+    <PackageReference Include="GitHubJwt" Version="0.0.5" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
