@@ -30,7 +30,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
-        public IObservable<ProjectCard> GetAll(int columnId)
+        public IObservable<ProjectCard> GetAll(long columnId)
         {
             return GetAll(columnId, ApiOptions.None);
         }
@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<ProjectCard> GetAll(int columnId, ApiOptions options)
+        public IObservable<ProjectCard> GetAll(long columnId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -58,7 +58,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
-        public IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request)
+        public IObservable<ProjectCard> GetAll(long columnId, ProjectCardRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request, ApiOptions options)
+        public IObservable<ProjectCard> GetAll(long columnId, ProjectCardRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        public IObservable<ProjectCard> Get(int id)
+        public IObservable<ProjectCard> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        public IObservable<ProjectCard> Create(int columnId, NewProjectCard newProjectCard)
+        public IObservable<ProjectCard> Create(long columnId, NewProjectCard newProjectCard)
         {
             Ensure.ArgumentNotNull(newProjectCard, nameof(newProjectCard));
 
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
-        public IObservable<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
+        public IObservable<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate)
         {
             Ensure.ArgumentNotNull(projectCardUpdate, nameof(projectCardUpdate));
 
@@ -133,7 +133,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        public IObservable<bool> Delete(int id)
+        public IObservable<bool> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }
@@ -146,7 +146,7 @@ namespace Octokit.Reactive
         /// </remarks>        
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        public IObservable<bool> Move(int id, ProjectCardMove position)
+        public IObservable<bool> Move(long id, ProjectCardMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 

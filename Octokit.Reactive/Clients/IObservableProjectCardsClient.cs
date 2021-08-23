@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
-        IObservable<ProjectCard> GetAll(int columnId);
+        IObservable<ProjectCard> GetAll(long columnId);
 
         /// <summary>
         /// Gets all cards.
@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<ProjectCard> GetAll(int columnId, ApiOptions options);
+        IObservable<ProjectCard> GetAll(long columnId, ApiOptions options);
 
         /// <summary>
         /// Gets all cards.
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
-        IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request);
+        IObservable<ProjectCard> GetAll(long columnId, ProjectCardRequest request);
 
         /// <summary>
         /// Gets all cards.
@@ -49,7 +49,7 @@ namespace Octokit.Reactive
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<ProjectCard> GetAll(int columnId, ProjectCardRequest request, ApiOptions options);
+        IObservable<ProjectCard> GetAll(long columnId, ProjectCardRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets a single card.
@@ -59,7 +59,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<ProjectCard> Get(int id);
+        IObservable<ProjectCard> Get(long id);
 
         /// <summary>
         /// Creates a card.
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        IObservable<ProjectCard> Create(int columnId, NewProjectCard newProjectCard);
+        IObservable<ProjectCard> Create(long columnId, NewProjectCard newProjectCard);
 
         /// <summary>
         /// Updates a card.
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
-        IObservable<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate);
+        IObservable<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate);
 
         /// <summary>
         /// Deletes a card.
@@ -88,7 +88,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        IObservable<bool> Delete(int id);
+        IObservable<bool> Delete(long id);
 
         /// <summary>
         /// Moves a card.
@@ -98,6 +98,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        IObservable<bool> Move(int id, ProjectCardMove position);
+        IObservable<bool> Move(long id, ProjectCardMove position);
     }
 }

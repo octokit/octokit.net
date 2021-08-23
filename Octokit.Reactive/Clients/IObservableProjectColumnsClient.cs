@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#list-project-columns">API documentation</a> for more information.
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
-        IObservable<ProjectColumn> GetAll(int projectId);
+        IObservable<ProjectColumn> GetAll(long projectId);
 
         /// <summary>
         /// Gets all columns.
@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<ProjectColumn> GetAll(int projectId, ApiOptions options);
+        IObservable<ProjectColumn> GetAll(long projectId, ApiOptions options);
 
         /// <summary>
         /// Gets a single column.
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the column</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<ProjectColumn> Get(int id);
+        IObservable<ProjectColumn> Get(long id);
 
         /// <summary>
         /// Creates a column.
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         /// <param name="newProjectColumn">The column to create</param>
-        IObservable<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn);
+        IObservable<ProjectColumn> Create(long projectId, NewProjectColumn newProjectColumn);
 
         /// <summary>
         /// Updates a column.
@@ -58,7 +58,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the column</param>
         /// <param name="projectColumnUpdate">New values to update the column with</param>
-        IObservable<ProjectColumn> Update(int id, ProjectColumnUpdate projectColumnUpdate);
+        IObservable<ProjectColumn> Update(long id, ProjectColumnUpdate projectColumnUpdate);
 
         /// <summary>
         /// Deletes a column.
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#delete-a-project-column">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the column</param>
-        IObservable<bool> Delete(int id);
+        IObservable<bool> Delete(long id);
 
         /// <summary>
         /// Moves a column.
@@ -77,6 +77,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the column</param>
         /// <param name="position">The position to move the column</param>
-        IObservable<bool> Move(int id, ProjectColumnMove position);
+        IObservable<bool> Move(long id, ProjectColumnMove position);
     }
 }

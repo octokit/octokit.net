@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#list-project-columns">API documentation</a> for more information.
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
-        public IObservable<ProjectColumn> GetAll(int projectId)
+        public IObservable<ProjectColumn> GetAll(long projectId)
         {
             return GetAll(projectId, ApiOptions.None);
         }
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<ProjectColumn> GetAll(int projectId, ApiOptions options)
+        public IObservable<ProjectColumn> GetAll(long projectId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#get-a-project-column">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the column</param>
-        public IObservable<ProjectColumn> Get(int id)
+        public IObservable<ProjectColumn> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The id of the project</param>
         /// <param name="newProjectColumn">The column to create</param>
-        public IObservable<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn)
+        public IObservable<ProjectColumn> Create(long projectId, NewProjectColumn newProjectColumn)
         {
             Ensure.ArgumentNotNull(newProjectColumn, nameof(newProjectColumn));
 
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the column</param>
         /// <param name="projectColumnUpdate">New values to update the column with</param>
-        public IObservable<ProjectColumn> Update(int id, ProjectColumnUpdate projectColumnUpdate)
+        public IObservable<ProjectColumn> Update(long id, ProjectColumnUpdate projectColumnUpdate)
         {
             Ensure.ArgumentNotNull(projectColumnUpdate, nameof(projectColumnUpdate));
 
@@ -96,7 +96,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#delete-a-project-column">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the column</param>
-        public IObservable<bool> Delete(int id)
+        public IObservable<bool> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }
@@ -109,7 +109,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the column</param>
         /// <param name="position">The position to move the column</param>
-        public IObservable<bool> Move(int id, ProjectColumnMove position)
+        public IObservable<bool> Move(long id, ProjectColumnMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 
