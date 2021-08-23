@@ -189,7 +189,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns></returns>
-        public static Uri Releases(string owner, string name, int id)
+        public static Uri Releases(string owner, string name, long id)
         {
             return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, id);
         }
@@ -224,7 +224,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns></returns>
-        public static Uri ReleaseAssets(string owner, string name, int id)
+        public static Uri ReleaseAssets(string owner, string name, long id)
         {
             return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, id);
         }
@@ -236,7 +236,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release asset</param>
         /// <returns></returns>
-        public static Uri Asset(string owner, string name, int id)
+        public static Uri Asset(string owner, string name, long id)
         {
             return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, id);
         }
@@ -2721,7 +2721,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release asset</param>
         /// <returns>The <see cref="Uri"/> that returns the assets specified by the asset id.</returns>
-        public static Uri Asset(long repositoryId, int id)
+        public static Uri Asset(long repositoryId, long id)
         {
             return "repositories/{0}/releases/assets/{1}".FormatUri(repositoryId, id);
         }
@@ -3247,7 +3247,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.</returns>
-        public static Uri ReleaseAssets(long repositoryId, int id)
+        public static Uri ReleaseAssets(long repositoryId, long id)
         {
             return "repositories/{0}/releases/{1}/assets".FormatUri(repositoryId, id);
         }
@@ -3268,7 +3268,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
-        public static Uri Releases(long repositoryId, int id)
+        public static Uri Releases(long repositoryId, long id)
         {
             return "repositories/{0}/releases/{1}".FormatUri(repositoryId, id);
         }
