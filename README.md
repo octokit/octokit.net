@@ -44,7 +44,7 @@ dotnet add package Octokit.Reactive
 
 
 ### Beta packages ###
-Unstable NuGet packages that track the master branch of this repository are available at
+Unstable NuGet packages that track the `main` branch of this repository are available at
 [https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
 
 In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
@@ -73,9 +73,9 @@ Linux/OSX: `./build.sh`
 
 ## Contribute
 
-Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md)
+Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/main/CONTRIBUTING.md)
 for more details. All contributors are expected to follow our
-[Code of Conduct](https://github.com/octokit/octokit.net/blob/master/CODE_OF_CONDUCT.md).
+[Code of Conduct](https://github.com/octokit/octokit.net/blob/main/CODE_OF_CONDUCT.md).
 
 ## Problems?
 
@@ -104,4 +104,4 @@ problem.
 
 Copyright 2017 GitHub, Inc.
 
-Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/master/LICENSE.txt)
+Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/main/LICENSE.txt)
