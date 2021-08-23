@@ -25,7 +25,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         [ManualRoute("GET", "/projects/columns/{column_id}/cards")]
-        public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId)
+        public Task<IReadOnlyList<ProjectCard>> GetAll(long columnId)
         {
             return GetAll(columnId, ApiOptions.None);
         }
@@ -39,7 +39,7 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/projects/columns/{column_id}/cards")]
-        public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ApiOptions options)
+        public Task<IReadOnlyList<ProjectCard>> GetAll(long columnId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -55,7 +55,7 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
         [ManualRoute("GET", "/projects/columns/{column_id}/cards")]
-        public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request)
+        public Task<IReadOnlyList<ProjectCard>> GetAll(long columnId, ProjectCardRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -73,7 +73,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         [Preview("inertia")]
         [ManualRoute("GET", "/projects/columns/{column_id}/cards")]
-        public Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request, ApiOptions options)
+        public Task<IReadOnlyList<ProjectCard>> GetAll(long columnId, ProjectCardRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -90,7 +90,7 @@ namespace Octokit
         /// <param name="id">The id of the card</param>
         [Preview("inertia")]
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
-        public Task<ProjectCard> Get(int id)
+        public Task<ProjectCard> Get(long id)
         {
             return ApiConnection.Get<ProjectCard>(ApiUrls.ProjectCard(id), null, AcceptHeaders.ProjectsApiPreview);
         }
@@ -105,7 +105,7 @@ namespace Octokit
         /// <param name="newProjectCard">The card to create</param>
         [Preview("inertia")]
         [ManualRoute("POST", "/projects/columns/{column_id}/cards")]
-        public Task<ProjectCard> Create(int columnId, NewProjectCard newProjectCard)
+        public Task<ProjectCard> Create(long columnId, NewProjectCard newProjectCard)
         {
             Ensure.ArgumentNotNull(newProjectCard, nameof(newProjectCard));
 
@@ -122,7 +122,7 @@ namespace Octokit
         /// <param name="projectCardUpdate">New values to update the card with</param>
         [Preview("inertia")]
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
-        public Task<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
+        public Task<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate)
         {
             Ensure.ArgumentNotNull(projectCardUpdate, nameof(projectCardUpdate));
 
@@ -138,7 +138,7 @@ namespace Octokit
         /// <param name="id">The id of the card</param>
         [Preview("inertia")]
         [ManualRoute("DELETE", "/projects/columns/cards/{card_id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             var endpoint = ApiUrls.ProjectCard(id);
 
@@ -163,7 +163,7 @@ namespace Octokit
         /// <param name="position">The position to move the card</param>
         [Preview("inertia")]
         [ManualRoute("POST", "/projects/columns/cards/{card_id}/moves")]
-        public async Task<bool> Move(int id, ProjectCardMove position)
+        public async Task<bool> Move(long id, ProjectCardMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 

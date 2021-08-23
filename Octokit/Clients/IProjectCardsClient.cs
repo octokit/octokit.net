@@ -19,7 +19,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId);
+        Task<IReadOnlyList<ProjectCard>> GetAll(long columnId);
 
         /// <summary>
         /// Gets all cards.
@@ -29,7 +29,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ApiOptions options);
+        Task<IReadOnlyList<ProjectCard>> GetAll(long columnId, ApiOptions options);
 
         /// <summary>
         /// Gets all cards.
@@ -39,7 +39,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request);
+        Task<IReadOnlyList<ProjectCard>> GetAll(long columnId, ProjectCardRequest request);
 
         /// <summary>
         /// Gets all cards.
@@ -50,7 +50,7 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request, ApiOptions options);
+        Task<IReadOnlyList<ProjectCard>> GetAll(long columnId, ProjectCardRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets a single card.
@@ -60,7 +60,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<ProjectCard> Get(int id);
+        Task<ProjectCard> Get(long id);
 
         /// <summary>
         /// Creates a card.
@@ -70,7 +70,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        Task<ProjectCard> Create(int columnId, NewProjectCard newProjectCard);
+        Task<ProjectCard> Create(long columnId, NewProjectCard newProjectCard);
 
         /// <summary>
         /// Updates a card.
@@ -80,7 +80,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
-        Task<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate);
+        Task<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate);
 
         /// <summary>
         /// Deletes a card.
@@ -89,7 +89,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        Task<bool> Delete(int id);
+        Task<bool> Delete(long id);
 
         /// <summary>
         /// Moves a card.
@@ -99,6 +99,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        Task<bool> Move(int id, ProjectCardMove position);
+        Task<bool> Move(long id, ProjectCardMove position);
     }
 }

@@ -3917,7 +3917,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the card</param>
         /// <returns>The <see cref="Uri"/> for project cards.</returns>
-        public static Uri ProjectCard(int id)
+        public static Uri ProjectCard(long id)
         {
             return "projects/columns/cards/{0}".FormatUri(id);
         }
@@ -3927,7 +3927,7 @@ namespace Octokit
         /// </summary>
         /// <param name="columnId">The id of the column</param>
         /// <returns>The <see cref="Uri"/> for project cards.</returns>
-        public static Uri ProjectCards(int columnId)
+        public static Uri ProjectCards(long columnId)
         {
             return "projects/columns/{0}/cards".FormatUri(columnId);
         }
@@ -3937,7 +3937,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the card to move</param>
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
-        public static Uri ProjectCardMove(int id)
+        public static Uri ProjectCardMove(long id)
         {
             return "projects/columns/cards/{0}/moves".FormatUri(id);
         }
