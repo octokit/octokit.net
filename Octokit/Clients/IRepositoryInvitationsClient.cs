@@ -20,7 +20,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
-        Task<bool> Accept(int invitationId);
+        Task<bool> Accept(long invitationId);
 
         /// <summary>
         /// Decline a repository invitation.
@@ -30,7 +30,7 @@ namespace Octokit
         /// </remarks>        
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Decline(int invitationId);
+        Task<bool> Decline(long invitationId);
 
         /// <summary>
         /// Deletes a repository invitation.
@@ -41,7 +41,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Delete(long repositoryId, int invitationId);
+        Task<bool> Delete(long repositoryId, long invitationId);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -95,6 +95,6 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <param name="permissions">The permission for the collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions);
+        Task<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions);
     }
 }

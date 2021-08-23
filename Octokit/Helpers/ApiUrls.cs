@@ -3710,7 +3710,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <returns>The <see cref="Uri"/> for repository invitations.</returns>
-        public static Uri RepositoryInvitations(long repositoryId, int invitationId)
+        public static Uri RepositoryInvitations(long repositoryId, long invitationId)
         {
             return "repositories/{0}/invitations/{1}".FormatUri(repositoryId, invitationId);
         }
@@ -3729,7 +3729,7 @@ namespace Octokit
         /// </summary>
         /// <param name="invitationId">The id of the invitation</param>
         /// <returns>The <see cref="Uri"/> for invitations for the current user.</returns>
-        public static Uri UserInvitations(int invitationId)
+        public static Uri UserInvitations(long invitationId)
         {
             return "user/repository_invitations/{0}".FormatUri(invitationId);
         }
