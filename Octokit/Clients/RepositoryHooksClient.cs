@@ -196,7 +196,7 @@ namespace Octokit
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
         [ManualRoute("POST", "/repositories/{id}/hooks/{hook_id}/tests")]
-        public Task Test(long repositoryId, int hookId)
+        public Task Test(long repositoryId, long hookId)
         {
             return ApiConnection.Post(ApiUrls.RepositoryHookTest(repositoryId, hookId));
         }
@@ -209,7 +209,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("POST", "/repos/{owner}/{repo}/hooks/{id}/pings")]
-        public Task Ping(string owner, string name, int hookId)
+        public Task Ping(string owner, string name, long hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
