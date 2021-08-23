@@ -282,7 +282,7 @@ public class ProjectColumnsClientTests
         return result;
     }
 
-    private static async Task<ProjectColumn> CreateColumnHelper(IGitHubClient githubClient, int projectId)
+    private static async Task<ProjectColumn> CreateColumnHelper(IGitHubClient githubClient, long projectId)
     {
         var newColumn = new NewProjectColumn(Helper.MakeNameWithTimestamp("new-project-column"));
         var result = await githubClient.Repository.Project.Column.Create(projectId, newColumn);
