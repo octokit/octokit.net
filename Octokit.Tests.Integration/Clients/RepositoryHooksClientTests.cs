@@ -295,7 +295,7 @@ namespace Octokit.Tests.Integration.Clients
                 }.Union(config).ToDictionary(k => k.Key, v => v.Value);
             }
 
-            string CreateExpectedBaseHookUrl(string url, int id)
+            string CreateExpectedBaseHookUrl(string url, long id)
             {
                 return url + "/hooks/" + id;
             }
