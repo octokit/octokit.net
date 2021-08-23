@@ -10,7 +10,7 @@ namespace Octokit
     {
         public PullRequestReviewComment() { }
 
-        public PullRequestReviewComment(long id)
+        public PullRequestReviewComment(int id)
         {
             Id = id;
         }
