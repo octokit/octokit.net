@@ -9,7 +9,7 @@ namespace Octokit
     {
         public Author() { }
 
-        public Author(string login, int id, string nodeId, string avatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin)
+        public Author(string login, long id, string nodeId, string avatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin)
         {
             Login = login;
             Id = id;
@@ -32,7 +32,7 @@ namespace Octokit
 
         public string Login { get; protected set; }
 
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// GraphQL Node Id
