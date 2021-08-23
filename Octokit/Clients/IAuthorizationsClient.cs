@@ -61,7 +61,7 @@ namespace Octokit
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
-        Task<Authorization> Get(int id);
+        Task<Authorization> Get(long id);
 
         /// <summary>
         /// Creates a new personal token for the authenticated user.
@@ -251,7 +251,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
-        Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate);
+        Task<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate);
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
@@ -267,7 +267,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        Task Delete(int id);
+        Task Delete(long id);
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
@@ -284,6 +284,6 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        Task Delete(int id, string twoFactorAuthenticationCode);
+        Task Delete(long id, string twoFactorAuthenticationCode);
     }
 }
