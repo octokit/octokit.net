@@ -12,7 +12,7 @@ namespace Octokit
     {
         public GpgKey() { }
 
-        public GpgKey(long id, int? primaryKeyId, string keyId, string publicKey, IReadOnlyList<EmailAddress> emails, IReadOnlyList<GpgKey> subkeys, bool canSign, bool canEncryptCommunications, bool canEncryptStorage, bool canCertify, DateTimeOffset createdAt, DateTimeOffset? expiresAt)
+        public GpgKey(int id, int? primaryKeyId, string keyId, string publicKey, IReadOnlyList<EmailAddress> emails, IReadOnlyList<GpgKey> subkeys, bool canSign, bool canEncryptCommunications, bool canEncryptStorage, bool canCertify, DateTimeOffset createdAt, DateTimeOffset? expiresAt)
         {
             Id = id;
             PrimaryKeyId = primaryKeyId;
@@ -28,7 +28,7 @@ namespace Octokit
             ExpiresAt = expiresAt;
         }
 
-        public long Id { get; protected set; }
+        public int Id { get; protected set; }
         public int? PrimaryKeyId { get; protected set; }
         public string KeyId { get; protected set; }
         public string PublicKey { get; protected set; }
