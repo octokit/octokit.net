@@ -14,7 +14,7 @@ namespace Octokit
         // TODO: I'd love to not need this
         public Authorization() { }
 
-        public Authorization(int id, string url, Application application, string tokenLastEight, string hashedToken, string fingerprint, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)
+        public Authorization(long id, string url, Application application, string tokenLastEight, string hashedToken, string fingerprint, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes)
         {
             Id = id;
             Url = url;
@@ -36,7 +36,7 @@ namespace Octokit
         /// <summary>
         /// The Id of this <see cref="Authorization"/>.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// The API URL for this <see cref="Authorization"/>.
