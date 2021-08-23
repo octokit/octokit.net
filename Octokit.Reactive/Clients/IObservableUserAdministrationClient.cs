@@ -133,6 +133,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
-        IObservable<Unit> DeletePublicKey(int keyId);
+        IObservable<Unit> DeletePublicKey(long keyId);
     }
 }

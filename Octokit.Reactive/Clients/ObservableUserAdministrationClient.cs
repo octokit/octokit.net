@@ -180,7 +180,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
-        public IObservable<Unit> DeletePublicKey(int keyId)
+        public IObservable<Unit> DeletePublicKey(long keyId)
         {
             return _client.DeletePublicKey(keyId).ToObservable();
         }
