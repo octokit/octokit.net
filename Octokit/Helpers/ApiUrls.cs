@@ -2264,7 +2264,7 @@ namespace Octokit
         /// <param name="name">Name of the repository</param>
         /// <param name="deploymentId">Id of the deployment</param>
         /// <returns></returns>
-        public static Uri DeploymentStatuses(string owner, string name, int deploymentId)
+        public static Uri DeploymentStatuses(string owner, string name, long deploymentId)
         {
             return "repos/{0}/{1}/deployments/{2}/statuses".FormatUri(owner, name, deploymentId);
         }
@@ -2567,12 +2567,12 @@ namespace Octokit
             return EnterpriseAdminStats("all");
         }
 
-        public static Uri EnterpriseLdapTeamMapping(int teamId)
+        public static Uri EnterpriseLdapTeamMapping(long teamId)
         {
             return "admin/ldap/teams/{0}/mapping".FormatUri(teamId);
         }
 
-        public static Uri EnterpriseLdapTeamSync(int teamId)
+        public static Uri EnterpriseLdapTeamSync(long teamId)
         {
             return "admin/ldap/teams/{0}/sync".FormatUri(teamId);
         }
@@ -2895,7 +2895,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="deploymentId">Id of the deployment</param>
         /// <returns>The <see cref="Uri"/> for the Deployment Statuses API for the given deployment.</returns>
-        public static Uri DeploymentStatuses(long repositoryId, int deploymentId)
+        public static Uri DeploymentStatuses(long repositoryId, long deploymentId)
         {
             return "repositories/{0}/deployments/{1}/statuses".FormatUri(repositoryId, deploymentId);
         }
