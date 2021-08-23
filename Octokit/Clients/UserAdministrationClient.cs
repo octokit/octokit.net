@@ -221,7 +221,7 @@ namespace Octokit
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/admin/keys/{key_id}")]
-        public async Task DeletePublicKey(int keyId)
+        public async Task DeletePublicKey(long keyId)
         {
             Ensure.ArgumentNotNull(keyId, nameof(keyId));
             var endpoint = ApiUrls.UserAdministrationPublicKeys(keyId);

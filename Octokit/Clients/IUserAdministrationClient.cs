@@ -132,6 +132,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
-        Task DeletePublicKey(int keyId);
+        Task DeletePublicKey(long keyId);
     }
 }

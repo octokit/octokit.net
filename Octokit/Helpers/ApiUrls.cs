@@ -2654,7 +2654,7 @@ namespace Octokit
             return "admin/keys".FormatUri();
         }
 
-        public static Uri UserAdministrationPublicKeys(int keyId)
+        public static Uri UserAdministrationPublicKeys(long keyId)
         {
             return "admin/keys/{0}".FormatUri(keyId);
         }
