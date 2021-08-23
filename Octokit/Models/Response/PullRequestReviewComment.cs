@@ -121,12 +121,12 @@ namespace Octokit
         /// <summary>
         /// The Id of the comment this comment replys to.
         /// </summary>
-        public int? InReplyToId { get; protected set; }
+        public long? InReplyToId { get; protected set; }
 
         /// <summary>
         /// The Id of the pull request this comment belongs to.
         /// </summary>
-        public int? PullRequestReviewId { get; protected set; }
+        public long? PullRequestReviewId { get; protected set; }
 
         /// <summary>
         /// The comment author association with repository.

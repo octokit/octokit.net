@@ -6,7 +6,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ProjectColumnMove
     {
-        public ProjectColumnMove(ProjectColumnPosition position, int? columnId)
+        public ProjectColumnMove(ProjectColumnPosition position, long? columnId)
         {
             switch (position)
             {
