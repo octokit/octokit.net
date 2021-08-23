@@ -3887,7 +3887,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the columns</param>
         /// <returns>The <see cref="Uri"/> for project columns.</returns>
-        public static Uri ProjectColumn(int id)
+        public static Uri ProjectColumn(long id)
         {
             return "projects/columns/{0}".FormatUri(id);
         }
@@ -3897,7 +3897,7 @@ namespace Octokit
         /// </summary>
         /// <param name="projectId">The id of the project</param>
         /// <returns>The <see cref="Uri"/> for a specific project column.</returns>
-        public static Uri ProjectColumns(int projectId)
+        public static Uri ProjectColumns(long projectId)
         {
             return "projects/{0}/columns".FormatUri(projectId);
         }
@@ -3907,7 +3907,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the column to move</param>
         /// <returns>The <see cref="Uri"/> to move a project column.</returns>
-        public static Uri ProjectColumnMove(int id)
+        public static Uri ProjectColumnMove(long id)
         {
             return "projects/columns/{0}/moves".FormatUri(id);
         }

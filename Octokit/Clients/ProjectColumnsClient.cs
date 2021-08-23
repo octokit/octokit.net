@@ -25,7 +25,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         [ManualRoute("GET", "/projects/{project_id}/columns")]
-        public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId)
+        public Task<IReadOnlyList<ProjectColumn>> GetAll(long projectId)
         {
             return GetAll(projectId, ApiOptions.None);
         }
@@ -40,7 +40,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         [Preview("inertia")]
         [ManualRoute("GET", "/projects/{project_id}/columns")]
-        public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId, ApiOptions options)
+        public Task<IReadOnlyList<ProjectColumn>> GetAll(long projectId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -56,7 +56,7 @@ namespace Octokit
         /// <param name="id">The id of the column</param>
         [Preview("inertia")]
         [ManualRoute("GET", "/projects/columns/{column_id}")]
-        public Task<ProjectColumn> Get(int id)
+        public Task<ProjectColumn> Get(long id)
         {
             return ApiConnection.Get<ProjectColumn>(ApiUrls.ProjectColumn(id), null, AcceptHeaders.ProjectsApiPreview);
         }
@@ -71,7 +71,7 @@ namespace Octokit
         /// <param name="newProjectColumn">The column to create</param>
         [Preview("inertia")]
         [ManualRoute("POST", "/projects/{project_id}/columns")]
-        public Task<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn)
+        public Task<ProjectColumn> Create(long projectId, NewProjectColumn newProjectColumn)
         {
             Ensure.ArgumentNotNull(newProjectColumn, nameof(newProjectColumn));
 
@@ -88,7 +88,7 @@ namespace Octokit
         /// <param name="projectColumnUpdate">New values to update the column with</param>
         [Preview("inertia")]
         [ManualRoute("PATCH", "/projects/columns/{column_id}")]
-        public Task<ProjectColumn> Update(int id, ProjectColumnUpdate projectColumnUpdate)
+        public Task<ProjectColumn> Update(long id, ProjectColumnUpdate projectColumnUpdate)
         {
             Ensure.ArgumentNotNull(projectColumnUpdate, nameof(projectColumnUpdate));
 
@@ -104,7 +104,7 @@ namespace Octokit
         /// <param name="id">The id of the column</param>
         [Preview("inertia")]
         [ManualRoute("DELETE", "/projects/columns/{column_id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             var endpoint = ApiUrls.ProjectColumn(id);
             try
@@ -128,7 +128,7 @@ namespace Octokit
         /// <param name="position">The position to move the column</param>
         [Preview("inertia")]
         [ManualRoute("POST", "/projects/columns/{column_id}/moves")]
-        public async Task<bool> Move(int id, ProjectColumnMove position)
+        public async Task<bool> Move(long id, ProjectColumnMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 
