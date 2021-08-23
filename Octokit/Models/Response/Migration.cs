@@ -22,7 +22,7 @@ namespace Octokit
         { }
 
         public Migration(
-            long id,
+            int id,
             string nodeId,
             string guid,
             MigrationState state,
@@ -48,7 +48,7 @@ namespace Octokit
         /// <summary>
         /// Id of migration.
         /// </summary>
-        public long Id { get; private set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
