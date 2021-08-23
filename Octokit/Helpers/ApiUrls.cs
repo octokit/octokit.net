@@ -1001,7 +1001,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="hookId">The identifier of the organization hook</param>
         /// <returns></returns>
-        public static Uri OrganizationHookById(string org, int hookId)
+        public static Uri OrganizationHookById(string org, long hookId)
         {
             return "orgs/{0}/hooks/{1}".FormatUri(org, hookId);
         }
@@ -1012,7 +1012,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="hookId">The identifier of the organization hook</param>
         /// <returns></returns>
-        public static Uri OrganizationHookPing(string org, int hookId)
+        public static Uri OrganizationHookPing(string org, long hookId)
         {
             return "orgs/{0}/hooks/{1}/pings".FormatUri(org, hookId);
         }
