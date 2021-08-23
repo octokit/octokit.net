@@ -15,7 +15,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReviewComment(string url, long id, string nodeId, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, ReactionSummary reactions, int? inReplyToId, int? pullRequestReviewId, AuthorAssociation authorAssociation)
+        public PullRequestReviewComment(string url, int id, string nodeId, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, ReactionSummary reactions, int? inReplyToId, int? pullRequestReviewId, AuthorAssociation authorAssociation)
         {
             PullRequestReviewId = pullRequestReviewId;
             Url = url;
@@ -46,7 +46,7 @@ namespace Octokit
         /// <summary>
         /// The comment Id.
         /// </summary>
-        public long Id { get; protected set; }
+        public int Id { get; protected set; }
 
         /// <summary>
         /// GraphQL Node Id
