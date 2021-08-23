@@ -11,7 +11,7 @@ namespace Octokit
     {
         public OrganizationHook() { }
 
-        public OrganizationHook(long id, string url, string testUrl, string pingUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, IReadOnlyList<string> events, bool active, IReadOnlyDictionary<string, string> config)
+        public OrganizationHook(int id, string url, string testUrl, string pingUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string name, IReadOnlyList<string> events, bool active, IReadOnlyDictionary<string, string> config)
         {
             Url = url;
             TestUrl = testUrl;
@@ -25,7 +25,7 @@ namespace Octokit
             Id = id;
         }
 
-        public long Id { get; private set; }
+        public int Id { get; private set; }
 
         public string Url { get; private set; }
 
