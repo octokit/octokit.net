@@ -15,7 +15,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<GistComment> Get(string gistId, int commentId);
+        IObservable<GistComment> Get(string gistId, long commentId);
 
         /// <summary>
         /// Gets all comments for the gist with the specified id.
@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        IObservable<GistComment> Update(string gistId, int commentId, string comment);
+        IObservable<GistComment> Update(string gistId, long commentId, string comment);
 
         /// <summary>
         /// Deletes the comment with the specified gist- and comment id.
@@ -60,6 +60,6 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{Unit}.</returns>
-        IObservable<Unit> Delete(string gistId, int commentId);
+        IObservable<Unit> Delete(string gistId, long commentId);
     }
 }
