@@ -593,7 +593,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment number</param>
         /// <returns></returns>
-        public static Uri CommitCommentReactions(string owner, string name, long number)
+        public static Uri CommitCommentReactions(string owner, string name, int number)
         {
             return "repos/{0}/{1}/comments/{2}/reactions".FormatUri(owner, name, number);
         }
@@ -604,7 +604,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
         /// <returns></returns>
-        public static Uri CommitCommentReactions(long repositoryId, long number)
+        public static Uri CommitCommentReactions(long repositoryId, int number)
         {
             return "repositories/{0}/comments/{1}/reactions".FormatUri(repositoryId, number);
         }
