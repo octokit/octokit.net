@@ -242,7 +242,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Delte a team - must have owner permissions to this
+        /// Delete a team - must have owner permissions to this
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
