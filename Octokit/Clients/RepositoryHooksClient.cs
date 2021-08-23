@@ -85,7 +85,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/hooks/{id}")]
-        public Task<RepositoryHook> Get(string owner, string name, int hookId)
+        public Task<RepositoryHook> Get(string owner, string name, long hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -100,7 +100,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("GET", "/repositories/{id}/hooks/{id}")]
-        public Task<RepositoryHook> Get(long repositoryId, int hookId)
+        public Task<RepositoryHook> Get(long repositoryId, long hookId)
         {
             return ApiConnection.Get<RepositoryHook>(ApiUrls.RepositoryHookById(repositoryId, hookId));
         }
@@ -145,7 +145,7 @@ namespace Octokit
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/hooks/{id}")]
-        public Task<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook)
+        public Task<RepositoryHook> Edit(string owner, string name, long hookId, EditRepositoryHook hook)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -162,7 +162,7 @@ namespace Octokit
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("POST", "/repositories/{id}/hooks/{hook_id}")]
-        public Task<RepositoryHook> Edit(long repositoryId, int hookId, EditRepositoryHook hook)
+        public Task<RepositoryHook> Edit(long repositoryId, long hookId, EditRepositoryHook hook)
         {
             Ensure.ArgumentNotNull(hook, nameof(hook));
 
@@ -179,7 +179,7 @@ namespace Octokit
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
         [ManualRoute("POST", "/repos/{owner}/{repo}/hooks/{id}/tests")]
-        public Task Test(string owner, string name, int hookId)
+        public Task Test(string owner, string name, long hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -224,7 +224,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("POST", "/repositories/{id}/hooks/{hook_id}/pings")]
-        public Task Ping(long repositoryId, int hookId)
+        public Task Ping(long repositoryId, long hookId)
         {
             return ApiConnection.Post(ApiUrls.RepositoryHookPing(repositoryId, hookId));
         }
@@ -237,7 +237,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/hooks/{id}")]
-        public Task Delete(string owner, string name, int hookId)
+        public Task Delete(string owner, string name, long hookId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -252,7 +252,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("DELETE", "/repositories/{id}/hooks/{hook_id}")]
-        public Task Delete(long repositoryId, int hookId)
+        public Task Delete(long repositoryId, long hookId)
         {
             return ApiConnection.Delete(ApiUrls.RepositoryHookById(repositoryId, hookId));
         }

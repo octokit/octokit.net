@@ -52,7 +52,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keywords")]
-        Task<RepositoryHook> Get(string owner, string name, int hookId);
+        Task<RepositoryHook> Get(string owner, string name, long hookId);
 
         /// <summary>
         /// Gets a single hook by Id
@@ -61,7 +61,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keywords")]
-        Task<RepositoryHook> Get(long repositoryId, int hookId);
+        Task<RepositoryHook> Get(long repositoryId, long hookId);
 
         /// <summary>
         /// Creates a hook for a repository
@@ -88,7 +88,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        Task<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook);
+        Task<RepositoryHook> Edit(string owner, string name, long hookId, EditRepositoryHook hook);
 
         /// <summary>
         /// Edits a hook for a repository
@@ -97,7 +97,7 @@ namespace Octokit
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        Task<RepositoryHook> Edit(long repositoryId, int hookId, EditRepositoryHook hook);
+        Task<RepositoryHook> Edit(long repositoryId, long hookId, EditRepositoryHook hook);
 
         /// <summary>
         /// Tests a hook for a repository
@@ -108,7 +108,7 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
-        Task Test(string owner, string name, int hookId);
+        Task Test(string owner, string name, long hookId);
 
         /// <summary>
         /// Tests a hook for a repository
@@ -118,7 +118,7 @@ namespace Octokit
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
-        Task Test(long repositoryId, int hookId);
+        Task Test(long repositoryId, long hookId);
 
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
@@ -127,7 +127,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        Task Ping(string owner, string name, int hookId);
+        Task Ping(string owner, string name, long hookId);
 
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
@@ -135,7 +135,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        Task Ping(long repositoryId, int hookId);
+        Task Ping(long repositoryId, long hookId);
 
         /// <summary>
         /// Deletes a hook for a repository
@@ -144,7 +144,7 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        Task Delete(string owner, string name, int hookId);
+        Task Delete(string owner, string name, long hookId);
 
         /// <summary>
         /// Deletes a hook for a repository
@@ -152,6 +152,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        Task Delete(long repositoryId, int hookId);
+        Task Delete(long repositoryId, long hookId);
     }
 }

@@ -956,7 +956,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns></returns>
-        public static Uri RepositoryHookById(string owner, string name, int hookId)
+        public static Uri RepositoryHookById(string owner, string name, long hookId)
         {
             return "repos/{0}/{1}/hooks/{2}".FormatUri(owner, name, hookId);
         }
@@ -968,7 +968,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns></returns>
-        public static Uri RepositoryHookTest(string owner, string name, int hookId)
+        public static Uri RepositoryHookTest(string owner, string name, long hookId)
         {
             return "repos/{0}/{1}/hooks/{2}/tests".FormatUri(owner, name, hookId);
         }
@@ -980,7 +980,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns></returns>
-        public static Uri RepositoryHookPing(string owner, string name, int hookId)
+        public static Uri RepositoryHookPing(string owner, string name, long hookId)
         {
             return "repos/{0}/{1}/hooks/{2}/pings".FormatUri(owner, name, hookId);
         }
@@ -3454,7 +3454,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns>The <see cref="Uri"/> that gets the repository hook for the specified reference.</returns>
-        public static Uri RepositoryHookById(long repositoryId, int hookId)
+        public static Uri RepositoryHookById(long repositoryId, long hookId)
         {
             return "repositories/{0}/hooks/{1}".FormatUri(repositoryId, hookId);
         }
@@ -3465,7 +3465,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns>The <see cref="Uri"/> that can ping a specified repository hook</returns>
-        public static Uri RepositoryHookPing(long repositoryId, int hookId)
+        public static Uri RepositoryHookPing(long repositoryId, long hookId)
         {
             return "repositories/{0}/hooks/{1}/pings".FormatUri(repositoryId, hookId);
         }
@@ -3486,7 +3486,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The identifier of the repository hook</param>
         /// <returns>The <see cref="Uri"/> that can tests a specified repository hook</returns>
-        public static Uri RepositoryHookTest(long repositoryId, int hookId)
+        public static Uri RepositoryHookTest(long repositoryId, long hookId)
         {
             return "repositories/{0}/hooks/{1}/tests".FormatUri(repositoryId, hookId);
         }
