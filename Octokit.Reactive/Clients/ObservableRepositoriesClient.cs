@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="templateOwner">The organization or person who will owns the template</param>
         /// <param name="templateRepo">The name of template repository to work from</param>
-        /// <param name="newRepository"></param>
+        /// <param name="newRepository">A <see cref="NewRepositoryFromTemplate"/> instance describing the new repository to create from a template</param>
         /// <returns></returns>
         public IObservable<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository)
         {
