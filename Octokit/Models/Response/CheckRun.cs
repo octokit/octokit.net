@@ -12,13 +12,14 @@ namespace Octokit
         {
         }
 
-        public CheckRun(long id, string headSha, string externalId, string url, string htmlUrl, CheckStatus status, CheckConclusion? conclusion, DateTimeOffset startedAt, DateTimeOffset? completedAt, CheckRunOutputResponse output, string name, CheckSuite checkSuite, GitHubApp app, IReadOnlyList<PullRequest> pullRequests)
+        public CheckRun(long id, string headSha, string externalId, string url, string htmlUrl, string detailsUrl, CheckStatus status, CheckConclusion? conclusion, DateTimeOffset startedAt, DateTimeOffset? completedAt, CheckRunOutputResponse output, string name, CheckSuite checkSuite, GitHubApp app, IReadOnlyList<PullRequest> pullRequests)
         {
             Id = id;
             HeadSha = headSha;
             ExternalId = externalId;
             Url = url;
             HtmlUrl = htmlUrl;
+            DetailsUrl = detailsUrl;
             Status = status;
             Conclusion = conclusion;
             StartedAt = startedAt;
@@ -54,6 +55,11 @@ namespace Octokit
         /// The GitHub.com URL of the check run
         /// </summary>
         public string HtmlUrl { get; protected set; }
+
+        /// <summary>
+        /// The URL of the integrator's site that has the full details of the check
+        /// </summary>
+        public string DetailsUrl { get; protected set; }
 
         /// <summary>
         /// The check run status
