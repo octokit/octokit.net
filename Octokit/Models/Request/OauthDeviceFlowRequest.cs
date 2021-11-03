@@ -32,7 +32,7 @@ namespace Octokit
 
         /// <summary>
         /// A set of scopes to request. If not provided, scope defaults to an empty list of scopes for users that don’t
-        /// have a valid token for the app. For users who do already have a valid token for the app, the user won’t be
+        /// have a valid token for the app. For users who do already have a valid token for the app, the user won't be
         /// shown the OAuth authorization page with the list of scopes. Instead, this step of the flow will
         /// automatically complete with the same scopes that were used last time the user completed the flow.
         /// </summary>
