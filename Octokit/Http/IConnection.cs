@@ -321,5 +321,10 @@ namespace Octokit
         /// </summary>
         /// <param name="timeout">The Timeout value</param>
         void SetRequestTimeout(TimeSpan timeout);
+
+        /// <summary>
+        /// Gets / sets send data timeout
+        /// </summary>
+        TimeSpan? SendDataTimeout{ get; set; }
     }
 }

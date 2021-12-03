@@ -412,6 +412,11 @@ namespace Octokit
                 Endpoint = uri
             };
 
+            if (SendDataTimeout.HasValue)
+            {
+                request.Timeout = SendDataTimeout.Value;
+            }
+
             return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
         }
 
@@ -645,6 +650,8 @@ namespace Octokit
                 _authenticator.CredentialStore = new InMemoryCredentialStore(value);
             }
         }
+
+        public TimeSpan? SendDataTimeout{ get; set; }
 
         async Task<IApiResponse<string>> GetHtml(IRequest request)
         {

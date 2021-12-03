@@ -209,8 +209,12 @@ namespace Octokit.Tests
 
                 client.SetRequestTimeout(TimeSpan.FromSeconds(15));
 
-
                 httpClient.Received(1).SetRequestTimeout(TimeSpan.FromSeconds(15));
+                
+                var connection = Substitute.For<IConnection>();
+                var t = TimeSpan.FromSeconds(20);
+                connection.SendDataTimeout = t;
+                connection.Received(1).SendDataTimeout = t;
             }
         }
 
