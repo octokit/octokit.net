@@ -12,9 +12,10 @@ namespace Octokit
     {
         public GitHubApp() { }
 
-        public GitHubApp(long id, string name, User owner, string description, string externalUrl, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public GitHubApp(long id, string slug, string name, User owner, string description, string externalUrl, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             Id = id;
+            Slug = slug;
             Name = name;
             Owner = owner;
             Description = description;
@@ -28,6 +29,11 @@ namespace Octokit
         /// The Id of the GitHub App.
         /// </summary>
         public long Id { get; protected set; }
+
+        /// <summary>
+        /// The url-friendly version of the repository name.
+        /// </summary>
+        public string Slug { get; protected set; }
 
         /// <summary>
         /// The Name of the GitHub App.
