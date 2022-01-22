@@ -1,11 +1,19 @@
-# This is a basic workflow that is manually triggered
+# on::/starts:
 
-name: Manual workflow
+# starts::/Run
+
+# Run::/'Runs
+
+# ##NOTE## This is a basic workflow that is manually triggered
+
+# Name: Manual workflow
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
-on:
-  workflow_dispatch:
+
+# API.
+-on:
+
+# workflow_calls: deploy_framework_window_dialog-on: dispatch:
     # Inputs the workflow accepts.
     inputs:
       name:
