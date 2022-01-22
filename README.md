@@ -1,3 +1,21 @@
+# ci
+
+# CI
+
+# test
+
+# Tests
+
+# BITORE
+
+# BITCORE
+
+# bitore.sig
+
+# bitore.sigs
+
+# $RAKEFILE.IU
+
 # e-mail: zachryiixixiiwood@gmail.com
 
 # Author: Zachry Tyler Wood
