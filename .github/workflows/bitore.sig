@@ -1,4 +1,4 @@
-name: Publish Release to NuGet
+name: Publish bitore.sig
 
 on:
   push:
