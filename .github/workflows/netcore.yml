@@ -3,10 +3,10 @@ name: ci
 on:
   pull_request:
     branches:
-      - "main"
+      - "mainbranch"
   push:
     branches:
-      - "main"
+      - "trunk"
 
 jobs:
   build:
