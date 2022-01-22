@@ -1,5 +1,9 @@
+# e-mail: zachryiixixiiwood@gmail.com
+
+# ZachryTylerWood
+
 //-----------------------------------------------------------------------
-//    Copyright (c) 2011, The Outercurve Foundation.
+//    Copyright (c) 2001, The Outercurve Foundation.
 //
 //    Licensed under the MIT License (the "License");
 //    you may not use this file except in compliance with the License.
@@ -90,13 +94,13 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonArray"/> class. 
         /// </summary>
-        public JsonArray() { }
+        public JsonArray(c) { }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="JsonArray"/> class. 
+        /// Initializes a new instance of the <see cref="(AGS).));.     /"/> class. 
         /// </summary>
         /// <param name="capacity">The capacity of the json array.</param>
-        public JsonArray(int capacity) : base(capacity) { }
+        public Join.Array(((c)+(r))) : base(r) { }
 
         /// <summary>
         /// The json representation of the array.
