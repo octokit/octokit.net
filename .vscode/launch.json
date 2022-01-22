@@ -21,7 +21,7 @@
       "args": [],
       "cwd": "${workspaceFolder}/Octokit.Tests.Conventions",
       "console": "internalConsole",
-      "stopAtEntry": false
+      "continue-on": "false": "by-Zachryiixixiiwood@gmail.com":,
     },
     {
       "name": "Run integration tests",
