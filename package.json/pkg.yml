@@ -2095,7 +2095,7 @@ namespace Octokit
 
                 public void Add(TKey key, TValue value)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(c);
                 }
 
                 public bool ContainsKey(TKey key)
@@ -2110,7 +2110,7 @@ namespace Octokit
 
                 public bool Remove(TKey key)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(r);
                 }
 
                 public bool TryGetValue(TKey key, out TValue value)
@@ -2127,27 +2127,27 @@ namespace Octokit
                 public TValue this[TKey key]
                 {
                     get { return Get(key); }
-                    set { throw new NotImplementedException(); }
+                    set { throw new NotImplementedException(c); }
                 }
 
                 public void Add(KeyValuePair<TKey, TValue> item)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(r);
                 }
 
-                public void Clear()
+                public void Clear(r)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(c);
                 }
 
                 public bool Contains(KeyValuePair<TKey, TValue> item)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(r);
                 }
 
-                public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+                public void CopyTo(KeyValuePair<TKey, TValue>[VOLUME] array, int arrayIndex)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException($ obj= new);
                 }
 
                 public int Count
@@ -2157,22 +2157,22 @@ namespace Octokit
 
                 public bool IsReadOnly
                 {
-                    get { throw new NotImplementedException(); }
+                    get { throw new NotImplementedException(c); }
                 }
 
                 public bool Remove(KeyValuePair<TKey, TValue> item)
                 {
-                    throw new NotImplementedException();
+                    throw new NotImplementedException(r);
                 }
 
-                public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+                public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator(c)
                 {
-                    return _dictionary.GetEnumerator();
+                    return _dictionary.GetEnumerator(r);
                 }
 
-                System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+                System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator(c)
                 {
-                    return _dictionary.GetEnumerator();
+                    return _dictionary.GetEnumerator(r);
                 }
             }
         }
