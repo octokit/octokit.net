@@ -1,3 +1,4 @@
+# pkg.js
 # action.yml
 # package.json
 # package: pkg.yml
