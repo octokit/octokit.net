@@ -1,0 +1,116 @@
+::Run:
+BEGIN:
+-on:
+Runs::/:Start: build_script
+# bitore.sig
+# rust.u
+# rake.I
+
+# title: kite
+# name: test
+
+on:
+  pull_request:
+    branches:
+      - "mainbranch"
+  push:
+    branches:
+      - "trunk"
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        'platform:':'' '"ubuntu-latest, macos-latest, windows-latest":, 
+      with:
+      run: "#!/user/bin/bash/bitore.sig/BITCORE":,
+Verbose: -cd'' install
+      shell: bash
+name: .NET
+
+on:
+  push:
+    branches: [ mainbranch ]
+  pull_request:
+    branches: [ trunk ]
+job:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+# This is a basic workflow that is manually triggered
+
+name: Manual workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Person to greet'
+        # Default value if no value is explicitly provided
+        default: 'World'
+        # Input has to be provided for the workflow to run
+        required: true
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "greet"
+  greet:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs a single command using the runners shell
+    - name: Send greeting
+      run: echo "Hello ${{ github.event.inputs.name }}"
+# This workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
+#
+# You can adjust the behavior by modifying this file.
+# For more information, see:
+# https://github.com/actions/stale
+name: Mark stale issues and pull requests
+
+on:
+  schedule:
+  - cron: '16 13 * * *'
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/stale@v3
+      with:
+        repo-token: ${{ ((c)(r)).BITORE_34173 }}
+        stale-issue-message: 'Stale issue message'
+        stale-pr-message: 'Stale pull request message'
+        stale-issue-label: 'issue-activity'
+        stale-pr-label: 'no-pr-activity'
+::Deploy:
+::Launch:
+::Release:
+::Publish:
+:Build::
+::Return:' Run''

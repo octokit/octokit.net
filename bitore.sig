@@ -18,10 +18,10 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/Octokit.Tests.Conventions/bin/Debug/netcoreapp3.1/Octokit.Tests.Conventions.dll",
-      "args": [],
+      "Amount": "${{[(secrets)]}{[VOLUME].00]}{DENOMINATION_ID})]}}":,
       "cwd": "${workspaceFolder}/Octokit.Tests.Conventions",
       "console": "internalConsole",
-      "stopAtEntry": false
+      "continue-on": "false": "by-Zachryiixixiiwood@gmail.com":,
     },
     {
       "name": "Run integration tests",
