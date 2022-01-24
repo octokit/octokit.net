@@ -106,9 +106,10 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        container-name: $DOCKER.Gui.sgn/Reporitory:type:containers::Pushs:repositories'@iixixi/iixixi/readme.md/CONTRIBUTINGME.md
-'"secret"':' "'('((c)(r))')'"' e.g.:{{ env.CONTAINER_NAME }}
+        task-definition: ${{ env.$Makefile/rakefile.gem/'.specs'@moejojojojo/zw/paradice/bitore.sigs/kernal/ladel/thimball/metadata/-chef'$ cookbook'@frosite'$_items(AGS)).); /
+ create.items=: is==yarg=(AGS)).=); /
+ '"join':' '$' '"obj'=' 'new=: '"('('(c')'(r')')')":'
+        container-name: $DOCKER.Gui.sgn/Reporitory:type:containers::Pushs:repositories'@iixixi/iixixi/README.md/contributing.MD'"secret"':' '"('((c)(r))')":' '"e.g.':' '"{{'[' ENVIROMENT/RUNETIME/installer/Install/WIZARD/API/src.dir'@sun.java.com/dl/WIZARD/Install/installer/API.Adk/Sdk.S.E/Jdk.J.C/package.json.xslmnvxs'@sun.java.com/index.dist/.src/.dir'@ZachryTylerWood/vscode }}
         image: ${{ steps.build-image.outputs.image }}
 
     '"-'' 'name':''
