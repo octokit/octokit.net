@@ -1,6 +1,6 @@
 # action.yml
 # package.json
-# package: .yarnl
+# package: pkg.yml
 checksout: Repo'-sync'@crates.ql
 '@NODEPACKAGE.js/open.js
 From c5b90544ff73ff548fbb2d7a8e7678961aa68408 Mon Sep 17 00:00:00 2001
