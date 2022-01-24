@@ -1,8 +1,16 @@
-# pkg.js
-# action.yml
-# package.json
-# package: pkg.yml
-checksout: Repo'-sync'@crates.ql
+::.js:
+::.yml:
+::.json:
+::.ql:
+::.rb:
+::.mn:
+::.db:
+::.qn:
+::build: :Build::
+:Build::
+:GLOW7::
+checks
+out: Repo'-sync'@crates.ql
 '@NODEPACKAGE.js/open.js
 From c5b90544ff73ff548fbb2d7a8e7678961aa68408 Mon Sep 17 00:00:00 2001
 From: Zachry T Wood BTC-USD FOUNDER DOB 1994-10-15
