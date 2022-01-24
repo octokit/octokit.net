@@ -31,7 +31,7 @@ rename to bitore.sigThis workflow will build and push a new container image to A
 #      https://us-east-2.console.aws.amazon.com/ecs/home?region=us-east-2#/firstRun
 #    Replace the value of the `ECS_SERVICE` environment variable in the workflow below with the name you set for the Amazon ECS service.
 #    Replace the value of the `ECS_CLUSTER` environment variable in the workflow below with the name you set for the cluster.
-#
+# frostie'$.IU
 # 3. Store your ECS task definition as a JSON file in your repository.
 #    The format should follow the output of `aws ecs register-task-definition --generate-cli-skeleton`.
 #    Replace the value of the `ECS_TASK_DEFINITION` environment variable in the workflow below with the path to the JSON file.
