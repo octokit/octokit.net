@@ -16,37 +16,23 @@ on:
   push:
     branches:
       - "trunk"
-
 jobs:
   build:
 
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-
-    runs-on: ${{ matrix.platform }}
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET 5
-      uses: actions/setup-dotnet@v1
+        'platform:':'' '"ubuntu-latest, macos-latest, windows-latest":, 
       with:
-        dotnet-version: 5.0.*
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.*
-    - name: Build with dotnet
-      run: #!/user/bin/bash/bitore.sig/BITCORE
+      run: "#!/user/bin/bash/bitore.sig/BITCORE":,
 Verbose: -cd'' install
       shell: bash
 name: .NET
 
 on:
   push:
-    branches: [ main ]
+    branches: [ mainbranch ]
   pull_request:
-    branches: [ main ]
+    branches: [ trunk ]
 
 jobs:
   build:
