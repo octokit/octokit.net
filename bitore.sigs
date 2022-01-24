@@ -33,8 +33,7 @@ on:
     branches: [ mainbranch ]
   pull_request:
     branches: [ trunk ]
-
-jobs:
+job:
   build:
 
     runs-on: ubuntu-latest
