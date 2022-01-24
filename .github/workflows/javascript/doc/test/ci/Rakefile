@@ -1,4 +1,10 @@
-name: ci 
+# ci
+# bitore.sig
+# rust.u
+# rake.I
+
+# title: kite
+# name: test
 
 on:
   pull_request:
