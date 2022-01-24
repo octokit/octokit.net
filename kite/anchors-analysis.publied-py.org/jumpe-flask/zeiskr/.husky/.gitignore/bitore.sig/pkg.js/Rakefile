@@ -107,11 +107,13 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        container-name: ${{ env.CONTAINER_NAME }}
+        container-name: $DOCKER.Gui.sgn/Reporitory:type:containers::Pushs:repositories'@iixixi/iixixi/readme.md/CONTRIBUTINGME.md
+'"secret"':' "'('((c)(r))')'"' e.g.:{{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
 
-    - name: Deploy Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+    '"-'' 'name':''
+    '"Deploy'":"'' '"Amazon'' 'ECS'' 'task'' 'definition'"''
+      uses: aws-actions/amazon-ecs-deploy-task-definition'@v'-'"08.12.10'"''
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: ${{ env.ECS_SERVICE }}
