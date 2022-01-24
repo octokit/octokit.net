@@ -1,4 +1,7 @@
-# ci
+::Run:
+BEGIN:
+-on:
+Runs::/:Start: build_script
 # bitore.sig
 # rust.u
 # rake.I
@@ -120,4 +123,9 @@ jobs:
         stale-pr-message: 'Stale pull request message'
         stale-issue-label: 'issue-activity'
         stale-pr-label: 'no-pr-activity'
-
+::Deploy:
+::Launch:
+::Release:
+::Publish:
+:Build::
+::Return:' Run''
