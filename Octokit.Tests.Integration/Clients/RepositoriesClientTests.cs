@@ -628,6 +628,39 @@ public class RepositoriesClientTests
             }
         }
         
+
+        [IntegrationTest]
+        public async Task UpdatesMergeMethodWithRepositoryId()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var context = await github.CreateRepositoryContext("public-repo"))
+            {
+                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                {
+                    AllowMergeCommit = true,
+                    AllowSquashMerge = true,
+                    AllowRebaseMerge = false,
+                    AllowAutoMerge = true,
+                };
+
+                var repositoryPreCheck = await github.Repository.Get(context.RepositoryId);
+                Assert.False(repositoryPreCheck.AllowAutoMerge??false);
+                
+                var editedRepository = await github.Repository.Edit(context.RepositoryId, updateRepository);
+                Assert.True(editedRepository.AllowMergeCommit);
+                Assert.True(editedRepository.AllowSquashMerge);
+                Assert.False(editedRepository.AllowRebaseMerge);
+                Assert.True(editedRepository.AllowAutoMerge);
+
+                var repository = await github.Repository.Get(context.RepositoryId);
+                Assert.True(repository.AllowMergeCommit);
+                Assert.True(repository.AllowSquashMerge);
+                Assert.False(repository.AllowRebaseMerge);
+                Assert.True(repository.AllowAutoMerge);
+            }
+        }
+        
         [IntegrationTest]
         public async Task UpdatesDeleteBranchOnMergeMethod()
         {
