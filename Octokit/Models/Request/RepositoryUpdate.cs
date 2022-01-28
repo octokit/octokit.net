@@ -78,6 +78,11 @@ namespace Octokit
         /// </summary>
         public bool? AllowMergeCommit { get; set; }
         
+        /// <summary>
+        /// Optional. Allows the "Enable auto-merge" merge method to be used.
+        /// </summary>
+        public bool? AllowAutoMerge { get; set; }
+        
         public bool? DeleteBranchOnMerge { get; set; }
 
         /// <summary>
