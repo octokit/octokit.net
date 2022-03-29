@@ -118,6 +118,7 @@ namespace Octokit
             Licenses = new LicensesClient(apiConnection);
             RateLimit = new RateLimitClient(apiConnection);
             Meta = new MetaClient(apiConnection);
+            Actions = new ActionsClient(apiConnection);
         }
 
         /// <summary>
@@ -367,6 +368,12 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://docs.github.com/rest/markdown
         /// </remarks>
         public IMarkdownClient Markdown { get; private set; }
+        /// Access GitHub's Actions API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://developer.github.com/v3/actions/
+        /// </remarks>
+        public IActionsClient Actions { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

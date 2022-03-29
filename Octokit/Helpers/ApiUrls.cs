@@ -4776,5 +4776,135 @@ namespace Octokit
         {
             return "/users/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
         }
+
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDispatchWorkflow(string owner, string repo, long workflowId)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDispatchWorkflow(string owner, string repo, string workflowFileName)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowFileName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDisableWorkflow(string owner, string repo, string workflowFileName)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowFileName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDisableWorkflow(string owner, string repo, long workflowId)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that enables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsEnableWorkflow(string owner, string repo, string workflowFileName)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowFileName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that enables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsEnableWorkflow(string owner, string repo, long workflowId)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that gets an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsGetWorkflow(string owner, string repo, string workflowFileName)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowFileName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that gets an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsGetWorkflow(string owner, string repo, long workflowId)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that gets an Actions workflow'usage for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsGetWorkflowUsage(string owner, string repo, string workflowFileName)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowFileName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that gets an Actions workflow's usage for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsGetWorkflowUsage(string owner, string repo, long workflowId)
+        {
+            return "/repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions workflows for the repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions workflows for the repository.</returns>
+        public static Uri ActionsListWorkflows(string owner, string repo)
+        {
+            return "/repos/{0}/{1}/actions/workflows".FormatUri(owner, repo);
+        }
     }
 }
