@@ -17,6 +17,19 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheClientProperties
+        {
+            [Fact]
+            public void AreNotNull()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowsClient(connection);
+
+                Assert.NotNull(client.Jobs);
+                Assert.NotNull(client.Runs);
+            }
+        }
+
         public class TheCreateDispatchMethod
         {
             [Fact]

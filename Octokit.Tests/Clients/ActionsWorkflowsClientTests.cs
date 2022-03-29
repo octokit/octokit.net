@@ -16,6 +16,19 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheClientProperties
+        {
+            [Fact]
+            public void AreNotNull()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowsClient(connection);
+
+                Assert.NotNull(client.Jobs);
+                Assert.NotNull(client.Runs);
+            }
+        }
+
         public class TheCreateDispatchMethod
         {
             [Fact]

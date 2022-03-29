@@ -17,5 +17,23 @@ namespace Octokit
         public ActionsWorkflowJobsClient(IApiConnection apiConnection) : base(apiConnection)
         {
         }
+
+        /// <summary>
+        /// Re-runs a specific workflow job in a repository.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-jobs/#re-run-a-job-from-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="jobId">The Id of the workflow job.</param>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/actions/jobs/{job_id}/rerun")]
+        public Task Rerun(string owner, string name, long jobId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.Post(ApiUrls.ActionsRerunWorkflowJob(owner, name, jobId));
+        }
     }
 }

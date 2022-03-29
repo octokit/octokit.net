@@ -5,11 +5,11 @@ using Octokit.Internal;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class WorkflowBillable
+    public class WorkflowRunBillable
     {
-        public WorkflowBillable() { }
+        public WorkflowRunBillable() { }
 
-        public WorkflowBillable(WorkflowBillableTiming ubuntu, WorkflowBillableTiming macOS, WorkflowBillableTiming windows)
+        public WorkflowRunBillable(WorkflowRunBillableTiming ubuntu, WorkflowRunBillableTiming macOS, WorkflowRunBillableTiming windows)
         {
             Ubuntu = ubuntu;
             MacOS = macOS;
@@ -20,19 +20,19 @@ namespace Octokit
         /// The Ubuntu billable timing.
         /// </summary>
         [Parameter(Key = "UBUNTU")]
-        public WorkflowBillableTiming Ubuntu { get; protected set; }
+        public WorkflowRunBillableTiming Ubuntu { get; protected set; }
 
         /// <summary>
         /// The macOS billable timing.
         /// </summary>
         [Parameter(Key = "MACOS")]
-        public WorkflowBillableTiming MacOS { get; protected set; }
+        public WorkflowRunBillableTiming MacOS { get; protected set; }
 
         /// <summary>
         /// The Windows billable timing.
         /// </summary>
         [Parameter(Key = "WINDOWS")]
-        public WorkflowBillableTiming Windows { get; protected set; }
+        public WorkflowRunBillableTiming Windows { get; protected set; }
 
         internal string DebuggerDisplay
         {
