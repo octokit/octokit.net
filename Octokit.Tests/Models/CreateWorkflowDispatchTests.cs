@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Octokit.Internal;
 using Xunit;
 
@@ -6,6 +7,21 @@ namespace Octokit.Tests.Models
 {
     public class CreateWorkflowDispatchTests
     {
+        public class TheCtor
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                Assert.Throws<ArgumentNullException>(() => new CreateWorkflowDispatch(null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                Assert.Throws<ArgumentException>(() => new CreateWorkflowDispatch(""));
+            }
+        }
+
         [Fact]
         public void CanBeSerialized()
         {

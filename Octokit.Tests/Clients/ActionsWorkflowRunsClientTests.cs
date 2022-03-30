@@ -365,6 +365,94 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetPendingDeploymentsMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                await client.GetPendingDeployments("fake", "repo", 123);
+
+                connection.Received().GetAll<PendingDeployment>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
+                    null,
+                    "application/vnd.github.v3+json",
+                    null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var workflowRunsRequest = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetPendingDeployments(null, "repo", 123));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetPendingDeployments("fake", null, 123));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var workflowRunsRequest = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetPendingDeployments("", "repo", 123));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetPendingDeployments("fake", "", 123));
+            }
+        }
+
+        public class TheGetReviewHistoryMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                await client.GetReviewHistory("fake", "repo", 123);
+
+                connection.Received().GetAll<EnvironmentApprovals>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/approvals"),
+                    null,
+                    "application/vnd.github.v3+json",
+                    null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var workflowRunsRequest = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReviewHistory(null, "repo", 123));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetReviewHistory("fake", null, 123));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var workflowRunsRequest = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetReviewHistory("", "repo", 123));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetReviewHistory("fake", "", 123));
+            }
+        }
+
         public class TheGetUsageMethod
         {
             [Fact]
@@ -518,6 +606,222 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheListByWorkflowMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrlWithId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                await client.ListByWorkflow("fake", "repo", 123);
+
+                connection.Received().GetAll<WorkflowRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/runs"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.v3+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithName()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                await client.ListByWorkflow("fake", "repo", "main.yml");
+
+                connection.Received().GetAll<WorkflowRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yml/runs"),
+                    Args.EmptyDictionary,
+                    "application/vnd.github.v3+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithIdWithRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest
+                {
+                    Actor = "octocat",
+                    Branch = "main",
+                    CheckSuiteId = 42,
+                    Created = "2020-2022",
+                    Event = "push",
+                    ExcludePullRequests = true,
+                    Status = CheckRunStatusFilter.InProgress,
+                };
+
+                await client.ListByWorkflow("fake", "repo", 123, request);
+
+                connection.Received().GetAll<WorkflowRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x.Count == 7
+                            && x["actor"] == "octocat"
+                            && x["branch"] == "main"
+                            && x["check_suite_id"] == "42"
+                            && x["created"] == "2020-2022"
+                            && x["event"] == "push"
+                            && x["branch"] == "main"
+                            && x["exclude_pull_requests"] == "true"
+                            && x["status"] == "in_progress"),
+                    "application/vnd.github.v3+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithNameWithRequest()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest
+                {
+                    Actor = "octocat",
+                    Branch = "main",
+                    CheckSuiteId = 42,
+                    Created = "2020-2022",
+                    Event = "push",
+                    ExcludePullRequests = true,
+                    Status = CheckRunStatusFilter.InProgress,
+                };
+
+                await client.ListByWorkflow("fake", "repo", "main.yml", request);
+
+                connection.Received().GetAll<WorkflowRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yml/runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x.Count == 7
+                            && x["actor"] == "octocat"
+                            && x["branch"] == "main"
+                            && x["check_suite_id"] == "42"
+                            && x["created"] == "2020-2022"
+                            && x["event"] == "push"
+                            && x["branch"] == "main"
+                            && x["exclude_pull_requests"] == "true"
+                            && x["status"] == "in_progress"),
+                    "application/vnd.github.v3+json",
+                    Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithIdWithRequestWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest { Branch = "main", CheckSuiteId = 42, Status = CheckRunStatusFilter.InProgress };
+                var options = new ApiOptions { PageSize = 1 };
+
+                await client.ListByWorkflow("fake", "repo", 123, request, options);
+
+                connection.Received().GetAll<WorkflowRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x.Count == 3
+                            && x["branch"] == "main"
+                            && x["status"] == "in_progress"
+                            && x["check_suite_id"] == "42"),
+                    "application/vnd.github.v3+json",
+                    options);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithNameWithRequestWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest { Branch = "main", CheckSuiteId = 42, Status = CheckRunStatusFilter.InProgress };
+                var options = new ApiOptions { PageSize = 1 };
+
+                await client.ListByWorkflow("fake", "repo", "main.yml", request, options);
+
+                connection.Received().GetAll<WorkflowRunsResponse>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yml/runs"),
+                    Arg.Is<Dictionary<string, string>>(x =>
+                            x.Count == 3
+                            && x["branch"] == "main"
+                            && x["status"] == "in_progress"
+                            && x["check_suite_id"] == "42"),
+                    "application/vnd.github.v3+json",
+                    options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var workflowRunsRequest = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", 123));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", null, 123));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", "main.yml"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", null, "main.yml"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", 123, workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", null, 123, workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", 123, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", "main.yml", workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", null, "main.yml", workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", null, workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", "main.yml", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", 123, workflowRunsRequest, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", null, 123, workflowRunsRequest, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", 123, null, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", 123, workflowRunsRequest, null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", "main.yml", workflowRunsRequest, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", null, "main.yml", workflowRunsRequest, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", null, workflowRunsRequest, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", "main.yml", null, options));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", "main.yml", workflowRunsRequest, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var workflowRunsRequest = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("", "repo", 123));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "", 123));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("", "repo", "main.yml"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "", "main.yml"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "repo", ""));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("", "repo", 123, workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "", 123, workflowRunsRequest));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("", "repo", "main.yml", workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "", "main.yml", workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "repo", "", workflowRunsRequest));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("", "repo", "main.yml", workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "", "main.yml", workflowRunsRequest));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "repo", "", workflowRunsRequest));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("", "repo", "main.yml", workflowRunsRequest, options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "", "main.yml", workflowRunsRequest, options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListByWorkflow("fake", "repo", "", workflowRunsRequest, options));
+            }
+        }
+
         public class TheRerunMethod
         {
             [Fact]
@@ -589,6 +893,50 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RerunFailedJobs("", "repo", 123));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.RerunFailedJobs("fake", "", 123));
+            }
+        }
+
+        public class TheReviewFailedJobsMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var review = new PendingDeploymentReview(new[] { 1L }, PendingDeploymentReviewState.Approved, "");
+
+                await client.ReviewPendingDeployments("fake", "repo", 123, review);
+
+                connection.Received().Post<Deployment>(
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
+                    review,
+                    "application/vnd.github.v3+json");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var review = new PendingDeploymentReview(new[] { 1L }, PendingDeploymentReviewState.Approved, "Ship it!");
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPendingDeployments(null, "repo", 123, review));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPendingDeployments("fake", null, 123, review));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ReviewPendingDeployments("fake", "repo", 123, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowRunsClient(connection);
+
+                var review = new PendingDeploymentReview(new[] { 1L }, PendingDeploymentReviewState.Approved, "Ship it!");
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPendingDeployments("", "repo", 123, review));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ReviewPendingDeployments("fake", "", 123, review));
             }
         }
     }

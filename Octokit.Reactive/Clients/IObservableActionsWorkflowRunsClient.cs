@@ -67,6 +67,17 @@ namespace Octokit.Reactive
         IObservable<Unit> Delete(string owner, string name, long runId);
 
         /// <summary>
+        /// Get the review history for a workflow run.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#get-the-review-history-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        IObservable<EnvironmentApprovals> GetReviewHistory(string owner, string name, long runId);
+
+        /// <summary>
         /// Approves a workflow run for a pull request from a public fork of a first time contributor.
         /// </summary>
         /// <remarks>
@@ -135,6 +146,29 @@ namespace Octokit.Reactive
         IObservable<Unit> DeleteLogs(string owner, string name, long runId);
 
         /// <summary>
+        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#get-pending-deployments-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        IObservable<PendingDeployment> GetPendingDeployments(string owner, string name, long runId);
+
+        /// <summary>
+        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#review-pending-deployments-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="review">The review for the pending deployment.</param>
+        IObservable<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review);
+
+        /// <summary>
         /// Re-runs a specific workflow run in a repository.
         /// </summary>
         /// <remarks>
@@ -166,5 +200,77 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         IObservable<WorkflowRunUsage> GetUsage(string owner, string name, long runId);
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId);
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName);
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest);
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest);
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        /// <param name="options">Options to change the API response.</param>
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        /// <param name="options">Options to change the API response.</param>
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
@@ -20,7 +21,7 @@ namespace Octokit.Tests.Reactive
         public class TheApproveMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsApproveOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -54,7 +55,7 @@ namespace Octokit.Tests.Reactive
         public class TheCancelMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsCancelOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -88,7 +89,7 @@ namespace Octokit.Tests.Reactive
         public class TheDeleteMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsDeleteOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -122,7 +123,7 @@ namespace Octokit.Tests.Reactive
         public class TheDeleteLogsMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsDeleteLogsOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -156,7 +157,7 @@ namespace Octokit.Tests.Reactive
         public class TheListMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsListOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -167,7 +168,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlWithRequest()
+            public async Task CallsListOnClientWithRequest()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -180,7 +181,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlWithRequestWithOptions()
+            public async Task CallsListOnClientWithRequestWithOptions()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -221,15 +222,24 @@ namespace Octokit.Tests.Reactive
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
 
+                var request = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
                 Assert.Throws<ArgumentException>(() => client.List("", "repo"));
                 Assert.Throws<ArgumentException>(() => client.List("fake", ""));
+
+                Assert.Throws<ArgumentException>(() => client.List("", "repo", request));
+                Assert.Throws<ArgumentException>(() => client.List("fake", "", request));
+
+                Assert.Throws<ArgumentException>(() => client.List("", "repo", request, options));
+                Assert.Throws<ArgumentException>(() => client.List("fake", "", request, options));
             }
         }
 
         public class TheGetMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsGetOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -263,7 +273,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetLogsMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsGetLogsOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -297,7 +307,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetAttemptMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsGetAttemptOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -331,7 +341,7 @@ namespace Octokit.Tests.Reactive
         public class TheGetAttemptLogsMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsGetAttemptLogsOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -362,10 +372,82 @@ namespace Octokit.Tests.Reactive
             }
         }
 
+        public class TheGetPendingDeploymentsMethod
+        {
+            [Fact]
+            public async Task CallsGetPendingDeploymentsOnClient()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                client.GetPendingDeployments("fake", "repo", 123);
+
+                connection.Connection.Received().Get<List<PendingDeployment>>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
+                    null,
+                    null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetPendingDeployments(null, "repo", 123));
+                Assert.Throws<ArgumentNullException>(() => client.GetPendingDeployments("fake", null, 123));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                Assert.Throws<ArgumentException>(() => client.GetPendingDeployments("", "repo", 123));
+                Assert.Throws<ArgumentException>(() => client.GetPendingDeployments("fake", "", 123));
+            }
+        }
+
+        public class TheGetReviewHistoryMethod
+        {
+            [Fact]
+            public async Task CallsGetReviewHistoryOnClient()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                client.GetReviewHistory("fake", "repo", 123);
+
+                connection.Connection.Received().Get<List<EnvironmentApprovals>>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/approvals"),
+                    null,
+                    null);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetReviewHistory(null, "repo", 123));
+                Assert.Throws<ArgumentNullException>(() => client.GetReviewHistory("fake", null, 123));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                Assert.Throws<ArgumentException>(() => client.GetReviewHistory("", "repo", 123));
+                Assert.Throws<ArgumentException>(() => client.GetReviewHistory("fake", "", 123));
+            }
+        }
+
         public class TheGetUsageMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsGetUsageOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -399,7 +481,7 @@ namespace Octokit.Tests.Reactive
         public class TheRerunMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsRerunOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -433,7 +515,7 @@ namespace Octokit.Tests.Reactive
         public class TheRerunFailedJobsMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallsRerunFailedJobsOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowRunsClient(connection);
@@ -461,6 +543,194 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Throws<ArgumentException>(() => client.RerunFailedJobs("", "repo", 123));
                 Assert.Throws<ArgumentException>(() => client.RerunFailedJobs("fake", "", 123));
+            }
+        }
+
+        public class TheReviewPendingDeploymentsMethod
+        {
+            [Fact]
+            public async Task CallsReviewPendingDeploymentsOnClient()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var review = new PendingDeploymentReview(new[] { 1L }, PendingDeploymentReviewState.Approved, "");
+
+                client.ReviewPendingDeployments("fake", "repo", 123, review);
+
+                connection.Received().Actions.Workflows.Runs.ReviewPendingDeployments("fake", "repo", 123, review);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var review = new PendingDeploymentReview(new[] { 1L }, PendingDeploymentReviewState.Approved, "");
+
+                Assert.Throws<ArgumentNullException>(() => client.ReviewPendingDeployments(null, "repo", 123, review));
+                Assert.Throws<ArgumentNullException>(() => client.ReviewPendingDeployments("fake", null, 123, review));
+                Assert.Throws<ArgumentNullException>(() => client.ReviewPendingDeployments("fake", "repo", 123, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var review = new PendingDeploymentReview(new[] { 1L }, PendingDeploymentReviewState.Approved, "");
+
+                Assert.Throws<ArgumentException>(() => client.ReviewPendingDeployments("", "repo", 123, review));
+                Assert.Throws<ArgumentException>(() => client.ReviewPendingDeployments("fake", "", 123, review));
+            }
+        }
+
+        public class TheListByWorkflowMethod
+        {
+            [Fact]
+            public async Task CallsListByWorkflowOnClientById()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                client.ListByWorkflow("fake", "repo", 123);
+
+                connection.Received().Actions.Workflows.Runs.ListByWorkflow("fake", "repo", 123);
+            }
+
+            [Fact]
+            public async Task CallsListByWorkflowOnClientByName()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                client.ListByWorkflow("fake", "repo", "main.yml");
+
+                connection.Received().Actions.Workflows.Runs.ListByWorkflow("fake", "repo", "main.yml");
+            }
+
+            [Fact]
+            public async Task CallsListByWorkflowOnClientByIdWithRequest()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest();
+
+                client.ListByWorkflow("fake", "repo", 123, request);
+
+                connection.Received().Actions.Workflows.Runs.ListByWorkflow("fake", "repo", 123, request);
+            }
+
+            [Fact]
+            public async Task CallsListByWorkflowOnClientByNameWithRequest()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest();
+
+                client.ListByWorkflow("fake", "repo", "main.yml", request);
+
+                connection.Received().Actions.Workflows.Runs.ListByWorkflow("fake", "repo", "main.yml", request);
+            }
+
+            [Fact]
+            public async Task CallsListByWorkflowOnClientByIdWithRequestWithOptions()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                client.ListByWorkflow("fake", "repo", 123, request, options);
+
+                connection.Received().Actions.Workflows.Runs.ListByWorkflow("fake", "repo", 123, request, options);
+            }
+
+            [Fact]
+            public async Task CallsListByWorkflowOnClientByNameWithRequestWithOptions()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                client.ListByWorkflow("fake", "repo", "main.yml", request, options);
+
+                connection.Received().Actions.Workflows.Runs.ListByWorkflow("fake", "repo", "main.yml", request, options);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", 123));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", null, 123));
+
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", "main.yml"));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", null, "main.yml"));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", 123, request));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", null, 123, request));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", 123, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", "main.yml", request));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", null, "main.yml", request));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", null, request));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", "main.yml", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", 123, request, options));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", null, 123, request, options));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", 123, null, options));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", 123, request, null));
+
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow(null, "repo", "main.yml", request, options));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", null, "main.yml", request, options));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", null, request, options));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", "main.yml", null, options));
+                Assert.Throws<ArgumentNullException>(() => client.ListByWorkflow("fake", "repo", "main.yml", request, null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowRunsClient(connection);
+
+                var request = new WorkflowRunsRequest();
+                var options = new ApiOptions();
+
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("", "repo", 123));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "", 123));
+
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("", "repo", "main.yml"));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "", "main.yml"));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "repo", ""));
+
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("", "repo", 123, request));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "", 123, request));
+
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("", "repo", "main.yml", request));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "", "main.yml", request));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "repo", "", request));
+
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("", "repo", 123, request, options));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "", 123, request, options));
+
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("", "repo", "main.yml", request, options));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "", "main.yml", request, options));
+                Assert.Throws<ArgumentException>(() => client.ListByWorkflow("fake", "repo", "", request, options));
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -108,6 +109,24 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Delete(ApiUrls.ActionsWorkflowRun(owner, name, runId));
+        }
+
+        /// <summary>
+        /// Get the review history for a workflow run.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#get-the-review-history-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/approvals")]
+        public Task<IReadOnlyList<EnvironmentApprovals>> GetReviewHistory(string owner, string name, long runId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.GetAll<EnvironmentApprovals>(ApiUrls.ActionsWorkflowRunApprovals(owner, name, runId), null, AcceptHeaders.StableVersionJson, null);
         }
 
         /// <summary>
@@ -245,6 +264,44 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#get-pending-deployments-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments")]
+        public Task<IReadOnlyList<PendingDeployment>> GetPendingDeployments(string owner, string name, long runId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.GetAll<PendingDeployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId), null, AcceptHeaders.StableVersionJson, null);
+        }
+
+        /// <summary>
+        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#review-pending-deployments-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="review">The review for the pending deployment.</param>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments")]
+        public Task<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(review, nameof(review));
+
+            return ApiConnection.Post<Deployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId), review, AcceptHeaders.StableVersionJson);
+        }
+
+        /// <summary>
         /// Re-runs your workflow run using its Id.
         /// </summary>
         /// <remarks>
@@ -296,6 +353,121 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return ApiConnection.Get<WorkflowRunUsage>(ApiUrls.ActionsGetWorkflowRunUsage(owner, name, runId), null, AcceptHeaders.StableVersionJson);
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId)
+        {
+            return ListByWorkflow(owner, name, workflowId, new WorkflowRunsRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest)
+        {
+            return ListByWorkflow(owner, name, workflowId, workflowRunsRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        /// <param name="options">Options to change the API response.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
+        public async Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowId), workflowRunsRequest.ToParametersDictionary(), AcceptHeaders.StableVersionJson, options).ConfigureAwait(false);
+
+            return new WorkflowRunsResponse(
+                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+                results.SelectMany(x => x.WorkflowRuns).ToList());
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The Id of the workflow.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName)
+        {
+            return ListByWorkflow(owner, name, workflowFileName, new WorkflowRunsRequest(), ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest)
+        {
+            return ListByWorkflow(owner, name, workflowFileName, workflowRunsRequest, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        /// <param name="options">Options to change the API response.</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
+        public async Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
+            Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowFileName), workflowRunsRequest.ToParametersDictionary(), AcceptHeaders.StableVersionJson, options).ConfigureAwait(false);
+
+            return new WorkflowRunsResponse(
+                results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+                results.SelectMany(x => x.WorkflowRuns).ToList());
         }
     }
 }

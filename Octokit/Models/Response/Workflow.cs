@@ -35,7 +35,7 @@ namespace Octokit
         public string NodeId { get; protected set; }
 
         /// <summary>
-        /// Name of the issue.
+        /// Name of the workflow.
         /// </summary>
         public string Name { get; protected set; }
 

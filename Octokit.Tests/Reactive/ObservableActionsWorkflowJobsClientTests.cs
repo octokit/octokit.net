@@ -20,7 +20,7 @@ namespace Octokit.Tests.Reactive
         public class TheRerunMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task CallRerunOnClient()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowJobsClient(connection);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
@@ -13,6 +14,7 @@ namespace Octokit.Reactive
     public class ObservableActionsWorkflowRunsClient : IObservableActionsWorkflowRunsClient
     {
         readonly IActionsWorkflowRunsClient _client;
+        readonly IConnection _connection;
 
         /// <summary>
         /// Instantiate a new GitHub Actions Workflows runs API client.
@@ -23,6 +25,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Actions.Workflows.Runs;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -111,6 +114,23 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.Delete(owner, name, runId).ToObservable();
+        }
+
+        /// <summary>
+        /// Get the review history for a workflow run.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#get-the-review-history-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        public IObservable<EnvironmentApprovals> GetReviewHistory(string owner, string name, long runId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _connection.GetAndFlattenAllPages<EnvironmentApprovals>(ApiUrls.ActionsWorkflowRunApprovals(owner, name, runId));
         }
 
         /// <summary>
@@ -218,6 +238,42 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#get-pending-deployments-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        public IObservable<PendingDeployment> GetPendingDeployments(string owner, string name, long runId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _connection.GetAndFlattenAllPages<PendingDeployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId));
+        }
+
+        /// <summary>
+        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#review-pending-deployments-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="review">The review for the pending deployment.</param>
+        public IObservable<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(review, nameof(review));
+
+            return _client.ReviewPendingDeployments(owner, name, runId, review).ToObservable();
+        }
+
+        /// <summary>
         /// Re-runs a specific workflow run in a repository.
         /// </summary>
         /// <remarks>
@@ -267,6 +323,123 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             return _client.GetUsage(owner, name, runId).ToObservable();
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        public IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.ListByWorkflow(owner, name, workflowId).ToObservable();
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        public IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
+
+            return _client.ListByWorkflow(owner, name, workflowId, workflowRunsRequest).ToObservable();
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        /// <param name="options">Options to change the API response.</param>
+        public IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _client.ListByWorkflow(owner, name, workflowId, workflowRunsRequest, options).ToObservable();
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The Id of the workflow.</param>
+        public IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
+
+            return _client.ListByWorkflow(owner, name, workflowFileName).ToObservable();
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        public IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
+            Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
+
+            return _client.ListByWorkflow(owner, name, workflowFileName, workflowRunsRequest).ToObservable();
+        }
+
+        /// <summary>
+        /// List all workflow runs for a workflow.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
+        /// <param name="options">Options to change the API response.</param>
+        public IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
+            Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _client.ListByWorkflow(owner, name, workflowFileName, workflowRunsRequest, options).ToObservable();
         }
     }
 }
