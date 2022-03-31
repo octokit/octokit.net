@@ -255,7 +255,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
+        /// Approve or reject pending deployments that are waiting on approval by a required reviewer.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-runs/#review-pending-deployments-for-a-workflow-run
