@@ -12,12 +12,12 @@ namespace Octokit
 
         public OauthToken(string tokenType, string accessToken, IReadOnlyList<string> scope, string error, string errorDescription, string errorUri)
         {
-            TokenType = tokenType;
-            AccessToken = accessToken;
-            Scope = scope;
-            Error = error;
-            ErrorDescription = errorDescription;
-            ErrorUri = errorUri;
+            this.TokenType = tokenType;
+            this.AccessToken = accessToken;
+            this.Scope = scope;
+            this.Error = error;
+            this.ErrorDescription = errorDescription;
+            this.ErrorUri = errorUri;
         }
 
         /// <summary>
@@ -39,28 +39,28 @@ namespace Octokit
         /// Gets or sets the error code or the response.
         /// </summary>
         [Parameter(Key = "error")]
-        public string Error { get; set; }
+        public string Error { get; private set; }
 
         /// <summary>
         /// Gets or sets the error description.
         /// </summary>
         [Parameter(Key = "error_description")]
-        public string ErrorDescription { get; set; }
+        public string ErrorDescription { get; private set; }
 
         /// <summary>
         /// Gets or sets the error uri.
         /// </summary>
         [Parameter(Key = "error_uri")]
-        public string ErrorUri { get; set; }
+        public string ErrorUri { get; private set; }
 
         internal string DebuggerDisplay
         {
             get
             {
                 return string.Format(CultureInfo.InvariantCulture, "TokenType: {0}, AccessToken: {1}, Scopes: {2}",
-                    TokenType,
-                    AccessToken,
-                    Scope);
+                    this.TokenType,
+                    this.AccessToken,
+                    this.Scope);
             }
         }
     }
