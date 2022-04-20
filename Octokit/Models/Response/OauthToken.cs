@@ -10,27 +10,30 @@ namespace Octokit
     {
         public OauthToken() { }
 
-        public OauthToken(string tokenType, string accessToken, IReadOnlyList<string> scope)
+        public OauthToken(string tokenType, string accessToken, IReadOnlyList<string> scope, string error, string errorDescription, string errorUri)
         {
             TokenType = tokenType;
             AccessToken = accessToken;
             Scope = scope;
+            Error = error;
+            ErrorDescription = errorDescription;
+            ErrorUri = errorUri;
         }
 
         /// <summary>
         /// The type of OAuth token
         /// </summary>
-        public string TokenType { get; protected set; }
+        public string TokenType { get; private set; }
 
         /// <summary>
         /// The secret OAuth access token. Use this to authenticate Octokit.net's client.
         /// </summary>
-        public string AccessToken { get; protected set; }
+        public string AccessToken { get; private set; }
 
         /// <summary>
         /// The list of scopes the token includes.
         /// </summary>
-        public IReadOnlyList<string> Scope { get; protected set; }
+        public IReadOnlyList<string> Scope { get; private set; }
 
         /// <summary>
         /// Gets or sets the error code or the response.
