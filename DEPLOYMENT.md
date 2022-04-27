@@ -10,7 +10,7 @@ Creating a new release and deploying the package to nuget are administrative tas
 ### Prepare the changeset & publish to nuget.org
 
 1. Create a branch named `release`.
-2. Push the branch to GitHub and create a pull request. This will kick off the MyGet build of the NuGet package with this new version.
+2. Push the branch to GitHub and create a pull request. This will kick off the CI builds to verify the changes.
 3. Test!
 4. [Generate](https://github.com/shiftkey/octokit.releasenotes) the release notes. `Octokit.ReleaseNotes generate v0.50.0 [BASE] [HEAD]`
   Any PRs that should be noted in the release notes, each pull request must have a comment formatted like `release_notes: description` where description represents the details of the change. Make sure for the commit range any changeset in a PR that should be represented has a comment on the PR prefixed with `release_notes:` and corresponding label (details below)
