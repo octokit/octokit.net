@@ -3,7 +3,7 @@
 ### Requirements
 
 Creating a new release and deploying the package to nuget are administrative tasks and require that you have/do the following:
-1. Admin access to the [GitHub](https://www.nuget.org/profiles/GitHub) nuget organization
+1. Admin access to the [GitHub](https://www.nuget.org/profiles/GitHub) NuGet organization
 2. Admin rights to the [octokit.net](https://github.com/octokit/octokit.net) repository
 3. For any PRs that should be noted in the release notes, each pull request must have a comment formatted like `release_notes: description` where description represents the details of the change.
 
