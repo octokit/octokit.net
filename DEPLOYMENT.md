@@ -55,3 +55,5 @@ When running the release notes generator on a mac if dotnet has not been added t
 
 `dotnet run generate [BASE] [HEAD]`
 (where `[BASE]` is the last release label (i.e. v0.50.0) and `[HEAD]` represents the `release` branch tip that was generated above)
+
+The tool looks for a environment variable named `OCTOKIT_OAUTHTOKEN`. This token requires a minimal scope to execute and pull the data from the repository via API. Keep in mind that if a token is not provided then you will most likely run into rate limit errors because the requests are being made anonymously.
