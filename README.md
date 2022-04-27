@@ -104,4 +104,4 @@ problem.
 
 Copyright 2017 GitHub, Inc.
 
-Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/main/LICENSE.txt)
+Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/main/LICENSE.txt).
