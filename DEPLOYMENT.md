@@ -27,7 +27,7 @@ using the tag you just created and pasting in the release notes you just generat
 
 ### Details on the release notes generator
 
-Release notes [generator] (https://github.com/shiftkey/octokit.releasenotes) : this is used to pull details using the GitHub API to generate the release notes.
+Release notes [generator](https://github.com/shiftkey/octokit.releasenotes): this is used to pull details using the GitHub API to generate the release notes.
 
 The generator helps in that it produces release notes that are consistently formatted based on information directly from the change scope (from the previous release to the current tip i.e. the `release` branch).
 
