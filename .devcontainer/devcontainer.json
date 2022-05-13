@@ -1,0 +1,19 @@
+{
+  "name": "Octokit.NET",
+  "extensions": [
+		"formulahendry.dotnet-test-explorer",
+    "eamodio.gitlens",
+    "fernandoescolar.vscode-solution-explorer",
+    "ms-dotnettools.csharp",
+    "redhat.vscode-yaml",
+  ],
+  "dockerFile": "Dockerfile",
+  "containerEnv": {
+    // Enable detection of running in a container
+    "DOTNET_RUNNING_IN_CONTAINER": "true",
+    // Enable correct mode for dotnet watch (only mode supported in a container)
+    "DOTNET_USE_POLLING_FILE_WATCHER": "true",
+    // Skip extraction of XML docs - generally not useful within an image/container - helps perfomance
+    "NUGET_XMLDOC_MODE": "true"
+  }
+}
