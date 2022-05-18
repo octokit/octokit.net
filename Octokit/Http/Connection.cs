@@ -763,7 +763,7 @@ namespace Octokit
 
         static string FormatUserAgent(ProductHeaderValue productInformation)
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0} ({1}; {2}; Octokit {3})",
+            return string.Format(CultureInfo.InvariantCulture, "{0} ({1}; {2}; Octokit.net {3})",
                 productInformation,
                 GetPlatformInformation(),
                 GetCultureInformation(),

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -749,6 +749,7 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal(new Uri("https://github.com/"), connection.BaseAddress);
                 Assert.StartsWith("OctokitTests (", connection.UserAgent);
+                Assert.Contains("Octokit.net", connection.UserAgent);
             }
         }
 
