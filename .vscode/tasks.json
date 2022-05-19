@@ -20,49 +20,6 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "Format",
-      "command": "dotnet",
-      "type": "shell",
-      "args": ["format"],
-      "presentation": {
-        "reveal": "silent"
-      },
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "label": "Run docs server",
-      "command": "mkdocs",
-      "type": "shell",
-      "args": ["serve"],
-      "presentation": {
-        "reveal": "silent",
-        "revealProblems": "onProblem"
-      }
-    }
-  ]
-}
-{
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Build",
-      "command": "dotnet",
-      "type": "shell",
-      "args": [
-        "build",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "reveal": "silent"
-      },
-      "problemMatcher": "$msCompile"
-    },
-    {
       "label": "Unit Tests",
       "command": "./build.sh",
       "type": "shell",
