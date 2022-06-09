@@ -13,7 +13,7 @@
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "omnisharp.path": "latest",
-    "omnisharp.defaultLaunchSolution": "format.sln",
+    "omnisharp.defaultLaunchSolution": "Octokit.sln",
     "omnisharp.disableMSBuildDiagnosticWarning": false,
     "omnisharp.useModernNet": true,
     "omnisharp.enableAsyncCompletion": true,
