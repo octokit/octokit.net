@@ -7,13 +7,17 @@
     "args": {
       // Update 'VARIANT' to pick a .NET Core version: 3.1, 5.0, 6.0
       // Append -bullseye or -focal to pin to an OS version.
-      "VARIANT": "6.0",
-      // Options
-      "NODE_VERSION": "none"
+      "VARIANT": "6.0"
     }
   },
   // Set *default* container specific settings.json values on container create.
-  "settings": {},
+  "settings": {
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.path": "latest",
+    "omnisharp.projectLoadTimeout": 60,
+    "omnisharp.useGlobalMono": "always",
+    "omnisharp.useModernNet": true
+  },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "ms-dotnettools.csharp",
