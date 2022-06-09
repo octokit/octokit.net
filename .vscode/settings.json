@@ -11,6 +11,4 @@
   "editor.detectIndentation": false,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  "dotnet-test-explorer.testProjectPath": "./Octokit.Test*/*",
-  "omnisharp.useModernNet": false,
 }

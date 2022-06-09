@@ -14,7 +14,7 @@
   "settings": {
     "omnisharp.path": "latest",
     "omnisharp.defaultLaunchSolution": "format.sln",
-    "omnisharp.disableMSBuildDiagnosticWarning": true,
+    "omnisharp.disableMSBuildDiagnosticWarning": false,
     "omnisharp.useModernNet": true,
     "omnisharp.enableAsyncCompletion": true,
     "omnisharp.enableEditorConfigSupport": true,
@@ -27,7 +27,6 @@
     "ms-dotnettools.csharp",
     "eamodio.gitlens",
     "fernandoescolar.vscode-solution-explorer",
-    "tintoy.msbuild-project-tools",
     "redhat.vscode-yaml"
   ],
   // This is needed so that the C# extension can resolve to the correct SDK version
