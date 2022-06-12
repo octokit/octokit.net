@@ -1,106 +1,224 @@
-# Octokit - GitHub API Client Library for .NET 
+<p align="center">
+  <a href="https://github.com/actions/checkout"><img alt="GitHub Actions status" src="https://github.com/actions/checkout/workflows/test-local/badge.svg"></a>
+</p>
 
-[![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/master?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/master)
-[![Build Status]( https://travis-ci.org/octokit/octokit.net.svg)]( https://travis-ci.org/octokit/octokit.net)
-[![codecov](https://codecov.io/gh/octokit/octokit.net/branch/master/graph/badge.svg)](https://codecov.io/gh/octokit/octokit.net)
-[![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![NuGet](http://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
-[![NuGet](http://img.shields.io/nuget/v/Octokit.Reactive.svg)](https://www.nuget.org/packages/Octokit.Reactive)
+# Checkout V3
 
-![logo](octokit-dotnet_2.png)
+This action checks-out your repository under `$GITHUB_WORKSPACE`, so your workflow can access it.
 
-Octokit is a client library targeting .NET 4.5 and above that provides an easy
-way to interact with the [GitHub API](http://developer.github.com/v3/).
+Only a single commit is fetched by default, for the ref/SHA that triggered the workflow. Set `fetch-depth: 0` to fetch all history for all branches and tags. Refer [here](https://help.github.com/en/articles/events-that-trigger-workflows) to learn which commit `$GITHUB_SHA` points to for different events.
 
-## Usage examples
+The auth token is persisted in the local git config. This enables your scripts to run authenticated git commands. The token is removed during post-job cleanup. Set `persist-credentials: false` to opt-out.
 
-Get public info on a specific user.
+When Git 2.18 or higher is not in your PATH, falls back to the REST API to download the files.
 
-```c#
-var github = new GitHubClient(new ProductHeaderValue("MyAmazingApp"));
-var user = await github.User.Get("half-ogre");
-Console.WriteLine(user.Followers + " folks love the half ogre!");
+# What's new
+
+- Updated to the node16 runtime by default
+  - This requires a minimum [Actions Runner](https://github.com/actions/runner/releases/tag/v2.285.0) version of v2.285.0 to run, which is by default available in GHES 3.4 or later.
+
+# Usage
+
+<!-- start usage -->
+```yaml
+- uses: actions/checkout@v3
+  with:
+    # Repository name with owner. For example, actions/checkout
+    # Default: ${{ github.repository }}
+    repository: ''
+
+    # The branch, tag or SHA to checkout. When checking out the repository that
+    # triggered a workflow, this defaults to the reference or SHA for that event.
+    # Otherwise, uses the default branch.
+    ref: ''
+
+    # Personal access token (PAT) used to fetch the repository. The PAT is configured
+    # with the local git config, which enables your scripts to run authenticated git
+    # commands. The post-job step removes the PAT.
+    #
+    # We recommend using a service account with the least permissions necessary. Also
+    # when generating a new PAT, select the least scopes necessary.
+    #
+    # [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    #
+    # Default: ${{ github.token }}
+    token: ''
+
+    # SSH key used to fetch the repository. The SSH key is configured with the local
+    # git config, which enables your scripts to run authenticated git commands. The
+    # post-job step removes the SSH key.
+    #
+    # We recommend using a service account with the least permissions necessary.
+    #
+    # [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    ssh-key: ''
+
+    # Known hosts in addition to the user and global host key database. The public SSH
+    # keys for a host may be obtained using the utility `ssh-keyscan`. For example,
+    # `ssh-keyscan github.com`. The public key for github.com is always implicitly
+    # added.
+    ssh-known-hosts: ''
+
+    # Whether to perform strict host key checking. When true, adds the options
+    # `StrictHostKeyChecking=yes` and `CheckHostIP=no` to the SSH command line. Use
+    # the input `ssh-known-hosts` to configure additional hosts.
+    # Default: true
+    ssh-strict: ''
+
+    # Whether to configure the token or SSH key with the local git config
+    # Default: true
+    persist-credentials: ''
+
+    # Relative path under $GITHUB_WORKSPACE to place the repository
+    path: ''
+
+    # Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching
+    # Default: true
+    clean: ''
+
+    # Number of commits to fetch. 0 indicates all history for all branches and tags.
+    # Default: 1
+    fetch-depth: ''
+
+    # Whether to download Git-LFS files
+    # Default: false
+    lfs: ''
+
+    # Whether to checkout submodules: `true` to checkout submodules or `recursive` to
+    # recursively checkout submodules.
+    #
+    # When the `ssh-key` input is not provided, SSH URLs beginning with
+    # `git@github.com:` are converted to HTTPS.
+    #
+    # Default: false
+    submodules: ''
+```
+<!-- end usage -->
+
+# Scenarios
+
+- [Fetch all history for all tags and branches](#Fetch-all-history-for-all-tags-and-branches)
+- [Checkout a different branch](#Checkout-a-different-branch)
+- [Checkout HEAD^](#Checkout-HEAD)
+- [Checkout multiple repos (side by side)](#Checkout-multiple-repos-side-by-side)
+- [Checkout multiple repos (nested)](#Checkout-multiple-repos-nested)
+- [Checkout multiple repos (private)](#Checkout-multiple-repos-private)
+- [Checkout pull request HEAD commit instead of merge commit](#Checkout-pull-request-HEAD-commit-instead-of-merge-commit)
+- [Checkout pull request on closed event](#Checkout-pull-request-on-closed-event)
+- [Push a commit using the built-in token](#Push-a-commit-using-the-built-in-token)
+
+## Fetch all history for all tags and branches
+
+```yaml
+- uses: actions/checkout@v3
+  with:
+    fetch-depth: 0
 ```
 
-## Supported Platforms
+## Checkout a different branch
 
-* .NET 4.5 (Desktop / Server)
-* [.NET Standard 1.1](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
-
-## Getting Started
-
-Octokit is a GitHub API client library for .NET and is available on NuGet:
-
-```
-Install-Package Octokit
+```yaml
+- uses: actions/checkout@v3
+  with:
+    ref: my-branch
 ```
 
-There is also an IObservable based GitHub API client library for .NET using Reactive Extensions:
+## Checkout HEAD^
 
-```
-Install-Package Octokit.Reactive
-```
-
-
-### Beta packages ###
-Unstable NuGet packages that track the master branch of this repository are available at
-[https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
-
-In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
-
-## Documentation
-
-Documentation is available at http://octokitnet.readthedocs.io/en/latest/.
-
-## Build
-
-Octokit is a single assembly designed to be easy to deploy anywhere.
-
-To clone and build it locally click the "Clone in Desktop" button above or run the 
-following git commands.
-
-```
-git clone git@github.com:octokit/Octokit.net.git Octokit
-cd Octokit
+```yaml
+- uses: actions/checkout@v3
+  with:
+    fetch-depth: 2
+- run: git checkout HEAD^
 ```
 
-To build the libraries, run the following command:
+## Checkout multiple repos (side by side)
 
-Windows: `.\build.ps1`
+```yaml
+- name: Checkout
+  uses: actions/checkout@v3
+  with:
+    path: main
 
-Linux/OSX: `./build.sh`
+- name: Checkout tools repo
+  uses: actions/checkout@v3
+  with:
+    repository: my-org/my-tools
+    path: my-tools
+```
 
-## Contribute
+## Checkout multiple repos (nested)
 
-Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md)
-for more details. All contributors are expected to follow our
-[Code of Conduct](https://github.com/octokit/octokit.net/blob/master/CODE_OF_CONDUCT.md).
+```yaml
+- name: Checkout
+  uses: actions/checkout@v3
 
-## Problems?
+- name: Checkout tools repo
+  uses: actions/checkout@v3
+  with:
+    repository: my-org/my-tools
+    path: my-tools
+```
 
-If you find an issue with our library, please visit the [issue tracker](https://github.com/octokit/octokit.net/issues)
-and report the issue.
+## Checkout multiple repos (private)
 
-Please be kind and search to see if the issue is already logged before creating
-a new one. If you're pressed for time, log it anyways.
+```yaml
+- name: Checkout
+  uses: actions/checkout@v3
+  with:
+    path: main
 
-When creating an issue, clearly explain
+- name: Checkout private tools
+  uses: actions/checkout@v3
+  with:
+    repository: my-org/my-private-tools
+    token: ${{ secrets.GH_PAT }} # `GH_PAT` is a secret that contains your PAT
+    path: my-tools
+```
 
-* What you were trying to do.
-* What you expected to happen.
-* What actually happened.
-* Steps to reproduce the problem.
+> - `${{ github.token }}` is scoped to the current repository, so if you want to checkout a different repository that is private you will need to provide your own [PAT](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
 
-Also include any other information you think is relevant to reproduce the
-problem.
 
-## Related Projects
+## Checkout pull request HEAD commit instead of merge commit
 
- - [ScriptCs.OctoKit](https://github.com/hnrkndrssn/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs 
- - [ScriptCs.OctokitLibrary](https://github.com/ryanrousseau/ScriptCs.OctokitLibrary) - a [script library](https://github.com/scriptcs/scriptcs/wiki/Script-Libraries) to use Octokit in scriptcs
+```yaml
+- uses: actions/checkout@v3
+  with:
+    ref: ${{ github.event.pull_request.head.sha }}
+```
 
-## Copyright and License
+## Checkout pull request on closed event
 
-Copyright 2017 GitHub, Inc.
+```yaml
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, closed]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+```
 
-Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/master/LICENSE.txt)
+## Push a commit using the built-in token
+
+```yaml
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated"
+          git push
+```
+
+# License
+
+The scripts and documentation in this project are released under the [MIT License](LICENSE)
