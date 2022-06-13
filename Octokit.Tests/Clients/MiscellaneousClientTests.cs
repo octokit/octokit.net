@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
 using System.Globalization;
+using System.Linq;
 
 namespace Octokit.Tests.Clients
 {
@@ -65,24 +66,24 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                IReadOnlyList<Emoji> response = new List<Emoji>
+                var response = new ReadOnlyDictionary<string, Uri>(new Dictionary<string, Uri>()
                 {
-                    { new Emoji("foo", "http://example.com/foo.gif") },
-                    { new Emoji("bar", "http://example.com/bar.gif") }
-                };
+                    { "foo", new Uri("http://example.com/foo.gif") },
+                    { "bar", new Uri("http://example.com/bar.gif") }
+                });
 
                 var apiConnection = Substitute.For<IApiConnection>();
-                apiConnection.GetAll<Emoji>(Args.Uri)
-                          .Returns(Task.FromResult(response));
+                apiConnection.Get<IReadOnlyDictionary<string, Uri>>(Args.Uri)
+                          .Returns(Task.FromResult(response as IReadOnlyDictionary<string, Uri>));
 
                 var client = new MiscellaneousClient(apiConnection);
 
                 var emojis = await client.GetAllEmojis();
 
                 Assert.Equal(2, emojis.Count);
-                Assert.Equal("foo", emojis[0].Name);
+                Assert.Equal("foo", emojis.First().Key);
                 apiConnection.Received()
-                    .GetAll<Emoji>(Arg.Is<Uri>(u => u.ToString() == "emojis"));
+                    .Get<IReadOnlyDictionary<string, Uri>>(Arg.Is<Uri>(u => u.ToString() == "emojis"));
             }
         }
 

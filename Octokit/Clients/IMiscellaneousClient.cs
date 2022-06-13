@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -19,7 +20,7 @@ namespace Octokit
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<Emoji>> GetAllEmojis();
+        Task<IReadOnlyDictionary<string, Uri>> GetAllEmojis();
 
         /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.

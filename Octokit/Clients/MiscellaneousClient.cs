@@ -28,9 +28,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [ManualRoute("GET", "/emojis")]
-        public Task<IReadOnlyList<Emoji>> GetAllEmojis()
+        public Task<IReadOnlyDictionary<string, Uri>> GetAllEmojis()
         {
-            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis());
+            return ApiConnection.Get<IReadOnlyDictionary<string, Uri>>(ApiUrls.Emojis());
         }
 
         /// <summary>

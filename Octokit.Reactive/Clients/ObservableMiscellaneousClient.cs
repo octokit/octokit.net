@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
-        public IObservable<Emoji> GetAllEmojis()
+        public IObservable<KeyValuePair<string, Uri>> GetAllEmojis()
         {
             return _client.GetAllEmojis().ToObservable().SelectMany(e => e);
         }

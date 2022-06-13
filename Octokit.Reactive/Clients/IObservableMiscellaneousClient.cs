@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit.Reactive
@@ -12,7 +13,7 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Makes a network request")]
-        IObservable<Emoji> GetAllEmojis();
+        IObservable<KeyValuePair<string, Uri>> GetAllEmojis();
 
         /// <summary>
         /// Gets the rendered Markdown for an arbitrary markdown document.
