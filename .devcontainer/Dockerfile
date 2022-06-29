@@ -11,3 +11,5 @@ COPY --from=mcr.microsoft.com/dotnet/sdk:5.0 /usr/share/dotnet/shared /usr/share
 # # Add mkdocs for doc generation
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends python3-pip
 RUN pip3 install mkdocs
+
+RUN apt-get install -y mono-complete
