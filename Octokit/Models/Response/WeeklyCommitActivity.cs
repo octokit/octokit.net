@@ -8,6 +8,7 @@ using System.Linq;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(WeekTimestamp))]
     public class WeeklyCommitActivity
     {
         public WeeklyCommitActivity() { }

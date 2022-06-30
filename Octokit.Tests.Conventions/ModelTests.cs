@@ -62,7 +62,7 @@ namespace Octokit.Tests.Conventions
 
             var constructors = modelType.GetConstructors();
             var properties = modelType.GetProperties()
-                .Where(prop => prop.CanWrite &&
+                .Where(prop => !prop.CanWrite &&
                                !excludedProperties.Contains(prop.Name))
                 .ToList();
 
