@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Octokit
@@ -29,6 +30,10 @@ namespace Octokit
         /// Whether the current user has pull permissions
         /// </summary>
         public bool Pull { get; protected set; }
+
+        //Should fail resharper rule
+        //Should fail auto-prop without ctor setting rule
+        public IReadOnlyList<Label> Labels { get; }
 
         internal string DebuggerDisplay
         {
