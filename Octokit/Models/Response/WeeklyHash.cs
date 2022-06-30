@@ -6,7 +6,6 @@ using System.Globalization;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(Week), nameof(Additions), nameof(Deletions), nameof(Commits))]
     public class WeeklyHash
     {
         public WeeklyHash() { }

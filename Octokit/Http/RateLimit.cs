@@ -15,7 +15,6 @@ namespace Octokit
 #if !NO_SERIALIZABLE
     [Serializable]
 #endif
-    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(Reset))]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class RateLimit
 #if !NO_SERIALIZABLE

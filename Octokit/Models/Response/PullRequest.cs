@@ -7,7 +7,6 @@ using Octokit.Internal;
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(Merged))]
     public class PullRequest
     {
         public PullRequest() { }

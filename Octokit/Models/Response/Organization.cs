@@ -4,7 +4,6 @@ using System.Globalization;
 
 namespace Octokit
 {
-    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(Type))]
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Organization : Account
     {

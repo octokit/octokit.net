@@ -56,14 +56,9 @@ namespace Octokit.Tests.Conventions
         [MemberData(nameof(ResponseModelTypes))]
         public void AllResponseModelsHavePublicCtorWithAllProperties(Type modelType)
         {
-            var excludedProperties = modelType.GetCustomAttribute<ExcludeFromCtorWithAllPropertiesConventionTestAttribute>()?
-                                         .Properties ??
-                                     new string[] { };
-
             var constructors = modelType.GetConstructors();
             var properties = modelType.GetProperties()
-                .Where(prop => !prop.CanWrite &&
-                               !excludedProperties.Contains(prop.Name))
+                .Where(prop => !prop.CanWrite && IsAutoProperty(prop))
                 .ToList();
 
             var missingProperties = properties.ToList();
@@ -86,6 +81,12 @@ namespace Octokit.Tests.Conventions
             {
                 throw new MissingPublicConstructorWithAllPropertiesException(modelType, missingProperties);
             }
+        }
+
+        private bool IsAutoProperty(PropertyInfo prop)
+        {
+            return prop.DeclaringType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                  .Any(f => f.Name.Contains("<" + prop.Name + ">"));
         }
 
         [Theory]

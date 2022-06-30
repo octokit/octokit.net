@@ -8,7 +8,6 @@ namespace Octokit
     /// Look at the Type property to figure out which one it is.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    [ExcludeFromCtorWithAllPropertiesConventionTest(nameof(Content))]
     public class RepositoryContent : RepositoryContentInfo
     {
         public RepositoryContent() { }
