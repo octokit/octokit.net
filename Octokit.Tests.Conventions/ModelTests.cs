@@ -99,12 +99,10 @@ namespace Octokit.Tests.Conventions
             {
                 var setter = property.GetSetMethod(nonPublic: true);
 
-                if (setter == null || !setter.IsPublic)
+                if (setter != null && (setter.IsPublic || typeof(RepositoryPermissions) == modelType))
                 {
-                    continue;
+                    mutableProperties.Add(property);
                 }
-
-                mutableProperties.Add(property);
             }
 
             if (mutableProperties.Any())
