@@ -20,27 +20,27 @@ namespace Octokit
         /// <summary>
         /// Whether the current user has administrative permissions
         /// </summary>
-        public bool Admin { get; protected set; }
+        public bool Admin { get; }
 
         /// <summary>
         /// Whether the current user has maintain permissions
         /// </summary>
-        public bool Maintain { get; protected set; }
+        public bool Maintain { get; }
 
         /// <summary>
         /// Whether the current user has push permissions
         /// </summary>
-        public bool Push { get; protected set; }
+        public bool Push { get; }
 
         /// <summary>
         /// Whether the current user has triage permissions
         /// </summary>
-        public bool Triage { get; protected set; }
+        public bool Triage { get; }
 
         /// <summary>
         /// Whether the current user has pull permissions
         /// </summary>
-        public bool Pull { get; protected set; }
+        public bool Pull { get; }
 
         internal string DebuggerDisplay
         {
