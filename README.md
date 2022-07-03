@@ -4,8 +4,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/main?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/main)
 [![codecov](https://codecov.io/gh/octokit/octokit.net/branch/main/graph/badge.svg)](https://codecov.io/gh/octokit/octokit.net)
 [![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![NuGet](http://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
-[![NuGet](http://img.shields.io/nuget/v/Octokit.Reactive.svg)](https://www.nuget.org/packages/Octokit.Reactive)
+[![NuGet](https://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
+[![NuGet](https://img.shields.io/nuget/v/Octokit.Reactive.svg)](https://www.nuget.org/packages/Octokit.Reactive)
 
 ![logo](octokit-dotnet_2.png)
 
@@ -44,7 +44,7 @@ dotnet add package Octokit.Reactive
 
 
 ### Beta packages ###
-Unstable NuGet packages that track the master branch of this repository are available at
+Unstable NuGet packages that track the `main` branch of this repository are available at
 [https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
 
 In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
@@ -73,9 +73,9 @@ Linux/OSX: `./build.sh`
 
 ## Contribute
 
-Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/master/CONTRIBUTING.md)
+Visit the [Contributor Guidelines](https://github.com/octokit/octokit.net/blob/main/CONTRIBUTING.md)
 for more details. All contributors are expected to follow our
-[Code of Conduct](https://github.com/octokit/octokit.net/blob/master/CODE_OF_CONDUCT.md).
+[Code of Conduct](https://github.com/octokit/octokit.net/blob/main/CODE_OF_CONDUCT.md).
 
 ## Problems?
 
@@ -104,4 +104,4 @@ problem.
 
 Copyright 2017 GitHub, Inc.
 
-Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/master/LICENSE.txt)
+Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/main/LICENSE.txt)

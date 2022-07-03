@@ -54,6 +54,8 @@ namespace Octokit
 
         public const string VisibilityPreview = "application/vnd.github.nebula-preview+json";
 
+        public const string TemplatePreview = "application/vnd.github.baptiste-preview+json";
+
         public const string DependencyAlertsPreview = "application/vnd.github.dorian-preview+json";
 
         /// <summary>

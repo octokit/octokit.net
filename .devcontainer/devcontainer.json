@@ -1,0 +1,39 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.234.0/containers/dotnet
+{
+  "name": "Octokit.net",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      // Update 'VARIANT' to pick a .NET Core version: 3.1, 5.0, 6.0
+      // Append -bullseye or -focal to pin to an OS version.
+      "VARIANT": "latest"
+    }
+  },
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "omnisharp.path": "latest",
+    "omnisharp.defaultLaunchSolution": "Octokit.sln",
+    "omnisharp.disableMSBuildDiagnosticWarning": false,
+    "omnisharp.useModernNet": true,
+    "omnisharp.enableAsyncCompletion": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableImportCompletion": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "omnisharp.organizeImportsOnFormat": true
+  },
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "ms-dotnettools.csharp",
+    "eamodio.gitlens",
+    "fernandoescolar.vscode-solution-explorer",
+    "redhat.vscode-yaml"
+  ],
+  // This is needed so that the C# extension can resolve to the correct SDK version
+  "remoteEnv": {
+    "PATH": "${containerWorkspaceFolder}/.dotnet:${containerEnv:PATH}",
+    "DOTNET_MULTILEVEL_LOOKUP": "0",
+    "TARGET": "net7.0",
+    "DOTNET_WATCH_SUPPRESS_LAUNCH_BROWSER": "true"
+  }
+}

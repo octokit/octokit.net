@@ -302,6 +302,12 @@ namespace Octokit
         /// No conflicts, everything good. Merging is allowed.
         /// </summary>
         [Parameter(Value = "clean")]
-        Clean
+        Clean,
+
+        /// <summary>
+        /// Not ready for review. Merging is blocked.
+        /// </summary>
+        [Parameter(Value = "draft")]
+        Draft
     }
 }

@@ -59,6 +59,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that create a repository using a template.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Repositories(string owner, string repo)
+        {
+            return "repos/{0}/{1}/generate".FormatUri(owner, repo);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the specified organization in
         /// response to a GET request. A POST to this URL creates a new repository for the organization.
         /// </summary>
@@ -2359,6 +2368,15 @@ namespace Octokit
         public static Uri OauthAuthorize()
         {
             return "login/oauth/authorize".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for initiating the OAuth device Flow
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OauthDeviceCode()
+        {
+            return "login/device/code".FormatUri();
         }
 
         /// <summary>
