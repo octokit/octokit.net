@@ -409,7 +409,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/vulnerability-alerts"),
-                    null, AcceptHeaders.DependencyAlertsPreview).Returns(responseTask);
+                    null, null).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new RepositoriesClient(apiConnection);

@@ -238,7 +238,6 @@ namespace Octokit
         /// <param name="owner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
-        [Preview("dorian")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/vulnerability-alerts")]
         public async Task<bool> AreVulnerabilityAlertsEnabled(string owner, string name)
         {
@@ -247,7 +246,7 @@ namespace Octokit
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.RepositoryVulnerabilityAlerts(owner, name), null, AcceptHeaders.DependencyAlertsPreview).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.RepositoryVulnerabilityAlerts(owner, name), null, null).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)

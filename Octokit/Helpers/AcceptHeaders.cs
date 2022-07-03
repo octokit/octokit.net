@@ -56,8 +56,6 @@ namespace Octokit
 
         public const string TemplatePreview = "application/vnd.github.baptiste-preview+json";
 
-        public const string DependencyAlertsPreview = "application/vnd.github.dorian-preview+json";
-
         /// <summary>
         /// Combines multiple preview headers. GitHub API supports Accept header with multiple
         /// values separated by comma.
