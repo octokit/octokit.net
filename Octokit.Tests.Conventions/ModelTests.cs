@@ -114,6 +114,33 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData(nameof(ResponseModelTypes))]
+        public void ResponseModelsHaveNoSetterlessAutoPropertiesForReflection(Type modelType)
+        {
+            var setterlessAutoProperties = new List<PropertyInfo>();
+
+            foreach (var property in modelType.GetProperties())
+            {
+                var propertyHasNoSetter = property.GetSetMethod(true) is null;
+                if (IsAutoProperty(property) && propertyHasNoSetter)
+                {
+                    setterlessAutoProperties.Add(property);
+                }
+            }
+
+            if (setterlessAutoProperties.Any())
+            {
+                throw new ResponseModelSetterlessAutoPropertyException(modelType, setterlessAutoProperties);
+            }
+        }
+
+        private bool IsAutoProperty(PropertyInfo prop)
+        {
+            return prop.DeclaringType.GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .Any(f => f.Name.Contains("<" + prop.Name + ">"));
+        }
+
+        [Theory]
+        [MemberData(nameof(ResponseModelTypes))]
         public void ResponseModelsHaveReadOnlyCollections(Type modelType)
         {
             var mutableCollectionProperties = new List<PropertyInfo>();
