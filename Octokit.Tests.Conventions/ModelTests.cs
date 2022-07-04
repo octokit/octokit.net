@@ -90,7 +90,7 @@ namespace Octokit.Tests.Conventions
 
         [Theory]
         [MemberData(nameof(ResponseModelTypes))]
-        public void ResponseModelsHaveGetterOnlyProperties(Type modelType)
+        public void ResponseModelsHaveNoPublicSettableProperties(Type modelType)
         {
             var mutableProperties = new List<PropertyInfo>();
 
