@@ -2256,6 +2256,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for checking vulnerability alerts for a repository.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static Uri RepositoryVulnerabilityAlerts(string owner, string name)
+        {
+            return "repos/{0}/{1}/vulnerability-alerts".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="System.Uri"/> for the Deployments API for the given repository.
         /// </summary>
         /// <param name="owner">Owner of the repository</param>

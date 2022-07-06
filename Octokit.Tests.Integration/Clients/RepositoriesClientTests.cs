@@ -2055,4 +2055,15 @@ public class RepositoriesClientTests
             }
         }
     }
+
+    public class TheAreVulnerabilityAlertsEnabledMethod
+    {
+        [IntegrationTest]
+        public async Task AreVulnerabilityAlertsEnabledReturnsTrue()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var enabled = await github.Repository.AreVulnerabilityAlertsEnabled("owner", "name");
+            Assert.True(enabled);
+        }
+    }
 }
