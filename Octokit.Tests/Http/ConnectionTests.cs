@@ -217,7 +217,7 @@ namespace Octokit.Tests.Http
                     httpClient,
                     Substitute.For<IJsonSerializer>());
 
-                var exception = await Assert.ThrowsAsync<RateLimitExceededException>(
+                var exception = await Assert.ThrowsAsync<SecondaryRateLimitExceededException>(
                     () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("You have exceeded a secondary rate limit. Please wait a few minutes before you try again.",

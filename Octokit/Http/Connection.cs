@@ -719,9 +719,14 @@ namespace Octokit
         {
             string body = response.Body as string ?? "";
 
-            if (body.Contains("rate limit exceeded") || body.Contains("secondary rate limit"))
+            if (body.Contains("rate limit exceeded"))
             {
                 return new RateLimitExceededException(response);
+            }
+
+            if (body.Contains("secondary rate limit"))
+            {
+                return new SecondaryRateLimitExceededException(response);
             }
 
             if (body.Contains("number of login attempts exceeded"))
