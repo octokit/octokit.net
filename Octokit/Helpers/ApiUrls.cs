@@ -2725,6 +2725,24 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive hooks.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveHooks()
+        {
+            return "admin/pre-receive-hooks".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the <see cref="Uri"/> for pre-receive hooks.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri AdminPreReceiveHooks(long hookId)
+        {
+            return "admin/pre-receive-hooks/{0}".FormatUri(hookId);
+        }
+
+        /// <summary>
         /// Creates the relative <see cref="Uri"/> for altering administration status of a user.
         /// </summary>
         /// <param name="login">The login for the intended user.</param>
