@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace Octokit
 {
     /// <summary>
-    /// Extra information returned as part of each api response.
+    /// Extra information returned as part of each API response.
     /// </summary>
     public class ApiInfo
     {

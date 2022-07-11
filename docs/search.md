@@ -198,10 +198,10 @@ var request = new SearchCodeRequest("auth")
 {
     // we can restrict search to the file, path or search both
     In = new[] { CodeInQualifier.File, CodeInQualifier.Path },
-    
+
     // how about we find a file based on a certain language
     Language = Language.JavaScript,
-    
+
     // do we want to search forks too?
     Forks = true,
 
@@ -210,15 +210,16 @@ var request = new SearchCodeRequest("auth")
 
     // we may want to restrict the search to the path of a file
     Path = "app/assets",
-    
+
     // we may want to restrict the file based on file extension
     Extensions = new[] { "json", "sql" },
-    
+
     // restrict search to a specific file name
     FileName = "app.json",
-    
+
     // search within a users or orgs repo
-    User = "dhh"
+    Users = new[] { "johnDoe", "janeDoe" }
+    Organizations = new[] { "johnDoe", "janeDoe" }
 };
 ```
 

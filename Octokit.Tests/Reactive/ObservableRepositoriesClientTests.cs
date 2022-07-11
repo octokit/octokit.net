@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -86,6 +87,30 @@ namespace Octokit.Tests.Reactive
 
                 client.Transfer(1, transfer);
                 gitHubClient.Repository.Received().Transfer(1, transfer);
+            }
+        }
+
+        public class TheIsFollowingMethod
+        {
+            [Fact]
+            public void CallsIntoClient()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(githubClient);
+
+                client.AreVulnerabilityAlertsEnabled("owner", "name");
+                githubClient.Repository.Received().AreVulnerabilityAlertsEnabled("owner", "name");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("owner", "").ToTask());
             }
         }
 

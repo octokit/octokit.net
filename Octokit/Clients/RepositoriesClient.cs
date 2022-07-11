@@ -51,6 +51,7 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
+        [Preview("nebula")]
         [ManualRoute("POST", "/user/repos")]
         public Task<Repository> Create(NewRepository newRepository)
         {
@@ -69,6 +70,8 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
+        [Preview("nebula")]
+        [Preview("baptiste")]
         [ManualRoute("POST", "/orgs/{org}/repos")]
         public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
         {
@@ -80,11 +83,31 @@ namespace Octokit
             return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
         }
 
+        /// <summary>
+        /// Creates a new repository from a template
+        /// </summary>
+        /// <param name="templateOwner">The organization or person who will owns the template</param>
+        /// <param name="templateRepo">The name of template repository to work from</param>
+        /// <param name="newRepository"></param>
+        /// <returns></returns>
+        [Preview("baptiste")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/generate")]
+        public Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository)
+        {
+            Ensure.ArgumentNotNull(templateOwner, nameof(templateOwner));
+            Ensure.ArgumentNotNull(templateRepo, nameof(templateRepo));
+            Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
+            if (string.IsNullOrEmpty(newRepository.Name))
+                throw new ArgumentException("The new repository's name must not be null.");
+
+            return ApiConnection.Post<Repository>(ApiUrls.Repositories(templateOwner, templateRepo), newRepository, AcceptHeaders.TemplatePreview);
+        }
+
         async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
         {
             try
             {
-                return await ApiConnection.Post<Repository>(url, newRepository).ConfigureAwait(false);
+                return await ApiConnection.Post<Repository>(url, newRepository, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview)).ConfigureAwait(false);
             }
             catch (ApiValidationException e)
             {
@@ -178,6 +201,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/transfer")]
         public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
         {
@@ -197,6 +221,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("POST", "/repositories/{id}/transfer")]
         public Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
         {
@@ -206,12 +231,40 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Checks if vulnerability alerts are enabled for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/vulnerability-alerts")]
+        public async Task<bool> AreVulnerabilityAlertsEnabled(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            try
+            {
+                var response = await Connection.Get<object>(ApiUrls.RepositoryVulnerabilityAlerts(owner, name), null, null).ConfigureAwait(false);
+                return response.HttpResponse.IsTrue();
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        [Preview("nebula")]
+        [Preview("baptiste")]
         [ManualRoute("PATCH", "/repos/{owner}/{repo}")]
         public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
         {
@@ -220,7 +273,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(update, nameof(update));
             Ensure.ArgumentNotNull(update.Name, nameof(update.Name));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview));
         }
 
         /// <summary>
@@ -229,6 +282,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("PATCH", "/repositories/{id}")]
         public Task<Repository> Edit(long repositoryId, RepositoryUpdate update)
         {
@@ -247,13 +301,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("nebula")]
         [ManualRoute("GET", "/repos/{owner}/{repo}")]
         public Task<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.VisibilityPreview);
         }
 
         /// <summary>
@@ -265,6 +320,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
+        [Preview("mercy")]
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId)
         {
@@ -280,7 +336,7 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
+        /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>        
         [ManualRoute("GET", "/repositories")]
         public Task<IReadOnlyList<Repository>> GetAllPublic()
         {
@@ -318,6 +374,8 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
+        [Preview("nebula")]
+        [Preview("baptiste")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
@@ -334,12 +392,14 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
+        [Preview("nebula")]
+        [Preview("baptiste")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview), options);
         }
 
         /// <summary>
@@ -353,6 +413,7 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
+        [Preview("nebula")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request)
         {
@@ -373,13 +434,14 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
+        [Preview("nebula")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.VisibilityPreview, options);
         }
 
         /// <summary>
@@ -428,6 +490,8 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
+        [Preview("nebula")]
+        [Preview("baptiste")]
         [ManualRoute("GET", "/orgs/{org}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
@@ -446,13 +510,15 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
+        [Preview("nebula")]
+        [Preview("baptiste")]
         [ManualRoute("GET", "/orgs/{org}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview), options);
         }
 
         /// <summary>
@@ -724,6 +790,126 @@ namespace Octokit
                 parameters.Add("anon", "1");
 
             return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(repositoryId), parameters, options);
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repositories/{id}/topics")]
+        public async Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(options, nameof(options));
+            var endpoint = ApiUrls.RepositoryTopics(repositoryId);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repositories/{id}/topics")]
+
+        public Task<RepositoryTopics> GetAllTopics(long repositoryId)
+        {
+            return GetAllTopics(repositoryId, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
+        public async Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var endpoint = ApiUrls.RepositoryTopics(owner, name);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
+        }
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
+
+        public Task<RepositoryTopics> GetAllTopics(string owner, string name)
+        {
+            return GetAllTopics(owner, name, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        [ManualRoute("PUT", "/repos/{owner}/{repo}/topics")]
+        public async Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(topics, nameof(topics));
+
+            var endpoint = ApiUrls.RepositoryTopics(owner, name);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
+        }
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        [ManualRoute("PUT", "/repositories/{id}/topics")]
+        public async Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
+        {
+            Ensure.ArgumentNotNull(topics, nameof(topics));
+
+            var endpoint = ApiUrls.RepositoryTopics(repositoryId);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+
+            return data ?? new RepositoryTopics();
         }
 
         /// <summary>

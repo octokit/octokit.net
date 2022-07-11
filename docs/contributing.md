@@ -3,7 +3,7 @@ so you can edit changes and view them immediately.
 
 ## Windows
 
-You need these things:
+You'll need to install the following:
 
  - this repo - `git clone https://github.com/octokit/octokit.net.git`
  - Python - install it from Chocolatey: `cinst python`
@@ -20,7 +20,7 @@ to `http://localhost:8000/`
 
 ## OS X
 
-You need these things:
+You'll need to install the following:
 
  - this repo - `git clone https://github.com/octokit/octokit.net.git`
  - Python - if you don't have it already, get it from homebrew: `brew install python3`
@@ -28,3 +28,19 @@ You need these things:
 
 Once you've got all that, run `mkdocs serve` from the root of your repository and then point your browser
 to `http://localhost:8000/`
+
+## Codespaces
+
+Note: By default `Python 3.x` and `pip` should already be installed on your [codespace](https://github.com/features/codespaces) instance when it spins up.
+
+You'll need to install the following:
+
+ - mkdocs - install it with pip: `pip install mkdocs`
+
+
+## Troubleshooting
+
+In some instances you (depending on how python and pip were installed) you'll need to use the python module flag `-m` to install mkdocs.
+Using this flag ensures that you are using the instance of pip that is connected to the active instance of Python.
+
+ex. `python -m pip install mkdocs`

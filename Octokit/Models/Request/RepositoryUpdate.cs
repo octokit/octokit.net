@@ -77,11 +77,18 @@ namespace Octokit
         /// Optional. Allows the "Create a merge commit" merge method to be used.
         /// </summary>
         public bool? AllowMergeCommit { get; set; }
+        
+        public bool? DeleteBranchOnMerge { get; set; }
 
         /// <summary>
         /// Optional. True to archive this repository.  Note: you cannot unarchive repositories through the API.
         /// </summary>
         public bool? Archived { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository is public, private, or internal. A value provided here overrides any value set in the existing private field.
+        /// </summary>
+        public RepositoryVisibility? Visibility { get; set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal string DebuggerDisplay

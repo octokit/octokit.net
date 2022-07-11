@@ -59,6 +59,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that create a repository using a template.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri Repositories(string owner, string repo)
+        {
+            return "repos/{0}/{1}/generate".FormatUri(owner, repo);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the specified organization in
         /// response to a GET request. A POST to this URL creates a new repository for the organization.
         /// </summary>
@@ -1961,6 +1970,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for repository topics.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>the <see cref="Uri"/> for repository topics.</returns>
+        public static Uri RepositoryTopics(string owner, string name)
+        {
+            return "repos/{0}/{1}/topics".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository topics.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>the <see cref="Uri"/> for repository topics.</returns>
+        public static Uri RepositoryTopics(long repositoryId)
+        {
+            return "repositories/{0}/topics".FormatUri(repositoryId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository languages.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -2284,6 +2314,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for checking vulnerability alerts for a repository.
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static Uri RepositoryVulnerabilityAlerts(string owner, string name)
+        {
+            return "repos/{0}/{1}/vulnerability-alerts".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="System.Uri"/> for the Deployments API for the given repository.
         /// </summary>
         /// <param name="owner">Owner of the repository</param>
@@ -2385,6 +2426,15 @@ namespace Octokit
         public static Uri OauthAuthorize()
         {
             return "login/oauth/authorize".FormatUri();
+        }
+
+        /// <summary>
+        /// Creates the relative <see cref="Uri"/> for initiating the OAuth device Flow
+        /// </summary>
+        /// <returns></returns>
+        public static Uri OauthDeviceCode()
+        {
+            return "login/device/code".FormatUri();
         }
 
         /// <summary>
@@ -3772,7 +3822,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for repository traffice referrers.
+        /// Returns the <see cref="Uri"/> for repository traffic referrers.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>

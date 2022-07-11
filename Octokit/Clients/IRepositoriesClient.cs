@@ -86,6 +86,16 @@ namespace Octokit
         Task<Repository> Create(string organizationLogin, NewRepository newRepository);
 
         /// <summary>
+        /// Creates a new repository from a template
+        /// </summary>
+        /// <param name="templateOwner">The organization or person who will owns the template</param>
+        /// <param name="templateRepo">The name of template repository to work from</param>
+        /// <param name="newRepository"></param>
+        /// <returns></returns>
+        Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository);
+
+
+        /// <summary>
         /// Deletes the specified repository.
         /// </summary>
         /// <remarks>
@@ -130,6 +140,17 @@ namespace Octokit
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
         Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer);
+
+        /// <summary>
+        /// Checks if vulnerability alerts are enabled for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
+        Task<bool> AreVulnerabilityAlertsEnabled(string owner, string name);
 
         /// <summary>
         /// Gets the specified repository.
@@ -629,5 +650,77 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
         /// </remarks>
         IProjectsClient Project { get; }
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Gets all topics for the specified owner and repository name.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        Task<RepositoryTopics> GetAllTopics(string owner, string name);
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>All topics associated with the repository.</returns>
+        Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options);
+
+        /// <summary>
+        /// Gets all topics for the specified repository ID.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>All topics associated with the repository.</returns>
+        Task<RepositoryTopics> GetAllTopics(long repositoryId);
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics);
+
+        /// <summary>
+        /// Replaces all topics for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        ///
+        /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <returns>All topics now associated with the repository.</returns>
+        Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics);
+
     }
 }

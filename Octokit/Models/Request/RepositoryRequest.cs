@@ -43,7 +43,7 @@ namespace Octokit
         /// <value>
         ///  The visibility.
         /// </value>
-        public RepositoryVisibility? Visibility { get; set; }
+        public RepositoryRequestVisibility? Visibility { get; set; }
 
         /// <summary>
         /// Gets or sets the affiliation property.
@@ -143,17 +143,17 @@ namespace Octokit
     /// <summary>
     /// The properties that repositories can be visible by.
     /// </summary>
-    public enum RepositoryVisibility
+    public enum RepositoryRequestVisibility
     {
         /// <summary>
         /// Returns only public repositories
-        /// </summary>     
+        /// </summary>
         [Parameter(Value = "public")]
         Public,
 
         /// <summary>
         /// Returns only private repositories
-        /// </summary> 
+        /// </summary>
         [Parameter(Value = "private")]
         Private,
 
@@ -161,7 +161,13 @@ namespace Octokit
         /// Return both public and private repositories
         /// </summary>
         [Parameter(Value = "all")]
-        All
+        All,
+
+        /// <summary>
+        /// Returns only internal repositories
+        /// </summary>
+        [Parameter(Value = "internal")]
+        Internal,
     }
 
     /// <summary>

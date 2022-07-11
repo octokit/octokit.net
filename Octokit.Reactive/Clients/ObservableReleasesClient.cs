@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -400,13 +401,14 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
         /// <param name="data">Description of the asset with its data</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
+        public IObservable<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(release, nameof(release));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            return _client.UploadAsset(release, data).ToObservable();
+            return _client.UploadAsset(release, data, cancellationToken).ToObservable();
         }
 
         /// <summary>

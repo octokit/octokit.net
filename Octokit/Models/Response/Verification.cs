@@ -91,7 +91,7 @@ namespace Octokit
         [Parameter(Value = "malformed_signature")]
         MalformedSignature,
 
-        [Parameter(Value = "inavlid")]
+        [Parameter(Value = "invalid")]
         Invalid,
 
         [Parameter(Value = "valid")]
