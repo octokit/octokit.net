@@ -180,7 +180,7 @@ namespace Octokit.Tests.Http
             }
 
             [Fact]
-            public async Task ThrowsRateLimitExceededExceptionForForbidderResponse()
+            public async Task ThrowsRateLimitExceededExceptionForForbiddenResponse()
             {
                 var httpClient = Substitute.For<IHttpClient>();
                 var response = CreateResponse(
@@ -199,6 +199,28 @@ namespace Octokit.Tests.Http
                     () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
 
                 Assert.Equal("API rate limit exceeded. See http://developer.github.com/v3/#rate-limiting for details.",
+                    exception.Message);
+            }
+
+            [Fact]
+            public async Task ThrowsSecondaryRateLimitExceededExceptionForForbiddenResponse()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                var response = CreateResponse(
+                    HttpStatusCode.Forbidden,
+                    "{\"message\":\"You have exceeded a secondary rate limit. Please wait a few minutes before you try again.\"}");
+
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var exception = await Assert.ThrowsAsync<SecondaryRateLimitExceededException>(
+                    () => connection.GetResponse<string>(new Uri("endpoint", UriKind.Relative)));
+
+                Assert.Equal("You have exceeded a secondary rate limit. Please wait a few minutes before you try again.",
                     exception.Message);
             }
 

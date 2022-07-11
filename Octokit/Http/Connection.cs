@@ -724,6 +724,11 @@ namespace Octokit
                 return new RateLimitExceededException(response);
             }
 
+            if (body.Contains("secondary rate limit"))
+            {
+                return new SecondaryRateLimitExceededException(response);
+            }
+
             if (body.Contains("number of login attempts exceeded"))
             {
                 return new LoginAttemptsExceededException(response);
