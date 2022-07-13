@@ -77,6 +77,7 @@ namespace Octokit
         /// Optional. Allows the "Create a merge commit" merge method to be used.
         /// </summary>
         public bool? AllowMergeCommit { get; set; }
+
         
         public bool? DeleteBranchOnMerge { get; set; }
 
@@ -89,6 +90,11 @@ namespace Octokit
         /// Optional. Gets or sets whether the new repository is public, private, or internal. A value provided here overrides any value set in the existing private field.
         /// </summary>
         public RepositoryVisibility? Visibility { get; set; }
+
+        /// <summary>
+        /// Options. Allows the "Auto Merge" method to be used.
+        /// </summary>
+        public bool? AllowAutoMerge { get; set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal string DebuggerDisplay

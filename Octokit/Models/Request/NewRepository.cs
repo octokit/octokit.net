@@ -95,6 +95,26 @@ namespace Octokit
         /// </summary>
         public RepositoryVisibility? Visibility { get; set; }
 
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows rebase merges.
+        /// </summary>
+        public bool? AllowRebaseMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows squash merges.
+        /// </summary>
+        public bool? AllowSquashMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows merge commits.
+        /// </summary>
+        public bool? AllowMergeCommit { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows auto merge.
+        /// </summary>
+        public bool? AllowAutoMerge { get; set; }
+
         internal string DebuggerDisplay
         {
             get

@@ -36,6 +36,10 @@ public class RepositoriesClientTests
                 Assert.Null(repository.Homepage);
                 Assert.NotNull(repository.DefaultBranch);
                 Assert.Null(repository.License);
+                Assert.False(repository.AllowAutoMerge);
+                Assert.True(repository.AllowMergeCommit);
+                Assert.True(repository.AllowRebaseMerge);
+                Assert.True(repository.AllowSquashMerge);
             }
         }
 
@@ -59,6 +63,89 @@ public class RepositoriesClientTests
                 Assert.True(createdRepository.Private);
                 var repository = await github.Repository.Get(Helper.UserName, repoName);
                 Assert.True(repository.Private);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithAllowAutoMergeSet()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("repo-auto-merge");
+
+            var newRepository = new NewRepository(repoName) { AllowAutoMerge = true };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                // Default is false if unset, so check for true to ensure change
+                Assert.True(createdRepository.AllowAutoMerge);
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.True(repository.AllowAutoMerge);
+
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithAllowMergeCommitSet()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("repo-merge-commit");
+
+            var newRepository = new NewRepository(repoName) { AllowMergeCommit = false };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                // Default is true if unset, so check for false to ensure change
+                Assert.False(createdRepository.AllowMergeCommit);
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.False(repository.AllowMergeCommit);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithAllowRebaseMergeSet()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("repo-rebase-merge");
+
+            var newRepository = new NewRepository(repoName) { AllowRebaseMerge = false };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                // Default is true if unset, so check for false to ensure change
+                Assert.False(createdRepository.AllowRebaseMerge);
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.False(repository.AllowRebaseMerge);
+
+            }
+        }
+
+        [IntegrationTest]
+        public async Task CreatesARepositoryWithAllowSquashMergeSet()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            var repoName = Helper.MakeNameWithTimestamp("repo-squash-merge");
+
+            var newRepository = new NewRepository(repoName) { AllowSquashMerge = false };
+
+            using (var context = await github.CreateRepositoryContext(newRepository))
+            {
+                var createdRepository = context.Repository;
+
+                // Default is true if unset, so check for false to ensure change
+                Assert.False(createdRepository.AllowSquashMerge);
+                var repository = await github.Repository.Get(Helper.UserName, repoName);
+                Assert.False(repository.AllowSquashMerge);
+
             }
         }
 
@@ -632,18 +719,21 @@ public class RepositoriesClientTests
                 {
                     AllowMergeCommit = false,
                     AllowSquashMerge = false,
-                    AllowRebaseMerge = true
+                    AllowRebaseMerge = true, // this is the default, but the value is tested in UpdatesMergeMethodWithRepositoryId test
+                    AllowAutoMerge = true
                 };
 
                 var editedRepository = await github.Repository.Edit(context.RepositoryOwner, context.RepositoryName, updateRepository);
                 Assert.False(editedRepository.AllowMergeCommit);
                 Assert.False(editedRepository.AllowSquashMerge);
                 Assert.True(editedRepository.AllowRebaseMerge);
+                Assert.True(editedRepository.AllowAutoMerge);
 
                 var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
                 Assert.False(repository.AllowMergeCommit);
                 Assert.False(repository.AllowSquashMerge);
                 Assert.True(repository.AllowRebaseMerge);
+                Assert.True(repository.AllowAutoMerge);
             }
         }
 
@@ -658,18 +748,21 @@ public class RepositoriesClientTests
                 {
                     AllowMergeCommit = true,
                     AllowSquashMerge = true,
-                    AllowRebaseMerge = false
+                    AllowRebaseMerge = false,
+                    AllowAutoMerge = true
                 };
 
                 var editedRepository = await github.Repository.Edit(context.RepositoryId, updateRepository);
                 Assert.True(editedRepository.AllowMergeCommit);
                 Assert.True(editedRepository.AllowSquashMerge);
                 Assert.False(editedRepository.AllowRebaseMerge);
+                Assert.True(editedRepository.AllowAutoMerge);
 
                 var repository = await github.Repository.Get(context.RepositoryId);
                 Assert.True(repository.AllowMergeCommit);
                 Assert.True(repository.AllowSquashMerge);
                 Assert.False(repository.AllowRebaseMerge);
+                Assert.True(editedRepository.AllowAutoMerge);
             }
         }
         
@@ -861,6 +954,7 @@ public class RepositoriesClientTests
                 Assert.NotNull(repository.AllowRebaseMerge);
                 Assert.NotNull(repository.AllowSquashMerge);
                 Assert.NotNull(repository.AllowMergeCommit);
+                Assert.NotNull(repository.AllowAutoMerge);
             }
         }
 
@@ -876,6 +970,7 @@ public class RepositoriesClientTests
                 Assert.NotNull(repository.AllowRebaseMerge);
                 Assert.NotNull(repository.AllowSquashMerge);
                 Assert.NotNull(repository.AllowMergeCommit);
+                Assert.NotNull(repository.AllowAutoMerge);
             }
         }
 
