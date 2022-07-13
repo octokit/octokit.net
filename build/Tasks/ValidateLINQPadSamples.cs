@@ -8,7 +8,7 @@ using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
 
-[Dependency(typeof(Build))]
+[IsDependentOn(typeof(Build))]
 public sealed class ValidateLINQPadSamples : FrostingTask<Context>
 {
     public override void Run(Context context)

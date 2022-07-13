@@ -4,7 +4,7 @@ using Cake.Common.Tools.DotNetCore;
 using Cake.Common.Tools.DotNetCore.Test;
 using Cake.Frosting;
 
-[Dependency(typeof(Build))]
+[IsDependentOn(typeof(Build))]
 public sealed class IntegrationTests : FrostingTask<Context>
 {
     public override void Run(Context context)
