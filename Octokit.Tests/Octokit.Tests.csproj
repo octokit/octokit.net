@@ -4,7 +4,7 @@
     <Description>Tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp3.1;net46</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net462</TargetFrameworks>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests</AssemblyName>
     <PackageId>Octokit.Tests</PackageId>
@@ -42,7 +42,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
