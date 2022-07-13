@@ -13,7 +13,7 @@ namespace Octokit
     {
         public Deployment() { }
 
-        public Deployment(int id, string nodeId, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl, bool transientEnvironment, bool productionEnvironment)
+        public Deployment(int id, string nodeId, string sha, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl, bool transientEnvironment, bool productionEnvironment, string task)
         {
             Id = id;
             NodeId = nodeId;
@@ -27,6 +27,7 @@ namespace Octokit
             StatusesUrl = statusesUrl;
             TransientEnvironment = transientEnvironment;
             ProductionEnvironment = productionEnvironment;
+            Task = task;
         }
 
         /// <summary>
@@ -88,6 +89,11 @@ namespace Octokit
         /// Indicates if the environment is one with which end users directly interact.
         /// </summary>
         public bool ProductionEnvironment { get; protected set; }
+
+        /// <summary>
+        /// Specifies a task to execute (e.g., deploy or deploy:migrations)
+        /// </summary>
+        public string Task { get; protected set; }
 
         internal string DebuggerDisplay
         {

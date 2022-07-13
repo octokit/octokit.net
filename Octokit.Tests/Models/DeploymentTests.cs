@@ -17,7 +17,7 @@ namespace Octokit.Tests.Models
             };
             var deserialized = new SimpleJsonSerializer().Serialize(deployment);
             
-            Assert.Equal(@"{""ref"":""ref"",""task"":""deploy"",""payload"":{""environment"":""production""}}", deserialized);
+            Assert.Equal(@"{""ref"":""ref"",""payload"":{""environment"":""production""}}", deserialized);
         }
 
         [Fact]
@@ -50,7 +50,8 @@ namespace Octokit.Tests.Models
                     ""created_at"": ""2012-07-20T01:19:13Z"",
                     ""updated_at"": ""2012-07-20T01:19:13Z"",
                     ""description"": ""Deploy request from hubot"",
-                    ""statuses_url"": ""https://api.github.com/repos/octocat/example/deployments/1/statuses""
+                    ""statuses_url"": ""https://api.github.com/repos/octocat/example/deployments/1/statuses"",
+                    ""task"": ""deploy""
                 }";
 
             var actual = new SimpleJsonSerializer().Deserialize<Deployment>(json);
@@ -63,6 +64,7 @@ namespace Octokit.Tests.Models
             Assert.Equal(DateTimeOffset.Parse("2012-07-20T01:19:13Z"), actual.UpdatedAt);
             Assert.Equal("Deploy request from hubot", actual.Description);
             Assert.Equal("https://api.github.com/repos/octocat/example/deployments/1/statuses", actual.StatusesUrl);
+            Assert.Equal("deploy", actual.Task);
         }
     }
 }
