@@ -31,7 +31,7 @@ namespace Octokit
         public long Id { get; protected set; }
 
         /// <summary>
-        /// The url-friendly version of the repository name.
+        /// The url-friendly version of the GitHub App name.
         /// </summary>
         public string Slug { get; protected set; }
 
@@ -56,7 +56,7 @@ namespace Octokit
         public string ExternalUrl { get; protected set; }
 
         /// <summary>
-        /// The URL to view the GitHub App on GitHub
+        /// The URL to view the GitHub App on GitHub.
         /// </summary>
         public string HtmlUrl { get; protected set; }
 
