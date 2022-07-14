@@ -25,6 +25,7 @@ namespace Octokit.Tests.Integration.Clients
                 var result = await _github.GitHubApps.Get(Helper.GitHubAppSlug);
 
                 Assert.Equal(Helper.GitHubAppId, result.Id);
+                Assert.Equal(Helper.GitHubAppSlug, result.Slug);
                 Assert.False(string.IsNullOrEmpty(result.Name));
                 Assert.NotNull(result.Owner);
             }
@@ -46,6 +47,7 @@ namespace Octokit.Tests.Integration.Clients
                 var result = await _github.GitHubApps.GetCurrent();
 
                 Assert.Equal(Helper.GitHubAppId, result.Id);
+                Assert.Equal(Helper.GitHubAppSlug, result.Slug);
                 Assert.False(string.IsNullOrEmpty(result.Name));
                 Assert.NotNull(result.Owner);
             }
