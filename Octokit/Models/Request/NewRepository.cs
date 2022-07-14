@@ -43,6 +43,11 @@ namespace Octokit
         public bool? HasIssues { get; set; }
 
         /// <summary>
+        /// Optional. Gets or sets whether to enable projects for the new repository. The default is true.
+        /// </summary>
+        public bool? HasProjects { get; set; }
+
+        /// <summary>
         /// Optional. Gets or sets whether to enable the wiki for the new repository. The default is true.
         /// </summary>
         public bool? HasWiki { get; set; }
@@ -114,6 +119,11 @@ namespace Octokit
         /// Optional. Gets or sets whether the new repository allows auto merge.
         /// </summary>
         public bool? AllowAutoMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the squash pr title is used as default when using Squash Merge. Default is false. Cannot currently be tested as it isn't returned in the GET method.
+        /// </summary>
+        public bool? UseSquashPrTitleAsDefault { get; set; }
 
         internal string DebuggerDisplay
         {
