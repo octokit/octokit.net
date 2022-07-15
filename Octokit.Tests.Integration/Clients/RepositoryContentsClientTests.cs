@@ -216,7 +216,21 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit", "master");
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit", "main");
+
+                Assert.True(contents.Count > 2);
+                Assert.Equal(ContentType.Dir, contents.First().Type);
+            }
+
+            [IntegrationTest]
+            public async Task GetsDirectoryContentWithTrailingSlash()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit/", "main");
 
                 Assert.True(contents.Count > 2);
                 Assert.Equal(ContentType.Dir, contents.First().Type);

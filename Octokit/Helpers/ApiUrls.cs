@@ -1698,7 +1698,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri TreeRecursive(string owner, string name, string reference)
         {
-            return "repos/{0}/{1}/git/trees/{2}?recursive=1".FormatUri(owner, name, reference);
+            return "repos/{0}/{1}/git/trees/{2}?recursive=1".FormatUri(owner, name, reference.TrimEnd('/'));
         }
 
         /// <summary>
@@ -2445,7 +2445,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(string owner, string name, string path, string reference)
         {
-            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path == "/" ? "" : path, reference);
+            return "repos/{0}/{1}/contents/{2}?ref={3}".FormatUri(owner, name, path == "/" ? "" : path.TrimEnd('/'), reference);
         }
 
         /// <summary>
@@ -3451,7 +3451,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(long repositoryId, string path, string reference)
         {
-            return "repositories/{0}/contents/{1}?ref={2}".FormatUri(repositoryId, path, reference);
+            return "repositories/{0}/contents/{1}?ref={2}".FormatUri(repositoryId, path.TrimEnd('/'), reference);
         }
 
         /// <summary>
@@ -3708,7 +3708,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> for the specified tree.</returns>
         public static Uri TreeRecursive(long repositoryId, string reference)
         {
-            return "repositories/{0}/git/trees/{1}?recursive=1".FormatUri(repositoryId, reference);
+            return "repositories/{0}/git/trees/{1}?recursive=1".FormatUri(repositoryId, reference.TrimEnd('/'));
         }
 
         /// <summary>
