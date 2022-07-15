@@ -85,11 +85,15 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns all <see cref="Organization" />s for the specified user.
+        /// Returns <see cref="Organization" />s which the specified user is a member of,
+        /// where the user hasn't marked their membership as private.
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        /// <returns>
+        /// A list of the <see cref="Organization"/>s which the specified user is a member
+        /// of, where they haven't marked their membership as private
+        /// </returns>
         [ManualRoute("GET", "/users/{username}/orgs")]
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user)
         {
@@ -99,12 +103,16 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns all <see cref="Organization" />s for the specified user.
+        /// Returns <see cref="Organization" />s which the specified user is a member of,
+        /// where the user hasn't marked their membership as private.
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        /// <returns>
+        /// A list of the <see cref="Organization"/>s which the specified user is a member
+        /// of, where they haven't marked their membership as private
+        /// </returns>
         [ManualRoute("GET", "/users/{username}/orgs")]
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options)
         {
