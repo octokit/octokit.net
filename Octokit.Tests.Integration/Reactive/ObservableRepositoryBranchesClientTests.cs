@@ -121,7 +121,6 @@ namespace Octokit.Tests.Integration
         {
             IObservableRepositoryBranchesClient _client;
             RepositoryContext _userRepoContext;
-            OrganizationRepositoryWithTeamContext _orgRepoContext;
 
             public TheUpdateBranchProtectionMethod()
             {
@@ -129,7 +128,6 @@ namespace Octokit.Tests.Integration
                 _client = new ObservableRepositoryBranchesClient(github);
 
                 _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-                _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
             }
 
             [IntegrationTest]
@@ -142,7 +140,7 @@ namespace Octokit.Tests.Integration
                     new BranchProtectionRequiredReviewsUpdate(false, true, 2),
                     false);
 
-                var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
+                var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "main", update);
 
                 Assert.False(protection.RequiredStatusChecks.Strict);
                 Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
@@ -166,7 +164,7 @@ namespace Octokit.Tests.Integration
                     new BranchProtectionRequiredReviewsUpdate(false, true, 2),
                     false);
 
-                var protection = await _client.UpdateBranchProtection(repoId, "master", update);
+                var protection = await _client.UpdateBranchProtection(repoId, "main", update);
 
                 Assert.False(protection.RequiredStatusChecks.Strict);
                 Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
@@ -181,7 +179,27 @@ namespace Octokit.Tests.Integration
                 Assert.False(protection.EnforceAdmins.Enabled);
             }
 
-            [IntegrationTest]
+            public void Dispose()
+            {
+                if (_userRepoContext != null)
+                    _userRepoContext.Dispose();
+            }
+        }
+
+        public class TheUpdateOrgBranchProtectionMethod : IDisposable
+        {
+            IObservableRepositoryBranchesClient _client;
+            OrganizationRepositoryWithTeamContext _orgRepoContext;
+
+            public TheUpdateOrgBranchProtectionMethod()
+            {
+                var github = Helper.GetAuthenticatedClient();
+                _client = new ObservableRepositoryBranchesClient(github);
+
+                _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+            }
+
+            [OrganizationTest]
             public async Task UpdatesBranchProtectionForOrgRepo()
             {
                 var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
@@ -190,9 +208,14 @@ namespace Octokit.Tests.Integration
                     new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
                     new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
                     new BranchProtectionPushRestrictionsUpdate(),
-                    false);
+                    false,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true);
 
-                var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
+                var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "main", update);
 
                 Assert.False(protection.RequiredStatusChecks.Strict);
                 Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
@@ -206,9 +229,14 @@ namespace Octokit.Tests.Integration
                 Assert.Empty(protection.Restrictions.Users);
 
                 Assert.False(protection.EnforceAdmins.Enabled);
+                Assert.True(protection.RequiredLinearHistory.Enabled);
+                Assert.True(protection.AllowForcePushes.Enabled);
+                Assert.True(protection.AllowDeletions.Enabled);
+                Assert.True(protection.BlockCreations.Enabled);
+                Assert.True(protection.RequiredConversationResolution.Enabled);
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task UpdatesBranchProtectionForOrgRepoWithRepositoryId()
             {
                 var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
@@ -216,9 +244,14 @@ namespace Octokit.Tests.Integration
                     new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
                     new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
                     new BranchProtectionPushRestrictionsUpdate(),
-                    false);
+                    false,
+                    true,
+                    true,
+                    true,
+                    true,
+                    true);
 
-                var protection = await _client.UpdateBranchProtection(repoId, "master", update);
+                var protection = await _client.UpdateBranchProtection(repoId, "main", update);
 
                 Assert.False(protection.RequiredStatusChecks.Strict);
                 Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
@@ -232,13 +265,15 @@ namespace Octokit.Tests.Integration
                 Assert.Empty(protection.Restrictions.Users);
 
                 Assert.False(protection.EnforceAdmins.Enabled);
+                Assert.True(protection.RequiredLinearHistory.Enabled);
+                Assert.True(protection.AllowForcePushes.Enabled);
+                Assert.True(protection.AllowDeletions.Enabled);
+                Assert.True(protection.BlockCreations.Enabled);
+                Assert.True(protection.RequiredConversationResolution.Enabled);
             }
 
             public void Dispose()
             {
-                if (_userRepoContext != null)
-                    _userRepoContext.Dispose();
-
                 if (_orgRepoContext != null)
                     _orgRepoContext.Dispose();
             }

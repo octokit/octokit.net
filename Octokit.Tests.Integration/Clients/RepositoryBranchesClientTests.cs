@@ -197,7 +197,6 @@ public class RepositoryBranchesClientTests
     {
         IRepositoryBranchesClient _client;
         RepositoryContext _userRepoContext;
-        OrganizationRepositoryWithTeamContext _orgRepoContext;
 
         public TheGetBranchProtectionMethod()
         {
@@ -205,7 +204,6 @@ public class RepositoryBranchesClientTests
             _client = github.Repository.Branch;
 
             _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
         }
 
         [IntegrationTest]
@@ -213,7 +211,7 @@ public class RepositoryBranchesClientTests
         {
             var repoOwner = _userRepoContext.RepositoryOwner;
             var repoName = _userRepoContext.RepositoryName;
-            var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
+            var protection = await _client.GetBranchProtection(repoOwner, repoName, "main");
 
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
@@ -225,13 +223,18 @@ public class RepositoryBranchesClientTests
             Assert.Null(protection.Restrictions);
 
             Assert.True(protection.EnforceAdmins.Enabled);
+            Assert.True(protection.RequiredLinearHistory.Enabled);
+            Assert.True(protection.AllowForcePushes.Enabled);
+            Assert.True(protection.AllowDeletions.Enabled);
+            Assert.False(protection.BlockCreations.Enabled);
+            Assert.True(protection.RequiredConversationResolution.Enabled);
         }
 
         [IntegrationTest]
         public async Task GetsBranchProtectionWithRepositoryId()
         {
             var repoId = _userRepoContext.RepositoryId;
-            var protection = await _client.GetBranchProtection(repoId, "master");
+            var protection = await _client.GetBranchProtection(repoId, "main");
 
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
@@ -243,14 +246,39 @@ public class RepositoryBranchesClientTests
             Assert.Null(protection.Restrictions);
 
             Assert.True(protection.EnforceAdmins.Enabled);
+            Assert.True(protection.RequiredLinearHistory.Enabled);
+            Assert.True(protection.AllowForcePushes.Enabled);
+            Assert.True(protection.AllowDeletions.Enabled);
+            Assert.False(protection.BlockCreations.Enabled);
+            Assert.True(protection.RequiredConversationResolution.Enabled);
         }
 
-        [IntegrationTest]
+        public void Dispose()
+        {
+            if (_userRepoContext != null)
+                _userRepoContext.Dispose();
+        }
+    }
+    
+    public class TheGetBranchOrgProtectionMethod : IDisposable
+    {
+        IRepositoryBranchesClient _client;
+        OrganizationRepositoryWithTeamContext _orgRepoContext;
+
+        public TheGetBranchOrgProtectionMethod()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            _client = github.Repository.Branch;
+
+            _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+        }
+
+        [OrganizationTest]
         public async Task GetsBranchProtectionForOrgRepo()
         {
             var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
             var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-            var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
+            var protection = await _client.GetBranchProtection(repoOwner, repoName, "main");
 
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
@@ -266,11 +294,11 @@ public class RepositoryBranchesClientTests
             Assert.True(protection.EnforceAdmins.Enabled);
         }
 
-        [IntegrationTest]
+        [OrganizationTest]
         public async Task GetsBranchProtectionForOrgRepoWithRepositoryId()
         {
             var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-            var protection = await _client.GetBranchProtection(repoId, "master");
+            var protection = await _client.GetBranchProtection(repoId, "main");
 
             Assert.True(protection.RequiredStatusChecks.Strict);
             Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
@@ -288,9 +316,6 @@ public class RepositoryBranchesClientTests
 
         public void Dispose()
         {
-            if (_userRepoContext != null)
-                _userRepoContext.Dispose();
-
             if (_orgRepoContext != null)
                 _orgRepoContext.Dispose();
         }
