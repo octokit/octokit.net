@@ -85,12 +85,48 @@ namespace Octokit
         /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews, BranchProtectionPushRestrictionsUpdate restrictions, bool enforceAdmins)
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks,
+                                              BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews,
+                                              BranchProtectionPushRestrictionsUpdate restrictions,
+                                              bool enforceAdmins)
         {
             RequiredStatusChecks = requiredStatusChecks;
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = restrictions;
             EnforceAdmins = enforceAdmins;
+        }
+
+        /// <summary>
+        /// Create a BranchProtection update request
+        /// </summary>
+        /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
+        /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
+        /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
+        /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        /// <param name="requiredLinearHistory">Enforces a linear commit Git history</param>
+        /// <param name="allowForcePushes">Permits force pushes to the protected branch</param>
+        /// <param name="allowDeletions">Allows deletion of the protected branch</param>
+        /// <param name="blockCreations">The restrictions branch protection settings will also block pushes which create new branches</param>
+        /// <param name="requiredConversationResolution">Requires all conversations on code to be resolved before a pull request can be merged</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks,
+                                              BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews,
+                                              BranchProtectionPushRestrictionsUpdate restrictions,
+                                              bool enforceAdmins,
+                                              bool requiredLinearHistory,
+                                              bool? allowForcePushes,
+                                              bool allowDeletions,
+                                              bool blockCreations,
+                                              bool requiredConversationResolution)
+        {
+            RequiredStatusChecks = requiredStatusChecks;
+            RequiredPullRequestReviews = requiredPullRequestReviews;
+            Restrictions = restrictions;
+            EnforceAdmins = enforceAdmins;
+            RequiredLinearHistory = requiredLinearHistory;
+            AllowForcePushes = allowForcePushes;
+            AllowDeletions = allowDeletions;
+            BlockCreations = blockCreations;
+            RequiredConversationResolution = requiredConversationResolution;
         }
 
         /// <summary>
@@ -115,6 +151,32 @@ namespace Octokit
         /// Specifies whether the protections applied to this branch also apply to repository admins
         /// </summary>
         public bool EnforceAdmins { get; set; }
+
+        /// <summary>
+        /// Enforces a linear commit Git history. Default is false.
+        /// </summary>
+        public bool RequiredLinearHistory { get; set; }
+
+        /// <summary>
+        /// Permits force pushes to the protected branch by anyone with write access to the repository. Default is false.
+        /// </summary>
+        public bool? AllowForcePushes { get; set; }
+
+        /// <summary>
+        /// Allows deletion of the protected branch by anyone with write access to the repository. Default is false.
+        /// </summary>
+        public bool AllowDeletions { get; set; }
+
+        /// <summary>
+        /// If set to true, the restrictions branch protection settings which limits who can push will also block pushes which create new branches, unless the push is initiated by a user, team, or app which has the ability to push. Default is false.
+        /// </summary>
+        public bool BlockCreations { get; set; }
+
+        /// <summary>
+        /// Requires all conversations on code to be resolved before a pull request can be merged. Default is false.
+        /// </summary>
+        public bool RequiredConversationResolution { get; set; }
+
 
         internal string DebuggerDisplay
         {

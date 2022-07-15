@@ -34,9 +34,14 @@ namespace Octokit.Tests.Integration.Helpers
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
                 new BranchProtectionRequiredReviewsUpdate(true, true, 3),
                 null,
+                true,
+                true,
+                true,
+                true,
+                false,
                 true);
 
-            await client.Repository.Branch.UpdateBranchProtection(contextUserRepo.RepositoryOwner, contextUserRepo.RepositoryName, "master", update);
+            await client.Repository.Branch.UpdateBranchProtection(contextUserRepo.RepositoryOwner, contextUserRepo.RepositoryName, "main", update);
 
             return contextUserRepo;
         }

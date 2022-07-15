@@ -9,41 +9,85 @@ namespace Octokit
     /// <summary>
     /// Protection details for a <see cref="Branch"/>.
     /// </summary>
-    /// <remarks>
-    /// Note: this is a PREVIEW api: https://developer.github.com/changes/2016-06-27-protected-branches-api-update/
-    /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class BranchProtectionSettings
     {
         public BranchProtectionSettings() { }
 
-        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks, BranchProtectionPushRestrictions restrictions, BranchProtectionRequiredReviews requiredPullRequestReviews, EnforceAdmins enforceAdmins)
+        public BranchProtectionSettings(BranchProtectionRequiredStatusChecks requiredStatusChecks,
+                                        BranchProtectionRequiredReviews requiredPullRequestReviews,
+                                        BranchProtectionPushRestrictions restrictions,
+                                        EnforceAdmins enforceAdmins,
+                                        BranchProtectionEnabledCommon requiredLinearHistory,
+                                        BranchProtectionEnabledCommon allowForcePushes,
+                                        BranchProtectionEnabledCommon allowDeletions,
+                                        BranchProtectionEnabledCommon blockCreations,
+                                        BranchProtectionEnabledCommon requiredConversationResolution,
+                                        BranchProtectionEnabledCommon requiredSignatures)
         {
             RequiredStatusChecks = requiredStatusChecks;
-            Restrictions = restrictions;
             RequiredPullRequestReviews = requiredPullRequestReviews;
+            Restrictions = restrictions;
             EnforceAdmins = enforceAdmins;
+            RequiredLinearHistory = requiredLinearHistory;
+            AllowForcePushes = allowForcePushes;
+            AllowDeletions = allowDeletions;
+            BlockCreations = blockCreations;
+            RequiredConversationResolution = requiredConversationResolution;
+            RequiredSignatures = requiredSignatures;
         }
+
+
 
         /// <summary>
         /// Status check settings for the protected branch
         /// </summary>
-        public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; protected set; }
+        public BranchProtectionRequiredStatusChecks RequiredStatusChecks { get; private set; }
 
         /// <summary>
         /// Required review settings for the protected branch
         /// </summary>
-        public BranchProtectionRequiredReviews RequiredPullRequestReviews { get; protected set; }
+        public BranchProtectionRequiredReviews RequiredPullRequestReviews { get; private set; }
 
         /// <summary>
         /// Push access restrictions for the protected branch
         /// </summary>
-        public BranchProtectionPushRestrictions Restrictions { get; protected set; }
+        public BranchProtectionPushRestrictions Restrictions { get; private set; }
 
         /// <summary>
         /// Specifies whether the protections applied to this branch also apply to repository admins
         /// </summary>
-        public EnforceAdmins EnforceAdmins { get; protected set; }
+        public EnforceAdmins EnforceAdmins { get; private set; }
+
+        /// <summary>
+        /// Specifies whether a linear history is required
+        /// </summary>
+        public BranchProtectionEnabledCommon RequiredLinearHistory { get; private set; }
+
+        /// <summary>
+        /// Specifies whether force pushes are allowed
+        /// </summary>
+        public BranchProtectionEnabledCommon AllowForcePushes { get; private set; }
+
+        /// <summary>
+        /// Specifies whether deletions are allowed
+        /// </summary>
+        public BranchProtectionEnabledCommon AllowDeletions { get; private set; }
+
+        /// <summary>
+        /// Specifies whether creations can be blocked
+        /// </summary>
+        public BranchProtectionEnabledCommon BlockCreations { get; private set; }
+
+        /// <summary>
+        /// Specifies whether conversation resolution iss required
+        /// </summary>
+        public BranchProtectionEnabledCommon RequiredConversationResolution { get; private set; }
+
+        /// <summary>
+        /// Specifies whether signatures are required
+        /// </summary>
+        public BranchProtectionEnabledCommon RequiredSignatures { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -236,6 +280,27 @@ namespace Octokit
                     "Teams: {0} Users: {1}",
                     Teams == null ? "" : String.Join(",", Teams.Select(x => x.Name)),
                     Users == null ? "" : String.Join(",", Users.Select(x => x.Login)));
+            }
+        }
+    }
+
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class BranchProtectionEnabledCommon
+    {
+        public BranchProtectionEnabledCommon() { }
+
+        public BranchProtectionEnabledCommon(bool enabled)
+        {
+            Enabled = enabled;
+        }
+
+        public bool Enabled { get; protected set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture, "Enabled: {0}", Enabled);
             }
         }
     }
