@@ -68,7 +68,7 @@ namespace Octokit.Tests.Integration.Helpers
                 new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }), true, true, 3),
                 new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }),
                 true);
-            await client.Repository.Branch.UpdateBranchProtection(contextOrgRepo.RepositoryOwner, contextOrgRepo.RepositoryName, "master", protection);
+            await client.Repository.Branch.UpdateBranchProtection(contextOrgRepo.RepositoryOwner, contextOrgRepo.RepositoryName, "main", protection);
 
             return new OrganizationRepositoryWithTeamContext
             {
