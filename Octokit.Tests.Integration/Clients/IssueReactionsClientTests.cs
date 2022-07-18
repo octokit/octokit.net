@@ -286,6 +286,49 @@ public class IssueReactionsClientTests
             Assert.Equal(issue.User.Id, issueReaction.User.Id);
         }
 
+        [IntegrationTest]
+        public async Task CanDeleteReaction()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
+
+                var reaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, newReaction);
+                await _github.Reaction.Issue.Delete(_context.RepositoryOwner, _context.RepositoryName, issue.Number, reaction.Id);
+            }
+
+            var allReactions = await _github.Reaction.Issue.GetAll(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+
+            Assert.Empty(allReactions);
+        }
+
+        [IntegrationTest]
+        public async Task CanDeleteReactionWithRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
+
+                var reaction = await _github.Reaction.Issue.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, newReaction);
+                await _github.Reaction.Issue.Delete(_context.RepositoryId, issue.Number, reaction.Id);
+            }
+
+            var allReactions = await _github.Reaction.Issue.GetAll(_context.RepositoryId, issue.Number);
+
+            Assert.Empty(allReactions);
+
+        }
+
         public void Dispose()
         {
             _context.Dispose();

@@ -71,5 +71,26 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param> 
         /// <returns></returns>
         Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options);
+
+        /// <summary>
+        /// Deletes a reaction for a specified Commit Comment
+        /// </summary>
+        /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-commit-comment-reaction</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="reaction">The reaction id</param>
+        /// <returns></returns>
+        Task Delete(string owner, string name, int number, int reaction);
+
+        /// <summary>
+        /// Deletes a reaction for a specified Commit Comment
+        /// </summary>
+        /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-commit-comment-reaction</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        /// <param name="number">The comment id</param>
+        /// <param name="reaction">The reaction id</param>
+        /// <returns></returns>
+        Task Delete(long repositoryId, int number, int reaction);
     }
 }

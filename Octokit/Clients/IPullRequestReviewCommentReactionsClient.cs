@@ -65,5 +65,26 @@ namespace Octokit
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         Task<Reaction> Create(long repositoryId, int number, NewReaction reaction);
+
+        /// <summary>
+        /// Deletes a reaction for a specified Pull Request comment
+        /// </summary>
+        /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-pull-request-comment-reaction</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The issue id</param>
+        /// <param name="reaction">The reaction id</param>
+        /// <returns></returns>
+        Task Delete(string owner, string name, int number, int reaction);
+
+        /// <summary>
+        /// Deletes a reaction for a specified Pull Request comment
+        /// </summary>
+        /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-pull-request-comment-reaction</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        /// <param name="number">The issue id</param>
+        /// <param name="reaction">The reaction id</param>
+        /// <returns></returns>
+        Task Delete(long repositoryId, int number, int reaction);
     }
 }
