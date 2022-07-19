@@ -18,7 +18,7 @@ public class TeamsClientTests
 
             var teamName = Helper.MakeNameWithTimestamp("new-team");
             var teamDescription = Helper.MakeNameWithTimestamp("team description");
-            using (var context = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("org-repo"))))
+            using (var context = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("org-repo"))))
             {
                 var newTeam = new NewTeam(teamName)
                 {
@@ -295,7 +295,7 @@ public class TeamsClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            using (var repositoryContext = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            using (var repositoryContext = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
             {
                 github.Organization.Team.AddRepository(_team.Id, Helper.Organization, repositoryContext.RepositoryName);
 
@@ -320,7 +320,7 @@ public class TeamsClientTests
         public async Task CanAddRepository()
         {
             using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
-            using (var repoContext = await _github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("team-repository"))))
+            using (var repoContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("team-repository"))))
             {
                 var team = teamContext.Team;
                 var repo = repoContext.Repository;

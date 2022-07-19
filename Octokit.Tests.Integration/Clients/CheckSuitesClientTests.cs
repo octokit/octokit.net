@@ -26,7 +26,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Need to get a CheckSuiteId so we can test the Get method
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
                     var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha)).CheckSuites.First();
 
                     // Get Check Suite by Id
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Need to get a CheckSuiteId so we can test the Get method
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha)).CheckSuites.First();
 
                     // Get Check Suite by Id
@@ -75,7 +75,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
 
                     var checkSuites = await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha);
 
@@ -92,7 +92,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
 
                     var checkSuites = await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha);
 
@@ -176,7 +176,7 @@ namespace Octokit.Tests.Integration.Clients
                     await _githubAppInstallation.Check.Suite.UpdatePreferences(repoContext.RepositoryOwner, repoContext.RepositoryName, preference);
 
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check suite for the feature branch
@@ -199,7 +199,7 @@ namespace Octokit.Tests.Integration.Clients
                     await _githubAppInstallation.Check.Suite.UpdatePreferences(repoContext.RepositoryId, preference);
 
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check suite for the feature branch
@@ -232,7 +232,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Need to get a CheckSuiteId so we can test the Get method
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha)).CheckSuites.First();
 
                     // Get Check Suite by Id
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Need to get a CheckSuiteId so we can test the Get method
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var checkSuite = (await _githubAppInstallation.Check.Suite.GetAllForReference(repoContext.RepositoryId, headCommit.Sha)).CheckSuites.First();
 
                     // Get Check Suite by Id

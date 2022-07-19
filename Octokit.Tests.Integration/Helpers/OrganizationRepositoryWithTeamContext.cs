@@ -23,6 +23,23 @@ namespace Octokit.Tests.Integration.Helpers
 
     internal static class RepositoryProtectedBranchHelperExtensions
     {
+        internal async static Task ProtectDefaultBranch(this IGitHubClient client, RepositoryContext repoContext)
+        {
+            // Protect master branch
+            var update = new BranchProtectionSettingsUpdate(
+                new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
+                new BranchProtectionRequiredReviewsUpdate(true, true, 3),
+                null,
+                true,
+                true,
+                true,
+                true,
+                false,
+                true);
+
+            await client.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, update);
+        }
+
         internal async static Task<RepositoryContext> CreateRepositoryWithProtectedBranch(this IGitHubClient client)
         {
             // Create user owned repo
@@ -46,11 +63,32 @@ namespace Octokit.Tests.Integration.Helpers
             return contextUserRepo;
         }
 
+        internal async static Task ProtectOrganisationDefaultBranch(this IGitHubClient client, RepositoryContext repoContext)
+        {
+            // Create team in org
+            var contextOrgTeam = await client.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team")));
+
+            // Grant team push access to repo
+            await client.Organization.Team.AddRepository(
+                contextOrgTeam.TeamId,
+                repoContext.RepositoryOwner,
+                repoContext.RepositoryName,
+                new RepositoryPermissionRequest(Permission.Push));
+
+            // Protect master branch
+            var protection = new BranchProtectionSettingsUpdate(
+                new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
+                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }), true, true, 3),
+                new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }),
+                true);
+            await client.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, protection);
+        }
+
         internal async static Task<OrganizationRepositoryWithTeamContext> CreateOrganizationRepositoryWithProtectedBranch(this IGitHubClient client)
         {
             // Create organization owned repo
             var orgRepo = new NewRepository(Helper.MakeNameWithTimestamp("protected-org-repo")) { AutoInit = true };
-            var contextOrgRepo = await client.CreateRepositoryContext(Helper.Organization, orgRepo);
+            var contextOrgRepo = await client.CreateOrganizationRepositoryContext(Helper.Organization, orgRepo);
 
             // Create team in org
             var contextOrgTeam = await client.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team")));

@@ -16,12 +16,14 @@ namespace Octokit.Tests.Integration.Helpers
             RepositoryId = repo.Id;
             RepositoryOwner = repo.Owner.Login;
             RepositoryName = repo.Name;
+            RepositoryDefaultBranch = repo.DefaultBranch;
         }
 
         private IConnection _connection;
         internal long RepositoryId { get; private set; }
         internal string RepositoryOwner { get; private set; }
         internal string RepositoryName { get; private set; }
+        internal string RepositoryDefaultBranch { get; private set; }
 
         internal Repository Repository { get; private set; }
 
