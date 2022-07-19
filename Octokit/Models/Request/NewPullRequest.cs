@@ -29,15 +29,15 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="NewPullRequest"/> class.
         /// </summary>
-        /// <param name="issue">The number of an existing issue to convert into a pull request.</param>
+        /// <param name="issueId">The number of an existing issue to convert into a pull request.</param>
         /// <param name="head">The branch (or git ref where your changes are implemented. In other words, the source branch/ref</param>
         /// <param name="baseRef">The base (or git ref) reference you want your changes pulled into. In other words, the target branch/ref</param>
-        public NewPullRequest(int issue, string head, string baseRef)
+        public NewPullRequest(int issueId, string head, string baseRef)
         {
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
             Ensure.ArgumentNotNullOrEmptyString(baseRef, nameof(baseRef));
 
-            Issue = Issue;
+            IssueId = issueId;
             Head = head;
             Base = baseRef;
         }
@@ -50,7 +50,7 @@ namespace Octokit
         /// <summary>
         /// The number of an existing issue to convert into a pull request (required if <see cref="Title"/> not provided).
         /// </summary>
-        public int? Issue { get; private set; }
+        public int? IssueId { get; private set; }
 
         /// <summary>
         /// The branch (or git ref) you want your changes pulled into (required).
@@ -87,7 +87,7 @@ namespace Octokit
                 }
                 else
                 {
-                    return string.Format(CultureInfo.InvariantCulture, "From Issue: {0}", Issue);
+                    return string.Format(CultureInfo.InvariantCulture, "From Issue: {0}", IssueId);
                 }
             }
         }
