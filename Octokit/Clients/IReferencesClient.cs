@@ -23,9 +23,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
@@ -41,9 +41,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
@@ -104,9 +104,9 @@ namespace Octokit
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <remarks>
         /// The subNamespace parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace);
 
@@ -122,9 +122,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// The subNamespace parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options);
 
@@ -138,9 +138,9 @@ namespace Octokit
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <remarks>
         /// The subNamespace parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace);
 
@@ -155,9 +155,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// The subNamespace parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options);
 
@@ -172,9 +172,9 @@ namespace Octokit
         /// <param name="reference">The reference to create</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task<Reference> Create(string owner, string name, NewReference reference);
 
@@ -201,9 +201,9 @@ namespace Octokit
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate);
 
@@ -218,9 +218,9 @@ namespace Octokit
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate);
 
@@ -235,9 +235,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task Delete(string owner, string name, string reference);
 
@@ -251,9 +251,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         Task Delete(long repositoryId, string reference);
     }

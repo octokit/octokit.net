@@ -38,7 +38,7 @@ namespace Octokit
         public string Message { get; private set; }
 
         /// <summary>
-        /// The branch name. If null, this defaults to the default branch which is usually "master".
+        /// The branch name. If null, this defaults to the default branch which is usually "main".
         /// </summary>
         public string Branch { get; set; }
 

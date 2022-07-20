@@ -31,9 +31,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task<Reference> Get(string owner, string name, string reference)
@@ -60,9 +60,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/git/refs/{ref}")]
         public Task<Reference> Get(long repositoryId, string reference)
@@ -171,9 +171,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
@@ -217,9 +217,9 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// The subNamespace parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/git/refs/{ref}")]
         public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
@@ -284,9 +284,9 @@ namespace Octokit
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
@@ -315,9 +315,9 @@ namespace Octokit
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("PATCH", "/repositories/{id}/git/refs/{ref}")]
         public Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate)
@@ -344,9 +344,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/git/refs/{ref}")]
         public Task Delete(string owner, string name, string reference)
@@ -373,9 +373,9 @@ namespace Octokit
         /// <param name="reference">The reference name</param>
         /// <remarks>
         /// The reference parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("DELETE", "/repositories/{id}/git/refs/{ref}")]
         public Task Delete(long repositoryId, string reference)

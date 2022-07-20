@@ -637,7 +637,7 @@ namespace Octokit.Tests.Clients
                 {
                     "payload", new
                     {
-                        @ref = "master",
+                        @ref = GitHubConstants.DefaultBranchName,
                         ref_type = "branch",
                     }
                 }
@@ -648,7 +648,7 @@ namespace Octokit.Tests.Clients
             Assert.Equal(1, activities.Count);
 
             var payload = activities.FirstOrDefault().Payload as CreateEventPayload;
-            Assert.Equal("master", payload.Ref);
+            Assert.Equal(GitHubConstants.DefaultBranchName, payload.Ref);
             Assert.Equal(RefType.Branch, payload.RefType);
         }
 
@@ -661,7 +661,7 @@ namespace Octokit.Tests.Clients
                 {
                     "payload", new
                     {
-                        @ref = "master",
+                        @ref = GitHubConstants.DefaultBranchName,
                         ref_type = "branch",
                     }
                 }
@@ -672,7 +672,7 @@ namespace Octokit.Tests.Clients
             Assert.Equal(1, activities.Count);
 
             var payload = activities.FirstOrDefault().Payload as DeleteEventPayload;
-            Assert.Equal("master", payload.Ref);
+            Assert.Equal(GitHubConstants.DefaultBranchName, payload.Ref);
             Assert.Equal(RefType.Branch, payload.RefType);
         }
 
@@ -955,7 +955,7 @@ namespace Octokit.Tests.Clients
                         {
                             new
                             {
-                                name = "master",
+                                name = GitHubConstants.DefaultBranchName,
                                 commit = new
                                 {
                                     sha = "9049f1265b7d61be4a8904a9a27120d2064dab3b",

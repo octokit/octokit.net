@@ -456,7 +456,7 @@ public class RepositoriesClientTests
 
             var repoName = Helper.MakeNameWithTimestamp("public-org-repo");
 
-            using (var context = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+            using (var context = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
             {
                 var createdRepository = context.Repository;
 
@@ -484,7 +484,7 @@ public class RepositoriesClientTests
 
             var repository = new NewRepository(repoName);
 
-            using (var context = await github.CreateRepositoryContext(Helper.Organization, repository))
+            using (var context = await github.CreateOrganizationRepositoryContext(Helper.Organization, repository))
             {
                 var createdRepository = context.Repository;
 
@@ -1604,7 +1604,7 @@ public class RepositoriesClientTests
         {
             _theRepoOwner = Helper.Organization;
             _theRepository = Helper.MakeNameWithTimestamp("topics");
-            _context = _github.CreateRepositoryContext(_theRepoOwner, new NewRepository(_theRepository)).Result;
+            _context = _github.CreateOrganizationRepositoryContext(_theRepoOwner, new NewRepository(_theRepository)).Result;
             var defaultTopicAssignmentResult = _github.Repository.ReplaceAllTopics(_context.RepositoryId, _defaultTopics).Result;
         }
 
@@ -2035,7 +2035,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
             var newOwner = Helper.UserName;
-            using (var context = await github.CreateRepositoryContext(Helper.Organization, newRepo))
+            using (var context = await github.CreateOrganizationRepositoryContext(Helper.Organization, newRepo))
             {
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryOwner, context.RepositoryName, transfer);
@@ -2051,7 +2051,7 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var newRepo = new NewRepository(Helper.MakeNameWithTimestamp("transferred-repo"));
             var newOwner = Helper.UserName;
-            using (var context = await github.CreateRepositoryContext(Helper.Organization, newRepo))
+            using (var context = await github.CreateOrganizationRepositoryContext(Helper.Organization, newRepo))
             {
                 var transfer = new RepositoryTransfer(newOwner);
                 await github.Repository.Transfer(context.RepositoryId, transfer);
