@@ -200,7 +200,7 @@ namespace Octokit
         {
             get
             {
-                return HttpResponse != null
+                return HttpResponse?.ContentType != null
                        && !HttpResponse.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase)
                        && HttpResponse.Body is string
                     ? (string)HttpResponse.Body : string.Empty;
