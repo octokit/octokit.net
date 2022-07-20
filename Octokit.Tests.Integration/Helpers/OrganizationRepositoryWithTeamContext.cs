@@ -25,7 +25,7 @@ namespace Octokit.Tests.Integration.Helpers
     {
         internal async static Task ProtectDefaultBranch(this IGitHubClient client, RepositoryContext repoContext)
         {
-            // Protect master branch
+            // Protect default branch
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
                 new BranchProtectionRequiredReviewsUpdate(true, true, 3),
@@ -46,7 +46,7 @@ namespace Octokit.Tests.Integration.Helpers
             var userRepo = new NewRepository(Helper.MakeNameWithTimestamp("protected-repo")) { AutoInit = true };
             var contextUserRepo = await client.CreateRepositoryContext(userRepo);
 
-            // Protect master branch
+            // Protect default branch
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
                 new BranchProtectionRequiredReviewsUpdate(true, true, 3),
@@ -63,25 +63,27 @@ namespace Octokit.Tests.Integration.Helpers
             return contextUserRepo;
         }
 
-        internal async static Task ProtectOrganisationDefaultBranch(this IGitHubClient client, RepositoryContext repoContext)
+        internal async static Task<TeamContext> ProtectDefaultBranchWithTeam(this IGitHubClient client, RepositoryContext repoContext)
         {
             // Create team in org
-            var contextOrgTeam = await client.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team")));
+            var team = await client.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team")));
 
             // Grant team push access to repo
             await client.Organization.Team.AddRepository(
-                contextOrgTeam.TeamId,
+                team.TeamId,
                 repoContext.RepositoryOwner,
                 repoContext.RepositoryName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            // Protect master branch
+            // Protect default branch
             var protection = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
-                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }), true, true, 3),
-                new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }),
+                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { team.TeamName }), true, true, 3),
+                new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { team.TeamName }),
                 true);
             await client.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, protection);
+
+            return team;
         }
 
         internal async static Task<OrganizationRepositoryWithTeamContext> CreateOrganizationRepositoryWithProtectedBranch(this IGitHubClient client)
@@ -100,7 +102,7 @@ namespace Octokit.Tests.Integration.Helpers
                 contextOrgRepo.RepositoryName,
                 new RepositoryPermissionRequest(Permission.Push));
 
-            // Protect master branch
+            // Protect default branch
             var protection = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
                 new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }), true, true, 3),
