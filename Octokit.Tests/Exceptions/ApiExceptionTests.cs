@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 #if !NO_SERIALIZABLE
@@ -135,6 +136,16 @@ namespace Octokit.Tests.Exceptions
             public void DoesNotThrowIfBodyIsNotDefined()
             {
                 var response = CreateResponse(HttpStatusCode.GatewayTimeout);
+
+                var exception = new ApiException(response);
+                var stringRepresentation = exception.ToString();
+                Assert.NotNull(stringRepresentation);
+            }
+
+            [Fact]
+            public void DoesNotThrowIfContentTypeIsNotDefined()
+            {
+                var response = CreateResponse(HttpStatusCode.GatewayTimeout, null, new Dictionary<string, string>(), null);
 
                 var exception = new ApiException(response);
                 var stringRepresentation = exception.ToString();
