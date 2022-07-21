@@ -270,7 +270,6 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(update, nameof(update));
-            //Ensure.ArgumentNotNull(update.Name, nameof(update.Name));
 
             return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview));
         }
