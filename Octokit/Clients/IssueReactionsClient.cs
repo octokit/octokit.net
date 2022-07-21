@@ -117,16 +117,16 @@ namespace Octokit
         /// <remarks>https://docs.github.com/en/rest/reactions#delete-an-issue-reaction</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue id</param>
-        /// <param name="reaction">The reaction id</param>
+        /// <param name="issueNumber">The issue id</param>
+        /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}")]
-        public Task Delete(string owner, string name, int number, int reaction)
+        public Task Delete(string owner, string name, int issueNumber, int reactionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.IssueReaction(owner, name, number, reaction));
+            return ApiConnection.Delete(ApiUrls.IssueReaction(owner, name, issueNumber, reactionId));
         }
 
         /// <summary>
@@ -134,13 +134,13 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://docs.github.com/en/rest/reactions#delete-an-issue-reaction</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        /// <param name="number">The issue id</param>
-        /// <param name="reaction">The reaction id</param>
+        /// <param name="issueNumber">The issue id</param>
+        /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repositories/{id}/issues/{issue_number}/reactions/{reaction_id}")]
-        public Task Delete(long repositoryId, int number, int reaction)
+        public Task Delete(long repositoryId, int issueNumber, int reactionId)
         {
-            return ApiConnection.Delete(ApiUrls.IssueReaction(repositoryId, number, reaction));
+            return ApiConnection.Delete(ApiUrls.IssueReaction(repositoryId, issueNumber, reactionId));
         }
     }
 }

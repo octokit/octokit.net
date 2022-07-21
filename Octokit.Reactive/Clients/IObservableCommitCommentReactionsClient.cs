@@ -78,19 +78,19 @@ namespace Octokit.Reactive
         /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-commit-comment-reaction</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
-        /// <param name="reaction">The reaction id</param>
+        /// <param name="commentId">The comment id</param>
+        /// <param name="reactionid">The reaction id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int number, int reaction);
+        IObservable<Unit> Delete(string owner, string name, int commentId, int reactionid);
 
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
         /// </summary>
         /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-commit-comment-reaction</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
-        /// <param name="reaction">The reaction id</param>
+        /// <param name="commentId">The comment id</param>
+        /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(long repositoryId, int number, int reaction);
+        IObservable<Unit> Delete(long repositoryId, int commentId, int reactionId);
     }
 }

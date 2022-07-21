@@ -115,16 +115,16 @@ namespace Octokit.Reactive
         /// <remarks>https://docs.github.com/en/rest/reactions#delete-an-issue-reaction</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue id</param>
-        /// <param name="reaction">The reaction id</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, int number, int reaction)
+        public IObservable<Unit> Delete(string owner, string name, int issueNumber, int reactionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Ensure.ArgumentNotNull(reaction, nameof(reaction));
+            Ensure.ArgumentNotNull(reactionId, nameof(reactionId));
 
-            return _client.Delete(owner, name, number, reaction).ToObservable();
+            return _client.Delete(owner, name, issueNumber, reactionId).ToObservable();
         }
 
         /// <summary>
@@ -132,14 +132,14 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://docs.github.com/en/rest/reactions#delete-an-issue-reaction</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        /// <param name="number">The issue id</param>
-        /// <param name="reaction">The reaction id</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(long repositoryId, int number, int reaction)
+        public IObservable<Unit> Delete(long repositoryId, int issueNumber, int reactionId)
         {
-            Ensure.ArgumentNotNull(reaction, nameof(reaction));
+            Ensure.ArgumentNotNull(reactionId, nameof(reactionId));
 
-            return _client.Delete(repositoryId, number, reaction).ToObservable();
+            return _client.Delete(repositoryId, issueNumber, reactionId).ToObservable();
         }
     }
 }
