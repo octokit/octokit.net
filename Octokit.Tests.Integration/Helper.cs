@@ -247,6 +247,8 @@ namespace Octokit.Tests.Integration
             return string.Concat(name, "-", DateTime.UtcNow.ToString("yyyyMMddhhmmssfff"));
         }
 
+        public static bool IsNameTimestamped(string name) => name.Contains("-") && name.Substring(name.LastIndexOf("-")).Length == 18;
+
         public static Stream LoadFixture(string fileName)
         {
             var key = "Octokit.Tests.Integration.fixtures." + fileName;

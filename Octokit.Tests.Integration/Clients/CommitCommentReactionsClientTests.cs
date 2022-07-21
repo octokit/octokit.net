@@ -18,7 +18,7 @@ public class CommitCommentReactionsClientTests
         {
             _github = Helper.GetAuthenticatedClient();
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         private async Task<Commit> SetupCommitForRepository(IGitHubClient client)

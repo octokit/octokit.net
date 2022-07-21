@@ -14,7 +14,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsAllBranches()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -29,7 +29,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsAllBranchesWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -44,7 +44,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsCorrectCountOfBranchesWithoutStart()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsCorrectCountOfBranchesWithoutStartWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsCorrectCountOfBranchesWithStart()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -126,7 +126,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task ReturnsCorrectCountOfBranchesWithStartWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -154,7 +154,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsPagesOfBranches()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -198,7 +198,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsPagesOfBranchesWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-1", repoContext.Repository.DefaultBranch);
                     await _github.Git.Reference.CreateBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, "patch-2", repoContext.Repository.DefaultBranch);
@@ -245,7 +245,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsABranch()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -261,7 +261,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsABranchWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -280,7 +280,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsBranchProtection()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -307,7 +307,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsBranchProtectionWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -334,7 +334,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsBranchProtectionForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -358,7 +358,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsBranchProtectionForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -385,7 +385,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdatesBranchProtection()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -413,7 +413,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdatesBranchProtectionWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -441,7 +441,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesBranchProtectionForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -471,7 +471,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesBranchProtectionForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
                     var update = new BranchProtectionSettingsUpdate(
@@ -503,7 +503,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task DeletesBranchProtection()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -516,7 +516,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task DeletesBranchProtectionWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -529,7 +529,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesBranchProtectionForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -542,7 +542,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesBranchProtectionForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -558,7 +558,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsRequiredStatusChecks()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
                     var requiredStatusChecks = await _github.Repository.Branch.GetRequiredStatusChecks(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
@@ -573,7 +573,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsRequiredStatusChecksWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
                     var requiredStatusChecks = await _github.Repository.Branch.GetRequiredStatusChecks(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
@@ -591,7 +591,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdateRequiredStatusChecks()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -609,7 +609,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdatesRequiredStatusChecksWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -630,7 +630,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task DeletesRequiredStatusChecks()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -643,7 +643,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task DeletesRequiredStatusChecksWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -659,7 +659,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsRequiredStatusChecksContexts()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -673,7 +673,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsRequiredStatusChecksContextsWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -690,7 +690,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdateRequiredStatusChecksContexts()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -704,7 +704,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdatesRequiredStatusChecksContextsWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -721,7 +721,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task AddsRequiredStatusChecksContexts()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -736,7 +736,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task AddsRequiredStatusChecksContextsWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -754,7 +754,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task DeletesRequiredStatusChecksContexts()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -769,7 +769,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task DeletesRequiredStatusChecksContextsWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -787,7 +787,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsReviewEnforcement()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -802,7 +802,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsReviewEnforcementWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -817,7 +817,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsReviewEnforcementForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -833,7 +833,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsReviewEnforcementForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -852,7 +852,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdatesReviewEnforcement()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -870,7 +870,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task UpdatesReviewEnforcementWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -888,7 +888,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -910,7 +910,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -932,7 +932,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepoWithAdminOnly()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -955,7 +955,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepoWithAdminOnlyWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -981,7 +981,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task RemovesReviewEnforcement()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -994,7 +994,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task RemovesReviewEnforcementWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -1007,7 +1007,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task RemovesReviewEnforcementForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1020,7 +1020,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task RemovesReviewEnforcementForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1036,7 +1036,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsAdminEnforcement()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -1050,7 +1050,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task GetsAdminEnforcementWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -1067,7 +1067,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task AddsAdminEnforcement()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -1082,7 +1082,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task AddsAdminEnforcementoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -1100,7 +1100,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task RemovesAdminEnforcement()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -1118,7 +1118,7 @@ namespace Octokit.Tests.Integration.Clients
             [IntegrationTest]
             public async Task RemovesAdminEnforcementWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateUserRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranch(repoContext);
 
@@ -1137,11 +1137,11 @@ namespace Octokit.Tests.Integration.Clients
         public class TheGetProtectedBranchRestrictionsMethod : GitHubClientTestBase
         {
             [OrganizationTest]
-            public async Task GetsRequirProtectedBranchRestrictionsForOrgRepo()
+            public async Task GetsProtectedBranchRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
-                    await _github.ProtectDefaultBranch(repoContext);
+                    await _github.ProtectDefaultBranchWithTeam(repoContext);
 
                     var restrictions = await _github.Repository.Branch.GetProtectedBranchRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
 
@@ -1153,9 +1153,9 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsProtectedBranchRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
-                    await _github.ProtectDefaultBranch(repoContext);
+                    await _github.ProtectDefaultBranchWithTeam(repoContext);
 
                     var restrictions = await _github.Repository.Branch.GetProtectedBranchRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
 
@@ -1170,9 +1170,9 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesRProtectedBranchRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
-                    await _github.ProtectDefaultBranch(repoContext);
+                    await _github.ProtectDefaultBranchWithTeam(repoContext);
 
                     var deleted = await _github.Repository.Branch.DeleteProtectedBranchRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
 
@@ -1183,9 +1183,9 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesProtectedBranchRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
-                    await _github.ProtectDefaultBranch(repoContext);
+                    await _github.ProtectDefaultBranchWithTeam(repoContext);
 
                     var deleted = await _github.Repository.Branch.DeleteProtectedBranchRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
 
@@ -1199,7 +1199,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsProtectedBranchTeamRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1213,7 +1213,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1230,7 +1230,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesProtectedBranchTeamRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1254,7 +1254,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1281,7 +1281,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task AddsProtectedBranchTeamRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1305,7 +1305,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task AddsProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1332,7 +1332,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesRProtectedBranchTeamRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     var team = await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1347,7 +1347,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesProtectedBranchTeamRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     var team = await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1365,7 +1365,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsProtectedBranchUserRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1379,7 +1379,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task GetsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1396,7 +1396,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesProtectedBranchUserRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1412,7 +1412,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task UpdatesProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1431,7 +1431,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task AddsProtectedBranchUserRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     var team = await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1447,7 +1447,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task AddsProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1466,7 +1466,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesProtectedBranchUserRestrictionsForOrgRepo()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 
@@ -1486,7 +1486,7 @@ namespace Octokit.Tests.Integration.Clients
             [OrganizationTest]
             public async Task DeletesProtectedBranchUserRestrictionsForOrgRepoWithRepositoryId()
             {
-                using (var repoContext = await _github.CreateOrganizationRepositoryContext())
+                using (var repoContext = await _github.CreateOrganizationRepositoryContext(x => x.AutoInit = true))
                 {
                     await _github.ProtectDefaultBranchWithTeam(repoContext);
 

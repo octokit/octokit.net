@@ -22,7 +22,7 @@ public class MergingClientTests : IDisposable
         };
 
         _fixture = _github.Repository.Merging;
-        _context = _github.CreateRepositoryContext("public-repo").Result;
+        _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
     }
 
     [IntegrationTest]
@@ -30,12 +30,12 @@ public class MergingClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newMerge = new NewMerge("master", branchName) { CommitMessage = "merge commit to master from integrationtests" };
+        var newMerge = new NewMerge("main", branchName) { CommitMessage = "merge commit to main from integrationtests" };
 
         var merge = await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newMerge);
         Assert.NotNull(merge);
         Assert.NotNull(merge.Commit);
-        Assert.Equal("merge commit to master from integrationtests", merge.Commit.Message);
+        Assert.Equal("merge commit to main from integrationtests", merge.Commit.Message);
     }
 
     [IntegrationTest]
@@ -43,28 +43,28 @@ public class MergingClientTests : IDisposable
     {
         await CreateTheWorld();
 
-        var newMerge = new NewMerge("master", branchName) { CommitMessage = "merge commit to master from integrationtests" };
+        var newMerge = new NewMerge("main", branchName) { CommitMessage = "merge commit to main from integrationtests" };
 
         var merge = await _fixture.Create(_context.Repository.Id, newMerge);
         Assert.NotNull(merge);
         Assert.NotNull(merge.Commit);
-        Assert.Equal("merge commit to master from integrationtests", merge.Commit.Message);
+        Assert.Equal("merge commit to main from integrationtests", merge.Commit.Message);
     }
 
     async Task CreateTheWorld()
     {
-        var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+        var main = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/main");
 
-        // create new commit for master branch
-        var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World! I want to be overwritten by featurebranch!" } });
-        var newMaster = await CreateCommit("baseline for merge", newMasterTree.Sha, master.Object.Sha);
+        // create new commit for main branch
+        var newMainTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World! I want to be overwritten by featurebranch!" } });
+        var newMain = await CreateCommit("baseline for merge", newMainTree.Sha, main.Object.Sha);
 
-        // update master
-        await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
+        // update main
+        await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/main", new ReferenceUpdate(newMain.Sha));
 
         // create new commit for feature branch
         var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
-        var featureBranchCommit = await CreateCommit("this is the commit to merge", featureBranchTree.Sha, newMaster.Sha);
+        var featureBranchCommit = await CreateCommit("this is the commit to merge", featureBranchTree.Sha, newMain.Sha);
 
         // create branch
         await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));

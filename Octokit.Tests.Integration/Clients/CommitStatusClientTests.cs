@@ -213,7 +213,7 @@ public class CommitStatusClientTests
         {
             _github = Helper.GetAuthenticatedClient();
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         [IntegrationTest]

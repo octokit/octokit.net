@@ -23,6 +23,14 @@ namespace Octokit.Tests.Integration
             if (!Helper.IsPaidAccount)
                 return Enumerable.Empty<IXunitTestCase>();
 
+            var github = Helper.GetAuthenticatedClient();
+
+            var userDetails = github.User.Current().Result;
+            if (userDetails.Plan.PrivateRepos == 0)
+            {
+                return Enumerable.Empty<IXunitTestCase>();
+            }
+
             return new[] { new XunitTestCase(diagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), TestMethodDisplayOptions.None, testMethod) };
         }
     }

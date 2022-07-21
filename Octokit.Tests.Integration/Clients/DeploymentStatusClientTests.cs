@@ -16,7 +16,7 @@ public class DeploymentStatusClientTests : IDisposable
         var github = Helper.GetAuthenticatedClient();
 
         _deploymentsClient = github.Repository.Deployment;
-        _context = github.CreateRepositoryContext("public-repo").Result;
+        _context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
 
         var blob = new NewBlob
         {

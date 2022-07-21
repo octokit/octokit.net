@@ -1,26 +1,24 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Octokit.Tests.Integration.Helpers
 {
     internal static class GithubClientExtensions
     {
         /// <summary>
-        /// Creates a public repository with the timestamped name public-repo
+        /// Creates a public repository with the timestamped name public-repo and autoinit true
         /// </summary>
-        internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client)
+        internal static async Task<RepositoryContext> CreateRepositoryContextWithAutoInit(this IGitHubClient client)
         {
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            var repo = await client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-
-            return new RepositoryContext(client.Connection, repo);
+            return await client.CreateUserRepositoryContext(x => x.AutoInit = true);
         }
 
-        internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, string repositoryName)
+        /// <summary>
+        /// Creates a public repository with the repository name passed in and autoinit true
+        /// </summary>
+        internal static async Task<RepositoryContext> CreateRepositoryContextWithAutoInit(this IGitHubClient client, string repositoryName)
         {
-            var repoName = Helper.MakeNameWithTimestamp(repositoryName);
-            var repo = await client.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-
-            return new RepositoryContext(client.Connection, repo);
+            return await client.CreateUserRepositoryContext(Helper.MakeNameWithTimestamp(repositoryName), x => x.AutoInit = true);
         }
 
         internal static async Task<RepositoryContext> CreateRepositoryContext(this IGitHubClient client, NewRepository newRepository)
@@ -31,9 +29,69 @@ namespace Octokit.Tests.Integration.Helpers
         }
 
         /// <summary>
-        /// Creates an organisationrepository with the timestamped name organisation-repo
+        /// Creates a public repository with the timestamped name "public-repo" and an optional function of parameters passed in
         /// </summary>
-        internal static async Task<RepositoryContext> CreateOrganizationRepositoryContext(this IGitHubClient client)
+        /// <param name="client"></param>
+        /// <param name="repositoryName">The name of the repository without the timestamp</param>
+        /// <param name="action">Function setting parameters on the NewRepository</param>
+        /// <returns></returns>
+        internal static async Task<RepositoryContext> CreateUserRepositoryContext(this IGitHubClient client, Action<NewRepository> action = null)
+        {
+            var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("public-repo"));
+            action?.Invoke(newRepository);
+
+            var repo = await client.Repository.Create(newRepository);
+
+            return new RepositoryContext(client.Connection, repo);
+        }
+
+        /// <summary>
+        /// Creates a public repository with the repository name and an optional function of parameters passed in
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="repositoryName">The name of the repository without the timestamp</param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        internal static async Task<RepositoryContext> CreateUserRepositoryContext(this IGitHubClient client, string repositoryName, Action<NewRepository> action = null)
+        {
+            var newRepository = new NewRepository(Helper.IsNameTimestamped(repositoryName) ? repositoryName : Helper.MakeNameWithTimestamp(repositoryName));
+            action?.Invoke(newRepository);
+
+            var repo = await client.Repository.Create(newRepository);
+
+            return new RepositoryContext(client.Connection, repo);
+        }
+
+        /// <summary>
+        /// Creates an organisation repository with the timestamped name organisation-repo and an optional function of parameters
+        /// </summary>
+        internal static async Task<RepositoryContext> CreateOrganizationRepositoryContext(this IGitHubClient client, Action<NewRepository> action = null)
+        {
+            var newRepository = new NewRepository(Helper.MakeNameWithTimestamp("organization-repo"));
+            action?.Invoke(newRepository);
+
+            var repo = await client.Repository.Create(Helper.Organization, newRepository);
+
+            return new RepositoryContext(client.Connection, repo);
+        }
+
+        /// <summary>
+        /// Creates an organisation repository with the passed in repository name repo and an optional function of parameters
+        /// </summary>
+        internal static async Task<RepositoryContext> CreateOrganizationRepositoryContext(this IGitHubClient client, string repositoryName, Action<NewRepository> action = null)
+        {
+            var newRepository = new NewRepository(Helper.IsNameTimestamped(repositoryName) ? repositoryName : Helper.MakeNameWithTimestamp(repositoryName));
+            action?.Invoke(newRepository);
+
+            var repo = await client.Repository.Create(Helper.Organization, newRepository);
+
+            return new RepositoryContext(client.Connection, repo);
+        }
+
+        /// <summary>
+        /// Creates an organisation repository with the timestamped name organisation-repo
+        /// </summary>
+        internal static async Task<RepositoryContext> CreateOrganizationRepositoryContextWithAutoInit(this IGitHubClient client, Action<NewRepository> action = null)
         {
             var repoName = Helper.MakeNameWithTimestamp("organization-repo");
             var repo = await client.Repository.Create(Helper.Organization, new NewRepository(repoName) { AutoInit = true });
@@ -47,6 +105,17 @@ namespace Octokit.Tests.Integration.Helpers
         internal static async Task<RepositoryContext> CreateOrganizationRepositoryContext(this IGitHubClient client, string organizationLogin, NewRepository newRepository)
         {
             var repo = await client.Repository.Create(organizationLogin, newRepository);
+
+            return new RepositoryContext(client.Connection, repo);
+        }
+
+        /// <summary>
+        /// Creates a private repository with the timestamped name private-repo
+        /// </summary>
+        internal static async Task<RepositoryContext> CreatePrivateRepositoryContext(this IGitHubClient client)
+        {
+            var repoName = Helper.MakeNameWithTimestamp("private-repo");
+            var repo = await client.Repository.Create(new NewRepository(repoName) { Private = true });
 
             return new RepositoryContext(client.Connection, repo);
         }

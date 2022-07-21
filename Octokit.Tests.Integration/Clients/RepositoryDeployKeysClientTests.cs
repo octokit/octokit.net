@@ -19,7 +19,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
         var github = Helper.GetAuthenticatedClient();
 
         _fixture = github.Repository.DeployKeys;
-        _context = github.CreateRepositoryContext("public-repo").Result;
+        _context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
     }
 
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for investigating this failing test")]
