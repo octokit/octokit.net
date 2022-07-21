@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         public IObservable<Reference> Get(string owner, string name, string reference)
         {
@@ -50,7 +50,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/git/refs/#get-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         public IObservable<Reference> Get(long repositoryId, string reference)
         {
@@ -148,9 +148,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// The subNamespace parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         public IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
         {
@@ -192,9 +192,9 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// The subNamespace parameter supports either the fully-qualified ref
-        /// (prefixed with  "refs/", e.g. "refs/heads/master" or
+        /// (prefixed with  "refs/", e.g. "refs/heads/main" or
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
-        /// "heads/master" or "tags/release-1")
+        /// "heads/main" or "tags/release-1")
         /// </remarks>
         public IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
         {
@@ -252,7 +252,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
         public IObservable<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
@@ -272,7 +272,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/git/refs/#update-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
         public IObservable<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate)
@@ -291,7 +291,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         public IObservable<Unit> Delete(string owner, string name, string reference)
         {
@@ -309,7 +309,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/git/refs/#delete-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         public IObservable<Unit> Delete(long repositoryId, string reference)
         {

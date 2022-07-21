@@ -15,7 +15,7 @@ namespace Octokit.Tests.Integration.Helpers
 
             using (var context = await client.CreateRepositoryContext("public-repo"))
             {
-                var branchFromMaster = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-1");
+                var branchFromMaster = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-1", context.Repository.DefaultBranch);
 
                 var branchFromPath = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-2", branchFromMaster);
 
