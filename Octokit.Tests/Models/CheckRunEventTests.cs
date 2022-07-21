@@ -30,7 +30,7 @@ namespace Octokit.Tests.Models
     ""name"": ""randscape"",
     ""check_suite"": {
       ""id"": 5,
-      ""head_branch"": ""master"",
+      ""head_branch"": ""main"",
       ""head_sha"": ""d6fde92930d4715a2b49857d24b940956b26d2d3"",
       ""status"": ""completed"",
       ""conclusion"": ""neutral"",
@@ -201,7 +201,7 @@ namespace Octokit.Tests.Models
     ""forks"": 0,
     ""open_issues"": 3,
     ""watchers"": 0,
-    ""default_branch"": ""master""
+    ""default_branch"": ""main""
   },
   ""organization"": {
     ""login"": ""github"",

@@ -2441,7 +2441,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path of the contents to get</param>
-        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(string owner, string name, string path, string reference)
         {
@@ -3447,7 +3447,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path of the contents to get</param>
-        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         /// <returns>The <see cref="Uri"/> for getting the contents of the specified repository and path</returns>
         public static Uri RepositoryContent(long repositoryId, string path, string reference)
         {

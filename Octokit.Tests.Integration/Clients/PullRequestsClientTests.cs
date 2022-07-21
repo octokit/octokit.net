@@ -50,6 +50,18 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanCreateFromIssue()
+    {
+        await CreateTheWorld();
+
+        var newIssue = await _github.Issue.Create(Helper.UserName, _context.RepositoryName, new NewIssue("an issue"));
+        var newPullRequest = new NewPullRequest(newIssue.Number, branchName, "master");
+        var result = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+        Assert.Equal(newIssue.Number, result.Number);
+        Assert.Equal(newIssue.Title, result.Title);
+    }
+
+    [IntegrationTest]
     public async Task CanCreateWithRepositoryId()
     {
         await CreateTheWorld();
@@ -68,6 +80,18 @@ public class PullRequestsClientTests : IDisposable
         var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
         Assert.Equal("a draft pull request", result.Title);
         Assert.True(result.Draft);
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateFromIssueWithRepositoryId()
+    {
+        await CreateTheWorld();
+
+        var newIssue = await _github.Issue.Create(_context.RepositoryId, new NewIssue("an issue"));
+        var newPullRequest = new NewPullRequest(newIssue.Number, branchName, "master");
+        var result = await _fixture.Create(_context.Repository.Id, newPullRequest);
+        Assert.Equal(newIssue.Number, result.Number);
+        Assert.Equal(newIssue.Title, result.Title);
     }
 
     [IntegrationTest]

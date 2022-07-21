@@ -34,7 +34,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsOutsideCollaborators()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
 
@@ -50,7 +50,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithoutStart()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
 
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithStart()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
@@ -96,7 +96,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
@@ -113,7 +113,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterAndApiOptions()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
@@ -136,7 +136,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithAllFilterWithStart()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
@@ -171,7 +171,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilter()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
@@ -189,7 +189,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task ReturnsCorrectCountOfOutsideCollaboratorsWithTwoFactorFilterAndApiOptions()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test2");
@@ -226,7 +226,7 @@ namespace Octokit.Tests.Integration.Reactive
             public async Task CanRemoveOutsideCollaborator()
             {
                 var repoName = Helper.MakeNameWithTimestamp("public-repo");
-                using (var context = await _gitHub.CreateRepositoryContext(Helper.Organization, new NewRepository(repoName)))
+                using (var context = await _gitHub.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(repoName)))
                 {
                     await _gitHub.Repository.Collaborator.Add(context.RepositoryOwner, context.RepositoryName, _fixtureCollaborator);
 

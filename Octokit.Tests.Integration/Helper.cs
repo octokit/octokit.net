@@ -113,7 +113,12 @@ namespace Octokit.Tests.Integration
         }
 
         public static string UserName { get; private set; }
+        
         public static string Organization { get; private set; }
+
+        public static bool HasNoOrganization => Organization == null;
+
+        public static bool HasOrganization => Organization != null;
 
         /// <summary>
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1

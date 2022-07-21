@@ -163,7 +163,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         /// <param name="path">The content path</param>
         IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference, string path);
 
@@ -187,7 +187,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/contents/#get-contents">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         /// <param name="path">The content path</param>
         IObservable<RepositoryContent> GetAllContentsByRef(long repositoryId, string reference, string path);
 
@@ -196,14 +196,14 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference);
 
         /// <summary>
         /// Returns the contents of the home directory in a repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually master)</param>
+        /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         IObservable<RepositoryContent> GetAllContentsByRef(long repositoryId, string reference);
 
         /// <summary>
