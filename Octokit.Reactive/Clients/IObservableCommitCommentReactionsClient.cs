@@ -79,9 +79,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The comment id</param>
-        /// <param name="reactionid">The reaction id</param>
+        /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int commentId, int reactionid);
+        IObservable<Unit> Delete(string owner, string name, int commentId, int reactionId);
 
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
