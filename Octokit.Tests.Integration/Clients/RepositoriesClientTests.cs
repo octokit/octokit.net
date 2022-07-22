@@ -506,216 +506,314 @@ public class RepositoriesClientTests
         // TODO: Add a test for the team_id param once an overload that takes an organization is added
     }
 
-    public class TheEditMethod : IDisposable
+    public class TheEditMethod : GitHubClientTestBase
     {
-        Repository _repository;
+        [IntegrationTest]
+        public async Task UpdatesNothing()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate();
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
+
+                Assert.Equal(repoContext.Repository.Name, updatedRepository.Name);
+                Assert.Equal(repoContext.Repository.Description, updatedRepository.Description);
+                Assert.Equal(repoContext.Repository.Homepage, updatedRepository.Homepage);
+                Assert.Equal(repoContext.Repository.Private, updatedRepository.Private);
+                Assert.Equal(repoContext.Repository.Visibility, updatedRepository.Visibility);
+                Assert.Equal(repoContext.Repository.HasIssues, updatedRepository.HasIssues);
+                //Assert.Equal(_repository.HasProjects, updatedRepository.HasProjects); - not on response!
+                Assert.Equal(repoContext.Repository.HasWiki, updatedRepository.HasWiki);
+                Assert.Equal(repoContext.Repository.HasDownloads, updatedRepository.HasDownloads);
+                Assert.Equal(repoContext.Repository.IsTemplate, updatedRepository.IsTemplate);
+                Assert.Equal(repoContext.Repository.DefaultBranch, updatedRepository.DefaultBranch);
+                Assert.Equal(repoContext.Repository.AllowSquashMerge, updatedRepository.AllowSquashMerge);
+                Assert.Equal(repoContext.Repository.AllowMergeCommit, updatedRepository.AllowMergeCommit);
+                Assert.Equal(repoContext.Repository.AllowRebaseMerge, updatedRepository.AllowRebaseMerge);
+                Assert.Equal(repoContext.Repository.AllowAutoMerge, updatedRepository.AllowAutoMerge);
+                Assert.Equal(repoContext.Repository.DeleteBranchOnMerge, updatedRepository.DeleteBranchOnMerge);
+                // Assert.Equal(_repository.UseSquashPrTitleAsDefault, updatedRepository.UseSquashPrTitleAsDefault); - not on response!
+                Assert.Equal(repoContext.Repository.Archived, updatedRepository.Archived);
+                //Assert.Equal(_repository.AllowForking, updatedRepository.AllowForking); - not on response!
+            }
+        }
 
         [IntegrationTest]
         public async Task UpdatesName()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-            var update = new RepositoryUpdate(updatedName);
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
+                var update = new RepositoryUpdate() { Name = updatedName };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
 
-            Assert.Equal(update.Name, _repository.Name);
+                Assert.Equal(update.Name, updatedRepository.Name);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesNameWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-            var update = new RepositoryUpdate(updatedName);
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
+                var update = new RepositoryUpdate() { Name = updatedName };
 
-            _repository = await github.Repository.Edit(_repository.Id, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
 
-            Assert.Equal(update.Name, _repository.Name);
+                Assert.Equal(update.Name, updatedRepository.Name);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesNameObsolete()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
+                var update = new RepositoryUpdate(updatedName);
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
+
+                Assert.Equal(update.Name, updatedRepository.Name);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesNameWithRepositoryIdObsolete()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
+                var update = new RepositoryUpdate(updatedName);
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
+
+                Assert.Equal(update.Name, updatedRepository.Name);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesDescription()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { Description = "Updated description" };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { Description = "Updated description" };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
 
-            Assert.Equal("Updated description", _repository.Description);
+                Assert.Equal(update.Description, updatedRepository.Description);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesDescriptionWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { Description = "Updated description" };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { Description = "Updated description" };
 
-            _repository = await github.Repository.Edit(_repository.Id, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
 
-            Assert.Equal("Updated description", _repository.Description);
+                Assert.Equal(update.Description, updatedRepository.Description);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesHomepage()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { Homepage = "http://aUrl.to/nowhere" };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { Homepage = "http://aUrl.to/nowhere" };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
 
-            Assert.Equal("http://aUrl.to/nowhere", _repository.Homepage);
+                Assert.Equal(update.Homepage, updatedRepository.Homepage);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesHomepageWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { Homepage = "http://aUrl.to/nowhere" };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { Homepage = "http://aUrl.to/nowhere" };
 
-            _repository = await github.Repository.Edit(_repository.Id, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
 
-            Assert.Equal("http://aUrl.to/nowhere", _repository.Homepage);
+                Assert.Equal(update.Homepage, updatedRepository.Homepage);
+            }
         }
 
         [PaidAccountTest]
         public async Task UpdatesPrivate()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            var userDetails = await github.User.Current();
-            if (userDetails.Plan.PrivateRepos == 0)
+            using (var repoContext = await _github.CreateRepositoryContext())
             {
-                throw new Exception("Test cannot complete, account is on free plan");
+                var update = new RepositoryUpdate() { Private = true };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
+
+                Assert.True(updatedRepository.Private);
             }
-
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { Private = true };
-
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-            Assert.True(_repository.Private);
         }
 
         [PaidAccountTest]
         public async Task UpdatesPrivateWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            var userDetails = await github.User.Current();
-            if (userDetails.Plan.PrivateRepos == 0)
+            using (var repoContext = await _github.CreateRepositoryContext())
             {
-                throw new Exception("Test cannot complete, account is on free plan");
+                var update = new RepositoryUpdate() { Private = true };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
+
+                Assert.True(updatedRepository.Private);
             }
-
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { Private = true };
-
-            _repository = await github.Repository.Edit(_repository.Id, update);
-
-            Assert.True(_repository.Private);
-        }
-
-        [IntegrationTest]
-        public async Task UpdatesHasDownloads()
-        {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { HasDownloads = false };
-
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
-
-            Assert.False(_repository.HasDownloads);
-        }
-
-        [IntegrationTest]
-        public async Task UpdatesHasDownloadsWithRepositoryId()
-        {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { HasDownloads = false };
-
-            _repository = await github.Repository.Edit(_repository.Id, update);
-
-            Assert.False(_repository.HasDownloads);
         }
 
         [IntegrationTest]
         public async Task UpdatesHasIssues()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { HasIssues = false };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { HasIssues = false };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
 
-            Assert.False(_repository.HasIssues);
+                Assert.False(updatedRepository.HasIssues);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesHasIssuesWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { HasIssues = false };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { HasIssues = false };
 
-            _repository = await github.Repository.Edit(_repository.Id, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
 
-            Assert.False(_repository.HasIssues);
+                Assert.False(updatedRepository.HasIssues);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesHasWiki()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { HasWiki = false };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { HasWiki = false };
 
-            _repository = await github.Repository.Edit(Helper.UserName, repoName, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
 
-            Assert.False(_repository.HasWiki);
+                Assert.False(updatedRepository.HasWiki);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesHasWikiWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-            var repoName = Helper.MakeNameWithTimestamp("public-repo");
-            _repository = await github.Repository.Create(new NewRepository(repoName) { AutoInit = true });
-            var update = new RepositoryUpdate(repoName) { HasWiki = false };
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { HasWiki = false };
 
-            _repository = await github.Repository.Edit(_repository.Id, update);
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
 
-            Assert.False(_repository.HasWiki);
+                Assert.False(updatedRepository.HasWiki);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesHasDownloads()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { HasDownloads = false };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
+
+                Assert.False(updatedRepository.HasDownloads);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesHasDownloadsWithRepositoryId()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { HasDownloads = false };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
+
+                Assert.False(updatedRepository.HasDownloads);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesIsTemplate()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { IsTemplate = true };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
+
+                Assert.True(updatedRepository.IsTemplate);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesIsTemplateWithRepositoryId()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { IsTemplate = true };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
+
+                Assert.True(updatedRepository.IsTemplate);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesDefaultBranch()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var reference = _github.Git.Reference.GetAll(repoContext.RepositoryOwner, repoContext.RepositoryName).Result.First();
+                _github.Git.Reference.Create(repoContext.RepositoryId, new NewReference("refs/heads/primary", reference.Object.Sha)).Wait();
+                var update = new RepositoryUpdate() { DefaultBranch = "primary" };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
+
+                Assert.Equal(update.DefaultBranch, updatedRepository.DefaultBranch);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesDefaultBranchWithRepositoryId()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var reference = _github.Git.Reference.GetAll(repoContext.RepositoryOwner, repoContext.RepositoryName).Result.First();
+                _github.Git.Reference.Create(repoContext.RepositoryId, new NewReference("refs/heads/primary", reference.Object.Sha)).Wait();
+                var update = new RepositoryUpdate() { DefaultBranch = "primary" };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
+
+                Assert.Equal(update.DefaultBranch, updatedRepository.DefaultBranch);
+            }
         }
 
         [IntegrationTest]
         public async Task UpdatesMergeMethod()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            using (var context = await github.CreateRepositoryContext("public-repo"))
+            using (var repoContext = await _github.CreateRepositoryContext())
             {
-                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+
+                var updateRepository = new RepositoryUpdate()
                 {
                     AllowMergeCommit = false,
                     AllowSquashMerge = false,
@@ -723,28 +821,20 @@ public class RepositoriesClientTests
                     AllowAutoMerge = true
                 };
 
-                var editedRepository = await github.Repository.Edit(context.RepositoryOwner, context.RepositoryName, updateRepository);
+                var editedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, updateRepository);
                 Assert.False(editedRepository.AllowMergeCommit);
                 Assert.False(editedRepository.AllowSquashMerge);
                 Assert.True(editedRepository.AllowRebaseMerge);
                 Assert.True(editedRepository.AllowAutoMerge);
-
-                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
-                Assert.False(repository.AllowMergeCommit);
-                Assert.False(repository.AllowSquashMerge);
-                Assert.True(repository.AllowRebaseMerge);
-                Assert.True(repository.AllowAutoMerge);
             }
         }
 
         [IntegrationTest]
         public async Task UpdatesMergeMethodWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            using (var context = await github.CreateRepositoryContext("public-repo"))
+            using (var repoContext = await _github.CreateRepositoryContext())
             {
-                var updateRepository = new RepositoryUpdate(context.RepositoryName)
+                var updateRepository = new RepositoryUpdate()
                 {
                     AllowMergeCommit = true,
                     AllowSquashMerge = true,
@@ -752,63 +842,62 @@ public class RepositoriesClientTests
                     AllowAutoMerge = true
                 };
 
-                var editedRepository = await github.Repository.Edit(context.RepositoryId, updateRepository);
+                var editedRepository = await _github.Repository.Edit(repoContext.RepositoryId, updateRepository);
                 Assert.True(editedRepository.AllowMergeCommit);
                 Assert.True(editedRepository.AllowSquashMerge);
                 Assert.False(editedRepository.AllowRebaseMerge);
                 Assert.True(editedRepository.AllowAutoMerge);
-
-                var repository = await github.Repository.Get(context.RepositoryId);
-                Assert.True(repository.AllowMergeCommit);
-                Assert.True(repository.AllowSquashMerge);
-                Assert.False(repository.AllowRebaseMerge);
-                Assert.True(editedRepository.AllowAutoMerge);
             }
         }
-        
+
         [IntegrationTest]
         public async Task UpdatesDeleteBranchOnMergeMethod()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            using (var context = await github.CreateRepositoryContext("public-repo"))
+            using (var repoContext = await _github.CreateRepositoryContext())
             {
-                var updateRepository = new RepositoryUpdate(context.RepositoryName)
-                {
-                    DeleteBranchOnMerge = true
-                };
+                var updateRepository = new RepositoryUpdate() { DeleteBranchOnMerge = true };
 
-                var editedRepository = await github.Repository.Edit(context.RepositoryOwner, context.RepositoryName, updateRepository);
+                var editedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, updateRepository);
                 Assert.True(editedRepository.DeleteBranchOnMerge);
-
-                var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
-                Assert.True(repository.DeleteBranchOnMerge);
             }
         }
-        
+
         [IntegrationTest]
         public async Task UpdatesDeleteBranchOnMergeMethodWithRepositoryId()
         {
-            var github = Helper.GetAuthenticatedClient();
-
-            using (var context = await github.CreateRepositoryContext("public-repo"))
+            using (var repoContext = await _github.CreateRepositoryContext())
             {
-                var updateRepository = new RepositoryUpdate(context.RepositoryName)
-                {
-                    DeleteBranchOnMerge = true
-                };
+                var updateRepository = new RepositoryUpdate() { DeleteBranchOnMerge = true };
 
-                var editedRepository = await github.Repository.Edit(context.RepositoryId, updateRepository);
+                var editedRepository = await _github.Repository.Edit(repoContext.RepositoryId, updateRepository);
                 Assert.True(editedRepository.DeleteBranchOnMerge);
-
-                var repository = await github.Repository.Get(context.RepositoryId);
-                Assert.True(repository.DeleteBranchOnMerge);
             }
         }
 
-        public void Dispose()
+        [IntegrationTest]
+        public async Task UpdatesArchive()
         {
-            Helper.DeleteRepo(Helper.GetAuthenticatedClient().Connection, _repository);
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { Archived = true };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
+
+                Assert.Equal(update.Archived, updatedRepository.Archived);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task UpdatesArchiveWithRepositoryId()
+        {
+            using (var repoContext = await _github.CreateRepositoryContext())
+            {
+                var update = new RepositoryUpdate() { Archived = true };
+
+                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
+
+                Assert.Equal(update.Archived, updatedRepository.Archived);
+            }
         }
     }
 
@@ -985,7 +1074,7 @@ public class RepositoriesClientTests
             Assert.Equal("mit", repository.License.Key);
             Assert.Equal("MIT License", repository.License.Name);
         }
-        
+
         [IntegrationTest]
         public async Task ReturnsRepositoryDeleteBranchOnMergeOptions()
         {
@@ -2159,6 +2248,51 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var enabled = await github.Repository.AreVulnerabilityAlertsEnabled("owner", "name");
             Assert.True(enabled);
+        }
+    }
+
+    public class RepositoryTestBaseClass : IDisposable
+    {
+        protected IGitHubClient _github;
+
+        private readonly List<RepositoryContext> _repositories;
+
+        protected RepositoryTestBaseClass()
+        {
+            _github = Helper.GetAuthenticatedClient();
+            _repositories = new List<RepositoryContext>();
+        }
+
+        public void Dispose()
+        {
+            foreach (var repository in _repositories)
+            {
+                repository.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Returns a RepositoryContext, which will be disposed at the end of the test.
+        /// </summary>
+        /// <param name="name">Your value or uses default of Helper.MakeNameWithTimestamp("public-repo");</param>
+        /// <returns></returns>
+        internal RepositoryContext CreateRepository(string name = null)
+        {
+            var newContext = _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp(name ?? Helper.MakeNameWithTimestamp("public-repo"))) { AutoInit = true }).Result;
+            _repositories.Add(newContext);
+            return newContext;
+        }
+
+        /// <summary>
+        /// Returns a RepositoryContext, which will be disposed at the end of the test.
+        /// </summary>
+        /// <param name="name">Your value or uses default of Helper.MakeNameWithTimestamp("public-repo");</param>
+        /// <returns></returns>
+        internal async Task<RepositoryContext> CreateRepositoryAsync(string name = null)
+        {
+            var newContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp(name ?? Helper.MakeNameWithTimestamp("public-repo"))) { AutoInit = true });
+            _repositories.Add(newContext);
+            return newContext;
         }
     }
 }
