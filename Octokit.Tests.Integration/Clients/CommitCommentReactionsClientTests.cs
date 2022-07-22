@@ -352,6 +352,54 @@ public class CommitCommentReactionsClientTests
             Assert.Equal(result.User.Id, reaction.User.Id);
         }
 
+
+        [IntegrationTest]
+        public async Task CanDeleteReaction()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryOwner, _context.RepositoryName,
+                commit.Sha, comment);
+
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
+
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryOwner, _context.RepositoryName, result.Id, newReaction);
+
+                await _github.Reaction.CommitComment.Delete(_context.RepositoryOwner, _context.RepositoryName, result.Id, reaction.Id);
+            }
+
+            var finalComments = await _github.Reaction.CommitComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, result.Id);
+
+            Assert.Empty(finalComments);
+        }
+
+        [IntegrationTest]
+        public async Task CanDeleteReactionWithRepositoryId()
+        {
+            var commit = await SetupCommitForRepository(_github);
+
+            var comment = new NewCommitComment("test");
+
+            var result = await _github.Repository.Comment.Create(_context.RepositoryId, commit.Sha, comment);
+
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
+
+                var reaction = await _github.Reaction.CommitComment.Create(_context.RepositoryId, result.Id, newReaction);
+
+                await _github.Reaction.CommitComment.Delete(_context.RepositoryId, result.Id, reaction.Id);
+            }
+
+            var finalComments = await _github.Reaction.CommitComment.GetAll(_context.RepositoryId, result.Id);
+
+            Assert.Empty(finalComments);
+        }
+
         public void Dispose()
         {
             _context.Dispose();

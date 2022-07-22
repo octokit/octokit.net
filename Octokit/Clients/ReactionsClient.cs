@@ -58,6 +58,7 @@ namespace Octokit
         /// <returns></returns>
         [Preview("squirrel-girl")]
         [ManualRoute("DELETE", "/reactions/{reaction_id}")]
+        [Obsolete("This route no longer works and is replaced with individual routes in each client")]
         public Task Delete(int number)
         {
             return ApiConnection.Delete(ApiUrls.Reactions(number), new object(), AcceptHeaders.ReactionsPreview);

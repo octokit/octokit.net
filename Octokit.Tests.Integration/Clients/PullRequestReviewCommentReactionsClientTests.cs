@@ -339,6 +339,60 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
         Assert.Equal(commentFromGitHub.User.Id, pullRequestReviewCommentReaction.User.Id);
     }
 
+    [IntegrationTest]
+    public async Task CanDeleteReaction()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(Helper.UserName, _context.RepositoryName, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
+
+            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, newReaction);
+            await _github.Reaction.PullRequestReviewComment.Delete(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, reaction.Id);
+        }
+
+        var allReactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id);
+
+        Assert.Empty(allReactions);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeleteReactionWithRepositoryId()
+    {
+        var pullRequest = await CreatePullRequest(_context);
+
+        const string body = "A review comment message";
+        const int position = 1;
+
+        var createdComment = await CreateComment(body, position, pullRequest.Sha, pullRequest.Number);
+
+        var commentFromGitHub = await _client.GetComment(_context.RepositoryId, createdComment.Id);
+
+        AssertComment(commentFromGitHub, body, position);
+
+        foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+        {
+            var newReaction = new NewReaction(reactionType);
+
+            var reaction = await _github.Reaction.PullRequestReviewComment.Create(_context.RepositoryId, commentFromGitHub.Id, newReaction);
+            await _github.Reaction.PullRequestReviewComment.Delete(_context.RepositoryId, commentFromGitHub.Id, reaction.Id);
+        }
+
+        var allReactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryId, commentFromGitHub.Id);
+
+        Assert.Empty(allReactions);
+    }
+
     /// <summary>
     /// Creates the base state for testing (creates a repo, a commit in master, a branch, a commit in the branch and a pull request)
     /// </summary>
@@ -349,7 +403,7 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         // Creating a commit in master
 
-        var createdCommitInMaster = await CreateCommit(repoName, "Hello World!", "README.md", "heads/master", "A master commit message");
+        var createdCommitInMaster = await CreateCommit(repoName, "Hello World!", "README.md", "heads/main", "A master commit message");
 
         // Creating a branch
 
@@ -362,7 +416,7 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         // Creating a pull request
 
-        var pullRequest = new NewPullRequest("Nice title for the pull request", branchName, "master");
+        var pullRequest = new NewPullRequest("Nice title for the pull request", branchName, "main");
         var createdPullRequest = await _github.PullRequest.Create(Helper.UserName, repoName, pullRequest);
 
         var data = new PullRequestData

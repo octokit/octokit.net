@@ -322,6 +322,55 @@ public class IssueCommentReactionsClientTests
             Assert.Equal(issueComment.User.Id, issueCommentReaction.User.Id);
         }
 
+        [IntegrationTest]
+        public async Task CanDeleteReaction()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryOwner, _context.RepositoryName, issue.Number, "A test comment");
+
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
+
+                var reaction = await _github.Reaction.IssueComment.Create(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, newReaction);
+
+                await _github.Reaction.IssueComment.Delete(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, reaction.Id);
+            }
+
+            var allReactions = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id);
+
+            Assert.Empty(allReactions);
+        }
+
+        [IntegrationTest]
+        public async Task CanDeleteReactionWithRepositoryId()
+        {
+            var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+            var issue = await _issuesClient.Create(_context.RepositoryId, newIssue);
+
+            Assert.NotNull(issue);
+
+            var issueComment = await _issuesClient.Comment.Create(_context.RepositoryId, issue.Number, "A test comment");
+
+            Assert.NotNull(issueComment);
+
+            foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))
+            {
+                var newReaction = new NewReaction(reactionType);
+
+                var reaction = await _github.Reaction.IssueComment.Create(_context.RepositoryId, issueComment.Id, newReaction);
+                await _github.Reaction.IssueComment.Delete(_context.RepositoryId, issueComment.Id, reaction.Id);
+            }
+
+            var allReactions = await _github.Reaction.IssueComment.GetAll(_context.RepositoryId, issueComment.Id);
+
+            Assert.Empty(allReactions);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
