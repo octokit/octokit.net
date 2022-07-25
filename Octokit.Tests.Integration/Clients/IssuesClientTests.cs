@@ -1288,7 +1288,7 @@ public class IssuesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetReactionPayload()
     {
-        using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssuesReactionTests")))
+        using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("IssuesReactionTests")))
         {
             // Create a test issue with reactions
             var issueNumber = await HelperCreateIssue(context.RepositoryOwner, context.RepositoryName);
@@ -1312,7 +1312,7 @@ public class IssuesClientTests : IDisposable
     public async Task CanGetReactionPayloadForMultipleIssues()
     {
         var numberToCreate = 2;
-        using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssuesReactionTests")))
+        using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("IssuesReactionTests")))
         {
             var issueNumbers = new List<int>();
 

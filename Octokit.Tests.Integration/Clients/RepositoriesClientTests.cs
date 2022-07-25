@@ -511,7 +511,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesNothing()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate();
 
@@ -542,7 +542,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesName()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
                 var update = new RepositoryUpdate() { Name = updatedName };
@@ -556,7 +556,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesNameWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
                 var update = new RepositoryUpdate() { Name = updatedName };
@@ -570,7 +570,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesNameObsolete()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
                 var update = new RepositoryUpdate(updatedName);
@@ -584,7 +584,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesNameWithRepositoryIdObsolete()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
                 var update = new RepositoryUpdate(updatedName);
@@ -598,7 +598,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesDescription()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Description = "Updated description" };
 
@@ -611,7 +611,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesDescriptionWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Description = "Updated description" };
 
@@ -624,7 +624,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHomepage()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Homepage = "http://aUrl.to/nowhere" };
 
@@ -637,7 +637,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHomepageWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Homepage = "http://aUrl.to/nowhere" };
 
@@ -650,7 +650,7 @@ public class RepositoriesClientTests
         [PaidAccountTest]
         public async Task UpdatesPrivate()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Private = true };
 
@@ -663,7 +663,7 @@ public class RepositoriesClientTests
         [PaidAccountTest]
         public async Task UpdatesPrivateWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Private = true };
 
@@ -676,7 +676,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasIssues()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { HasIssues = false };
 
@@ -689,7 +689,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasIssuesWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { HasIssues = false };
 
@@ -702,7 +702,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasWiki()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { HasWiki = false };
 
@@ -715,7 +715,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasWikiWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { HasWiki = false };
 
@@ -728,7 +728,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasDownloads()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { HasDownloads = false };
 
@@ -741,7 +741,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesHasDownloadsWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { HasDownloads = false };
 
@@ -754,7 +754,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesIsTemplate()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { IsTemplate = true };
 
@@ -767,7 +767,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesIsTemplateWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { IsTemplate = true };
 
@@ -780,7 +780,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesDefaultBranch()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var reference = _github.Git.Reference.GetAll(repoContext.RepositoryOwner, repoContext.RepositoryName).Result.First();
                 _github.Git.Reference.Create(repoContext.RepositoryId, new NewReference("refs/heads/primary", reference.Object.Sha)).Wait();
@@ -795,7 +795,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesDefaultBranchWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var reference = _github.Git.Reference.GetAll(repoContext.RepositoryOwner, repoContext.RepositoryName).Result.First();
                 _github.Git.Reference.Create(repoContext.RepositoryId, new NewReference("refs/heads/primary", reference.Object.Sha)).Wait();
@@ -810,9 +810,8 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesMergeMethod()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
-
                 var updateRepository = new RepositoryUpdate()
                 {
                     AllowMergeCommit = false,
@@ -832,7 +831,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesMergeMethodWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var updateRepository = new RepositoryUpdate()
                 {
@@ -849,23 +848,26 @@ public class RepositoriesClientTests
                 Assert.True(editedRepository.AllowAutoMerge);
             }
         }
-
+        
         [IntegrationTest]
         public async Task UpdatesDeleteBranchOnMergeMethod()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var updateRepository = new RepositoryUpdate() { DeleteBranchOnMerge = true };
 
                 var editedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, updateRepository);
                 Assert.True(editedRepository.DeleteBranchOnMerge);
+
+                var repository = await _github.Repository.Get(repoContext.RepositoryOwner, repoContext.RepositoryName);
+                Assert.True(repository.DeleteBranchOnMerge);
             }
         }
-
+        
         [IntegrationTest]
         public async Task UpdatesDeleteBranchOnMergeMethodWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var updateRepository = new RepositoryUpdate() { DeleteBranchOnMerge = true };
 
@@ -877,7 +879,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesArchive()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Archived = true };
 
@@ -890,7 +892,7 @@ public class RepositoriesClientTests
         [IntegrationTest]
         public async Task UpdatesArchiveWithRepositoryId()
         {
-            using (var repoContext = await _github.CreateRepositoryContext())
+            using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 var update = new RepositoryUpdate() { Archived = true };
 
@@ -928,9 +930,10 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetMethod
+    public class TheGetMethod : GitHubClientTestBase
     {
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsSpecifiedRepository()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -945,6 +948,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsSpecifiedRepositoryWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -959,6 +963,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsOrganizationRepository()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -972,6 +977,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsRenamedRepository()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -997,6 +1003,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsOrganizationRepositoryWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -1010,6 +1017,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsForkedRepository()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -1021,6 +1029,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsForkedRepositoryWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -1036,7 +1045,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            using (var context = await github.CreateUserRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
             {
                 var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
 
@@ -1052,7 +1061,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            using (var context = await github.CreateUserRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
             {
                 var repository = await github.Repository.Get(context.RepositoryId);
 
@@ -1064,6 +1073,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsSpecifiedRepositoryWithLicenseInformation()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -1074,13 +1084,13 @@ public class RepositoriesClientTests
             Assert.Equal("mit", repository.License.Key);
             Assert.Equal("MIT License", repository.License.Name);
         }
-
+        
         [IntegrationTest]
         public async Task ReturnsRepositoryDeleteBranchOnMergeOptions()
         {
             var github = Helper.GetAuthenticatedClient();
 
-            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            using (var context = await github.CreateUserRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
             {
                 var repository = await github.Repository.Get(context.RepositoryOwner, context.RepositoryName);
 
@@ -1093,7 +1103,7 @@ public class RepositoriesClientTests
         {
             var github = Helper.GetAuthenticatedClient();
 
-            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            using (var context = await github.CreateUserRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
             {
                 var repository = await github.Repository.Get(context.RepositoryId);
 
@@ -1632,7 +1642,7 @@ public class RepositoriesClientTests
         }
     }
 
-    public class TheGetAllLanguagesMethod
+    public class TheGetAllLanguagesMethod : GitHubClientTestBase
     {
         [IntegrationTest]
         public async Task GetsLanguages()
@@ -1660,7 +1670,7 @@ public class RepositoriesClientTests
         public async Task GetsEmptyLanguagesWhenNone()
         {
             var github = Helper.GetAuthenticatedClient();
-            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            using (var context = await github.CreateUserRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
             {
                 var languages = await github.Repository.GetAllLanguages(context.RepositoryOwner, context.RepositoryName);
 
@@ -1672,7 +1682,7 @@ public class RepositoriesClientTests
         public async Task GetsEmptyLanguagesWhenNoneWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
-            using (var context = await github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
+            using (var context = await github.CreateUserRepositoryContext(Helper.MakeNameWithTimestamp("public-repo")))
             {
                 var languages = await github.Repository.GetAllLanguages(context.RepositoryId);
 
@@ -2248,51 +2258,6 @@ public class RepositoriesClientTests
             var github = Helper.GetAuthenticatedClient();
             var enabled = await github.Repository.AreVulnerabilityAlertsEnabled("owner", "name");
             Assert.True(enabled);
-        }
-    }
-
-    public class RepositoryTestBaseClass : IDisposable
-    {
-        protected IGitHubClient _github;
-
-        private readonly List<RepositoryContext> _repositories;
-
-        protected RepositoryTestBaseClass()
-        {
-            _github = Helper.GetAuthenticatedClient();
-            _repositories = new List<RepositoryContext>();
-        }
-
-        public void Dispose()
-        {
-            foreach (var repository in _repositories)
-            {
-                repository.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Returns a RepositoryContext, which will be disposed at the end of the test.
-        /// </summary>
-        /// <param name="name">Your value or uses default of Helper.MakeNameWithTimestamp("public-repo");</param>
-        /// <returns></returns>
-        internal RepositoryContext CreateRepository(string name = null)
-        {
-            var newContext = _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp(name ?? Helper.MakeNameWithTimestamp("public-repo"))) { AutoInit = true }).Result;
-            _repositories.Add(newContext);
-            return newContext;
-        }
-
-        /// <summary>
-        /// Returns a RepositoryContext, which will be disposed at the end of the test.
-        /// </summary>
-        /// <param name="name">Your value or uses default of Helper.MakeNameWithTimestamp("public-repo");</param>
-        /// <returns></returns>
-        internal async Task<RepositoryContext> CreateRepositoryAsync(string name = null)
-        {
-            var newContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp(name ?? Helper.MakeNameWithTimestamp("public-repo"))) { AutoInit = true });
-            _repositories.Add(newContext);
-            return newContext;
         }
     }
 }

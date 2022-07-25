@@ -17,7 +17,7 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
 
                 fixture = github.Git.Tag;
-                context = github.CreateRepositoryContext("public-repo").Result;
+                context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
 
                 var blob = new NewBlob
                 {
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Integration.Clients
                 var github = Helper.GetAuthenticatedClient();
 
                 fixture = github.Git.Tag;
-                context = github.CreateRepositoryContext("public-repo").Result;
+                context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
 
                 var blob = new NewBlob
                 {
