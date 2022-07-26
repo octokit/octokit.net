@@ -407,44 +407,6 @@ public class RepositoriesClientTests
                 Assert.False(thrown.OwnerIsOrganization);
             }
         }
-
-        [PaidAccountTest(Skip = "Paid plans now have unlimited repositories. We shouldn't test this now.")]
-        public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var userDetails = await github.User.Current();
-            var freePrivateSlots = userDetails.Plan.PrivateRepos - userDetails.OwnedPrivateRepos;
-
-            if (userDetails.Plan.PrivateRepos == 0)
-            {
-                throw new Exception("Test cannot complete, account is on free plan");
-            }
-
-            var createRepoTasks =
-                Enumerable.Range(0, (int)freePrivateSlots)
-                .Select(x =>
-                {
-                    var repoName = Helper.MakeNameWithTimestamp("private-repo-" + x);
-                    var repository = new NewRepository(repoName) { Private = true };
-                    return github.Repository.Create(repository);
-                });
-
-            var createdRepositories = await Task.WhenAll(createRepoTasks);
-
-            try
-            {
-                await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
-                    () => github.Repository.Create(new NewRepository("x-private") { Private = true }));
-            }
-            finally
-            {
-                var deleteRepos = createdRepositories
-                    .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name));
-
-                Task.WhenAll(deleteRepos).Wait();
-            }
-        }
     }
 
     public class TheCreateMethodForOrganization

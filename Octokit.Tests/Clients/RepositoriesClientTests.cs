@@ -85,30 +85,6 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Null(exception.ExistingRepositoryWebUrl);
             }
-
-            [Fact]
-            public async Task ThrowsExceptionWhenPrivateRepositoryQuotaExceeded()
-            {
-                var newRepository = new NewRepository("aName") { Private = true };
-                var response = Substitute.For<IResponse>();
-                response.StatusCode.Returns((HttpStatusCode)422);
-                response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
-                    + @"""http://developer.github.com/v3/repos/#create"",""errors"":[{""resource"":""Repository"","
-                    + @"""code"":""custom"",""field"":""name"",""message"":"
-                    + @"""name can't be private. You are over your quota.""}]}");
-                var credentials = new Credentials("haacked", "pwd");
-                var connection = Substitute.For<IApiConnection>();
-                connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
-                connection.Connection.Credentials.Returns(credentials);
-                connection.Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json")
-                    .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
-                var client = new RepositoriesClient(connection);
-
-                var exception = await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
-                    () => client.Create(newRepository));
-
-                Assert.NotNull(exception);
-            }
         }
 
         public class TheCreateMethodForOrganization
