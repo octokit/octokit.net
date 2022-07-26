@@ -84,7 +84,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckSuitesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-suites"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -99,7 +98,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckSuitesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-suites"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -122,7 +120,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(x =>
                         x["app_id"] == "123"
                         && x["check_name"] == "build"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -145,7 +142,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(x =>
                         x["app_id"] == "123"
                         && x["check_name"] == "build"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -284,8 +280,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<CheckSuite>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites"),
-                    newCheckSuite,
-                    "application/vnd.github.antiope-preview+json");
+                    newCheckSuite);
             }
 
             [Fact]
@@ -300,8 +295,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<CheckSuite>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites"),
-                    newCheckSuite,
-                    "application/vnd.github.antiope-preview+json");
+                    newCheckSuite);
             }
 
             [Fact]

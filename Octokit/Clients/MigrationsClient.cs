@@ -30,7 +30,6 @@ namespace Octokit
         /// <param name="migration">Specifies parameters for the migration in a
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
-        [Preview("wyandotte")]
         [ManualRoute("POST", "/orgs/{org}/migrations")]
         public async Task<Migration> Start(string org, StartMigrationRequest migration)
         {
@@ -39,7 +38,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
-            return await ApiConnection.Post<Migration>(endpoint, migration, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
+            return await ApiConnection.Post<Migration>(endpoint, migration).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -66,7 +65,6 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
         [ManualRoute("GET", "/orgs/{org}/migrations")]
-        [Preview("wyandotte")]
         public async Task<IReadOnlyList<Migration>> GetAll(string org, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -74,7 +72,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrations(org);
 
-            return await ApiConnection.GetAll<Migration>(endpoint, null, AcceptHeaders.MigrationsApiPreview, options).ConfigureAwait(false);
+            return await ApiConnection.GetAll<Migration>(endpoint, null, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -86,7 +84,6 @@ namespace Octokit
         /// <param name="org">The organization which is migrating.</param>
         /// <param name="id">Migration Id of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        [Preview("wyandotte")]
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}")]
         public async Task<Migration> Get(string org, int id)
         {
@@ -94,7 +91,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrationById(org, id);
 
-            return await ApiConnection.Get<Migration>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
+            return await ApiConnection.Get<Migration>(endpoint, null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,14 +103,13 @@ namespace Octokit
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns>The binary contents of the archive as a byte array.</returns>
-        [Preview("wyandotte")]
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}/archive")]
         public async Task<byte[]> GetArchive(string org, int id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
-            var response = await Connection.Get<byte[]>(endpoint, null, AcceptHeaders.MigrationsApiPreview).ConfigureAwait(false);
+            var response = await Connection.GetRaw(endpoint, null).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -127,7 +123,6 @@ namespace Octokit
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns></returns>
-        [Preview("wyandotte")]
         [ManualRoute("DELETE", "/orgs/{org}/migrations/{id}/archive")]
         public Task DeleteArchive(string org, int id)
         {
@@ -135,7 +130,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
-            return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.MigrationsApiPreview);
+            return ApiConnection.Delete(endpoint, new object());
         }
 
         /// <summary>
@@ -148,7 +143,6 @@ namespace Octokit
         /// <param name="id">The Id of the migration.</param>
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
-        [Preview("wyandotte")]
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}/repos/{name}/lock")]
         public Task UnlockRepository(string org, int id, string repo)
         {
@@ -157,7 +151,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrationUnlockRepository(org, id, repo);
 
-            return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.MigrationsApiPreview);
+            return ApiConnection.Delete(endpoint, new object());
         }
     }
 }

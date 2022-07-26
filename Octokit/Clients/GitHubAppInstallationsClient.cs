@@ -30,13 +30,12 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
-        [Preview("machine-man")]
         [ManualRoute("GET", "/installation/repositories")]
         public async Task<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.InstallationRepositories(), null, AcceptHeaders.GitHubAppsPreview, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.InstallationRepositories(), null, options).ConfigureAwait(false);
 
             return new RepositoriesResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -60,13 +59,12 @@ namespace Octokit
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        [Preview("machine-man")]
         [ManualRoute("GET", "/user/installation/{id}/repositories")]
         public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, options).ConfigureAwait(false);
 
             return new RepositoriesResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,

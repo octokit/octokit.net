@@ -27,14 +27,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments/{comment_id}")]
         public Task<CommitComment> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(owner, name, number), null, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(owner, name, number), null);
         }
 
         /// <summary>
@@ -43,11 +42,10 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/comments/{number}")]
         public Task<CommitComment> Get(long repositoryId, int number)
         {
-            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, number), null);
         }
 
         /// <summary>
@@ -83,7 +81,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options)
         {
@@ -91,7 +88,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name), null, options);
         }
 
         /// <summary>
@@ -100,13 +97,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId), null, options);
         }
 
         /// <summary>
@@ -148,7 +144,6 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{commit_sha}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options)
         {
@@ -157,7 +152,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name, sha), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(owner, name, sha), null, options);
         }
 
         /// <summary>
@@ -167,14 +162,13 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/commits/{commit_sha}/comments")]
         public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<CommitComment>(ApiUrls.CommitComments(repositoryId, sha), null, options);
         }
 
         /// <summary>

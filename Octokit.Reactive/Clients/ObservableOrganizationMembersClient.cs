@@ -470,7 +470,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
+            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, options);
         }
     }
 }

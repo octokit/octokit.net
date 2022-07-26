@@ -239,7 +239,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
-                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(owner, name, user), null, AcceptHeaders.OrganizationMembershipPreview);
+                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(owner, name, user), null);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
-                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null, AcceptHeaders.OrganizationMembershipPreview);
+                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null);
         }
 
         /// <summary>

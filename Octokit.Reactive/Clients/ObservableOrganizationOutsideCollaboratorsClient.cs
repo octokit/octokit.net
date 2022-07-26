@@ -54,7 +54,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org), null, options);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, AcceptHeaders.OrganizationMembershipPreview, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, options);
         }
 
         /// <summary>

@@ -44,7 +44,7 @@ namespace Octokit
         public Task<IReadOnlyList<PreReceiveEnvironment>> GetAll(ApiOptions options)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironments();
-            return ApiConnection.GetAll<PreReceiveEnvironment>(endpoint, null, AcceptHeaders.PreReceiveEnvironmentsPreview, options);
+            return ApiConnection.GetAll<PreReceiveEnvironment>(endpoint, null, options);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Octokit
         public Task<PreReceiveEnvironment> Get(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironments(environmentId);
-            return ApiConnection.Get<PreReceiveEnvironment>(endpoint, null, AcceptHeaders.PreReceiveEnvironmentsPreview);
+            return ApiConnection.Get<PreReceiveEnvironment>(endpoint, null);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(newPreReceiveEnvironment, nameof(newPreReceiveEnvironment));
 
             var endpoint = ApiUrls.AdminPreReceiveEnvironments();
-            return ApiConnection.Post<PreReceiveEnvironment>(endpoint, newPreReceiveEnvironment, AcceptHeaders.PreReceiveEnvironmentsPreview);
+            return ApiConnection.Post<PreReceiveEnvironment>(endpoint, newPreReceiveEnvironment);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(updatePreReceiveEnvironment, nameof(updatePreReceiveEnvironment));
 
             var endpoint = ApiUrls.AdminPreReceiveEnvironments(environmentId);
-            return ApiConnection.Patch<PreReceiveEnvironment>(endpoint, updatePreReceiveEnvironment, AcceptHeaders.PreReceiveEnvironmentsPreview);
+            return ApiConnection.Patch<PreReceiveEnvironment>(endpoint, updatePreReceiveEnvironment);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Octokit
         public Task Delete(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironments(environmentId);
-            return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.PreReceiveEnvironmentsPreview);
+            return ApiConnection.Delete(endpoint, new object());
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Octokit
         public Task<PreReceiveEnvironmentDownload> DownloadStatus(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironmentDownloadStatus(environmentId);
-            return ApiConnection.Get<PreReceiveEnvironmentDownload>(endpoint, null, AcceptHeaders.PreReceiveEnvironmentsPreview);
+            return ApiConnection.Get<PreReceiveEnvironmentDownload>(endpoint, null);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Octokit
         public Task<PreReceiveEnvironmentDownload> TriggerDownload(long environmentId)
         {
             var endpoint = ApiUrls.AdminPreReceiveEnvironmentDownload(environmentId);
-            return ApiConnection.Post<PreReceiveEnvironmentDownload>(endpoint, new object(), AcceptHeaders.PreReceiveEnvironmentsPreview);
+            return ApiConnection.Post<PreReceiveEnvironmentDownload>(endpoint, new object());
         }
     }
 }

@@ -150,7 +150,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
