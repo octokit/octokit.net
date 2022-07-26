@@ -11,7 +11,7 @@ namespace Octokit
     /// A client for GitHub's Repositories API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/">Repositories API documentation</a> for more details.
+    /// See the <a href="https://docs.github.com/rest/repos/repos">Repositories API documentation</a> for more details.
     /// </remarks>
     public class RepositoriesClient : ApiClient, IRepositoriesClient
     {
@@ -1112,6 +1112,32 @@ namespace Octokit
         public Task<RepositoryContentLicense> GetLicenseContents(long repositoryId)
         {
             return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId));
+        }
+
+        /// <summary>
+        /// Gets the list of errors in the codeowners file
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns the list of errors in the codeowners files</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/codeowners/errors")]
+        public Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(owner, name));
+        }
+
+        /// <summary>
+        /// Gets the list of errors in the codeowners file
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns the list of errors in the codeowners files</returns>
+        [ManualRoute("GET", "/repositories/{id}/codeowners/errors")]
+        public Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId)
+        {
+            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(repositoryId));
         }
 
         /// <summary>

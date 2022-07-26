@@ -1070,6 +1070,42 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetCodeOwnersErrorsMethod
+        {
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetAllCodeOwnersErrors("owner", "name");
+
+                connection.Received()
+                    .Get<RepositoryCodeOwnersErrors>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/codeowners/errors"));
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlWithRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await client.GetAllCodeOwnersErrors(1);
+
+                connection.Received()
+                    .Get<RepositoryCodeOwnersErrors>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/codeowners/errors"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCodeOwnersErrors(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCodeOwnersErrors("owner", null));
+            }
+        }
+
         public class TheGetAllTagsMethod
         {
             [Fact]
