@@ -131,22 +131,6 @@ namespace Octokit
                         baseAddress, e);
                 }
 
-                if (string.Equals(
-                    "please upgrade your plan to create a new private repository.",
-                    errorMessage,
-                    StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new PrivateRepositoryQuotaExceededException(e);
-                }
-
-                if (string.Equals(
-                    "name can't be private. You are over your quota.",
-                    errorMessage,
-                    StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new PrivateRepositoryQuotaExceededException(e);
-                }
-
                 if (errorMessage != null && errorMessage.EndsWith("is an unknown gitignore template.", StringComparison.OrdinalIgnoreCase))
                 {
                     throw new InvalidGitIgnoreTemplateException(e);
