@@ -35,7 +35,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
 
             [Fact]
@@ -50,7 +50,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
 
             [Fact]
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
 
             [Fact]
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
 
             [Fact]
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
 
             [Fact]
@@ -147,7 +147,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
 
             [Fact]

@@ -215,7 +215,7 @@ namespace Octokit
             var endpoint = ApiUrls.RepoBranchProtection(owner, name, branch);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -240,7 +240,7 @@ namespace Octokit
             var endpoint = ApiUrls.RepoBranchProtection(repositoryId, branch);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -343,7 +343,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -369,7 +369,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -624,7 +624,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -650,7 +650,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -749,7 +749,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -775,7 +775,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -839,7 +839,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -865,7 +865,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint, null).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)

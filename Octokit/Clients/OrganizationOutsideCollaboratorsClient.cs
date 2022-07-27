@@ -119,7 +119,7 @@ namespace Octokit
 
             try
             {
-                var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user), null).ConfigureAwait(false);
+                var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user)).ConfigureAwait(false);
 
                 if (statusCode != HttpStatusCode.NoContent
                     && statusCode != (HttpStatusCode)422)

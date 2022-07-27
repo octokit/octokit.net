@@ -97,8 +97,7 @@ public class ObservableIssuesClientTests
             client.GetAllForRepository("fake", "repo");
 
             gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                Arg.Any<IDictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview+json");
+                Arg.Any<IDictionary<string, string>>(), null);
         }
 
         [Fact]
@@ -136,7 +135,7 @@ public class ObservableIssuesClientTests
                 && d["direction"] == "desc"
                 && d["page"] == "1"
                 && d["per_page"] == "1"),
-                "application/vnd.github.squirrel-girl-preview+json");
+                null);
         }
 
         [Fact]
@@ -181,7 +180,7 @@ public class ObservableIssuesClientTests
                 && d["state"] == "open"
                 && d["sort"] == "created"
                 && d["direction"] == "asc"),
-                "application/vnd.github.squirrel-girl-preview+json");
+                null);
         }
 
         [Fact]
@@ -229,7 +228,7 @@ public class ObservableIssuesClientTests
                 && d["direction"] == "asc"
                 && d["page"] == "1"
                 && d["per_page"] == "1"),
-                "application/vnd.github.squirrel-girl-preview+json");
+                null);
         }
 
         [Fact]
@@ -303,11 +302,12 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"), Arg.Any<string>())
+                    && d["filter"] == "assigned"),
+                null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
@@ -380,11 +380,11 @@ public class ObservableIssuesClientTests
                     && d["state"] == "open"
                     && d["sort"] == "created"
                     && d["filter"] == "assigned"),
-                "application/vnd.github.squirrel-girl-preview+json")
+                null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
@@ -466,11 +466,12 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"), "application/vnd.github.squirrel-girl-preview+json")
+                    && d["filter"] == "assigned"),
+                null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
 
             var client = new ObservableIssuesClient(gitHubClient);
@@ -534,16 +535,18 @@ public class ObservableIssuesClientTests
                 }
             );
             var gitHubClient = Substitute.For<IGitHubClient>();
-            gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
+            gitHubClient.Connection.Get<List<Issue>>(
+                Arg.Is(firstPageUrl),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"), "application/vnd.github.squirrel-girl-preview+json")
+                    && d["filter"] == "assigned"),
+                null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), null)
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 

@@ -128,12 +128,11 @@ namespace Octokit.Tests.Reactive
                 );
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var acceptHeader = "application/vnd.github.squirrel-girl-preview+json";
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, acceptHeader)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, acceptHeader)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, acceptHeader)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -141,9 +140,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAll("owner", "name", 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, acceptHeader);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, acceptHeader);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, acceptHeader);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, null);
             }
 
             [Fact]
@@ -347,23 +346,22 @@ namespace Octokit.Tests.Reactive
                 );
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                var previewAcceptHeader = "application/vnd.github.squirrel-girl-preview+json";
 
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), previewAcceptHeader)
+                        && d["sort"] == "updated"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), previewAcceptHeader)
+                        && d["sort"] == "updated"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), previewAcceptHeader)
+                        && d["sort"] == "updated"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -382,15 +380,15 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), previewAcceptHeader);
+                        && d["sort"] == "updated"), null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), previewAcceptHeader);
+                        && d["sort"] == "updated"), null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), previewAcceptHeader);
+                        && d["sort"] == "updated"), null);
             }
 
             [Fact]
@@ -436,17 +434,17 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), "application/vnd.github.squirrel-girl-preview+json")
+                        && d["sort"] == "updated"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), "application/vnd.github.squirrel-girl-preview+json")
+                        && d["sort"] == "updated"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), "application/vnd.github.squirrel-girl-preview+json")
+                        && d["sort"] == "updated"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -465,15 +463,15 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), "application/vnd.github.squirrel-girl-preview+json");
+                        && d["sort"] == "updated"), null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), "application/vnd.github.squirrel-girl-preview+json");
+                        && d["sort"] == "updated"), null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"), "application/vnd.github.squirrel-girl-preview+json");
+                        && d["sort"] == "updated"), null);
             }
 
             [Fact]
@@ -573,20 +571,18 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
-                var previewAcceptHeader = "application/vnd.github.squirrel-girl-preview+json";
-
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), previewAcceptHeader)
+                        && d["sort"] == "created"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), previewAcceptHeader)
+                        && d["sort"] == "created"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), previewAcceptHeader)
+                        && d["sort"] == "created"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -597,13 +593,13 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), previewAcceptHeader);
+                        && d["sort"] == "created"), null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), previewAcceptHeader);
+                        && d["sort"] == "created"), null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), previewAcceptHeader);
+                        && d["sort"] == "created"), null);
             }
 
             [Fact]
@@ -648,15 +644,15 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), "application/vnd.github.squirrel-girl-preview+json")
+                        && d["sort"] == "created"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), "application/vnd.github.squirrel-girl-preview+json")
+                        && d["sort"] == "created"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), "application/vnd.github.squirrel-girl-preview+json")
+                        && d["sort"] == "created"), null)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -668,14 +664,15 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"),
-                    "application/vnd.github.squirrel-girl-preview+json");
+                        null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"),
-                        "application/vnd.github.squirrel-girl-preview+json");
+                        null);
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"), "application/vnd.github.squirrel-girl-preview+json");
+                        && d["sort"] == "created"),
+                        null);
             }
 
             [Fact]

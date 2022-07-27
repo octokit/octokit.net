@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
                 var client = new IssuesEventsClient(connection);
 
                 await client.GetAllForIssue("fake", "repo", 42);
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), null, "application/vnd.github.starfox-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -37,7 +37,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForIssue(1, 42);
 
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), null, "application/vnd.github.starfox-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -55,7 +55,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForIssue("fake", "repo", 42, options);
 
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), null, "application/vnd.github.starfox-preview+json", options);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), null, options);
             }
 
             [Fact]
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForIssue(1, 42, options);
 
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), null, "application/vnd.github.starfox-preview+json", options);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), null, options);
             }
 
             [Fact]
@@ -106,7 +106,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository("fake", "repo");
 
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), null, "application/vnd.github.starfox-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository(1);
 
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), null, "application/vnd.github.starfox-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -135,7 +135,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository("fake", "repo", options);
 
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), null, "application/vnd.github.starfox-preview+json", options);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), null, options);
             }
 
             [Fact]
@@ -153,7 +153,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForRepository(1, options);
 
-                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), null, "application/vnd.github.starfox-preview+json", options);
+                connection.Received().GetAll<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), null, options);
             }
 
             [Fact]
@@ -186,7 +186,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("fake", "repo", 42);
 
-                connection.Received().Get<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events/42"), null, "application/vnd.github.starfox-preview+json");
+                connection.Received().Get<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events/42"), null);
             }
 
             [Fact]
@@ -197,7 +197,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get(1, 42);
 
-                connection.Received().Get<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events/42"), null, "application/vnd.github.starfox-preview+json");
+                connection.Received().Get<IssueEvent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events/42"), null);
             }
 
             [Fact]

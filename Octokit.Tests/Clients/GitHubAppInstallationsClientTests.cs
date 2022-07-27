@@ -30,7 +30,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<RepositoriesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "installation/repositories"),
                     null,
-                    "application/vnd.github.machine-man-preview+json",
                     Args.ApiOptions);
             }
 
@@ -52,7 +51,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<RepositoriesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "installation/repositories"),
                     null,
-                    "application/vnd.github.machine-man-preview+json",
                     options);
             }
         }
@@ -70,7 +68,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<RepositoriesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"),
                     null,
-                    "application/vnd.github.machine-man-preview+json",
                     Args.ApiOptions);
             }
 
@@ -92,7 +89,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<RepositoriesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"),
                     null,
-                    "application/vnd.github.machine-man-preview+json",
                     options);
             }
         }

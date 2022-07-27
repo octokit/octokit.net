@@ -597,7 +597,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllPendingInvitations("org");
 
-                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -612,7 +612,7 @@ namespace Octokit.Tests.Clients
                 };
                 client.GetAllPendingInvitations("org", options);
 
-                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, "application/vnd.github.korra-preview+json", options);
+                connection.Received().GetAll<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), null, options);
             }
 
             [Fact]

@@ -399,8 +399,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
-                    Args.EmptyDictionary,
-                    "application/vnd.github.korra-preview+json");
+                    Args.EmptyDictionary);
             }
 
             [Fact]
@@ -419,8 +418,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received().GetAndFlattenAllPages<OrganizationMembershipInvitation>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 2),
-                    "application/vnd.github.korra-preview+json");
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]

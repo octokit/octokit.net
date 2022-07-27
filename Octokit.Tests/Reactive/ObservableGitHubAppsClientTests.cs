@@ -87,7 +87,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<Installation>>(
                     Arg.Is<Uri>(u => u.ToString() == "app/installations"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.machine-man-preview+json");
+                    null);
             }
 
             [Fact]
@@ -109,7 +109,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 1
                             && x["per_page"] == "1"),
-                    "application/vnd.github.machine-man-preview+json");
+                    null);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<List<InstallationsResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "user/installations"),
                     null,
-                    "application/vnd.github.machine-man-preview+json");
+                    null);
             }
 
             [Fact]
@@ -163,7 +163,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 1
                             && x["per_page"] == "1"),
-                    "application/vnd.github.machine-man-preview+json");
+                    null);
             }
         }
 

@@ -336,7 +336,7 @@ namespace Octokit.Tests.Integration
             {
                 foreach (var invitee in invitees)
                 {
-                    connection.Delete(new Uri($"orgs/{Organization}/memberships/{invitee}", UriKind.Relative), null).Wait(TimeSpan.FromSeconds(15));
+                    connection.Delete(new Uri($"orgs/{Organization}/memberships/{invitee}", UriKind.Relative)).Wait(TimeSpan.FromSeconds(15));
                 }
             }
             catch { }
