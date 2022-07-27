@@ -754,6 +754,32 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Gets the list of errors in the codeowners file
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns the list of errors in the codeowners files</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/codeowners/errors")]
+        public IObservable<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.GetAllCodeOwnersErrors(owner, name).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets the list of errors in the codeowners file
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns the list of errors in the codeowners files</returns>
+        [ManualRoute("GET", "/repositories/{id}/codeowners/errors")]
+        public IObservable<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId)
+        {
+            return _client.GetAllCodeOwnersErrors(repositoryId).ToObservable();
+        }
+
+        /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>

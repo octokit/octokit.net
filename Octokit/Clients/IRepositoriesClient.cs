@@ -714,5 +714,21 @@ namespace Octokit
         /// <returns>All topics now associated with the repository.</returns>
         Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics);
 
+        /// <summary>
+        /// Gets the list of errors in the codeowners file
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>Returns the list of errors in the codeowners files</returns>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/codeowners/errors")]
+        Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name);
+
+        /// <summary>
+        /// Gets the list of errors in the codeowners file
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>Returns the list of errors in the codeowners files</returns>
+        [ManualRoute("GET", "/repositories/{id}/codeowners/errors")]
+        Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId);
     }
 }
