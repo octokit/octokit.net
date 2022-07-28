@@ -33,8 +33,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<ProjectColumn>>(
                     Arg.Is<Uri>(u => u.ToString() == "projects/1/columns"),
-                    Args.EmptyDictionary,
-                    null);
+                    Args.EmptyDictionary);
             }
 
             [Fact]

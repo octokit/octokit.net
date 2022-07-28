@@ -31,8 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"),
-                    Args.EmptyDictionary,
-                    null);
+                    Args.EmptyDictionary);
             }
 
             [Fact]
@@ -52,8 +51,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2),
-                    null);
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -87,8 +85,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"),
-                    Args.EmptyDictionary,
-                    null);
+                    Args.EmptyDictionary);
             }
 
             [Fact]
@@ -108,8 +105,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2),
-                    null);
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -122,8 +118,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"),
-                    Args.EmptyDictionary,
-                    null);
+                    Args.EmptyDictionary);
             }
 
             [Fact]
@@ -143,8 +138,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2),
-                    null);
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
             }
         }
 

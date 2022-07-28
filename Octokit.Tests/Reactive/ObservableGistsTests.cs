@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll();
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -59,7 +59,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll(options);
 
                 gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"),
-                                  DictionaryWithApiOptions, null);
+                                  DictionaryWithApiOptions);
             }
 
             [Fact]
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Reactive
                 var since = DateTimeOffset.Now;
                 client.GetAll(since);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"), DictionaryWithSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"), DictionaryWithSince);
             }
 
             [Fact]
@@ -89,8 +89,7 @@ namespace Octokit.Tests.Reactive
                 var since = DateTimeOffset.Now;
                 client.GetAll(since, options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"),
-                     DictionaryWithApiOptionsAndSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists"), DictionaryWithApiOptionsAndSince);
             }
 
             [Fact]
@@ -113,7 +112,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllPublic();
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -130,8 +129,7 @@ namespace Octokit.Tests.Reactive
                 };
                 client.GetAllPublic(options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                                  DictionaryWithApiOptions, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), DictionaryWithApiOptions);
             }
 
             [Fact]
@@ -143,7 +141,7 @@ namespace Octokit.Tests.Reactive
                 var since = DateTimeOffset.Now;
                 client.GetAllPublic(since);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), DictionaryWithSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), DictionaryWithSince);
             }
 
             [Fact]
@@ -161,8 +159,7 @@ namespace Octokit.Tests.Reactive
                 var since = DateTimeOffset.Now;
                 client.GetAllPublic(since, options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"),
-                     DictionaryWithApiOptionsAndSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/public"), DictionaryWithApiOptionsAndSince);
             }
 
             [Fact]
@@ -185,7 +182,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStarred();
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -202,8 +199,7 @@ namespace Octokit.Tests.Reactive
                 };
                 client.GetAllStarred(options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                                  DictionaryWithApiOptions, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), DictionaryWithApiOptions);
             }
 
             [Fact]
@@ -215,7 +211,7 @@ namespace Octokit.Tests.Reactive
                 var since = DateTimeOffset.Now;
                 client.GetAllStarred(since);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), DictionaryWithSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), DictionaryWithSince);
             }
 
             [Fact]
@@ -233,8 +229,7 @@ namespace Octokit.Tests.Reactive
                 var since = DateTimeOffset.Now;
                 client.GetAllStarred(since, options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"),
-                     DictionaryWithApiOptionsAndSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "gists/starred"), DictionaryWithApiOptionsAndSince);
             }
 
             [Fact]
@@ -257,7 +252,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUser("samthedev");
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -274,8 +269,7 @@ namespace Octokit.Tests.Reactive
                 };
                 client.GetAllForUser("samthedev", options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"),
-                                  DictionaryWithApiOptions, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), DictionaryWithApiOptions);
             }
 
             [Fact]
@@ -288,7 +282,7 @@ namespace Octokit.Tests.Reactive
                 var user = "samthedev";
                 client.GetAllForUser(user, since);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), DictionaryWithSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), DictionaryWithSince);
             }
 
             [Fact]
@@ -307,8 +301,7 @@ namespace Octokit.Tests.Reactive
                 var user = "samthedev";
                 client.GetAllForUser(user, since, options);
 
-                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"),
-                     DictionaryWithApiOptionsAndSince, null);
+                gitHubClient.Connection.Received(1).Get<List<Gist>>(Arg.Is<Uri>(u => u.ToString() == "users/samthedev/gists"), DictionaryWithApiOptionsAndSince);
             }
 
             [Fact]
@@ -335,7 +328,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllCommits("id");
 
-                gitHubClient.Connection.Received(1).Get<List<GistHistory>>(Arg.Is<Uri>(u => u.ToString() == "gists/id/commits"), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<GistHistory>>(Arg.Is<Uri>(u => u.ToString() == "gists/id/commits"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -352,8 +345,7 @@ namespace Octokit.Tests.Reactive
                 };
                 client.GetAllCommits("id", options);
 
-                gitHubClient.Connection.Received(1).Get<List<GistHistory>>(Arg.Is<Uri>(u => u.ToString() == "gists/id/commits"),
-                                  DictionaryWithApiOptions, null);
+                gitHubClient.Connection.Received(1).Get<List<GistHistory>>(Arg.Is<Uri>(u => u.ToString() == "gists/id/commits"), DictionaryWithApiOptions);
             }
 
 
@@ -379,7 +371,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForks("id");
 
-                gitHubClient.Connection.Received(1).Get<List<GistFork>>(new Uri("gists/id/forks", UriKind.Relative), Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<GistFork>>(new Uri("gists/id/forks", UriKind.Relative), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -396,8 +388,7 @@ namespace Octokit.Tests.Reactive
                 };
                 client.GetAllForks("id", options);
 
-                gitHubClient.Connection.Received(1).Get<List<GistFork>>(new Uri("gists/id/forks", UriKind.Relative),
-                                  DictionaryWithApiOptions, null);
+                gitHubClient.Connection.Received(1).Get<List<GistFork>>(new Uri("gists/id/forks", UriKind.Relative), DictionaryWithApiOptions);
             }
 
 

@@ -22,13 +22,14 @@ namespace Octokit.Tests.Http
                 var getUri = new Uri("anything", UriKind.Relative);
                 IApiResponse<object> response = new ApiResponse<object>(CreateResponse(HttpStatusCode.OK));
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Args.Uri, null, null).Returns(Task.FromResult(response));
+                connection.Get<object>(Args.Uri, null).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri);
 
                 Assert.Same(response.Body, data);
-                connection.Received().GetResponse<object>(getUri);
+                var calls = connection.ReceivedCalls();
+                connection.Received().Get<object>(getUri, null, null);
             }
 
             [Fact]

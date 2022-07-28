@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options)
         {
-            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, options);
+            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), options);
         }
 
         /// <summary>
