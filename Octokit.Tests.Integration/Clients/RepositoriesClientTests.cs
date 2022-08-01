@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -405,44 +406,6 @@ public class RepositoriesClientTests
                 Assert.Equal(repoName, thrown.RepositoryName);
                 Assert.Equal(message, thrown.Message);
                 Assert.False(thrown.OwnerIsOrganization);
-            }
-        }
-
-        [PaidAccountTest(Skip = "Paid plans now have unlimited repositories. We shouldn't test this now.")]
-        public async Task ThrowsPrivateRepositoryQuotaExceededExceptionWhenOverQuota()
-        {
-            var github = Helper.GetAuthenticatedClient();
-
-            var userDetails = await github.User.Current();
-            var freePrivateSlots = userDetails.Plan.PrivateRepos - userDetails.OwnedPrivateRepos;
-
-            if (userDetails.Plan.PrivateRepos == 0)
-            {
-                throw new Exception("Test cannot complete, account is on free plan");
-            }
-
-            var createRepoTasks =
-                Enumerable.Range(0, (int)freePrivateSlots)
-                .Select(x =>
-                {
-                    var repoName = Helper.MakeNameWithTimestamp("private-repo-" + x);
-                    var repository = new NewRepository(repoName) { Private = true };
-                    return github.Repository.Create(repository);
-                });
-
-            var createdRepositories = await Task.WhenAll(createRepoTasks);
-
-            try
-            {
-                await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
-                    () => github.Repository.Create(new NewRepository("x-private") { Private = true }));
-            }
-            finally
-            {
-                var deleteRepos = createdRepositories
-                    .Select(repo => github.Repository.Delete(repo.Owner.Login, repo.Name));
-
-                Task.WhenAll(deleteRepos).Wait();
             }
         }
     }
@@ -2102,6 +2065,7 @@ public class RepositoriesClientTests
     public class TheGetLicenseContentsMethod
     {
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsLicenseContent()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -2114,6 +2078,7 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
+        [PotentiallyFlakyTest]
         public async Task ReturnsLicenseContentWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -2123,6 +2088,39 @@ public class RepositoriesClientTests
             Assert.NotNull(license.License);
             Assert.Equal("mit", license.License.Key);
             Assert.Equal("MIT License", license.License.Name);
+        }
+    }
+
+    public class TheGetCodeOwnersErrorsMethod : GitHubClientTestBase
+    {
+        [IntegrationTest]
+        public async Task ReturnsCodeOwnersErrors()
+        {
+            using (var repoContext = await _github.CreateUserRepositoryContext())
+            {
+                await _github.Repository.Content.CreateFile(repoContext.RepositoryOwner, repoContext.RepositoryName, ".github/codeowners", new CreateFileRequest("Create codeowners", @"* snyrting6@hotmail.com"));
+                
+                // Sometimes it takes a second to create the file
+                Thread.Sleep(TimeSpan.FromSeconds(2));
+                
+                var license = await _github.Repository.GetAllCodeOwnersErrors(repoContext.RepositoryOwner, repoContext.RepositoryName);
+                Assert.NotEmpty(license.Errors);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCodeOwnersErrorsWithRepositoryId()
+        {
+            using (var repoContext = await _github.CreateUserRepositoryContext())
+            {
+                await _github.Repository.Content.CreateFile(repoContext.RepositoryId, ".github/codeowners", new CreateFileRequest("Create codeowners", @"* snyrting6@hotmail.com"));
+
+                // Sometimes it takes a second to create the file
+                Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                var license = await _github.Repository.GetAllCodeOwnersErrors(repoContext.RepositoryId);
+                Assert.NotEmpty(license.Errors);
+            }
         }
     }
 

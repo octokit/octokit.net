@@ -1996,6 +1996,27 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for repository codeowners errors.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>the <see cref="Uri"/> for repository topics.</returns>
+        public static Uri RepositoryCodeOwnersErrors(string owner, string name)
+        {
+            return "repos/{0}/{1}/codeowners/errors".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for repository codeowners errors.
+        /// </summary>
+        /// <param name="repositoryId">The ID of the repository</param>
+        /// <returns>the <see cref="Uri"/> for repository topics.</returns>
+        public static Uri RepositoryCodeOwnersErrors(long repositoryId)
+        {
+            return "repositories/{0}/codeowners/errors".FormatUri(repositoryId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for repository contributors.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
