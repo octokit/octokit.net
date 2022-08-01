@@ -57,7 +57,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.RepositoryProjects(owner, name);
 
-            return _connection.GetAndFlattenAllPages<Project>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Project>(url, new Dictionary<string, string>(), options);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.RepositoryProjects(owner, name);
 
-            return _connection.GetAndFlattenAllPages<Project>(url, request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Project>(url, request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.RepositoryProjects(repositoryId);
 
-            return _connection.GetAndFlattenAllPages<Project>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Project>(url, new Dictionary<string, string>(), options);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.RepositoryProjects(repositoryId);
 
-            return _connection.GetAndFlattenAllPages<Project>(url, request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Project>(url, request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.OrganizationProjects(organization);
 
-            return _connection.GetAndFlattenAllPages<Project>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Project>(url, new Dictionary<string, string>(), options);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.OrganizationProjects(organization);
 
-            return _connection.GetAndFlattenAllPages<Project>(url, request.ToParametersDictionary(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Project>(url, request.ToParametersDictionary(), options);
         }
 
         /// <summary>

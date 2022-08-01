@@ -99,7 +99,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps();
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null, "application/vnd.github.v3.star+json", Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, Args.ApiOptions);
             }
 
             [Fact]
@@ -118,7 +118,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps(options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null, "application/vnd.github.v3.star+json", options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, options);
             }
 
             [Fact]
@@ -132,8 +132,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps(request);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"),
-                    "application/vnd.github.v3.star+json", Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Args.ApiOptions);
             }
 
             [Fact]
@@ -154,8 +153,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps(request, options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"),
-                    "application/vnd.github.v3.star+json", options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), options);
             }
 
             [Fact]
@@ -252,8 +250,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana");
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null,
-                    "application/vnd.github.v3.star+json", Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, Args.ApiOptions);
             }
 
             [Fact]
@@ -272,7 +269,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana", options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null, "application/vnd.github.v3.star+json", options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, options);
             }
 
             [Fact]
@@ -286,8 +283,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana", starredRequest);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"),
-                    "application/vnd.github.v3.star+json", Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Args.ApiOptions);
             }
 
             [Fact]
@@ -308,8 +304,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana", starredRequest, options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"),
-                    "application/vnd.github.v3.star+json", options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), options);
             }
 
             [Fact]
@@ -417,7 +412,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps("fake", "repo");
 
-                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", Args.ApiOptions);
+                connection.Received().GetAll<UserStar>(endpoint, null, Args.ApiOptions);
             }
 
             [Fact]
@@ -429,7 +424,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps(1);
 
-                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", Args.ApiOptions);
+                connection.Received().GetAll<UserStar>(endpoint, null, Args.ApiOptions);
             }
 
             [Fact]
@@ -448,7 +443,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps("fake", "repo", options);
 
-                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", options);
+                connection.Received().GetAll<UserStar>(endpoint, null, options);
             }
 
             [Fact]
@@ -467,7 +462,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps(1, options);
 
-                connection.Received().GetAll<UserStar>(endpoint, null, "application/vnd.github.v3.star+json", options);
+                connection.Received().GetAll<UserStar>(endpoint, null, options);
             }
 
             [Fact]

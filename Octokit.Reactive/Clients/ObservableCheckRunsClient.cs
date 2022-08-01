@@ -184,7 +184,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForReference(owner, name, reference), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForReference(owner, name, reference), checkRunRequest.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForReference(repositoryId, reference), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForReference(repositoryId, reference), checkRunRequest.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(owner, name, checkSuiteId), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(owner, name, checkSuiteId), checkRunRequest.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(repositoryId, checkSuiteId), checkRunRequest.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckRunsResponse>(ApiUrls.CheckRunsForCheckSuite(repositoryId, checkSuiteId), checkRunRequest.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(owner, name, checkRunId), null, options);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, options);
         }
     }
 }

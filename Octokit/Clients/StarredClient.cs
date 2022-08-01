@@ -117,7 +117,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarCreationTimestamps, options);
+            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(owner, name), null, options);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(repositoryId), null, AcceptHeaders.StarCreationTimestamps, options);
+            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(repositoryId), null, options);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.Starred(), null, AcceptHeaders.StarCreationTimestamps, options);
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.Starred(), null, options);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.StarredByUser(user), null, AcceptHeaders.StarCreationTimestamps, options);
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.StarredByUser(user), null, options);
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
+            return ApiConnection.GetAll<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

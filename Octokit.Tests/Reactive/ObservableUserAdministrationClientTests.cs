@@ -144,7 +144,6 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received().Get<System.Collections.Generic.List<PublicKey>>(
                     Arg.Is<Uri>(a =>
                         a.ToString() == expectedUri),
-                    null,
                     null);
             }
         }

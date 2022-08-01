@@ -25,7 +25,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/assignees"),
                     null,
-                    AcceptHeaders.StableVersion,
                     Args.ApiOptions);
             }
 
@@ -40,7 +39,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees"),
                     null,
-                    AcceptHeaders.StableVersion,
                     Args.ApiOptions);
             }
 
@@ -62,7 +60,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/assignees"),
                     null,
-                    AcceptHeaders.StableVersion,
                     options);
             }
 
@@ -84,7 +81,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<User>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees"),
                     null,
-                    AcceptHeaders.StableVersion,
                     options);
             }
 

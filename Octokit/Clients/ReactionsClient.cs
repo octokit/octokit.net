@@ -56,12 +56,11 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#delete-a-reaction</remarks>
         /// <param name="number">The reaction id</param>
         /// <returns></returns>
-        [Preview("squirrel-girl")]
         [ManualRoute("DELETE", "/reactions/{reaction_id}")]
         [Obsolete("This route no longer works and is replaced with individual routes in each client")]
         public Task Delete(int number)
         {
-            return ApiConnection.Delete(ApiUrls.Reactions(number), new object(), AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Delete(ApiUrls.Reactions(number), new object());
         }
     }
 }

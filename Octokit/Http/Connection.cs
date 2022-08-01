@@ -172,6 +172,13 @@ namespace Octokit
         }
         private ApiInfo _lastApiInfo;
 
+        public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, null, null, CancellationToken.None);
+        }
+
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));

@@ -59,9 +59,7 @@ public class DeploymentsClientTests
             await client.GetAll(owner, name);
 
             connection.Received(1)
-                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), null,
-                                    "application/vnd.github.ant-man-preview+json",
-                                    Args.ApiOptions);
+                .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl), null, Args.ApiOptions);
         }
 
         [Fact]
@@ -97,7 +95,6 @@ public class DeploymentsClientTests
             connection.Received(1)
                 .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                     null,
-                                    "application/vnd.github.ant-man-preview+json",
                                     options);
         }
 
@@ -133,7 +130,6 @@ public class DeploymentsClientTests
             connection.Received(1)
                 .GetAll<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
                                     Arg.Any<IDictionary<string, string>>(),
-                                    "application/vnd.github.ant-man-preview+json",
                                     Args.ApiOptions);
         }
     }
@@ -185,8 +181,7 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                    newDeployment,
-                                                    "application/vnd.github.ant-man-preview+json");
+                                                    newDeployment);
         }
 
         [Fact]
@@ -211,8 +206,7 @@ public class DeploymentsClientTests
             client.Create("owner", "name", newDeployment);
 
             connection.Received(1).Post<Deployment>(Arg.Any<Uri>(),
-                                                    Arg.Any<NewDeployment>(),
-                                                    "application/vnd.github.ant-man-preview+json");
+                                                    Arg.Any<NewDeployment>());
         }
     }
 

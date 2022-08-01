@@ -9,6 +9,8 @@ namespace Octokit.Tests.Helpers
         public static IApiConnection PostReturnsHttpStatus(HttpStatusCode status)
         {
             var connection = Substitute.For<IConnection>();
+            connection.Post(Arg.Any<Uri>())
+                .Returns(status);
             connection.Post(Arg.Any<Uri>(), Arg.Any<object>(), Arg.Any<string>())
                 .Returns(status);
 

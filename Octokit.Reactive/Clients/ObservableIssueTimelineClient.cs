@@ -53,7 +53,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
+            return _connection.GetAndFlattenAllPages<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number), null, options);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, AcceptHeaders.IssueTimelineApiPreview, options);
+            return _connection.GetAndFlattenAllPages<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, options);
         }
     }
 }

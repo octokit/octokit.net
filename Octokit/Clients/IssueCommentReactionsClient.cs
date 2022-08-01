@@ -24,7 +24,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/issues/comments/{number}/reactions")]
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
@@ -32,7 +31,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), reaction);
         }
 
         /// <summary>
@@ -42,13 +41,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repositories/{0}/issues/comments/{number}/reactions")]
         public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), reaction, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Post<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), reaction);
         }
 
         /// <summary>
@@ -72,7 +70,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/issues/comments/{number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
         {
@@ -80,7 +77,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(owner, name, number), null, options);
         }
 
         /// <summary>
@@ -102,13 +99,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{0}/issues/comments/{number}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueCommentReactions(repositoryId, number), null, options);
         }
 
         /// <summary>

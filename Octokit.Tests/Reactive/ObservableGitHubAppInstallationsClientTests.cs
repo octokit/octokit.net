@@ -32,8 +32,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<List<RepositoriesResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "installation/repositories"),
-                    Args.EmptyDictionary,
-                    "application/vnd.github.machine-man-preview+json");
+                    Args.EmptyDictionary);
             }
 
             [Fact]
@@ -54,8 +53,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "installation/repositories"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 1
-                            && x["per_page"] == "1"),
-                    "application/vnd.github.machine-man-preview+json");
+                            && x["per_page"] == "1"));
             }
         }
 
@@ -72,12 +70,11 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<List<RepositoriesResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"),
-                    Args.EmptyDictionary,
-                    "application/vnd.github.machine-man-preview+json");
+                    Args.EmptyDictionary);
             }
 
             [Fact]
-            public void GetsFromCorrectUrllWithApiOptions()
+            public void GetsFromCorrectUrlWithApiOptions()
             {
                 var connection = Substitute.For<IConnection>();
                 var gitHubClient = new GitHubClient(connection);
@@ -94,8 +91,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "user/installations/1234/repositories"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 1
-                            && x["per_page"] == "1"),
-                    "application/vnd.github.machine-man-preview+json");
+                            && x["per_page"] == "1"));
             }
         }
     }

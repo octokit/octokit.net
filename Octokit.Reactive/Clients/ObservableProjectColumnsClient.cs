@@ -44,7 +44,7 @@ namespace Octokit.Reactive
 
             var url = ApiUrls.ProjectColumns(projectId);
 
-            return _connection.GetAndFlattenAllPages<ProjectColumn>(url, new Dictionary<string, string>(), AcceptHeaders.ProjectsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<ProjectColumn>(url, new Dictionary<string, string>(), options);
         }
 
         /// <summary>

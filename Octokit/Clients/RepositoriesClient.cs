@@ -50,7 +50,6 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
-        [Preview("nebula")]
         [ManualRoute("POST", "/user/repos")]
         public Task<Repository> Create(NewRepository newRepository)
         {
@@ -69,8 +68,6 @@ namespace Octokit
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
-        [Preview("nebula")]
-        [Preview("baptiste")]
         [ManualRoute("POST", "/orgs/{org}/repos")]
         public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
         {
@@ -89,7 +86,6 @@ namespace Octokit
         /// <param name="templateRepo">The name of template repository to work from</param>
         /// <param name="newRepository"></param>
         /// <returns></returns>
-        [Preview("baptiste")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/generate")]
         public Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository)
         {
@@ -99,14 +95,14 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.Repositories(templateOwner, templateRepo), newRepository, AcceptHeaders.TemplatePreview);
+            return ApiConnection.Post<Repository>(ApiUrls.Repositories(templateOwner, templateRepo), newRepository);
         }
 
         async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
         {
             try
             {
-                return await ApiConnection.Post<Repository>(url, newRepository, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview)).ConfigureAwait(false);
+                return await ApiConnection.Post<Repository>(url, newRepository).ConfigureAwait(false);
             }
             catch (ApiValidationException e)
             {
@@ -184,7 +180,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
-        [Preview("mercy")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/transfer")]
         public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
         {
@@ -204,7 +199,6 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
-        [Preview("mercy")]
         [ManualRoute("POST", "/repositories/{id}/transfer")]
         public Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
         {
@@ -246,8 +240,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        [Preview("nebula")]
-        [Preview("baptiste")]
         [ManualRoute("PATCH", "/repos/{owner}/{repo}")]
         public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
         {
@@ -255,7 +247,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview));
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
         }
 
         /// <summary>
@@ -264,7 +256,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        [Preview("mercy")]
         [ManualRoute("PATCH", "/repositories/{id}")]
         public Task<Repository> Edit(long repositoryId, RepositoryUpdate update)
         {
@@ -283,14 +274,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
-        [Preview("nebula")]
         [ManualRoute("GET", "/repos/{owner}/{repo}")]
         public Task<Repository> Get(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, AcceptHeaders.VisibilityPreview);
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null);
         }
 
         /// <summary>
@@ -302,7 +292,6 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
-        [Preview("mercy")]
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId)
         {
@@ -356,8 +345,6 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
-        [Preview("nebula")]
-        [Preview("baptiste")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent()
         {
@@ -374,14 +361,12 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
-        [Preview("nebula")]
-        [Preview("baptiste")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, options);
         }
 
         /// <summary>
@@ -395,7 +380,6 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
-        [Preview("nebula")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request)
         {
@@ -416,14 +400,13 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
-        [Preview("nebula")]
         [ManualRoute("GET", "/user/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), AcceptHeaders.VisibilityPreview, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -472,8 +455,6 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
-        [Preview("nebula")]
-        [Preview("baptiste")]
         [ManualRoute("GET", "/orgs/{org}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
         {
@@ -492,15 +473,13 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
-        [Preview("nebula")]
-        [Preview("baptiste")]
         [ManualRoute("GET", "/orgs/{org}/repos")]
         public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, AcceptHeaders.Concat(AcceptHeaders.VisibilityPreview, AcceptHeaders.TemplatePreview), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, options);
         }
 
         /// <summary>
@@ -780,7 +759,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
-            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -818,7 +797,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -859,7 +838,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -881,7 +860,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
-            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null, AcceptHeaders.RepositoryTopicsPreview).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }

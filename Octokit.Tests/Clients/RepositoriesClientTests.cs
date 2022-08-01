@@ -44,8 +44,7 @@ namespace Octokit.Tests.Clients
                 client.Create(new NewRepository("aName"));
 
                 connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"),
-                    Arg.Any<NewRepository>(),
-                    "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json");
+                    Arg.Any<NewRepository>());
             }
 
             [Fact]
@@ -57,7 +56,7 @@ namespace Octokit.Tests.Clients
 
                 client.Create(newRepository);
 
-                connection.Received().Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json");
+                connection.Received().Post<Repository>(Args.Uri, newRepository);
             }
 
             [Fact]
@@ -73,7 +72,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
                 connection.Connection.Credentials.Returns(credentials);
-                connection.Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json")
+                connection.Post<Repository>(Args.Uri, newRepository)
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
@@ -85,6 +84,8 @@ namespace Octokit.Tests.Clients
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Null(exception.ExistingRepositoryWebUrl);
             }
+
+
         }
 
         public class TheCreateMethodForOrganization
@@ -108,8 +109,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<Repository>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/theLogin/repos"),
-                    Args.NewRepository,
-                    "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json");
+                    Args.NewRepository);
             }
 
             [Fact]
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Create("aLogin", newRepository);
 
-                connection.Received().Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json");
+                connection.Received().Post<Repository>(Args.Uri, newRepository);
             }
 
             [Fact]
@@ -135,7 +135,7 @@ namespace Octokit.Tests.Clients
                     + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
                 var connection = Substitute.For<IApiConnection>();
                 connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
-                connection.Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json")
+                connection.Post<Repository>(Args.Uri, newRepository)
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
@@ -160,7 +160,7 @@ namespace Octokit.Tests.Clients
                     + @"""http://developer.github.com/v3/repos/#create"",""errors"":[]}");
                 var connection = Substitute.For<IApiConnection>();
                 connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
-                connection.Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json")
+                connection.Post<Repository>(Args.Uri, newRepository)
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
@@ -181,7 +181,7 @@ namespace Octokit.Tests.Clients
                     + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
                 var connection = Substitute.For<IApiConnection>();
                 connection.Connection.BaseAddress.Returns(new Uri("https://example.com"));
-                connection.Post<Repository>(Args.Uri, newRepository, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json")
+                connection.Post<Repository>(Args.Uri, newRepository)
                     .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
                 var client = new RepositoriesClient(connection);
 
@@ -214,8 +214,7 @@ namespace Octokit.Tests.Clients
                 client.Generate("asd", "asd", new NewRepositoryFromTemplate("aName"));
 
                 connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/asd/asd/generate"),
-                    Arg.Any<NewRepositoryFromTemplate>(),
-                    "application/vnd.github.baptiste-preview+json");
+                    Arg.Any<NewRepositoryFromTemplate>());
             }
 
             [Fact]
@@ -227,7 +226,7 @@ namespace Octokit.Tests.Clients
 
                 client.Generate("anOwner", "aRepo", newRepository);
 
-                connection.Received().Post<Repository>(Args.Uri, newRepository, "application/vnd.github.baptiste-preview+json");
+                connection.Received().Post<Repository>(Args.Uri, newRepository);
             }
         }
 
@@ -472,8 +471,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
-                    null,
-                    "application/vnd.github.nebula-preview+json");
+                    null);
             }
 
             [Fact]
@@ -556,7 +554,6 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                     null,
-                    "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json",
                     Args.ApiOptions);
             }
 
@@ -577,7 +574,6 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d => d["type"] == "all"),
-                        "application/vnd.github.nebula-preview+json",
                         Args.ApiOptions);
             }
 
@@ -599,7 +595,6 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d => d["type"] == "private" && d["sort"] == "full_name"),
-                        "application/vnd.github.nebula-preview+json",
                         Args.ApiOptions);
             }
 
@@ -622,7 +617,6 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d => d["type"] == "member" && d["sort"] == "updated" && d["direction"] == "asc"),
-                        "application/vnd.github.nebula-preview+json",
                         Args.ApiOptions);
             }
 
@@ -643,7 +637,6 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d => d["visibility"] == "private"),
-                        "application/vnd.github.nebula-preview+json",
                         Args.ApiOptions);
             }
 
@@ -665,7 +658,6 @@ namespace Octokit.Tests.Clients
                     .GetAll<Repository>(
                         Arg.Is<Uri>(u => u.ToString() == "user/repos"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "owner" && d["sort"] == "full_name"),
-                        "application/vnd.github.nebula-preview+json",
                         Args.ApiOptions);
             }
         }
@@ -710,7 +702,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"), null, "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json", Args.ApiOptions);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -1046,42 +1038,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetCodeOwnersErrorsMethod
-        {
-            [Fact]
-            public async Task RequestsTheCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                await client.GetAllCodeOwnersErrors("owner", "name");
-
-                connection.Received()
-                    .Get<RepositoryCodeOwnersErrors>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/codeowners/errors"));
-            }
-
-            [Fact]
-            public async Task RequestsTheCorrectUrlWithRepositoryId()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new RepositoriesClient(connection);
-
-                await client.GetAllCodeOwnersErrors(1);
-
-                connection.Received()
-                    .Get<RepositoryCodeOwnersErrors>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/codeowners/errors"));
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCodeOwnersErrors(null, "repo"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllCodeOwnersErrors("owner", null));
-            }
-        }
-
         public class TheGetAllTagsMethod
         {
             [Fact]
@@ -1179,8 +1135,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received()
                     .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"),
-                    Arg.Any<RepositoryUpdate>(),
-                    "application/vnd.github.nebula-preview+json,application/vnd.github.baptiste-preview+json");
+                    Arg.Any<RepositoryUpdate>());
             }
 
             [Fact]
@@ -1350,7 +1305,7 @@ namespace Octokit.Tests.Clients
                 client.GetSha1("owner", "name", "reference");
 
                 connection.Received()
-                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, "application/vnd.github.v3.sha");
+                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null);
             }
         }
 
@@ -1383,7 +1338,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllTopics("owner", "name");
 
                 connection.Received()
-                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), null, "application/vnd.github.mercy-preview+json");
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), null);
             }
 
             [Fact]
@@ -1395,7 +1350,7 @@ namespace Octokit.Tests.Clients
                 client.GetAllTopics(1234);
 
                 connection.Received()
-                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), null, "application/vnd.github.mercy-preview+json");
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), null);
             }
         }
 
@@ -1434,7 +1389,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics("owner", "name", _emptyTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics, null, "application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics, null);
             }
 
             [Fact]
@@ -1443,7 +1398,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics("owner", "name", _listOfTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics, null, "application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics, null);
             }
 
             [Fact]
@@ -1452,7 +1407,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics(1234, _emptyTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics, null, "application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics, null);
             }
 
             [Fact]
@@ -1461,7 +1416,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics(1234, _listOfTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics, null, "application/vnd.github.mercy-preview+json");
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics, null);
             }
         }
     }

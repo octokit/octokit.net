@@ -503,7 +503,7 @@ namespace Octokit
         [ManualRoute("GET", "/teams/{team_id}/invitations")]
         public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id, ApiOptions options)
         {
-            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.TeamPendingInvitations(id), null, AcceptHeaders.OrganizationMembershipPreview, options);
+            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.TeamPendingInvitations(id), null, options);
         }
     }
 }
