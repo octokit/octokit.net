@@ -108,6 +108,7 @@ namespace Octokit
 
         public int StargazersCount { get; protected set; }
 
+        [Obsolete("WatchersCount returns the same data as StargazersCount. You are likely looking to use SubscribersCount. Update your code to use SubscribersCount, as this field will stop containing data in the future")]
         public int WatchersCount { get; protected set; }
 
         public string DefaultBranch { get; protected set; }
@@ -142,7 +143,6 @@ namespace Octokit
 
         public bool HasPages { get; protected set; }
 
-        [Obsolete("Update your code to use WatchersCount as this field will stop containing data in the future")]
         public int SubscribersCount { get; protected set; }
 
         public long Size { get; protected set; }
