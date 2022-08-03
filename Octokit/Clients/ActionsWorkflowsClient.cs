@@ -39,7 +39,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
-            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowFileName), createDispatch, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowFileName), createDispatch);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
-            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowId), createDispatch, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowId), createDispatch);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
 
-            return ApiConnection.Get<Workflow>(ApiUrls.ActionsGetWorkflow(owner, name, workflowFileName), null, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Get<Workflow>(ApiUrls.ActionsGetWorkflow(owner, name, workflowFileName), null);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Workflow>(ApiUrls.ActionsGetWorkflow(owner, name, workflowId), null, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Get<Workflow>(ApiUrls.ActionsGetWorkflow(owner, name, workflowId), null);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
 
-            return ApiConnection.Get<WorkflowUsage>(ApiUrls.ActionsGetWorkflowUsage(owner, name, workflowFileName), null, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Get<WorkflowUsage>(ApiUrls.ActionsGetWorkflowUsage(owner, name, workflowFileName), null);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<WorkflowUsage>(ApiUrls.ActionsGetWorkflowUsage(owner, name, workflowId), null, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Get<WorkflowUsage>(ApiUrls.ActionsGetWorkflowUsage(owner, name, workflowId), null);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<WorkflowsResponse>(ApiUrls.ActionsListWorkflows(owner, name), null, AcceptHeaders.StableVersionJson, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<WorkflowsResponse>(ApiUrls.ActionsListWorkflows(owner, name), null, options).ConfigureAwait(false);
 
             return new WorkflowsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,

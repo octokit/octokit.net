@@ -68,7 +68,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsWorkflowRuns(owner, name), workflowRunsRequest.ToParametersDictionary(), AcceptHeaders.StableVersionJson, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsWorkflowRuns(owner, name), workflowRunsRequest.ToParametersDictionary(), options).ConfigureAwait(false);
 
             return new WorkflowRunsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -90,7 +90,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRun(owner, name, runId), null, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRun(owner, name, runId), null);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<EnvironmentApprovals>(ApiUrls.ActionsWorkflowRunApprovals(owner, name, runId), null, AcceptHeaders.StableVersionJson, null);
+            return ApiConnection.GetAll<EnvironmentApprovals>(ApiUrls.ActionsWorkflowRunApprovals(owner, name, runId));
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRunAttempt(owner, name, runId, attemptNumber), null, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRunAttempt(owner, name, runId, attemptNumber), null);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<PendingDeployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId), null, AcceptHeaders.StableVersionJson, null);
+            return ApiConnection.GetAll<PendingDeployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId));
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(review, nameof(review));
 
-            return ApiConnection.Post<Deployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId), review, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Post<Deployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId), review);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<WorkflowRunUsage>(ApiUrls.ActionsGetWorkflowRunUsage(owner, name, runId), null, AcceptHeaders.StableVersionJson);
+            return ApiConnection.Get<WorkflowRunUsage>(ApiUrls.ActionsGetWorkflowRunUsage(owner, name, runId), null);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowId), workflowRunsRequest.ToParametersDictionary(), AcceptHeaders.StableVersionJson, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowId), workflowRunsRequest.ToParametersDictionary(), options).ConfigureAwait(false);
 
             return new WorkflowRunsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -463,7 +463,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowFileName), workflowRunsRequest.ToParametersDictionary(), AcceptHeaders.StableVersionJson, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowFileName), workflowRunsRequest.ToParametersDictionary(), options).ConfigureAwait(false);
 
             return new WorkflowRunsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,

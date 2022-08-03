@@ -43,8 +43,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<object>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/dispatches"),
-                    createDispatch,
-                    "application/vnd.github.v3+json");
+                    createDispatch);
             }
 
             [Fact]
@@ -59,8 +58,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<object>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml/dispatches"),
-                    createDispatch,
-                    "application/vnd.github.v3+json");
+                    createDispatch);
             }
 
             [Fact]
@@ -220,8 +218,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<Workflow>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123"),
-                    null,
-                    "application/vnd.github.v3+json");
+                    null);
             }
 
             [Fact]
@@ -234,8 +231,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<Workflow>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml"),
-                    null,
-                    "application/vnd.github.v3+json");
+                    null);
             }
 
             [Fact]
@@ -279,8 +275,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<WorkflowUsage>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/timing"),
-                    null,
-                    "application/vnd.github.v3+json");
+                    null);
             }
 
             [Fact]
@@ -293,8 +288,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<WorkflowUsage>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml/timing"),
-                    null,
-                    "application/vnd.github.v3+json");
+                    null);
             }
 
             [Fact]
@@ -339,7 +333,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<WorkflowsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows"),
                     null,
-                    "application/vnd.github.v3+json",
                     Args.ApiOptions);
             }
 
@@ -356,7 +349,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<WorkflowsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows"),
                     null,
-                    "application/vnd.github.v3+json",
                     options);
             }
 

@@ -171,8 +171,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<WorkflowRun>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123"),
-                    null,
-                    "application/vnd.github.v3+json");
+                    null);
             }
 
             [Fact]
@@ -274,8 +273,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<WorkflowRun>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456"),
-                    null,
-                    "application/vnd.github.v3+json");
+                    null);
             }
 
             [Fact]
@@ -376,10 +374,7 @@ namespace Octokit.Tests.Clients
                 await client.GetPendingDeployments("fake", "repo", 123);
 
                 connection.Received().GetAll<PendingDeployment>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
-                    null,
-                    "application/vnd.github.v3+json",
-                    null);
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"));
             }
 
             [Fact]
@@ -420,10 +415,7 @@ namespace Octokit.Tests.Clients
                 await client.GetReviewHistory("fake", "repo", 123);
 
                 connection.Received().GetAll<EnvironmentApprovals>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/approvals"),
-                    null,
-                    "application/vnd.github.v3+json",
-                    null);
+                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/approvals"));
             }
 
             [Fact]
@@ -465,8 +457,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<WorkflowRunUsage>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/timing"),
-                    null,
-                    "application/vnd.github.v3+json");
+                    null);
             }
 
             [Fact]
@@ -503,7 +494,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<WorkflowRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.v3+json",
                     Args.ApiOptions);
             }
 
@@ -538,7 +528,6 @@ namespace Octokit.Tests.Clients
                             && x["branch"] == "main"
                             && x["exclude_pull_requests"] == "true"
                             && x["status"] == "in_progress"),
-                    "application/vnd.github.v3+json",
                     Args.ApiOptions);
             }
 
@@ -560,7 +549,6 @@ namespace Octokit.Tests.Clients
                             && x["branch"] == "main"
                             && x["status"] == "in_progress"
                             && x["check_suite_id"] == "42"),
-                    "application/vnd.github.v3+json",
                     options);
             }
 
@@ -619,7 +607,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<WorkflowRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/runs"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.v3+json",
                     Args.ApiOptions);
             }
 
@@ -634,7 +621,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<WorkflowRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yml/runs"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.v3+json",
                     Args.ApiOptions);
             }
 
@@ -669,7 +655,6 @@ namespace Octokit.Tests.Clients
                             && x["branch"] == "main"
                             && x["exclude_pull_requests"] == "true"
                             && x["status"] == "in_progress"),
-                    "application/vnd.github.v3+json",
                     Args.ApiOptions);
             }
 
@@ -704,7 +689,6 @@ namespace Octokit.Tests.Clients
                             && x["branch"] == "main"
                             && x["exclude_pull_requests"] == "true"
                             && x["status"] == "in_progress"),
-                    "application/vnd.github.v3+json",
                     Args.ApiOptions);
             }
 
@@ -726,7 +710,6 @@ namespace Octokit.Tests.Clients
                             && x["branch"] == "main"
                             && x["status"] == "in_progress"
                             && x["check_suite_id"] == "42"),
-                    "application/vnd.github.v3+json",
                     options);
             }
 
@@ -748,7 +731,6 @@ namespace Octokit.Tests.Clients
                             && x["branch"] == "main"
                             && x["status"] == "in_progress"
                             && x["check_suite_id"] == "42"),
-                    "application/vnd.github.v3+json",
                     options);
             }
 
@@ -910,8 +892,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<Deployment>(
                     Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
-                    review,
-                    "application/vnd.github.v3+json");
+                    review);
             }
 
             [Fact]

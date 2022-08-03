@@ -383,7 +383,6 @@ namespace Octokit.Tests.Reactive
                 client.GetPendingDeployments("fake", "repo", 123);
 
                 connection.Connection.Received().Get<List<PendingDeployment>>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
-                    null,
                     null);
             }
 
@@ -419,7 +418,6 @@ namespace Octokit.Tests.Reactive
                 client.GetReviewHistory("fake", "repo", 123);
 
                 connection.Connection.Received().Get<List<EnvironmentApprovals>>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/approvals"),
-                    null,
                     null);
             }
 
