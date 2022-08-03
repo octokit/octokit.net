@@ -6,7 +6,7 @@
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>Octokit</AssemblyName>
     <PackageId>Octokit</PackageId>
     <DebugType>embedded</DebugType>
@@ -19,25 +19,11 @@
     <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+  <PropertyGroup>
     <DefineConstants>$(DefineConstants);HAS_TYPEINFO;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO</DefineConstants>
     <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <DefineConstants>$(DefineConstants);HAS_ENVIRONMENT;HAS_REGEX_COMPILED_OPTIONS;SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;HAS_SERVICEPOINTMANAGER</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <NoWarn>1591;1701;1702;1705</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Include="images\octokit.png" Pack="true" PackagePath="\" />

@@ -6,7 +6,7 @@
     <Authors>GitHub</Authors>
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AssemblyName>Octokit.Reactive</AssemblyName>
     <PackageId>Octokit.Reactive</PackageId>
     <DebugType>embedded</DebugType>
@@ -19,11 +19,8 @@
     <Copyright>Copyright GitHub 2017</Copyright>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
-  </PropertyGroup>
-
   <PropertyGroup>
+    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
     <NoWarn>1591;1701;1702;1705</NoWarn>
   </PropertyGroup>
 
@@ -44,11 +41,4 @@
     <PackageReference Include="System.Reactive" Version="4.4.1" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
-  </ItemGroup>
-
 </Project>
