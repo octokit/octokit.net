@@ -16,7 +16,7 @@ public sealed class Package : FrostingTask<Context>
             if (project.Publish)
             {
                 context.Information("Packing {0}...", project.Name);
-                context.DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings()
+                context.DotNetPack(project.Path.FullPath, new DotNetCorePackSettings()
                 {
                     Configuration = context.Configuration,
                     NoBuild = true,

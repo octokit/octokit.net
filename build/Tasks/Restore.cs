@@ -8,7 +8,7 @@ public sealed class Restore : FrostingTask<Context>
 {
     public override void Run(Context context)
     {
-        context.DotNetCoreRestore(".", new DotNetCoreRestoreSettings
+        context.DotNetRestore(".", new DotNetCoreRestoreSettings
         {
             ArgumentCustomization = args => args
                 .Append("/p:Version={0}", context.Version.GetSemanticVersion())

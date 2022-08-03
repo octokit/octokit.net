@@ -11,7 +11,7 @@ public sealed class ConventionTests : FrostingTask<Context>
         foreach (var project in context.Projects.Where(x => x.ConventionTests))
         {
             context.Information("Executing Convention Tests Project {0}...", project.Name);
-            context.DotNetCoreTest(project.Path.FullPath, context.GetTestSettings());
+            context.DotNetTest(project.Path.FullPath, context.GetTestSettings());
         }
     }
 }

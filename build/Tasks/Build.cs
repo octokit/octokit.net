@@ -9,7 +9,7 @@ public class Build : FrostingTask<Context>
 {
     public override void Run(Context context)
     {
-        context.DotNetCoreBuild("./Octokit.sln", new DotNetCoreBuildSettings
+        context.DotNetBuild("./Octokit.sln", new DotNetCoreBuildSettings
         {
             Configuration = context.Configuration,
             ArgumentCustomization = args => args

@@ -11,7 +11,7 @@ public sealed class UnitTests : FrostingTask<Context>
         foreach (var project in context.Projects.Where(x => x.UnitTests))
         {
             context.Information("Executing Unit Tests Project {0}...", project.Name);
-            context.DotNetCoreTest(project.Path.FullPath, context.GetTestSettings());
+            context.DotNetTest(project.Path.FullPath, context.GetTestSettings());
         }
     }
 }

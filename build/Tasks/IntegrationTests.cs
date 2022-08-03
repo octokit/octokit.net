@@ -12,7 +12,7 @@ public sealed class IntegrationTests : FrostingTask<Context>
         foreach (var project in context.Projects.Where(x => x.IntegrationTests))
         {
             context.Information("Executing Integration Tests Project {0}...", project.Name);
-            context.DotNetCoreTest(project.Path.FullPath, context.GetTestSettings());
+            context.DotNetTest(project.Path.FullPath, context.GetTestSettings());
         }
     }
 
