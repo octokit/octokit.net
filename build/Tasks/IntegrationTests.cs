@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Test;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Test;
 using Cake.Frosting;
 
 [IsDependentOn(typeof(Build))]
