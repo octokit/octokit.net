@@ -1,6 +1,6 @@
 using System.Linq;
 using Cake.Common.Diagnostics;
-using Cake.Common.Tool;
+using Cake.Common.Tools;
 using Cake.Frosting;
 
 [IsDependentOn(typeof(Build))]
