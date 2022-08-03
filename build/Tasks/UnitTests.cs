@@ -1,7 +1,8 @@
 using System.Linq;
+using Cake.Frosting;
 using Cake.Common.Diagnostics;
 using Cake.Common.Tools;
-using Cake.Frosting;
+using Cake.Common.Tools.DotNet;
 
 [IsDependentOn(typeof(Build))]
 public sealed class UnitTests : FrostingTask<Context>
