@@ -327,7 +327,7 @@ namespace Octokit
         Credentials Credentials { get; set; }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// Sets the timeout for the connection between the client and the server.
         /// </summary>
         /// <param name="timeout">The Timeout value</param>
         void SetRequestTimeout(TimeSpan timeout);

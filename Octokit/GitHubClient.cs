@@ -114,7 +114,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// Sets the timeout for the connection between the client and the server.
         /// Useful to set a specific timeout for lengthy operations, such as uploading release assets
         /// </summary>
         /// <remarks>
