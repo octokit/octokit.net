@@ -8,7 +8,7 @@ namespace Octokit.Models.Common
     public enum LockReason
     {
         // The issue or pull request was locked because the conversation was off-topic.
-        [Parameter(Value = "off_topic")]
+        [Parameter(Value = "off-topic")]
         OffTopic,
 
         // The issue or pull request was locked because the conversation was resolved.
@@ -20,7 +20,7 @@ namespace Octokit.Models.Common
         Spam,
 
         // The issue or pull request was locked because the conversation was too heated.
-        [Parameter(Value = "too_heated")]
+        [Parameter(Value = "too heated")]
         TooHeader
     }
 }
