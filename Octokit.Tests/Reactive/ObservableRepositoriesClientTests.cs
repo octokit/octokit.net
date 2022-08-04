@@ -846,7 +846,7 @@ namespace Octokit.Tests.Reactive
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate();
 
                 client.Edit("owner", "repo", update);
 
@@ -858,7 +858,7 @@ namespace Octokit.Tests.Reactive
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate();
 
                 client.Edit(1, update);
 
@@ -869,7 +869,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate();
 
                 Assert.Throws<ArgumentNullException>(() => client.Edit(null, "repo", update));
                 Assert.Throws<ArgumentNullException>(() => client.Edit("owner", null, update));

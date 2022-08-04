@@ -485,6 +485,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
+        /// <param name="reaction">The reaction id</param>
         /// <returns></returns>
         public static Uri IssueReaction(string owner, string name, int number, int reaction)
         {
@@ -496,6 +497,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
+        /// <param name="reaction">The reaction id</param>
         /// <returns></returns>
         public static Uri IssueReaction(long repositoryId, int number, int reaction)
         {
@@ -589,6 +591,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment number</param>
+        /// <param name="reaction">The reaction id</param>
         /// <returns></returns>
         public static Uri IssueCommentReaction(string owner, string name, int number, int reaction)
         {
@@ -600,6 +603,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="number">The comment number</param>
+        /// <param name="reaction">The reaction id</param>
         /// <returns></returns>
         public static Uri IssueCommentReaction(long repositoryId, int number, int reaction)
         {
@@ -1705,6 +1709,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment number</param>
+        /// <param name="reaction">The reaction id</param>
         /// <returns></returns>
         public static Uri PullRequestReviewCommentReaction(string owner, string name, int number, int reaction)
         {
@@ -1716,6 +1721,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment number</param>
+        /// <param name="reaction">The reaction id</param>
         /// <returns></returns>
         public static Uri PullRequestReviewCommentReaction(long repositoryId, int number, int reaction)
         {
