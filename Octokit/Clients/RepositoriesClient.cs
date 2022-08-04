@@ -838,7 +838,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -860,7 +860,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
-            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, null).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }

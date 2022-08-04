@@ -1389,7 +1389,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics("owner", "name", _emptyTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics, null);
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics);
             }
 
             [Fact]
@@ -1398,7 +1398,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics("owner", "name", _listOfTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics, null);
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics);
             }
 
             [Fact]
@@ -1407,7 +1407,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics(1234, _emptyTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics, null);
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics);
             }
 
             [Fact]
@@ -1416,7 +1416,7 @@ namespace Octokit.Tests.Clients
                 await _client.ReplaceAllTopics(1234, _listOfTopics);
 
                 _connection.Received()
-                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics, null);
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics);
             }
         }
     }
