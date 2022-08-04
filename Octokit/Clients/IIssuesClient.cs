@@ -331,6 +331,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
+        /// <param name="lockReason">The reason for locking the issue</param>
         Task Lock(long repositoryId, int number, LockReason? lockReason = null);
 
         /// <summary>
