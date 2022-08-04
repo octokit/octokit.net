@@ -208,7 +208,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateBranchProtection("owner", "repo", "branch", update);
 
                 connection.Received()
-                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), null);
+                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>());
             }
 
             [Fact]
@@ -222,7 +222,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateBranchProtection(1, "branch", update);
 
                 connection.Received()
-                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), null);
+                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>());
             }
 
             [Fact]
@@ -490,7 +490,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateRequiredStatusChecksContexts("owner", "repo", "branch", update);
 
                 connection.Received()
-                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), null);
+                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -503,7 +503,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateRequiredStatusChecksContexts(1, "branch", update);
 
                 connection.Received()
-                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), null);
+                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1057,8 +1057,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Put<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
-                    Arg.Any<IReadOnlyList<string>>(),
-                    null);
+                    Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1073,8 +1072,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Put<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
-                        Arg.Any<IReadOnlyList<string>>(),
-                        null);
+                        Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1264,7 +1262,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
 
                 connection.Received()
-                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), null);
+                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1277,7 +1275,7 @@ namespace Octokit.Tests.Clients
                 client.UpdateProtectedBranchUserRestrictions(1, "branch", newUsers);
 
                 connection.Received()
-                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), null);
+                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
