@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Octokit
 {
@@ -35,7 +37,18 @@ namespace Octokit
         /// <param name="since">The integer Id of the last Repository that you’ve seen.</param>
         public static Uri AllPublicRepositories(long since)
         {
-            return "repositories?since={0}".FormatUri(since);
+            string[] chars = new string[] { "since" };
+
+            var url = "repositories?since={since}";
+
+            var result = url.ReplaceAll(new Dictionary<string, string> { { nameof(since), since.ToString() } });
+
+            return result.FormatUri();
+        }
+
+        public static string ReplaceAll(this string seed, Dictionary<string, string> chars)
+        {
+            return chars.Aggregate(seed, (str, cItem) => str.Replace("{" + cItem.Key + "}", cItem.Value));
         }
 
         /// <summary>

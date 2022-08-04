@@ -110,15 +110,10 @@ namespace Octokit.Tests.Conventions
         {
             var typeInfo = type.GetTypeInfo();
 
-            var isReadOnlyList = typeInfo.HasGenericTypeDefinition(typeof(IReadOnlyList<>));
-            var isReadOnlyDictionary = typeInfo.HasGenericTypeDefinition(typeof(IReadOnlyDictionary<,>));
+            var isReadOnlyList = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
+            var isReadOnlyDictionary = type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyDictionary<,>);
 
             return isReadOnlyList || isReadOnlyDictionary;
-        }
-
-        private static bool HasGenericTypeDefinition(this TypeInfo type, Type genericTypeDefinition)
-        {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == genericTypeDefinition;
         }
     }
 
