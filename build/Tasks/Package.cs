@@ -1,6 +1,6 @@
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Pack;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Pack;
 using Cake.Core;
 using Cake.Frosting;
 
@@ -16,7 +16,7 @@ public sealed class Package : FrostingTask<Context>
             if (project.Publish)
             {
                 context.Information("Packing {0}...", project.Name);
-                context.DotNetCorePack(project.Path.FullPath, new DotNetCorePackSettings()
+                context.DotNetPack(project.Path.FullPath, new DotNetPackSettings()
                 {
                     Configuration = context.Configuration,
                     NoBuild = true,

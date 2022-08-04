@@ -17,17 +17,6 @@ namespace Octokit
         public RepositoryUpdate() { }
 
         /// <summary>
-        /// Creates an object that describes an update to a repository on GitHub.
-        /// </summary>
-        /// <param name="name">The name of the repository. This is the only required parameter.</param>
-        [Obsolete("Use the constructor with no parameters as name is no longer a required field")]
-        public RepositoryUpdate(string name)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-            Name = name;
-        }
-
-        /// <summary>
         /// Required. Gets or sets the repository name.
         /// </summary>
         public string Name { get; set; }

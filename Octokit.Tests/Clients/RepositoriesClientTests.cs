@@ -1129,7 +1129,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var update = new RepositoryUpdate("repo");
+                var update = new RepositoryUpdate() { Name= "repo" };
 
                 client.Edit("owner", "repo", update);
 
@@ -1143,7 +1143,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var update = new RepositoryUpdate("repo");
+                var update = new RepositoryUpdate() { Name= "repo" };
 
                 client.Edit(1, update);
 
@@ -1155,7 +1155,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate() { Name= "anyreponame" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(null, "repo", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("owner", null, update));

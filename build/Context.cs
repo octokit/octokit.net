@@ -1,6 +1,6 @@
 using Cake.Common;
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore.Test;
+using Cake.Common.Tools.DotNet.Test;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
@@ -28,9 +28,9 @@ public class Context : FrostingContext
 
     public FilePath GitVersionToolPath { get; set; }
 
-    public DotNetCoreTestSettings GetTestSettings()
+    public DotNetTestSettings GetTestSettings()
     {
-        var settings = new DotNetCoreTestSettings
+        var settings = new DotNetTestSettings
         {
             Configuration = Configuration,
             NoBuild = true

@@ -1,6 +1,6 @@
 ﻿using Cake.Common.IO;
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Tool;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Tool;
 using Cake.Common.Tools.NuGet;
 using Cake.Common.Tools.NuGet.Install;
 using Cake.Core;
@@ -8,7 +8,7 @@ using Cake.Core.IO;
 
 public static class ToolInstaller
 {
-    private static DirectoryPath ToolsPath { get; } = "./tools"; 
+    private static DirectoryPath ToolsPath { get; } = "./tools";
     public static void Install(ICakeContext context, string package, string version)
     {
         context.NuGetInstall(package, new NuGetInstallSettings
@@ -19,7 +19,7 @@ public static class ToolInstaller
         });
     }
 
-    public static FilePath DotNetCoreToolInstall(
+    public static FilePath DotNetToolInstall(
         this ICakeContext context,
         string package,
         string version,
@@ -42,10 +42,10 @@ public static class ToolInstaller
                                 : ".exe"
                             )
                         );
-                    
+
         if (!context.DirectoryExists(toolInstallPath) && context.FileExists(toolPath))
         {
-            context.DotNetCoreTool("tool", new DotNetCoreToolSettings
+            context.DotNetTool("tool", new DotNetToolSettings
                 {
                     ArgumentCustomization = args => args
                         .Append("uninstall")
@@ -56,7 +56,7 @@ public static class ToolInstaller
 
         if (!context.FileExists(toolPath))
         {
-            context.DotNetCoreTool("tool", new DotNetCoreToolSettings
+            context.DotNetTool("tool", new DotNetToolSettings
                 {
                     ArgumentCustomization = args => args
                         .Append("install")
