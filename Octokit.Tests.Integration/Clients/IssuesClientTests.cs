@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
+using Octokit.Models.Common;
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
@@ -250,6 +251,20 @@ public class IssuesClientTests : IDisposable
         retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
         Assert.False(retrieved.Locked);
+    }
+
+    [IntegrationTest]
+    public async Task CanAccessActiveLockReason()
+    {
+        var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.False(issue.Locked);
+
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number, LockReason.OffTopic);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.True(retrieved.Locked);
+        Assert.Equal(retrieved.ActiveLockReason, LockReason.OffTopic);
     }
 
     [IntegrationTest]
