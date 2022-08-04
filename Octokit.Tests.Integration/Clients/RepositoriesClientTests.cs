@@ -531,35 +531,6 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
-        public async Task UpdatesNameObsolete()
-        {
-            using (var repoContext = await _github.CreateUserRepositoryContext())
-            {
-                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-                var update = new RepositoryUpdate() { Name = updatedName };
-
-                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
-
-                Assert.Equal(update.Name, updatedRepository.Name);
-            }
-        }
-
-        [IntegrationTest]
-        public async Task UpdatesNameWithRepositoryIdObsolete()
-        {
-            using (var repoContext = await _github.CreateUserRepositoryContext())
-            {
-                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-                var update = new RepositoryUpdate() { Name = updatedName };
-
-
-                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
-
-                Assert.Equal(update.Name, updatedRepository.Name);
-            }
-        }
-
-        [IntegrationTest]
         public async Task UpdatesDescription()
         {
             using (var repoContext = await _github.CreateUserRepositoryContext())
