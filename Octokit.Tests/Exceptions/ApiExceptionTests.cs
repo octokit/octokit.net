@@ -108,7 +108,8 @@ namespace Octokit.Tests.Exceptions
                     var formatter = new BinaryFormatter();
                     formatter.Serialize(stream, exception);
                     stream.Position = 0;
-                    var deserialized = (ApiException)formatter.Deserialize(stream);
+                    var deserializedObject = formatter.Deserialize(stream);
+                    var deserialized = (ApiException)deserializedObject;
                     Assert.Equal("Validation Failed", deserialized.ApiError.Message);
                     Assert.Equal("key is already in use", exception.ApiError.Errors.First().Message);
                 }

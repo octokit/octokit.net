@@ -879,7 +879,6 @@ public class RepositoriesClientTests
             Assert.False(repository.Private);
             Assert.False(repository.Fork);
             Assert.Equal(AccountType.User, repository.Owner.Type);
-            Assert.True(repository.WatchersCount > 0);
         }
 
         [IntegrationTest]
@@ -894,7 +893,6 @@ public class RepositoriesClientTests
             Assert.False(repository.Private);
             Assert.False(repository.Fork);
             Assert.Equal(AccountType.User, repository.Owner.Type);
-            Assert.True(repository.WatchersCount > 0);
         }
 
         [IntegrationTest]

@@ -17,19 +17,5 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => new ObservableReactionsClient(null));
             }
         }
-
-        public class TheDeleteMethod
-        {
-            [Fact]
-            public void PostsToCorrectUrl()
-            {
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableReactionsClient(gitHubClient);
-
-                client.Delete(13);
-
-                gitHubClient.Reaction.Received().Delete(13);
-            }
-        }
     }
 }

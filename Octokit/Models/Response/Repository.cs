@@ -58,7 +58,9 @@ namespace Octokit
             AllowSquashMerge = allowSquashMerge;
             AllowMergeCommit = allowMergeCommit;
             Archived = archived;
+#pragma warning disable CS0618 // Type or member is obsolete
             WatchersCount = watchersCount;
+#pragma warning restore CS0618 // Type or member is obsolete
             Topics = topics.ToList();
             DeleteBranchOnMerge = deleteBranchOnMerge;
             Visibility = visibility;

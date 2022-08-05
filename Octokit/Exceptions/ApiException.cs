@@ -25,7 +25,9 @@ namespace Octokit
         /// <summary>
         /// Constructs an instance of ApiException
         /// </summary>
+#pragma warning disable CS0618 // Response() is obsolete but we need this as a default as Response passed down cannot be null
         public ApiException() : this(new Response())
+#pragma warning restore CS0618 // Response() is obsolete but we need this as a default as Response passed down cannot be null
         {
         }
 
@@ -202,8 +204,8 @@ namespace Octokit
             {
                 return HttpResponse?.ContentType != null
                        && !HttpResponse.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase)
-                       && HttpResponse.Body is string
-                    ? (string)HttpResponse.Body : string.Empty;
+                       && HttpResponse.Body is string @string
+                       ? @string : string.Empty;
             }
         }
 
