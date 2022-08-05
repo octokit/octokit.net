@@ -109,7 +109,7 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
-        /// /// <param name="since">The integer Id of the last Organization that you’ve seen.</param>
+        /// <param name="since">The integer Id of the last Organization that you’ve seen.</param>
         /// <returns></returns>
         public static Uri AllOrganizations(long since)
         {
@@ -497,7 +497,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        /// /// <param name="reaction">The reactionid for the issue</param>
+        /// <param name="reaction">The reactionid for the issue</param>
         /// <returns></returns>
         public static Uri IssueReaction(long repositoryId, int number, int reaction)
         {
@@ -591,7 +591,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment number</param>
-        /// /// <param name="reaction">The reactionid for the comment</param>
+        /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
         public static Uri IssueCommentReaction(string owner, string name, int number, int reaction)
         {
