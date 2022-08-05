@@ -21,6 +21,6 @@ namespace Octokit
 
         // The issue or pull request was locked because the conversation was too heated.
         [Parameter(Value = "too heated")]
-        TooHeader
+        TooHeated
     }
 }
