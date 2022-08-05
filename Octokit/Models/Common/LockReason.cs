@@ -1,6 +1,6 @@
 ﻿using Octokit.Internal;
 
-namespace Octokit.Models.Common
+namespace Octokit
 {
     /// <summary>
     /// The possible reasons that an issue or pull request was locked.

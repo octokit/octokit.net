@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Octokit;
-using Octokit.Models.Common;
 using Octokit.Tests.Integration;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
