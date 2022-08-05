@@ -1,7 +1,8 @@
 using System.Linq;
-using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore;
 using Cake.Frosting;
+using Cake.Common.Diagnostics;
+using Cake.Common.Tools;
+using Cake.Common.Tools.DotNet;
 
 [IsDependentOn(typeof(Build))]
 public sealed class UnitTests : FrostingTask<Context>
@@ -11,7 +12,7 @@ public sealed class UnitTests : FrostingTask<Context>
         foreach (var project in context.Projects.Where(x => x.UnitTests))
         {
             context.Information("Executing Unit Tests Project {0}...", project.Name);
-            context.DotNetCoreTest(project.Path.FullPath, context.GetTestSettings());
+            context.DotNetTest(project.Path.FullPath, context.GetTestSettings());
         }
     }
 }

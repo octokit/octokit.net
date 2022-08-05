@@ -1,5 +1,5 @@
-using Cake.Common.Tools.DotNetCore;
-using Cake.Common.Tools.DotNetCore.Build;
+using Cake.Common.Tools.DotNet;
+using Cake.Common.Tools.DotNet.Build;
 using Cake.Core;
 using Cake.Frosting;
 
@@ -9,7 +9,7 @@ public class Build : FrostingTask<Context>
 {
     public override void Run(Context context)
     {
-        context.DotNetCoreBuild("./Octokit.sln", new DotNetCoreBuildSettings
+        context.DotNetBuild("./Octokit.sln", new DotNetBuildSettings
         {
             Configuration = context.Configuration,
             ArgumentCustomization = args => args

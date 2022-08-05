@@ -531,34 +531,6 @@ public class RepositoriesClientTests
         }
 
         [IntegrationTest]
-        public async Task UpdatesNameObsolete()
-        {
-            using (var repoContext = await _github.CreateUserRepositoryContext())
-            {
-                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-                var update = new RepositoryUpdate(updatedName);
-
-                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryOwner, repoContext.RepositoryName, update);
-
-                Assert.Equal(update.Name, updatedRepository.Name);
-            }
-        }
-
-        [IntegrationTest]
-        public async Task UpdatesNameWithRepositoryIdObsolete()
-        {
-            using (var repoContext = await _github.CreateUserRepositoryContext())
-            {
-                var updatedName = Helper.MakeNameWithTimestamp("updated-repo");
-                var update = new RepositoryUpdate(updatedName);
-
-                var updatedRepository = await _github.Repository.Edit(repoContext.RepositoryId, update);
-
-                Assert.Equal(update.Name, updatedRepository.Name);
-            }
-        }
-
-        [IntegrationTest]
         public async Task UpdatesDescription()
         {
             using (var repoContext = await _github.CreateUserRepositoryContext())
@@ -811,7 +783,7 @@ public class RepositoriesClientTests
                 Assert.True(editedRepository.AllowAutoMerge);
             }
         }
-        
+
         [IntegrationTest]
         public async Task UpdatesDeleteBranchOnMergeMethod()
         {
@@ -826,7 +798,7 @@ public class RepositoriesClientTests
                 Assert.True(repository.DeleteBranchOnMerge);
             }
         }
-        
+
         [IntegrationTest]
         public async Task UpdatesDeleteBranchOnMergeMethodWithRepositoryId()
         {
@@ -1047,7 +1019,7 @@ public class RepositoriesClientTests
             Assert.Equal("mit", repository.License.Key);
             Assert.Equal("MIT License", repository.License.Name);
         }
-        
+
         [IntegrationTest]
         public async Task ReturnsRepositoryDeleteBranchOnMergeOptions()
         {
@@ -2099,10 +2071,10 @@ public class RepositoriesClientTests
             using (var repoContext = await _github.CreateUserRepositoryContext())
             {
                 await _github.Repository.Content.CreateFile(repoContext.RepositoryOwner, repoContext.RepositoryName, ".github/codeowners", new CreateFileRequest("Create codeowners", @"* snyrting6@hotmail.com"));
-                
+
                 // Sometimes it takes a second to create the file
                 Thread.Sleep(TimeSpan.FromSeconds(2));
-                
+
                 var license = await _github.Repository.GetAllCodeOwnersErrors(repoContext.RepositoryOwner, repoContext.RepositoryName);
                 Assert.NotEmpty(license.Errors);
             }
