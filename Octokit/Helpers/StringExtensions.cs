@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,11 +21,24 @@ namespace Octokit
             return !string.IsNullOrWhiteSpace(value);
         }
 
+        public static Uri FormatUri(this string pattern) => new Uri(pattern, UriKind.Relative);
+
         public static Uri FormatUri(this string pattern, params object[] args)
         {
             Ensure.ArgumentNotNullOrEmptyString(pattern, nameof(pattern));
 
             return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
+        }
+
+        public static Uri FormatUri(this string pattern, params (string Key, string Value)[] args)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(pattern, nameof(pattern));
+
+            var formattedString = pattern.ReplaceAll(args);
+
+            Ensure.ArgumentNotContainsBraces(pattern, nameof(pattern));
+
+            return new Uri(formattedString, UriKind.Relative);
         }
 
         public static string UriEncode(this string input)
@@ -134,6 +148,11 @@ namespace Octokit
         internal static bool IsNameWithOwnerFormat(this string input)
         {
             return nameWithOwner.IsMatch(input);
+        }
+
+        private static string ReplaceAll(this string seed, params (string Key, string Value)[] chars)
+        {
+            return chars.Aggregate(seed, (str, cItem) => str.Replace("{" + cItem.Key + "}", cItem.Value));
         }
     }
 }

@@ -25,95 +25,59 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all public repositories in
         /// response to a GET request.
         /// </summary>
-        public static Uri AllPublicRepositories()
-        {
-            return "repositories".FormatUri();
-        }
+        public static Uri AllPublicRepositories() => ApiRoutes.AllPublicRepositories.FormatUri();
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
         /// response to a GET request.
         /// </summary>
         /// <param name="since">The integer Id of the last Repository that you’ve seen.</param>
-        public static Uri AllPublicRepositories(long since)
-        {
-            string[] chars = new string[] { "since" };
-
-            var url = "repositories?since={since}";
-
-            var result = url.ReplaceAll(new Dictionary<string, string> { { nameof(since), since.ToString() } });
-
-            return result.FormatUri();
-        }
-
-        public static string ReplaceAll(this string seed, Dictionary<string, string> chars)
-        {
-            return chars.Aggregate(seed, (str, cItem) => str.Replace("{" + cItem.Key + "}", cItem.Value));
-        }
+        public static Uri AllPublicRepositories(long since) => ApiRoutes.AllPublicRepositoriesSince.FormatUri((nameof(since), since.ToString()));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the currently logged in user in
         /// response to a GET request. A POST to this URL creates a new repository.
         /// </summary>
-        /// <returns></returns>
-        public static Uri Repositories()
-        {
-            return _currentUserRepositoriesUrl;
-        }
+        public static Uri Repositories() => ApiRoutes.ActiveUserRepositories.FormatUri();
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the specified login.
         /// </summary>
         /// <param name="login">The login for the user</param>
-        /// <returns></returns>
-        public static Uri Repositories(string login)
-        {
-            return "users/{0}/repos".FormatUri(login);
-        }
+        public static Uri Repositories(string login) => ApiRoutes.LoggedInUserRepositories.FormatUri((nameof(login), login));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that create a repository using a template.
         /// </summary>
-        /// <returns></returns>
-        public static Uri Repositories(string owner, string repo)
-        {
-            return "repos/{0}/{1}/generate".FormatUri(owner, repo);
-        }
+        public static Uri Repositories(string owner, string repo) => ApiRoutes.GenerateRepository.FormatUri((nameof(owner), owner), (nameof(repo), repo));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the repositories for the specified organization in
         /// response to a GET request. A POST to this URL creates a new repository for the organization.
         /// </summary>
         /// <param name="organization">The name of the organization</param>
-        /// <returns></returns>
-        public static Uri OrganizationRepositories(string organization)
-        {
-            return "orgs/{0}/repos".FormatUri(organization);
-        }
+        public static Uri OrganizationRepositories(string organization) => ApiRoutes.OrganizationRepositories.FormatUri((nameof(organization), organization));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
         /// </summary>
-        /// <returns></returns>
         public static Uri UserOrganizations()
         {
-            return "user/orgs".FormatUri();
+            return ApiRoutes.UserOrganizations.FormatUri();
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the specified login.
         /// </summary>
         /// <param name="login">The login for the user</param>
-        /// <returns></returns>
         public static Uri UserOrganizations(string login)
         {
-            return "users/{0}/orgs".FormatUri(login);
+            return ApiRoutes.LoggedInUserOrganizations.FormatUri((nameof(login), login));
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
-        /// <returns></returns>
         public static Uri AllOrganizations()
         {
             return "organizations".FormatUri();
@@ -123,7 +87,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
         /// /// <param name="since">The integer Id of the last Organization that you’ve seen.</param>
-        /// <returns></returns>
         public static Uri AllOrganizations(long since)
         {
             return "organizations?since={0}".FormatUri(since);
@@ -133,7 +96,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the organization for the specified organization name
         /// </summary>
         /// <param name="organizationName">The name of the organization</param>
-        /// <returns>The <see cref="Uri"/> that returns the organization for the specified organization name</returns>
         public static Uri Organization(string organizationName)
         {
             return "orgs/{0}".FormatUri(organizationName);
@@ -142,7 +104,6 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the SSH keys for the currently logged in user.
         /// </summary>
-        /// <returns></returns>
         public static Uri SshKeys()
         {
             return _currentUserSshKeys;
@@ -152,7 +113,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all of the SSH keys for the specified user.
         /// </summary>
         /// <param name="login">The login for the user</param>
-        /// <returns></returns>
         public static Uri SshKeys(string login)
         {
             return "users/{0}/keys".FormatUri(login);
@@ -187,7 +147,6 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the email addresses for the currently logged in user.
         /// </summary>
-        /// <returns></returns>
         public static Uri Emails()
         {
             return _currentUserEmailsEndpoint;
@@ -198,7 +157,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public static Uri Releases(string owner, string name)
         {
             return "repos/{0}/{1}/releases".FormatUri(owner, name);
@@ -210,7 +168,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release</param>
-        /// <returns></returns>
         public static Uri Releases(string owner, string name, int id)
         {
             return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, id);
@@ -222,7 +179,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag of the release</param>
-        /// <returns></returns>
         public static Uri Releases(string owner, string name, string tag)
         {
             return "repos/{0}/{1}/releases/tags/{2}".FormatUri(owner, name, tag);
@@ -233,7 +189,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public static Uri LatestRelease(string owner, string name)
         {
             return "repos/{0}/{1}/releases/latest".FormatUri(owner, name);
@@ -245,7 +200,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release</param>
-        /// <returns></returns>
         public static Uri ReleaseAssets(string owner, string name, int id)
         {
             return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, id);
@@ -257,7 +211,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release asset</param>
-        /// <returns></returns>
         public static Uri Asset(string owner, string name, int id)
         {
             return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, id);
@@ -266,7 +219,6 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the notifications for the currently logged in user.
         /// </summary>
-        /// <returns></returns>
         public static Uri Notifications()
         {
             return _currentUserNotificationsEndpoint;
@@ -278,7 +230,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public static Uri Notifications(string owner, string name)
         {
             return "repos/{0}/{1}/notifications".FormatUri(owner, name);
@@ -288,7 +239,6 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the specified notification.
         /// </summary>
         /// <param name="id">The Id of the notification.</param>
-        /// <returns></returns>
         public static Uri Notification(int id)
         {
             return "notifications/threads/{0}".FormatUri(id);
@@ -348,7 +298,6 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the repository's installation information.
         /// </summary>
-        /// <returns></returns>
         public static Uri RepoInstallation(string owner, string repo)
         {
             return "repos/{0}/{1}/installation".FormatUri(owner, repo);
@@ -357,7 +306,6 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the repository's installation information.
         /// </summary>
-        /// <returns></returns>
         public static Uri RepoInstallation(long repositoryId)
         {
             return "repositories/{0}/installation".FormatUri(repositoryId);
@@ -398,7 +346,6 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all the repositories
         /// </summary>
-        /// <returns></returns>
         public static Uri InstallationRepositories()
         {
             return "installation/repositories".FormatUri();
@@ -428,7 +375,6 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <returns></returns>
         public static Uri Issues(string owner, string name)
         {
             return "repos/{0}/{1}/issues".FormatUri(owner, name);
@@ -439,7 +385,6 @@ namespace Octokit
         /// currently logged in user.
         /// </summary>
         /// <param name="organization">The name of the organization</param>
-        /// <returns></returns>
         public static Uri Issues(string organization)
         {
             return "orgs/{0}/issues".FormatUri(organization);
@@ -451,7 +396,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        /// <returns></returns>
         public static Uri Issue(string owner, string name, int number)
         {
             return "repos/{0}/{1}/issues/{2}".FormatUri(owner, name, number);
@@ -4454,5 +4398,17 @@ namespace Octokit
         {
             return "meta".FormatUri();
         }
+    }
+
+    public static class ApiRoutes
+    {
+        public static string AllPublicRepositories => "repositories";
+        public static string AllPublicRepositoriesSince => "repositories?since={since}";
+        public static string ActiveUserRepositories => "user/repos";
+        public static string LoggedInUserRepositories => "users/{login}/repos";
+        public static string GenerateRepository => "repos/{owner}/{repo}/generate";
+        public static string OrganizationRepositories => "orgs/{organization}/repos";
+        public static string UserOrganizations => "user/orgs";
+        public static string LoggedInUserOrganizations = "users/{login}/orgs";
     }
 }

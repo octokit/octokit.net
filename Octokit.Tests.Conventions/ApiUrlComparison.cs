@@ -20,63 +20,31 @@ namespace Octokit.Tests.Conventions
         [Fact]
         public void WorkOk()
         {
-            ApiUrls.AllPublicRepositories(1);
-
             WebClient downloadClient = new WebClient();
             var jsonFile = downloadClient.DownloadString("https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json");
 
             var apiSchemaObject = new SimpleJsonSerializer().Deserialize<OpenApiSchema>(jsonFile);
             var knownPaths = apiSchemaObject.Paths.Keys.ToList();
 
-            List<string> convertedPaths = new List<string>();
+            var allRouteProps = typeof(ApiRoutes).GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            var allRoutes = allRouteProps.Select(x => "/" + x.GetValue(this));
 
-            foreach (var knownPath in knownPaths)
+            var matches = allRoutes.Where(x => knownPaths.Contains(x)).ToList();
+            var failures = allRoutes.Where(x => !knownPaths.Contains(x)).ToList();
+
+            _outputHelper.WriteLine($"Failures: {failures.Count}");
+
+            foreach (var item in failures)
             {
-                var splits = knownPath.Split('{');
-
-                if (splits.Length == 1)
-                {
-                    convertedPaths.Add(knownPath);
-                    continue;
-                }
-
-                var localPath = knownPath;
-
-                foreach (var item in splits.Where(x => x.Contains("}")))
-                {
-                    var cleanItem = item.Replace("{", "").Split('}')[0].Replace("}", "");
-
-                    var matchedType = apiSchemaObject.Components["parameters"].FirstOrDefault(x => x.Value.Name == cleanItem);
-                    if (matchedType.Key != null && matchedType.Value.Schema.Type == "string")
-                    {
-                        localPath = localPath.Replace("{" + cleanItem + "}", "abcdef");
-                    }
-                    else if (matchedType.Key != null && matchedType.Value.Schema.Type == "integer")
-                    {
-                        localPath = localPath.Replace("{" + cleanItem + "}", "12345");
-                    }
-                }
-
-                convertedPaths.Add(localPath);
+                _outputHelper.WriteLine(item);
             }
 
-            //var apiUrls = ApiUrls._allUrls.Values.Select(x => "/" + x).ToList();
-            //var allMatches = apiUrls.Where(x => knownPaths.Contains(x)).ToList();
-            //var allFailures = apiUrls.Where(x => !knownPaths.Contains(x)).ToList();
+            _outputHelper.WriteLine($"Matches: {matches.Count}");
 
-            //_outputHelper.WriteLine($"Failures - {allFailures.Count}");
-            
-            //foreach (var item in allFailures)
-            //{
-            //    _outputHelper.WriteLine(item);
-            //}
-
-            //_outputHelper.WriteLine($"Matches - {allMatches.Count}");
-
-            //foreach(var item in allMatches)
-            //{
-            //    _outputHelper.WriteLine(item);
-            //}
+            foreach (var item in matches)
+            {
+                _outputHelper.WriteLine(item);
+            }
         }
 
         private class ApiUrlComparisonResult
