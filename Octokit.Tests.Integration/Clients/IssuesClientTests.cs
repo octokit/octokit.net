@@ -253,6 +253,20 @@ public class IssuesClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanAccessActiveLockReason()
+    {
+        var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };
+        var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
+        Assert.False(issue.Locked);
+
+        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number, LockReason.OffTopic);
+        var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        Assert.NotNull(retrieved);
+        Assert.True(retrieved.Locked);
+        Assert.Equal(retrieved.ActiveLockReason, LockReason.OffTopic);
+    }
+
+    [IntegrationTest]
     public async Task CanLockAndUnlockIssueWithRepositoryId()
     {
         var newIssue = new NewIssue("a test issue") { Body = "A new unassigned issue" };

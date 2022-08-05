@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 
+
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
@@ -11,7 +12,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(string url, string htmlUrl, string commentsUrl, string eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, string nodeId, bool locked, Repository repository, ReactionSummary reactions)
+        public Issue(string url, string htmlUrl, string commentsUrl, string eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, string nodeId, bool locked, Repository repository, ReactionSummary reactions, LockReason? activeLockReason)
         {
             Id = id;
             NodeId = nodeId;
@@ -37,6 +38,7 @@ namespace Octokit
             Locked = locked;
             Repository = repository;
             Reactions = reactions;
+            ActiveLockReason = activeLockReason;
         }
 
         /// <summary>
@@ -155,6 +157,11 @@ namespace Octokit
         /// The reaction summary for this issue.
         /// </summary>
         public ReactionSummary Reactions { get; protected set; }
+
+        /// <summary>
+        /// Reason that the conversation was locked.
+        /// </summary>
+        public StringEnum<LockReason>? ActiveLockReason { get; protected set; }
 
         internal string DebuggerDisplay
         {

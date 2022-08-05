@@ -500,13 +500,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
+        /// <param name="lockReason">The reason for locking the issue</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/issues/{issue_number}/lock")]
-        public Task Lock(string owner, string name, int number)
+        public Task Lock(string owner, string name, int number, LockReason? lockReason = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, number), new object());
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, number), lockReason.HasValue ? new { LockReason = lockReason } : new object());
         }
 
         /// <summary>
@@ -515,10 +516,11 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
+        /// <param name="lockReason">The reason for locking the issue</param>
         [ManualRoute("PUT", "/repositories/{id}/issues/{number}/lock")]
-        public Task Lock(long repositoryId, int number)
+        public Task Lock(long repositoryId, int number, LockReason? lockReason = null)
         {
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, number), new object());
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, number), lockReason.HasValue ? new { LockReaons = lockReason } : new object());
         }
 
         /// <summary>
