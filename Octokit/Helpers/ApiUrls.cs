@@ -61,52 +61,37 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
         /// </summary>
-        public static Uri UserOrganizations()
-        {
-            return ApiRoutes.UserOrganizations.FormatUri();
-        }
+        public static Uri UserOrganizations() => ApiRoutes.UserOrganizations.FormatUri();
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the specified login.
         /// </summary>
         /// <param name="login">The login for the user</param>
-        public static Uri UserOrganizations(string login)
-        {
-            return ApiRoutes.LoggedInUserOrganizations.FormatUri((nameof(login), login));
-        }
+        public static Uri UserOrganizations(string login) => ApiRoutes.LoggedInUserOrganizations.FormatUri((nameof(login), login));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
-        public static Uri AllOrganizations()
-        {
-            return "organizations".FormatUri();
-        }
+        public static Uri AllOrganizations() => ApiRoutes.AllOrganizations.FormatUri();
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
         /// /// <param name="since">The integer Id of the last Organization that you’ve seen.</param>
-        public static Uri AllOrganizations(long since)
-        {
-            return "organizations?since={0}".FormatUri(since);
-        }
+        public static Uri AllOrganizations(long since) => ApiRoutes.AllOrganizationsSince.FormatUri((nameof(since), since));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the organization for the specified organization name
         /// </summary>
         /// <param name="organizationName">The name of the organization</param>
-        public static Uri Organization(string organizationName)
-        {
-            return "orgs/{0}".FormatUri(organizationName);
-        }
+        public static Uri Organization(string organizationName) => ApiRoutes.Organization.FormatUri((nameof(organizationName), organizationName));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the SSH keys for the currently logged in user.
         /// </summary>
         public static Uri SshKeys()
         {
-            return _currentUserSshKeys;
+            return ApiRoutes.CurrentUserSshKeys.FormatUri();
         }
 
         /// <summary>
@@ -115,7 +100,7 @@ namespace Octokit
         /// <param name="login">The login for the user</param>
         public static Uri SshKeys(string login)
         {
-            return "users/{0}/keys".FormatUri(login);
+            return ApiRoutes.LoggedInUserSshKeys.FormatUri((nameof(login), login));
         }
 
         /// <summary>
@@ -4410,5 +4395,10 @@ namespace Octokit
         public static string OrganizationRepositories => "orgs/{organization}/repos";
         public static string UserOrganizations => "user/orgs";
         public static string LoggedInUserOrganizations = "users/{login}/orgs";
+        public static string AllOrganizations = "organizations";
+        public static string AllOrganizationsSince = "organizations?since={since}";
+        public static string Organization = "orgs/{organizationName}";
+        public static string CurrentUserSshKeys = "user/keys";
+        public static string LoggedInUserSshKeys = "users/{0}/keys";
     }
 }
