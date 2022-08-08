@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>A set of extension methods for the GitHub API client library for .NET and .NET Core providing IAsyncEnumerable abstractions for paginated web requests</Description>
+    <AssemblyTitle>Octokit.AsyncPaginationExtension</AssemblyTitle>
+    <Authors>GitHub</Authors>
+    <Version>0.0.0-dev</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <AssemblyName>Octokit.AsyncPaginationExtension</AssemblyName>
+    <PackageId>Octokit.AsyncPaginationExtension</PackageId>
+    <DebugType>embedded</DebugType>
+    <RepositoryUrl>https://github.com/octokit/octokit.net</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/octokit/octokit.net</PackageProjectUrl>
+    <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
+    <PackageIcon>octokit.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
+    <Copyright>Copyright GitHub 2017</Copyright>
+    <LangVersion>9</LangVersion>
+	  <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+		<NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Octokit\Octokit.csproj" />
+	</ItemGroup>
+
+</Project>
