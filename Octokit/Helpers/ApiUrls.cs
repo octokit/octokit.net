@@ -852,6 +852,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the organizations failed invitations
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationFailedInvitations(string org)
+        {
+            return "orgs/{0}/failed_invitations".FormatUri(org);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
         /// </summary>
         /// <param name="org">The organization</param>

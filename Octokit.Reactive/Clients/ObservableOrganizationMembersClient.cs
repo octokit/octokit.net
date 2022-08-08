@@ -472,5 +472,39 @@ namespace Octokit.Reactive
 
             return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvitations(org), null, options);
         }
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return GetAllFailedInvitations(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationFailedInvitations(org), null, options);
+        }
     }
 }
