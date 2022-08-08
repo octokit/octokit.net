@@ -846,7 +846,7 @@ namespace Octokit
         /// </summary>
         /// <param name="org">The name of the organization</param>
         /// <returns></returns>
-        public static Uri OrganizationPendingInvititations(string org)
+        public static Uri OrganizationPendingInvitations(string org)
         {
             return "orgs/{0}/invitations".FormatUri(org);
         }
