@@ -10,13 +10,9 @@ namespace Octokit
     /// </summary>
     public static partial class ApiUrls
     {
-        static readonly Uri _currentUserRepositoriesUrl = new Uri("user/repos", UriKind.Relative);
-        static readonly Uri _currentUserOrganizationsUrl = new Uri("user/orgs", UriKind.Relative);
-        static readonly Uri _currentUserSshKeys = new Uri("user/keys", UriKind.Relative);
         static readonly Uri _currentUserGpgKeys = new Uri("user/gpg_keys", UriKind.Relative);
         static readonly Uri _currentUserStars = new Uri("user/starred", UriKind.Relative);
         static readonly Uri _currentUserWatched = new Uri("user/subscriptions", UriKind.Relative);
-        static readonly Uri _currentUserEmailsEndpoint = new Uri("user/emails", UriKind.Relative);
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
@@ -72,13 +68,13 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
-        public static Uri AllOrganizations() => ApiRoutes.AllOrganizations.FormatUri();
+        public static Uri AllOrganizations() => ApiRoutes.Organizations.FormatUri();
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations.
         /// </summary>
         /// /// <param name="since">The integer Id of the last Organization that you’ve seen.</param>
-        public static Uri AllOrganizations(long since) => ApiRoutes.AllOrganizationsSince.FormatUri((nameof(since), since));
+        public static Uri AllOrganizations(long since) => ApiRoutes.OrganizationsSince.FormatUri((nameof(since), since));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the organization for the specified organization name
@@ -87,65 +83,33 @@ namespace Octokit
         public static Uri Organization(string organizationName) => ApiRoutes.Organization.FormatUri((nameof(organizationName), organizationName));
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the SSH keys for the currently logged in user.
-        /// </summary>
-        public static Uri SshKeys()
-        {
-            return ApiRoutes.CurrentUserSshKeys.FormatUri();
-        }
-
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all of the SSH keys for the specified user.
-        /// </summary>
-        /// <param name="login">The login for the user</param>
-        public static Uri SshKeys(string login)
-        {
-            return ApiRoutes.LoggedInUserSshKeys.FormatUri((nameof(login), login));
-        }
-
-        /// <summary>
         /// Returns the <see cref="Uri"/> to retrieve keys for the current user.
         /// </summary>
-        public static Uri Keys()
-        {
-            return "user/keys".FormatUri();
-        }
+        public static Uri SshKeys() => ApiRoutes.AuthenticatedUserSshKeys.FormatUri();
 
         /// <summary>
         /// Returns the <see cref="Uri"/> to retrieve keys for a given user.
         /// </summary>
         /// <param name="userName">The user to search on</param>
-        public static Uri Keys(string userName)
-        {
-            return "users/{0}/keys".FormatUri(userName);
-        }
+        public static Uri SshKeys(string userName) => ApiRoutes.SpecificUserSshKeys.FormatUri((nameof(userName), userName));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> to retrieve a given key.
         /// </summary>
         /// <param name="id">The Key Id to retrieve</param>
-        public static Uri Keys(int id)
-        {
-            return "user/keys/{0}".FormatUri(id);
-        }
+        public static Uri SshKey(int id) => ApiRoutes.AuthenticatedUserSshKey.FormatUri((nameof(id), id));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the email addresses for the currently logged in user.
         /// </summary>
-        public static Uri Emails()
-        {
-            return _currentUserEmailsEndpoint;
-        }
+        public static Uri Emails() => ApiRoutes.AuthenticatedUserEmails.FormatUri();
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the releases for the specified repository.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public static Uri Releases(string owner, string name)
-        {
-            return "repos/{0}/{1}/releases".FormatUri(owner, name);
-        }
+        public static Uri Releases(string owner, string name) => ApiRoutes.ReleasesByOwnerName.FormatUri((nameof(owner), owner), (nameof(name), name));
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
@@ -155,7 +119,7 @@ namespace Octokit
         /// <param name="id">The id of the release</param>
         public static Uri Releases(string owner, string name, int id)
         {
-            return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, id);
+            return "repos/{owner}/{name}/releases/{id}".FormatUri((nameof(owner), owner), (nameof(name), name), (nameof(id), id));
         }
 
         /// <summary>
@@ -4395,10 +4359,13 @@ namespace Octokit
         public static string OrganizationRepositories => "orgs/{organization}/repos";
         public static string UserOrganizations => "user/orgs";
         public static string LoggedInUserOrganizations = "users/{login}/orgs";
-        public static string AllOrganizations = "organizations";
-        public static string AllOrganizationsSince = "organizations?since={since}";
+        public static string Organizations = "organizations";
+        public static string OrganizationsSince = "organizations?since={since}";
         public static string Organization = "orgs/{organizationName}";
-        public static string CurrentUserSshKeys = "user/keys";
-        public static string LoggedInUserSshKeys = "users/{0}/keys";
+        public static string AuthenticatedUserSshKeys = "user/keys";
+        public static string AuthenticatedUserSshKey = "user/keys/{id}";
+        public static string SpecificUserSshKeys = "users/{username}/keys";
+        public static string AuthenticatedUserEmails = "user/emails";
+        public static string ReleasesByOwnerName = "repos/{owner}/{name}/releases";
     }
 }

@@ -47,7 +47,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(userName), options);
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.SshKeys(userName), options);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<PublicKey>(ApiUrls.Keys(), options);
+            return ApiConnection.GetAll<PublicKey>(ApiUrls.SshKeys(), options);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Octokit
         [ManualRoute("GET", "/user/keys/{key_id}")]
         public Task<PublicKey> Get(int id)
         {
-            return ApiConnection.Get<PublicKey>(ApiUrls.Keys(id));
+            return ApiConnection.Get<PublicKey>(ApiUrls.SshKey(id));
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(newKey, nameof(newKey));
 
-            return ApiConnection.Post<PublicKey>(ApiUrls.Keys(), newKey);
+            return ApiConnection.Post<PublicKey>(ApiUrls.SshKeys(), newKey);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Octokit
         [ManualRoute("DELETE", "/user/keys/{key_id}")]
         public Task Delete(int id)
         {
-            return ApiConnection.Delete(ApiUrls.Keys(id));
+            return ApiConnection.Delete(ApiUrls.SshKey(id));
         }
     }
 }
