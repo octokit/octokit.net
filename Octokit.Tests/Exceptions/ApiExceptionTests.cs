@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-#if !NO_SERIALIZABLE
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-#endif
 using NSubstitute;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 using static Octokit.Internal.TestSetup;
@@ -92,7 +89,6 @@ namespace Octokit.Tests.Exceptions
                 Assert.Equal("message2", thirdException.ApiError.Message);
             }
 
-#if !NO_SERIALIZABLE
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
@@ -102,19 +98,11 @@ namespace Octokit.Tests.Exceptions
                     @"already in use"",""resource"":""PublicKey""}],""message"":""Validation Failed""}");
 
                 var exception = new ApiException(response);
+                var deserialized = BinaryFormatterExtensions.SerializeAndDeserializeObject(exception);
 
-                using (var stream = new MemoryStream())
-                {
-                    var formatter = new BinaryFormatter();
-                    formatter.Serialize(stream, exception);
-                    stream.Position = 0;
-                    var deserializedObject = formatter.Deserialize(stream);
-                    var deserialized = (ApiException)deserializedObject;
-                    Assert.Equal("Validation Failed", deserialized.ApiError.Message);
-                    Assert.Equal("key is already in use", exception.ApiError.Errors.First().Message);
-                }
+                Assert.Equal("Validation Failed", deserialized.ApiError.Message);
+                Assert.Equal("key is already in use", exception.ApiError.Errors.First().Message);
             }
-#endif
         }
 
         public class TheToStringMethod
