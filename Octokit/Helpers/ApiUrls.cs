@@ -850,9 +850,19 @@ namespace Octokit
         /// </summary>
         /// <param name="org">The name of the organization</param>
         /// <returns></returns>
-        public static Uri OrganizationPendingInvititations(string org)
+        public static Uri OrganizationPendingInvitations(string org)
         {
             return "orgs/{0}/invitations".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the organizations failed invitations
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationFailedInvitations(string org)
+        {
+            return "orgs/{0}/failed_invitations".FormatUri(org);
         }
 
         /// <summary>

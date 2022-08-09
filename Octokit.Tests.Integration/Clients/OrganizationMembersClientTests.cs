@@ -275,5 +275,23 @@ namespace Octokit.Tests.Integration.Clients
                 }
             }
         }
+
+        public class TheGetAllFailedInvitationsMethod
+        {
+            readonly IGitHubClient _gitHub;
+
+            public TheGetAllFailedInvitationsMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsNoFailedInvitations()
+            {
+                var pendingInvitations = await _gitHub.Organization.Member.GetAllFailedInvitations(Helper.Organization);
+                Assert.NotNull(pendingInvitations);
+                Assert.Empty(pendingInvitations);
+            }
+        }
     }
 }

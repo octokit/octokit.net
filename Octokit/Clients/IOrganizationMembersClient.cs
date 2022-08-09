@@ -346,5 +346,28 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
         Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, ApiOptions options);
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org);
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org, ApiOptions options);
     }
 }
