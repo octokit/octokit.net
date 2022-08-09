@@ -4358,14 +4358,14 @@ namespace Octokit
         public static string GenerateRepository => "repos/{owner}/{repo}/generate";
         public static string OrganizationRepositories => "orgs/{organization}/repos";
         public static string UserOrganizations => "user/orgs";
-        public static string LoggedInUserOrganizations = "users/{login}/orgs";
-        public static string Organizations = "organizations";
-        public static string OrganizationsSince = "organizations?since={since}";
-        public static string Organization = "orgs/{organizationName}";
-        public static string AuthenticatedUserSshKeys = "user/keys";
-        public static string AuthenticatedUserSshKey = "user/keys/{id}";
-        public static string SpecificUserSshKeys = "users/{username}/keys";
-        public static string AuthenticatedUserEmails = "user/emails";
-        public static string ReleasesByOwnerName = "repos/{owner}/{name}/releases";
+        public static string LoggedInUserOrganizations => "users/{login}/orgs";
+        public static string Organizations => "organizations";
+        public static string OrganizationsSince => "organizations?since={since}";
+        public static string Organization => "orgs/{organizationName}";
+        public static string AuthenticatedUserSshKeys => "user/keys";
+        public static string AuthenticatedUserSshKey => "user/keys/{id}";
+        public static string SpecificUserSshKeys => "users/{username}/keys";
+        public static string AuthenticatedUserEmails => "user/emails";
+        public static string ReleasesByOwnerName => "repos/{owner}/{name}/releases";
     }
 }
