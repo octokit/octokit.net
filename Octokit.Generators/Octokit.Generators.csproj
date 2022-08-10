@@ -6,7 +6,7 @@
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>Octokit.Generators</AssemblyName>
     <PackageId>Octokit.Generators</PackageId>
     <DebugType>embedded</DebugType>
@@ -18,6 +18,6 @@
     <PackageTags>GitHub API Octokit dotnetcore dotnetstandard2.0</PackageTags>
     <Copyright>Copyright GitHub 2022</Copyright>
     <LangVersion>9</LangVersion>
-	  <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 </Project>

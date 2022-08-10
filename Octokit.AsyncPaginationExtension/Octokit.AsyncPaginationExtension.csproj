@@ -18,23 +18,23 @@
     <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
     <Copyright>Copyright GitHub 2017</Copyright>
     <LangVersion>9</LangVersion>
-	  <Nullable>enable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
-	</PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
+  </PropertyGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-		<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
-	</ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Octokit\Octokit.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Octokit\Octokit.csproj" />
+  </ItemGroup>
 
 </Project>

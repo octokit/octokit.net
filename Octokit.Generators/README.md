@@ -4,7 +4,7 @@
 
 We've been discussing and thinking about code generators for a [while now](https://github.com/octokit/octokit.net/discussions/2527) and they are part of the [future vision](https://github.com/octokit/octokit.net/discussions/2495) for where we'd like to head with this SDK.
 
-Consider this to be iteration 0.  Meaning while we want to potentially move to source generators, templates, and using the features that Rosyln offers we need to do some functional experiments and solve our current needs while iterating on the future.  Acknoledging that code generation is a solved problem (menaing there is existing work out there) we should be intentional with the direction we take.
+Consider this to be iteration 0, meaning while we want to potentially move to source generators, templates, and using the features that Rosyln offers we need to do some functional experiments and solve our current needs while iterating on the future.  Acknowledging that code generation is a solved problem (menaing there is existing work out there) we should be intentional with the direction we take.
 
 ----
 
