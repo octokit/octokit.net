@@ -2,9 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 
 namespace Octokit
 {
@@ -13,9 +11,7 @@ namespace Octokit
     /// This will returned if GitHub has been asked to takedown the requested resource due to
     /// a DMCA takedown.
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class LegalRestrictionException : ApiException
@@ -54,7 +50,6 @@ namespace Octokit
                 "LegalRestrictionException created with wrong status code");
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of LegalRestrictionException
         /// </summary>
@@ -70,6 +65,5 @@ namespace Octokit
             : base(info, context)
         {
         }
-#endif
     }
 }

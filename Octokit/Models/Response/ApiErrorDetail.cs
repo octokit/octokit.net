@@ -4,9 +4,7 @@ using System.Globalization;
 
 namespace Octokit
 {
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiErrorDetail
     {

@@ -24,7 +24,7 @@
     <EmbeddedResource Include="fixtures\hello-world.txt;fixtures\hello-world.zip" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
     <None Include="app.config" />
   </ItemGroup>
-
+	
   <ItemGroup>
     <ProjectReference Include="..\Octokit\Octokit.csproj" />
     <ProjectReference Include="..\Octokit.Reactive\Octokit.Reactive.csproj" />

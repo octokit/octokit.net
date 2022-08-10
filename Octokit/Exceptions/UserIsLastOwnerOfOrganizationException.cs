@@ -2,9 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 
 namespace Octokit
 {
@@ -12,9 +10,7 @@ namespace Octokit
     /// Represents an error that occurs when trying to convert the 
     /// last owner of the organization to an outside collaborator
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class UserIsLastOwnerOfOrganizationException : ApiException
@@ -42,7 +38,6 @@ namespace Octokit
         // https://developer.github.com/v3/orgs/outside_collaborators/#response-if-user-is-the-last-owner-of-the-organization
         public override string Message => ApiErrorMessageSafe ?? "User is the last owner of the organization.";
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of <see cref="UserIsLastOwnerOfOrganizationException"/>.
         /// </summary>
@@ -58,6 +53,5 @@ namespace Octokit
             : base(info, context)
         {
         }
-#endif
     }
 }

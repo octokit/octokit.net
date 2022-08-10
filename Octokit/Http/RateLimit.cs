@@ -4,22 +4,15 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 using System.Security;
 using Octokit.Internal;
 
 namespace Octokit
 {
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RateLimit
-#if !NO_SERIALIZABLE
-        : ISerializable
-#endif
+    public class RateLimit : ISerializable
     {
         public RateLimit() { }
 
@@ -96,7 +89,6 @@ namespace Octokit
                 : result;
         }
 
-#if !NO_SERIALIZABLE
         protected RateLimit(SerializationInfo info, StreamingContext context)
         {
             Ensure.ArgumentNotNull(info, nameof(info));
@@ -115,7 +107,6 @@ namespace Octokit
             info.AddValue("Remaining", Remaining);
             info.AddValue("ResetAsUtcEpochSeconds", ResetAsUtcEpochSeconds);
         }
-#endif
 
         internal string DebuggerDisplay
         {

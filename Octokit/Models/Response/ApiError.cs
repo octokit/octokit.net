@@ -8,9 +8,7 @@ namespace Octokit
     /// <summary>
     /// Error payload from the API response
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiError
     {
