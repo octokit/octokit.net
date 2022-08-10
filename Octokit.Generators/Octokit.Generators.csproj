@@ -6,7 +6,7 @@
     <Version>0.0.0-dev</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Octokit.Generators</AssemblyName>
     <PackageId>Octokit.Generators</PackageId>
     <DebugType>embedded</DebugType>

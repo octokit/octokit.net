@@ -5,7 +5,7 @@
       "name": "Run Generator",
       "type": "coreclr",
       "request": "launch",
-      "program": "${workspaceFolder}/Octokit.Generators/bin/Debug/net6.0/Octokit.Generators",
+      "program": "${workspaceFolder}/Octokit.Generators/bin/Debug/net5.0/Octokit.Generators",
       "args": [],
       "cwd": "${workspaceFolder}/Octokit.Generators",
       "console": "internalConsole",
