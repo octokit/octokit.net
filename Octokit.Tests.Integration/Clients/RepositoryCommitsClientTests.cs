@@ -405,6 +405,7 @@ public class RepositoryCommitsClientTests
             Assert.Equal(1, result.Commits.Count);
             Assert.Equal(1, result.AheadBy);
             Assert.Equal(0, result.BehindBy);
+            Assert.Equal(result.Commits[0].Sha, result.Files[0].CommitSha);
         }
 
         [IntegrationTest]
@@ -420,6 +421,7 @@ public class RepositoryCommitsClientTests
             Assert.Equal(1, result.Commits.Count);
             Assert.Equal(1, result.AheadBy);
             Assert.Equal(0, result.BehindBy);
+            Assert.Equal(result.Commits[0].Sha, result.Files[0].CommitSha);
         }
 
         [IntegrationTest]

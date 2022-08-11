@@ -86,6 +86,27 @@ namespace Octokit
         [Parameter(Key = "previous_filename")]
         public string PreviousFileName { get; protected set; }
 
+        /// <summary>
+        /// The SHA the file was commited in
+        /// </summary>
+        public string CommitSha
+        {
+            get
+            {
+                if (RawUrl != null)
+                {
+                    var splitItems = RawUrl.Split(new[] { '/' }, System.StringSplitOptions.RemoveEmptyEntries);
+                    
+                    if (splitItems.Length > 2)
+                    {
+                        return splitItems[splitItems.Length - 2];
+                    }
+                }
+
+                return string.Empty;
+            }
+        }
+
         internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Filename: {0} ({1})", Filename, Status); }
