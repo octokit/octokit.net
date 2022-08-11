@@ -8,19 +8,12 @@ namespace Octokit.Tests.Integration.Clients
     {
         public class TheGetAllMethod
         {
-            readonly IGitHubClient _github;
-            readonly IOrganizationsClient _organizationsClient;
-
-            public TheGetAllMethod()
-            {
-                _github = EnterpriseHelper.GetAuthenticatedClient();
-
-                _organizationsClient = _github.Organization;
-            }
-
             [GitHubEnterpriseTest]
             public async Task CanListAllOrganizations()
             {
+                var github = EnterpriseHelper.GetAuthenticatedClient();
+                var organizationsClient = github.Organization;
+
                 string orgLogin1 = Helper.MakeNameWithTimestamp("MyOrganization1");
                 string orgName1 = string.Concat(orgLogin1, " Display Name 1");
                 string orgLogin2 = Helper.MakeNameWithTimestamp("MyOrganization2");
@@ -28,10 +21,10 @@ namespace Octokit.Tests.Integration.Clients
 
                 var newOrganization1 = new NewOrganization(orgLogin1, EnterpriseHelper.UserName, orgName1);
                 var newOrganization2 = new NewOrganization(orgLogin2, EnterpriseHelper.UserName, orgName2);
-                await _github.Enterprise.Organization.Create(newOrganization1);
-                await _github.Enterprise.Organization.Create(newOrganization2);
+                await github.Enterprise.Organization.Create(newOrganization1);
+                await github.Enterprise.Organization.Create(newOrganization2);
 
-                var organizations = await _organizationsClient.GetAll();
+                var organizations = await organizationsClient.GetAll();
 
                 Assert.Contains(organizations, (org => org.Login == orgLogin1));
                 Assert.Contains(organizations, (org => org.Login == orgLogin2));
@@ -40,6 +33,9 @@ namespace Octokit.Tests.Integration.Clients
             [GitHubEnterpriseTest]
             public async Task ReturnsCorrectOrganizationsWithSince()
             {
+                var github = EnterpriseHelper.GetAuthenticatedClient();
+                var organizationsClient = github.Organization;
+
                 string orgLogin1 = Helper.MakeNameWithTimestamp("MyOrganization1");
                 string orgName1 = string.Concat(orgLogin1, " Display Name 1");
                 string orgLogin2 = Helper.MakeNameWithTimestamp("MyOrganization2");
@@ -51,17 +47,33 @@ namespace Octokit.Tests.Integration.Clients
                 var newOrganization2 = new NewOrganization(orgLogin2, EnterpriseHelper.UserName, orgName2);
                 var newOrganization3 = new NewOrganization(orgLogin3, EnterpriseHelper.UserName, orgName3);
 
-                var createdOrganization1 = await _github.Enterprise.Organization.Create(newOrganization1);
-                var createdOrganization2 = await _github.Enterprise.Organization.Create(newOrganization2);
-                var createdOrganization3 = await _github.Enterprise.Organization.Create(newOrganization3);
+                var createdOrganization1 = await github.Enterprise.Organization.Create(newOrganization1);
+                var createdOrganization2 = await github.Enterprise.Organization.Create(newOrganization2);
+                var createdOrganization3 = await github.Enterprise.Organization.Create(newOrganization3);
 
                 var requestParameter = new OrganizationRequest(createdOrganization1.Id);
 
-                var organizations = await _organizationsClient.GetAll(requestParameter);
+                var organizations = await organizationsClient.GetAll(requestParameter);
 
                 Assert.DoesNotContain(organizations, (org => org.Login == orgLogin1));
                 Assert.Contains(organizations, (org => org.Login == orgLogin2));
                 Assert.Contains(organizations, (org => org.Login == orgLogin3));
+            }
+        }
+
+        public class TheGetMethod
+        {
+            [IntegrationTest]
+            [PotentiallyFlakyTest]
+            public async Task GetFreeOrganization()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var organization = await
+                    github.Organization.Get("snyrting6orggithub");
+
+                Assert.Equal(0, organization.Plan.Seats);
+                Assert.Equal(1, organization.Plan.FilledSeats);
             }
         }
 
