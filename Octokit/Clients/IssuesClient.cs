@@ -494,7 +494,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
+        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue  or pull request's conversation.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -511,7 +511,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
+        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue or pull request's conversation.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -524,7 +524,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
+        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue or pull request's conversation.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
@@ -540,7 +540,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
+        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue  or pull request's conversation.
         /// </summary>
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
