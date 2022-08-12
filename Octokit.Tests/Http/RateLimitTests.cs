@@ -79,6 +79,7 @@ namespace Octokit.Tests.Http
                 };
 
                 var rateLimit = new RateLimit(headers);
+
                 var deserialized = BinaryFormatterExtensions.SerializeAndDeserializeObject(rateLimit);
 
                 Assert.Equal(100, deserialized.Limit);

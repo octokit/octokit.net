@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 
 namespace Octokit
 {
@@ -16,9 +14,7 @@ namespace Octokit
     /// </para>
     /// <para>See https://docs.github.com/en/rest/overview/resources-in-the-rest-api#secondary-rate-limits for more details.</para>
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class SecondaryRateLimitExceededException : ForbiddenException
@@ -46,7 +42,6 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "Secondary API Rate Limit exceeded"; }
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of <see  cref="Octokit.SecondaryRateLimitExceededException"/>.
         /// </summary>
@@ -62,6 +57,5 @@ namespace Octokit
             : base(info, context)
         {
         }
-#endif
     }
 }

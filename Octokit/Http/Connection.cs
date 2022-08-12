@@ -8,9 +8,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
-#if !HAS_ENVIRONMENT
-using System.Runtime.InteropServices;
-#endif
 
 namespace Octokit
 {
@@ -790,17 +787,11 @@ namespace Octokit
                 try
                 {
                     _platformInformation = string.Format(CultureInfo.InvariantCulture,
-#if !HAS_ENVIRONMENT
-                        "{0}; {1}",
-                        RuntimeInformation.OSDescription.Trim(),
-                        RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant().Trim()
-#else
                         "{0} {1}; {2}",
                         Environment.OSVersion.Platform,
                         Environment.OSVersion.Version.ToString(3),
                         Environment.Is64BitOperatingSystem ? "amd64" : "x86"
-#endif
-                        );
+                    );
                 }
                 catch
                 {

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 
 namespace Octokit
 {
     /// <summary>
     /// Represents a HTTP 403 - Forbidden response returned from the API.
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class InvalidGitIgnoreTemplateException : ApiValidationException
@@ -38,7 +34,6 @@ namespace Octokit
             }
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of InvalidGitignoreTemplateException
         /// </summary>
@@ -53,6 +48,5 @@ namespace Octokit
         protected InvalidGitIgnoreTemplateException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }
-#endif
     }
 }

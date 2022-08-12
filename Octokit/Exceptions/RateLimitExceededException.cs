@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 using System.Security;
 
 namespace Octokit
@@ -18,9 +16,7 @@ namespace Octokit
     /// </para>
     /// <para>See http://developer.github.com/v3/#rate-limiting for more details.</para>
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class RateLimitExceededException : ForbiddenException
@@ -102,7 +98,6 @@ namespace Octokit
             return ts > TimeSpan.Zero ? ts : TimeSpan.Zero;
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of RateLimitExceededException
         /// </summary>
@@ -131,6 +126,5 @@ namespace Octokit
             info.AddValue("RateLimit", _rateLimit);
             info.AddValue(nameof(ApiInfo.ServerTimeDifference), _severTimeDiff);
         }
-#endif
     }
 }

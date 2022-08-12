@@ -74,8 +74,6 @@ namespace Octokit.Tests.Integration
 
         static readonly Lazy<Credentials> _githubAppCredentials = new Lazy<Credentials>(() =>
         {
-            // GitHubJwt nuget package only available for netstandard2.0+
-#if GITHUBJWT_HELPER_AVAILABLE
             var generator = new GitHubJwt.GitHubJwtFactory(
                 new GitHubJwt.FilePrivateKeySource(GitHubAppPemFile),
                 new GitHubJwt.GitHubJwtFactoryOptions
@@ -87,11 +85,6 @@ namespace Octokit.Tests.Integration
 
             var jwtToken = generator.CreateEncodedJwtToken();
             return new Credentials(jwtToken, AuthenticationType.Bearer);
-#else
-            // return null, which will cause the [GitHubAppTest]'s to not be discovered
-            return null;
-#endif
-
         });
 
         static readonly Lazy<Uri> _customUrl = new Lazy<Uri>(() =>

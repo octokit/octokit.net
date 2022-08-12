@@ -2,18 +2,14 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 
 namespace Octokit
 {
     /// <summary>
     /// 
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class TwoFactorRequiredException : TwoFactorAuthorizationException
@@ -50,7 +46,6 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "Two-factor authentication code is required"; }
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of TwoFactorRequiredException.
         /// </summary>
@@ -66,6 +61,5 @@ namespace Octokit
             : base(info, context)
         {
         }
-#endif
     }
 }
