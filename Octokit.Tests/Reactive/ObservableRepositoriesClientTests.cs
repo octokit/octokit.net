@@ -959,7 +959,7 @@ namespace Octokit.Tests.Reactive
             await gitHubClient.Connection.Received(0).Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>());
         }
 
-        static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
+        private IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
         {
             var response = Substitute.For<IResponse>();
             response.ApiInfo.Returns(new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())));
