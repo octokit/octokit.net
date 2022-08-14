@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -336,23 +337,23 @@ namespace Octokit.Tests.Reactive
                     }
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.GetResponse<List<Repository>>(firstPageUrl)
+                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult<IApiResponse<List<Repository>>>(firstPageResponse));
-                gitHubClient.Connection.GetResponse<List<Repository>>(secondPageUrl)
+                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult<IApiResponse<List<Repository>>>(secondPageResponse));
-                gitHubClient.Connection.GetResponse<List<Repository>>(thirdPageUrl)
+                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult<IApiResponse<List<Repository>>>(thirdPageResponse));
-                gitHubClient.Connection.GetResponse<List<Repository>>(fourthPageUrl)
+                gitHubClient.Connection.Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult<IApiResponse<List<Repository>>>(lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
                 var results = await repositoriesClient.GetAllForCurrent().Take(4).ToArray();
 
                 Assert.Equal(4, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, null, null);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, null, null);
-                gitHubClient.Connection.Received(0).Get<List<Repository>>(thirdPageUrl, null, null);
-                gitHubClient.Connection.Received(0).Get<List<Repository>>(fourthPageUrl, null, null);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>());
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>());
+                gitHubClient.Connection.Received(0).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>());
+                gitHubClient.Connection.Received(0).Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>());
             }
         }
 
