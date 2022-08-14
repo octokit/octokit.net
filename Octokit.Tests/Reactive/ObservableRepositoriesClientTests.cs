@@ -290,71 +290,71 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>());
             }
 
-            [Fact]
-            public async Task StopsMakingNewRequestsWhenTakeIsFulfilled()
-            {
-                var firstPageUrl = new Uri("user/repos", UriKind.Relative);
-                var secondPageUrl = new Uri("https://example.com/page/2");
-                var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
-                var firstPageResponse = new ApiResponse<List<Repository>>
-                (
-                    CreateResponseWithApiInfo(firstPageLinks),
-                    new List<Repository>
-                    {
-                        new Repository(1),
-                        new Repository(2),
-                        new Repository(3)
-                    }
-                );
-                var thirdPageUrl = new Uri("https://example.com/page/3");
-                var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
-                var secondPageResponse = new ApiResponse<List<Repository>>
-                (
-                    CreateResponseWithApiInfo(secondPageLinks),
-                    new List<Repository>
-                    {
-                        new Repository(4),
-                        new Repository(5),
-                        new Repository(6)
-                    }
-                );
-                var fourthPageUrl = new Uri("https://example.com/page/4");
-                var thirdPageLinks = new Dictionary<string, Uri> { { "next", fourthPageUrl } };
-                var thirdPageResponse = new ApiResponse<List<Repository>>
-                (
-                    CreateResponseWithApiInfo(thirdPageLinks),
-                    new List<Repository>
-                    {
-                        new Repository(7)
-                    }
-                );
-                var lastPageResponse = new ApiResponse<List<Repository>>
-                (
-                    CreateResponse(HttpStatusCode.OK),
-                    new List<Repository>
-                    {
-                        new Repository(8)
-                    }
-                );
-                var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>())
-                    .Returns(Task.FromResult<IApiResponse<List<Repository>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>())
-                    .Returns(Task.FromResult<IApiResponse<List<Repository>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>())
-                    .Returns(Task.FromResult<IApiResponse<List<Repository>>>(thirdPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>())
-                    .Returns(Task.FromResult<IApiResponse<List<Repository>>>(lastPageResponse));
-                var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
+            ////[Fact]
+            ////public async Task StopsMakingNewRequestsWhenTakeIsFulfilled()
+            ////{
+            ////    var firstPageUrl = new Uri("user/repos", UriKind.Relative);
+            ////    var secondPageUrl = new Uri("https://example.com/page/2");
+            ////    var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+            ////    var firstPageResponse = new ApiResponse<List<Repository>>
+            ////    (
+            ////        CreateResponseWithApiInfo(firstPageLinks),
+            ////        new List<Repository>
+            ////        {
+            ////            new Repository(1),
+            ////            new Repository(2),
+            ////            new Repository(3)
+            ////        }
+            ////    );
+            ////    var thirdPageUrl = new Uri("https://example.com/page/3");
+            ////    var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+            ////    var secondPageResponse = new ApiResponse<List<Repository>>
+            ////    (
+            ////        CreateResponseWithApiInfo(secondPageLinks),
+            ////        new List<Repository>
+            ////        {
+            ////            new Repository(4),
+            ////            new Repository(5),
+            ////            new Repository(6)
+            ////        }
+            ////    );
+            ////    var fourthPageUrl = new Uri("https://example.com/page/4");
+            ////    var thirdPageLinks = new Dictionary<string, Uri> { { "next", fourthPageUrl } };
+            ////    var thirdPageResponse = new ApiResponse<List<Repository>>
+            ////    (
+            ////        CreateResponseWithApiInfo(thirdPageLinks),
+            ////        new List<Repository>
+            ////        {
+            ////            new Repository(7)
+            ////        }
+            ////    );
+            ////    var lastPageResponse = new ApiResponse<List<Repository>>
+            ////    (
+            ////        CreateResponse(HttpStatusCode.OK),
+            ////        new List<Repository>
+            ////        {
+            ////            new Repository(8)
+            ////        }
+            ////    );
+            ////    var gitHubClient = Substitute.For<IGitHubClient>();
+            ////    gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>())
+            ////        .Returns(Task.FromResult<IApiResponse<List<Repository>>>(firstPageResponse));
+            ////    gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>())
+            ////        .Returns(Task.FromResult<IApiResponse<List<Repository>>>(secondPageResponse));
+            ////    gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>())
+            ////        .Returns(Task.FromResult<IApiResponse<List<Repository>>>(thirdPageResponse));
+            ////    gitHubClient.Connection.Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>())
+            ////        .Returns(Task.FromResult<IApiResponse<List<Repository>>>(lastPageResponse));
+            ////    var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
-                var results = await repositoriesClient.GetAllForCurrent().Take(4).ToArray();
+            ////    var results = await repositoriesClient.GetAllForCurrent().Take(4).ToArray();
 
-                Assert.Equal(4, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>());
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>());
-                gitHubClient.Connection.Received(0).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>());
-                gitHubClient.Connection.Received(0).Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>());
-            }
+            ////    Assert.Equal(4, results.Length);
+            ////    await gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>());
+            ////    await gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>());
+            ////    await gitHubClient.Connection.Received(0).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>());
+            ////    await gitHubClient.Connection.Received(0).Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>());
+            ////}
         }
 
         public class TheGetAllPublicRepositoriesSinceMethod
@@ -881,6 +881,82 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.Edit("", "repo", update));
                 Assert.Throws<ArgumentException>(() => client.Edit("owner", "", update));
             }
+        }
+
+        static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
+        {
+            var response = Substitute.For<IResponse>();
+            response.ApiInfo.Returns(new ApiInfo(links, new List<string>(), new List<string>(), "etag", new RateLimit(new Dictionary<string, string>())));
+            return response;
+        }
+    }
+
+    public class SeparatingTests
+    {
+        [Fact]
+        public async Task StopsMakingNewRequestsWhenTakeIsFulfilled()
+        {
+            var firstPageUrl = new Uri("user/repos", UriKind.Relative);
+            var secondPageUrl = new Uri("https://example.com/page/2");
+            var firstPageLinks = new Dictionary<string, Uri> { { "next", secondPageUrl } };
+            var firstPageResponse = new ApiResponse<List<Repository>>
+            (
+                CreateResponseWithApiInfo(firstPageLinks),
+                new List<Repository>
+                {
+                        new Repository(1),
+                        new Repository(2),
+                        new Repository(3)
+                }
+            );
+            var thirdPageUrl = new Uri("https://example.com/page/3");
+            var secondPageLinks = new Dictionary<string, Uri> { { "next", thirdPageUrl } };
+            var secondPageResponse = new ApiResponse<List<Repository>>
+            (
+                CreateResponseWithApiInfo(secondPageLinks),
+                new List<Repository>
+                {
+                        new Repository(4),
+                        new Repository(5),
+                        new Repository(6)
+                }
+            );
+            var fourthPageUrl = new Uri("https://example.com/page/4");
+            var thirdPageLinks = new Dictionary<string, Uri> { { "next", fourthPageUrl } };
+            var thirdPageResponse = new ApiResponse<List<Repository>>
+            (
+                CreateResponseWithApiInfo(thirdPageLinks),
+                new List<Repository>
+                {
+                        new Repository(7)
+                }
+            );
+            var lastPageResponse = new ApiResponse<List<Repository>>
+            (
+                CreateResponse(HttpStatusCode.OK),
+                new List<Repository>
+                {
+                        new Repository(8)
+                }
+            );
+            var gitHubClient = Substitute.For<IGitHubClient>();
+            gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>())
+                .Returns(Task.FromResult<IApiResponse<List<Repository>>>(firstPageResponse));
+            gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>())
+                .Returns(Task.FromResult<IApiResponse<List<Repository>>>(secondPageResponse));
+            gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>())
+                .Returns(Task.FromResult<IApiResponse<List<Repository>>>(thirdPageResponse));
+            gitHubClient.Connection.Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>())
+                .Returns(Task.FromResult<IApiResponse<List<Repository>>>(lastPageResponse));
+            var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
+
+            var results = await repositoriesClient.GetAllForCurrent().Take(4).ToArray();
+
+            Assert.Equal(4, results.Length);
+            await gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>());
+            await gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>());
+            await gitHubClient.Connection.Received(0).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>());
+            await gitHubClient.Connection.Received(0).Get<List<Repository>>(fourthPageUrl, Arg.Any<IDictionary<string, string>>());
         }
 
         static IResponse CreateResponseWithApiInfo(IDictionary<string, Uri> links)
