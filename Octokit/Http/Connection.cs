@@ -232,7 +232,7 @@ namespace Octokit
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
                 Endpoint = uri.ApplyParameters(parameters)
-            });
+            }, cancellationToken);
         }
 
         public Task<IApiResponse<T>> Patch<T>(Uri uri, object body)

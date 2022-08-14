@@ -111,13 +111,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The API resource's raw content or <c>null</c> if the <paramref name="uri"/> points to a directory.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<byte[]> GetRaw(Uri uri, IDictionary<string, string> parameters)
+        public async Task<byte[]> GetRaw(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await Connection.GetRaw(uri, parameters).ConfigureAwait(false);
+            var response = await Connection.GetRaw(uri, parameters, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -569,7 +570,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Executes a GET to the API object at the specified URI. This operation is appropriate for API calls which 
+        /// Executes a GET to the API object at the specified URI. This operation is appropriate for API calls which
         /// queue long running calculations and return a collection of a resource.
         /// It expects the API to respond with an initial 202 Accepted, and queries again until a 200 OK is received.
         /// It returns an empty collection if it receives a 204 No Content response.
