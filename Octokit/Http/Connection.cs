@@ -221,8 +221,9 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <remarks>The <see cref="IResponse.Body"/> property will be <c>null</c> if the <paramref name="uri"/> points to a directory instead of a file</remarks>
-        public Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters)
+        public Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -657,10 +658,10 @@ namespace Octokit
             return new ApiResponse<string>(response, response.Body as string);
         }
 
-        async Task<IApiResponse<byte[]>> GetRaw(IRequest request)
+        async Task<IApiResponse<byte[]>> GetRaw(IRequest request, CancellationToken cancellationToken = default)
         {
             request.Headers.Add("Accept", AcceptHeaders.RawContentMediaType);
-            var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
+            var response = await RunRequest(request, cancellationToken).ConfigureAwait(false);
             return new ApiResponse<byte[]>(response, response.Body as byte[]);
         }
 
