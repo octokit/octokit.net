@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -51,7 +52,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
         [ManualRoute("GET", "repos/{owner}/{repo}/contents/{path}")]
-        public Task<byte[]> GetRawContent(string owner, string name, string path)
+        public Task<byte[]> GetRawContent(string owner, string name, string path, CancellationToken cancellationToken)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -59,7 +60,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryContent(owner, name, path);
 
-            return ApiConnection.GetRaw(url, null);
+            return ApiConnection.GetRaw(url, null, cancellationToken);
         }
 
         /// <summary>
