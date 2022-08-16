@@ -30,6 +30,11 @@ namespace Octokit.Reactive
         /// </summary>
         public IObservablePullRequestReviewRequestsClient ReviewRequest { get; private set; }
 
+        /// <summary>
+        /// Client for locking/unlocking a conversation on a pull request
+        /// </summary>
+        public IObservableLockUnlockClient LockUnlock { get; private set; }
+
         public ObservablePullRequestsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, nameof(client));
@@ -39,6 +44,7 @@ namespace Octokit.Reactive
             Review = new ObservablePullRequestReviewsClient(client);
             ReviewComment = new ObservablePullRequestReviewCommentsClient(client);
             ReviewRequest = new ObservablePullRequestReviewRequestsClient(client);
+            LockUnlock = new ObservableLockUnlockClient(client);
         }
 
         /// <summary>

@@ -27,6 +27,11 @@ namespace Octokit.Reactive
         IObservablePullRequestReviewRequestsClient ReviewRequest { get; }
 
         /// <summary>
+        /// Client for locking/unlocking a conversation on a pull request
+        /// </summary>
+        IObservableLockUnlockClient LockUnlock { get; }
+
+        /// <summary>
         /// Gets a single Pull Request by number.
         /// </summary>
         /// <remarks>
