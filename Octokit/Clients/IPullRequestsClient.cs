@@ -29,6 +29,11 @@ namespace Octokit
         IPullRequestReviewRequestsClient ReviewRequest { get; }
 
         /// <summary>
+        /// Client for locking/unlocking a coversation on a pull request
+        /// </summary>
+        ILockUnlockClient LockUnlock { get; }
+
+        /// <summary>
         /// Get a pull request by number.
         /// </summary>
         /// <remarks>

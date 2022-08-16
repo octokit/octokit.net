@@ -18,6 +18,7 @@ namespace Octokit
             Review = new PullRequestReviewsClient(apiConnection);
             ReviewComment = new PullRequestReviewCommentsClient(apiConnection);
             ReviewRequest = new PullRequestReviewRequestsClient(apiConnection);
+            LockUnlock = new LockUnlockClient(apiConnection);
         }
 
         /// <summary>
@@ -34,6 +35,11 @@ namespace Octokit
         /// Client for managing review requests.
         /// </summary>
         public IPullRequestReviewRequestsClient ReviewRequest { get; set; }
+
+        /// <summary>
+        /// Client for locking/unlocking a coversation on a pull request
+        /// </summary>
+        public ILockUnlockClient LockUnlock { get; set; }
 
         /// <summary>
         /// Get a pull request by number.

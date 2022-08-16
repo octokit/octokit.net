@@ -654,6 +654,25 @@ public class PullRequestsClientTests : IDisposable
     }
 
     [IntegrationTest]
+    public async Task CanLockAndUnlock()
+    {
+        await CreateTheWorld();
+
+        var newPullRequest = new NewPullRequest("a pull request to lock", branchName, "main");
+        var pullRequest = await _fixture.Create(Helper.UserName, _context.RepositoryName, newPullRequest);
+
+        await _fixture.LockUnlock.Lock(Helper.UserName, _context.RepositoryName, pullRequest.Number, LockReason.OffTopic);
+        var retrived = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
+
+        Assert.Equal(retrived.ActiveLockReason, LockReason.OffTopic);
+
+        await _fixture.LockUnlock.Unlock(Helper.UserName, _context.RepositoryName, pullRequest.Number);
+        var unlocked = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
+
+        Assert.Equal(unlocked.ActiveLockReason, null);
+    }
+
+    [IntegrationTest]
     public async Task CanFindClosedPullRequest()
     {
         await CreateTheWorld();

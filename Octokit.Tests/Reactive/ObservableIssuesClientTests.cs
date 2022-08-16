@@ -647,7 +647,7 @@ public class ObservableIssuesClientTests
 
             client.Lock("fake", "repo", 42);
 
-            gitHubClient.Issue.Received().Lock("fake", "repo", 42);
+            gitHubClient.Issue.Received().LockUnlock.Lock("fake", "repo", 42);
         }
 
         [Fact]
@@ -658,7 +658,7 @@ public class ObservableIssuesClientTests
 
             client.Lock(1, 42);
 
-            gitHubClient.Issue.Received().Lock(1, 42);
+            gitHubClient.Issue.Received().LockUnlock.Lock(1, 42);
         }
 
         [Fact]
@@ -685,7 +685,7 @@ public class ObservableIssuesClientTests
 
             client.Unlock("fake", "repo", 42);
 
-            gitHubClient.Issue.Received().Unlock("fake", "repo", 42);
+            gitHubClient.Issue.Received().LockUnlock.Unlock("fake", "repo", 42);
         }
 
         [Fact]
@@ -696,7 +696,7 @@ public class ObservableIssuesClientTests
 
             client.Unlock(1, 42);
 
-            gitHubClient.Issue.Received().Unlock(1, 42);
+            gitHubClient.Issue.Received().LockUnlock.Unlock(1, 42);
         }
 
         [Fact]

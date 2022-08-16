@@ -486,7 +486,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Lock(owner, name, number, lockReason).ToObservable();
+            return _client.LockUnlock.Lock(owner, name, number, lockReason).ToObservable();
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Octokit.Reactive
         /// <param name="lockReason">The reason for locking the issue</param>
         public IObservable<Unit> Lock(long repositoryId, int number, LockReason? lockReason = null)
         {
-            return _client.Lock(repositoryId, number, lockReason).ToObservable();
+            return _client.LockUnlock.Lock(repositoryId, number, lockReason).ToObservable();
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Unlock(owner, name, number).ToObservable();
+            return _client.LockUnlock.Unlock(owner, name, number).ToObservable();
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Octokit.Reactive
         /// <param name="number">The issue number</param>
         public IObservable<Unit> Unlock(long repositoryId, int number)
         {
-            return _client.Unlock(repositoryId, number).ToObservable();
+            return _client.LockUnlock.Unlock(repositoryId, number).ToObservable();
         }
     }
 }
