@@ -669,7 +669,7 @@ public class PullRequestsClientTests : IDisposable
         await _fixture.LockUnlock.Unlock(Helper.UserName, _context.RepositoryName, pullRequest.Number);
         var unlocked = await _fixture.Get(Helper.UserName, _context.RepositoryName, pullRequest.Number);
 
-        Assert.Equal(unlocked.ActiveLockReason, null);
+        Assert.Null(unlocked.ActiveLockReason);
     }
 
     [IntegrationTest]
