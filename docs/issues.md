@@ -120,3 +120,23 @@ Label changes probably requires some explanation:
 
 If you're trying to populate the `Labels` collection by hand, you might hit
 some exceptional behaviour due to these rules.
+
+### Lock / Unlock
+
+The lock and unlock methods are available on the ILockUnlockClient on IIssuesClient.
+
+Heres a sample code for locking an issue:
+
+```csharp
+var issue = await client.Issue.Get("octokit", "octokit.net", 405);
+await client.LockUnlock.Lock("octokit", "octokit.net", 405, LockReason.OffTopic);
+```
+
+The active lock reason can be accessed via the LockReason property on Issues class.
+
+The code below demonstrates how to unlock an issue:
+
+```csharp
+var issue = await client.Issue.Get("octokit", "octokit.net", 405);
+await client.LockUnlock.Unlock("octokit", "octokit.net", 405);
+```

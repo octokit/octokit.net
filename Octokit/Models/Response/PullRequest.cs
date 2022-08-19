@@ -16,7 +16,7 @@ namespace Octokit
             Number = number;
         }
 
-        public PullRequest(long id, string nodeId, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool draft, bool? mergeable, MergeableState? mergeableState, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, bool? maintainerCanModify, IReadOnlyList<User> requestedReviewers, IReadOnlyList<Team> requestedTeams, IReadOnlyList<Label> labels)
+        public PullRequest(long id, string nodeId, string url, string htmlUrl, string diffUrl, string patchUrl, string issueUrl, string statusesUrl, int number, ItemState state, string title, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, DateTimeOffset? closedAt, DateTimeOffset? mergedAt, GitReference head, GitReference @base, User user, User assignee, IReadOnlyList<User> assignees, bool draft, bool? mergeable, MergeableState? mergeableState, User mergedBy, string mergeCommitSha, int comments, int commits, int additions, int deletions, int changedFiles, Milestone milestone, bool locked, bool? maintainerCanModify, IReadOnlyList<User> requestedReviewers, IReadOnlyList<Team> requestedTeams, IReadOnlyList<Label> labels, LockReason? activeLockReason)
         {
             Id = id;
             NodeId = nodeId;
@@ -55,6 +55,7 @@ namespace Octokit
             RequestedReviewers = requestedReviewers;
             RequestedTeams = requestedTeams;
             Labels = labels;
+            ActiveLockReason = activeLockReason;
         }
 
         /// <summary>
@@ -250,6 +251,11 @@ namespace Octokit
         public IReadOnlyList<Team> RequestedTeams { get; protected set; }
 
         public IReadOnlyList<Label> Labels { get; protected set; }
+
+        /// <summary>
+        /// Reason that the conversation was locked
+        /// </summary>
+        public StringEnum<LockReason>? ActiveLockReason { get; protected set; }
 
         internal string DebuggerDisplay
         {

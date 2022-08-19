@@ -241,12 +241,12 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.False(issue.Locked);
 
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
         Assert.True(retrieved.Locked);
 
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
         Assert.False(retrieved.Locked);
@@ -259,7 +259,7 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.False(issue.Locked);
 
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number, LockReason.OffTopic);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number, LockReason.OffTopic);
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
         Assert.True(retrieved.Locked);
@@ -273,12 +273,12 @@ public class IssuesClientTests : IDisposable
         var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
         Assert.False(issue.Locked);
 
-        await _issuesClient.Lock(_context.Repository.Id, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.Repository.Id, issue.Number);
         var retrieved = await _issuesClient.Get(_context.Repository.Id, issue.Number);
         Assert.NotNull(retrieved);
         Assert.True(retrieved.Locked);
 
-        await _issuesClient.Unlock(_context.Repository.Id, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.Repository.Id, issue.Number);
         retrieved = await _issuesClient.Get(_context.Repository.Id, issue.Number);
         Assert.NotNull(retrieved);
         Assert.False(retrieved.Locked);

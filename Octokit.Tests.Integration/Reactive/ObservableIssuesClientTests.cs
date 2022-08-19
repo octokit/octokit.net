@@ -118,11 +118,11 @@ public class ObservableIssuesClientTests : IDisposable
         var createResult = await _client.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
         Assert.False(createResult.Locked);
 
-        await _client.Lock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+        await _client.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
         var lockResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
         Assert.True(lockResult.Locked);
 
-        await _client.Unlock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
+        await _client.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
         var unlockIssueResult = await _client.Get(_context.RepositoryOwner, _context.RepositoryName, createResult.Number);
         Assert.False(unlockIssueResult.Locked);
     }
