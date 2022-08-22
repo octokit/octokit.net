@@ -4459,26 +4459,57 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the Pacakges GET request
+        /// Returns the <see cref="Uri"/> for the Packages request
         /// </summary>
         /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
-        public static Uri Packages(string org, PackageType packageType, PackageVisibility? packageVisibility)
+        public static Uri Packages(string org)
         {
-            if (packageVisibility == null)
-            {
-                return "/orgs/{0}/packages?package_type={1}".FormatUri(org, packageType.ToParameter());
-            }
-
-            return "/orgs/{0}/packages?package_type={1}&visibility={2}".FormatUri(org, packageType.ToParameter(), packageVisibility.ToParameter());
+            return "/orgs/{0}/packages".FormatUri(org);
         }
 
         /// <summary>
-        /// Returns the <see cref="Uri"/> for the Pacakges GET request
+        /// Returns the <see cref="Uri"/> for the Package request
         /// </summary>
-        /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri Package(string org, PackageType packageType, string packageName)
         {
             return "/orgs/{0}/packages/{1}/{2}".FormatUri(org, packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Restore request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package Restore endpoint.</returns>
+        public static Uri PackageRestore(string org, PackageType packageType, string packageName)
+        {
+            return "/orgs/{0}/packages/{1}/{2}/restore".FormatUri(org, packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Versions request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersions(string org, PackageType packageType, string packageName)
+        {
+            return "/orgs/{0}/packages/{1}/{2}/versions".FormatUri(org, packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Version request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersion(string org, PackageType packageType, string packageName, int packageVersionId)
+        {
+            return "/orgs/{0}/packages/{1}/{2}/versions/{3}".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Version request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersionRestore(string org, PackageType packageType, string packageName, int packageVersionId)
+        {
+            return "/orgs/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
         }
     }
 }

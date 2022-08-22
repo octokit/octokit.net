@@ -1,9 +1,7 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
-using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
-using System.Text;
 
 namespace Octokit.Reactive
 {
@@ -32,8 +30,12 @@ namespace Octokit.Reactive
         public IObservable<Package> GetAll(string org, PackageType packageType, PackageVisibility? packageVisibility = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return _connection.GetAndFlattenAllPages<Package>(ApiUrls.Packages(org, packageType, packageVisibility));
+            var route = ApiUrls.Packages(org);
+            var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
+
+            return _connection.GetAndFlattenAllPages<Package>(route, parameters);
         }
 
         /// <summary>
@@ -47,6 +49,10 @@ namespace Octokit.Reactive
         /// <param name="packageName">Required: The name of the package</param>
         public IObservable<Package> Get(string org, PackageType packageType, string packageName)
         {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
+
             return _client.Get(org, packageType, packageName).ToObservable();
         }
 
@@ -62,8 +68,19 @@ namespace Octokit.Reactive
         public IObservable<Unit> Delete(string org, PackageType packageType, string packageName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             return _client.Delete(org, packageType, packageName).ToObservable();
+        }
+
+        public IObservable<Unit> Restore(string org, PackageType packageType, string packageName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
+
+            return _client.Restore(org, packageType, packageName).ToObservable();
         }
     }
 }

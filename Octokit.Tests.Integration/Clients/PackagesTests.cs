@@ -31,4 +31,20 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
     }
+
+    public class PackageVersionTests
+    {
+        public class TheGetAllMethod
+        {
+            [IntegrationTest]
+            public async Task ReturnsAllPackageVersions()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var result = await github.Packages.PackageVersions.GetAll(Helper.Organization, PackageType.Container, "asd");
+
+                Assert.Empty(result);
+            }
+        }
+    }
 }
