@@ -4471,5 +4471,14 @@ namespace Octokit
 
             return "/orgs/{0}/packages?package_type={1}&visibility={2}".FormatUri(org, packageType.ToParameter(), packageVisibility.ToParameter());
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Pacakges GET request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
+        public static Uri Package(string org, PackageType packageType, string packageName)
+        {
+            return "/orgs/{0}/packages/{1}/{2}".FormatUri(org, packageType.ToParameter(), packageName);
+        }
     }
 }

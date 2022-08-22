@@ -1,18 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Octokit.Reactive.Internal;
+using System;
+using System.Collections.Generic;
+using System.Reactive;
+using System.Reactive.Threading.Tasks;
+using System.Text;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
-    /// <summary>
-    /// A client for GitHub's Packages API.
-    /// </summary>
-    /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/packages">Packages API documentation</a> for more details.
-    /// </remarks>
-    public class PackagesClient : ApiClient, IPackagesClient
+    public class ObservablePackagesClient : IObservablePackagesClient
     {
-        public PackagesClient(IApiConnection apiConnection) : base(apiConnection)
+        readonly IPackagesClient _client;
+        readonly IConnection _connection;
+
+        public ObservablePackagesClient(IGitHubClient client)
         {
+            Ensure.ArgumentNotNull(client, nameof(client));
+
+            _client = client.Packages;
+            _connection = client.Connection;
         }
 
         /// <summary>
@@ -24,12 +29,11 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        [ManualRoute("GET", "/orgs/{org}/packages")]
-        public Task<IReadOnlyList<Package>> GetAll(string org, PackageType packageType, PackageVisibility? packageVisibility = null)
+        public IObservable<Package> GetAll(string org, PackageType packageType, PackageVisibility? packageVisibility = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<Package>(ApiUrls.Packages(org, packageType, packageVisibility));
+            return _connection.GetAndFlattenAllPages<Package>(ApiUrls.Packages(org, packageType, packageVisibility));
         }
 
         /// <summary>
@@ -41,12 +45,9 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        [ManualRoute("GET", "/orgs/{org}/packages/{package_type}/{package_name}")]
-        public Task<Package> Get(string org, PackageType packageType, string packageName)
+        public IObservable<Package> Get(string org, PackageType packageType, string packageName)
         {
-            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-
-            return ApiConnection.Get<Package>(ApiUrls.Package(org, packageType, packageName));
+            return _client.Get(org, packageType, packageName).ToObservable();
         }
 
         /// <summary>
@@ -58,12 +59,11 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        [ManualRoute("DELETE", "/orgs/{org}/packages/{package_type}/{package_name}")]
-        public Task Delete(string org, PackageType packageType, string packageName)
+        public IObservable<Unit> Delete(string org, PackageType packageType, string packageName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.Delete(ApiUrls.Package(org, packageType, packageName));
+            return _client.Delete(org, packageType, packageName).ToObservable();
         }
     }
 }

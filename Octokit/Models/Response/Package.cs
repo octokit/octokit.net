@@ -36,7 +36,7 @@ namespace Octokit
         /// <summary>
         /// The Type of the package
         /// </summary>
-        public PackageType PackageType { get; private set; }
+        public StringEnum<PackageType> PackageType { get; private set; }
 
         /// <summary>
         /// The Owner of the package
@@ -51,7 +51,7 @@ namespace Octokit
         /// <summary>
         /// The Visibility of the package
         /// </summary>
-        public PackageVisibility Visibility { get; private set; }
+        public StringEnum<PackageVisibility> Visibility { get; private set; }
 
         /// <summary>
         /// The Url of the package
