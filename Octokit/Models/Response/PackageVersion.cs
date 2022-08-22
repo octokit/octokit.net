@@ -10,6 +10,18 @@ namespace Octokit
     {
         public PackageVersion() { }
 
+        public PackageVersion(long id, string name, string url, string packageHtmlUrl, DateTime createdAt, DateTime updatedAt, string htmlUrl, PackageVersionMetadata metadata)
+        {
+            Id = id;
+            Name = name;
+            Url = url;
+            PackageHtmlUrl = packageHtmlUrl;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            HtmlUrl = htmlUrl;
+            Metadata = metadata;
+        }
+
         public long Id { get; private set; }
 
         public string Name { get; private set; }

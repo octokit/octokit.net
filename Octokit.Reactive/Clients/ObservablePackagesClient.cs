@@ -18,6 +18,8 @@ namespace Octokit.Reactive
             _connection = client.Connection;
         }
 
+        public IObservablePackageVersionsClient PackageVersions { get; private set; }
+
         /// <summary>
         /// List all packages for an organisations, readable by the current user
         /// </summary>
@@ -74,6 +76,15 @@ namespace Octokit.Reactive
             return _client.Delete(org, packageType, packageName).ToObservable();
         }
 
+        /// <summary>
+        /// Restore a specific package for an Organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#restore-a-package-for-an-organization">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="org">Required: Organisation Name</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageName">Required: The name of the package</param>
         public IObservable<Unit> Restore(string org, PackageType packageType, string packageName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
