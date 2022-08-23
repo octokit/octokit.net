@@ -24,9 +24,7 @@ namespace Octokit
         public Task<IReadOnlyList<PackageVersion>> GetAll(string org, PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
-            Ensure.ArgumentNotNull(state, nameof(state));
             Ensure.ApiOptionsNotNull(ref options);
 
             var route = ApiUrls.PackageVersions(org, packageType, packageName);
@@ -76,7 +74,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
-            var route = ApiUrls.PackageVersionRestore(org, packageType, packageName, packageVersionId);
+            var route = ApiUrls.PackageVersion(org, packageType, packageName, packageVersionId);
             return ApiConnection.Delete(route);
         }
 
@@ -94,7 +92,6 @@ namespace Octokit
         public Task Restore(string org, PackageType packageType, string packageName, int packageVersionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 

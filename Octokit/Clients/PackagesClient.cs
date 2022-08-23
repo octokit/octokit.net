@@ -31,7 +31,6 @@ namespace Octokit
         public Task<IReadOnlyList<Package>> GetAll(string org, PackageType packageType, PackageVisibility? packageVisibility = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
             var route = ApiUrls.Packages(org);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
@@ -52,7 +51,6 @@ namespace Octokit
         public Task<Package> Get(string org, PackageType packageType, string packageName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.Package(org, packageType, packageName);
@@ -73,7 +71,6 @@ namespace Octokit
         public Task Delete(string org, PackageType packageType, string packageName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.Package(org, packageType, packageName);
@@ -94,7 +91,6 @@ namespace Octokit
         public Task Restore(string org, PackageType packageType, string packageName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageRestore(org, packageType, packageName);

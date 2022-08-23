@@ -32,9 +32,7 @@ namespace Octokit.Reactive
         public IObservable<PackageVersion> GetAll(string org, PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
-            Ensure.ArgumentNotNull(state, nameof(state));
             Ensure.ApiOptionsNotNull(ref options);
 
             var route = ApiUrls.PackageVersions(org, packageType, packageName);
@@ -56,7 +54,6 @@ namespace Octokit.Reactive
         public IObservable<PackageVersion> Get(string org, PackageType packageType, string packageName, int packageVersionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
@@ -76,7 +73,6 @@ namespace Octokit.Reactive
         public IObservable<Unit> Delete(string org, PackageType packageType, string packageName, int packageVersionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
@@ -96,7 +92,6 @@ namespace Octokit.Reactive
         public IObservable<Unit> Restore(string org, PackageType packageType, string packageName, int packageVersionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
