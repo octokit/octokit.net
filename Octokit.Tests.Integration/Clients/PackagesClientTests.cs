@@ -3,16 +3,16 @@ using Xunit;
 
 namespace Octokit.Tests.Integration.Clients
 {
-    public class PackageVersionTests
+    public class PackagesClientTests
     {
         public class TheGetAllMethod
         {
             [IntegrationTest(Skip = "Cannot create packages as part of this test, so can never succeed")]
-            public async Task ReturnsAllPackageVersions()
+            public async Task ReturnsAllPackages()
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var result = await github.Packages.PackageVersions.GetAll(Helper.Organization, PackageType.Container, "asd");
+                var result = await github.Packages.GetAllForOrg(Helper.Organization, PackageType.Container);
 
                 Assert.NotEmpty(result);
             }
@@ -25,7 +25,7 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var github = Helper.GetAuthenticatedClient();
 
-                var result = await github.Packages.PackageVersions.Get(Helper.Organization, PackageType.Container, "asd", 1);
+                var result = await github.Packages.GetForOrg(Helper.Organization, PackageType.Container, "asd");
 
                 Assert.NotNull(result);
             }

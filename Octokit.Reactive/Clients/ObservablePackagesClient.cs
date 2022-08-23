@@ -34,7 +34,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            var route = ApiUrls.Packages(org);
+            var route = ApiUrls.PackagesOrg(org);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
             return _connection.GetAndFlattenAllPages<Package>(route, parameters);
@@ -55,7 +55,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.Get(org, packageType, packageName).ToObservable();
+            return _client.GetForOrg(org, packageType, packageName).ToObservable();
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.Delete(org, packageType, packageName).ToObservable();
+            return _client.DeleteForOrg(org, packageType, packageName).ToObservable();
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.Restore(org, packageType, packageName).ToObservable();
+            return _client.RestoreForOrg(org, packageType, packageName).ToObservable();
         }
     }
 }

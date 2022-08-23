@@ -65,7 +65,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get("fake", PackageType.Npm, "name");
 
-                gitHubClient.Packages.Received().Get("fake", PackageType.Npm, "name");
+                gitHubClient.Packages.Received().GetForOrg("fake", PackageType.Npm, "name");
             }
 
             [Fact]
@@ -91,7 +91,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Delete("fake", PackageType.Npm, "name");
 
-                gitHubClient.Packages.Received(1).Delete("fake", PackageType.Npm, "name");
+                gitHubClient.Packages.Received(1).DeleteForOrg("fake", PackageType.Npm, "name");
             }
 
             [Fact]
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Restore("fake", PackageType.Npm, "name");
 
-                gitHubClient.Packages.Received(1).Restore("fake", PackageType.Npm, "name");
+                gitHubClient.Packages.Received(1).RestoreForOrg("fake", PackageType.Npm, "name");
             }
 
             [Fact]

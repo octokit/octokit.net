@@ -4462,7 +4462,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the Packages request
         /// </summary>
         /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
-        public static Uri Packages(string org)
+        public static Uri PackagesOrg(string org)
         {
             return "/orgs/{0}/packages".FormatUri(org);
         }
@@ -4471,7 +4471,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the Package request
         /// </summary>
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
-        public static Uri Package(string org, PackageType packageType, string packageName)
+        public static Uri PackageOrg(string org, PackageType packageType, string packageName)
         {
             return "/orgs/{0}/packages/{1}/{2}".FormatUri(org, packageType.ToParameter(), packageName);
         }
@@ -4480,7 +4480,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the Package Restore request
         /// </summary>
         /// <returns>The <see cref="Uri"/> Package Restore endpoint.</returns>
-        public static Uri PackageRestore(string org, PackageType packageType, string packageName)
+        public static Uri PackageRestoreOrg(string org, PackageType packageType, string packageName)
         {
             return "/orgs/{0}/packages/{1}/{2}/restore".FormatUri(org, packageType.ToParameter(), packageName);
         }
@@ -4489,7 +4489,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the Package Versions request
         /// </summary>
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
-        public static Uri PackageVersions(string org, PackageType packageType, string packageName)
+        public static Uri PackageVersionsOrg(string org, PackageType packageType, string packageName)
         {
             return "/orgs/{0}/packages/{1}/{2}/versions".FormatUri(org, packageType.ToParameter(), packageName);
         }
@@ -4498,7 +4498,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the Package Version request
         /// </summary>
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
-        public static Uri PackageVersion(string org, PackageType packageType, string packageName, int packageVersionId)
+        public static Uri PackageVersionOrg(string org, PackageType packageType, string packageName, int packageVersionId)
         {
             return "/orgs/{0}/packages/{1}/{2}/versions/{3}".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
         }
@@ -4507,9 +4507,117 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the Package Version request
         /// </summary>
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
-        public static Uri PackageVersionRestore(string org, PackageType packageType, string packageName, int packageVersionId)
+        public static Uri PackageVersionRestoreOrg(string org, PackageType packageType, string packageName, int packageVersionId)
         {
             return "/orgs/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Packages request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
+        public static Uri PackagesActiveUser()
+        {
+            return "/user/packages".FormatUri();
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageActiveUser(PackageType packageType, string packageName)
+        {
+            return "/user/packages/{0}/{1}".FormatUri(packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Restore request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package Restore endpoint.</returns>
+        public static Uri PackageRestoreActiveUser(PackageType packageType, string packageName)
+        {
+            return "/user/packages/{0}/{1}/restore".FormatUri(packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Versions request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersionsActiveUser(PackageType packageType, string packageName)
+        {
+            return "/user/packages/{0}/{1}/versions".FormatUri(packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Version request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersionActiveUser(PackageType packageType, string packageName, int packageVersionId)
+        {
+            return "/user/packages/{0}/{1}/versions/{2}".FormatUri(packageType.ToParameter(), packageName, packageVersionId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Version request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersionRestoreActiveUser(PackageType packageType, string packageName, int packageVersionId)
+        {
+            return "/user/packages/{0}/{1}/versions/{2}/restore".FormatUri(packageType.ToParameter(), packageName, packageVersionId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Packages request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
+        public static Uri PackagesUser(string username)
+        {
+            return "/users/{0}/packages".FormatUri(username);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageUser(string username, PackageType packageType, string packageName)
+        {
+            return "/users/{0}/packages/{1}/{2}".FormatUri(username, packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Restore request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package Restore endpoint.</returns>
+        public static Uri PackageRestoreUser(string username, PackageType packageType, string packageName)
+        {
+            return "/users/{0}/packages/{1}/{2}/restore".FormatUri(username, packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Versions request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersionsUser(string username, PackageType packageType, string packageName)
+        {
+            return "/users/{0}/packages/{1}/{2}/versions".FormatUri(username, packageType.ToParameter(), packageName);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Version request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersionUser(string username, PackageType packageType, string packageName, int packageVersionId)
+        {
+            return "/users/{0}/packages/{1}/{2}/versions/{3}".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Package Version request
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
+        public static Uri PackageVersionRestoreUser(string username, PackageType packageType, string packageName, int packageVersionId)
+        {
+            return "/users/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
         }
     }
 }

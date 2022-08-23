@@ -35,7 +35,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.ApiOptionsNotNull(ref options);
 
-            var route = ApiUrls.PackageVersions(org, packageType, packageName);
+            var route = ApiUrls.PackageVersionsOrg(org, packageType, packageName);
             var parameters = ParameterBuilder.AddParameter("state", state);
 
             return _connection.GetAndFlattenAllPages<PackageVersion>(route, parameters);
@@ -57,7 +57,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
-            return _client.Get(org, packageType, packageName, packageVersionId).ToObservable();
+            return _client.GetForOrg(org, packageType, packageName, packageVersionId).ToObservable();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
-            return _client.Delete(org, packageType, packageName, packageVersionId).ToObservable();
+            return _client.DeleteForOrg(org, packageType, packageName, packageVersionId).ToObservable();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Octokit.Reactive
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
 
-            return _client.Restore(org, packageType, packageName, packageVersionId).ToObservable();
+            return _client.RestoreForOrg(org, packageType, packageName, packageVersionId).ToObservable();
         }
     }
 }
