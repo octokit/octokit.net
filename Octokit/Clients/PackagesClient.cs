@@ -105,7 +105,7 @@ namespace Octokit
         /// Lists packages owned by the authenticated user within the user's namespace
         /// </summary>
         /// <remarks>
-        /// See the <a href="list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
@@ -218,7 +218,7 @@ namespace Octokit
         /// Deletes an entire package for a user.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/rest/packages#delete-a-package-for-an-organization">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/packages#delete-a-package-for-a-user">API documentation</a> for more details
         /// </remarks>
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>

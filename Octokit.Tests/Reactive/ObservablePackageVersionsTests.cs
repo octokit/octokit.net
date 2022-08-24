@@ -25,7 +25,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePackageVersionsClient(gitHubClient);
 
-                client.GetAll("fake", PackageType.RubyGems, "name");
+                client.GetAllForOrg("fake", PackageType.RubyGems, "name");
 
                 gitHubClient.Connection.Received().Get<List<PackageVersion>>(
                     new Uri("/orgs/fake/packages/rubygems/name/versions", UriKind.Relative),
@@ -38,7 +38,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePackageVersionsClient(gitHubClient);
 
-                client.GetAll("fake", PackageType.RubyGems, "name", PackageVersionState.Deleted);
+                client.GetAllForOrg("fake", PackageType.RubyGems, "name", PackageVersionState.Deleted);
 
                 gitHubClient.Connection.Received().Get<List<PackageVersion>>(
                     Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/rubygems/name/versions"),
@@ -50,11 +50,11 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservablePackageVersionsClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll(null, PackageType.Nuget, "name"));
-                Assert.Throws<ArgumentException>(() => client.GetAll("", PackageType.Nuget, "name"));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForOrg(null, PackageType.Nuget, "name"));
+                Assert.Throws<ArgumentException>(() => client.GetAllForOrg("", PackageType.Nuget, "name"));
 
-                Assert.Throws<ArgumentNullException>(() => client.GetAll("fake", PackageType.Nuget, null));
-                Assert.Throws<ArgumentException>(() => client.GetAll("fake", PackageType.Nuget, ""));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllForOrg("fake", PackageType.Nuget, null));
+                Assert.Throws<ArgumentException>(() => client.GetAllForOrg("fake", PackageType.Nuget, ""));
             }
         }
 
@@ -66,7 +66,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePackageVersionsClient(gitHubClient);
 
-                client.Get("fake", PackageType.Npm, "name", 5);
+                client.GetForOrg("fake", PackageType.Npm, "name", 5);
 
                 gitHubClient.Packages.PackageVersions.Received().GetForOrg("fake", PackageType.Npm, "name", 5);
             }
@@ -76,13 +76,13 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservablePackageVersionsClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Get(null, PackageType.Npm, "asd", 5));
-                Assert.Throws<ArgumentException>(() => client.Get("", PackageType.Npm, "asd", 5));
+                Assert.Throws<ArgumentNullException>(() => client.GetForOrg(null, PackageType.Npm, "asd", 5));
+                Assert.Throws<ArgumentException>(() => client.GetForOrg("", PackageType.Npm, "asd", 5));
 
-                Assert.Throws<ArgumentNullException>(() => client.Get("owner", PackageType.Npm, null, 5));
-                Assert.Throws<ArgumentException>(() => client.Get("owner", PackageType.Npm, "", 5));
+                Assert.Throws<ArgumentNullException>(() => client.GetForOrg("owner", PackageType.Npm, null, 5));
+                Assert.Throws<ArgumentException>(() => client.GetForOrg("owner", PackageType.Npm, "", 5));
 
-                Assert.Throws<ArgumentException>(() => client.Get("owner", PackageType.Npm, "asd", 0));
+                Assert.Throws<ArgumentException>(() => client.GetForOrg("owner", PackageType.Npm, "asd", 0));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePackageVersionsClient(gitHubClient);
 
-                client.Delete("fake", PackageType.Npm, "name", 5);
+                client.DeleteForOrg("fake", PackageType.Npm, "name", 5);
 
                 gitHubClient.Packages.PackageVersions.Received(1).DeleteForOrg("fake", PackageType.Npm, "name", 5);
             }
@@ -104,13 +104,13 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservablePackageVersionsClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Delete(null, PackageType.Npm, "asd", 5));
-                Assert.Throws<ArgumentException>(() => client.Delete("", PackageType.Npm, "asd", 5));
+                Assert.Throws<ArgumentNullException>(() => client.DeleteForOrg(null, PackageType.Npm, "asd", 5));
+                Assert.Throws<ArgumentException>(() => client.DeleteForOrg("", PackageType.Npm, "asd", 5));
 
-                Assert.Throws<ArgumentNullException>(() => client.Delete("owner", PackageType.Npm, null, 5));
-                Assert.Throws<ArgumentException>(() => client.Delete("owner", PackageType.Npm, "", 5));
+                Assert.Throws<ArgumentNullException>(() => client.DeleteForOrg("owner", PackageType.Npm, null, 5));
+                Assert.Throws<ArgumentException>(() => client.DeleteForOrg("owner", PackageType.Npm, "", 5));
 
-                Assert.Throws<ArgumentException>(() => client.Delete("owner", PackageType.Npm, "asd", 0));
+                Assert.Throws<ArgumentException>(() => client.DeleteForOrg("owner", PackageType.Npm, "asd", 0));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservablePackageVersionsClient(gitHubClient);
 
-                client.Restore("fake", PackageType.Npm, "name", 5);
+                client.RestoreForOrg("fake", PackageType.Npm, "name", 5);
 
                 gitHubClient.Packages.PackageVersions.Received(1).RestoreForOrg("fake", PackageType.Npm, "name", 5);
             }
@@ -132,13 +132,13 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservablePackageVersionsClient(Substitute.For<IGitHubClient>());
 
-                Assert.Throws<ArgumentNullException>(() => client.Restore(null, PackageType.Npm, "asd", 5));
-                Assert.Throws<ArgumentException>(() => client.Restore("", PackageType.Npm, "asd", 5));
+                Assert.Throws<ArgumentNullException>(() => client.RestoreForOrg(null, PackageType.Npm, "asd", 5));
+                Assert.Throws<ArgumentException>(() => client.RestoreForOrg("", PackageType.Npm, "asd", 5));
 
-                Assert.Throws<ArgumentNullException>(() => client.Restore("owner", PackageType.Npm, null, 5));
-                Assert.Throws<ArgumentException>(() => client.Restore("owner", PackageType.Npm, "", 5));
+                Assert.Throws<ArgumentNullException>(() => client.RestoreForOrg("owner", PackageType.Npm, null, 5));
+                Assert.Throws<ArgumentException>(() => client.RestoreForOrg("owner", PackageType.Npm, "", 5));
                 
-                Assert.Throws<ArgumentException>(() => client.Restore("owner", PackageType.Npm, "asd", 0));
+                Assert.Throws<ArgumentException>(() => client.RestoreForOrg("owner", PackageType.Npm, "asd", 0));
             }
         }
     }
