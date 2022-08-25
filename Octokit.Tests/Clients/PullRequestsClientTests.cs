@@ -461,7 +461,7 @@ namespace Octokit.Tests.Clients
                 await client.Files("fake", "repo", 42);
 
                 connection.Received()
-                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/files"));
+                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/files"), Args.ApiOptions);
             }
 
             [Fact]
@@ -473,7 +473,7 @@ namespace Octokit.Tests.Clients
                 await client.Files(1, 42);
 
                 connection.Received()
-                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42/files"));
+                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42/files"), Args.ApiOptions);
             }
 
             [Fact]

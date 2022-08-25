@@ -443,7 +443,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, number), null, options);
+            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, number), options);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/files")]
         public Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int number, ApiOptions options)
         {
-            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number), null, options);
+            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number), options);
         }
     }
 }

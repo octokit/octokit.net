@@ -704,7 +704,7 @@ namespace Octokit.Tests.Reactive
                     CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestFile> { file }
                 );
-                connection.Get<List<PullRequestFile>>(Args.Uri, null)
+                connection.Get<List<PullRequestFile>>(Args.Uri, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -713,7 +713,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Equal(1, files.Count);
                 Assert.Same(file, files[0]);
-                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), null);
+                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]
@@ -728,7 +728,7 @@ namespace Octokit.Tests.Reactive
                     CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestFile> { file }
                 );
-                connection.Get<List<PullRequestFile>>(Args.Uri, null)
+                connection.Get<List<PullRequestFile>>(Args.Uri, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -737,7 +737,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Equal(1, files.Count);
                 Assert.Same(file, files[0]);
-                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), null);
+                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]
