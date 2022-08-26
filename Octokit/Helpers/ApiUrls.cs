@@ -4457,5 +4457,15 @@ namespace Octokit
         {
             return "meta".FormatUri();
         }
+
+        public static Uri AllOrganizationCredentials(string org)
+        {
+            return "orgs/{0}/credential-authorizations".FormatUri(org);
+        }
+
+        public static Uri AllOrganizationCredentials(string org, string login)
+        {
+            return "orgs/{0}/credential-authorizations?login={1}".FormatUri(org, login);
+        }
     }
 }

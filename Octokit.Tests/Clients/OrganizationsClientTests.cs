@@ -192,5 +192,102 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Update("", new OrganizationUpdate()));
             }
         }
+
+        public class TheGetAllAuthorizationsMethod
+        {
+            [Fact]
+            public async Task RequestTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await client.GetAllAuthorizations("fake");
+
+                connection.Received().GetAll<OrganizationCredential>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/credential-authorizations"));
+            }
+
+            [Fact]
+            public async Task RequestTheCorrectUrlWithOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+                
+                await client.GetAllAuthorizations("fake", new ApiOptions() { PageCount = 1, PageSize = 1, StartPage = 1});
+
+                connection.Received().GetAll<OrganizationCredential>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/credential-authorizations"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task RequestTheCorrectUrlWithLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await client.GetAllAuthorizations("fake", "login");
+
+                connection.Received().GetAll<OrganizationCredential>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/credential-authorizations?login=login"));
+            }
+
+            [Fact]
+            public async Task RequestTheCorrectUrlWithLoginAndUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await client.GetAllAuthorizations("fake", "login", new ApiOptions() { PageCount = 1, PageSize = 1, StartPage = 1 });
+
+                connection.Received().GetAll<OrganizationCredential>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/credential-authorizations?login=login"), Args.ApiOptions);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations(null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAuthorizations(""));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArgumentsWithOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations(null, new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAuthorizations("", new ApiOptions()));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations("asd", (ApiOptions)null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArgumentsWithLogin()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations(null, "asd"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAuthorizations("", "asd"));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations("asd", (string)null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAuthorizations("asd", ""));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArgumentsWithLoginAndOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations(null, "asd", new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAuthorizations("", "asd", new ApiOptions()));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations("asd", (string)null, new ApiOptions()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllAuthorizations("asd", "", new ApiOptions()));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllAuthorizations("asd", "asd", null));
+            }
+        }
     }
 }

@@ -113,5 +113,13 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
         Task<Organization> Update(string org, OrganizationUpdate updateRequest);
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org);
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, ApiOptions options);
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login);
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, ApiOptions options);
     }
 }
