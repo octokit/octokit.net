@@ -113,13 +113,37 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
         Task<Organization> Update(string org, OrganizationUpdate updateRequest);
-        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org);
-        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, ApiOptions options);
-        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login);
-        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, ApiOptions options);
     }
 }

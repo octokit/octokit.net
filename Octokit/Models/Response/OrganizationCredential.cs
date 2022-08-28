@@ -9,6 +9,36 @@ namespace Octokit
     {
         public OrganizationCredential() { }
 
+        public OrganizationCredential(
+            string login,
+            long credentialId,
+            string credentialType,
+            string tokenLastEight,
+            DateTime credentialAuthorizedAt,
+            string[] scopes,
+            string fingerprint,
+            DateTime? credentialAccessedAt,
+            long? authorizedCredentialId,
+            string authorizedCredentialTitle,
+            string authorizedCredentialNote,
+            DateTime? authorizedCredentialExpiresAt)
+        {
+            Login = login;
+            CredentialId = credentialId;
+            CredentialType = credentialType;
+            TokenLastEight = tokenLastEight;
+            CredentialAuthorizedAt = credentialAuthorizedAt;
+            Scopes = scopes;
+            Fingerprint = fingerprint;
+            CredentialAccessedAt = credentialAccessedAt;
+            AuthorizedCredentialId = authorizedCredentialId;
+            AuthorizedCredentialTitle = authorizedCredentialTitle;
+            AuthorizedCredentialNote = authorizedCredentialNote;
+            AuthorizedCredentialExpiresAt = authorizedCredentialExpiresAt;
+        }
+
+
+
         /// <summary>
         /// User login that owns the underlying credential.
         /// </summary>
