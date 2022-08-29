@@ -16,7 +16,7 @@ The API will reject you if you don't provide a `User-Agent` header (more details
 
 If you want to access private repositories or perform actions on behalf of a user, you need to pass credentials to the client.
 
-There are two Authentication options supported by the API. 
+You can authenticate by passing an access token, for example a personal access token (PAT), an OAuth access token or an installation token from a GitHub App
 
 - Personal Access Tokens (PAT) and 
 - OAuth authentication.
