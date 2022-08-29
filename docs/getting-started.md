@@ -3,7 +3,7 @@
 The easiest way to get started with Octokit is to use a plain `GitHubClient`:
 
 ```csharp
-var client = new GitHubClient(new ProductHeaderValue("my-cool-app"));removed
+var client = new GitHubClient(new ProductHeaderValue("my-cool-app"));
 ```
 
 This will let you access unauthenticated GitHub APIs, but you will be subject to rate limiting (you can read more about this [here](https://docs.github.com/rest/overview/resources-in-the-rest-api#rate-limiting)).
