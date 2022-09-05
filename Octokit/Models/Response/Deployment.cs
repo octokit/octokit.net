@@ -13,7 +13,7 @@ namespace Octokit
     {
         public Deployment() { }
 
-        public Deployment(int id, string nodeId, string sha, string @ref, Uri url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, Uri statusesUrl, Uri repositoryUrl, string environment, string originalEnvironment, bool transientEnvironment, bool productionEnvironment, string task)
+        public Deployment(int id, string nodeId, string sha, string @ref, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl, string repositoryUrl, string environment, string originalEnvironment, bool transientEnvironment, bool productionEnvironment, string task)
         {
             Id = id;
             NodeId = nodeId;
@@ -57,7 +57,7 @@ namespace Octokit
         /// <summary>
         /// The API URL for this deployment.
         /// </summary>
-        public Uri Url { get; protected set; }
+        public string Url { get; protected set; }
 
         /// <summary>
         /// The <seealso cref="User"/> that created the deployment.
@@ -87,12 +87,12 @@ namespace Octokit
         /// <summary>
         /// The API URL for the <seealso cref="DeploymentStatus"/>es of this deployment.
         /// </summary>
-        public Uri StatusesUrl { get; protected set; }
+        public string StatusesUrl { get; protected set; }
 
         /// <summary>
         /// The API URL for the <seealso cref="Repository"/>es of this deployment.
         /// </summary>
-        public Uri RepositoryUrl { get; protected set; }
+        public string RepositoryUrl { get; protected set; }
 
         /// <summary>
         /// The name of the <seealso cref="Environment"/> that was deployed to (e.g., staging or production).
