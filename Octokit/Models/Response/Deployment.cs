@@ -90,7 +90,7 @@ namespace Octokit
         public string StatusesUrl { get; protected set; }
 
         /// <summary>
-        /// The API URL for the <seealso cref="Repository"/>es of this deployment.
+        /// The API URL for the <seealso cref="Repository"/> of this deployment.
         /// </summary>
         public string RepositoryUrl { get; protected set; }
 
