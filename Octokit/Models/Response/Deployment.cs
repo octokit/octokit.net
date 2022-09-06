@@ -27,7 +27,7 @@ namespace Octokit
             Description = description;
             StatusesUrl = statusesUrl;
             RepositoryUrl = repositoryUrl;
-            @Environment = environment;
+            Environment = environment;
             OriginalEnvironment = originalEnvironment;
             TransientEnvironment = transientEnvironment;
             ProductionEnvironment = productionEnvironment;
@@ -97,10 +97,10 @@ namespace Octokit
         /// <summary>
         /// The name of the <seealso cref="Environment"/> that was deployed to (e.g., staging or production).
         /// </summary>
-        public string @Environment { get; protected set; }
+        public string Environment { get; protected set; }
 
         /// <summary>
-        /// 
+        /// The name of the that was originally deployed to (e.g., staging or production).
         /// </summary>
         public string OriginalEnvironment { get; protected set; }
 
