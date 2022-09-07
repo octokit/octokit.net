@@ -30,6 +30,19 @@ Console.WriteLine("Created release id {0}", result.Id);
 
 Note that the `Draft` flag is used to indicate when a release should be published to the world, whereas the `PreRelease` flag is used to indicate whether a release is unofficial or preview release.
 
+#### Generate release notes
+
+Additionally, you can ask GitHub to generate a name and body before creating a new release.
+
+```csharp
+var generationRequest = new GenerateReleaseNotesRequest("v2.0.0");
+var releaseNotes = await client.Repository.Release.GenerateReleaseNotes("octokit", "octokit.net", generationRequest);
+
+var newRelease = new NewRelease("v1.0.0");
+newRelease.Name = releaseNotes.Name;
+newRelease.Body = releaseNotes.Body;
+```
+
 ### Update
 
 Once the release is ready for the public, you can apply an update to the release:
