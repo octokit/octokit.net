@@ -24,5 +24,21 @@ namespace Octokit
 
             return attribute != null ? attribute.Value : propString.ToLowerInvariant();
         }
+
+        internal static bool HasParameter(this Enum prop)
+        {
+            if (prop == null) return false;
+
+            var propString = prop.ToString();
+            var member = prop.GetType().GetMember(propString).FirstOrDefault();
+
+            if (member == null) return false;
+
+            var attribute = member.GetCustomAttributes(typeof(ParameterAttribute), false)
+                .Cast<ParameterAttribute>()
+                .FirstOrDefault();
+
+            return attribute != null;
+        }
     }
 }
