@@ -16,10 +16,10 @@ namespace Octokit
             Url = url;
         }
 
-        public User Actor { get; protected set; }
-        public int Id { get; protected set; }
-        public Issue Issue { get; protected set; }
-        public string Url { get; protected set; }
+        public User Actor { get; private set; }
+        public int Id { get; private set; }
+        public Issue Issue { get; private set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

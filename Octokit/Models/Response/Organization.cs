@@ -28,21 +28,21 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The billing address for an organization. This is only returned when updating 
+        /// The billing address for an organization. This is only returned when updating
         /// an organization.
         /// </summary>
-        public string BillingAddress { get; protected set; }
-        public string ReposUrl { get; protected set; }
-        public string EventsUrl { get; protected set; }
-        public string HooksUrl { get; protected set; }
-        public string IssuesUrl { get; protected set; }
-        public string MembersUrl { get; protected set; }
-        public string PublicMembersUrl { get; protected set; }
-        public string Description { get; protected set; }
-        public bool IsVerified { get; protected set; }
-        public bool HasOrganizationProjects { get; protected set; }
-        public bool HasRepositoryProjects { get; protected set; }
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public string BillingAddress { get; private set; }
+        public string ReposUrl { get; private set; }
+        public string EventsUrl { get; private set; }
+        public string HooksUrl { get; private set; }
+        public string IssuesUrl { get; private set; }
+        public string MembersUrl { get; private set; }
+        public string PublicMembersUrl { get; private set; }
+        public string Description { get; private set; }
+        public bool IsVerified { get; private set; }
+        public bool HasOrganizationProjects { get; private set; }
+        public bool HasRepositoryProjects { get; private set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
 
         internal string DebuggerDisplay

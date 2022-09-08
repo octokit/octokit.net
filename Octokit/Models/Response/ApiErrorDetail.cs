@@ -18,13 +18,13 @@ namespace Octokit
             Resource = resource;
         }
 
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
-        public string Code { get; protected set; }
+        public string Code { get; private set; }
 
-        public string Field { get; protected set; }
+        public string Field { get; private set; }
 
-        public string Resource { get; protected set; }
+        public string Resource { get; private set; }
 
         internal string DebuggerDisplay
         {

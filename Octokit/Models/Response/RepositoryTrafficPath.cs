@@ -18,14 +18,14 @@ namespace Octokit
             Uniques = uniques;
         }
 
-        public string Path { get; protected set; }
+        public string Path { get; private set; }
 
-        public string Title { get; protected set; }
+        public string Title { get; private set; }
 
-        public int Count { get; protected set; }
+        public int Count { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public int Uniques { get; protected set; }
+        public int Uniques { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -18,12 +18,12 @@ namespace Octokit
         /// <summary>
         /// The access token
         /// </summary>
-        public string Token { get; protected set; }
+        public string Token { get; private set; }
 
         /// <summary>
         /// The expiration date
         /// </summary>
-        public DateTimeOffset ExpiresAt { get; protected set; }
+        public DateTimeOffset ExpiresAt { get; private set; }
 
         internal string DebuggerDisplay
         {

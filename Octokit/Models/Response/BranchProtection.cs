@@ -116,7 +116,7 @@ namespace Octokit
             Enabled = enabled;
         }
 
-        public bool Enabled { get; protected set; }
+        public bool Enabled { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -144,7 +144,7 @@ namespace Octokit
         /// <summary>
         /// Require branches to be up to date before merging
         /// </summary>
-        public bool Strict { get; protected set; }
+        public bool Strict { get; private set; }
 
         /// <summary>
         /// Require status checks to pass before merging
@@ -218,22 +218,22 @@ namespace Octokit
         /// <summary>
         /// Specify which users and teams can dismiss pull request reviews.
         /// </summary>
-        public BranchProtectionRequiredReviewsDismissalRestrictions DismissalRestrictions { get; protected set; }
+        public BranchProtectionRequiredReviewsDismissalRestrictions DismissalRestrictions { get; private set; }
 
         /// <summary>
         /// Dismiss approved reviews automatically when a new commit is pushed.
         /// </summary>
-        public bool DismissStaleReviews { get; protected set; }
+        public bool DismissStaleReviews { get; private set; }
 
         /// <summary>
         /// Blocks merge until code owners have reviewed.
         /// </summary>
-        public bool RequireCodeOwnerReviews { get; protected set; }
+        public bool RequireCodeOwnerReviews { get; private set; }
 
         /// <summary>
         /// Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.
         /// </summary>
-        public int RequiredApprovingReviewCount { get; protected set; }
+        public int RequiredApprovingReviewCount { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -294,7 +294,7 @@ namespace Octokit
             Enabled = enabled;
         }
 
-        public bool Enabled { get; protected set; }
+        public bool Enabled { get; private set; }
 
         internal string DebuggerDisplay
         {

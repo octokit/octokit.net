@@ -33,67 +33,67 @@ namespace Octokit
         /// <summary>
         /// Id of this deployment.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         /// <summary>
         /// The API URL for this deployment.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The <seealso cref="User"/> that created the deployment.
         /// </summary>
-        public User Creator { get; protected set; }
+        public User Creator { get; private set; }
 
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        public IReadOnlyDictionary<string, string> Payload { get; protected set; }
+        public IReadOnlyDictionary<string, string> Payload { get; private set; }
 
         /// <summary>
         /// Date and time that the deployment was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// Date and time that the deployment was updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         /// <summary>
         /// A short description of the deployment.
         /// </summary>
-        public string Description { get; protected set; }
+        public string Description { get; private set; }
 
         /// <summary>
         /// The API URL for the <seealso cref="DeploymentStatus"/>es of this deployment.
         /// </summary>
-        public string StatusesUrl { get; protected set; }
+        public string StatusesUrl { get; private set; }
 
         /// <summary>
         /// Indicates if the environment is specific to a deployment and will no longer exist at some point in the future.
         /// </summary>
-        public bool TransientEnvironment { get; protected set; }
+        public bool TransientEnvironment { get; private set; }
 
         /// <summary>
         /// Indicates if the environment is one with which end users directly interact.
         /// </summary>
-        public bool ProductionEnvironment { get; protected set; }
+        public bool ProductionEnvironment { get; private set; }
 
         /// <summary>
         /// Specifies a task to execute (e.g., deploy or deploy:migrations)
         /// </summary>
-        public string Task { get; protected set; }
+        public string Task { get; private set; }
 
         internal string DebuggerDisplay
         {

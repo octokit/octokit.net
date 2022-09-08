@@ -19,12 +19,12 @@ namespace Octokit
         /// <summary>
         /// The check suite preferences
         /// </summary>
-        public CheckSuitePreferences Preferences { get; protected set; }
+        public CheckSuitePreferences Preferences { get; private set; }
 
         /// <summary>
         /// The repository the check suite preferences are related to
         /// </summary>
-        public Repository Repository { get; protected set; }
+        public Repository Repository { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Preferences: {0}, Repository: {1}", Preferences.DebuggerDisplay, Repository.DebuggerDisplay);
     }

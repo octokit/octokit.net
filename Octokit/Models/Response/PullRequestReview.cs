@@ -32,52 +32,52 @@ namespace Octokit
         /// <summary>
         /// The review Id.
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The state of the review
         /// </summary>
-        public StringEnum<PullRequestReviewState> State { get; protected set; }
+        public StringEnum<PullRequestReviewState> State { get; private set; }
 
         /// <summary>
         /// The commit Id the review is associated with.
         /// </summary>
-        public string CommitId { get; protected set; }
+        public string CommitId { get; private set; }
 
         /// <summary>
         /// The user that created the review.
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         /// <summary>
         /// The text of the review.
         /// </summary>
-        public string Body { get; protected set; }
+        public string Body { get; private set; }
 
         /// <summary>
         /// The URL for this review on Github.com
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// The URL for the pull request via the API.
         /// </summary>
-        public string PullRequestUrl { get; protected set; }
+        public string PullRequestUrl { get; private set; }
 
         /// <summary>
         /// The comment author association with repository.
         /// </summary>
-        public StringEnum<AuthorAssociation> AuthorAssociation { get; protected set; }
+        public StringEnum<AuthorAssociation> AuthorAssociation { get; private set; }
 
         /// <summary>
         /// The time the review was submitted
         /// </summary>
-        public DateTimeOffset SubmittedAt { get; protected set; }
+        public DateTimeOffset SubmittedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

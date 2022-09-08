@@ -21,12 +21,12 @@ namespace Octokit
         /// <summary>
         /// The date the star was created.
         /// </summary>
-        public DateTimeOffset StarredAt { get; protected set; }
+        public DateTimeOffset StarredAt { get; private set; }
 
         /// <summary>
         /// The repository associated with the star.
         /// </summary>
-        public Repository Repo { get; protected set; }
+        public Repository Repo { get; private set; }
 
         internal string DebuggerDisplay
         {
