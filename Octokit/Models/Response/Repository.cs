@@ -67,97 +67,97 @@ namespace Octokit
             AllowAutoMerge = allowAutoMerge;
         }
 
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
-        public string CloneUrl { get; protected set; }
+        public string CloneUrl { get; private set; }
 
-        public string GitUrl { get; protected set; }
+        public string GitUrl { get; private set; }
 
-        public string SshUrl { get; protected set; }
+        public string SshUrl { get; private set; }
 
-        public string SvnUrl { get; protected set; }
+        public string SvnUrl { get; private set; }
 
-        public string MirrorUrl { get; protected set; }
+        public string MirrorUrl { get; private set; }
 
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public User Owner { get; protected set; }
+        public User Owner { get; private set; }
 
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
-        public string FullName { get; protected set; }
+        public string FullName { get; private set; }
 
-        public bool IsTemplate { get; protected set; }
+        public bool IsTemplate { get; private set; }
 
-        public string Description { get; protected set; }
+        public string Description { get; private set; }
 
-        public string Homepage { get; protected set; }
+        public string Homepage { get; private set; }
 
-        public string Language { get; protected set; }
+        public string Language { get; private set; }
 
-        public bool Private { get; protected set; }
+        public bool Private { get; private set; }
 
-        public bool Fork { get; protected set; }
+        public bool Fork { get; private set; }
 
-        public int ForksCount { get; protected set; }
+        public int ForksCount { get; private set; }
 
-        public int StargazersCount { get; protected set; }
+        public int StargazersCount { get; private set; }
 
         [Obsolete("WatchersCount returns the same data as StargazersCount. You are likely looking to use SubscribersCount. Update your code to use SubscribersCount, as this field will stop containing data in the future")]
-        public int WatchersCount { get; protected set; }
+        public int WatchersCount { get; private set; }
 
-        public string DefaultBranch { get; protected set; }
+        public string DefaultBranch { get; private set; }
 
-        public int OpenIssuesCount { get; protected set; }
+        public int OpenIssuesCount { get; private set; }
 
-        public DateTimeOffset? PushedAt { get; protected set; }
+        public DateTimeOffset? PushedAt { get; private set; }
 
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
-        public RepositoryPermissions Permissions { get; protected set; }
+        public RepositoryPermissions Permissions { get; private set; }
 
-        public Repository Parent { get; protected set; }
+        public Repository Parent { get; private set; }
 
-        public Repository Source { get; protected set; }
+        public Repository Source { get; private set; }
 
-        public LicenseMetadata License { get; protected set; }
+        public LicenseMetadata License { get; private set; }
 
-        public bool HasIssues { get; protected set; }
+        public bool HasIssues { get; private set; }
 
-        public bool HasWiki { get; protected set; }
+        public bool HasWiki { get; private set; }
 
-        public bool HasDownloads { get; protected set; }
+        public bool HasDownloads { get; private set; }
 
-        public bool? AllowRebaseMerge { get; protected set; }
+        public bool? AllowRebaseMerge { get; private set; }
 
-        public bool? AllowSquashMerge { get; protected set; }
+        public bool? AllowSquashMerge { get; private set; }
 
-        public bool? AllowMergeCommit { get; protected set; }
+        public bool? AllowMergeCommit { get; private set; }
 
-        public bool HasPages { get; protected set; }
+        public bool HasPages { get; private set; }
 
-        public int SubscribersCount { get; protected set; }
+        public int SubscribersCount { get; private set; }
 
-        public long Size { get; protected set; }
+        public long Size { get; private set; }
 
-        public bool Archived { get; protected set; }
+        public bool Archived { get; private set; }
 
-        public IReadOnlyList<string> Topics { get; protected set; }
+        public IReadOnlyList<string> Topics { get; private set; }
 
-        public bool? DeleteBranchOnMerge { get; protected set; }
+        public bool? DeleteBranchOnMerge { get; private set; }
 
-        public RepositoryVisibility? Visibility { get; protected set; }
+        public RepositoryVisibility? Visibility { get; private set; }
 
-        public bool? AllowAutoMerge { get; protected set; }
+        public bool? AllowAutoMerge { get; private set; }
 
         internal string DebuggerDisplay
         {

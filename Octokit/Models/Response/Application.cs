@@ -20,12 +20,12 @@ namespace Octokit
         /// <summary>
         /// <see cref="Application"/> Name.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The Url of this <see cref="Application"/>.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

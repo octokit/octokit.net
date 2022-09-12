@@ -53,7 +53,7 @@ namespace Octokit
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// Guid of migration.

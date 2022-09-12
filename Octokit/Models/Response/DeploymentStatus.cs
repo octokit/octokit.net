@@ -30,66 +30,66 @@ namespace Octokit
         /// <summary>
         /// Id of this deployment status.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The API URL for this deployment status.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The state of this deployment status.
         /// </summary>
-        public StringEnum<DeploymentState> State { get; protected set; }
+        public StringEnum<DeploymentState> State { get; private set; }
 
         /// <summary>
         /// The <seealso cref="User"/> that created this deployment status.
         /// </summary>
-        public User Creator { get; protected set; }
+        public User Creator { get; private set; }
 
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        public IReadOnlyDictionary<string, string> Payload { get; protected set; }
+        public IReadOnlyDictionary<string, string> Payload { get; private set; }
 
         /// <summary>
         /// The target URL of this deployment status. This URL should contain
         /// output to keep the user updated while the task is running or serve
         /// as historical information for what happened in the deployment
         /// </summary>
-        public string TargetUrl { get; protected set; }
+        public string TargetUrl { get; private set; }
 
         /// <summary>
         /// The target URL  of this deployment status. This URL should contain
         /// output to keep the user updated while the task is running or serve as
         /// historical information for what happened in the deployment
         /// </summary>
-        public string LogUrl { get; protected set; }
+        public string LogUrl { get; private set; }
 
         /// <summary>
         /// The URL for accessing your environment.
         /// </summary>
-        public string EnvironmentUrl { get; protected set; }
+        public string EnvironmentUrl { get; private set; }
 
         /// <summary>
         /// The date and time that the status was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The date and time that the status was updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         /// <summary>
         /// A short description of the status.
         /// </summary>
-        public string Description { get; protected set; }
+        public string Description { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -267,7 +267,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<bool> Add(string owner, string name, string user, CollaboratorRequest permission)
+        public IObservable<RepositoryInvitation> Add(string owner, string name, string user, CollaboratorRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -303,7 +303,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<bool> Add(long repositoryId, string user, CollaboratorRequest permission)
+        public IObservable<RepositoryInvitation> Add(long repositoryId, string user, CollaboratorRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(permission, nameof(permission));

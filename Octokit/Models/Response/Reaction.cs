@@ -47,23 +47,23 @@ namespace Octokit
         /// <summary>
         /// The Id for this reaction.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// Information about the user.
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         /// <summary>
         /// The reaction type for this commit comment.
         /// </summary>
         [Parameter(Key = "content")]
-        public StringEnum<ReactionType> Content { get; protected set; }
+        public StringEnum<ReactionType> Content { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -74,4 +74,3 @@ namespace Octokit
         }
     }
 }
-

@@ -20,21 +20,21 @@ namespace Octokit
             Url = url;
         }
 
-        public string Id { get; protected set; } // NB: API currently returns this as string which is Weird
+        public string Id { get; private set; } // NB: API currently returns this as string which is Weird
 
-        public Repository Repository { get; protected set; }
+        public Repository Repository { get; private set; }
 
-        public NotificationInfo Subject { get; protected set; }
+        public NotificationInfo Subject { get; private set; }
 
-        public string Reason { get; protected set; }
+        public string Reason { get; private set; }
 
-        public bool Unread { get; protected set; }
+        public bool Unread { get; private set; }
 
-        public string UpdatedAt { get; protected set; }
+        public string UpdatedAt { get; private set; }
 
-        public string LastReadAt { get; protected set; }
+        public string LastReadAt { get; private set; }
 
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

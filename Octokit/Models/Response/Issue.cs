@@ -44,124 +44,124 @@ namespace Octokit
         /// <summary>
         /// The internal Id for this issue (not the issue number)
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The URL for this issue.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The URL for the HTML view of this issue.
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// The Comments URL of this issue.
         /// </summary>
-        public string CommentsUrl { get; protected set; }
+        public string CommentsUrl { get; private set; }
 
         /// <summary>
         /// The Events URL of this issue.
         /// </summary>
-        public string EventsUrl { get; protected set; }
+        public string EventsUrl { get; private set; }
 
         /// <summary>
         /// The issue number.
         /// </summary>
-        public int Number { get; protected set; }
+        public int Number { get; private set; }
 
         /// <summary>
         /// Whether the issue is open or closed.
         /// </summary>
-        public StringEnum<ItemState> State { get; protected set; }
+        public StringEnum<ItemState> State { get; private set; }
 
         /// <summary>
         /// Title of the issue
         /// </summary>
-        public string Title { get; protected set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// Details about the issue.
         /// </summary>
-        public string Body { get; protected set; }
+        public string Body { get; private set; }
 
         /// <summary>
         /// Details about the user who has closed this issue.
         /// </summary>
-        public User ClosedBy { get; protected set; }
+        public User ClosedBy { get; private set; }
 
         /// <summary>
         /// The user that created the issue.
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         /// <summary>
         /// The set of labels applied to the issue
         /// </summary>
-        public IReadOnlyList<Label> Labels { get; protected set; }
+        public IReadOnlyList<Label> Labels { get; private set; }
 
         /// <summary>
         /// The user this issue is assigned to.
         /// </summary>
-        public User Assignee { get; protected set; }
+        public User Assignee { get; private set; }
 
         /// <summary>
         ///The multiple users this issue is assigned to.
         /// </summary>
-        public IReadOnlyList<User> Assignees { get; protected set; }
+        public IReadOnlyList<User> Assignees { get; private set; }
 
         /// <summary>
         /// The milestone, if any, that this issue is assigned to.
         /// </summary>
-        public Milestone Milestone { get; protected set; }
+        public Milestone Milestone { get; private set; }
 
         /// <summary>
         /// The number of comments on the issue.
         /// </summary>
-        public int Comments { get; protected set; }
+        public int Comments { get; private set; }
 
-        public PullRequest PullRequest { get; protected set; }
+        public PullRequest PullRequest { get; private set; }
 
         /// <summary>
         /// The date the issue was closed if closed.
         /// </summary>
-        public DateTimeOffset? ClosedAt { get; protected set; }
+        public DateTimeOffset? ClosedAt { get; private set; }
 
         /// <summary>
         /// The date the issue was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The date the issue was last updated.
         /// </summary>
-        public DateTimeOffset? UpdatedAt { get; protected set; }
+        public DateTimeOffset? UpdatedAt { get; private set; }
 
         /// <summary>
         /// If the issue is locked or not.
         /// </summary>
-        public bool Locked { get; protected set; }
+        public bool Locked { get; private set; }
 
         /// <summary>
         /// The repository the issue comes from.
         /// </summary>
-        public Repository Repository { get; protected set; }
+        public Repository Repository { get; private set; }
 
         /// <summary>
         /// The reaction summary for this issue.
         /// </summary>
-        public ReactionSummary Reactions { get; protected set; }
+        public ReactionSummary Reactions { get; private set; }
 
         /// <summary>
         /// Reason that the conversation was locked.
         /// </summary>
-        public StringEnum<LockReason>? ActiveLockReason { get; protected set; }
+        public StringEnum<LockReason>? ActiveLockReason { get; private set; }
 
         internal string DebuggerDisplay
         {

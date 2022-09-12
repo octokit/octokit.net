@@ -26,19 +26,19 @@ namespace Octokit
             Files = files;
         }
 
-        public string Url { get; protected set; }
-        public string HtmlUrl { get; protected set; }
-        public string PermalinkUrl { get; protected set; }
-        public string DiffUrl { get; protected set; }
-        public string PatchUrl { get; protected set; }
-        public GitHubCommit BaseCommit { get; protected set; }
-        public GitHubCommit MergeBaseCommit { get; protected set; }
-        public string Status { get; protected set; }
-        public int AheadBy { get; protected set; }
-        public int BehindBy { get; protected set; }
-        public int TotalCommits { get; protected set; }
-        public IReadOnlyList<GitHubCommit> Commits { get; protected set; }
-        public IReadOnlyList<GitHubCommitFile> Files { get; protected set; }
+        public string Url { get; private set; }
+        public string HtmlUrl { get; private set; }
+        public string PermalinkUrl { get; private set; }
+        public string DiffUrl { get; private set; }
+        public string PatchUrl { get; private set; }
+        public GitHubCommit BaseCommit { get; private set; }
+        public GitHubCommit MergeBaseCommit { get; private set; }
+        public string Status { get; private set; }
+        public int AheadBy { get; private set; }
+        public int BehindBy { get; private set; }
+        public int TotalCommits { get; private set; }
+        public IReadOnlyList<GitHubCommit> Commits { get; private set; }
+        public IReadOnlyList<GitHubCommitFile> Files { get; private set; }
 
         internal string DebuggerDisplay
         {

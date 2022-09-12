@@ -28,17 +28,17 @@ namespace Octokit
         /// <summary>
         /// The sha reference of the commit.
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         /// <summary>
         /// True if merged successfully, otherwise false.
         /// </summary>
-        public bool Merged { get; protected set; }
+        public bool Merged { get; private set; }
 
         /// <summary>
         /// The message that will be used for the merge commit.
         /// </summary>
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -8,27 +8,27 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PushWebhookCommit
     {
-        public string Id { get; protected set; }
+        public string Id { get; private set; }
 
-        public string TreeId { get; protected set; }
+        public string TreeId { get; private set; }
 
-        public bool Distinct { get; protected set; }
+        public bool Distinct { get; private set; }
 
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
-        public DateTimeOffset Timestamp { get; protected set; }
+        public DateTimeOffset Timestamp { get; private set; }
 
-        public Uri Url { get; protected set; }
+        public Uri Url { get; private set; }
 
-        public Committer Author { get; protected set; }
+        public Committer Author { get; private set; }
 
-        public Committer Committer { get; protected set; }
+        public Committer Committer { get; private set; }
 
-        public IReadOnlyList<string> Added { get; protected set; }
+        public IReadOnlyList<string> Added { get; private set; }
 
-        public IReadOnlyList<string> Removed { get; protected set; }
+        public IReadOnlyList<string> Removed { get; private set; }
 
-        public IReadOnlyList<string> Modified { get; protected set; }
+        public IReadOnlyList<string> Modified { get; private set; }
 
         internal string DebuggerDisplay
         {

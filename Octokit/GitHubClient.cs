@@ -111,6 +111,7 @@ namespace Octokit
             User = new UsersClient(apiConnection);
             Reaction = new ReactionsClient(apiConnection);
             Check = new ChecksClient(apiConnection);
+            Packages = new PackagesClient(apiConnection);
         }
 
         /// <summary>
@@ -224,6 +225,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/orgs/
         /// </remarks>
         public IOrganizationsClient Organization { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Pacakges API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/en/rest/packages
+        /// </remarks>
+        public IPackagesClient Packages { get; private set; }
 
         /// <summary>
         /// Access GitHub's Pull Requests API.

@@ -21,16 +21,16 @@ namespace Octokit
             Url = url;
         }
 
-        public int TotalCount { get; protected set; }
+        public int TotalCount { get; private set; }
         [Parameter(Key = "+1")]
-        public int Plus1 { get; protected set; }
+        public int Plus1 { get; private set; }
         [Parameter(Key = "-1")]
-        public int Minus1 { get; protected set; }
-        public int Laugh { get; protected set; }
-        public int Confused { get; protected set; }
-        public int Heart { get; protected set; }
-        public int Hooray { get; protected set; }
-        public string Url { get; protected set; }
+        public int Minus1 { get; private set; }
+        public int Laugh { get; private set; }
+        public int Confused { get; private set; }
+        public int Heart { get; private set; }
+        public int Hooray { get; private set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

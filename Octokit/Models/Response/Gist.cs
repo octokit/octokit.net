@@ -33,7 +33,7 @@ namespace Octokit
         /// <summary>
         /// The API URL for this <see cref="Gist"/>.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The Id of this <see cref="Gist"/>.
@@ -41,22 +41,22 @@ namespace Octokit
         /// <remarks>
         /// Given a gist url of https://gist.github.com/UserName/1234 the Id would be '1234'.
         /// </remarks>
-        public string Id { get; protected set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// A description of the <see cref="Gist"/>.
         /// </summary>
-        public string Description { get; protected set; }
+        public string Description { get; private set; }
 
         /// <summary>
         /// Indicates if the <see cref="Gist"/> is private or public.
         /// </summary>
-        public bool Public { get; protected set; }
+        public bool Public { get; private set; }
 
         /// <summary>
         /// The <see cref="User"/> who owns this <see cref="Gist"/>.
@@ -64,57 +64,57 @@ namespace Octokit
         /// <remarks>
         /// Given a gist url of https://gist.github.com/UserName/1234 the Owner would be 'UserName'.
         /// </remarks>
-        public User Owner { get; protected set; }
+        public User Owner { get; private set; }
 
         /// <summary>
         /// A <see cref="IDictionary{TKey,TValue}"/> containing all <see cref="GistFile"/>s in this <see cref="Gist"/>.
         /// </summary>
-        public IReadOnlyDictionary<string, GistFile> Files { get; protected set; }
+        public IReadOnlyDictionary<string, GistFile> Files { get; private set; }
 
         /// <summary>
         /// The number of comments on this <see cref="Gist"/>.
         /// </summary>
-        public int Comments { get; protected set; }
+        public int Comments { get; private set; }
 
         /// <summary>
         /// A url to retrieve the comments for this <see cref="Gist"/>.
         /// </summary>
-        public string CommentsUrl { get; protected set; }
+        public string CommentsUrl { get; private set; }
 
         /// <summary>
         /// URL to view the gist on gist.github.com.
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// The git url to pull from to retrieve the contents for this <see cref="Gist"/>.
         /// </summary>
-        public string GitPullUrl { get; protected set; }
+        public string GitPullUrl { get; private set; }
 
         /// <summary>
         /// The git url to push to when changing this <see cref="Gist"/>.
         /// </summary>
-        public string GitPushUrl { get; protected set; }
+        public string GitPushUrl { get; private set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> for when this <see cref="Gist"/> was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> for when this <see cref="Gist"/> was last updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         /// <summary>
         /// A <see cref="IList{T}"/> of all <see cref="GistFork"/> that exist for this <see cref="Gist"/>.
         /// </summary>
-        public IReadOnlyList<GistFork> Forks { get; protected set; }
+        public IReadOnlyList<GistFork> Forks { get; private set; }
 
         /// <summary>
         /// A <see cref="IList{T}"/> of all <see cref="GistHistory"/> containing the full history for this <see cref="Gist"/>.
         /// </summary>
-        public IReadOnlyList<GistHistory> History { get; protected set; }
+        public IReadOnlyList<GistHistory> History { get; private set; }
 
         internal string DebuggerDisplay
         {

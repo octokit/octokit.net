@@ -16,10 +16,10 @@ namespace Octokit
             Title = title;
         }
 
-        public int Id { get; protected set; }
-        public string Key { get; protected set; }
-        public string Url { get; protected set; }
-        public string Title { get; protected set; }
+        public int Id { get; private set; }
+        public string Key { get; private set; }
+        public string Url { get; private set; }
+        public string Title { get; private set; }
 
         internal string DebuggerDisplay
         {

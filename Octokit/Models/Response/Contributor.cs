@@ -19,11 +19,11 @@ namespace Octokit
             Weeks = weeks;
         }
 
-        public Author Author { get; protected set; }
+        public Author Author { get; private set; }
 
-        public int Total { get; protected set; }
+        public int Total { get; private set; }
 
-        public IReadOnlyList<WeeklyHash> Weeks { get; protected set; }
+        public IReadOnlyList<WeeklyHash> Weeks { get; private set; }
 
         internal string DebuggerDisplay
         {
