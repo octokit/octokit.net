@@ -29,42 +29,42 @@ namespace Octokit
         /// The type of the activity.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public string Type { get; protected set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Whether the activity event is public or not.
         /// </summary>
-        public bool Public { get; protected set; }
+        public bool Public { get; private set; }
 
         /// <summary>
         /// The repository associated with the activity event.
         /// </summary>
-        public Repository Repo { get; protected set; }
+        public Repository Repo { get; private set; }
 
         /// <summary>
         /// The user associated with the activity event.
         /// </summary>
-        public User Actor { get; protected set; }
+        public User Actor { get; private set; }
 
         /// <summary>
         /// The organization associated with the activity event.
         /// </summary>
-        public Organization Org { get; protected set; }
+        public Organization Org { get; private set; }
 
         /// <summary>
         /// The date the activity event was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The activity event Id.
         /// </summary>
-        public string Id { get; protected set; }
+        public string Id { get; private set; }
 
         /// <summary>
         /// The payload associated with the activity event.
         /// </summary>
-        public ActivityPayload Payload { get; protected set; }
+        public ActivityPayload Payload { get; private set; }
 
         internal string DebuggerDisplay
         {

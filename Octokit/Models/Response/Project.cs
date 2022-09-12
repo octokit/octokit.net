@@ -28,62 +28,62 @@ namespace Octokit
         /// <summary>
         /// The URL for this projects repository.
         /// </summary>
-        public string OwnerUrl { get; protected set; }
+        public string OwnerUrl { get; private set; }
 
         /// <summary>
         /// The HTML URL for this project.
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// The URL for this project.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The Id for this project.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The name for this project.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The body for this project.
         /// </summary>
-        public string Body { get; protected set; }
+        public string Body { get; private set; }
 
         /// <summary>
         /// The number for this project.
         /// </summary>
-        public int Number { get; protected set; }
+        public int Number { get; private set; }
 
         /// <summary>
         /// The current state of this project.
         /// </summary>
-        public StringEnum<ItemState> State { get; protected set; }
+        public StringEnum<ItemState> State { get; private set; }
 
         /// <summary>
         /// The user associated with this project.
         /// </summary>
-        public User Creator { get; protected set; }
+        public User Creator { get; private set; }
 
         /// <summary>
         /// When this project was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// When this project was last updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -22,37 +22,37 @@ namespace Octokit
         /// <summary>
         /// file name
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// path to file
         /// </summary>
-        public string Path { get; protected set; }
+        public string Path { get; private set; }
 
         /// <summary>
         /// Sha for file
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         /// <summary>
         /// api-url to file
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// git-url to file
         /// </summary>
-        public string GitUrl { get; protected set; }
+        public string GitUrl { get; private set; }
 
         /// <summary>
         /// html-url to file
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// Repo where this file belongs to
         /// </summary>
-        public Repository Repository { get; protected set; }
+        public Repository Repository { get; private set; }
 
         internal string DebuggerDisplay
         {

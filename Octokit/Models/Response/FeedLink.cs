@@ -24,32 +24,32 @@ namespace Octokit
         /// <summary>
         /// The GitHub global public timeline
         /// </summary>
-        public FeedLink Timeline { get; protected set; }
+        public FeedLink Timeline { get; private set; }
 
         /// <summary>
         /// The public timeline for any user, using URI template
         /// </summary>
-        public FeedLink User { get; protected set; }
+        public FeedLink User { get; private set; }
 
         /// <summary>
         /// The public timeline for the authenticated user
         /// </summary>
-        public FeedLink CurrentUserPublic { get; protected set; }
+        public FeedLink CurrentUserPublic { get; private set; }
 
         /// <summary>
         /// The private timeline for the authenticated user
         /// </summary>
-        public FeedLink CurrentUser { get; protected set; }
+        public FeedLink CurrentUser { get; private set; }
 
         /// <summary>
         /// The private timeline for activity created by the authenticated user
         /// </summary>
-        public FeedLink CurrentUserActor { get; protected set; }
+        public FeedLink CurrentUserActor { get; private set; }
 
         /// <summary>
         /// The private timeline for the authenticated user for a given organization, using URI template
         /// </summary>
-        public FeedLink CurrentUserOrganization { get; protected set; }
+        public FeedLink CurrentUserOrganization { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -74,13 +74,13 @@ namespace Octokit
         /// <summary>
         /// Link to feed
         /// </summary>
-        public string Href { get; protected set; }
+        public string Href { get; private set; }
 
         /// <summary>
         /// Feed type, e.g. application/atom+xml
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public string Type { get; protected set; }
+        public string Type { get; private set; }
 
         internal string DebuggerDisplay
         {

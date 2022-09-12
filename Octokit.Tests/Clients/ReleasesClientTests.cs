@@ -20,6 +20,55 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGenerateReleaseNotesMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var releasesClient = new ReleasesClient(client);
+                var data = new GenerateReleaseNotesRequest("fake-tag");
+
+                await releasesClient.GenerateReleaseNotes("fake", "repo", data);
+
+                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
+                    data,
+                    "application/vnd.github.v3");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var releasesClient = new ReleasesClient(client);
+                var data = new GenerateReleaseNotesRequest("fake-tag");
+
+                await releasesClient.GenerateReleaseNotes(1, data);
+
+                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/releases"),
+                    data,
+                    "application/vnd.github.v3");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                Assert.Throws<ArgumentNullException>(() => new GenerateReleaseNotesRequest(null));
+
+                var data = new GenerateReleaseNotesRequest("fake-tag");
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes(null, "name", data));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes("owner", null, data));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GenerateReleaseNotes("", "name", data));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GenerateReleaseNotes("owner", "", data));
+            }
+        }
+
         public class TheGetAllMethod
         {
             [Fact]

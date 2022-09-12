@@ -16,6 +16,6 @@ namespace Octokit
             Contributions = contributions;
         }
 
-        public int Contributions { get; protected set; }
+        public int Contributions { get; private set; }
     }
 }

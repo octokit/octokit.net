@@ -426,10 +426,24 @@ namespace Octokit
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/files")]
         public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number)
         {
+            return Files(owner, name, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/files")]
+        public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number, ApiOptions options)
+        {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, number));
+            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, number), options);
         }
 
         /// <summary>
@@ -441,7 +455,20 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/files")]
         public Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int number)
         {
-            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number));
+            return Files(repositoryId, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        [ManualRoute("GET", "/repositories/{id}/pulls/{number}/files")]
+        public Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int number, ApiOptions options)
+        {
+            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number), options);
         }
     }
 }

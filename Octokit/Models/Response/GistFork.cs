@@ -20,22 +20,22 @@ namespace Octokit
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The <see cref="User"/> that created this <see cref="GistFork"/>
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         /// <summary>
         /// The API URL for this <see cref="GistFork"/>.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> for when this <see cref="Gist"/> was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

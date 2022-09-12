@@ -18,14 +18,14 @@ namespace Octokit
         }
 
 
-        public string Tag { get; protected set; }
+        public string Tag { get; private set; }
 
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
-        public Committer Tagger { get; protected set; }
+        public Committer Tagger { get; private set; }
 
-        public TagObject Object { get; protected set; }
+        public TagObject Object { get; private set; }
 
-        public Verification Verification { get; protected set; }
+        public Verification Verification { get; private set; }
     }
 }

@@ -26,37 +26,37 @@ namespace Octokit
         /// <summary>
         /// The identifier for the pre-receive hook.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// The name of the hook.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The state of enforcement for this hook.
         /// </summary>
-        public StringEnum<PreReceiveHookEnforcement> Enforcement { get; protected set; }
+        public StringEnum<PreReceiveHookEnforcement> Enforcement { get; private set; }
 
         /// <summary>
         /// The script that the hook runs.
         /// </summary>
-        public string Script { get; protected set; }
+        public string Script { get; private set; }
 
         /// <summary>
         /// The GitHub repository where the script is kept.
         /// </summary>
-        public Repository ScriptRepository { get; protected set; }
+        public Repository ScriptRepository { get; private set; }
 
         /// <summary>
         /// The pre-receive environment where the script is executed.
         /// </summary>
-        public PreReceiveEnvironment Environment { get; protected set; }
+        public PreReceiveEnvironment Environment { get; private set; }
 
         /// <summary>
         /// Whether enforcement can be overridden at the org or repo level.
         /// </summary>
-        public bool AllowDownstreamConfiguration { get; protected set; }
+        public bool AllowDownstreamConfiguration { get; private set; }
 
         public UpdatePreReceiveHook ToUpdate()
         {

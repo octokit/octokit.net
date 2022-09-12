@@ -19,12 +19,12 @@ namespace Octokit
             Views = views;
         }
 
-        public int Count { get; protected set; }
+        public int Count { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public int Uniques { get; protected set; }
+        public int Uniques { get; private set; }
 
-        public IReadOnlyList<RepositoryTrafficView> Views { get; protected set; }
+        public IReadOnlyList<RepositoryTrafficView> Views { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -45,12 +45,12 @@ namespace Octokit
             Uniques = uniques;
         }
 
-        public DateTimeOffset Timestamp { get; protected set; }
+        public DateTimeOffset Timestamp { get; private set; }
 
-        public int Count { get; protected set; }
+        public int Count { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "It's a property from the api.")]
-        public int Uniques { get; protected set; }
+        public int Uniques { get; private set; }
 
         internal string DebuggerDisplay
         {

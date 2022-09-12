@@ -23,23 +23,23 @@ namespace Octokit
         /// <summary>
         /// Does GitHub consider the signature in this commit to be verified?
         /// </summary>
-        public bool Verified { get; protected set; }
+        public bool Verified { get; private set; }
 
         /// <summary>
         /// The reason for verified value.
         /// </summary>
         [Parameter(Key = "reason")]
-        public StringEnum<VerificationReason> Reason { get; protected set; }
+        public StringEnum<VerificationReason> Reason { get; private set; }
 
         /// <summary>
         /// The signature that was extracted from the commit.
         /// </summary>
-        public string Signature { get; protected set; }
+        public string Signature { get; private set; }
 
         /// <summary>
         /// The value that was signed.
         /// </summary>
-        public string Payload { get; protected set; }
+        public string Payload { get; private set; }
 
         internal string DebuggerDisplay
         {

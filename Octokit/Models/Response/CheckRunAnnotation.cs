@@ -52,63 +52,63 @@ namespace Octokit
         /// The path of the file the annotation refers to
         /// </summary>
         [Obsolete("This property is replaced with Path but may still be required on GitHub Enterprise 2.14")]
-        public string Filename { get; protected set; }
+        public string Filename { get; private set; }
 
         /// <summary>
         /// The path of the file the annotation refers to
         /// </summary>
-        public string Path { get; protected set; }
+        public string Path { get; private set; }
 
         /// <summary>
         /// The file's full blob URL
         /// </summary>
-        public string BlobHref { get; protected set; }
+        public string BlobHref { get; private set; }
 
         /// <summary>
         /// The start line of the annotation
         /// </summary>
-        public int StartLine { get; protected set; }
+        public int StartLine { get; private set; }
 
         /// <summary>
         /// The end line of the annotation
         /// </summary>
-        public int EndLine { get; protected set; }
+        public int EndLine { get; private set; }
 
         /// <summary>
         /// The start line of the annotation
         /// </summary>
-        public int? StartColumn { get; protected set; }
+        public int? StartColumn { get; private set; }
 
         /// <summary>
         /// The end line of the annotation
         /// </summary>
-        public int? EndColumn { get; protected set; }
+        public int? EndColumn { get; private set; }
 
         /// <summary>
         /// The warning level of the annotation. Can be one of notice, warning, or failure
         /// </summary>
         [Obsolete("This property is replaced with AnnotationLevel but may still be required on GitHub Enterprise 2.14")]
-        public StringEnum<CheckWarningLevel>? WarningLevel { get; protected set; }
+        public StringEnum<CheckWarningLevel>? WarningLevel { get; private set; }
 
         /// <summary>
         /// The level of the annotation. Can be one of notice, warning, or failure
         /// </summary>
-        public StringEnum<CheckAnnotationLevel>? AnnotationLevel { get; protected set; }
+        public StringEnum<CheckAnnotationLevel>? AnnotationLevel { get; private set; }
 
         /// <summary>
         /// A short description of the feedback for these lines of code
         /// </summary>
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
         /// <summary>
         /// The title that represents the annotation
         /// </summary>
-        public string Title { get; protected set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// Details about this annotation
         /// </summary>
-        public string RawDetails { get; protected set; }
+        public string RawDetails { get; private set; }
 
 #pragma warning disable CS0618 // Type or member is obsolete
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Path: {0}, StartLine: {1}, WarningLevel: {2}", Path ?? Filename, StartLine, AnnotationLevel?.DebuggerDisplay ?? WarningLevel?.DebuggerDisplay);

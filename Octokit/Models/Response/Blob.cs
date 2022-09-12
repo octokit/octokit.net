@@ -21,27 +21,27 @@ namespace Octokit
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The content of the blob.
         /// </summary>
-        public string Content { get; protected set; }
+        public string Content { get; private set; }
 
         /// <summary>
         /// The encoding of the blob.
         /// </summary>
-        public StringEnum<EncodingType> Encoding { get; protected set; }
+        public StringEnum<EncodingType> Encoding { get; private set; }
 
         /// <summary>
         /// The SHA of the blob.
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         /// <summary>
         /// The size of the blob.
         /// </summary>
-        public int Size { get; protected set; }
+        public int Size { get; private set; }
 
         internal string DebuggerDisplay
         {
