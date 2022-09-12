@@ -22,8 +22,8 @@ namespace Octokit
             Users = users;
             Teams = teams;
         }
-        public IReadOnlyList<User> Users { get; protected set; }
-        public IReadOnlyList<Team> Teams { get; protected set; }
+        public IReadOnlyList<User> Users { get; private set; }
+        public IReadOnlyList<Team> Teams { get; private set; }
 
         internal string DebuggerDisplay
         {

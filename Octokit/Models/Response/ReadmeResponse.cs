@@ -13,10 +13,10 @@ namespace Octokit
             Encoding = encoding;
         }
 
-        public string Content { get; protected set; }
-        public string Name { get; protected set; }
-        public string HtmlUrl { get; protected set; }
-        public string Url { get; protected set; }
-        public string Encoding { get; protected set; }
+        public string Content { get; private set; }
+        public string Name { get; private set; }
+        public string HtmlUrl { get; private set; }
+        public string Url { get; private set; }
+        public string Encoding { get; private set; }
     }
 }

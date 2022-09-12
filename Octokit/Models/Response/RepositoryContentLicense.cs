@@ -21,7 +21,7 @@ namespace Octokit
         /// <summary>
         /// License information
         /// </summary>
-        public LicenseMetadata License { get; protected set; }
+        public LicenseMetadata License { get; private set; }
 
         internal new string DebuggerDisplay
         {

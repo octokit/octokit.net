@@ -27,29 +27,29 @@ namespace Octokit
         /// <summary>
         /// The pages's API URL.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
         /// <summary>
         /// The status of the build.
         /// </summary>
-        public StringEnum<PagesBuildStatus> Status { get; protected set; }
+        public StringEnum<PagesBuildStatus> Status { get; private set; }
         /// <summary>
         /// Error details - if there was one.
         /// </summary>
-        public ApiError Error { get; protected set; }
+        public ApiError Error { get; private set; }
         /// <summary>
         /// The user whose commit initiated the build.
         /// </summary>
-        public User Pusher { get; protected set; }
+        public User Pusher { get; private set; }
         /// <summary>
         /// Commit SHA.
         /// </summary>
-        public Commit Commit { get; protected set; }
+        public Commit Commit { get; private set; }
         /// <summary>
         /// Duration of the build
         /// </summary>
-        public TimeSpan Duration { get; protected set; }
-        public DateTime CreatedAt { get; protected set; }
-        public DateTime UpdatedAt { get; protected set; }
+        public TimeSpan Duration { get; private set; }
+        public DateTime CreatedAt { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

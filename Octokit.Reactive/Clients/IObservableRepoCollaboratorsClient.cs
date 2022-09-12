@@ -172,7 +172,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<bool> Add(string owner, string name, string user, CollaboratorRequest permission);
+        IObservable<RepositoryInvitation> Add(string owner, string name, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -195,7 +195,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<bool> Add(long repositoryId, string user, CollaboratorRequest permission);
+        IObservable<RepositoryInvitation> Add(long repositoryId, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Invites a user as a collaborator to a repository.

@@ -5,6 +5,6 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class CommitCommentPayload : ActivityPayload
     {
-        public CommitComment Comment { get; protected set; }
+        public CommitComment Comment { get; private set; }
     }
 }

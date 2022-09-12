@@ -24,19 +24,19 @@ namespace Octokit
             PreviousFileName = previousFileName;
         }
 
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
         [Parameter(Key = "filename")]
-        public string FileName { get; protected set; }
-        public string Status { get; protected set; }
-        public int Additions { get; protected set; }
-        public int Deletions { get; protected set; }
-        public int Changes { get; protected set; }
-        public string BlobUrl { get; protected set; }
-        public string RawUrl { get; protected set; }
-        public string ContentsUrl { get; protected set; }
-        public string Patch { get; protected set; }
+        public string FileName { get; private set; }
+        public string Status { get; private set; }
+        public int Additions { get; private set; }
+        public int Deletions { get; private set; }
+        public int Changes { get; private set; }
+        public string BlobUrl { get; private set; }
+        public string RawUrl { get; private set; }
+        public string ContentsUrl { get; private set; }
+        public string Patch { get; private set; }
         [Parameter(Key = "previous_filename")]
-        public string PreviousFileName { get; protected set; }
+        public string PreviousFileName { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -20,12 +20,12 @@ namespace Octokit
         /// <summary>
         /// Message indicating if the Rename request was queued
         /// </summary>
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
         /// <summary>
         /// Url to the user that will be renamed
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

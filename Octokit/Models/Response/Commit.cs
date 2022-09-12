@@ -24,18 +24,18 @@ namespace Octokit
             Verification = verification;
         }
 
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
-        public Committer Author { get; protected set; }
+        public Committer Author { get; private set; }
 
-        public Committer Committer { get; protected set; }
+        public Committer Committer { get; private set; }
 
-        public GitReference Tree { get; protected set; }
+        public GitReference Tree { get; private set; }
 
-        public IReadOnlyList<GitReference> Parents { get; protected set; }
+        public IReadOnlyList<GitReference> Parents { get; private set; }
 
-        public int CommentCount { get; protected set; }
+        public int CommentCount { get; private set; }
 
-        public Verification Verification { get; protected set; }
+        public Verification Verification { get; private set; }
     }
 }

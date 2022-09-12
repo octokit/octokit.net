@@ -5,6 +5,6 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class StarredEventPayload : ActivityPayload
     {
-        public string Action { get; protected set; }
+        public string Action { get; private set; }
     }
 }

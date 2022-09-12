@@ -23,18 +23,18 @@ namespace Octokit
             Inviter = inviter;
         }
 
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public string Login { get; protected set; }
-        public string Email { get; protected set; }
-        public StringEnum<OrganizationMembershipRole> Role { get; protected set; }
-        public DateTimeOffset CreatedAt { get; protected set; }
-        public User Inviter { get; protected set; }
+        public string Login { get; private set; }
+        public string Email { get; private set; }
+        public StringEnum<OrganizationMembershipRole> Role { get; private set; }
+        public DateTimeOffset CreatedAt { get; private set; }
+        public User Inviter { get; private set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "Used by DebuggerDisplayAttribute")]

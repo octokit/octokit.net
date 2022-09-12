@@ -26,34 +26,34 @@ namespace Octokit
             Uploader = uploader;
         }
 
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
-        public string Label { get; protected set; }
+        public string Label { get; private set; }
 
-        public string State { get; protected set; }
+        public string State { get; private set; }
 
-        public string ContentType { get; protected set; }
+        public string ContentType { get; private set; }
 
-        public int Size { get; protected set; }
+        public int Size { get; private set; }
 
-        public int DownloadCount { get; protected set; }
+        public int DownloadCount { get; private set; }
 
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
-        public string BrowserDownloadUrl { get; protected set; }
+        public string BrowserDownloadUrl { get; private set; }
 
-        public Author Uploader { get; protected set; }
+        public Author Uploader { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -14,8 +14,8 @@ namespace Octokit
             To = to;
         }
 
-        public string From { get; protected set; }
-        public string To { get; protected set; }
+        public string From { get; private set; }
+        public string To { get; private set; }
 
         internal string DebuggerDisplay
         {

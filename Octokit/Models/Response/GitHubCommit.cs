@@ -29,25 +29,25 @@ namespace Octokit
         /// address used in the commit with the email addresses registered with the GitHub account.
         /// If no account corresponds to the commit email, then this property is null.
         /// </summary>
-        public Author Author { get; protected set; }
+        public Author Author { get; private set; }
 
-        public string CommentsUrl { get; protected set; }
+        public string CommentsUrl { get; private set; }
 
-        public Commit Commit { get; protected set; }
+        public Commit Commit { get; private set; }
 
         /// <summary>
         /// Gets the GitHub account information for the commit committer. It attempts to match the email
         /// address used in the commit with the email addresses registered with the GitHub account.
         /// If no account corresponds to the commit email, then this property is null.
         /// </summary>
-        public Author Committer { get; protected set; }
+        public Author Committer { get; private set; }
 
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
-        public GitHubCommitStats Stats { get; protected set; }
+        public GitHubCommitStats Stats { get; private set; }
 
-        public IReadOnlyList<GitReference> Parents { get; protected set; }
+        public IReadOnlyList<GitReference> Parents { get; private set; }
 
-        public IReadOnlyList<GitHubCommitFile> Files { get; protected set; }
+        public IReadOnlyList<GitHubCommitFile> Files { get; private set; }
     }
 }

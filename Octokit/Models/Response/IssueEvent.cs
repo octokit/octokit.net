@@ -29,69 +29,69 @@ namespace Octokit
         /// <summary>
         /// The id of the issue/pull request event.
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The URL for this issue/pull request event.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// Always the User that generated the event.
         /// </summary>
-        public User Actor { get; protected set; }
+        public User Actor { get; private set; }
 
         /// <summary>
         /// The user that was assigned, if the event was 'Assigned'.
         /// </summary>
-        public User Assignee { get; protected set; }
+        public User Assignee { get; private set; }
 
         /// <summary>
         /// The label that was assigned, if the event was 'Labeled'
         /// </summary>
-        public Label Label { get; protected set; }
+        public Label Label { get; private set; }
 
         /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public StringEnum<EventInfoState> Event { get; protected set; }
+        public StringEnum<EventInfoState> Event { get; private set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
         /// </summary>
-        public string CommitId { get; protected set; }
+        public string CommitId { get; private set; }
 
         /// <summary>
         /// The commit URL of a commit that referenced this issue.
         /// </summary>
-        public string CommitUrl { get; protected set; }
+        public string CommitUrl { get; private set; }
 
         /// <summary>
         /// Date the event occurred for the issue/pull request.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The issue associated to this event.
         /// </summary>
-        public Issue Issue { get; protected set; }
+        public Issue Issue { get; private set; }
 
         /// <summary>
         /// An object containing rename details
         /// Only provided for renamed events
         /// </summary>
-        public RenameInfo Rename { get; protected set; }
+        public RenameInfo Rename { get; private set; }
 
         /// <summary>
         /// Information about the project card that triggered the event.
         /// The project_card attribute is not returned if someone deletes the project board, or if you do not have permission to view it.
         /// </summary>
-        public IssueEventProjectCard ProjectCard { get; protected set; }
+        public IssueEventProjectCard ProjectCard { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -32,27 +32,27 @@ namespace Octokit
         /// <summary>
         /// The user who owns the Installation.
         /// </summary>
-        public User Account { get; protected set; }
+        public User Account { get; private set; }
 
         /// <summary>
         /// The URL to view the Installation on GitHub.
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// The Id of the associated GitHub App.
         /// </summary>
-        public long AppId { get; protected set; }
+        public long AppId { get; private set; }
 
         /// <summary>
         /// The Id of the User/Organization the Installation is installed in
         /// </summary>
-        public long TargetId { get; protected set; }
+        public long TargetId { get; private set; }
 
         /// <summary>
         /// The type of the target (User or Organization)
         /// </summary>
-        public StringEnum<AccountType> TargetType { get; protected set; }
+        public StringEnum<AccountType> TargetType { get; private set; }
 
         /// <summary>
         /// The Permissions granted to the Installation
@@ -67,12 +67,12 @@ namespace Octokit
         /// <summary>
         /// The single file the GitHub App can manage (when Permissions.SingleFile is set to read or write)
         /// </summary>
-        public string SingleFileName { get; protected set; }
+        public string SingleFileName { get; private set; }
 
         /// <summary>
         /// The choice of repositories the installation is on. Can be either "selected" or "all".
         /// </summary>
-        public StringEnum<InstallationRepositorySelection> RepositorySelection { get; protected set; }
+        public StringEnum<InstallationRepositorySelection> RepositorySelection { get; private set; }
 
         internal new string DebuggerDisplay
         {

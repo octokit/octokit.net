@@ -42,42 +42,42 @@ namespace Octokit
         /// <summary>
         /// Url to the license on https://choosealicense.com
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// A description of the license.
         /// </summary>
-        public string Description { get; protected set; }
+        public string Description { get; private set; }
 
         /// <summary>
         /// A group or family that the license belongs to such as the GPL family of licenses.
         /// </summary>
-        public string Category { get; protected set; }
+        public string Category { get; private set; }
 
         /// <summary>
         /// Notes on how to properly apply the license.
         /// </summary>
-        public string Implementation { get; protected set; }
+        public string Implementation { get; private set; }
 
         /// <summary>
         /// Set of codes for what is required under the terms of the license. For example, "include-copyright"
         /// </summary>
-        public IReadOnlyList<string> Required { get; protected set; }
+        public IReadOnlyList<string> Required { get; private set; }
 
         /// <summary>
         /// Set of codes for what is permitted under the terms of the license. For example, "commercial-use"
         /// </summary>
-        public IReadOnlyList<string> Permitted { get; protected set; }
+        public IReadOnlyList<string> Permitted { get; private set; }
 
         /// <summary>
         /// Set of codes for what is forbidden under the terms of the license. For example, "no-liability"
         /// </summary>
-        public IReadOnlyList<string> Forbidden { get; protected set; }
+        public IReadOnlyList<string> Forbidden { get; private set; }
 
         /// <summary>
         /// The text of the license
         /// </summary>
-        public string Body { get; protected set; }
+        public string Body { get; private set; }
 
         internal override string DebuggerDisplay
         {
