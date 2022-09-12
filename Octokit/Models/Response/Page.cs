@@ -60,28 +60,28 @@ namespace Octokit
         /// <summary>
         /// The pages's API URL.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// Absolute URL to the rendered site.
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// Build status of the pages site.
         /// </summary>
-        public StringEnum<PagesBuildStatus> Status { get; protected set; }
+        public StringEnum<PagesBuildStatus> Status { get; private set; }
 
         /// <summary>
         /// CName of the pages site. Will be null if no CName was provided by the user.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "CName")]
-        public string CName { get; protected set; }
+        public string CName { get; private set; }
 
         /// <summary>
         /// Is a custom 404 page provided.
         /// </summary>
-        public bool Custom404 { get; protected set; }
+        public bool Custom404 { get; private set; }
 
         internal string DebuggerDisplay
         {

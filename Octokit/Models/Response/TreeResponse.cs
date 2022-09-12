@@ -20,22 +20,22 @@ namespace Octokit
         /// <summary>
         /// The SHA for this Tree response.
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         /// <summary>
         /// The URL for this Tree response.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The list of Tree Items for this Tree response.
         /// </summary>
-        public IReadOnlyList<TreeItem> Tree { get; protected set; }
+        public IReadOnlyList<TreeItem> Tree { get; private set; }
 
         /// <summary>
         /// Whether the response was truncated due to GitHub API limits.
         /// </summary>
-        public bool Truncated { get; protected set; }
+        public bool Truncated { get; private set; }
 
         internal string DebuggerDisplay
         {

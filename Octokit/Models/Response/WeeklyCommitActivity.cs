@@ -24,17 +24,17 @@ namespace Octokit
         /// <summary>
         /// The days array is a group of commits per day, starting on Sunday.
         /// </summary>
-        public IReadOnlyList<int> Days { get; protected set; }
+        public IReadOnlyList<int> Days { get; private set; }
 
         /// <summary>
         /// Totally number of commits made this week.
         /// </summary>
-        public int Total { get; protected set; }
+        public int Total { get; private set; }
 
         /// <summary>
         /// The week of commits
         /// </summary>
-        public long Week { get; protected set; }
+        public long Week { get; private set; }
 
         public DateTimeOffset WeekTimestamp => DateTimeOffset.FromUnixTimeSeconds(Week);
 

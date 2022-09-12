@@ -18,7 +18,7 @@ namespace Octokit
             Names = new ReadOnlyCollection<string>(initialItems);
         }
 
-        public IReadOnlyList<string> Names { get; protected set; }
+        public IReadOnlyList<string> Names { get; private set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal string DebuggerDisplay

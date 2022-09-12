@@ -27,47 +27,47 @@ namespace Octokit
         /// <summary>
         /// The id of the issue/pull request event.
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The URL for this event.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// Always the User that generated the event.
         /// </summary>
-        public User Actor { get; protected set; }
+        public User Actor { get; private set; }
 
         /// <summary>
         /// The user that was assigned, if the event was 'Assigned'.
         /// </summary>
-        public User Assignee { get; protected set; }
+        public User Assignee { get; private set; }
 
         /// <summary>
         /// The label that was assigned, if the event was 'Labeled'
         /// </summary>
-        public Label Label { get; protected set; }
+        public Label Label { get; private set; }
 
         /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public StringEnum<EventInfoState> Event { get; protected set; }
+        public StringEnum<EventInfoState> Event { get; private set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
         /// </summary>
-        public string CommitId { get; protected set; }
+        public string CommitId { get; private set; }
 
         /// <summary>
         /// Date the event occurred for the issue/pull request.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -111,7 +111,7 @@ namespace Octokit
         BaseRefChanged,
 
         /// <summary>
-        /// The issue was closed by the actor. When the commit_id is present, it identifies the commit that 
+        /// The issue was closed by the actor. When the commit_id is present, it identifies the commit that
         /// closed the issue using “closes / fixes #NN” syntax.
         /// </summary>
         [Parameter(Value = "closed")]
@@ -195,7 +195,7 @@ namespace Octokit
         HeadRefRestored,
 
         /// <summary>
-        /// The pull request’s branch was force pushed to. 
+        /// The pull request’s branch was force pushed to.
         /// </summary>
         [Parameter(Value = "head_ref_force_pushed")]
         HeadRefForcePushed,
@@ -256,7 +256,7 @@ namespace Octokit
         ReadyForReview,
 
         /// <summary>
-        /// The issue was referenced from a commit message. The commit_id attribute is the commit SHA1 of where 
+        /// The issue was referenced from a commit message. The commit_id attribute is the commit SHA1 of where
         /// that happened.
         /// </summary>
         [Parameter(Value = "referenced")]
@@ -309,7 +309,7 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "subscribed")]
         Subscribed,
-        
+
         /// <summary>
         /// An issue was transferred.
         /// </summary>
@@ -321,7 +321,7 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "unassigned")]
         Unassigned,
-        
+
         /// <summary>
         /// A label was removed from the issue.
         /// </summary>
@@ -339,7 +339,7 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "unmarked_as_duplicate")]
         UnmarkedAsDuplicate,
-        
+
         /// <summary>
         /// An issue was unpinned.
         /// </summary>

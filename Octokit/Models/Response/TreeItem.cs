@@ -23,33 +23,33 @@ namespace Octokit
         /// <summary>
         /// The path for this Tree Item.
         /// </summary>
-        public string Path { get; protected set; }
+        public string Path { get; private set; }
 
         /// <summary>
         /// The mode of this Tree Item.
         /// </summary>
-        public string Mode { get; protected set; }
+        public string Mode { get; private set; }
 
         /// <summary>
         /// The type of this Tree Item.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods")]
-        public StringEnum<TreeType> Type { get; protected set; }
+        public StringEnum<TreeType> Type { get; private set; }
 
         /// <summary>
         /// The size of this Tree Item.
         /// </summary>
-        public int Size { get; protected set; }
+        public int Size { get; private set; }
 
         /// <summary>
         /// The SHA of this Tree Item.
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         /// <summary>
         /// The URL of this Tree Item.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

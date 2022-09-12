@@ -21,12 +21,12 @@ namespace Octokit
         /// <summary>
         /// The content of the response.
         /// </summary>
-        public RepositoryContentInfo Content { get; protected set; }
+        public RepositoryContentInfo Content { get; private set; }
 
         /// <summary>
         /// The commit information for the content change.
         /// </summary>
-        public Commit Commit { get; protected set; }
+        public Commit Commit { get; private set; }
 
         internal string DebuggerDisplay
         {

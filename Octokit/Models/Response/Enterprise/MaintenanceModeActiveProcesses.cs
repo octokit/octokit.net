@@ -14,9 +14,9 @@ namespace Octokit
             Number = number;
         }
 
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
-        public int Number { get; protected set; }
+        public int Number { get; private set; }
 
         public override string ToString()
         {

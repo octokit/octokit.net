@@ -24,22 +24,22 @@ namespace Octokit
         /// <summary>
         /// URL to the download status for a pre-receive environment.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The state of the most recent download.
         /// </summary>
-        public StringEnum<PreReceiveEnvironmentDownloadState> State { get; protected set; }
+        public StringEnum<PreReceiveEnvironmentDownloadState> State { get; private set; }
 
         /// <summary>
         /// On failure, this will have any error messages produced.
         /// </summary>
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
         /// <summary>
         /// The time when the most recent download started.
         /// </summary>
-        public DateTimeOffset? DownloadedAt { get; protected set; }
+        public DateTimeOffset? DownloadedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

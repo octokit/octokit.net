@@ -16,7 +16,7 @@ namespace Octokit
         /// <summary>
         /// The SHA of the blob.
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         internal string DebuggerDisplay
         {

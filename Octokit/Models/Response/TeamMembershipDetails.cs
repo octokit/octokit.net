@@ -15,9 +15,9 @@ namespace Octokit
             State = state;
         }
 
-        public StringEnum<TeamRole> Role { get; protected set; }
+        public StringEnum<TeamRole> Role { get; private set; }
 
-        public StringEnum<MembershipState> State { get; protected set; }
+        public StringEnum<MembershipState> State { get; private set; }
 
         internal string DebuggerDisplay
         {

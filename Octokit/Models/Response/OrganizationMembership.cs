@@ -20,12 +20,12 @@ namespace Octokit
             User = user;
         }
 
-        public string Url { get; protected set; }
-        public StringEnum<MembershipState> State { get; protected set; }
-        public StringEnum<MembershipRole> Role { get; protected set; }
-        public string OrganizationUrl { get; protected set; }
-        public Organization Organization { get; protected set; }
-        public User User { get; protected set; }
+        public string Url { get; private set; }
+        public StringEnum<MembershipState> State { get; private set; }
+        public StringEnum<MembershipRole> Role { get; private set; }
+        public string OrganizationUrl { get; private set; }
+        public Organization Organization { get; private set; }
+        public User User { get; private set; }
 
         internal string DebuggerDisplay => $"{nameof(OrganizationMembership)}: User: {User.Login}; Organization: {Organization.Login}; State: {State}; Role: {Role}";
     }
