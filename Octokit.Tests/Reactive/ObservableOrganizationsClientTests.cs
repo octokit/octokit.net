@@ -153,5 +153,81 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.Update("", new OrganizationUpdate()));
             }
         }
+
+        public class TheGetAllAuthorizationsMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationsClient(gitHubClient);
+
+                client.GetAllAuthorizations("org");
+
+                gitHubClient.Received().Organization.GetAllAuthorizations("org");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllAuthorizations("org", options);
+
+                gitHubClient.Received().Organization.GetAllAuthorizations("org", options);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithLogin()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationsClient(gitHubClient);
+
+                client.GetAllAuthorizations("org", "login");
+
+                gitHubClient.Received().Organization.GetAllAuthorizations("org", "login");
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptionsWithLogin()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationsClient(gitHubClient);
+
+                var options = new ApiOptions
+                {
+                    StartPage = 1,
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                client.GetAllAuthorizations("org", "login", options);
+
+                gitHubClient.Received().Organization.GetAllAuthorizations("org", "login", options);
+            }
+
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAuthorizations(null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAuthorizations(null, ApiOptions.None));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAuthorizations("username", (string)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAuthorizations("username", null, ApiOptions.None));
+
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAuthorizations("asd", (ApiOptions)null));
+                Assert.Throws<ArgumentNullException>(() => client.GetAllAuthorizations("asd", "asd", null));
+            }
+        }   
     }
 }
