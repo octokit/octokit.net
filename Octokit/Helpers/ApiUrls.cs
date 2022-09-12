@@ -4458,11 +4458,24 @@ namespace Octokit
             return "meta".FormatUri();
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all organization credentials in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <returns>The <see cref="Uri"/> to meta.</returns>
         public static Uri AllOrganizationCredentials(string org)
         {
             return "orgs/{0}/credential-authorizations".FormatUri(org);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all organization credentials for a given login in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <returns>The <see cref="Uri"/> to meta.</returns>
         public static Uri AllOrganizationCredentials(string org, string login)
         {
             return "orgs/{0}/credential-authorizations?login={1}".FormatUri(org, login);
