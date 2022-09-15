@@ -13,6 +13,5 @@ jobs:
         uses: lycheeverse/lychee-action@v1.5.1
         with:
           fail: true
-          args: "--max-redirects 0"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
