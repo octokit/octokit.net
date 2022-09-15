@@ -91,7 +91,7 @@ namespace Octokit
         /// Access GitHub's Pacakges API.
         /// </summary>
         /// <remarks>
-        /// Refer to the API documentation for more information: https://docs.github.com/en/rest/packages
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/packages
         /// </remarks>
         IPackagesClient Packages { get; }
 

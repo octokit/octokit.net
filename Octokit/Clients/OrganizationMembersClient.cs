@@ -572,7 +572,7 @@ namespace Octokit
         /// List failed organization invitations.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
@@ -589,7 +589,7 @@ namespace Octokit
         /// List failed organization invitations.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>

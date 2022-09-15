@@ -343,7 +343,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
@@ -397,7 +397,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Add a user to the organization or update the user's role withing the organization. 
+        /// Add a user to the organization or update the user's role withing the organization.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
@@ -477,7 +477,7 @@ namespace Octokit.Reactive
         /// List failed organization invitations.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
@@ -493,7 +493,7 @@ namespace Octokit.Reactive
         /// List failed organization invitations.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>

@@ -61,7 +61,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>        
+        /// <param name="number">The comment id</param>
         public IObservable<Reaction> GetAll(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <param name="options">Options for changing the API response</param>        
+        /// <param name="options">Options for changing the API response</param>
         public IObservable<Reaction> GetAll(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -92,7 +92,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>        
+        /// <param name="number">The comment id</param>
         public IObservable<Reaction> GetAll(long repositoryId, int number)
         {
             return GetAll(repositoryId, number, ApiOptions.None);
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
-        /// <param name="options">Options for changing the API response</param>        
+        /// <param name="options">Options for changing the API response</param>
         public IObservable<Reaction> GetAll(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -115,7 +115,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Deletes a reaction for a specified Issue Comment
         /// </summary>
-        /// <remarks>https://docs.github.com/en/rest/reactions#delete-an-issue-comment-reaction</remarks>
+        /// <remarks>https://docs.github.com/rest/reactions#delete-an-issue-comment-reaction</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The comment id</param>
@@ -133,7 +133,7 @@ namespace Octokit.Reactive
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
         /// </summary>
-        /// <remarks>https://docs.github.com/en/rest/reactions#delete-an-issue-comment-reaction</remarks>
+        /// <remarks>https://docs.github.com/rest/reactions#delete-an-issue-comment-reaction</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>
