@@ -56,7 +56,7 @@ namespace Octokit.Reactive
     /// Gets the specified branch.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/branches/#get-branch">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/branches/branches#get-a-branch">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -68,7 +68,7 @@ namespace Octokit.Reactive
     /// Gets the specified branch.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/branches/#get-branch">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/branches/branches#get-a-branch">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The ID of the repository</param>
     /// <param name="branch">The name of the branch</param>
