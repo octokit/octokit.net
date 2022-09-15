@@ -21,10 +21,10 @@ The clients within a project are organized similarly to the endpoints in the
 [GitHub API documentation](http://docs.github.com/rest/)
 
 Some clients are "sub-clients". For example, when you navigate to the
-[Issues API](http://developer.github.com/v3/issues/) you'll notice there's an
+[Issues API](https://docs.github.com/rest/issues/) you'll notice there's an
 endpoint for issues. But in the right navbar, there are other APIs such as
-[Assignees](http://developer.github.com/v3/issues/assignees/) and
-[Milestones](http://developer.github.com/v3/issues/milestones/).
+[Assignees](https://docs.github.com/rest/issues/assignees/) and
+[Milestones](https://docs.github.com/rest/issues/milestones/).
 
 We've tried to mirror this structure. So the `IObservableMilestoneClient` isn't
 a direct property of `IObservableGitHubClient`. Instead, it's a property of the
