@@ -270,7 +270,7 @@ namespace Octokit.Reactive
     /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#upload-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/assets#upload-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
     /// <param name="data">Description of the asset with its data</param>
