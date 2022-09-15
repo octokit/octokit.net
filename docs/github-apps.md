@@ -6,7 +6,7 @@ GitHub Apps are a new type of integration offering narrow, specific permissions,
 
 ⚠️ Please ensure to follow the links to the official GitHub Developer documentation where they are referenced, as we do not want to include all of the detail in this walkthrough (and run the risk of it becoming out of date or incorrect)
 
-To learn more about GitHub Apps, head to the GitHub Apps section under the GitHub Developer [Getting started with Building Apps](https://developer.github.com/apps/getting-started-with-building-apps/#using-github-apps) documentation.
+To learn more about GitHub Apps, head to the GitHub Apps section under the GitHub Developer [Getting started with Building Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps) documentation.
 
 ## Overview
 
@@ -29,11 +29,11 @@ The below walkthrough outlines how to use Octokit.net to
 - Generate a temporary Installation Token as the `GitHubApp`, to allow further authentication as a specific `Installation` of the `GitHubApp`
 - Access specific endpoints as the `Installation`
 
-Be sure to read the  [GitHub Api Documentation](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps) on GitHub Apps authentication, before proceeding!
+Be sure to read the  [GitHub Api Documentation](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps) on GitHub Apps authentication, before proceeding!
 
 ## GitHub App Walkthrough
 
-Each GitHub App has a private certificate (PEM file) which is [generated via the GitHub website](https://developer.github.com/apps/building-github-apps/authenticating-with-github-apps/#generating-a-private-key) by the owner of the GitHub App.  Wherever the owner decides to host the GitHub App, it would need access to this private certificate, as it is the entry point to authentication with GitHub.
+Each GitHub App has a private certificate (PEM file) which is [generated via the GitHub website](https://docs.github.com/en/developers/apps/building-github-apps/authenticating-with-github-apps#generating-a-private-key) by the owner of the GitHub App.  Wherever the owner decides to host the GitHub App, it would need access to this private certificate, as it is the entry point to authentication with GitHub.
 
 The first step in the authentication process, is to generate a temporary JWT token, signed by the GitHub App's private certificate.  It also needs to include the GitHub App's unique Id, which is obtainable from the GitHub website.
 

@@ -14,16 +14,15 @@ Console.WriteLine($"Found {stats.AdminUsers} admins, {stats.TotalUsers} total us
 
 Some caveats on using these APIs that you should be aware of:
 
- - only administrators of the GitHub Enterprise instance are able to access
+- only administrators of the GitHub Enterprise instance are able to access
    these APIs
- - administrators creating OAuth tokens to use this endpoint must ensure the
+- administrators creating OAuth tokens to use this endpoint must ensure the
    `site_admin` scope is set
- - the [Management Console API](https://developer.github.com/enterprise/2.18/v3/enterprise/management_console/)
+- the [Management Console API](https://docs.github.com/en/enterprise/2.18/user/rest/reference/enterprise-admin#management-console)
    also require providing the password created during setup of the GitHub
    Enterprise installation to confirm the action
 
-You can read more about this support [on the GitHub website](https://developer.github.com/enterprise/2.18/v3/enterprise-admin/).
-
+You can read more about this support [on the GitHub website](https://docs.github.com/en/enterprise/2.18/user/rest/reference/enterprise-admin).
 
 ## Management console
 
