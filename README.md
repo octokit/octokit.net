@@ -42,13 +42,6 @@ There is also an IObservable based GitHub API client library for .NET using Reac
 dotnet add package Octokit.Reactive
 ```
 
-### Beta packages ###
-
-Unstable NuGet packages that track the `main` branch of this repository are available at
-[https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
-
-In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
-
 ## Documentation
 
 Documentation is available at <http://octokitnet.readthedocs.io/en/latest/>.
