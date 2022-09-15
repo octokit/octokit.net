@@ -101,6 +101,9 @@ namespace Octokit
     /// list of all possible OSS licenses.
     /// </summary>
     /// <returns>A list of licenses available on the site</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/licenses
+    /// </remarks>
     [ManualRoute("GET", "/licenses")]
     public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
     {
@@ -113,6 +116,9 @@ namespace Octokit
     /// </summary>
     /// <param name="options">Options for changing the API response</param>
     /// <returns>A list of licenses available on the site</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/licenses
+    /// </remarks>
     [ManualRoute("GET", "/licenses")]
     public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options)
     {
@@ -126,6 +132,9 @@ namespace Octokit
     /// </summary>
     /// <param name="key"></param>
     /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/licenses
+    /// </remarks>
     [ManualRoute("GET", "/licenses/{key}")]
     public Task<License> GetLicense(string key)
     {
