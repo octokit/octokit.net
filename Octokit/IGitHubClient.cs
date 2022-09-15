@@ -59,7 +59,7 @@ namespace Octokit
     /// Access GitHub's Migration API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/migration/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/migrations/
     /// </remarks>
     IMigrationClient Migration { get; }
 
