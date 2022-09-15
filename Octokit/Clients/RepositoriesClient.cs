@@ -599,7 +599,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -617,7 +617,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <returns>All contributors of the repository.</returns>
@@ -631,7 +631,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -651,7 +651,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="options">Options for changing the API response</param>
@@ -668,7 +668,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -687,7 +687,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
@@ -702,7 +702,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -727,7 +727,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
