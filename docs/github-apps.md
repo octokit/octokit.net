@@ -1,6 +1,7 @@
 # Working with GitHub Apps
 
 ## Introduction
+
 GitHub Apps are a new type of integration offering narrow, specific permissions, compared to OAuth apps or user authentication.
 
 ⚠️ Please ensure to follow the links to the official GitHub Developer documentation where they are referenced, as we do not want to include all of the detail in this walkthrough (and run the risk of it becoming out of date or incorrect)
@@ -15,13 +16,14 @@ An "instance" of a GitHub App is then installed in an `Organization` or `User` a
 
 An `Installation` of a `GitHubApp`, thus operates at the "intersection" between the globally defined permissions/scopes/webhooks of the GitHub App itself PLUS the Organization/User repositories that were nominated.
 
-The [GitHub Api Documentation](https://developer.github.com/v3/apps/) on GitHub Apps contains more detailed information.
+The [GitHub Api Documentation](https://docs.github.com/rest/apps/) on GitHub Apps contains more detailed information.
 
 ## Authentication
 
 Authentication for GitHub Apps is reasonably complicated, as there are a few moving parts to take into account.
 
 The below walkthrough outlines how to use Octokit.net to
+
 - Authenticate as the `GitHubApp` itself using a temporary JWT token
 - Query top level endpoints as the `GitHubApp`
 - Generate a temporary Installation Token as the `GitHubApp`, to allow further authentication as a specific `Installation` of the `GitHubApp`
@@ -84,7 +86,7 @@ var installationClient = new GitHubClient(new ProductHeaderValue("MyApp-Installa
 };
 ```
 
-Once authenticated as an `Installation`, a [subset of regular API endpoints](https://developer.github.com/v3/apps/available-endpoints/) can be accessed, using the intersection of the permissions/scopes of the `GitHubApp` and the repositories nominated by the User/Organization as part of the `Installation`:
+Once authenticated as an `Installation`, a [subset of regular API endpoints](https://docs.github.com/rest/overview/endpoints-available-for-github-apps) can be accessed, using the intersection of the permissions/scopes of the `GitHubApp` and the repositories nominated by the User/Organization as part of the `Installation`:
 
 ``` csharp
 // Create a Comment on an Issue
@@ -98,6 +100,7 @@ That concludes the walkthrough!
 ## Additional Notes
 
 ### A Note on JWT Tokens
+
 Octokit.net aims to have no external dependencies, therefore we do not currently have the ability to generate/sign JWT tokens for you, and instead expect that you will pass in the appropriately signed JWT token required to authenticate the `GitHubApp`.
 
 Luckily one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ( [GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt) ) which you can use as per the following example.
@@ -123,11 +126,13 @@ var appClient = new GitHubClient(new ProductHeaderValue("MyApp"))
 ```
 
 ### A Note on identifying Installation Id's
+
 GitHub Apps specify which webhook events they are interested in, and when installed in a User/Organization account and restricted to some/all repositories, these webhooks will then be sent to the GitHub App's URL.
 
 WebHook payloads now include an extra field to indicate the Id of the GitHub App Installation that is associated with the received webhook.
 
 Example webhook for an opened Pull Request:
+
 ``` json
 {
     "action": "opened",

@@ -27,8 +27,8 @@ client.Credentials = tokenAuth;
 
 It is **strongly recommended** to use the [OAuth Flow](https://github.com/octokit/octokit.net/blob/main/docs/oauth-flow.md) for interactions on behalf of a user, as this gives two significant benefits:
 
- - the application owner never needs to store a user's password
- - the token can be revoked by the user at a later date
+- the application owner never needs to store a user's password
+- the token can be revoked by the user at a later date
 
 When authenticated, you have 5000 requests per hour available. So this is the recommended approach for interacting with the API.
 
@@ -46,7 +46,7 @@ You can use the `EnterpriseProbe` class to test whether a URL points to a Github
 ```csharp
 var probe = new EnterpriseProbe(new ProductHeaderValue("my-cool-app"));
 var result = await probe.Probe(new Uri("http://ghe.example.com/"));
-Assert.Equal(EnterpriseProbeResult.Ok, result); 
+Assert.Equal(EnterpriseProbeResult.Ok, result);
 ```
 
 ### Get some data
@@ -56,9 +56,9 @@ Once you have that setup, the simplest thing to experiment with is fetching deta
 ```csharp
 var user = await client.User.Get("shiftkey");
 Console.WriteLine("{0} has {1} public repositories - go check out their profile at {2}",
-	user.Name,
-	user.PublicRepos,
-	user.Url);
+ user.Name,
+ user.PublicRepos,
+ user.Url);
 ```
 
 If you've authenticated as a given user, you can query their details directly:
@@ -76,7 +76,7 @@ In fact, there are two ways to get the Rate Limits via OctoKit.NET. Calling `Git
 Example usage:
 
 ```csharp
-GitHubClient client; 
+GitHubClient client;
 //Create & initialize the client here
 
 // Prior to first API call, this will be null, because it only deals with the last call.
@@ -95,7 +95,7 @@ However, if in some cases you need to get the Rate Limit directly from Github, y
 Example usage:
 
 ```csharp
-GitHubClient client; 
+GitHubClient client;
 //Create & initialize the client here
 
 var miscellaneousRateLimit = await client.Miscellaneous.GetRateLimits();
@@ -115,6 +115,6 @@ var howManySearchRequestsDoIHaveLeft = searchRateLimit.Remaining;
 var whenDoesTheSearchLimitReset = searchRateLimit.Reset; // UTC time
 ```
 
-An authenticated client will have a significantly higher limit than an anonymous client. 
+An authenticated client will have a significantly higher limit than an anonymous client.
 
-For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://developer.github.com/v3/#rate-limiting).
+For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://docs.github.com/rest/#rate-limiting).

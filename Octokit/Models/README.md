@@ -34,6 +34,6 @@ objects in a unit test is a royal pain.
 ### Notes
 
 There's a lot of confusion caused by the fact that the GitHub API returns GitHub resources as well as Git resources.
-For example, you can use the [Git Data API](https://developer.github.com/v3/git/) to directly manipulate Git objects
+For example, you can use the [Git Data API](https://docs.github.com/rest/git/) to directly manipulate Git objects
 such as a `commit`. At the same time, GitHub also has its own `commit` (represented by `GitHubCommit` in Octokit.net)
 that contains the GitHub information around the commit such as comments.
