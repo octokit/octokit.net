@@ -419,7 +419,7 @@ namespace Octokit
     /// Deletes a collaborator from the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#remove-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -439,7 +439,7 @@ namespace Octokit
     /// Deletes a collaborator from the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#remove-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#remove-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the deleted collaborator</param>
