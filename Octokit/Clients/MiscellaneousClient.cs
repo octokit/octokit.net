@@ -146,6 +146,9 @@ namespace Octokit
     /// </summary>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/rate-limit
+    /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
     [ManualRoute("GET", "/rate_limit")]
     public Task<MiscellaneousRateLimit> GetRateLimits()
@@ -158,6 +161,9 @@ namespace Octokit
     /// </summary>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/meta
+    /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
     [ManualRoute("GET", "/meta")]
     public Task<Meta> GetMetadata()
