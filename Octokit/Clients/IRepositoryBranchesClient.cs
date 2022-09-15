@@ -18,7 +18,7 @@ namespace Octokit
     /// Gets all the branches for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branches#list-branches">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branches#list-branches">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -28,7 +28,7 @@ namespace Octokit
     /// Gets all the branches for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branches#list-branches">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branches#list-branches">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The ID of the repository</param>
     Task<IReadOnlyList<Branch>> GetAll(long repositoryId);
@@ -37,7 +37,7 @@ namespace Octokit
     /// Gets all the branches for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branches#list-branches">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branches#list-branches">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -48,7 +48,7 @@ namespace Octokit
     /// Gets all the branches for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branches#list-branches">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branches#list-branches">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The ID of the repository</param>
     /// <param name="options">Options for changing the API response</param>
@@ -58,7 +58,7 @@ namespace Octokit
     /// Gets the specified branch.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branches#get-a-branch">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branches#get-a-branch">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -70,7 +70,7 @@ namespace Octokit
     /// Gets the specified branch.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branches#get-a-branch">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branches#get-a-branch">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The ID of the repository</param>
     /// <param name="branch">The name of the branch</param>
@@ -81,7 +81,7 @@ namespace Octokit
     /// Get the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#get-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branch-protection#get-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -92,7 +92,7 @@ namespace Octokit
     /// Get the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#get-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branch-protection#get-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="branch">The name of the branch</param>
@@ -102,7 +102,7 @@ namespace Octokit
     /// Update the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#update-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branch-protection#update-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -114,7 +114,7 @@ namespace Octokit
     /// Update the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#update-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branch-protection#update-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="branch">The name of the branch</param>
@@ -125,7 +125,7 @@ namespace Octokit
     /// Remove the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#delete-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branch-protection#delete-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -136,7 +136,7 @@ namespace Octokit
     /// Remove the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#delete-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/branches/branch-protection#delete-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="branch">The name of the branch</param>

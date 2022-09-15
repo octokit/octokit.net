@@ -28,7 +28,7 @@ namespace Octokit
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/emojis
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/emojis
     /// </remarks>
     [ManualRoute("GET", "/emojis")]
     public Task<IReadOnlyList<Emoji>> GetAllEmojis()
@@ -43,7 +43,7 @@ namespace Octokit
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>The rendered Markdown.</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/markdown
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/markdown
     /// </remarks>
     [ManualRoute("POST", "/markdown/raw")]
     public Task<string> RenderRawMarkdown(string markdown)
@@ -58,7 +58,7 @@ namespace Octokit
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>The rendered Markdown.</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/markdown
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/markdown
     /// </remarks>
     [ManualRoute("POST", "/markdown")]
     public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
@@ -71,7 +71,7 @@ namespace Octokit
     /// </summary>
     /// <returns>A list of template names</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/gitignore
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/gitignore
     /// </remarks>
 
     [ManualRoute("GET", "/gitignore/templates")]
@@ -86,7 +86,7 @@ namespace Octokit
     /// <param name="templateName"></param>
     /// <returns>A template and its source</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/gitignore
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/gitignore
     /// </remarks>
     [ManualRoute("GET", "/gitignore/templates/{name}")]
     public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
@@ -102,7 +102,7 @@ namespace Octokit
     /// </summary>
     /// <returns>A list of licenses available on the site</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/licenses
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/licenses
     /// </remarks>
     [ManualRoute("GET", "/licenses")]
     public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
@@ -117,7 +117,7 @@ namespace Octokit
     /// <param name="options">Options for changing the API response</param>
     /// <returns>A list of licenses available on the site</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/licenses
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/licenses
     /// </remarks>
     [ManualRoute("GET", "/licenses")]
     public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options)
@@ -133,7 +133,7 @@ namespace Octokit
     /// <param name="key"></param>
     /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/licenses
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/licenses
     /// </remarks>
     [ManualRoute("GET", "/licenses/{key}")]
     public Task<License> GetLicense(string key)
@@ -147,7 +147,7 @@ namespace Octokit
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/rate-limit
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/rate-limit
     /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
     [ManualRoute("GET", "/rate_limit")]
@@ -162,7 +162,7 @@ namespace Octokit
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/meta
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/meta
     /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
     [ManualRoute("GET", "/meta")]

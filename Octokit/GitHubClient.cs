@@ -19,7 +19,7 @@ namespace Octokit
     /// https://api.github.com/
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="productInformation">
     /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
@@ -35,7 +35,7 @@ namespace Octokit
     /// https://api.github.com/
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="productInformation">
     /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
@@ -51,7 +51,7 @@ namespace Octokit
     /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="productInformation">
     /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
@@ -69,7 +69,7 @@ namespace Octokit
     /// Create a new instance of the GitHub API v3 client pointing to the specified baseAddress.
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="productInformation">
     /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
@@ -230,7 +230,7 @@ namespace Octokit
     /// Access GitHub's Pacakges API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/packages
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/packages
     /// </remarks>
     public IPackagesClient Packages { get; private set; }
 

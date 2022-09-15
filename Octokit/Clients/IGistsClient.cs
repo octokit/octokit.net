@@ -31,7 +31,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     Task<IReadOnlyList<Gist>> GetAll();
 
@@ -40,7 +40,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     Task<IReadOnlyList<Gist>> GetAll(ApiOptions options);
@@ -50,7 +50,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since);
@@ -60,7 +60,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -70,7 +70,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     Task<IReadOnlyList<Gist>> GetAllPublic();
 
@@ -78,7 +78,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     Task<IReadOnlyList<Gist>> GetAllPublic(ApiOptions options);
@@ -87,7 +87,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since);
@@ -96,7 +96,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -108,7 +108,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     Task<IReadOnlyList<Gist>> GetAllStarred();
 
@@ -116,7 +116,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options);
@@ -125,7 +125,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since);
@@ -134,7 +134,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -144,7 +144,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     Task<IReadOnlyList<Gist>> GetAllForUser(string user);
@@ -153,7 +153,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="options">Options for changing the API response</param>
@@ -163,7 +163,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="since">Only gists updated at or after this time are returned</param>
@@ -173,7 +173,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="since">Only gists updated at or after this time are returned</param>
@@ -184,7 +184,7 @@ namespace Octokit
     /// List gist commits
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-commits
+    /// https://docs.github.com/rest/gists-commits
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     Task<IReadOnlyList<GistHistory>> GetAllCommits(string id);
@@ -193,7 +193,7 @@ namespace Octokit
     /// List gist commits
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-commits
+    /// https://docs.github.com/rest/gists-commits
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     /// <param name="options">Options for changing the API response</param>
@@ -203,7 +203,7 @@ namespace Octokit
     /// List gist forks
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-forks
+    /// https://docs.github.com/rest/gists-forks
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     Task<IReadOnlyList<GistFork>> GetAllForks(string id);
@@ -212,7 +212,7 @@ namespace Octokit
     /// List gist forks
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-forks
+    /// https://docs.github.com/rest/gists-forks
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     /// <param name="options">Options for changing the API response</param>

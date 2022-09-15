@@ -24,7 +24,7 @@ namespace Octokit.Reactive
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     IObservable<Gist> GetAll();
 
@@ -33,7 +33,7 @@ namespace Octokit.Reactive
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     IObservable<Gist> GetAll(ApiOptions options);
@@ -43,7 +43,7 @@ namespace Octokit.Reactive
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     IObservable<Gist> GetAll(DateTimeOffset since);
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -63,7 +63,7 @@ namespace Octokit.Reactive
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     IObservable<Gist> GetAllPublic();
 
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     IObservable<Gist> GetAllPublic(ApiOptions options);
@@ -80,7 +80,7 @@ namespace Octokit.Reactive
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     IObservable<Gist> GetAllPublic(DateTimeOffset since);
@@ -89,7 +89,7 @@ namespace Octokit.Reactive
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -99,7 +99,7 @@ namespace Octokit.Reactive
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     IObservable<Gist> GetAllStarred();
 
@@ -107,7 +107,7 @@ namespace Octokit.Reactive
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     IObservable<Gist> GetAllStarred(ApiOptions options);
@@ -116,7 +116,7 @@ namespace Octokit.Reactive
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     IObservable<Gist> GetAllStarred(DateTimeOffset since);
@@ -125,7 +125,7 @@ namespace Octokit.Reactive
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -135,7 +135,7 @@ namespace Octokit.Reactive
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     IObservable<Gist> GetAllForUser(string user);
@@ -144,7 +144,7 @@ namespace Octokit.Reactive
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="options">Options for changing the API response</param>
@@ -154,7 +154,7 @@ namespace Octokit.Reactive
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="since">Only gists updated at or after this time are returned</param>
@@ -164,7 +164,7 @@ namespace Octokit.Reactive
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="since">Only gists updated at or after this time are returned</param>
@@ -175,7 +175,7 @@ namespace Octokit.Reactive
     /// List gist commits
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-commits
+    /// https://docs.github.com/rest/gists-commits
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     IObservable<GistHistory> GetAllCommits(string id);
@@ -184,7 +184,7 @@ namespace Octokit.Reactive
     /// List gist commits
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-commits
+    /// https://docs.github.com/rest/gists-commits
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     /// <param name="options">Options for changing the API response</param>
@@ -194,7 +194,7 @@ namespace Octokit.Reactive
     /// List gist forks
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-forks
+    /// https://docs.github.com/rest/gists-forks
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     IObservable<GistFork> GetAllForks(string id);
@@ -203,7 +203,7 @@ namespace Octokit.Reactive
     /// List gist forks
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-forks
+    /// https://docs.github.com/rest/gists-forks
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     /// <param name="options">Options for changing the API response</param>

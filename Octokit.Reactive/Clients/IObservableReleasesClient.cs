@@ -9,7 +9,7 @@ namespace Octokit.Reactive
   /// A client for GitHub's Releases API.
   /// </summary>
   /// <remarks>
-  /// See the <a href="https://docs.github.com/en/rest/releases/releases/">Releases API documentation</a> for more information.
+  /// See the <a href="https://docs.github.com/rest/releases/releases/">Releases API documentation</a> for more information.
   /// </remarks>
   public interface IObservableReleasesClient
   {
@@ -17,7 +17,7 @@ namespace Octokit.Reactive
     /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -29,7 +29,7 @@ namespace Octokit.Reactive
     /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="data">The request for generating release notes</param>
@@ -40,7 +40,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="Release"/>s for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#list-releases">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#list-releases">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -51,7 +51,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="Release"/>s for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#list-releases">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#list-releases">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="Release"/>s for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#list-releases">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#list-releases">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -73,7 +73,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="Release"/>s for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#list-releases">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#list-releases">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="options">Options for changing the API response</param>
@@ -84,7 +84,7 @@ namespace Octokit.Reactive
     /// Gets a single <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#get-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -96,7 +96,7 @@ namespace Octokit.Reactive
     /// Gets a single <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-a-release-by-tag-name">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#get-a-release-by-tag-name">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -108,7 +108,7 @@ namespace Octokit.Reactive
     /// Gets a single <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#get-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the release</param>
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
     /// Gets a single <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-a-release-by-tag-name">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#get-a-release-by-tag-name">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="tag">The tag of the release</param>
@@ -130,7 +130,7 @@ namespace Octokit.Reactive
     /// Gets the latest <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-the-latest-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#get-the-latest-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -141,7 +141,7 @@ namespace Octokit.Reactive
     /// Gets the latest <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-the-latest-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#get-the-latest-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -151,7 +151,7 @@ namespace Octokit.Reactive
     /// Creates a new <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases/#create-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases/#create-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -163,7 +163,7 @@ namespace Octokit.Reactive
     /// Creates a new <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases/#create-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases/#create-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="data">A description of the release to create</param>
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
     /// Edits an existing <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#update-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#update-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -187,7 +187,7 @@ namespace Octokit.Reactive
     /// Edits an existing <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#update-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#update-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the release</param>
@@ -199,7 +199,7 @@ namespace Octokit.Reactive
     /// Deletes an existing <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#delete-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -211,7 +211,7 @@ namespace Octokit.Reactive
     /// Deletes an existing <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#delete-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the release to delete</param>
@@ -222,7 +222,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -234,7 +234,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the <see cref="Release"/>.</param>
@@ -245,7 +245,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -258,7 +258,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the <see cref="Release"/>.</param>
@@ -270,7 +270,7 @@ namespace Octokit.Reactive
     /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/assets#upload-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/assets#upload-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
     /// <param name="data">Description of the asset with its data</param>
@@ -282,7 +282,7 @@ namespace Octokit.Reactive
     /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/assets#get-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/assets#get-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -293,7 +293,7 @@ namespace Octokit.Reactive
     /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/assets#get-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/assets#get-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
@@ -303,7 +303,7 @@ namespace Octokit.Reactive
     /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#update-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#update-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -315,7 +315,7 @@ namespace Octokit.Reactive
     /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#update-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#update-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
@@ -326,7 +326,7 @@ namespace Octokit.Reactive
     /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#delete-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -337,7 +337,7 @@ namespace Octokit.Reactive
     /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/releases/releases#delete-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>

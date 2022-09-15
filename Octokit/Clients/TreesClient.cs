@@ -8,7 +8,7 @@ namespace Octokit
   /// A client for GitHub's Git Trees API.
   /// </summary>
   /// <remarks>
-  /// See the <a href="https://docs.github.com/en/rest/git/trees/">Git Trees API documentation</a> for more information.
+  /// See the <a href="https://docs.github.com/rest/git/trees/">Git Trees API documentation</a> for more information.
   /// </remarks>
   public class TreesClient : ApiClient, ITreesClient
   {
@@ -25,7 +25,7 @@ namespace Octokit
     /// Gets a Tree Response for a given SHA.
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/git/trees/#get-a-tree
+    /// https://docs.github.com/rest/git/trees/#get-a-tree
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -44,7 +44,7 @@ namespace Octokit
     /// Gets a Tree Response for a given SHA.
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/git/trees/#get-a-tree
+    /// https://docs.github.com/rest/git/trees/#get-a-tree
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="reference">The SHA that references the tree</param>
@@ -95,7 +95,7 @@ namespace Octokit
     /// Creates a new Tree in the specified repo
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/git/trees/#create-a-tree
+    /// https://docs.github.com/rest/git/trees/#create-a-tree
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -119,7 +119,7 @@ namespace Octokit
     /// Creates a new Tree in the specified repo
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/git/trees/#create-a-tree
+    /// https://docs.github.com/rest/git/trees/#create-a-tree
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="newTree">The value of the new tree</param>

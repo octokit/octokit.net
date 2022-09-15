@@ -101,7 +101,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     [ManualRoute("GET", "/gists")]
     public Task<IReadOnlyList<Gist>> GetAll()
@@ -114,7 +114,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     [ManualRoute("GET", "/gists")]
@@ -130,7 +130,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     [ManualRoute("GET", "/gists")]
@@ -144,7 +144,7 @@ namespace Octokit
     /// this will return all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -161,7 +161,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     [ManualRoute("GET", "/gists/public")]
     public Task<IReadOnlyList<Gist>> GetAllPublic()
@@ -173,7 +173,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     [ManualRoute("GET", "/gists/public")]
@@ -188,7 +188,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     [ManualRoute("GET", "/gists/public")]
@@ -201,7 +201,7 @@ namespace Octokit
     /// Lists all public gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -218,7 +218,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     [ManualRoute("GET", "/gists/starred")]
     public Task<IReadOnlyList<Gist>> GetAllStarred()
@@ -230,7 +230,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     [ManualRoute("GET", "/gists/starred")]
@@ -245,7 +245,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     [ManualRoute("GET", "/gists/starred")]
@@ -258,7 +258,7 @@ namespace Octokit
     /// List the authenticated user’s starred gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="since">Only gists updated at or after this time are returned</param>
     /// <param name="options">Options for changing the API response</param>
@@ -275,7 +275,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     [ManualRoute("GET", "/users/{username}/gists")]
@@ -290,7 +290,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="options">Options for changing the API response</param>
@@ -307,7 +307,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="since">Only gists updated at or after this time are returned</param>
@@ -323,7 +323,7 @@ namespace Octokit
     /// List a user's gists
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists
+    /// https://docs.github.com/rest/gists
     /// </remarks>
     /// <param name="user">The user</param>
     /// <param name="since">Only gists updated at or after this time are returned</param>
@@ -342,7 +342,7 @@ namespace Octokit
     /// List gist commits
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-commits
+    /// https://docs.github.com/rest/gists-commits
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     [ManualRoute("GET", "/gists/{gist_id}/commits")]
@@ -357,7 +357,7 @@ namespace Octokit
     /// List gist commits
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-commits
+    /// https://docs.github.com/rest/gists-commits
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     /// <param name="options">Options for changing the API response</param>
@@ -374,7 +374,7 @@ namespace Octokit
     /// List gist forks
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-forks
+    /// https://docs.github.com/rest/gists-forks
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     [ManualRoute("GET", "/gists/{gist_id}/forks")]
@@ -389,7 +389,7 @@ namespace Octokit
     /// List gist forks
     /// </summary>
     /// <remarks>
-    /// https://docs.github.com/en/rest/gists-forks
+    /// https://docs.github.com/rest/gists-forks
     /// </remarks>
     /// <param name="id">The id of the gist</param>
     /// <param name="options">Options for changing the API response</param>

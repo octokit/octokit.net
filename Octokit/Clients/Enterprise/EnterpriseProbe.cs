@@ -21,7 +21,7 @@ namespace Octokit
     /// Creates a new EnterpriseProbe, used to check for the existence of GitHub Enterprise Instances
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="productInformation">
     /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of
@@ -37,7 +37,7 @@ namespace Octokit
     /// Creates a new EnterpriseProbe, used to check for the existence of GitHub Enterprise Instances
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="productInformation">
     /// The name (and optionally version) of the product using this library, the name of your GitHub organization, or your GitHub username (in that order of preference). This is sent to the server as part of

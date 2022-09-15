@@ -76,7 +76,7 @@ namespace Octokit.Reactive
     /// Checks if vulnerability alerts are enabled for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The current owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -272,7 +272,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -283,7 +283,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <returns>All contributors of the repository.</returns>
@@ -293,7 +293,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -305,7 +305,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="options">Options for changing the API response</param>
@@ -316,7 +316,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -328,7 +328,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
@@ -339,7 +339,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -352,7 +352,7 @@ namespace Octokit.Reactive
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
@@ -511,7 +511,7 @@ namespace Octokit.Reactive
     /// A client for GitHub's Repo Collaborators.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators/">Collaborators API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/collaborators/collaborators/">Collaborators API documentation</a> for more details
     /// </remarks>
     IObservableRepoCollaboratorsClient Collaborator { get; }
 
@@ -583,7 +583,7 @@ namespace Octokit.Reactive
     /// Gets all topics for the specified owner and repository name.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -595,7 +595,7 @@ namespace Octokit.Reactive
     /// Gets all topics for the specified owner and repository name.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -606,7 +606,7 @@ namespace Octokit.Reactive
     /// Gets all topics for the specified repository ID.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The ID of the repository</param>
     /// <param name="options">Options for changing the API response</param>
@@ -617,7 +617,7 @@ namespace Octokit.Reactive
     /// Gets all topics for the specified repository ID.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The ID of the repository</param>
     /// <returns>All topics associated with the repository.</returns>
@@ -627,7 +627,7 @@ namespace Octokit.Reactive
     /// Replaces all topics for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
     ///
     /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
     /// </remarks>
@@ -640,7 +640,7 @@ namespace Octokit.Reactive
     /// Replaces all topics for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
     ///
     /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
     /// </remarks>

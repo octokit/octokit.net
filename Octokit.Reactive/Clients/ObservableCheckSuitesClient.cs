@@ -8,7 +8,7 @@ namespace Octokit.Reactive
   /// A client for GitHub's Check Suites API.
   /// </summary>
   /// <remarks>
-  /// See the <a href="https://docs.github.com/en/rest/checks/suites/">Check Suites API documentation</a> for more information.
+  /// See the <a href="https://docs.github.com/rest/checks/suites/">Check Suites API documentation</a> for more information.
   /// </remarks>
   public class ObservableCheckSuitesClient : IObservableCheckSuitesClient
   {
@@ -61,7 +61,7 @@ namespace Octokit.Reactive
     /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
     /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
@@ -94,7 +94,7 @@ namespace Octokit.Reactive
     /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -114,7 +114,7 @@ namespace Octokit.Reactive
     /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
@@ -131,7 +131,7 @@ namespace Octokit.Reactive
     /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -153,7 +153,7 @@ namespace Octokit.Reactive
     /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#list-check-suites-for-a-git-reference">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
@@ -238,7 +238,7 @@ namespace Octokit.Reactive
     /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#rerequest-a-check-suite">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#rerequest-a-check-suite">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -255,7 +255,7 @@ namespace Octokit.Reactive
     /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/checks/suites#rerequest-a-check-suite">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/rest/checks/suites#rerequest-a-check-suite">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="checkSuiteId">The Id of the check suite</param>

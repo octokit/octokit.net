@@ -7,7 +7,7 @@
   /// <remarks>
   /// This class is a wrapper around <seealso href="https://msdn.microsoft.com/en-us/library/system.net.http.headers.productheadervalue(v=vs.118).aspx"/>
   /// so that consumers of Octokit.net would not have to add a reference to the System.Net.Http.Headers namespace.
-  /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+  /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
   /// </remarks>
   public class ProductHeaderValue
   {
@@ -17,7 +17,7 @@
     /// Initializes a new instance of the <see cref="ProductHeaderValue"/> class.
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="name">The name of the product, the GitHub Organization, or the GitHub Username (in that order of preference) that's using Octokit</param>
     public ProductHeaderValue(string name)
@@ -29,7 +29,7 @@
     /// Initializes a new instance of the <see cref="ProductHeaderValue"/> class.
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     /// <param name="name">The name of the product, the GitHub Organization, or the GitHub Username (in that order of preference) that's using Octokit</param>
     /// <param name="version">The version of the product that's using Octokit</param>
@@ -47,7 +47,7 @@
     /// The name of the product, the GitHub Organization, or the GitHub Username that's using Octokit (in that order of preference)
     /// </summary>
     /// <remarks>
-    /// See more information regarding User-Agent requirements here: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+    /// See more information regarding User-Agent requirements here: https://docs.github.com/rest/overview/resources-in-the-rest-api#user-agent-required
     /// </remarks>
     public string Name
     {
