@@ -18,7 +18,7 @@ Unless you're modifying some core behaviour, the **Clients** and **Models** name
 are likely to be the most interesting areas.
 
 The clients within a project are organized similarly to the endpoints in the
-[GitHub API documentation](http://docs.github.com/rest/)
+[GitHub API documentation](https://docs.github.com/rest/)
 
 Some clients are "sub-clients". For example, when you navigate to the
 [Issues API](https://docs.github.com/rest/issues/) you'll notice there's an

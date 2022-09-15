@@ -7,7 +7,7 @@ namespace Octokit.Reactive
   /// A client for GitHub's Collaborators on a Repository.
   /// </summary>
   /// <remarks>
-  /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators/">Collaborators API documentation</a> for more details.
+  /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators/">Collaborators API documentation</a> for more details.
   /// </remarks>
   public interface IObservableRepoCollaboratorsClient
   {
@@ -15,7 +15,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -26,7 +26,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -36,7 +36,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="options">Options for changing the API response</param>
@@ -59,7 +59,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="request">Used to request and filter a list of repository collaborators</param>
@@ -82,7 +82,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -95,7 +95,7 @@ namespace Octokit.Reactive
     /// Gets all the collaborators on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="request">Used to request and filter a list of repository collaborators</param>
@@ -107,7 +107,7 @@ namespace Octokit.Reactive
     /// Checks if a user is a collaborator on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
     /// Checks if a user is a collaborator on a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the prospective collaborator</param>
@@ -153,7 +153,7 @@ namespace Octokit.Reactive
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -165,7 +165,7 @@ namespace Octokit.Reactive
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -178,7 +178,7 @@ namespace Octokit.Reactive
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the new collaborator</param>
@@ -189,7 +189,7 @@ namespace Octokit.Reactive
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the new collaborator</param>
@@ -201,7 +201,7 @@ namespace Octokit.Reactive
     /// Invites a user as a collaborator to a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -212,7 +212,7 @@ namespace Octokit.Reactive
     /// Invites a user as a collaborator to a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -224,7 +224,7 @@ namespace Octokit.Reactive
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the new collaborator</param>
@@ -235,7 +235,7 @@ namespace Octokit.Reactive
     /// Invites a user as a collaborator to a repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the new collaborator</param>
@@ -247,7 +247,7 @@ namespace Octokit.Reactive
     /// Deletes a collaborator from the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#list-repository-collaborators">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -259,7 +259,7 @@ namespace Octokit.Reactive
     /// Deletes a collaborator from the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#remove-a-repository-collaborator">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#remove-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the removed collaborator</param>

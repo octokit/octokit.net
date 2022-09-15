@@ -66,7 +66,7 @@ namespace Octokit.Tests.Clients
         var response = Substitute.For<IResponse>();
         response.StatusCode.Returns((HttpStatusCode)422);
         response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
-            + @"""http://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[{""resource"":""Repository"","
+            + @"""https://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[{""resource"":""Repository"","
             + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
         var credentials = new Credentials("haacked", "pwd");
         var connection = Substitute.For<IApiConnection>();
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Clients
         var response = Substitute.For<IResponse>();
         response.StatusCode.Returns((HttpStatusCode)422);
         response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
-            + @"""http://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[{""resource"":""Repository"","
+            + @"""https://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[{""resource"":""Repository"","
             + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
         var connection = Substitute.For<IApiConnection>();
         connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
@@ -157,7 +157,7 @@ namespace Octokit.Tests.Clients
         var response = Substitute.For<IResponse>();
         response.StatusCode.Returns((HttpStatusCode)422);
         response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
-            + @"""http://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[]}");
+            + @"""https://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[]}");
         var connection = Substitute.For<IApiConnection>();
         connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
         connection.Post<Repository>(Args.Uri, newRepository)
@@ -177,7 +177,7 @@ namespace Octokit.Tests.Clients
         var response = Substitute.For<IResponse>();
         response.StatusCode.Returns((HttpStatusCode)422);
         response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
-            + @"""http://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[{""resource"":""Repository"","
+            + @"""https://docs.github.com/en/rest/repos/repos#create-an-organization-repository"",""errors"":[{""resource"":""Repository"","
             + @"""code"":""custom"",""field"":""name"",""message"":""name already exists on this account""}]}");
         var connection = Substitute.For<IApiConnection>();
         connection.Connection.BaseAddress.Returns(new Uri("https://example.com"));

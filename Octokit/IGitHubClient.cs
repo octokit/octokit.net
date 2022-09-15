@@ -3,7 +3,7 @@
 namespace Octokit
 {
   /// <summary>
-  /// A Client for the GitHub API v3. You can read more about the API here: http://docs.github.com/rest.
+  /// A Client for the GitHub API v3. You can read more about the API here: https://docs.github.com/rest.
   /// </summary>
   public interface IGitHubClient : IApiInfoProvider
   {

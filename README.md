@@ -11,7 +11,7 @@
 
 Octokit is a client library targeting .NET Framework 4.6 or greater and .NET Standard 2.0
 and above that provides an easy way to interact with the
-[GitHub API](http://docs.github.com/rest/).
+[GitHub API](https://docs.github.com/rest/).
 
 ## Usage examples
 

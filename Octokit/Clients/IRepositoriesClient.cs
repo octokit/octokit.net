@@ -58,7 +58,7 @@ namespace Octokit
     /// Creates a new repository for the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#create-an-organization-repository">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#create-an-organization-repository">API documentation</a> for more information.
     /// </remarks>
     /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -69,7 +69,7 @@ namespace Octokit
     /// Creates a new repository in the specified organization.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#create-an-organization-repository">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#create-an-organization-repository">API documentation</a> for more information.
     /// </remarks>
     /// <param name="organizationLogin">Login of the organization in which to create the repository</param>
     /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
@@ -91,7 +91,7 @@ namespace Octokit
     /// Deletes the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#delete-a-repository-a-repository">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#delete-a-repository-a-repository">API documentation</a> for more information.
     /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
@@ -103,7 +103,7 @@ namespace Octokit
     /// Deletes the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#delete-a-repository-a-repository">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#delete-a-repository-a-repository">API documentation</a> for more information.
     /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
@@ -202,7 +202,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// The default page size on GitHub.com is 30.
     /// </remarks>
     /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
@@ -216,7 +216,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
@@ -228,7 +228,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// The default page size on GitHub.com is 30.
     /// </remarks>
     /// <param name="request">Search parameters to filter results on</param>
@@ -241,7 +241,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// </remarks>
     /// <param name="request">Search parameters to filter results on</param>
     /// <param name="options">Options for changing the API response</param>
@@ -324,7 +324,7 @@ namespace Octokit
     /// A client for GitHub's Repo Collaborators.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators/">Collaborators API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators/">Collaborators API documentation</a> for more details
     /// </remarks>
     IRepoCollaboratorsClient Collaborator { get; }
 
@@ -374,7 +374,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -385,7 +385,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <returns>All contributors of the repository.</returns>
@@ -395,7 +395,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -407,7 +407,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. Does not include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="options">Options for changing the API response</param>
@@ -418,7 +418,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -430,7 +430,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
@@ -441,7 +441,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -454,7 +454,7 @@ namespace Octokit
     /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/repos/repos#list-repository-contributors">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
