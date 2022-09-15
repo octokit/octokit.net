@@ -57,6 +57,9 @@ namespace Octokit
     /// <param name="markdown">An arbitrary Markdown document</param>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>The rendered Markdown.</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/markdown
+    /// </remarks>
     [ManualRoute("POST", "/markdown")]
     public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
     {
@@ -67,6 +70,10 @@ namespace Octokit
     /// List all templates available to pass as an option when creating a repository.
     /// </summary>
     /// <returns>A list of template names</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/gitignore
+    /// </remarks>
+
     [ManualRoute("GET", "/gitignore/templates")]
     public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
     {
@@ -78,6 +85,9 @@ namespace Octokit
     /// </summary>
     /// <param name="templateName"></param>
     /// <returns>A template and its source</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/gitignore
+    /// </remarks>
     [ManualRoute("GET", "/gitignore/templates/{name}")]
     public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
     {

@@ -41,12 +41,19 @@ namespace Octokit
     /// <param name="markdown">An arbitrary Markdown document</param>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
     /// <returns>The rendered Markdown.</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/markdown
+    /// </remarks>
+
     Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown);
 
     /// <summary>
     /// List all templates available to pass as an option when creating a repository.
     /// </summary>
     /// <returns>A list of template names</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/gitignore
+    /// </remarks>
     [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
     [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
     Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates();
@@ -56,6 +63,9 @@ namespace Octokit
     /// </summary>
     /// <param name="templateName"></param>
     /// <returns>A template and its source</returns>
+    /// <remarks>
+    /// Refer to the API documentation for more information: https://docs.github.com/en/rest/gitignore
+    /// </remarks>
     Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName);
 
     /// <summary>
