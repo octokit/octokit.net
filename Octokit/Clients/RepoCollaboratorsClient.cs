@@ -225,7 +225,7 @@ namespace Octokit
     /// Review a user's permission level in a repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#get-repository-permissions-for-a-user">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -246,7 +246,7 @@ namespace Octokit
     /// Review a user's permission level in a repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/collaborators/#review-a-users-permission-level">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators#get-repository-permissions-for-a-user">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the collaborator to check permission for</param>
