@@ -7,12 +7,14 @@ jobs:
   linkChecker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      - name: Convert C# to UTF-8 # to use with Lychee.
+        run: find . -type f -iname *.cs -exec sh -c 'iconv -f $(file -bi "$1" |sed -e "s/.*[ ]charset=//") -t utf-8 -o converted "$1" && mv converted "$1"' -- {} \;
       - name: Link Checker
         uses: lycheeverse/lychee-action@v1.5.1
         with:
           fail: true
-          args: "--max-redirects 0 --accept 200 './**/*.md'"
+          args: "--max-redirects 0 --accept 200 './**/*.md' './**/*.cs'"
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
