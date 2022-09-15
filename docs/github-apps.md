@@ -6,7 +6,7 @@ GitHub Apps are a new type of integration offering narrow, specific permissions,
 
 ⚠️ Please ensure to follow the links to the official GitHub Developer documentation where they are referenced, as we do not want to include all of the detail in this walkthrough (and run the risk of it becoming out of date or incorrect)
 
-To learn more about GitHub Apps, head to the GitHub Apps section under the GitHub Developer [Getting started with Building Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps#seantest) documentation.
+To learn more about GitHub Apps, head to the GitHub Apps section under the GitHub Developer [Getting started with Building Apps](https://docs.github.com/en/developers/apps/getting-started-with-apps/about-apps) documentation.
 
 ## Overview
 
