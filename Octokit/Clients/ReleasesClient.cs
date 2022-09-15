@@ -8,7 +8,7 @@ namespace Octokit
   /// A client for GitHub's Releases API.
   /// </summary>
   /// <remarks>
-  /// See the <a href="http://developer.github.com/v3/repos/releases/">Releases API documentation</a> for more information.
+  /// See the <a href="https://docs.github.com/en/rest/releases/releases/">Releases API documentation</a> for more information.
   /// </remarks>
   public class ReleasesClient : ApiClient, IReleasesClient
   {
