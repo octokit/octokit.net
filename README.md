@@ -11,7 +11,7 @@
 
 Octokit is a client library targeting .NET Framework 4.6 or greater and .NET Standard 2.0
 and above that provides an easy way to interact with the
-[GitHub API](http://developer.github.com/v3/).
+[GitHub API](http://docs.github.com/rest/).
 
 ## Usage examples
 
@@ -42,8 +42,8 @@ There is also an IObservable based GitHub API client library for .NET using Reac
 dotnet add package Octokit.Reactive
 ```
 
-
 ### Beta packages ###
+
 Unstable NuGet packages that track the `main` branch of this repository are available at
 [https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
 
@@ -51,7 +51,7 @@ In Xamarin Studio you can find this option under the project's context menu: **A
 
 ## Documentation
 
-Documentation is available at http://octokitnet.readthedocs.io/en/latest/.
+Documentation is available at <http://octokitnet.readthedocs.io/en/latest/>.
 
 ## Build
 
@@ -97,8 +97,8 @@ problem.
 
 ## Related Projects
 
- - [ScriptCs.OctoKit](https://github.com/hnrkndrssn/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs
- - [ScriptCs.OctokitLibrary](https://github.com/ryanrousseau/ScriptCs.OctokitLibrary) - a [script library](https://github.com/scriptcs/scriptcs/wiki/Script-Libraries) to use Octokit in scriptcs
+* [ScriptCs.OctoKit](https://github.com/hnrkndrssn/ScriptCs.OctoKit) - a [script pack](https://github.com/scriptcs/scriptcs/wiki/Script-Packs) to use Octokit in scriptcs
+* [ScriptCs.OctokitLibrary](https://github.com/ryanrousseau/ScriptCs.OctokitLibrary) - a [script library](https://github.com/scriptcs/scriptcs/wiki/Script-Libraries) to use Octokit in scriptcs
 
 ## Copyright and License
 
