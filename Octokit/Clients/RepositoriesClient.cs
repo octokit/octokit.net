@@ -140,7 +140,7 @@ namespace Octokit
     /// Deletes the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#delete-a-repository">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#delete-a-repository-a-repository">API documentation</a> for more information.
     /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
@@ -159,7 +159,7 @@ namespace Octokit
     /// Deletes the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#delete-a-repository">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#delete-a-repository-a-repository">API documentation</a> for more information.
     /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
