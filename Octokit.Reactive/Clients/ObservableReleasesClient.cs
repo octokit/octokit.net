@@ -196,7 +196,7 @@ namespace Octokit.Reactive
     /// Gets the latest <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/releases/#get-the-latest-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-the-latest-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -213,7 +213,7 @@ namespace Octokit.Reactive
     /// Gets the latest <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/releases/#get-the-latest-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/releases#get-the-latest-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
