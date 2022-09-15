@@ -330,7 +330,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -348,7 +348,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the <see cref="Release"/>.</param>
@@ -362,7 +362,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -382,7 +382,7 @@ namespace Octokit.Reactive
     /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/assets#list-release-assets">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the <see cref="Release"/>.</param>
