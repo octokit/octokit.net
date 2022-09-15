@@ -298,7 +298,7 @@ namespace Octokit.Reactive
     /// Deletes an existing <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -316,7 +316,7 @@ namespace Octokit.Reactive
     /// Deletes an existing <see cref="Release"/> for the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the release to delete</param>
@@ -485,7 +485,7 @@ namespace Octokit.Reactive
     /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -502,7 +502,7 @@ namespace Octokit.Reactive
     /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/releases#delete-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
