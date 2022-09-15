@@ -202,7 +202,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// The default page size on GitHub.com is 30.
     /// </remarks>
     /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
@@ -216,7 +216,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// </remarks>
     /// <param name="options">Options for changing the API response</param>
     /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
@@ -228,7 +228,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// The default page size on GitHub.com is 30.
     /// </remarks>
     /// <param name="request">Search parameters to filter results on</param>
@@ -241,7 +241,7 @@ namespace Octokit
     /// Gets all repositories owned by the current user.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user">API documentation</a> for more information.
     /// </remarks>
     /// <param name="request">Search parameters to filter results on</param>
     /// <param name="options">Options for changing the API response</param>
