@@ -471,7 +471,7 @@ namespace Octokit
     /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/assets#get-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The repository's owner</param>
     /// <param name="name">The repository's name</param>
@@ -490,7 +490,7 @@ namespace Octokit
     /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release-asset">API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/releases/assets#get-a-release-asset">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
