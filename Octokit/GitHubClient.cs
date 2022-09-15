@@ -182,7 +182,7 @@ namespace Octokit
     /// Access GitHub's Activity API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/activity/
     /// </remarks>
     public IActivitiesClient Activity { get; private set; }
 
@@ -190,7 +190,7 @@ namespace Octokit
     /// Access GitHub's Issue API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/issues/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/issues/
     /// </remarks>
     public IIssuesClient Issue { get; private set; }
 
@@ -222,7 +222,7 @@ namespace Octokit
     /// Access GitHub's Organizations API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/orgs/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/orgs/
     /// </remarks>
     public IOrganizationsClient Organization { get; private set; }
 
@@ -238,7 +238,7 @@ namespace Octokit
     /// Access GitHub's Pull Requests API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/pulls/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/pulls/
     /// </remarks>
     public IPullRequestsClient PullRequest { get; private set; }
 
@@ -246,7 +246,7 @@ namespace Octokit
     /// Access GitHub's Repositories API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/repos/
     /// </remarks>
     public IRepositoriesClient Repository { get; private set; }
 
@@ -254,7 +254,7 @@ namespace Octokit
     /// Access GitHub's Gists API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/gists/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/gists/
     /// </remarks>
     public IGistsClient Gist { get; private set; }
 
@@ -262,7 +262,7 @@ namespace Octokit
     /// Access GitHub's Users API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/users/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/users/
     /// </remarks>
     public IUsersClient User { get; private set; }
 
@@ -270,7 +270,7 @@ namespace Octokit
     /// Access GitHub's Git Data API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/git/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/git/
     /// </remarks>
     public IGitDatabaseClient Git { get; private set; }
 
@@ -278,7 +278,7 @@ namespace Octokit
     /// Access GitHub's Apps API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/apps/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/apps/
     /// </remarks>
     public IGitHubAppsClient GitHubApps { get; private set; }
 
@@ -286,7 +286,7 @@ namespace Octokit
     /// Access GitHub's Search API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/search/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/search/
     /// </remarks>
     public ISearchClient Search { get; private set; }
 
@@ -302,7 +302,7 @@ namespace Octokit
     /// Access GitHub's Reactions API
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/reactions/
     /// </remarks>
     public IReactionsClient Reaction { get; private set; }
 
@@ -310,7 +310,7 @@ namespace Octokit
     /// Access GitHub's Checks API
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/checks/
     /// </remarks>
     public IChecksClient Check { get; private set; }
 
