@@ -117,4 +117,4 @@ var whenDoesTheSearchLimitReset = searchRateLimit.Reset; // UTC time
 
 An authenticated client will have a significantly higher limit than an anonymous client.
 
-For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://docs.github.com/rest/#rate-limiting).
+For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://docs.github.com/rest/rate-limit).
