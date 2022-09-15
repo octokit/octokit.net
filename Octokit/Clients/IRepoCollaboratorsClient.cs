@@ -153,7 +153,7 @@ namespace Octokit
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -165,7 +165,7 @@ namespace Octokit
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -178,7 +178,7 @@ namespace Octokit
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the new collaborator</param>
@@ -189,7 +189,7 @@ namespace Octokit
     /// Adds a new collaborator to the repository.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository</param>
     /// <param name="user">Username of the new collaborator</param>
@@ -201,7 +201,7 @@ namespace Octokit
     /// Invites a new collaborator to the repo
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
@@ -213,7 +213,7 @@ namespace Octokit
     /// Invites a new collaborator to the repo
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
@@ -226,7 +226,7 @@ namespace Octokit
     /// Invites a new collaborator to the repo
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository.</param>
     /// <param name="user">The name of the user to invite.</param>
@@ -237,7 +237,7 @@ namespace Octokit
     /// Invites a new collaborator to the repo
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/#add-collaborator">API documentation</a> for more information.
+    /// See the <a href="http://docs.github.com/en/rest/collaborators/collaborators#add-a-repository-collaborator">API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The id of the repository.</param>
     /// <param name="user">The name of the user to invite.</param>
