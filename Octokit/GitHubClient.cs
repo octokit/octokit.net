@@ -206,7 +206,7 @@ namespace Octokit
     /// Access GitHub's Miscellaneous API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/misc/
+    /// Refer to the API documentation for more information: https://docs.github.com/rest/misc/
     /// </remarks>
     public IMiscellaneousClient Miscellaneous { get; private set; }
 
