@@ -100,7 +100,7 @@ namespace Octokit.Reactive
     /// Update the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/branches/#update-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#update-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -112,7 +112,7 @@ namespace Octokit.Reactive
     /// Update the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/branches/#update-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#update-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="branch">The name of the branch</param>
@@ -123,7 +123,7 @@ namespace Octokit.Reactive
     /// Remove the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#delete-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -134,7 +134,7 @@ namespace Octokit.Reactive
     /// Remove the branch protection settings for the specified branch
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-branch-protection">API documentation</a> for more details
+    /// See the <a href="https://docs.github.com/en/rest/branches/branch-protection#delete-branch-protection">API documentation</a> for more details
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="branch">The name of the branch</param>
