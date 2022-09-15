@@ -6,7 +6,7 @@ namespace Octokit.Reactive
   /// A client for GitHub's Check Suites API.
   /// </summary>
   /// <remarks>
-  /// See the <a href="https://developer.github.com/v3/checks/suites/">Check Suites API documentation</a> for more information.
+  /// See the <a href="https://docs.github.com/en/rest/checks/suites/">Check Suites API documentation</a> for more information.
   /// </remarks>
   public interface IObservableCheckSuitesClient
   {
