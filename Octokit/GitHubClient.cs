@@ -174,7 +174,7 @@ namespace Octokit
     /// Access GitHub's Authorization API.
     /// </summary>
     /// <remarks>
-    /// Refer to the API documentation for more information: https://developer.github.com/v3/oauth_authorizations/
+    /// Refer to the API documentation for more information: https://docs.github.com/enterprise-server@3.6/rest/oauth-authorizations/
     /// </remarks>
     public IAuthorizationsClient Authorization { get; private set; }
 
