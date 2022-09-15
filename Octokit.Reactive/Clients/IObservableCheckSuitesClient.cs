@@ -146,7 +146,7 @@ namespace Octokit.Reactive
     /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/checks/suites#rerequest-a-check-suite">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="owner">The owner of the repository</param>
     /// <param name="name">The name of the repository</param>
@@ -157,7 +157,7 @@ namespace Octokit.Reactive
     /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://developer.github.com/v3/checks/suites/#request-check-suites">Check Suites API documentation</a> for more information.
+    /// See the <a href="https://docs.github.com/en/rest/checks/suites#rerequest-a-check-suite">Check Suites API documentation</a> for more information.
     /// </remarks>
     /// <param name="repositoryId">The Id of the repository</param>
     /// <param name="checkSuiteId">The Id of the check suite</param>
