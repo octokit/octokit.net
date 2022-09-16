@@ -96,6 +96,7 @@ namespace Octokit
             var apiConnection = new ApiConnection(connection);
             Activity = new ActivitiesClient(apiConnection);
             Authorization = new AuthorizationsClient(apiConnection);
+            Emojis = new EmojisClient(apiConnection);
             Enterprise = new EnterpriseClient(apiConnection);
             Gist = new GistsClient(apiConnection);
             Git = new GitDatabaseClient(apiConnection);
@@ -185,6 +186,14 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/activity/
         /// </remarks>
         public IActivitiesClient Activity { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Emojis API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/emojis
+        /// </remarks>
+        public IEmojisClient Emojis { get; private set; }
 
         /// <summary>
         /// Access GitHub's Issue API.

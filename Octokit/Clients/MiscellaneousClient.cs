@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -13,6 +12,9 @@ namespace Octokit
     /// </remarks>
     public class MiscellaneousClient : ApiClient, IMiscellaneousClient
     {
+        private readonly IEmojisClient _emojisClient;
+        private readonly IMarkdownClient _markdownClient;
+
         /// <summary>
         ///     Initializes a new GitHub miscellaneous API client.
         /// </summary>
@@ -20,6 +22,8 @@ namespace Octokit
         public MiscellaneousClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
+            _emojisClient = new EmojisClient(apiConnection);
+            _markdownClient = new MarkdownClient(apiConnection);
         }
 
         /// <summary>
@@ -28,9 +32,10 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [ManualRoute("GET", "/emojis")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use EmojisClient.GetAllEmojis instead.")]
         public Task<IReadOnlyList<Emoji>> GetAllEmojis()
         {
-            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis());
+            return _emojisClient.GetAllEmojis();
         }
 
         /// <summary>
@@ -40,9 +45,10 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
         [ManualRoute("POST", "/markdown/raw")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderRawMarkdown instead.")]
         public Task<string> RenderRawMarkdown(string markdown)
         {
-            return ApiConnection.Post<string>(ApiUrls.RawMarkdown(), markdown, "text/html", "text/plain");
+            return _markdownClient.RenderRawMarkdown(markdown);
         }
 
         /// <summary>
@@ -52,9 +58,10 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
         [ManualRoute("POST", "/markdown")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderArbitraryMarkdown instead.")]
         public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
         {
-            return ApiConnection.Post<string>(ApiUrls.Markdown(), markdown, "text/html", "text/plain");
+            return _markdownClient.RenderArbitraryMarkdown(markdown);
         }
 
         /// <summary>
@@ -62,6 +69,7 @@ namespace Octokit
         /// </summary>
         /// <returns>A list of template names</returns>
         [ManualRoute("GET", "/gitignore/templates")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetAllGitIgnoreTemplates instead.")]
         public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
         {
             return ApiConnection.GetAll<string>(ApiUrls.GitIgnoreTemplates());
@@ -73,6 +81,7 @@ namespace Octokit
         /// <param name="templateName"></param>
         /// <returns>A template and its source</returns>
         [ManualRoute("GET", "/gitignore/templates/{name}")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetGitIgnoreTemplate instead.")]
         public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
         {
             Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
@@ -85,6 +94,7 @@ namespace Octokit
         /// list of all possible OSS licenses.
         /// </summary>
         /// <returns>A list of licenses available on the site</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetAllLicenses instead.")]
         [ManualRoute("GET", "/licenses")]
         public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
         {
@@ -98,6 +108,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of licenses available on the site</returns>
         [ManualRoute("GET", "/licenses")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetAllLicenses instead.")]
         public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, "options");
@@ -111,6 +122,7 @@ namespace Octokit
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
         [ManualRoute("GET", "/licenses/{key}")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetLicense instead.")]
         public Task<License> GetLicense(string key)
         {
             return ApiConnection.Get<License>(ApiUrls.Licenses(key));
@@ -121,8 +133,8 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [ManualRoute("GET", "/rate_limit")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use RateLimitClient.GetRateLimits instead.")]
         public Task<MiscellaneousRateLimit> GetRateLimits()
         {
             return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit());
@@ -133,8 +145,8 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [ManualRoute("GET", "/meta")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MetaClient.GetMetadata instead.")]
         public Task<Meta> GetMetadata()
         {
             return ApiConnection.Get<Meta>(ApiUrls.Meta());
