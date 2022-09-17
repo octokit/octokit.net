@@ -162,12 +162,19 @@ public class MiscellaneousClientTests
 
             var result = await github.Miscellaneous.GetMetadata();
 
-            Assert.True(result.VerifiablePasswordAuthentication);
-            Assert.NotEmpty(result.GitHubServicesSha);
+            Assert.False(result.VerifiablePasswordAuthentication); // is username password allowed, probably not any more
+#pragma warning disable CS0618 // Type or member is obsolete
+            Assert.True(string.IsNullOrEmpty(result.GitHubServicesSha));
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Hooks.Count > 0);
+            Assert.True(result.Web.Count > 0);
+            Assert.True(result.Api.Count > 0);
             Assert.True(result.Git.Count > 0);
+            Assert.True(result.Packages.Count > 0);
             Assert.True(result.Pages.Count > 0);
             Assert.True(result.Importer.Count > 0);
+            Assert.True(result.Actions.Count > 0);
+            Assert.True(result.Dependabot.Count > 0);
         }
     }
 }
