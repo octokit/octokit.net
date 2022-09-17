@@ -5,6 +5,7 @@
     <AssemblyTitle>Octokit.Tests.Integration</AssemblyTitle>
     <Authors>GitHub</Authors>
     <TargetFrameworks>net6.0;netcoreapp3.1;net462</TargetFrameworks>
+    <SignAssembly>false</SignAssembly>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
     <PackageId>Octokit.Tests.Integration</PackageId>
