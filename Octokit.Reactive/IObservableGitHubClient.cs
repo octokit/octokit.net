@@ -35,5 +35,11 @@ namespace Octokit.Reactive
         IObservableReactionsClient Reaction { get; }
         IObservableChecksClient Check { get; }
         IObservablePackagesClient Packages{ get; }
+        IObservableEmojisClient Emojis { get; }
+        IObservableMarkdownClient Markdown { get; }
+        IObservableGitIgnoreClient GitIgnore { get; }
+        IObservableLicensesClient Licenses { get; }
+        IObservableRateLimitClient RateLimit { get; }
+        IObservableMetaClient Meta { get; }
     }
 }

@@ -50,6 +50,12 @@ namespace Octokit.Reactive
             Reaction = new ObservableReactionsClient(gitHubClient);
             Check = new ObservableChecksClient(gitHubClient);
             Packages = new ObservablePackagesClient(gitHubClient);
+            Emojis = new ObservableEmojisClient(gitHubClient);
+            Markdown = new ObservableMarkdownClient(gitHubClient);
+            GitIgnore = new ObservableGitIgnoreClient(gitHubClient);
+            Licenses = new ObservableLicensesClient(gitHubClient);
+            RateLimit = new ObservableRateLimitClient(gitHubClient);
+            Meta = new ObservableMetaClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -90,6 +96,12 @@ namespace Octokit.Reactive
         public IObservableReactionsClient Reaction { get; private set; }
         public IObservableChecksClient Check { get; private set; }
         public IObservablePackagesClient Packages { get; private set; }
+        public IObservableEmojisClient Emojis { get; private set; }
+        public IObservableMarkdownClient Markdown { get; private set; }
+        public IObservableGitIgnoreClient GitIgnore { get; private set; }
+        public IObservableLicensesClient Licenses { get; private set; }
+        public IObservableRateLimitClient RateLimit { get; private set; }
+        public IObservableMetaClient Meta { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made

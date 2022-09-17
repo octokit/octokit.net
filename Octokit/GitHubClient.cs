@@ -96,7 +96,6 @@ namespace Octokit
             var apiConnection = new ApiConnection(connection);
             Activity = new ActivitiesClient(apiConnection);
             Authorization = new AuthorizationsClient(apiConnection);
-            Emojis = new EmojisClient(apiConnection);
             Enterprise = new EnterpriseClient(apiConnection);
             Gist = new GistsClient(apiConnection);
             Git = new GitDatabaseClient(apiConnection);
@@ -113,6 +112,12 @@ namespace Octokit
             Reaction = new ReactionsClient(apiConnection);
             Check = new ChecksClient(apiConnection);
             Packages = new PackagesClient(apiConnection);
+            Emojis = new EmojisClient(apiConnection);
+            Markdown = new MarkdownClient(apiConnection);
+            GitIgnore = new GitIgnoreClient(apiConnection);
+            Licenses = new LicensesClient(apiConnection);
+            RateLimit = new RateLimitClient(apiConnection);
+            Meta = new MetaClient(apiConnection);
         }
 
         /// <summary>
@@ -322,6 +327,46 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
         /// </remarks>
         public IChecksClient Check { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Meta API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/meta
+        /// </remarks>
+        public IMetaClient Meta { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Rate Limit API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/rate-limit
+        /// </remarks>
+        public IRateLimitClient RateLimit { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Licenses API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/licenses
+        /// </remarks>
+        public ILicensesClient Licenses { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Git Ignore API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/gitignore
+        /// </remarks>
+        public IGitIgnoreClient GitIgnore { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Markdown API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/markdown
+        /// </remarks>
+        public IMarkdownClient Markdown { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

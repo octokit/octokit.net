@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Emojis APIs.
@@ -9,14 +8,13 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="https://docs.github.com/rest/emojis">Emojis API documentation</a> for more details.
     /// </remarks>
-    public interface IEmojisClient
+    public interface IObservableEmojisClient
     {
         /// <summary>
         /// Gets all the emojis available to use on GitHub.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
-        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<Emoji>> GetAllEmojis();
+        /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
+        IObservable<Emoji> GetAllEmojis();
     }
 }

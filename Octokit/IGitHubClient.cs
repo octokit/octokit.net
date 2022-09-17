@@ -166,5 +166,46 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/checks/
         /// </remarks>
         IChecksClient Check { get; }
+
+        /// <summary>
+        /// Access GitHub's Meta API.
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/meta
+        /// </remarks>
+        IMetaClient Meta { get; }
+
+        /// <summary>
+        /// Access GitHub's Rate Limit API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/rate-limit
+        /// </remarks>
+        IRateLimitClient RateLimit { get; }
+        
+        /// <summary>
+        /// Access GitHub's Markdown API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/markdown
+        /// </remarks>
+        IMarkdownClient Markdown { get; }
+
+        /// <summary>
+        /// Access GitHub's Git Ignore API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/gitignore
+        /// </remarks>
+        IGitIgnoreClient GitIgnore { get; }
+
+        /// <summary>
+        /// Access GitHub's Licenses API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/rest/licenses
+        /// </remarks>
+        ILicensesClient Licenses { get; }
+        IEmojisClient Emojis { get; }
     }
 }

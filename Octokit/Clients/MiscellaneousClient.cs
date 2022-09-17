@@ -10,10 +10,15 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/misc/">Miscellaneous API documentation</a> for more details.
     /// </remarks>
+    [Obsolete("Use individual clients available on the GitHubClient for these methods")]
     public class MiscellaneousClient : ApiClient, IMiscellaneousClient
     {
         private readonly IEmojisClient _emojisClient;
         private readonly IMarkdownClient _markdownClient;
+        private readonly IGitIgnoreClient _gitIgnoreClient;
+        private readonly ILicensesClient _licensesClient;
+        private readonly IRateLimitClient _rateLimitClient;
+        private readonly IMetaClient _metaClient;
 
         /// <summary>
         ///     Initializes a new GitHub miscellaneous API client.
@@ -24,6 +29,10 @@ namespace Octokit
         {
             _emojisClient = new EmojisClient(apiConnection);
             _markdownClient = new MarkdownClient(apiConnection);
+            _gitIgnoreClient = new GitIgnoreClient(apiConnection);
+            _licensesClient = new LicensesClient(apiConnection);
+            _rateLimitClient = new RateLimitClient(apiConnection);
+            _metaClient = new MetaClient(apiConnection);
         }
 
         /// <summary>
@@ -72,7 +81,7 @@ namespace Octokit
         [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetAllGitIgnoreTemplates instead.")]
         public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
         {
-            return ApiConnection.GetAll<string>(ApiUrls.GitIgnoreTemplates());
+            return _gitIgnoreClient.GetAllGitIgnoreTemplates();
         }
 
         /// <summary>
@@ -86,7 +95,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
 
-            return ApiConnection.Get<GitIgnoreTemplate>(ApiUrls.GitIgnoreTemplates(templateName));
+            return _gitIgnoreClient.GetGitIgnoreTemplate(templateName);
         }
 
         /// <summary>
@@ -98,7 +107,7 @@ namespace Octokit
         [ManualRoute("GET", "/licenses")]
         public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
         {
-            return GetAllLicenses(ApiOptions.None);
+            return _licensesClient.GetAllLicenses();
         }
 
         /// <summary>
@@ -113,7 +122,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<LicenseMetadata>(ApiUrls.Licenses(), options);
+            return _licensesClient.GetAllLicenses(options);
         }
 
         /// <summary>
@@ -125,7 +134,7 @@ namespace Octokit
         [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetLicense instead.")]
         public Task<License> GetLicense(string key)
         {
-            return ApiConnection.Get<License>(ApiUrls.Licenses(key));
+            return _licensesClient.GetLicense(key);
         }
 
         /// <summary>
@@ -137,7 +146,7 @@ namespace Octokit
         [Obsolete("This client is being deprecated and will be removed in the future. Use RateLimitClient.GetRateLimits instead.")]
         public Task<MiscellaneousRateLimit> GetRateLimits()
         {
-            return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit());
+            return _rateLimitClient.GetRateLimits();
         }
 
         /// <summary>
@@ -149,7 +158,7 @@ namespace Octokit
         [Obsolete("This client is being deprecated and will be removed in the future. Use MetaClient.GetMetadata instead.")]
         public Task<Meta> GetMetadata()
         {
-            return ApiConnection.Get<Meta>(ApiUrls.Meta());
+            return _metaClient.GetMetadata();
         }
     }
 }

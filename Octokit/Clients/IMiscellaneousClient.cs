@@ -10,6 +10,7 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/misc/">Miscellaneous API documentation</a> for more details.
     /// </remarks>
+    [Obsolete("Use individual clients available on the GitHubClient for these methods")]
     public interface IMiscellaneousClient
     {
         /// <summary>
@@ -44,6 +45,7 @@ namespace Octokit
         /// </summary>
         /// <returns>A list of template names</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetAllGitIgnoreTemplates instead.")]
         Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates();
 
         /// <summary>
