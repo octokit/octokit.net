@@ -49,7 +49,7 @@ namespace Octokit.Internal
                 // simple json does not support the root node being empty. Will submit a pr but in the mean time....
                 if (!string.IsNullOrEmpty(body) && body != "{}")
                 {
-                    var typeIsDictionary = typeof(IDictionary).IsAssignableFrom(typeof(T));
+                    var typeIsDictionary = typeof(IDictionary).IsAssignableFrom(typeof(T)) || typeof(T).IsAssignableToGenericType(typeof(System.Collections.Generic.IDictionary<,>));
                     var typeIsEnumerable = typeof(IEnumerable).IsAssignableFrom(typeof(T));
                     var responseIsObject = body.StartsWith("{", StringComparison.Ordinal);
 

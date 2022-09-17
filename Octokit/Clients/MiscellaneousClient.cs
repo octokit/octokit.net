@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -26,11 +27,13 @@ namespace Octokit
         /// Gets all the emojis available to use on GitHub.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
+        /// <returns>An <see cref="IReadOnlyList{Emoji}"/> of emoji and their URI.</returns>
         [ManualRoute("GET", "/emojis")]
-        public Task<IReadOnlyList<Emoji>> GetAllEmojis()
+        public async Task<IReadOnlyList<Emoji>> GetAllEmojis()
         {
-            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis());
+            var result = await ApiConnection.Get<IDictionary<string, string>>(ApiUrls.Emojis());
+
+            return result.Select(x => new Emoji(x.Key, x.Value)).ToList();
         }
 
         /// <summary>
