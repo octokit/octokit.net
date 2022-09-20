@@ -7,7 +7,7 @@ namespace Octokit
     /// Used to retrieve generated release notes.
     /// </summary>
     /// <remarks>
-    /// API: https://docs.github.com/en/rest/releases/releases#generate-release-notes-content-for-a-release
+    /// API: https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release
     /// The generated release notes are not saved anywhere.
     /// They are intended to be generated and used when creating a new release.
     /// </remarks>

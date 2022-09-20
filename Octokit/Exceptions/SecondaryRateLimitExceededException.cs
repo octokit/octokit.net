@@ -12,7 +12,7 @@ namespace Octokit
     /// This occurs when GitHub perceives misuse of the API. You may get this if
     /// you are polling heavily, creating content rapidly or making concurrent requests.
     /// </para>
-    /// <para>See https://docs.github.com/en/rest/overview/resources-in-the-rest-api#secondary-rate-limits for more details.</para>
+    /// <para>See https://docs.github.com/rest/overview/resources-in-the-rest-api#secondary-rate-limits for more details.</para>
     /// </summary>
     [Serializable]
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",

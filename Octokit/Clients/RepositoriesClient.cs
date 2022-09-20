@@ -211,7 +211,7 @@ namespace Octokit
         /// Checks if vulnerability alerts are enabled for the specified repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -307,7 +307,7 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>        
+        /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/repositories")]
         public Task<IReadOnlyList<Repository>> GetAllPublic()
         {
@@ -749,7 +749,7 @@ namespace Octokit
         /// Gets all topics for the specified repository ID.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
@@ -768,7 +768,7 @@ namespace Octokit
         /// Gets all topics for the specified repository ID.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <returns>All topics associated with the repository.</returns>
@@ -783,7 +783,7 @@ namespace Octokit
         /// Gets all topics for the specified owner and repository name.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -806,7 +806,7 @@ namespace Octokit
         /// Gets all topics for the specified owner and repository name.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
@@ -822,7 +822,7 @@ namespace Octokit
         /// Replaces all topics for the specified repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
         ///
         /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
         /// </remarks>
@@ -847,7 +847,7 @@ namespace Octokit
         /// Replaces all topics for the specified repository.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/rest/reference/repos#replace-all-repository-topics">API documentation</a> for more details
         ///
         /// This is a replacement operation; it is not additive. To clear repository topics, for example, you could specify an empty list of topics here.
         /// </remarks>
