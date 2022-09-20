@@ -65,15 +65,15 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsTheEmojiEndpoint()
             {
-                IReadOnlyList<Emoji> response = new List<Emoji>
+                IDictionary<string, string> response = new Dictionary<string, string>
                 {
-                    { new Emoji("foo", "http://example.com/foo.gif") },
-                    { new Emoji("bar", "http://example.com/bar.gif") }
+                    { "foo", "http://example.com/foo.gif" },
+                    { "bar", "http://example.com/bar.gif" }
                 };
 
                 var apiConnection = Substitute.For<IApiConnection>();
-                apiConnection.GetAll<Emoji>(Args.Uri)
-                          .Returns(Task.FromResult(response));
+                apiConnection.Get<IDictionary<string, string>>(Args.Uri)
+                    .Returns(Task.FromResult(response));
 
                 var client = new MiscellaneousClient(apiConnection);
 
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Clients
                 Assert.Equal(2, emojis.Count);
                 Assert.Equal("foo", emojis[0].Name);
                 apiConnection.Received()
-                    .GetAll<Emoji>(Arg.Is<Uri>(u => u.ToString() == "emojis"));
+                    .Get<IDictionary<string, string>>(Arg.Is<Uri>(u => u.ToString() == "emojis"));
             }
         }
 
