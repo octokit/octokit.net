@@ -17,7 +17,7 @@ namespace Octokit.Reactive
         /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">The request for generating release notes</param>

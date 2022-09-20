@@ -68,7 +68,7 @@
         /// A client for GitHub's Enterprise Pre-receive Hooks API
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/enterprise-server@3.3/rest/reference/enterprise-admin#pre-receive-hooks">Enterprise Pre-receive Hooks API documentation</a> for more information.
+        /// See the <a href="https://docs.github.com/enterprise-server@3.3/rest/reference/enterprise-admin#pre-receive-hooks">Enterprise Pre-receive Hooks API documentation</a> for more information.
         ///</remarks>
         IEnterprisePreReceiveHooksClient PreReceiveHook { get; }
     }

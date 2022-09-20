@@ -116,7 +116,7 @@ namespace Octokit
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
         /// </summary>
-        /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-commit-comment-reaction</remarks>
+        /// <remarks>https://docs.github.com/rest/reactions#delete-a-commit-comment-reaction</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The comment id</param>
@@ -134,7 +134,7 @@ namespace Octokit
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
         /// </summary>
-        /// <remarks>https://docs.github.com/en/rest/reactions#delete-a-commit-comment-reaction</remarks>
+        /// <remarks>https://docs.github.com/rest/reactions#delete-a-commit-comment-reaction</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>

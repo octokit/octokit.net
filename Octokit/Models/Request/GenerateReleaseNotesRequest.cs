@@ -7,7 +7,7 @@ namespace Octokit
     /// Used to generate release notes for a given tag.
     /// </summary>
     /// <remarks>
-    /// API: https://docs.github.com/en/rest/releases/releases#generate-release-notes-content-for-a-release
+    /// API: https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class GenerateReleaseNotesRequest

@@ -7,7 +7,7 @@ namespace Octokit
     /// A client for GitHub's Packages API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="https://docs.github.com/en/rest/packages">Packages API documentation</a> for more details.
+    /// See the <a href="https://docs.github.com/rest/packages">Packages API documentation</a> for more details.
     /// </remarks>
     public class PackagesClient : ApiClient, IPackagesClient
     {
@@ -55,7 +55,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageOrg(org, packageType, packageName);
-            
+
             return ApiConnection.Get<Package>(route);
         }
 
@@ -95,7 +95,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageRestoreOrg(org, packageType, packageName);
-            
+
             return ApiConnection.Post(route);
         }
         #endregion
