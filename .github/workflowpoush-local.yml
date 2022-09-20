@@ -1,0 +1,29 @@
+name: NuGet Generation
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: Update NuGet 
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@main
+        
+      - name: Build solution and generate NuGet package
+        run: |  
+          cd 'source\octokit.net'
+          dotnet pack -c Release -o out  
+
+      - name: Install NuGet client
+        uses: warrenbuckley/Setup-Nuget@v1
+        
+      - name: Add private GitHub registry to NuGet
+        run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/dirtygooback/index.json -Username ditrygooback -Password ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Push generated package to GitHub registry
+        run: nuget push .\source\octokit.net\octokit\out\*.nupkg -Source "GPR" -SkipDuplicate
