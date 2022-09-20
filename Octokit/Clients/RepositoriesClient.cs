@@ -234,6 +234,58 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Enable vulnerability alerts for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
+        [ManualRoute("PUT", "/repos/{owner}/{repo}/vulnerability-alerts")]
+        public async Task<bool> EnableVulnerabilityAlerts(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            try
+            {
+                var response = await Connection.Put<object>(ApiUrls.RepositoryVulnerabilityAlerts(owner, name), null, null).ConfigureAwait(false);
+                return response.HttpResponse.IsTrue();
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Disable vulnerability alerts for the specified repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The current owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/vulnerability-alerts")]
+        public async Task<bool> DisableVulnerabilityAlerts(string owner, string name)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            try
+            {
+                var response = await Connection.Delete<object>(ApiUrls.RepositoryVulnerabilityAlerts(owner, name), null, null).ConfigureAwait(false);
+                return response.HttpResponse.IsTrue();
+            }
+            catch (NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
