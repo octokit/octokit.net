@@ -25,9 +25,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="images\octokit.png" Pack="true" PackagePath="\">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="images\octokit.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>

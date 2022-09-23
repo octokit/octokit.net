@@ -103,7 +103,7 @@ namespace Octokit
         /// Optional. Automatically set the title of squashed commits to be the PR title. The default is null (do not update). The default when created is false.
         /// </summary>
         public bool? UseSquashPrTitleAsDefault { get; set; }
-        
+
         /// <summary>
         /// Optional. True to archive this repository.  Note: you cannot unarchive repositories through the API. The default is null (do not update). The default when created is false.
         /// </summary>
@@ -113,16 +113,6 @@ namespace Octokit
         /// Optional. Get or set whether to allow this repository to be forked or not. The default is null (do not update). The default when created is false.
         /// </summary>
         public bool? AllowForking { get; set; }
-
-        /// <summary>
-        /// Optional. Get or set whether to require contributors to sign off on web-based commits. The default is null (no not require). The default when created is false.
-        /// </summary>
-        public bool? WebCommitSignoffRequired { get; set; }
-
-        /// <summary>
-        /// Optional. Get or set to always allow a pull request head branch that is behind its base branch to be updated even if it is not required to be up to date before merging. The default is null (do not allow). The default when created is false.
-        /// </summary>
-        public bool? AllowUpdateBranch { get; set; }
 
         internal string DebuggerDisplay => new SimpleJsonSerializer().Serialize(this);
     }

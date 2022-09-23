@@ -145,8 +145,6 @@ namespace Octokit
 
         public bool HasPages { get; private set; }
 
-        public bool HasProjects { get; private set; }
-
         public int SubscribersCount { get; private set; }
 
         public long Size { get; private set; }
