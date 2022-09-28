@@ -1,34 +1,36 @@
 name: CI Build
-"on":
+
+on:
   pull_request:
     branches:
-      - main
+      - "main"
   push:
     branches:
-      - main
+      - "main"
+
 jobs:
   build:
+
     strategy:
       matrix:
-        platform:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+
     runs-on: ${{ matrix.platform }}
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup .NET 5
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 5.0.*
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.*
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.*
-      - name: Build with dotnet
-        run: ./build.sh --linksources=true --verbosity=verbose
-        shell: bash
+    - uses: actions/checkout@v1
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.*
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.*
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.*
+    - name: Build with dotnet
+      run: ./build.sh --linksources=true --verbosity=verbose
+      shell: bash
