@@ -30,7 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Octokit\Octokit.csproj" />
+      <ProjectReference Include="..\Octokit\Octokit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <None Include="images\octokit.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
