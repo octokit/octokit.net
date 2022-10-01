@@ -1,12 +1,11 @@
 name:  Local NuGet
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - local
       
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,8 +15,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup .NET Core @ Latest
-        uses: actions/setup-dotnet@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.x'
           source-url: https://nuget.pkg.github.com/dirtygooback/index.json
@@ -34,5 +33,5 @@ jobs:
         run: dotnet nuget list source          
          
       - name: Push generated package to GitHub registry
-        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg"  --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg"
         
