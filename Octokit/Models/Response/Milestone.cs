@@ -14,6 +14,11 @@ namespace Octokit
             Number = number;
         }
 
+        public Milestone(string title)
+        {
+            Title = title;
+        }
+
         public Milestone(string url, string htmlUrl, long id, int number, string nodeId, ItemState state, string title, string description, User creator, int openIssues, int closedIssues, DateTimeOffset createdAt, DateTimeOffset? dueOn, DateTimeOffset? closedAt, DateTimeOffset? updatedAt)
         {
             Url = url;
