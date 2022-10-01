@@ -29,9 +29,6 @@ jobs:
       - name: Create NuGet Package
         run: dotnet pack -c Release -o out
          
-      - name: Clean Sources
-        run: dotnet nuget remove source nuget.org
-        
       - name: Push NuGet Package
-        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg"
+        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg" --source https://nuget.pkg.github.com/dirtygooback/index.json --api-key ${{ secrets.NUGET_API_KEY }}
         
