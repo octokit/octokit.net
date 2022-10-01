@@ -24,7 +24,7 @@ jobs:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Clean Sources
-        run: dotnet nuget remove source https://api.nuget.org/v3/index.json
+        run: dotnet nuget remove source nuget.org
         
       - name: Build NuGet Package
         run: dotnet build
