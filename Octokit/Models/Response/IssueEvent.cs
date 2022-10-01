@@ -29,6 +29,7 @@ namespace Octokit
             Assigner = assigner;
             LockReason = lockReason;
             DismissedReview = dismissedReview;
+            Milestone = milestone;
         }
 
         /// <summary>
