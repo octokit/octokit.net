@@ -12,8 +12,8 @@ jobs:
     name: Update NuGet 
     steps:
 
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3        
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
@@ -23,15 +23,15 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
-      - name: Build
+      - name: Clean Sources
+        run: dotnet nuget remove source https://api.nuget.org/v3/index.json
+        
+      - name: Build NuGet Package
         run: dotnet build
         
-      - name: Pack
+      - name: Create NuGet Package
         run: dotnet pack -c Release -o out
-          
-      - name: Build solution and generate NuGet package
-        run: dotnet nuget list source          
          
-      - name: Push generated package to GitHub registry
+      - name: Push NuGet Package
         run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg"
         
