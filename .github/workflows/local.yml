@@ -21,10 +21,7 @@ jobs:
           dotnet-version: '6.x'
           source-url: https://nuget.pkg.github.com/dirtygooback/index.json
         env:
-          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-      - name: Clean Sources
-        run: dotnet nuget remove source nuget.org
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}     
         
       - name: Build NuGet Package
         run: dotnet build
@@ -32,6 +29,9 @@ jobs:
       - name: Create NuGet Package
         run: dotnet pack -c Release -o out
          
+      - name: Clean Sources
+        run: dotnet nuget remove source nuget.org
+        
       - name: Push NuGet Package
         run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg"
         
