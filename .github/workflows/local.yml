@@ -21,7 +21,7 @@ jobs:
           dotnet-version: '6.x'
           source-url: https://nuget.pkg.github.com/dirtygooback/index.json
         env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}} 
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
       - name: Build
         run: dotnet build
@@ -33,5 +33,5 @@ jobs:
         run: dotnet nuget list source          
          
       - name: Push generated package to GitHub registry
-        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg" 
+        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg"  --api-key ${{ secrets.NUGET_API_KEY }}
         
