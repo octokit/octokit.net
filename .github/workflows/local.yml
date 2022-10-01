@@ -30,5 +30,8 @@ jobs:
         run: dotnet pack -c Release -o out
          
       - name: Push NuGet Package
-        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg" --source https://nuget.pkg.github.com/dirtygooback/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg" 
+          --skip-duplicate
+          --source https://nuget.pkg.github.com/dirtygooback/index.json 
+          --api-key ${{ secrets.NUGET_API_KEY }}
         
