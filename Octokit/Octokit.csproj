@@ -4,7 +4,7 @@
     <Description>An async-based GitHub API client library for .NET and .NET Core</Description>
     <AssemblyTitle>Octokit</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <Version>3.0.2</Version>
+    <Version>3.0.3</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Octokit</AssemblyName>
