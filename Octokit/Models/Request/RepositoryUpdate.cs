@@ -114,6 +114,11 @@ namespace Octokit
         /// </summary>
         public bool? AllowForking { get; set; }
 
+		/// <summary>
+		/// Optional. Either true to require contributors to sign off on web-based commits, or false to not require contributors to sign off on web-based commits. The default is null (do not update). The default when created is false.
+		/// </summary>
+		public bool? WebCommitSignoffRequired { get; set; }
+
         internal string DebuggerDisplay => new SimpleJsonSerializer().Serialize(this);
     }
 }
