@@ -1,0 +1,37 @@
+name:  Local NuGet
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - local
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Update NuGet 
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3        
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.x'
+          source-url: https://nuget.pkg.github.com/dirtygooback/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}     
+        
+      - name: Build NuGet Package
+        run: dotnet build
+        
+      - name: Create NuGet Package
+        run: dotnet pack -c Release -o out
+         
+      - name: Push NuGet Package
+        run: dotnet nuget push "${GITHUB_WORKSPACE}/out/Octokit.3.*.nupkg" 
+          --skip-duplicate
+          --source https://nuget.pkg.github.com/dirtygooback/index.json 
+          --api-key ${{ secrets.NUGET_API_KEY }}
+        

@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace Octokit
 {
+
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public class Repository
 	{
