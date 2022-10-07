@@ -18,6 +18,9 @@ namespace Octokit.Tests.Models
             Assert.Equal("rerequested", payload.Action);
             Assert.Equal("73955d02043135d48809add98052c2170522158f", payload.CheckSuite.HeadSha);
             Assert.Equal(CheckStatus.Queued, payload.CheckSuite.Status.Value);
+            Assert.NotNull(payload.Installation);
+            Assert.NotNull(payload.Repository);
+            Assert.NotNull(payload.Sender);
         }
     }
 }
