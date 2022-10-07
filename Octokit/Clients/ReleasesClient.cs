@@ -30,14 +30,14 @@ namespace Octokit
         /// <param name="name">The repository's name</param>
         /// <param name="data">The request for generating release notes</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/releases")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/releases/generate-notes")]
         public Task<GeneratedReleaseNotes> GenerateReleaseNotes(string owner, string name, GenerateReleaseNotesRequest data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var endpoint = ApiUrls.Releases(owner, name);
+            var endpoint = ApiUrls.ReleasesGenerateNotes(owner, name);
             return ApiConnection.Post<GeneratedReleaseNotes>(endpoint, data, AcceptHeaders.StableVersion);
         }
 
@@ -50,12 +50,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">The request for generating release notes</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        [ManualRoute("GET", "/repos/{owner}/{repo}/releases")]
+        [ManualRoute("POST", "/repositories/{id}/releases/generate-notes")]
         public Task<GeneratedReleaseNotes> GenerateReleaseNotes(long repositoryId, GenerateReleaseNotesRequest data)
         {
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var endpoint = ApiUrls.Releases(repositoryId);
+            var endpoint = ApiUrls.ReleasesGenerateNotes(repositoryId);
             return ApiConnection.Post<GeneratedReleaseNotes>(endpoint, data, AcceptHeaders.StableVersion);
         }
 
