@@ -192,6 +192,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that generates release notes for the specified repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="Uri"/> that generates release notes for the specified repository.</returns>
+        public static Uri ReleasesGenerateNotes(string owner, string name)
+        {
+            return "repos/{0}/{1}/releases/generate-notes".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -3439,6 +3450,16 @@ namespace Octokit
         public static Uri Releases(long repositoryId)
         {
             return "repositories/{0}/releases".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that generates release notes for the specified repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> that generates release notes for the specified repository.</returns>
+        public static Uri ReleasesGenerateNotes(long repositoryId)
+        {
+            return "repositories/{0}/releases/generate-notes".FormatUri(repositoryId);
         }
 
         /// <summary>
