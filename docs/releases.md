@@ -30,18 +30,24 @@ Console.WriteLine("Created release id {0}", result.Id);
 
 Note that the `Draft` flag is used to indicate when a release should be published to the world, whereas the `PreRelease` flag is used to indicate whether a release is unofficial or preview release.
 
-#### Generate release notes
+### Generate release notes
 
-Additionally, you can ask GitHub to generate a name and body before creating a new release.
+GitHub can generate a name and body for a new release [automatically](https://github.blog/2021-10-04-beta-github-releases-improving-release-experience/#introducing-auto-generated-release-notes), based upon merged pull requests.
+[This is an example](https://github.com/MylesBorins/release-notes-test/releases/tag/v2.0.0) of automatically generated text.
 
 ```csharp
-var generationRequest = new GenerateReleaseNotesRequest("v2.0.0");
+var newTag = "v1.5.7";
+var generationRequest = new GenerateReleaseNotesRequest(newTag);
+generationRequest.TargetCommitish = "main"; // Optional, can be a branch, tag, or SHA; defaults to the main branch.
+generationRequest.PreviousTagName = "v1.5.6"; // Optional; default is automagically determined, based on existing tags.
 var releaseNotes = await client.Repository.Release.GenerateReleaseNotes("octokit", "octokit.net", generationRequest);
 
-var newRelease = new NewRelease("v1.0.0");
+var newRelease = new NewRelease(newTag); // Use the same tag as before, because it now appears in generated text.
 newRelease.Name = releaseNotes.Name;
 newRelease.Body = releaseNotes.Body;
 ```
+
+This feature can be customized at the repository level, by following [these instructions](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes#configuring-automatically-generated-release-notes).
 
 ### Update
 
