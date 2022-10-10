@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <SignAssembly>false</SignAssembly>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RunWorkingDirectory>$(MSBuildProjectDirectory)/..</RunWorkingDirectory>
   </PropertyGroup>
