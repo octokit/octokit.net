@@ -7,7 +7,7 @@ namespace Octokit
     /// Used to update a release.
     /// </summary>
     /// <remarks>
-    /// API: https://developer.github.com/v3/repos/releases/#create-a-release
+    /// API: https://docs.github.com/en/rest/releases/releases#update-a-release
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReleaseUpdate
@@ -47,7 +47,7 @@ namespace Octokit
         public string Body { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="NewRelease"/> is a draft (unpublished).
+        /// Gets or sets a value indicating whether this <see cref="ReleaseUpdate"/> is a draft (unpublished).
         /// Default: false
         /// </summary>
         /// <value>
@@ -56,7 +56,7 @@ namespace Octokit
         public bool? Draft { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="NewRelease"/> is prerelease.
+        /// Gets or sets a value indicating whether this <see cref="ReleaseUpdate"/> is prerelease.
         /// </summary>
         /// <value>
         ///   <c>true</c> if prerelease; otherwise, <c>false</c>.
