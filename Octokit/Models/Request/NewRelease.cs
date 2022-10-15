@@ -7,7 +7,7 @@ namespace Octokit
     /// Used to create a new release.
     /// </summary>
     /// <remarks>
-    /// API: https://docs.github.com/en/rest/releases/releases#create-a-release
+    /// API: https://docs.github.com/rest/releases/releases#create-a-release
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class NewRelease

@@ -7,7 +7,7 @@ namespace Octokit
     /// Used to update a release.
     /// </summary>
     /// <remarks>
-    /// API: https://docs.github.com/en/rest/releases/releases#update-a-release
+    /// API: https://docs.github.com/rest/releases/releases#update-a-release
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ReleaseUpdate
