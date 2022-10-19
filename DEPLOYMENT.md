@@ -7,29 +7,26 @@ Creating a new release and deploying the package to nuget are administrative tas
 2. Admin rights to the [octokit.net](https://github.com/octokit/octokit.net) repository
 3. For any PRs that should be noted in the release notes, each pull request must have a comment formatted like `release_notes: description` where description represents the details of the change.
 
-### Prepare the changeset & publish to nuget.org
+### Publish to nuget.org
 
-1. Create a branch named `release`.
-2. Push the branch to GitHub and create a pull request. This will kick off the CI builds to verify the changes.
-3. Test!
-4. [Generate](https://github.com/shiftkey/octokit.releasenotes) the release notes. `Octokit.ReleaseNotes generate v0.50.0 [BASE] [HEAD]`
-  Any PRs that should be noted in the release notes, each pull request must have a comment formatted like `release_notes: description` where description represents the details of the change. Make sure for the commit range any changeset in a PR that should be represented has a comment on the PR prefixed with `release_notes:` and corresponding label (details below)
-5. When you're satisfied with this release, create a tag `git tag v#.#.#`. For example, to create a tag for 1.0.0
-`git tag v1.0.0`
-6. Push the tag to the server. `git push --tags`
-7. When the tag is successfully pushed, the [publish workflow](https://github.com/octokit/octokit.net/blob/main/.github/workflows/publish.yml) will run and build and push the package to nuget
-8. Verify that the package has been uploaded to [nuget.org](https://www.nuget.org/packages/Octokit/)
-8. Accept the pull request
-9. Create a [new release](https://github.com/octokit/octokit.net/releases/new)
-using the tag you just created and pasting in the release notes you just generated
+1. Run test and perform manual tests from `main`
+2. [Generate](https://github.com/shiftkey/octokit.releasenotes) the release notes. `Octokit.ReleaseNotes generate main [LAST RELEASE TAG]` (i.e. `dotnet run generate main v3.0.0`)
+3. When you're satisfied with this release, create a tag `git tag v#.#.#`. For example, to create a tag for 3.0.1
+`git tag v3.0.1`
+4. Push the tag to the server. `git push --tags`
+5. When the tag is successfully pushed, the [publish workflow](https://github.com/octokit/octokit.net/blob/main/.github/workflows/publish.yml) will run and build and push the package to nuget
+6. Verify that the package has been uploaded to [nuget.org](https://www.nuget.org/packages/Octokit/)
+7. Create a [new release](https://github.com/octokit/octokit.net/releases/new) using the tag you just created and pasting in the release notes you just generated
 
 ---
 
-### Details on the release notes generator
+### Release notes generator
 
 Release notes [generator](https://github.com/shiftkey/octokit.releasenotes): this is used to pull details using the GitHub API to generate the release notes.
 
 The generator helps in that it produces release notes that are consistently formatted based on information directly from the change scope (from the previous release to the current tip i.e. the `release` branch).
+
+Any PRs that should be noted in the release notes, each pull request must have a comment formatted like `release_notes: description` where description represents the details of the change. Make sure for the commit range any changeset in a PR that should be represented has a comment on the PR prefixed with `release_notes:` and corresponding label.
 
 The nuances are mostly around how it gets and parses release notes from the PRs found in the changeset. The following are the comment prefixes that the generator currently supports:
 

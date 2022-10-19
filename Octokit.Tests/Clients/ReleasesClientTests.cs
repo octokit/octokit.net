@@ -31,7 +31,7 @@ namespace Octokit.Tests.Clients
 
                 await releasesClient.GenerateReleaseNotes("fake", "repo", data);
 
-                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases"),
+                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/generate-notes"),
                     data,
                     "application/vnd.github.v3");
             }
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Clients
 
                 await releasesClient.GenerateReleaseNotes(1, data);
 
-                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/releases"),
+                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/releases/generate-notes"),
                     data,
                     "application/vnd.github.v3");
             }

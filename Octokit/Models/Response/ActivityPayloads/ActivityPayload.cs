@@ -15,9 +15,9 @@ namespace Octokit
             Installation = installation;
         }
 
-        public Repository Repository { get; private set; }
-        public User Sender { get; private set; }
-        public InstallationId Installation { get; private set; }
+        public Repository Repository { get; protected set; }
+        public User Sender { get; protected set; }
+        public InstallationId Installation { get; protected set; }
 
         internal string DebuggerDisplay
         {
