@@ -18,17 +18,17 @@ public class ReferencesClientTests : IDisposable
 
         _fixture = _github.Git.Reference;
 
-        _context = _github.CreateRepositoryContext("public-repo").Result;
+        _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
     }
 
     [IntegrationTest]
     public async Task CanGetAReference()
     {
-        var @ref = await _fixture.Get("octokit", "octokit.net", "heads/master");
+        var @ref = await _fixture.Get("octokit", "octokit.net", "heads/main");
 
         // validate the top-level properties
-        Assert.Equal("refs/heads/master", @ref.Ref);
-        Assert.Equal("https://api.github.com/repos/octokit/octokit.net/git/refs/heads/master", @ref.Url);
+        Assert.Equal("refs/heads/main", @ref.Ref);
+        Assert.Equal("https://api.github.com/repos/octokit/octokit.net/git/refs/heads/main", @ref.Url);
 
         // validate the git reference
         Assert.Equal(TaggedType.Commit, @ref.Object.Type);
@@ -38,11 +38,11 @@ public class ReferencesClientTests : IDisposable
     [IntegrationTest]
     public async Task CanGetAReferenceWithRepositoryId()
     {
-        var @ref = await _fixture.Get(7528679, "heads/master");
+        var @ref = await _fixture.Get(7528679, "heads/main");
 
         // validate the top-level properties
-        Assert.Equal("refs/heads/master", @ref.Ref);
-        Assert.Equal("https://api.github.com/repos/octokit/octokit.net/git/refs/heads/master", @ref.Url);
+        Assert.Equal("refs/heads/main", @ref.Ref);
+        Assert.Equal("https://api.github.com/repos/octokit/octokit.net/git/refs/heads/main", @ref.Url);
 
         // validate the git reference
         Assert.Equal(TaggedType.Commit, @ref.Object.Type);

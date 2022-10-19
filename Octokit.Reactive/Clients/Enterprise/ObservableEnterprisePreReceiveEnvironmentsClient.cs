@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PreReceiveEnvironment>(ApiUrls.AdminPreReceiveEnvironments(), null, AcceptHeaders.PreReceiveEnvironmentsPreview, options);
+            return _connection.GetAndFlattenAllPages<PreReceiveEnvironment>(ApiUrls.AdminPreReceiveEnvironments(), null, options);
         }
 
         /// <summary>

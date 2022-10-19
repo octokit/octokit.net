@@ -37,7 +37,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(owner, name);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
             }
 
             [Fact]
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(repositoryId);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUriWithRepositoryId,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
             }
 
             [Fact]
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(owner, name, options);
 
                 gitHubClient.Connection.Received(2).Get<List<User>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
             }
 
             [Fact]
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(repositoryId, options);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUriWithRepositoryId,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), null);
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
             }
 
             [Fact]

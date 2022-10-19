@@ -36,6 +36,16 @@ namespace Octokit
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
@@ -105,8 +115,9 @@ namespace Octokit
         /// Performs an asynchronous HTTP POST request.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Post(Uri uri);
+        Task<HttpStatusCode> Post(Uri uri, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -114,8 +125,9 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Post(Uri uri, object body, string accepts);
+        Task<HttpStatusCode> Post(Uri uri, object body, string accepts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -123,8 +135,9 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Post<T>(Uri uri);
+        Task<IApiResponse<T>> Post<T>(Uri uri, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -136,8 +149,15 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="parameters">Extra parameters for authentication.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, IDictionary<string, string> parameters = null);
+        Task<IApiResponse<T>> Post<T>(
+            Uri uri,
+            object body,
+            string accepts,
+            string contentType,
+            IDictionary<string, string> parameters = null,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -149,8 +169,9 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="twoFactorAuthenticationCode">Two Factor Authentication Code</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, string twoFactorAuthenticationCode);
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -162,8 +183,9 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="timeout"></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout);
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout, CancellationToken cancellationToken = default);
 
 
         /// <summary>
@@ -180,8 +202,9 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="baseAddress">Allows overriding the base address for a post.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress);
+        Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request.
@@ -304,7 +327,7 @@ namespace Octokit
         Credentials Credentials { get; set; }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// Sets the timeout for the connection between the client and the server.
         /// </summary>
         /// <param name="timeout">The Timeout value</param>
         void SetRequestTimeout(TimeSpan timeout);

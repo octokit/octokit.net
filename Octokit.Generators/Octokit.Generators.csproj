@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>A set of code generators for Octokit.NET backed by the GitHub REST API Open API descriptions</Description>
+    <AssemblyTitle>Octokit.Generators</AssemblyTitle>
+    <Authors>GitHub</Authors>
+    <Version>0.0.0-dev</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>Octokit.Generators</AssemblyName>
+    <PackageId>Octokit.Generators</PackageId>
+    <DebugType>embedded</DebugType>
+    <RepositoryUrl>https://github.com/octokit/octokit.net</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/octokit/octokit.net</PackageProjectUrl>
+    <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
+    <PackageIcon>octokit.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>GitHub API Octokit dotnetcore dotnetstandard2.0</PackageTags>
+    <Copyright>Copyright GitHub 2022</Copyright>
+    <LangVersion>9</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

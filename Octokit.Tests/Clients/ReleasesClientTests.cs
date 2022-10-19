@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Internal;
 using Xunit;
 
 namespace Octokit.Tests.Clients
@@ -15,6 +17,55 @@ namespace Octokit.Tests.Clients
             {
                 Assert.Throws<ArgumentNullException>(() =>
                     new ReleasesClient(null));
+            }
+        }
+
+        public class TheGenerateReleaseNotesMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var releasesClient = new ReleasesClient(client);
+                var data = new GenerateReleaseNotesRequest("fake-tag");
+
+                await releasesClient.GenerateReleaseNotes("fake", "repo", data);
+
+                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/releases/generate-notes"),
+                    data,
+                    "application/vnd.github.v3");
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlWithRepositoryId()
+            {
+                var client = Substitute.For<IApiConnection>();
+                var releasesClient = new ReleasesClient(client);
+                var data = new GenerateReleaseNotesRequest("fake-tag");
+
+                await releasesClient.GenerateReleaseNotes(1, data);
+
+                client.Received().Post<GeneratedReleaseNotes>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/releases/generate-notes"),
+                    data,
+                    "application/vnd.github.v3");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var releasesClient = new ReleasesClient(Substitute.For<IApiConnection>());
+                Assert.Throws<ArgumentNullException>(() => new GenerateReleaseNotesRequest(null));
+
+                var data = new GenerateReleaseNotesRequest("fake-tag");
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes(null, "name", data));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes("owner", null, data));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes("owner", "name", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => releasesClient.GenerateReleaseNotes(1, null));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GenerateReleaseNotes("", "name", data));
+                await Assert.ThrowsAsync<ArgumentException>(() => releasesClient.GenerateReleaseNotes("owner", "", data));
             }
         }
 
@@ -483,6 +534,42 @@ namespace Octokit.Tests.Clients
                 await fixture.UploadAsset(release, uploadData);
 
                 apiConnection.Received().Post<ReleaseAsset>(Arg.Any<Uri>(), uploadData.RawData, Arg.Any<string>(), uploadData.ContentType, newTimeout);
+            }
+
+            [Fact]
+            public async Task CanBeCancelled()
+            {
+                var httpClient = new CancellationTestHttpClient();
+                var connection = new Connection(new ProductHeaderValue("TEST"), httpClient);
+                var apiConnection = new ApiConnection(connection);
+
+                var fixture = new ReleasesClient(apiConnection);
+
+                var release = new Release("https://uploads.github.com/anything");
+                var uploadData = new ReleaseAssetUpload("good", "good/good", Stream.Null, null);
+
+                using (var cts = new CancellationTokenSource())
+                {
+                    var uploadTask = fixture.UploadAsset(release, uploadData, cts.Token);
+
+                    cts.Cancel();
+
+                    await Assert.ThrowsAsync<TaskCanceledException>(() => uploadTask);
+                }
+            }
+
+            private class CancellationTestHttpClient : IHttpClient
+            {
+                public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+
+                    throw new Exception("HTTP operation was not cancelled");
+                }
+
+                public void Dispose() { }
+
+                public void SetRequestTimeout(TimeSpan timeout) { }
             }
         }
 

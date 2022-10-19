@@ -39,8 +39,8 @@ public class SearchRepositoryResultTests
       ""language"": ""Assembly"",
       ""forks_count"": 0,
       ""open_issues_count"": 0,
-      ""master_branch"": ""master"",
-      ""default_branch"": ""master"",
+      ""master_branch"": ""main"",
+      ""default_branch"": ""main"",
       ""score"": 10.309712
     }
   ]

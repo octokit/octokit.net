@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
+using Octokit.Internal;
 using Xunit;
+
+using static Octokit.Internal.TestSetup;
 
 namespace Octokit.Tests.Clients
 {
@@ -40,7 +43,8 @@ namespace Octokit.Tests.Clients
 
                 client.Create(new NewRepository("aName"));
 
-                connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Arg.Any<NewRepository>());
+                connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                    Arg.Any<NewRepository>());
             }
 
             [Fact]
@@ -81,29 +85,7 @@ namespace Octokit.Tests.Clients
                 Assert.Null(exception.ExistingRepositoryWebUrl);
             }
 
-            [Fact]
-            public async Task ThrowsExceptionWhenPrivateRepositoryQuotaExceeded()
-            {
-                var newRepository = new NewRepository("aName") { Private = true };
-                var response = Substitute.For<IResponse>();
-                response.StatusCode.Returns((HttpStatusCode)422);
-                response.Body.Returns(@"{""message"":""Validation Failed"",""documentation_url"":"
-                    + @"""http://developer.github.com/v3/repos/#create"",""errors"":[{""resource"":""Repository"","
-                    + @"""code"":""custom"",""field"":""name"",""message"":"
-                    + @"""name can't be private. You are over your quota.""}]}");
-                var credentials = new Credentials("haacked", "pwd");
-                var connection = Substitute.For<IApiConnection>();
-                connection.Connection.BaseAddress.Returns(GitHubClient.GitHubApiUrl);
-                connection.Connection.Credentials.Returns(credentials);
-                connection.Post<Repository>(Args.Uri, newRepository)
-                    .Returns<Task<Repository>>(_ => { throw new ApiValidationException(response); });
-                var client = new RepositoriesClient(connection);
 
-                var exception = await Assert.ThrowsAsync<PrivateRepositoryQuotaExceededException>(
-                    () => client.Create(newRepository));
-
-                Assert.NotNull(exception);
-            }
         }
 
         public class TheCreateMethodForOrganization
@@ -208,6 +190,43 @@ namespace Octokit.Tests.Clients
 
                 Assert.Equal("aName", exception.RepositoryName);
                 Assert.Equal(new Uri("https://example.com/illuminati/aName"), exception.ExistingRepositoryWebUrl);
+            }
+        }
+
+        public class TheGenerateMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Generate(null, null, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Generate("asd", null, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Generate("asd", "asd", null));
+            }
+
+            [Fact]
+            public void UsesTheUserReposUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.Generate("asd", "asd", new NewRepositoryFromTemplate("aName"));
+
+                connection.Received().Post<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/asd/asd/generate"),
+                    Arg.Any<NewRepositoryFromTemplate>());
+            }
+
+            [Fact]
+            public void TheNewRepositoryDescription()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+                var newRepository = new NewRepositoryFromTemplate("aName");
+
+                client.Generate("anOwner", "aRepo", newRepository);
+
+                connection.Received().Post<Repository>(Args.Uri, newRepository);
             }
         }
 
@@ -354,6 +373,55 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheAreVulnerabilityAlertsEnabledMethod
+        {
+            [Theory]
+            [InlineData(HttpStatusCode.NoContent, true)]
+            [InlineData(HttpStatusCode.NotFound, false)]
+            public async Task RequestsCorrectValueForStatusCode(HttpStatusCode status, bool expected)
+            {
+                var response = CreateResponse(status);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+                var connection = Substitute.For<IConnection>();
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/vulnerability-alerts"),
+                    null, null).Returns(responseTask);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+                var client = new RepositoriesClient(apiConnection);
+
+                var result = await client.AreVulnerabilityAlertsEnabled("owner", "name");
+
+                Assert.Equal(expected, result);
+            }
+
+            [Fact]
+            public async Task ThrowsExceptionForInvalidStatusCode()
+            {
+                var response = CreateResponse(HttpStatusCode.Conflict);
+                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+                var connection = Substitute.For<IConnection>();
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/vulnerability-alerts"),
+                    null, null).Returns(responseTask);
+                var apiConnection = Substitute.For<IApiConnection>();
+                apiConnection.Connection.Returns(connection);
+                var client = new RepositoriesClient(apiConnection);
+
+                await Assert.ThrowsAsync<ApiException>(() => client.AreVulnerabilityAlertsEnabled("owner", "name"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled(null, "name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("", "name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled( "owner", null));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("owner", ""));
+            }
+        }
+
         public class TheDeleteMethod
         {
             [Fact]
@@ -402,7 +470,8 @@ namespace Octokit.Tests.Clients
                 await client.Get("owner", "name");
 
                 connection.Received()
-                    .Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"));
+                    .Get<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name"),
+                    null);
             }
 
             [Fact]
@@ -483,7 +552,9 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForCurrent();
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"), Args.ApiOptions);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "user/repos"),
+                    null,
+                    Args.ApiOptions);
             }
 
             [Fact]
@@ -557,7 +628,7 @@ namespace Octokit.Tests.Clients
 
                 var request = new RepositoryRequest
                 {
-                    Visibility = RepositoryVisibility.Private
+                    Visibility = RepositoryRequestVisibility.Private
                 };
 
                 await client.GetAllForCurrent(request);
@@ -631,7 +702,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForOrg("orgname");
 
                 connection.Received()
-                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"), Args.ApiOptions);
+                    .GetAll<Repository>(Arg.Is<Uri>(u => u.ToString() == "orgs/orgname/repos"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -1058,12 +1129,13 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var update = new RepositoryUpdate("repo");
+                var update = new RepositoryUpdate() { Name= "repo" };
 
                 client.Edit("owner", "repo", update);
 
                 connection.Received()
-                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"), Arg.Any<RepositoryUpdate>());
+                    .Patch<Repository>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo"),
+                    Arg.Any<RepositoryUpdate>());
             }
 
             [Fact]
@@ -1071,7 +1143,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var update = new RepositoryUpdate("repo");
+                var update = new RepositoryUpdate() { Name= "repo" };
 
                 client.Edit(1, update);
 
@@ -1083,7 +1155,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepositoriesClient(Substitute.For<IApiConnection>());
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate() { Name= "anyreponame" };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit(null, "repo", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Edit("owner", null, update));
@@ -1233,7 +1305,118 @@ namespace Octokit.Tests.Clients
                 client.GetSha1("owner", "name", "reference");
 
                 connection.Received()
-                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null, "application/vnd.github.v3.sha");
+                    .Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/commits/reference"), null);
+            }
+        }
+
+        public class TheGetAllTopicsMethod
+        {
+            readonly RepositoriesClient _client = new RepositoriesClient(Substitute.For<IApiConnection>());
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics(123, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics(null, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.GetAllTopics("owner", null, ApiOptions.None));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                await Assert.ThrowsAsync<ArgumentException>(() => _client.GetAllTopics(string.Empty, "repo", ApiOptions.None));
+                await Assert.ThrowsAsync<ArgumentException>(() => _client.GetAllTopics("owner", string.Empty, ApiOptions.None));
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlForOwnerAndRepo()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTopics("owner", "name");
+
+                connection.Received()
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), null);
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlForRepoId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepositoriesClient(connection);
+
+                client.GetAllTopics(1234);
+
+                connection.Received()
+                    .Get<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), null);
+            }
+        }
+
+        public class TheReplaceAllTopicsMethod
+        {
+            private readonly RepositoryTopics _emptyTopics = new RepositoryTopics();
+            private readonly RepositoryTopics _listOfTopics = new RepositoryTopics(new List<string> { "one", "two", "three" });
+            private readonly IApiConnection _connection;
+            private readonly RepositoriesClient _client;
+
+            public TheReplaceAllTopicsMethod()
+            {
+                _connection = Substitute.For<IApiConnection>();
+                _client = new RepositoriesClient(_connection);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.ReplaceAllTopics("owner", "repo", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.ReplaceAllTopics(123, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.ReplaceAllTopics(null, "repo", _emptyTopics));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => _client.ReplaceAllTopics("owner", null, _emptyTopics));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                await Assert.ThrowsAsync<ArgumentException>(() => _client.ReplaceAllTopics(string.Empty, "repo", _emptyTopics));
+                await Assert.ThrowsAsync<ArgumentException>(() => _client.ReplaceAllTopics("owner", string.Empty, _emptyTopics));
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlForOwnerAndRepoWithEmptyTopics()
+            {
+                await _client.ReplaceAllTopics("owner", "name", _emptyTopics);
+
+                _connection.Received()
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _emptyTopics);
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlForOwnerAndRepoWithListOfTopics()
+            {
+                await _client.ReplaceAllTopics("owner", "name", _listOfTopics);
+
+                _connection.Received()
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/topics"), _listOfTopics);
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlForRepoIdWithEmptyTopics()
+            {
+                await _client.ReplaceAllTopics(1234, _emptyTopics);
+
+                _connection.Received()
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _emptyTopics);
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrlForRepoIdWithListOfTopics()
+            {
+                await _client.ReplaceAllTopics(1234, _listOfTopics);
+
+                _connection.Received()
+                    .Put<RepositoryTopics>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/topics"), _listOfTopics);
             }
         }
     }

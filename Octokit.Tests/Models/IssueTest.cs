@@ -120,8 +120,9 @@ public class IssueTest
 ""events_url"": ""https://api.github.com/users/octocat/events{/privacy}"",
 ""received_events_url"": ""https://api.github.com/users/octocat/received_events"",
 ""type"": ""User"",
-""site_admin"": false
-}
+""site_admin"": false,
+},
+""active_lock_reason"": null
 }";
         var serializer = new SimpleJsonSerializer();
 
@@ -130,6 +131,7 @@ public class IssueTest
         Assert.Equal(1347, issue.Number);
         Assert.Equal("octocat", issue.User.Login);
         Assert.Equal("bug", issue.Labels.First().Name);
+        Assert.Null(issue.ActiveLockReason);
     }
 
     public class TheToUpdateMethod

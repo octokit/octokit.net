@@ -41,6 +41,8 @@ namespace Octokit
 
         IIssueTimelineClient Timeline { get; }
 
+        ILockUnlockClient LockUnlock { get; }
+
         /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
@@ -314,38 +316,5 @@ namespace Octokit
         /// </param>
         Task<Issue> Update(long repositoryId, int number, IssueUpdate issueUpdate);
 
-        /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        Task Lock(string owner, string name, int number);
-
-        /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
-        Task Lock(long repositoryId, int number);
-
-        /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        Task Unlock(string owner, string name, int number);
-
-        /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
-        Task Unlock(long repositoryId, int number);
     }
 }

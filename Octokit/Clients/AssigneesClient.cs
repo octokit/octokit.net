@@ -58,7 +58,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.Assignees(owner, name);
 
-            return ApiConnection.GetAll<User>(endpoint, null, AcceptHeaders.StableVersion, options);
+            return ApiConnection.GetAll<User>(endpoint, null, options);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.Assignees(repositoryId);
 
-            return ApiConnection.GetAll<User>(endpoint, null, AcceptHeaders.StableVersion, options);
+            return ApiConnection.GetAll<User>(endpoint, null, options);
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -85,7 +85,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -163,7 +163,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -198,7 +198,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -247,7 +247,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -283,7 +283,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -332,7 +332,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -349,6 +349,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
                     Assert.Equal("name", checkRun.Name);
                     Assert.Equal(CheckStatus.InProgress, checkRun.Status);
+                    Assert.Equal(created.DetailsUrl, checkRun.DetailsUrl);
                 }
             }
 
@@ -358,7 +359,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -375,6 +376,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(featureBranch.Object.Sha, checkRun.HeadSha);
                     Assert.Equal("name", checkRun.Name);
                     Assert.Equal(CheckStatus.InProgress, checkRun.Status);
+                    Assert.Equal(created.DetailsUrl, checkRun.DetailsUrl);
                 }
             }
         }
@@ -398,7 +400,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch
@@ -431,7 +433,7 @@ namespace Octokit.Tests.Integration.Clients
                 using (var repoContext = await _github.CreateRepositoryContext(new NewRepository(Helper.MakeNameWithTimestamp("public-repo")) { AutoInit = true }))
                 {
                     // Create a new feature branch
-                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, "master");
+                    var headCommit = await _github.Repository.Commit.Get(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
                     var featureBranch = await Helper.CreateFeatureBranch(repoContext.RepositoryOwner, repoContext.RepositoryName, headCommit.Sha, "my-feature");
 
                     // Create a check run for the feature branch

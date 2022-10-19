@@ -16,19 +16,19 @@ namespace Octokit
             Title = title;
         }
 
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
-        public string Key { get; protected set; }
-
-        /// <remarks>
-        /// Only visible for the current user, or with the correct OAuth scope
-        /// </remarks>
-        public string Url { get; protected set; }
+        public string Key { get; private set; }
 
         /// <remarks>
         /// Only visible for the current user, or with the correct OAuth scope
         /// </remarks>
-        public string Title { get; protected set; }
+        public string Url { get; private set; }
+
+        /// <remarks>
+        /// Only visible for the current user, or with the correct OAuth scope
+        /// </remarks>
+        public string Title { get; private set; }
 
         internal string DebuggerDisplay
         {

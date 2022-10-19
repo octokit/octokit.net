@@ -97,8 +97,7 @@ public class ObservableIssuesClientTests
             client.GetAllForRepository("fake", "repo");
 
             gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                Arg.Any<IDictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview+json");
+                Arg.Any<IDictionary<string, string>>());
         }
 
         [Fact]
@@ -110,7 +109,7 @@ public class ObservableIssuesClientTests
             client.GetAllForRepository(1);
 
             gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
-                Arg.Any<IDictionary<string, string>>(), null);
+                Arg.Any<IDictionary<string, string>>());
         }
 
         [Fact]
@@ -135,8 +134,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "desc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"),
-                "application/vnd.github.squirrel-girl-preview+json");
+                && d["per_page"] == "1"));
         }
 
         [Fact]
@@ -161,7 +159,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "desc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"), null);
+                && d["per_page"] == "1"));
         }
 
         [Fact]
@@ -180,8 +178,7 @@ public class ObservableIssuesClientTests
                 && d["filter"] == "assigned"
                 && d["state"] == "open"
                 && d["sort"] == "created"
-                && d["direction"] == "asc"),
-                "application/vnd.github.squirrel-girl-preview+json");
+                && d["direction"] == "asc"));
         }
 
         [Fact]
@@ -200,7 +197,7 @@ public class ObservableIssuesClientTests
                 && d["filter"] == "assigned"
                 && d["state"] == "open"
                 && d["sort"] == "created"
-                && d["direction"] == "asc"), null);
+                && d["direction"] == "asc"));
         }
 
         [Fact]
@@ -228,8 +225,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "asc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"),
-                "application/vnd.github.squirrel-girl-preview+json");
+                && d["per_page"] == "1"));
         }
 
         [Fact]
@@ -257,8 +253,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "asc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"),
-                null);
+                && d["per_page"] == "1"));
         }
 
         [Fact]
@@ -303,11 +298,11 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"), Arg.Any<string>())
+                    && d["filter"] == "assigned"))
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
@@ -379,12 +374,11 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"),
-                "application/vnd.github.squirrel-girl-preview+json")
+                    && d["filter"] == "assigned"))
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
@@ -466,11 +460,11 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"), "application/vnd.github.squirrel-girl-preview+json")
+                    && d["filter"] == "assigned"))
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
 
             var client = new ObservableIssuesClient(gitHubClient);
@@ -534,16 +528,17 @@ public class ObservableIssuesClientTests
                 }
             );
             var gitHubClient = Substitute.For<IGitHubClient>();
-            gitHubClient.Connection.Get<List<Issue>>(Arg.Is(firstPageUrl),
+            gitHubClient.Connection.Get<List<Issue>>(
+                Arg.Is(firstPageUrl),
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 4
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"), "application/vnd.github.squirrel-girl-preview+json")
+                    && d["filter"] == "assigned"))
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), "application/vnd.github.squirrel-girl-preview+json")
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
@@ -650,9 +645,9 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            client.Lock("fake", "repo", 42);
+            client.LockUnlock.Lock("fake", "repo", 42);
 
-            gitHubClient.Issue.Received().Lock("fake", "repo", 42);
+            gitHubClient.Issue.Received().LockUnlock.Lock("fake", "repo", 42);
         }
 
         [Fact]
@@ -661,9 +656,9 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            client.Lock(1, 42);
+            client.LockUnlock.Lock(1, 42);
 
-            gitHubClient.Issue.Received().Lock(1, 42);
+            gitHubClient.Issue.Received().LockUnlock.Lock(1, 42);
         }
 
         [Fact]
@@ -672,11 +667,11 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            Assert.Throws<ArgumentNullException>(() => client.Lock(null, "name", 42));
-            Assert.Throws<ArgumentNullException>(() => client.Lock("owner", null, 42));
+            Assert.Throws<ArgumentNullException>(() => client.LockUnlock.Lock(null, "name", 42));
+            Assert.Throws<ArgumentNullException>(() => client.LockUnlock.Lock("owner", null, 42));
 
-            Assert.Throws<ArgumentException>(() => client.Lock("", "name", 42));
-            Assert.Throws<ArgumentException>(() => client.Lock("owner", "", 42));
+            Assert.Throws<ArgumentException>(() => client.LockUnlock.Lock("", "name", 42));
+            Assert.Throws<ArgumentException>(() => client.LockUnlock.Lock("owner", "", 42));
         }
     }
 
@@ -688,9 +683,9 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            client.Unlock("fake", "repo", 42);
+            client.LockUnlock.Unlock("fake", "repo", 42);
 
-            gitHubClient.Issue.Received().Unlock("fake", "repo", 42);
+            gitHubClient.Issue.Received().LockUnlock.Unlock("fake", "repo", 42);
         }
 
         [Fact]
@@ -699,9 +694,9 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            client.Unlock(1, 42);
+            client.LockUnlock.Unlock(1, 42);
 
-            gitHubClient.Issue.Received().Unlock(1, 42);
+            gitHubClient.Issue.Received().LockUnlock.Unlock(1, 42);
         }
 
         [Fact]
@@ -710,11 +705,11 @@ public class ObservableIssuesClientTests
             var gitHubClient = Substitute.For<IGitHubClient>();
             var client = new ObservableIssuesClient(gitHubClient);
 
-            Assert.Throws<ArgumentNullException>(() => client.Unlock(null, "name", 42));
-            Assert.Throws<ArgumentNullException>(() => client.Unlock("owner", null, 42));
+            Assert.Throws<ArgumentNullException>(() => client.LockUnlock.Unlock(null, "name", 42));
+            Assert.Throws<ArgumentNullException>(() => client.LockUnlock.Unlock("owner", null, 42));
 
-            Assert.Throws<ArgumentException>(() => client.Unlock("", "name", 42));
-            Assert.Throws<ArgumentException>(() => client.Unlock("owner", "", 42));
+            Assert.Throws<ArgumentException>(() => client.LockUnlock.Unlock("", "name", 42));
+            Assert.Throws<ArgumentException>(() => client.LockUnlock.Unlock("owner", "", 42));
         }
     }
 

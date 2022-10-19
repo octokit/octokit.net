@@ -20,12 +20,12 @@ namespace Octokit
         /// <summary>
         /// The total number of check suites that match the request filter
         /// </summary>
-        public int TotalCount { get; protected set; }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// The retrieved check suites
         /// </summary>
-        public IReadOnlyList<CheckSuite> CheckSuites { get; protected set; }
+        public IReadOnlyList<CheckSuite> CheckSuites { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "TotalCount: {0}, CheckSuites: {1}", TotalCount, CheckSuites.Count);
     }

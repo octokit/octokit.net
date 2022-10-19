@@ -239,7 +239,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
-                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(owner, name, user), null, AcceptHeaders.OrganizationMembershipPreview);
+                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(owner, name, user), null);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
-                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null, AcceptHeaders.OrganizationMembershipPreview);
+                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null);
         }
 
         /// <summary>
@@ -292,21 +292,13 @@ namespace Octokit
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/collaborators/{username}")]
-        public async Task<bool> Add(string owner, string name, string user, CollaboratorRequest permission)
+        public async Task<RepositoryInvitation> Add(string owner, string name, string user, CollaboratorRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
-
-            try
-            {
-                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
-                return response.HttpResponse.IsTrue();
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            
+            return await ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(owner, name, user), permission).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -337,19 +329,11 @@ namespace Octokit
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PUT", "/repository/{id}/collaborators/{username}")]
-        public async Task<bool> Add(long repositoryId, string user, CollaboratorRequest permission)
+        public async Task<RepositoryInvitation> Add(long repositoryId, string user, CollaboratorRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            try
-            {
-                var response = await Connection.Put<object>(ApiUrls.RepoCollaborator(repositoryId, user), permission).ConfigureAwait(false);
-                return response.HttpResponse.IsTrue();
-            }
-            catch (NotFoundException)
-            {
-                return false;
-            }
+            return await ApiConnection.Put<RepositoryInvitation>(ApiUrls.RepoCollaborator(repositoryId, user), permission).ConfigureAwait(false);
         }
 
         /// <summary>

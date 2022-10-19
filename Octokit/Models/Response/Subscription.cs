@@ -22,32 +22,32 @@ namespace Octokit
         /// <summary>
         /// Determines if notifications should be received from this repository.
         /// </summary>
-        public bool Subscribed { get; protected set; }
+        public bool Subscribed { get; private set; }
 
         /// <summary>
         /// Determines if all notifications should be blocked from this repository.
         /// </summary>
-        public bool Ignored { get; protected set; }
+        public bool Ignored { get; private set; }
 
         /// <summary>
         /// Url of the label
         /// </summary>
-        public string Reason { get; protected set; }
+        public string Reason { get; private set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> for when this <see cref="Subscription"/> was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The API URL for this <see cref="Subscription"/>.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The API URL for this <see cref="Repository"/>.
         /// </summary>
-        public string RepositoryUrl { get; protected set; }
+        public string RepositoryUrl { get; private set; }
 
         internal string DebuggerDisplay
         {

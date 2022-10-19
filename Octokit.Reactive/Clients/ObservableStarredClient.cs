@@ -113,7 +113,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarCreationTimestamps, options);
+            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(owner, name), null, options);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(repositoryId), null, AcceptHeaders.StarCreationTimestamps, options);
+            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(repositoryId), null, options);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), null, AcceptHeaders.StarCreationTimestamps, options);
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), null, options);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.Starred(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), null, AcceptHeaders.StarCreationTimestamps, options);
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), null, options);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), AcceptHeaders.StarCreationTimestamps, options);
+            return _connection.GetAndFlattenAllPages<RepositoryStar>(ApiUrls.StarredByUser(user), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

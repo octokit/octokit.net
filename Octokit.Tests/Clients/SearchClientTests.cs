@@ -702,6 +702,42 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(d =>
                         string.IsNullOrEmpty(d["q"])));
             }
+
+            [Fact]
+            public async Task TestingTheTopicQualifier()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topic = "TheTopic";
+
+                Assert.Contains("topic:thetopic", request.MergedQualifiers());
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithGreaterThanOneTopic()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = Range.GreaterThan(1);
+
+                Assert.Contains("topics:>1", request.MergedQualifiers());
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithExactlyOneTopic()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = new Range(1);
+
+                Assert.Contains("topics:1", request.MergedQualifiers());
+            }
+
+            [Fact]
+            public void TestingTheTopicsQualifierWithTwoOrLessTopics()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.Topics = Range.LessThanOrEquals(2);
+
+                Assert.Contains("topics:<=2", request.MergedQualifiers());
+            }
         }
 
         public class TheSearchIssuesMethod
@@ -1850,14 +1886,33 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.User = "alfhenrik";
+                var request = new SearchCodeRequest("something")
+                {
+                    Users = new[] { "alfhenrik" }
+                };
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+user:alfhenrik"));
+            }
+
+            [Fact]
+            public void TestingTheUserQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something")
+                {
+                    Users = new[] { "johnDoe", "janeDoe" }
+                };
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+user:johnDoe+user:janeDoe"));
             }
 
             [Fact]
@@ -1879,14 +1934,33 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
-                var request = new SearchCodeRequest("something");
-                request.Organization = "octokit";
+                var request = new SearchCodeRequest("something")
+                {
+                    Organizations = new[] { "octokit" }
+                };
 
                 client.SearchCode(request);
 
                 connection.Received().Get<SearchCodeResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+org:octokit"));
+            }
+
+            [Fact]
+            public void TestingTheOrgQualifier_Multiple()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something")
+                {
+                    Organizations = new[] { "octokit", "dotnet" }
+                };
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+org:octokit+org:dotnet"));
             }
 
             [Fact]
@@ -1906,6 +1980,44 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "search/code"),
                     Arg.Is<Dictionary<string, string>>(d =>
                         d["q"] == "something+path:tools/FAKE.core+extension:fs+extension:cs+repo:octokit/octokit.net"));
+            }
+
+            [Fact]
+            public void TestingTheRepoAndPathAndUsersQualifiers()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net")
+                {
+                    Users = new[] { "johnDoe", "janeDoe" }
+                };
+                request.Path = "tools/FAKE.core";
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something+path:tools/FAKE.core+user:johnDoe+user:janeDoe+repo:octokit/octokit.net"));
+            }
+
+            [Fact]
+            public void TestingTheRepoAndPathAndOrganizationsQualifiers()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchCodeRequest("something", "octokit", "octokit.net")
+                {
+                    Organizations = new[] { "johnDoe", "janeDoe" }
+                };
+                request.Path = "tools/FAKE.core";
+
+                client.SearchCode(request);
+
+                connection.Received().Get<SearchCodeResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/code"),
+                    Arg.Is<Dictionary<string, string>>(d =>
+                        d["q"] == "something+path:tools/FAKE.core+repo:octokit/octokit.net+org:johnDoe+org:janeDoe"));
             }
 
             [Fact]

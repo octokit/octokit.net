@@ -62,7 +62,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Migration>(ApiUrls.EnterpriseMigrations(org), null, AcceptHeaders.MigrationsApiPreview, options);
+            return _connection.GetAndFlattenAllPages<Migration>(ApiUrls.EnterpriseMigrations(org), null, options);
         }
 
         /// <summary>

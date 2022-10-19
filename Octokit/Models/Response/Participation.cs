@@ -26,12 +26,12 @@ namespace Octokit
         /// <summary>
         /// Returns the commit counts made each week, for the last 52 weeks
         /// </summary>
-        public IReadOnlyList<int> All { get; protected set; }
+        public IReadOnlyList<int> All { get; private set; }
 
         /// <summary>
         /// Returns the commit counts made by the owner each week, for the last 52 weeks
         /// </summary>
-        public IReadOnlyList<int> Owner { get; protected set; }
+        public IReadOnlyList<int> Owner { get; private set; }
 
         /// <summary>
         /// The total number of commits made by the owner in the last 52 weeks.

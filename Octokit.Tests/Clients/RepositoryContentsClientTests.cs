@@ -261,9 +261,9 @@ namespace Octokit.Tests.Clients
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
                 var contentsClient = new RepositoryContentsClient(connection);
 
-                var contents = await contentsClient.GetAllContentsByRef("fake", "repo", "readme.md", "master");
+                var contents = await contentsClient.GetAllContentsByRef("fake", "repo", "readme.md", GitHubConstants.DefaultBranchName);
 
-                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/readme.md?ref=master"));
+                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repos/fake/repo/contents/readme.md?ref={GitHubConstants.DefaultBranchName}"));
                 Assert.Equal(1, contents.Count);
             }
 
@@ -276,9 +276,9 @@ namespace Octokit.Tests.Clients
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
                 var contentsClient = new RepositoryContentsClient(connection);
 
-                var contents = await contentsClient.GetAllContentsByRef(1, "readme.md", "master");
+                var contents = await contentsClient.GetAllContentsByRef(1, "readme.md", GitHubConstants.DefaultBranchName);
 
-                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contents/readme.md?ref=master"));
+                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repositories/1/contents/readme.md?ref={GitHubConstants.DefaultBranchName}"));
                 Assert.Equal(1, contents.Count);
             }
 
@@ -291,9 +291,9 @@ namespace Octokit.Tests.Clients
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
                 var contentsClient = new RepositoryContentsClient(connection);
 
-                var contents = await contentsClient.GetAllContentsByRef("fake", "repo", "master");
+                var contents = await contentsClient.GetAllContentsByRef("fake", "repo", GitHubConstants.DefaultBranchName);
 
-                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/?ref=master"));
+                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repos/fake/repo/contents/?ref={GitHubConstants.DefaultBranchName}"));
                 Assert.Equal(1, contents.Count);
             }
 
@@ -306,9 +306,9 @@ namespace Octokit.Tests.Clients
                 connection.GetAll<RepositoryContent>(Args.Uri).Returns(Task.FromResult(result.AsReadOnly() as IReadOnlyList<RepositoryContent>));
                 var contentsClient = new RepositoryContentsClient(connection);
 
-                var contents = await contentsClient.GetAllContentsByRef(1, "master");
+                var contents = await contentsClient.GetAllContentsByRef(1, GitHubConstants.DefaultBranchName);
 
-                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contents/?ref=master"));
+                connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repositories/1/contents/?ref={GitHubConstants.DefaultBranchName}"));
                 Assert.Equal(1, contents.Count);
             }
 

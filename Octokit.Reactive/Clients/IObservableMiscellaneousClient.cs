@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Octokit.Reactive
 {
+    [Obsolete("Use individual clients for these methods")]
     public interface IObservableMiscellaneousClient
     {
         /// <summary>
@@ -10,8 +10,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
-            Justification = "Makes a network request")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use EmojisClient.GetAllEmojis instead.")]
         IObservable<Emoji> GetAllEmojis();
 
         /// <summary>
@@ -20,6 +19,7 @@ namespace Octokit.Reactive
         /// <param name="markdown">An arbitrary Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderArbitraryMarkdown instead.")]
         IObservable<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown);
 
         /// <summary>
@@ -28,19 +28,21 @@ namespace Octokit.Reactive
         /// <param name="markdown">A plain-text Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderRawMarkdown instead.")]
         IObservable<string> RenderRawMarkdown(string markdown);
 
         /// <summary>
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>An observable list of gitignore template names.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetAllGitIgnoreTemplates instead.")]
         IObservable<string> GetAllGitIgnoreTemplates();
 
         /// <summary>
         /// Retrieves the source for a single GitIgnore template
         /// </summary>
         /// <param name="templateName">Returns the template source for the given template</param>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetGitIgnoreTemplate instead.")]
         IObservable<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName);
 
         /// <summary>
@@ -48,7 +50,7 @@ namespace Octokit.Reactive
         /// list of all possible OSS licenses.
         /// </summary>
         /// <returns>A list of licenses available on the site</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetAllLicenses instead.")]
         IObservable<LicenseMetadata> GetAllLicenses();
 
         /// <summary>
@@ -57,6 +59,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of licenses available on the site</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetAllLicenses instead.")]
         IObservable<LicenseMetadata> GetAllLicenses(ApiOptions options);
 
         /// <summary>
@@ -64,6 +67,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetLicense instead.")]
         IObservable<License> GetLicense(string key);
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use RateLimitClient.GetRateLimits instead.")]
         IObservable<MiscellaneousRateLimit> GetRateLimits();
 
         /// <summary>
@@ -79,7 +83,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MetaClient.GetMetadata instead.")]
         IObservable<Meta> GetMetadata();
     }
 }

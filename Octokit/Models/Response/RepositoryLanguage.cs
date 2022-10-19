@@ -15,9 +15,9 @@ namespace Octokit
             NumberOfBytes = numberOfBytes;
         }
 
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
-        public long NumberOfBytes { get; protected set; }
+        public long NumberOfBytes { get; private set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal string DebuggerDisplay

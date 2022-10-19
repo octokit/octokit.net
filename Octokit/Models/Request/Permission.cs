@@ -14,7 +14,19 @@ namespace Octokit
         /// </summary>
         [Parameter(Value = "admin")]
         Admin,
-
+                
+        /// <summary>
+        ///  team members can manage the repository without access to sensitive or destructive actions. Recommended for project managers. Only applies to repositories owned by organizations.
+        /// </summary>
+        [Parameter(Value = "maintain")]
+        Maintain,
+        
+        /// <summary>
+        ///   team members can proactively manage issues and pull requests without write access. Recommended for contributors who triage a repository. Only applies to repositories owned by organizations.
+        /// </summary>
+        [Parameter(Value = "triage")]
+        Triage,
+        
         /// <summary>
         /// team members can pull and push, but not administer these repositories
         /// </summary>

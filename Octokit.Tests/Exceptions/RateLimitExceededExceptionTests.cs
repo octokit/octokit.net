@@ -4,14 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
-using System.Net.Http;
-#if !NO_SERIALIZABLE
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using Xunit;
 
 using static Octokit.Internal.TestSetup;
+using Octokit.Tests.Helpers;
 
 namespace Octokit.Tests.Exceptions
 {
@@ -86,7 +82,6 @@ namespace Octokit.Tests.Exceptions
                 Assert.Equal(TimeSpan.Zero, exception.GetRetryAfterTimeSpan());
             }
 
-#if !NO_SERIALIZABLE
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
@@ -99,24 +94,17 @@ namespace Octokit.Tests.Exceptions
 
                 var exception = new RateLimitExceededException(response);
 
-                using (var stream = new MemoryStream())
-                {
-                    var formatter = new BinaryFormatter();
-                    formatter.Serialize(stream, exception);
-                    stream.Position = 0;
-                    var deserialized = (RateLimitExceededException)formatter.Deserialize(stream);
+                var deserialized = BinaryFormatterExtensions.SerializeAndDeserializeObject(exception);
 
-                    Assert.Equal(HttpStatusCode.Forbidden, deserialized.StatusCode);
-                    Assert.Equal(100, deserialized.Limit);
-                    Assert.Equal(42, deserialized.Remaining);
-                    var expectedReset = DateTimeOffset.ParseExact(
-                        "Mon 01 Jul 2013 5:47:53 PM -00:00",
-                        "ddd dd MMM yyyy h:mm:ss tt zzz",
-                        CultureInfo.InvariantCulture);
-                    Assert.Equal(expectedReset, deserialized.Reset);
-                }
+                Assert.Equal(HttpStatusCode.Forbidden, deserialized.StatusCode);
+                Assert.Equal(100, deserialized.Limit);
+                Assert.Equal(42, deserialized.Remaining);
+                var expectedReset = DateTimeOffset.ParseExact(
+                    "Mon 01 Jul 2013 5:47:53 PM -00:00",
+                    "ddd dd MMM yyyy h:mm:ss tt zzz",
+                    CultureInfo.InvariantCulture);
+                Assert.Equal(expectedReset, deserialized.Reset);
             }
-#endif
         }
 
         public class GetRetryAfterTimeSpanMethod
@@ -153,7 +141,7 @@ namespace Octokit.Tests.Exceptions
             {
                 var beginTime = DateTimeOffset.Now;
                 var resetTime = beginTime - TimeSpan.FromHours(1);
-                
+
                 var response = CreateResponse(HttpStatusCode.Forbidden,
                     new Dictionary<string, string>
                     {

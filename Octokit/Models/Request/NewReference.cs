@@ -18,7 +18,7 @@ namespace Octokit
         /// Initializes a new instance of the <see cref="NewReference"/> class.
         /// </summary>
         /// <param name="reference">
-        /// The name of the fully qualified reference (ie: refs/heads/master). If it doesn’t start with ‘refs’ and
+        /// The name of the fully qualified reference (ie: refs/heads/main). If it doesn’t start with ‘refs’ and
         ///  have at least two slashes, it will be rejected.
         /// </param>
         /// <param name="sha">The SHA1 value to set this reference to</param>
@@ -32,7 +32,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The name of the fully qualified reference (ie: refs/heads/master). If it doesn’t start with ‘refs’ and
+        /// The name of the fully qualified reference (ie: refs/heads/main). If it doesn’t start with ‘refs’ and
         /// have at least two slashes, it will be rejected.
         /// </summary>
         /// <value>

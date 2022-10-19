@@ -1,6 +1,6 @@
 using Cake.Common;
 using Cake.Common.Diagnostics;
-using Cake.Common.Tools.DotNetCore.Test;
+using Cake.Common.Tools.DotNet.Test;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
@@ -14,8 +14,6 @@ public class Context : FrostingContext
     public BuildVersion Version { get; set; }
 
     public DirectoryPath Artifacts { get; set; }
-    public DirectoryPath CodeCoverage { get; set; }
-
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
     public bool IsOriginalRepo { get; set; }
@@ -30,9 +28,9 @@ public class Context : FrostingContext
 
     public FilePath GitVersionToolPath { get; set; }
 
-    public DotNetCoreTestSettings GetTestSettings()
+    public DotNetTestSettings GetTestSettings()
     {
-        var settings = new DotNetCoreTestSettings
+        var settings = new DotNetTestSettings
         {
             Configuration = Configuration,
             NoBuild = true

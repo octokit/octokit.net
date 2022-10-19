@@ -8,9 +8,7 @@ namespace Octokit
     /// <summary>
     /// Error payload from the API response
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiError
     {
@@ -31,17 +29,17 @@ namespace Octokit
         /// <summary>
         /// The error message
         /// </summary>
-        public string Message { get; protected set; }
+        public string Message { get; private set; }
 
         /// <summary>
         /// URL to the documentation for this error.
         /// </summary>
-        public string DocumentationUrl { get; protected set; }
+        public string DocumentationUrl { get; private set; }
 
         /// <summary>
         /// Additional details about the error
         /// </summary>
-        public IReadOnlyList<ApiErrorDetail> Errors { get; protected set; }
+        public IReadOnlyList<ApiErrorDetail> Errors { get; private set; }
 
         internal string DebuggerDisplay
         {

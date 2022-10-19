@@ -4,7 +4,8 @@
     <Description>Integration tests for Octokit</Description>
     <AssemblyTitle>Octokit.Tests.Integration</AssemblyTitle>
     <Authors>GitHub</Authors>
-    <TargetFrameworks>netcoreapp3.1;net46</TargetFrameworks>
+    <TargetFrameworks>net6.0;netcoreapp3.1;net462</TargetFrameworks>
+    <SignAssembly>false</SignAssembly>
     <NoWarn>$(NoWarn);CS4014;CS1998</NoWarn>
     <AssemblyName>Octokit.Tests.Integration</AssemblyName>
     <PackageId>Octokit.Tests.Integration</PackageId>
@@ -19,10 +20,6 @@
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.1' ">
-    <DefineConstants>$(DefineConstants);GITHUBJWT_HELPER_AVAILABLE;SODIUM_CORE_AVAILABLE</DefineConstants>
-  </PropertyGroup>
-  
   <ItemGroup>
     <Compile Include="..\Octokit.Tests\Helpers\AssertEx.cs" />
     <EmbeddedResource Include="fixtures\hello-world.txt;fixtures\hello-world.zip" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
@@ -36,25 +33,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2" />
+	<PackageReference Include="GitHubJwt" Version="0.0.5" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
+	<PackageReference Include="System.IO.Compression" Version="4.3.0" />
+	<PackageReference Include="xunit" Version="2.4.2" />
+	<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+	<Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-    <PackageReference Include="GitHubJwt" Version="0.0.4" />
-    <PackageReference Include="Sodium.Core">
-      <Version>1.2.3</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3"  PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

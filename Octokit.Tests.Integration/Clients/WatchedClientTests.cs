@@ -299,7 +299,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 _watchingClient = github.Activity.Watching;
 
-                _context = github.CreateRepositoryContext("public-repo").Result;
+                _context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
             }
 
             [IntegrationTest]

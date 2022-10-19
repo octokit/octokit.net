@@ -63,9 +63,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -83,9 +83,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -103,9 +103,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -124,9 +124,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -145,9 +145,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var startOptions = new ApiOptions
         {
@@ -174,9 +174,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var startOptions = new ApiOptions
         {
@@ -259,9 +259,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -279,9 +279,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -299,9 +299,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -320,9 +320,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var options = new ApiOptions
         {
@@ -341,9 +341,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var startOptions = new ApiOptions
         {
@@ -370,9 +370,9 @@ public class IssuesEventsClientTests : IDisposable
     {
         var newIssue = new NewIssue("issue 1") { Body = "A new unassigned issue" };
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-        await _issuesClient.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Unlock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
+        await _issuesClient.LockUnlock.Lock(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
         var startOptions = new ApiOptions
         {

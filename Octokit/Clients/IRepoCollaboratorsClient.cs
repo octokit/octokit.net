@@ -172,7 +172,7 @@ namespace Octokit
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Add(string owner, string name, string user, CollaboratorRequest permission);
+        Task<RepositoryInvitation> Add(string owner, string name, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -195,7 +195,7 @@ namespace Octokit
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Add(long repositoryId, string user, CollaboratorRequest permission);
+        Task<RepositoryInvitation> Add(long repositoryId, string user, CollaboratorRequest permission);
 
         /// <summary>
         /// Invites a new collaborator to the repo

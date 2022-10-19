@@ -8,9 +8,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
-#if !HAS_ENVIRONMENT
-using System.Runtime.InteropServices;
-#endif
 
 namespace Octokit
 {
@@ -172,6 +169,13 @@ namespace Octokit
         }
         private ApiInfo _lastApiInfo;
 
+        public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, null, null, CancellationToken.None);
+        }
+
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
@@ -251,44 +255,51 @@ namespace Octokit
         /// Performs an asynchronous HTTP POST request.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public async Task<HttpStatusCode> Post(Uri uri)
+        public async Task<HttpStatusCode> Post(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Post, null, null, null, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
-        public async Task<HttpStatusCode> Post(Uri uri, object body, string accepts)
+        public async Task<HttpStatusCode> Post(Uri uri, object body, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await SendData<object>(uri, HttpMethod.Post, body, accepts, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Post, body, accepts, null, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
-        public Task<IApiResponse<T>> Post<T>(Uri uri)
+        public Task<IApiResponse<T>> Post<T>(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return SendData<T>(uri, HttpMethod.Post, null, null, null, CancellationToken.None);
+            return SendData<T>(uri, HttpMethod.Post, null, null, null, cancellationToken);
         }
 
-        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType)
+        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, cancellationToken);
         }
 
-        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, IDictionary<string, string> parameters)
+        public Task<IApiResponse<T>> Post<T>(
+            Uri uri,
+            object body,
+            string accepts,
+            string contentType,
+            IDictionary<string, string> parameters,
+            CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Post, body, accepts, contentType, CancellationToken.None);
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Post, body, accepts, contentType, cancellationToken);
         }
 
         /// <summary>
@@ -301,30 +312,37 @@ namespace Octokit
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <param name="contentType">Specifies the media type of the request body</param>
         /// <param name="twoFactorAuthenticationCode">Two Factor Authentication Code</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, string twoFactorAuthenticationCode)
+        public Task<IApiResponse<T>> Post<T>(
+            Uri uri,
+            object body,
+            string accepts,
+            string contentType,
+            string twoFactorAuthenticationCode,
+            CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
-            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, twoFactorAuthenticationCode);
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode);
         }
 
-        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout)
+        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, timeout, CancellationToken.None);
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, timeout, cancellationToken);
         }
 
-        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress)
+        public Task<IApiResponse<T>> Post<T>(Uri uri, object body, string accepts, string contentType, Uri baseAddress, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, CancellationToken.None, baseAddress: baseAddress);
+            return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, cancellationToken, baseAddress: baseAddress);
         }
 
         public Task<IApiResponse<T>> Put<T>(Uri uri, object body)
@@ -710,6 +728,11 @@ namespace Octokit
                 return new RateLimitExceededException(response);
             }
 
+            if (body.Contains("secondary rate limit"))
+            {
+                return new SecondaryRateLimitExceededException(response);
+            }
+
             if (body.Contains("number of login attempts exceeded"))
             {
                 return new LoginAttemptsExceededException(response);
@@ -749,7 +772,7 @@ namespace Octokit
 
         static string FormatUserAgent(ProductHeaderValue productInformation)
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0} ({1}; {2}; Octokit {3})",
+            return string.Format(CultureInfo.InvariantCulture, "{0} ({1}; {2}; Octokit.net {3})",
                 productInformation,
                 GetPlatformInformation(),
                 GetCultureInformation(),
@@ -764,17 +787,11 @@ namespace Octokit
                 try
                 {
                     _platformInformation = string.Format(CultureInfo.InvariantCulture,
-#if !HAS_ENVIRONMENT
-                        "{0}; {1}",
-                        RuntimeInformation.OSDescription.Trim(),
-                        RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant().Trim()
-#else
                         "{0} {1}; {2}",
                         Environment.OSVersion.Platform,
                         Environment.OSVersion.Version.ToString(3),
                         Environment.Is64BitOperatingSystem ? "amd64" : "x86"
-#endif
-                        );
+                    );
                 }
                 catch
                 {
@@ -806,7 +823,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// Sets the timeout for the connection between the client and the server.
         /// </summary>
         /// <param name="timeout">The Timeout value</param>
         public void SetRequestTimeout(TimeSpan timeout)

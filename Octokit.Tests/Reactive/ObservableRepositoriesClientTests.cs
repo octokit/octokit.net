@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -86,6 +87,30 @@ namespace Octokit.Tests.Reactive
 
                 client.Transfer(1, transfer);
                 gitHubClient.Repository.Received().Transfer(1, transfer);
+            }
+        }
+
+        public class TheIsFollowingMethod
+        {
+            [Fact]
+            public void CallsIntoClient()
+            {
+                var githubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableRepositoriesClient(githubClient);
+
+                client.AreVulnerabilityAlertsEnabled("owner", "name");
+                githubClient.Repository.Received().AreVulnerabilityAlertsEnabled("owner", "name");
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled(null, "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("", "name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.AreVulnerabilityAlertsEnabled("owner", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.AreVulnerabilityAlertsEnabled("owner", "").ToTask());
             }
         }
 
@@ -248,20 +273,20 @@ namespace Octokit.Tests.Reactive
                     });
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders)
+                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult<IApiResponse<List<Repository>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders)
+                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult<IApiResponse<List<Repository>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders)
+                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult<IApiResponse<List<Repository>>>(lastPageResponse));
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
 
                 var results = await repositoriesClient.GetAllForCurrent().ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>());
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>());
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact(Skip = "See https://github.com/octokit/octokit.net/issues/1011 for issue to investigate this further")]
@@ -368,11 +393,11 @@ namespace Octokit.Tests.Reactive
                     });
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, null, Args.AnyAcceptHeaders)
+                gitHubClient.Connection.Get<List<Repository>>(firstPageUrl, null)
                     .Returns(Task.FromResult(firstPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, null, Args.AnyAcceptHeaders)
+                gitHubClient.Connection.Get<List<Repository>>(secondPageUrl, null)
                     .Returns(Task.FromResult(secondPageResponse));
-                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, null, Args.AnyAcceptHeaders)
+                gitHubClient.Connection.Get<List<Repository>>(thirdPageUrl, null)
                     .Returns(Task.FromResult(lastPageResponse));
 
                 var repositoriesClient = new ObservableRepositoriesClient(gitHubClient);
@@ -380,9 +405,9 @@ namespace Octokit.Tests.Reactive
                 var results = await repositoriesClient.GetAllPublic(new PublicRepositoryRequest(364L)).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
-                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>(), Args.AnyAcceptHeaders);
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(firstPageUrl, Arg.Any<IDictionary<string, string>>());
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(secondPageUrl, Arg.Any<IDictionary<string, string>>());
+                gitHubClient.Connection.Received(1).Get<List<Repository>>(thirdPageUrl, Arg.Any<IDictionary<string, string>>());
             }
         }
 
@@ -436,7 +461,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Commit.GetAll("owner", "repo");
 
-                github.Connection.Received(1).Get<List<GitHubCommit>>(expected, Arg.Any<IDictionary<string, string>>(), null);
+                github.Connection.Received(1).Get<List<GitHubCommit>>(expected, Arg.Any<IDictionary<string, string>>());
             }
         }
 
@@ -453,8 +478,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1)
                     .Get<List<RepositoryContributor>>(expected,
-                        Args.EmptyDictionary,
-                        null);
+                        Args.EmptyDictionary);
             }
 
             [Fact]
@@ -468,8 +492,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1)
                     .Get<List<RepositoryContributor>>(expected,
-                        Args.EmptyDictionary,
-                        null);
+                        Args.EmptyDictionary);
             }
 
             [Fact]
@@ -490,8 +513,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1)
                     .Get<List<RepositoryContributor>>(expected,
-                        Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -512,8 +534,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1)
                     .Get<List<RepositoryContributor>>(expected,
-                        Arg.Is<IDictionary<string, string>>(d => d.Count == 2),
-                        null);
+                        Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -525,7 +546,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllContributors("owner", "name", true);
 
                 gitHubClient.Connection.Received()
-                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Is<IDictionary<string, string>>(d => d["anon"] == "1"), null);
+                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Is<IDictionary<string, string>>(d => d["anon"] == "1"));
             }
 
             [Fact]
@@ -537,7 +558,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllContributors(1, true);
 
                 gitHubClient.Connection.Received()
-                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contributors"), Arg.Is<IDictionary<string, string>>(d => d["anon"] == "1"), null);
+                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contributors"), Arg.Is<IDictionary<string, string>>(d => d["anon"] == "1"));
             }
 
             [Fact]
@@ -556,7 +577,8 @@ namespace Octokit.Tests.Reactive
                 client.GetAllContributors("owner", "name", true, options);
 
                 gitHubClient.Connection.Received()
-                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"), Arg.Is<IDictionary<string, string>>(d => d.Count == 3 && d["anon"] == "1" && d["page"] == "1" && d["per_page"] == "1"), null);
+                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/contributors"),
+                        Arg.Is<IDictionary<string, string>>(d => d.Count == 3 && d["anon"] == "1" && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -575,7 +597,8 @@ namespace Octokit.Tests.Reactive
                 client.GetAllContributors(1, true, options);
 
                 gitHubClient.Connection.Received()
-                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contributors"), Arg.Is<IDictionary<string, string>>(d => d.Count == 3 && d["anon"] == "1" && d["page"] == "1" && d["per_page"] == "1"), null);
+                    .Get<List<RepositoryContributor>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contributors"),
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 3 && d["anon"] == "1" && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -655,8 +678,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllTeams("owner", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<Team>>(expected,
-                    Arg.Any<IDictionary<string, string>>(),
-                    Arg.Any<string>());
+                    Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]
@@ -669,8 +691,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllTeams(1);
 
                 gitHubClient.Connection.Received(1).Get<List<Team>>(expected,
-                    Arg.Any<IDictionary<string, string>>(),
-                    Arg.Any<string>());
+                    Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]
@@ -690,8 +711,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllTeams("owner", "repo", options);
 
                 gitHubClient.Connection.Received(1).Get<List<Team>>(expected,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"),
-                    Arg.Any<string>());
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -711,8 +731,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllTeams(1, options);
 
                 gitHubClient.Connection.Received(1).Get<List<Team>>(expected,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"),
-                    Arg.Any<string>());
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -746,7 +765,8 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTags("owner", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Any<IDictionary<string, string>>(), null);
+                var received = gitHubClient.Connection.ReceivedCalls();
+                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]
@@ -758,7 +778,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTags(1);
 
-                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Any<IDictionary<string, string>>(), null);
+                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]
@@ -777,7 +797,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTags("owner", "repo", options);
 
-                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), null);
+                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -796,7 +816,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllTags(1, options);
 
-                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), null);
+                gitHubClient.Connection.Received(1).Get<List<RepositoryTag>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -826,7 +846,7 @@ namespace Octokit.Tests.Reactive
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate(){ Name= "anyreponame" };
 
                 client.Edit("owner", "repo", update);
 
@@ -838,7 +858,7 @@ namespace Octokit.Tests.Reactive
             {
                 var github = Substitute.For<IGitHubClient>();
                 var client = new ObservableRepositoriesClient(github);
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate(){ Name= "anyreponame" };
 
                 client.Edit(1, update);
 
@@ -849,7 +869,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableRepositoriesClient(Substitute.For<IGitHubClient>());
-                var update = new RepositoryUpdate("anyreponame");
+                var update = new RepositoryUpdate() { Name= "anyreponame" };
 
                 Assert.Throws<ArgumentNullException>(() => client.Edit(null, "repo", update));
                 Assert.Throws<ArgumentNullException>(() => client.Edit("owner", null, update));

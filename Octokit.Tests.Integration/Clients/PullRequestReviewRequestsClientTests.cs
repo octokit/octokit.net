@@ -26,7 +26,7 @@ public class PullRequestReviewRequestsClientTests
 
             _client = _github.PullRequest.ReviewRequest;
 
-            _context = _github.CreateRepositoryContext("test-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("test-repo").Result;
 
             Task.WaitAll(_collaboratorLogins.Select(AddCollaborator).ToArray());
         }
@@ -144,18 +144,18 @@ public class PullRequestReviewRequestsClientTests
 
     static async Task<int> CreateTheWorld(IGitHubClient github, RepositoryContext context, bool createReviewRequests = true)
     {
-        var master = await github.Git.Reference.Get(context.RepositoryOwner, context.RepositoryName, "heads/master");
+        var main = await github.Git.Reference.Get(context.RepositoryOwner, context.RepositoryName, "heads/main");
 
-        // create new commit for master branch
-        var newMasterTree = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "Hello World!" } });
-        var newMaster = await CreateCommit(github, context, "baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+        // create new commit for main branch
+        var newMainTree = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "Hello World!" } });
+        var newMain = await CreateCommit(github, context, "baseline for pull request", newMainTree.Sha, main.Object.Sha);
 
-        // update master
-        await github.Git.Reference.Update(context.RepositoryOwner, context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
+        // update main
+        await github.Git.Reference.Update(context.RepositoryOwner, context.RepositoryName, "heads/main", new ReferenceUpdate(newMain.Sha));
 
         // create new commit for feature branch
         var featureBranchTree = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
-        var featureBranchCommit = await CreateCommit(github, context, "this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
+        var featureBranchCommit = await CreateCommit(github, context, "this is the commit to merge into the pull request", featureBranchTree.Sha, newMain.Sha);
 
         var featureBranchTree2 = await CreateTree(github, context, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new a 2nd time" } });
         var featureBranchCommit2 = await CreateCommit(github, context, "this is a 2nd commit to merge into the pull request", featureBranchTree2.Sha, featureBranchCommit.Sha);
@@ -164,7 +164,7 @@ public class PullRequestReviewRequestsClientTests
         await github.Git.Reference.Create(context.RepositoryOwner, context.RepositoryName, new NewReference("refs/heads/my-branch", featureBranchCommit2.Sha));
 
         // create a pull request
-        var pullRequest = new NewPullRequest("Nice title for the pull request", "my-branch", "master");
+        var pullRequest = new NewPullRequest("Nice title for the pull request", "my-branch", "main");
         var createdPullRequest = await github.PullRequest.Create(context.RepositoryOwner, context.RepositoryName, pullRequest);
 
         // Create review requests (optional)

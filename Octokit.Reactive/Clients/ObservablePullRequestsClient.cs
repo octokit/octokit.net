@@ -30,6 +30,11 @@ namespace Octokit.Reactive
         /// </summary>
         public IObservablePullRequestReviewRequestsClient ReviewRequest { get; private set; }
 
+        /// <summary>
+        /// Client for locking/unlocking a conversation on a pull request
+        /// </summary>
+        public IObservableLockUnlockClient LockUnlock { get; private set; }
+
         public ObservablePullRequestsClient(IGitHubClient client)
         {
             Ensure.ArgumentNotNull(client, nameof(client));
@@ -39,6 +44,7 @@ namespace Octokit.Reactive
             Review = new ObservablePullRequestReviewsClient(client);
             ReviewComment = new ObservablePullRequestReviewCommentsClient(client);
             ReviewRequest = new ObservablePullRequestReviewRequestsClient(client);
+            LockUnlock = new ObservableLockUnlockClient(client);
         }
 
         /// <summary>
@@ -111,7 +117,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name), null, AcceptHeaders.DraftPullRequestApiPreview, options);
+            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name), null, options);
         }
 
         /// <summary>
@@ -126,7 +132,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(repositoryId), null, AcceptHeaders.DraftPullRequestApiPreview, options);
+            return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(repositoryId), null, options);
         }
 
         /// <summary>
@@ -180,7 +186,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name),
-                request.ToParametersDictionary(), AcceptHeaders.DraftPullRequestApiPreview, options);
+                request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -198,7 +204,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(repositoryId),
-                request.ToParametersDictionary(), AcceptHeaders.DraftPullRequestApiPreview, options);
+                request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -353,12 +359,37 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
-        public IObservable<PullRequestFile> Files(string owner, string name, int number)
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<PullRequestFile> Files(string owner, string name, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, number));
+            return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, number), options);
+        }
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
+        public IObservable<PullRequestFile> Files(string owner, string name, int number)
+        {
+            return Files(owner, name, number, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<PullRequestFile> Files(long repositoryId, int number, ApiOptions options)
+        {
+            return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number), options);
         }
 
         /// <summary>
@@ -369,7 +400,7 @@ namespace Octokit.Reactive
         /// <param name="number">The pull request number</param>
         public IObservable<PullRequestFile> Files(long repositoryId, int number)
         {
-            return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, number));
+            return Files(repositoryId, number, ApiOptions.None);
         }
     }
 }

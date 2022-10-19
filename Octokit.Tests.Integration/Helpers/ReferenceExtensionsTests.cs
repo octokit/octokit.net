@@ -13,11 +13,11 @@ namespace Octokit.Tests.Integration.Helpers
             var client = Helper.GetAuthenticatedClient();
             var fixture = client.Git.Reference;
 
-            using (var context = await client.CreateRepositoryContext("public-repo"))
+            using (var context = await client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
-                var branchFromMaster = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-1");
+                var branchFromMain = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-1", context.Repository.DefaultBranch);
 
-                var branchFromPath = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-2", branchFromMaster);
+                var branchFromPath = await fixture.CreateBranch(context.RepositoryOwner, context.RepositoryName, "patch-2", branchFromMain);
 
                 var allBranchNames = (await client.Repository.Branch.GetAll(context.RepositoryOwner, context.RepositoryName)).Select(b => b.Name);
 

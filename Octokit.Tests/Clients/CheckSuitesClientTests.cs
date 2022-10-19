@@ -31,8 +31,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<CheckSuite>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1"),
-                    Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.antiope-preview+json");
+                    Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -45,8 +44,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<CheckSuite>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1"),
-                    Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.antiope-preview+json");
+                    Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -84,7 +82,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckSuitesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-suites"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -99,7 +96,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckSuitesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-suites"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -122,7 +118,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(x =>
                         x["app_id"] == "123"
                         && x["check_name"] == "build"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -145,7 +140,6 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Dictionary<string, string>>(x =>
                         x["app_id"] == "123"
                         && x["check_name"] == "build"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -224,8 +218,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Patch<CheckSuitePreferencesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/preferences"),
-                    preferences,
-                    "application/vnd.github.antiope-preview+json");
+                    preferences);
             }
 
             [Fact]
@@ -240,8 +233,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Patch<CheckSuitePreferencesResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/preferences"),
-                    preferences,
-                    "application/vnd.github.antiope-preview+json");
+                    preferences);
             }
 
             [Fact]
@@ -284,8 +276,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<CheckSuite>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites"),
-                    newCheckSuite,
-                    "application/vnd.github.antiope-preview+json");
+                    newCheckSuite);
             }
 
             [Fact]
@@ -300,8 +291,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<CheckSuite>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites"),
-                    newCheckSuite,
-                    "application/vnd.github.antiope-preview+json");
+                    newCheckSuite);
             }
 
             [Fact]
@@ -343,9 +333,7 @@ namespace Octokit.Tests.Clients
                 await client.Rerequest("fake", "repo", 1);
 
                 connection.Connection.Received().Post(
-                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/rerequest"),
-                    Args.Object,
-                    "application/vnd.github.antiope-preview+json");
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/rerequest"));
             }
 
             [Fact]
@@ -357,9 +345,7 @@ namespace Octokit.Tests.Clients
                 await client.Rerequest(1, 1);
 
                 connection.Connection.Received().Post(
-                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/rerequest"),
-                    Args.Object,
-                    "application/vnd.github.antiope-preview+json");
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/rerequest"));
             }
 
             [Fact]

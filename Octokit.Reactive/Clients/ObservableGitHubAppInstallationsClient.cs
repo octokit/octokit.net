@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options)
         {
-            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.InstallationRepositories(), null, AcceptHeaders.GitHubAppsPreview, options);
+            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.InstallationRepositories(), options);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
         {
-            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, AcceptHeaders.GitHubAppsPreview, options);
+            return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), options);
         }
     }
 }

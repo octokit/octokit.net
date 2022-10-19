@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Octokit.Tests.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-#if !NO_SERIALIZABLE
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-#endif
 using Xunit;
 
 namespace Octokit.Tests.Http
@@ -71,7 +68,6 @@ namespace Octokit.Tests.Http
                 Assert.Equal(expectedReset, rateLimit.Reset);
             }
 
-#if !NO_SERIALIZABLE
             [Fact]
             public void CanPopulateObjectFromSerializedData()
             {
@@ -84,23 +80,17 @@ namespace Octokit.Tests.Http
 
                 var rateLimit = new RateLimit(headers);
 
-                using (var stream = new MemoryStream())
-                {
-                    var formatter = new BinaryFormatter();
-                    formatter.Serialize(stream, rateLimit);
-                    stream.Position = 0;
-                    var deserialized = (RateLimit)formatter.Deserialize(stream);
+                var deserialized = BinaryFormatterExtensions.SerializeAndDeserializeObject(rateLimit);
 
-                    Assert.Equal(100, deserialized.Limit);
-                    Assert.Equal(42, deserialized.Remaining);
-                    var expectedReset = DateTimeOffset.ParseExact(
-                        "Mon 01 Jul 2013 5:47:53 PM -00:00",
-                        "ddd dd MMM yyyy h:mm:ss tt zzz",
-                        CultureInfo.InvariantCulture);
-                    Assert.Equal(expectedReset, deserialized.Reset);
-                }
+                Assert.Equal(100, deserialized.Limit);
+                Assert.Equal(42, deserialized.Remaining);
+                var expectedReset = DateTimeOffset.ParseExact(
+                    "Mon 01 Jul 2013 5:47:53 PM -00:00",
+                    "ddd dd MMM yyyy h:mm:ss tt zzz",
+                    CultureInfo.InvariantCulture);
+                Assert.Equal(expectedReset, deserialized.Reset);
             }
-#endif
+
             [Fact]
             public void EnsuresHeadersNotNull()
             {

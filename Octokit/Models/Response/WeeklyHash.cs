@@ -23,16 +23,16 @@ namespace Octokit
         }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "W")]
-        public long W { get; protected set; }
+        public long W { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "A")]
-        public int A { get; protected set; }
+        public int A { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "D")]
-        public int D { get; protected set; }
+        public int D { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "C")]
-        public int C { get; protected set; }
+        public int C { get; private set; }
 
         public DateTimeOffset Week
         {

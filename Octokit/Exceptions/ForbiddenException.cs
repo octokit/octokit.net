@@ -2,18 +2,14 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 
 namespace Octokit
 {
     /// <summary>
     /// Represents a HTTP 403 - Forbidden response returned from the API.
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class ForbiddenException : ApiException
@@ -43,7 +39,6 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "Request Forbidden"; }
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of ForbiddenException
         /// </summary>
@@ -59,6 +54,5 @@ namespace Octokit
             : base(info, context)
         {
         }
-#endif
     }
 }

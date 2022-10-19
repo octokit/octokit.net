@@ -2,6 +2,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Run Generator",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/Octokit.Generators/bin/Debug/net6.0/Octokit.Generators",
+      "args": [],
+      "cwd": "${workspaceFolder}/Octokit.Generators",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
       "name": "Run unit tests",
       "type": "coreclr",
       "request": "launch",

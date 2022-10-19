@@ -21,27 +21,27 @@ namespace Octokit
         /// <summary>
         /// The combined state of the commits.
         /// </summary>
-        public StringEnum<CommitState> State { get; protected set; }
+        public StringEnum<CommitState> State { get; private set; }
 
         /// <summary>
         /// The SHA of the reference.
         /// </summary>
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
         /// <summary>
         /// The total number of statuses.
         /// </summary>
-        public int TotalCount { get; protected set; }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// The statuses.
         /// </summary>
-        public IReadOnlyList<CommitStatus> Statuses { get; protected set; }
+        public IReadOnlyList<CommitStatus> Statuses { get; private set; }
 
         /// <summary>
         /// The repository of the reference.
         /// </summary>
-        public Repository Repository { get; protected set; }
+        public Repository Repository { get; private set; }
 
         internal string DebuggerDisplay
         {

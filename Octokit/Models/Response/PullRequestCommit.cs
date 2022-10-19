@@ -11,7 +11,7 @@ namespace Octokit
     {
         public PullRequestCommit() { }
 
-        public PullRequestCommit(string nodeId, Committer author, string commentsUrl, Commit commit, Committer committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
+        public PullRequestCommit(string nodeId, User author, string commentsUrl, Commit commit, User committer, string htmlUrl, IEnumerable<GitReference> parents, string sha, string url)
         {
             Ensure.ArgumentNotNull(parents, nameof(parents));
 
@@ -29,23 +29,23 @@ namespace Octokit
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public Committer Author { get; protected set; }
+        public User Author { get; private set; }
 
-        public string CommentsUrl { get; protected set; }
+        public string CommentsUrl { get; private set; }
 
-        public Commit Commit { get; protected set; }
+        public Commit Commit { get; private set; }
 
-        public Committer Committer { get; protected set; }
+        public User Committer { get; private set; }
 
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
-        public IReadOnlyList<GitReference> Parents { get; protected set; }
+        public IReadOnlyList<GitReference> Parents { get; private set; }
 
-        public string Sha { get; protected set; }
+        public string Sha { get; private set; }
 
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         internal string DebuggerDisplay
         {

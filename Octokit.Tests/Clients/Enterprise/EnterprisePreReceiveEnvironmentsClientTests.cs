@@ -28,7 +28,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
                     null,
-                    "application/vnd.github.eye-scream-preview+json",
                     Args.ApiOptions);
             }
 
@@ -49,7 +48,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
                     null,
-                    "application/vnd.github.eye-scream-preview+json",
                     options);
             }
         }
@@ -65,8 +63,7 @@ namespace Octokit.Tests.Clients
                 await client.Get(1);
 
                 connection.Received().Get<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1"),
-                    null,
-                    "application/vnd.github.eye-scream-preview+json");
+                    null);
             }
         }
 
@@ -82,8 +79,7 @@ namespace Octokit.Tests.Clients
                 await client.Create(data);
 
                 connection.Received().Post<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments"),
-                    data,
-                    "application/vnd.github.eye-scream-preview+json");
+                    data);
             }
 
             [Fact]
@@ -115,8 +111,7 @@ namespace Octokit.Tests.Clients
                 await client.Edit(1, data);
 
                 connection.Received().Patch<PreReceiveEnvironment>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1"),
-                    data,
-                    "application/vnd.github.eye-scream-preview+json");
+                    data);
             }
 
             [Fact]
@@ -139,8 +134,7 @@ namespace Octokit.Tests.Clients
                 await client.Delete(1);
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1"),
-                    Arg.Any<object>(),
-                    "application/vnd.github.eye-scream-preview+json");
+                    Arg.Any<object>());
             }
         }
 
@@ -155,8 +149,7 @@ namespace Octokit.Tests.Clients
                 await client.DownloadStatus(1);
 
                 connection.Received().Get<PreReceiveEnvironmentDownload>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1/downloads/latest"),
-                    null,
-                    "application/vnd.github.eye-scream-preview+json");
+                    null);
             }
         }
 
@@ -171,8 +164,7 @@ namespace Octokit.Tests.Clients
                 await client.TriggerDownload(1);
 
                 connection.Received().Post<PreReceiveEnvironmentDownload>(Arg.Is<Uri>(u => u.ToString() == "admin/pre-receive-environments/1/downloads"),
-                    Arg.Any<object>(),
-                    "application/vnd.github.eye-scream-preview+json");
+                    Arg.Any<object>());
             }
         }
     }

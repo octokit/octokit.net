@@ -6,7 +6,7 @@ using Cake.Core;
 using Cake.Core.IO;
 using Cake.Frosting;
 
-[Dependency(typeof(Package))]
+[IsDependentOn(typeof(Package))]
 public class TestSourceLink : FrostingTask<Context>
 {
     public override void Run(Context context)

@@ -16,7 +16,7 @@ public class BlobClientTests : IDisposable
         var github = Helper.GetAuthenticatedClient();
         _fixture = github.Git.Blob;
 
-        _context = github.CreateRepositoryContext("public-repo").Result;
+        _context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
     }
 
     [IntegrationTest]

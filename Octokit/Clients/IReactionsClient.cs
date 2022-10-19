@@ -41,13 +41,5 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         IPullRequestReviewCommentReactionsClient PullRequestReviewComment { get; }
-
-        /// <summary>
-        /// Delete a reaction.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/reactions/#delete-a-reaction</remarks>        
-        /// <param name="number">The reaction id</param>        
-        /// <returns></returns>
-        Task Delete(int number);
     }
 }

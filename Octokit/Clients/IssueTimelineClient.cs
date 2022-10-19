@@ -43,8 +43,6 @@ namespace Octokit
         /// <param name="repo">The name of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API repsonse</param>
-        [Preview("mockingbird")]
-        [Preview("starfox")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/timeline")]
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int number, ApiOptions options)
         {
@@ -52,10 +50,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number),
-                                                            null,
-                                                            AcceptHeaders.Concat(AcceptHeaders.IssueTimelineApiPreview, AcceptHeaders.IssueEventsApiPreview),
-                                                            options);
+            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number), null, options);
         }
 
         /// <summary>
@@ -81,17 +76,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("mockingbird")]
-        [Preview("starfox")]
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/timeline")]
         public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number),
-                                                            null,
-                                                            AcceptHeaders.Concat(AcceptHeaders.IssueTimelineApiPreview, AcceptHeaders.IssueEventsApiPreview),
-                                                            options);
+            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, options);
         }
     }
 }

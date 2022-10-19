@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 using System.Security;
 using Octokit.Internal;
 
@@ -12,9 +10,7 @@ namespace Octokit
     /// <summary>
     /// Represents errors that occur from the GitHub API.
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class ApiException : Exception
@@ -25,7 +21,9 @@ namespace Octokit
         /// <summary>
         /// Constructs an instance of ApiException
         /// </summary>
+#pragma warning disable CS0618 // Response() is obsolete but we need this as a default as Response passed down cannot be null
         public ApiException() : this(new Response())
+#pragma warning restore CS0618 // Response() is obsolete but we need this as a default as Response passed down cannot be null
         {
         }
 
@@ -141,7 +139,6 @@ namespace Octokit
             return new ApiError(responseContent);
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of ApiException.
         /// </summary>
@@ -168,7 +165,6 @@ namespace Octokit
             info.AddValue("HttpStatusCode", StatusCode);
             info.AddValue("ApiError", ApiError);
         }
-#endif
 
         /// <summary>
         /// Get the inner error message from the API response
@@ -200,10 +196,10 @@ namespace Octokit
         {
             get
             {
-                return HttpResponse != null
+                return HttpResponse?.ContentType != null
                        && !HttpResponse.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase)
-                       && HttpResponse.Body is string
-                    ? (string)HttpResponse.Body : string.Empty;
+                       && HttpResponse.Body is string @string
+                       ? @string : string.Empty;
             }
         }
 

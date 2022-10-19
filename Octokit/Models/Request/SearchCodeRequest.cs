@@ -116,7 +116,7 @@ namespace Octokit
         public string Path { get; set; }
 
         /// <summary>
-        /// Matches files with a certain extensions.
+        /// Matches files with certain extensions.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-code#extension
@@ -132,20 +132,20 @@ namespace Octokit
         public string FileName { get; set; }
 
         /// <summary>
-        /// Limits searches to a specific user.
+        /// Limits searches to specific users.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-code#users-organizations-and-repositories
         /// </remarks>
-        public string User { get; set; }
+        public IEnumerable<string> Users { get; set; } = new List<string>();
 
         /// <summary>
-        /// Limits searches to a specific organization.
+        /// Limits searches to specific organizations.
         /// </summary>
         /// <remarks>
         /// https://help.github.com/articles/searching-code/#search-within-a-users-or-organizations-repositories
         /// </remarks>
-        public string Organization { get; set; }
+        public IEnumerable<string> Organizations { get; set; } = new List<string>();
 
         /// <summary>
         /// Limits searches to a specific repository.
@@ -202,9 +202,13 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "filename:{0}", FileName));
             }
 
-            if (User.IsNotBlank())
+
+            if (Users.Any())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "user:{0}", User));
+                foreach (var user in Users)
+                {
+                    parameters.Add(string.Format(CultureInfo.InvariantCulture, "user:{0}", user));
+                }
             }
 
             if (Repos.Any())
@@ -219,9 +223,12 @@ namespace Octokit
                     string.Join("+", Repos.Select(x => "repo:" + x)));
             }
 
-            if (Organization.IsNotBlank())
+            if (Organizations.Any())
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "org:{0}", Organization));
+                foreach (var org in Organizations)
+                {
+                    parameters.Add(string.Format(CultureInfo.InvariantCulture, "org:{0}", org));
+                }
             }
 
             return new ReadOnlyCollection<string>(parameters);

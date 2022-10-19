@@ -410,7 +410,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<OrganizationMembershipInvitation>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/invitations"),
                     null,
-                    "application/vnd.github.korra-preview+json",
                     Args.ApiOptions);
             }
         }

@@ -45,7 +45,7 @@ public class IssueCommentsClientTests
         [IntegrationTest]
         public async Task CanGetReactionPayload()
         {
-            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
+            using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
             {
                 // Create a test issue
                 var issueNumber = await HelperCreateIssue(context.RepositoryOwner, context.RepositoryName);
@@ -217,7 +217,7 @@ public class IssueCommentsClientTests
         public async Task CanGetReactionPayload()
         {
             var numberToCreate = 2;
-            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
+            using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
             {
                 var commentIds = new List<int>();
 
@@ -402,7 +402,7 @@ public class IssueCommentsClientTests
         public async Task CanGetReactionPayload()
         {
             var numberToCreate = 2;
-            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
+            using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("IssueCommentsReactionTests")))
             {
                 var commentIds = new List<int>();
 

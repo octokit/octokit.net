@@ -32,7 +32,7 @@ public class ReleasesClientTests
             var github = Helper.GetAuthenticatedClient();
             _releaseClient = github.Repository.Release;
 
-            _context = github.CreateRepositoryContext("public-repo").Result;
+            _context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         [IntegrationTest]
@@ -71,7 +71,7 @@ public class ReleasesClientTests
             var github = Helper.GetAuthenticatedClient();
             _releaseClient = github.Repository.Release;
 
-            _context = github.CreateRepositoryContext("public-repo").Result;
+            _context = github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         [IntegrationTest]
@@ -365,7 +365,7 @@ public class ReleasesClientTests
             _github = Helper.GetAuthenticatedClient();
             _releaseClient = _github.Repository.Release;
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         [IntegrationTest]
@@ -408,7 +408,7 @@ public class ReleasesClientTests
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, releaseWithNoUpdate);
 
-            Assert.Equal("master", release.TargetCommitish);
+            Assert.Equal("main", release.TargetCommitish);
 
             var newHead = await _github.CreateTheWorld(_context.Repository);
 
@@ -429,7 +429,7 @@ public class ReleasesClientTests
             var releaseWithNoUpdate = new NewRelease("0.1") { Draft = true };
             var release = await _releaseClient.Create(_context.Repository.Id, releaseWithNoUpdate);
 
-            Assert.Equal("master", release.TargetCommitish);
+            Assert.Equal("main", release.TargetCommitish);
 
             var newHead = await _github.CreateTheWorld(_context.Repository);
 
@@ -465,7 +465,7 @@ public class ReleasesClientTests
             _github = Helper.GetAuthenticatedClient();
             _releaseClient = _github.Repository.Release;
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         [IntegrationTest]
@@ -812,7 +812,7 @@ public class ReleasesClientTests
             _github = Helper.GetAuthenticatedClient();
             _releaseClient = _github.Repository.Release;
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         [IntegrationTest]
@@ -867,7 +867,7 @@ public class ReleasesClientTests
             _github = Helper.GetAuthenticatedClient();
             _releaseClient = _github.Repository.Release;
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         [IntegrationTest]

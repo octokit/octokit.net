@@ -39,12 +39,6 @@ namespace Octokit
             return type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-#if !HAS_TYPEINFO
-        public static Type GetTypeInfo(this Type type)
-        {
-            return type;
-        }
-#else
         public static IEnumerable<MemberInfo> GetMember(this Type type, string name)
         {
             return type.GetTypeInfo().DeclaredMembers.Where(m => m.Name == name);
@@ -59,19 +53,14 @@ namespace Octokit
         {
             return type.GetTypeInfo().IsAssignableFrom(otherType.GetTypeInfo());
         }
-#endif
         public static IEnumerable<PropertyInfo> GetAllProperties(this Type type)
         {
-#if HAS_TYPEINFO
             var typeInfo = type.GetTypeInfo();
             var properties = typeInfo.DeclaredProperties;
 
             var baseType = typeInfo.BaseType;
 
             return baseType == null ? properties : properties.Concat(baseType.GetAllProperties());
-#else
-            return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-#endif
         }
 
         public static bool IsEnumeration(this Type type)

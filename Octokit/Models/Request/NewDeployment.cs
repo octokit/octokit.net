@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -32,12 +33,9 @@ namespace Octokit
 
         /// <summary>
         /// Gets or sets the optional task used to specify a task to execute, e.g. deploy or deploy:migrations. 
-        /// Default: deploy
+        /// Default if not specified: deploy
         /// </summary>
-        /// <value>
-        /// The task.
-        /// </value>
-        public DeployTask Task { get; set; }
+        public string Task { get; set; }
 
         /// <summary>
         /// Merges the default branch into the requested deployment branch if true;
@@ -59,7 +57,7 @@ namespace Octokit
         /// <summary>
         /// JSON payload with extra information about the deployment.
         /// </summary>
-        public string Payload { get; set; }
+        public Dictionary<string, string> Payload { get; set; }
 
         /// <summary>
         /// Optional name for the target deployment environment (e.g., production, staging, qa). Default: "production"
@@ -93,23 +91,5 @@ namespace Octokit
                 return string.Format(CultureInfo.InvariantCulture, "Description: {0}", Description);
             }
         }
-    }
-
-    /// <summary>
-    /// The types of deployments tasks that are available.
-    /// </summary>
-    public enum DeployTask
-    {
-        /// <summary>
-        /// Deploy everything (default)
-        /// </summary>
-        [Parameter(Value = "deploy")]
-        Deploy,
-
-        /// <summary>
-        /// Deploy migrations only.
-        /// </summary>
-        [Parameter(Value = "deploy:migrations")]
-        DeployMigrations
     }
 }

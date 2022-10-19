@@ -73,7 +73,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -131,7 +131,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/main/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -146,7 +146,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/main/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -186,11 +186,11 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive/ObservableGitHubClient.cs", "master");
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive/ObservableGitHubClient.cs", "main");
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -201,11 +201,11 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef(7528679, "Octokit.Reactive/ObservableGitHubClient.cs", "master");
+                    .GetAllContentsByRef(7528679, "Octokit.Reactive/ObservableGitHubClient.cs", "main");
 
                 Assert.Equal(1, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octokit/octokit.net/blob/master/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -216,14 +216,28 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit", "master");
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit", "main");
 
                 Assert.True(contents.Count > 2);
                 Assert.Equal(ContentType.Dir, contents.First().Type);
             }
 
             [IntegrationTest]
-            public async Task GetsContentNonMasterWithRootPath()
+            public async Task GetsDirectoryContentWithTrailingSlash()
+            {
+                var github = Helper.GetAuthenticatedClient();
+
+                var contents = await github
+                    .Repository
+                    .Content
+                    .GetAllContentsByRef("octokit", "octokit.net", "Octokit/", "main");
+
+                Assert.True(contents.Count > 2);
+                Assert.Equal(ContentType.Dir, contents.First().Type);
+            }
+
+            [IntegrationTest]
+            public async Task GetsContentNonMainWithRootPath()
             {
                 var github = Helper.GetAuthenticatedClient();
 
@@ -242,7 +256,7 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef(7528679, "Octokit", "master");
+                    .GetAllContentsByRef(7528679, "Octokit", "main");
 
                 Assert.True(contents.Count > 2);
                 Assert.Equal(ContentType.Dir, contents.First().Type);
@@ -256,11 +270,11 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef("octocat", "Spoon-Knife", "master");
+                    .GetAllContentsByRef("octocat", "Spoon-Knife", "main");
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/main/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -271,11 +285,11 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef(1300192, "master");
+                    .GetAllContentsByRef(1300192, "main");
 
                 Assert.Equal(3, contents.Count);
                 Assert.Equal(ContentType.File, contents.First().Type);
-                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/master/README.md", contents.First().HtmlUrl);
+                Assert.Equal("https://github.com/octocat/Spoon-Knife/blob/main/README.md", contents.First().HtmlUrl);
             }
 
             [IntegrationTest]
@@ -286,7 +300,7 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef("octocat", "octocat.github.io", "master");
+                    .GetAllContentsByRef("octocat", "octocat.github.io", "main");
 
                 Assert.NotEmpty(contents);
             }
@@ -299,7 +313,7 @@ namespace Octokit.Tests.Integration.Clients
                 var contents = await github
                     .Repository
                     .Content
-                    .GetAllContentsByRef(17881631, "master");
+                    .GetAllContentsByRef(17881631, "main");
 
                 Assert.NotEmpty(contents);
             }
@@ -402,8 +416,8 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var repository = context.Repository;
 
-                var master = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/master");
-                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, master.Object.Sha));
+                var main = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/main");
+                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, main.Object.Sha));
                 var file = await fixture.CreateFile(
                     repository.Owner.Login,
                     repository.Name,
@@ -449,8 +463,8 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var repository = context.Repository;
 
-                var master = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/master");
-                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, master.Object.Sha));
+                var main = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/main");
+                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, main.Object.Sha));
                 var file = await fixture.CreateFile(
                     repository.Id,
                     "somefile.txt",
@@ -578,8 +592,8 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var repository = context.Repository;
 
-                var master = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/master");
-                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, master.Object.Sha));
+                var main = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/main");
+                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, main.Object.Sha));
                 var file = await fixture.CreateFile(
                     repository.Owner.Login,
                     repository.Name,
@@ -625,8 +639,8 @@ namespace Octokit.Tests.Integration.Clients
             {
                 var repository = context.Repository;
 
-                var master = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/master");
-                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, master.Object.Sha));
+                var main = await client.Git.Reference.Get(Helper.UserName, repository.Name, "heads/main");
+                await client.Git.Reference.Create(Helper.UserName, repository.Name, new NewReference("refs/heads/" + branchName, main.Object.Sha));
                 var file = await fixture.CreateFile(
                     repository.Id,
                     "somefile.txt",
@@ -719,7 +733,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive("octocat", "Hello-World", ArchiveFormat.Tarball, "master");
+                    .GetArchive("octocat", "Hello-World", ArchiveFormat.Tarball, "main");
 
                 Assert.NotEmpty(archive);
             }
@@ -732,7 +746,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive(1296269, ArchiveFormat.Tarball, "master"); // octocat/Hello-World repo
+                    .GetArchive(1296269, ArchiveFormat.Tarball, "main"); // octocat/Hello-World repo
 
                 Assert.NotEmpty(archive);
             }
@@ -745,7 +759,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive("octocat", "Hello-World", ArchiveFormat.Tarball, "master", TimeSpan.FromMinutes(60));
+                    .GetArchive("octocat", "Hello-World", ArchiveFormat.Tarball, "main", TimeSpan.FromMinutes(60));
 
                 Assert.NotEmpty(archive);
             }
@@ -758,7 +772,7 @@ namespace Octokit.Tests.Integration.Clients
                 var archive = await github
                     .Repository
                     .Content
-                    .GetArchive(1296269, ArchiveFormat.Tarball, "master", TimeSpan.FromMinutes(60)); // octocat/Hello-World repo
+                    .GetArchive(1296269, ArchiveFormat.Tarball, "main", TimeSpan.FromMinutes(60)); // octocat/Hello-World repo
 
                 Assert.NotEmpty(archive);
             }

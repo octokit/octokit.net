@@ -99,8 +99,7 @@ public class PullRequestReviewCommentsClientTests
 
             connection.Received().GetAll<PullRequestReviewComment>(
                 Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"),
-                Arg.Any<Dictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
+                Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
         }
 
         [Fact]
@@ -132,8 +131,7 @@ public class PullRequestReviewCommentsClientTests
 
             connection.Received().GetAll<PullRequestReviewComment>(
                 Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/7/comments"),
-                Arg.Any<Dictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview+json", options);
+                Arg.Any<Dictionary<string, string>>(), options);
         }
 
         [Fact]
@@ -200,7 +198,6 @@ public class PullRequestReviewCommentsClientTests
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"),
-                "application/vnd.github.squirrel-girl-preview+json",
                 Args.ApiOptions);
         }
 
@@ -224,7 +221,7 @@ public class PullRequestReviewCommentsClientTests
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"),
-                "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -254,7 +251,6 @@ public class PullRequestReviewCommentsClientTests
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"),
-                "application/vnd.github.squirrel-girl-preview+json",
                 options);
         }
 
@@ -285,7 +281,7 @@ public class PullRequestReviewCommentsClientTests
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
                         && d["sort"] == "updated"),
-                "application/vnd.github.squirrel-girl-preview+json", options);
+                options);
         }
 
         [Fact]
@@ -300,7 +296,6 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"),
-                "application/vnd.github.squirrel-girl-preview+json",
                 Args.ApiOptions);
         }
 
@@ -316,7 +311,7 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"),
-                "application/vnd.github.squirrel-girl-preview+json", Args.ApiOptions);
+                Args.ApiOptions);
         }
 
         [Fact]
@@ -338,7 +333,6 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"),
-                "application/vnd.github.squirrel-girl-preview+json",
                 options);
         }
 
@@ -361,7 +355,7 @@ public class PullRequestReviewCommentsClientTests
                 Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
                         && d["sort"] == "created"),
-                "application/vnd.github.squirrel-girl-preview+json", options);
+                options);
         }
 
         [Fact]
@@ -420,8 +414,7 @@ public class PullRequestReviewCommentsClientTests
 
             connection.Received().Get<PullRequestReviewComment>(
                 Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments/53"),
-                Arg.Any<Dictionary<string, string>>(),
-                "application/vnd.github.squirrel-girl-preview+json");
+                Arg.Any<Dictionary<string, string>>());
         }
 
         [Fact]

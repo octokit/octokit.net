@@ -31,7 +31,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary, null);
+                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary);
             }
 
             [Fact]
@@ -51,7 +51,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(options);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -66,8 +66,8 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(notificationsRequest);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2
-                                                                                                                 && d["all"] == "true" && d["participating"] == "false"), null);
+                connection.Received().Get<List<Notification>>(endpoint,
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"));
             }
 
             [Fact]
@@ -89,9 +89,11 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(notificationsRequest, options);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 4
-                                                                                                                 && d["all"] == "true" && d["participating"] == "false"
-                                                                                                                 && d["page"] == "1" && d["per_page"] == "1"), null);
+                connection.Received().Get<List<Notification>>(endpoint,
+                    Arg.Is<IDictionary<string, string>>(d => 
+                        d.Count == 4
+                        && d["all"] == "true" && d["participating"] == "false"
+                        && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -116,7 +118,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("banana", "split");
 
-                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary, null);
+                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary);
             }
 
             [Fact]
@@ -129,7 +131,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1);
 
-                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary, null);
+                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary);
             }
 
             [Fact]
@@ -149,7 +151,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("banana", "split", options);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -169,7 +171,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, options);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -185,8 +187,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("banana", "split", notificationsRequest);
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
-                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"),
-                    null);
+                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"));
             }
 
             [Fact]
@@ -202,8 +203,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(1, notificationsRequest);
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
-                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"),
-                    null);
+                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"));
             }
 
             [Fact]
@@ -227,8 +227,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
                     d => d.Count == 4 && d["all"] == "true" && d["participating"] == "false"
-                         && d["page"] == "1" && d["per_page"] == "1"),
-                    null);
+                         && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]
@@ -252,8 +251,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
                     d => d.Count == 4 && d["all"] == "true" && d["participating"] == "false"
-                         && d["page"] == "1" && d["per_page"] == "1"),
-                    null);
+                         && d["page"] == "1" && d["per_page"] == "1"));
             }
 
             [Fact]

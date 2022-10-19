@@ -28,17 +28,17 @@ public class MigrationsClientTests : IDisposable
 
     private async Task CreateTheWorld()
     {
-        _repos.Add(await _gitHub.CreateRepositoryContext(_orgName, new NewRepository(Helper.MakeNameWithTimestamp("migrationtest-repo1"))
+        _repos.Add(await _gitHub.CreateOrganizationRepositoryContext(_orgName, new NewRepository(Helper.MakeNameWithTimestamp("migrationtest-repo1"))
         {
             GitignoreTemplate = "VisualStudio",
             LicenseTemplate = "mit"
         }));
-        _repos.Add(await _gitHub.CreateRepositoryContext(_orgName, new NewRepository(Helper.MakeNameWithTimestamp("migrationtest-repo2"))
+        _repos.Add(await _gitHub.CreateOrganizationRepositoryContext(_orgName, new NewRepository(Helper.MakeNameWithTimestamp("migrationtest-repo2"))
         {
             GitignoreTemplate = "VisualStudio",
             LicenseTemplate = "mit"
         }));
-        _repos.Add(await _gitHub.CreateRepositoryContext(_orgName, new NewRepository(Helper.MakeNameWithTimestamp("migrationtest-repo3"))
+        _repos.Add(await _gitHub.CreateOrganizationRepositoryContext(_orgName, new NewRepository(Helper.MakeNameWithTimestamp("migrationtest-repo3"))
         {
             GitignoreTemplate = "VisualStudio",
             LicenseTemplate = "mit"

@@ -565,7 +565,43 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvititations(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
+            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationPendingInvitations(org), null, options);
+        }
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/failed_invitations")]
+        public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return GetAllFailedInvitations(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/failed_invitations")]
+        public Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationFailedInvitations(org), null, options);
         }
     }
 }

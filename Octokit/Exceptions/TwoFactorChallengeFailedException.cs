@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 using System.Security;
 
 namespace Octokit
 {
-#if !NO_SERIALIZABLE
     /// <summary>
     /// Represents a failed 2FA challenge from the API
     /// </summary>
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class TwoFactorChallengeFailedException : TwoFactorAuthorizationException
@@ -49,7 +45,6 @@ namespace Octokit
             return exception == null ? TwoFactorType.None : Connection.ParseTwoFactorType(exception.HttpResponse);
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of TwoFactorChallengeFailedException.
         /// </summary>
@@ -73,6 +68,5 @@ namespace Octokit
             base.GetObjectData(info, context);
             info.AddValue("AuthorizationCode", AuthorizationCode);
         }
-#endif
     }
 }

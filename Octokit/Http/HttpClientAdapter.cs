@@ -29,31 +29,6 @@ namespace Octokit.Internal
         {
             Ensure.ArgumentNotNull(getHandler, nameof(getHandler));
 
-#if HAS_SERVICEPOINTMANAGER
-            // GitHub API requires TLS1.2 as of February 2018
-            //
-            // .NET Framework before 4.6 did not enable TLS1.2 by default
-            //
-            // Even though this is an AppDomain wide setting, the decision was made for Octokit to
-            // ensure that TLS1.2 is enabled so that existing applications using Octokit did not need to
-            // make changes outside Octokit to continue to work with GitHub API
-            //
-            // *Update*
-            // .NET Framework 4.7 introduced a new value (SecurityProtocolType.SystemDefault = 0)
-            // which defers enabled protocols to operating system defaults
-            // If this is the current value we shouldn't do anything, as that would cause TLS1.2 to be the ONLY enabled protocol!
-            //
-            // See https://docs.microsoft.com/en-us/dotnet/api/system.net.securityprotocoltype?view=netframework-4.7
-            // See https://github.com/octokit/octokit.net/issues/1914
-
-            // Only apply when current setting is not SystemDefault (0) added in .NET 4.7
-            if ((int)ServicePointManager.SecurityProtocol != 0)
-            {
-                // Add Tls1.2 to the existing enabled protocols
-                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
-            }
-#endif
-
             _http = new HttpClient(new RedirectHandler { InnerHandler = getHandler() });
         }
 
@@ -213,7 +188,7 @@ namespace Octokit.Internal
 
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            // Clone the request/content incase we get a redirect
+            // Clone the request/content in case we get a redirect
             var clonedRequest = await CloneHttpRequestMessageAsync(request).ConfigureAwait(false);
 
             // Send initial response

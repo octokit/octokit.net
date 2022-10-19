@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -12,6 +13,29 @@ namespace Octokit
     /// </remarks>
     public interface IReleasesClient
     {
+        /// <summary>
+        /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="data">The request for generating release notes</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<GeneratedReleaseNotes> GenerateReleaseNotes(string owner, string name, GenerateReleaseNotesRequest data);
+
+        /// <summary>
+        /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="data">The request for generating release notes</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<GeneratedReleaseNotes> GenerateReleaseNotes(long repositoryId, GenerateReleaseNotesRequest data);
+
         /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
         /// </summary>
@@ -250,8 +274,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
         /// <param name="data">Description of the asset with its data</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data);
+        Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.

@@ -29,6 +29,11 @@ namespace Octokit
         IPullRequestReviewRequestsClient ReviewRequest { get; }
 
         /// <summary>
+        /// Client for locking/unlocking a coversation on a pull request
+        /// </summary>
+        ILockUnlockClient LockUnlock { get; }
+
+        /// <summary>
         /// Get a pull request by number.
         /// </summary>
         /// <remarks>
@@ -230,7 +235,26 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number, ApiOptions options);
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
         Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int number);
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int number, ApiOptions options);
 
         /// <summary>
         /// Get the list of files on a pull request.

@@ -31,8 +31,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<CheckRun>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs"),
-                    newCheckRun,
-                    "application/vnd.github.antiope-preview+json");
+                    newCheckRun);
             }
 
             [Fact]
@@ -47,8 +46,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<CheckRun>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs"),
-                    newCheckRun,
-                    "application/vnd.github.antiope-preview+json");
+                    newCheckRun);
             }
 
             [Fact]
@@ -93,8 +91,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Patch<CheckRun>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1"),
-                    update,
-                    "application/vnd.github.antiope-preview+json");
+                    update);
             }
 
             [Fact]
@@ -109,8 +106,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Patch<CheckRun>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1"),
-                    update,
-                    "application/vnd.github.antiope-preview+json");
+                    update);
             }
 
             [Fact]
@@ -152,7 +148,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-runs"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -167,7 +162,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-runs"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -188,7 +182,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -209,7 +202,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -231,7 +223,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     options);
             }
 
@@ -253,7 +244,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     options);
             }
 
@@ -331,7 +321,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-suites/1/check-runs"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -346,7 +335,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunsResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-suites/1/check-runs"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -367,7 +355,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -388,7 +375,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -410,7 +396,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     options);
             }
 
@@ -432,7 +417,6 @@ namespace Octokit.Tests.Clients
                             && x["check_name"] == "build"
                             && x["status"] == "in_progress"
                             && x["filter"] == "latest"),
-                    "application/vnd.github.antiope-preview+json",
                     options);
             }
 
@@ -493,8 +477,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<CheckRun>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1"),
-                    null,
-                    "application/vnd.github.antiope-preview+json");
+                    null);
             }
 
             [Fact]
@@ -507,8 +490,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<CheckRun>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1"),
-                    null,
-                    "application/vnd.github.antiope-preview+json");
+                    null);
             }
 
             [Fact]
@@ -545,7 +527,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunAnnotation>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1/annotations"),
                     null,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -560,7 +541,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunAnnotation>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1/annotations"),
                     null,
-                    "application/vnd.github.antiope-preview+json",
                     Args.ApiOptions);
             }
 
@@ -577,7 +557,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunAnnotation>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/check-runs/1/annotations"),
                     null,
-                    "application/vnd.github.antiope-preview+json",
                     options);
             }
 
@@ -594,7 +573,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<CheckRunAnnotation>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/check-runs/1/annotations"),
                     null,
-                    "application/vnd.github.antiope-preview+json",
                     options);
             }
 

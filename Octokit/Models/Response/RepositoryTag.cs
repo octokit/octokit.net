@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -20,20 +21,20 @@ namespace Octokit
             TarballUrl = tarballUrl;
         }
 
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public GitReference Commit { get; protected set; }
+        public GitReference Commit { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Zipball")]
-        public string ZipballUrl { get; protected set; }
+        public string ZipballUrl { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tarball")]
-        public string TarballUrl { get; protected set; }
+        public string TarballUrl { get; private set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal string DebuggerDisplay

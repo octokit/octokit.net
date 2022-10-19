@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Octokit
 {
@@ -17,6 +18,45 @@ namespace Octokit
         /// <param name="apiConnection">An API connection</param>
         public ReleasesClient(IApiConnection apiConnection) : base(apiConnection)
         {
+        }
+
+        /// <summary>
+        /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="data">The request for generating release notes</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/releases/generate-notes")]
+        public Task<GeneratedReleaseNotes> GenerateReleaseNotes(string owner, string name, GenerateReleaseNotesRequest data)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(data, nameof(data));
+
+            var endpoint = ApiUrls.ReleasesGenerateNotes(owner, name);
+            return ApiConnection.Post<GeneratedReleaseNotes>(endpoint, data, AcceptHeaders.StableVersion);
+        }
+
+        /// <summary>
+        /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="data">The request for generating release notes</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("POST", "/repositories/{id}/releases/generate-notes")]
+        public Task<GeneratedReleaseNotes> GenerateReleaseNotes(long repositoryId, GenerateReleaseNotesRequest data)
+        {
+            Ensure.ArgumentNotNull(data, nameof(data));
+
+            var endpoint = ApiUrls.ReleasesGenerateNotes(repositoryId);
+            return ApiConnection.Post<GeneratedReleaseNotes>(endpoint, data, AcceptHeaders.StableVersion);
         }
 
         /// <summary>
@@ -398,9 +438,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="release">The <see cref="Release"/> to attach the uploaded asset to</param>
         /// <param name="data">Description of the asset with its data</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("POST", "{server}/repos/{owner}/{repo}/releases/{release_id}/assets")]
-        public Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data)
+        public Task<ReleaseAsset> UploadAsset(Release release, ReleaseAssetUpload data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(release, nameof(release));
             Ensure.ArgumentNotNull(data, nameof(data));
@@ -414,14 +455,16 @@ namespace Octokit
                     data.RawData,
                     AcceptHeaders.StableVersion,
                     data.ContentType,
-                    data.Timeout.GetValueOrDefault());
+                    data.Timeout.GetValueOrDefault(),
+                    cancellationToken);
             }
 
             return ApiConnection.Post<ReleaseAsset>(
                 endpoint,
                 data.RawData,
                 AcceptHeaders.StableVersion,
-                data.ContentType);
+                data.ContentType,
+                cancellationToken);
         }
 
         /// <summary>

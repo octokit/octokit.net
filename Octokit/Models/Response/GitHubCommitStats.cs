@@ -21,17 +21,17 @@ namespace Octokit
         /// <summary>
         /// The number of additions made within the commit
         /// </summary>
-        public int Additions { get; protected set; }
+        public int Additions { get; private set; }
 
         /// <summary>
         /// The number of deletions made within the commit
         /// </summary>
-        public int Deletions { get; protected set; }
+        public int Deletions { get; private set; }
 
         /// <summary>
         /// The total number of modifications within the commit
         /// </summary>
-        public int Total { get; protected set; }
+        public int Total { get; private set; }
 
         internal string DebuggerDisplay
         {

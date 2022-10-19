@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
+      "label": "Build",
       "command": "dotnet",
       "type": "shell",
       "args": [
@@ -20,6 +20,36 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "Unit Tests",
+      "command": "./build.sh",
+      "type": "shell",
+      "args": [
+        "--target=UnitTests"
+      ],
+      "group": {
+        "kind": "test"
+      },
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Convention Tests",
+      "command": "./build.sh",
+      "type": "shell",
+      "args": [
+        "--target=ConventionTests"
+      ],
+      "group": {
+        "kind": "test"
+      },
+      "presentation": {
+        "reveal": "always"
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "Format",
       "command": "dotnet",
       "type": "shell",
@@ -28,6 +58,16 @@
         "reveal": "silent"
       },
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Docs",
+      "command": "mkdocs",
+      "type": "shell",
+      "args": ["serve"],
+      "presentation": {
+        "reveal": "silent",
+        "revealProblems": "onProblem"
+      }
     }
   ]
 }

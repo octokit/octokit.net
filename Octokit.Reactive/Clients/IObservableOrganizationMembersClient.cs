@@ -253,7 +253,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a> 
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#publicize-a-users-membership">API documentation</a>
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
@@ -289,7 +289,7 @@ namespace Octokit.Reactive
         IObservable<OrganizationMembership> GetOrganizationMembership(string org, string user);
 
         /// <summary>
-        /// Add a user to the organization or update the user's role withing the organization. 
+        /// Add a user to the organization or update the user's role withing the organization.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
@@ -340,5 +340,28 @@ namespace Octokit.Reactive
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
         IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org, ApiOptions options);
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <returns></returns>
+        IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org);
+
+        /// <summary>
+        /// List failed organization invitations.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/orgs/members#list-failed-organization-invitations">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org, ApiOptions options);
     }
 }

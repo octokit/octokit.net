@@ -69,7 +69,7 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
-        /// <param name="options">Options to chagne API's behavior.</param>
+        /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the current user's keys.</returns>
         [ManualRoute("GET", "/user/keys")]
         public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)

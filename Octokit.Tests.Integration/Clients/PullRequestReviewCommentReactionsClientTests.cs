@@ -25,7 +25,7 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
         _client = _github.PullRequest.ReviewComment;
 
         // We'll create a pull request that can be used by most tests
-        _context = _github.CreateRepositoryContext("test-repo").Result;
+        _context = _github.CreateUserRepositoryContext("test-repo").Result;
     }
 
     [IntegrationTest]
@@ -349,11 +349,11 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         // Creating a commit in master
 
-        var createdCommitInMaster = await CreateCommit(repoName, "Hello World!", "README.md", "heads/master", "A master commit message");
+        var createdCommitInMain = await CreateCommit(repoName, "Hello World!", "README.md", "heads/main", "A main commit message");
 
         // Creating a branch
 
-        var newBranch = new NewReference(branchRef, createdCommitInMaster.Sha);
+        var newBranch = new NewReference(branchRef, createdCommitInMain.Sha);
         await _github.Git.Reference.Create(Helper.UserName, repoName, newBranch);
 
         // Creating a commit in the branch

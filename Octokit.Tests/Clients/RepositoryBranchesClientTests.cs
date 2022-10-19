@@ -33,7 +33,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("owner", "name");
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.luke-cage-preview+json", Args.ApiOptions);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -45,7 +45,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll(1);
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.luke-cage-preview+json", Args.ApiOptions);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("owner", "name", options);
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, "application/vnd.github.luke-cage-preview+json", options);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/branches"), null, options);
             }
 
             [Fact]
@@ -83,7 +83,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll(1, options);
 
                 connection.Received()
-                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, "application/vnd.github.luke-cage-preview+json", options);
+                    .GetAll<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches"), null, options);
             }
 
             [Fact]
@@ -118,7 +118,7 @@ namespace Octokit.Tests.Clients
                 await client.Get("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null, "application/vnd.github.luke-cage-preview+json");
+                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch"), null);
             }
 
             [Fact]
@@ -130,7 +130,7 @@ namespace Octokit.Tests.Clients
                 await client.Get(1, "branch");
 
                 connection.Received()
-                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch"), null, "application/vnd.github.luke-cage-preview+json");
+                    .Get<Branch>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch"), null);
             }
 
             [Fact]
@@ -157,12 +157,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetBranchProtection("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), null);
             }
 
             [Fact]
@@ -170,12 +169,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetBranchProtection(1, "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), null);
             }
 
             [Fact]
@@ -206,12 +204,11 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateBranchProtection("owner", "repo", "branch", update);
 
                 connection.Received()
-                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), null, previewAcceptsHeader);
+                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>());
             }
 
             [Fact]
@@ -221,12 +218,11 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionSettingsUpdate(
                     new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" }));
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateBranchProtection(1, "branch", update);
 
                 connection.Received()
-                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>(), null, previewAcceptsHeader);
+                    .Put<BranchProtectionSettings>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), Arg.Any<BranchProtectionSettingsUpdate>());
             }
 
             [Fact]
@@ -259,12 +255,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteBranchProtection("owner", "repo", "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection"));
             }
 
             [Fact]
@@ -272,12 +267,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteBranchProtection(1, "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection"));
             }
 
             [Fact]
@@ -306,12 +300,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetRequiredStatusChecks("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks"), null);
             }
 
             [Fact]
@@ -319,12 +312,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetRequiredStatusChecks(1, "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks"), null);
             }
 
             [Fact]
@@ -354,12 +346,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecks("owner", "repo", "branch", update);
 
                 connection.Received()
-                    .Patch<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks"), Arg.Any<BranchProtectionRequiredStatusChecksUpdate>(), previewAcceptsHeader);
+                    .Patch<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks"), Arg.Any<BranchProtectionRequiredStatusChecksUpdate>());
             }
 
             [Fact]
@@ -368,12 +359,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "test" });
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecks(1, "branch", update);
 
                 connection.Received()
-                    .Patch<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks"), Arg.Any<BranchProtectionRequiredStatusChecksUpdate>(), previewAcceptsHeader);
+                    .Patch<BranchProtectionRequiredStatusChecks>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks"), Arg.Any<BranchProtectionRequiredStatusChecksUpdate>());
             }
 
             [Fact]
@@ -405,12 +395,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecks("owner", "repo", "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks"));
             }
 
             [Fact]
@@ -418,12 +407,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecks(1, "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks"));
             }
 
             [Fact]
@@ -452,12 +440,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllRequiredStatusChecksContexts("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), null, previewAcceptsHeader);
+                    .Get<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), null);
             }
 
             [Fact]
@@ -465,12 +452,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllRequiredStatusChecksContexts(1, "branch");
 
                 connection.Received()
-                    .Get<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), null, previewAcceptsHeader);
+                    .Get<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), null);
             }
 
             [Fact]
@@ -500,12 +486,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecksContexts("owner", "repo", "branch", update);
 
                 connection.Received()
-                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), null, previewAcceptsHeader);
+                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -514,12 +499,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateRequiredStatusChecksContexts(1, "branch", update);
 
                 connection.Received()
-                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), null, previewAcceptsHeader);
+                    .Put<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -552,12 +536,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newContexts = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.AddRequiredStatusChecksContexts("owner", "repo", "branch", newContexts);
 
                 connection.Received()
-                    .Post<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Post<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -566,12 +549,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newContexts = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.AddRequiredStatusChecksContexts(1, "branch", newContexts);
 
                 connection.Received()
-                    .Post<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Post<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -604,12 +586,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var contextsToRemove = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecksContexts("owner", "repo", "branch", contextsToRemove);
 
                 connection.Received()
-                    .Delete<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Delete<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -618,12 +599,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var contextsToRemove = new List<string>() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteRequiredStatusChecksContexts(1, "branch", contextsToRemove);
 
                 connection.Received()
-                    .Delete<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Delete<IReadOnlyList<string>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_status_checks/contexts"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -655,12 +635,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetReviewEnforcement("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_pull_request_reviews"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_pull_request_reviews"), null);
             }
 
             [Fact]
@@ -668,12 +647,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetReviewEnforcement(1, "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_pull_request_reviews"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_pull_request_reviews"), null);
             }
 
             [Fact]
@@ -703,12 +681,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionRequiredReviewsUpdate(false, false, 2);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateReviewEnforcement("owner", "repo", "branch", update);
 
                 connection.Received()
-                    .Patch<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_pull_request_reviews"), Arg.Any<BranchProtectionRequiredReviewsUpdate>(), previewAcceptsHeader);
+                    .Patch<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_pull_request_reviews"), Arg.Any<BranchProtectionRequiredReviewsUpdate>());
             }
 
             [Fact]
@@ -717,12 +694,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var update = new BranchProtectionRequiredReviewsUpdate(false, false, 2);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateReviewEnforcement(1, "branch", update);
 
                 connection.Received()
-                    .Patch<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_pull_request_reviews"), Arg.Any<BranchProtectionRequiredReviewsUpdate>(), previewAcceptsHeader);
+                    .Patch<BranchProtectionRequiredReviews>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_pull_request_reviews"), Arg.Any<BranchProtectionRequiredReviewsUpdate>());
             }
 
             [Fact]
@@ -755,12 +731,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveReviewEnforcement("owner", "repo", "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_pull_request_reviews"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/required_pull_request_reviews"));
             }
 
             [Fact]
@@ -768,12 +743,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveReviewEnforcement(1, "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_pull_request_reviews"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/required_pull_request_reviews"));
             }
 
             [Fact]
@@ -802,12 +776,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetAdminEnforcement("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), null, previewAcceptsHeader);
+                    .Get<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), null);
             }
 
             [Fact]
@@ -815,12 +788,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetAdminEnforcement(1, "branch");
 
                 connection.Received()
-                    .Get<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), null, previewAcceptsHeader);
+                    .Get<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), null);
             }
 
             [Fact]
@@ -849,12 +821,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.AddAdminEnforcement("owner", "repo", "branch");
 
                 connection.Received()
-                    .Post<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Post<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), Arg.Any<object>());
             }
 
             [Fact]
@@ -862,12 +833,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.AddAdminEnforcement(1, "branch");
 
                 connection.Received()
-                    .Post<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Post<EnforceAdmins>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), Arg.Any<object>());
             }
 
             [Fact]
@@ -896,12 +866,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveAdminEnforcement("owner", "repo", "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/enforce_admins"));
             }
 
             [Fact]
@@ -909,12 +878,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.RemoveAdminEnforcement(1, "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/enforce_admins"));
             }
 
             [Fact]
@@ -943,12 +911,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetProtectedBranchRestrictions("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionPushRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionPushRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions"), null);
             }
 
             [Fact]
@@ -956,12 +923,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetProtectedBranchRestrictions(1, "branch");
 
                 connection.Received()
-                    .Get<BranchProtectionPushRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions"), null, previewAcceptsHeader);
+                    .Get<BranchProtectionPushRestrictions>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions"), null);
             }
 
             [Fact]
@@ -990,12 +956,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchRestrictions("owner", "repo", "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions"));
             }
 
             [Fact]
@@ -1003,12 +968,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchRestrictions(1, "branch");
 
                 connection.Connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions"), Arg.Any<object>(), previewAcceptsHeader);
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions"));
             }
 
             [Fact]
@@ -1043,8 +1007,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
-                    null,
-                    "application/vnd.github.luke-cage-preview+json");
+                    null);
             }
 
             [Fact]
@@ -1058,8 +1021,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Get<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
-                    null,
-                    "application/vnd.github.luke-cage-preview+json");
+                    null);
             }
 
             [Fact]
@@ -1095,9 +1057,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Put<IReadOnlyList<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
-                    Arg.Any<IReadOnlyList<string>>(),
-                    null,
-                    "application/vnd.github.luke-cage-preview+json");
+                    Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1112,9 +1072,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Put<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
-                        Arg.Any<IReadOnlyList<string>>(),
-                        null,
-                        "application/vnd.github.luke-cage-preview+json");
+                        Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1153,8 +1111,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Post<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
-                        Arg.Any<IReadOnlyList<string>>(),
-                        "application/vnd.github.luke-cage-preview+json");
+                        Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1169,8 +1126,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Post<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
-                        Arg.Any<IReadOnlyList<string>>(),
-                        "application/vnd.github.luke-cage-preview+json");
+                        Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1209,8 +1165,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Delete<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/teams"),
-                        Arg.Any<BranchProtectionTeamCollection>(),
-                        "application/vnd.github.luke-cage-preview+json");
+                        Arg.Any<BranchProtectionTeamCollection>());
             }
 
             [Fact]
@@ -1225,8 +1180,7 @@ namespace Octokit.Tests.Clients
                 connection.Received()
                     .Delete<IReadOnlyList<Team>>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/teams"),
-                        Arg.Any<IReadOnlyList<string>>(),
-                        "application/vnd.github.luke-cage-preview+json");
+                        Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1258,12 +1212,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllProtectedBranchUserRestrictions("owner", "repo", "branch");
 
                 connection.Received()
-                    .Get<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), null, previewAcceptsHeader);
+                    .Get<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), null);
             }
 
             [Fact]
@@ -1271,12 +1224,11 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.GetAllProtectedBranchUserRestrictions(1, "branch");
 
                 connection.Received()
-                    .Get<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), null, previewAcceptsHeader);
+                    .Get<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), null);
             }
 
             [Fact]
@@ -1306,12 +1258,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
 
                 connection.Received()
-                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), null, previewAcceptsHeader);
+                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1320,12 +1271,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.UpdateProtectedBranchUserRestrictions(1, "branch", newUsers);
 
                 connection.Received()
-                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), null, previewAcceptsHeader);
+                    .Put<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1358,12 +1308,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.AddProtectedBranchUserRestrictions("owner", "repo", "branch", newUsers);
 
                 connection.Received()
-                    .Post<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Post<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1372,12 +1321,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var newUsers = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.AddProtectedBranchUserRestrictions(1, "branch", newUsers);
 
                 connection.Received()
-                    .Post<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Post<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1410,12 +1358,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var usersToRemove = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchUserRestrictions("owner", "repo", "branch", usersToRemove);
 
                 connection.Received()
-                    .Delete<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Delete<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]
@@ -1424,12 +1371,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoryBranchesClient(connection);
                 var usersToRemove = new BranchProtectionUserCollection() { "test" };
-                const string previewAcceptsHeader = "application/vnd.github.luke-cage-preview+json";
 
                 client.DeleteProtectedBranchUserRestrictions(1, "branch", usersToRemove);
 
                 connection.Received()
-                    .Delete<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>(), previewAcceptsHeader);
+                    .Delete<IReadOnlyList<User>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/branches/branch/protection/restrictions/users"), Arg.Any<IReadOnlyList<string>>());
             }
 
             [Fact]

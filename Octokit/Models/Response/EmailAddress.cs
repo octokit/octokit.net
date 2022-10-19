@@ -24,23 +24,23 @@ namespace Octokit
         /// <summary>
         /// The email address
         /// </summary>
-        public string Email { get; protected set; }
+        public string Email { get; private set; }
 
         /// <summary>
         /// True if the email is verified; otherwise false
         /// </summary>
-        public bool Verified { get; protected set; }
+        public bool Verified { get; private set; }
 
         /// <summary>
         /// True if this is the users primary email; otherwise false
         /// </summary>
-        public bool Primary { get; protected set; }
+        public bool Primary { get; private set; }
 
         /// <summary>
         /// "private" or "public" if the email address is the primary;
         /// otherwise null
         /// </summary>
-        public StringEnum<EmailVisibility>? Visibility { get; protected set; }
+        public StringEnum<EmailVisibility>? Visibility { get; private set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "Used by DebuggerDisplayAttribute")]
@@ -61,13 +61,13 @@ namespace Octokit
     {
         /// <summary>
         /// Primary email address and is public
-        /// </summary>     
+        /// </summary>
         [Parameter(Value = "public")]
         Public,
 
         /// <summary>
         /// Primary email address and is private
-        /// </summary> 
+        /// </summary>
         [Parameter(Value = "private")]
         Private
     }

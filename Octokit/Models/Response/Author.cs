@@ -63,7 +63,7 @@ namespace Octokit
 
         public string ReceivedEventsUrl { get; protected set; }
 
-        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "This is what is returned from the api")]
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "This is what is returned from the API")]
         public string Type { get; protected set; }
 
         public bool SiteAdmin { get; protected set; }
