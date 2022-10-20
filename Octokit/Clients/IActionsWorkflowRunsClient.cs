@@ -209,7 +209,7 @@ namespace Octokit
         /// List all workflow runs for a workflow.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-workflow
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -220,7 +220,7 @@ namespace Octokit
         /// List all workflow runs for a workflow.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-workflow
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -231,7 +231,7 @@ namespace Octokit
         /// List all workflow runs for a workflow.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-workflow
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -243,7 +243,7 @@ namespace Octokit
         /// List all workflow runs for a workflow.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-workflow
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -255,7 +255,7 @@ namespace Octokit
         /// List all workflow runs for a workflow.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-workflow
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -268,7 +268,7 @@ namespace Octokit
         /// List all workflow runs for a workflow.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-workflow
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
