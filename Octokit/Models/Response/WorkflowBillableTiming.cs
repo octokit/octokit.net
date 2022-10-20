@@ -16,7 +16,7 @@ namespace Octokit
         /// <summary>
         /// The total billable milliseconds.
         /// </summary>
-        public long TotalMs { get; protected set; }
+        public long TotalMs { get; private set; }
 
         internal string DebuggerDisplay
         {

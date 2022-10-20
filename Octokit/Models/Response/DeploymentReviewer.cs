@@ -20,12 +20,12 @@ namespace Octokit
         /// <summary>
         /// The type of the reviewer.
         /// </summary>
-        public StringEnum<DeploymentReviewerType> Type { get; protected set; }
+        public StringEnum<DeploymentReviewerType> Type { get; private set; }
 
         /// <summary>
         /// The user or team whose approval is required.
         /// </summary>
-        public User Reviewer { get; protected set; }
+        public User Reviewer { get; private set; }
 
         internal string DebuggerDisplay
         {

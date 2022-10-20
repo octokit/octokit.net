@@ -17,12 +17,12 @@ namespace Octokit
         /// <summary>
         /// The job Id.
         /// </summary>
-        public long JobId { get; protected set; }
+        public long JobId { get; private set; }
 
         /// <summary>
         /// The duration of the job in milliseconds.
         /// </summary>
-        public long DurationMs { get; protected set; }
+        public long DurationMs { get; private set; }
 
         internal string DebuggerDisplay
         {

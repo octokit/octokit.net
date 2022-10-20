@@ -20,19 +20,19 @@ namespace Octokit
         /// The Ubuntu billable timing.
         /// </summary>
         [Parameter(Key = "UBUNTU")]
-        public WorkflowBillableTiming Ubuntu { get; protected set; }
+        public WorkflowBillableTiming Ubuntu { get; private set; }
 
         /// <summary>
         /// The macOS billable timing.
         /// </summary>
         [Parameter(Key = "MACOS")]
-        public WorkflowBillableTiming MacOS { get; protected set; }
+        public WorkflowBillableTiming MacOS { get; private set; }
 
         /// <summary>
         /// The Windows billable timing.
         /// </summary>
         [Parameter(Key = "WINDOWS")]
-        public WorkflowBillableTiming Windows { get; protected set; }
+        public WorkflowBillableTiming Windows { get; private set; }
 
         internal string DebuggerDisplay
         {

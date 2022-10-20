@@ -25,27 +25,27 @@ namespace Octokit
         /// <summary>
         /// The environment pending deployment.
         /// </summary>
-        public PendingDeploymentEnvironment Environment { get; protected set; }
+        public PendingDeploymentEnvironment Environment { get; private set; }
 
         /// <summary>
         /// The set duration of the wait timer.
         /// </summary>
-        public long WaitTimer { get; protected set; }
+        public long WaitTimer { get; private set; }
 
         /// <summary>
         /// The time that the wait timer began.
         /// </summary>
-        public DateTimeOffset? WaitTimerStartedAt { get; protected set; }
+        public DateTimeOffset? WaitTimerStartedAt { get; private set; }
 
         /// <summary>
         /// Whether the currently authenticated user can approve the deployment.
         /// </summary>
-        public bool CurrentUserCanApprove { get; protected set; }
+        public bool CurrentUserCanApprove { get; private set; }
 
         /// <summary>
         /// The people or teams that may approve jobs that reference the environment.
         /// </summary>
-        public IReadOnlyList<DeploymentReviewer> Reviewers { get; protected set; }
+        public IReadOnlyList<DeploymentReviewer> Reviewers { get; private set; }
 
         internal string DebuggerDisplay
         {

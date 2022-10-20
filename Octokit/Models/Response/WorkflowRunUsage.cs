@@ -17,12 +17,12 @@ namespace Octokit
         /// <summary>
         /// The billable usage.
         /// </summary>
-        public WorkflowRunBillable Billable { get; protected set; }
+        public WorkflowRunBillable Billable { get; private set; }
 
         /// <summary>
         /// The total run duration in milliseconds.
         /// </summary>
-        public long RunDurationMs { get; protected set; }
+        public long RunDurationMs { get; private set; }
 
         internal string DebuggerDisplay
         {

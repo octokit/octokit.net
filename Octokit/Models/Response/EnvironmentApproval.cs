@@ -26,37 +26,37 @@ namespace Octokit
         /// <summary>
         /// The Id of the environment.
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id.
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The name of the environment.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The URL for this environment.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The URL for the HTML view of this environment.
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// The time that the environment was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The time that the environment was last updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

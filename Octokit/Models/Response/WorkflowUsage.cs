@@ -16,7 +16,7 @@ namespace Octokit
         /// <summary>
         /// The billable usage.
         /// </summary>
-        public WorkflowBillable Billable { get; protected set; }
+        public WorkflowBillable Billable { get; private set; }
 
         internal string DebuggerDisplay
         {

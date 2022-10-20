@@ -27,57 +27,57 @@ namespace Octokit
         /// <summary>
         /// The Id for this workflow.
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id.
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// Name of the workflow.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The path of the workflow file.
         /// </summary>
-        public string Path { get; protected set; }
+        public string Path { get; private set; }
 
         /// <summary>
         /// The state of the workflow.
         /// </summary>
-        public StringEnum<WorkflowState> State { get; protected set; }
+        public StringEnum<WorkflowState> State { get; private set; }
 
         /// <summary>
         /// The time that the workflow was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The time that the workflow was last updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         /// <summary>
         /// The URL for this workflow.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The URL for the HTML view of this workflow.
         /// </summary>
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         /// <summary>
         /// The URL of the badge image for this workflow.
         /// </summary>
-        public string BadgeUrl { get; protected set; }
+        public string BadgeUrl { get; private set; }
 
         /// <summary>
         /// The time that the workflow was deleted.
         /// </summary>
-        public DateTimeOffset? DeletedAt { get; protected set; }
+        public DateTimeOffset? DeletedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

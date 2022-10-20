@@ -20,12 +20,12 @@ namespace Octokit
         /// <summary>
         /// The total number of workflow runs.
         /// </summary>
-        public int TotalCount { get; protected set; }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// The retrieved workflow runs.
         /// </summary>
-        public IReadOnlyList<WorkflowRun> WorkflowRuns { get; protected set; }
+        public IReadOnlyList<WorkflowRun> WorkflowRuns { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "TotalCount: {0}, WorkflowRuns: {1}", TotalCount, WorkflowRuns.Count);
     }

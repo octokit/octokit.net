@@ -23,22 +23,22 @@ namespace Octokit
         /// <summary>
         /// The list of environments that were approved or rejected.
         /// </summary>
-        public IReadOnlyList<EnvironmentApproval> Environments { get; protected set; }
+        public IReadOnlyList<EnvironmentApproval> Environments { get; private set; }
 
         /// <summary>
         /// The user that approved or rejected the deployments.
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         /// <summary>
         /// Whether deployment to the environment(s) was approved or rejected.
         /// </summary>
-        public StringEnum<EnvironmentApprovalState> State { get; protected set; }
+        public StringEnum<EnvironmentApprovalState> State { get; private set; }
 
         /// <summary>
         /// The comment submitted with the deployment review.
         /// </summary>
-        public string Comment { get; protected set; }
+        public string Comment { get; private set; }
 
         internal string DebuggerDisplay
         {

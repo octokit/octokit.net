@@ -20,17 +20,17 @@ namespace Octokit
         /// <summary>
         /// The list of environment Ids to approve or reject.
         /// </summary>
-        public IList<long> EnvironmentIds { get; protected set; }
+        public IList<long> EnvironmentIds { get; private set; }
 
         /// <summary>
         /// Whether to approve or reject deployment to the specified environments.
         /// </summary>
-        public StringEnum<PendingDeploymentReviewState> State { get; protected set; }
+        public StringEnum<PendingDeploymentReviewState> State { get; private set; }
 
         /// <summary>
         /// A comment to accompany the deployment review.
         /// </summary>
-        public string Comment { get; protected set; }
+        public string Comment { get; private set; }
 
         internal string DebuggerDisplay
         {

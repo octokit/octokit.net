@@ -19,17 +19,17 @@ namespace Octokit
         /// <summary>
         /// The total billable milliseconds.
         /// </summary>
-        public long TotalMs { get; protected set; }
+        public long TotalMs { get; private set; }
 
         /// <summary>
         /// The total number of jobs.
         /// </summary>
-        public long Jobs { get; protected set; }
+        public long Jobs { get; private set; }
 
         /// <summary>
         /// The billable job runs.
         /// </summary>
-        public IReadOnlyList<WorkflowRunTiming> JobRuns { get; protected set; }
+        public IReadOnlyList<WorkflowRunTiming> JobRuns { get; private set; }
 
         internal string DebuggerDisplay
         {
