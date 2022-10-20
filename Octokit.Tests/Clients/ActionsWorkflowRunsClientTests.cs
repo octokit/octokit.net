@@ -219,24 +219,6 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task ThrowsExceptionForInvalidStatusCode()
-            {
-                var response = TestSetup.CreateResponse(HttpStatusCode.NotFound);
-                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
-
-                var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/logs"), null, null)
-                          .Returns(responseTask);
-
-                var apiConnection = Substitute.For<IApiConnection>();
-                apiConnection.Connection.Returns(connection);
-
-                var client = new ActionsWorkflowRunsClient(apiConnection);
-
-                await Assert.ThrowsAsync<ApiException>(() => client.GetLogs("fake", "repo", 123));
-            }
-
-            [Fact]
             public async Task EnsuresNonNullArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -312,26 +294,8 @@ namespace Octokit.Tests.Clients
                 var client = new ActionsWorkflowRunsClient(apiConnection);
 
                 var actual = await client.GetAttemptLogs("fake", "repo", 123, 456);
-
+                
                 Assert.Equal(new byte[] { 1, 2, 3, 4 }, actual);
-            }
-
-            [Fact]
-            public async Task ThrowsExceptionForInvalidStatusCode()
-            {
-                var response = TestSetup.CreateResponse(HttpStatusCode.NotFound);
-                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
-
-                var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456/logs"), null, null)
-                          .Returns(responseTask);
-
-                var apiConnection = Substitute.For<IApiConnection>();
-                apiConnection.Connection.Returns(connection);
-
-                var client = new ActionsWorkflowRunsClient(apiConnection);
-
-                await Assert.ThrowsAsync<ApiException>(() => client.GetAttemptLogs("fake", "repo", 123, 456));
             }
 
             [Fact]
