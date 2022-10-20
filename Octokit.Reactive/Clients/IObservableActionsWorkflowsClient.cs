@@ -105,7 +105,7 @@ namespace Octokit.Reactive
         /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflows/#get-a-workflow
+        /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -116,7 +116,7 @@ namespace Octokit.Reactive
         /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflows/#get-a-workflow
+        /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
