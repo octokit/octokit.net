@@ -4777,6 +4777,7 @@ namespace Octokit
             return "/users/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
         }
 
+        /// <summary>
         /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
         /// </summary>
         /// <param name="owner">The owner of repo</param>

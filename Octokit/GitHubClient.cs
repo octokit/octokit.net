@@ -368,6 +368,8 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://docs.github.com/rest/markdown
         /// </remarks>
         public IMarkdownClient Markdown { get; private set; }
+
+        /// <summary>
         /// Access GitHub's Actions API
         /// </summary>
         /// <remarks>
