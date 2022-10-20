@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -167,7 +166,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets a redirect URL to download an archive of log files for a specific workflow run attempt.
+        /// Gets a byte array containing an archive of log files for a specific workflow run attempt.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-attempt-logs
@@ -177,24 +176,13 @@ namespace Octokit
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}")]
-        public async Task<string> GetAttemptLogs(string owner, string name, long runId, long attemptNumber)
+        public async Task<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var response = await Connection.Get<object>(ApiUrls.ActionsGetWorkflowRunAttemptLogs(owner, name, runId, attemptNumber), null, null).ConfigureAwait(false);
-            var statusCode = response.HttpResponse.StatusCode;
-            if (statusCode != HttpStatusCode.Found)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 302", statusCode);
-            }
-
-            if (!response.HttpResponse.Headers.TryGetValue("Location", out string url))
-            {
-                url = null;
-            }
-
-            return url;
+            var response = await Connection.GetRaw(ApiUrls.ActionsGetWorkflowRunAttemptLogs(owner, name, runId, attemptNumber), null).ConfigureAwait(false);
+            return response.Body;
         }
 
         /// <summary>
@@ -216,7 +204,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets a redirect URL to download an archive of log files for a workflow run.
+        /// Gets a byte array containing an archive of log files for a workflow run.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
@@ -225,24 +213,13 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/logs")]
-        public async Task<string> GetLogs(string owner, string name, long runId)
+        public async Task<byte[]> GetLogs(string owner, string name, long runId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var response = await Connection.Get<object>(ApiUrls.ActionsGetWorkflowRunLogs(owner, name, runId), null, null).ConfigureAwait(false);
-            var statusCode = response.HttpResponse.StatusCode;
-            if (statusCode != HttpStatusCode.Found)
-            {
-                throw new ApiException("Invalid Status Code returned. Expected a 302", statusCode);
-            }
-
-            if (!response.HttpResponse.Headers.TryGetValue("Location", out string url))
-            {
-                url = null;
-            }
-
-            return url;
+            var response = await Connection.GetRaw(ApiUrls.ActionsGetWorkflowRunLogs(owner, name, runId), null).ConfigureAwait(false);
+            return response.Body;
         }
 
         /// <summary>

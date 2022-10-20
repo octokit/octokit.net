@@ -101,7 +101,7 @@ namespace Octokit.Reactive
         IObservable<WorkflowRun> GetAttempt(string owner, string name, long runId, long attemptNumber);
 
         /// <summary>
-        /// Gets a redirect URL to download an archive of log files for a specific workflow run attempt.
+        /// Gets a byte array containing an archive of log files for a specific workflow run attempt.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-attempt-logs
@@ -110,7 +110,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        IObservable<string> GetAttemptLogs(string owner, string name, long runId, long attemptNumber);
+        IObservable<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber);
 
         /// <summary>
         /// Cancels a workflow run using its Id.
@@ -124,7 +124,7 @@ namespace Octokit.Reactive
         IObservable<Unit> Cancel(string owner, string name, long runId);
 
         /// <summary>
-        /// Gets a redirect URL to download an archive of log files for a workflow run.
+        /// Gets a byte array containing an archive of log files for a workflow run.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
@@ -132,7 +132,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<string> GetLogs(string owner, string name, long runId);
+        IObservable<byte[]> GetLogs(string owner, string name, long runId);
 
         /// <summary>
         /// Deletes all logs for a workflow run.

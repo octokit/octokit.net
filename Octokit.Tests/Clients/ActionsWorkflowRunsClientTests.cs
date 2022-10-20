@@ -200,16 +200,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var headers = new Dictionary<string, string>()
-                {
-                    ["Location"] = "https://github.local/logs"
-                };
-
-                var response = TestSetup.CreateResponse(HttpStatusCode.Found, headers);
-                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+                var headers = new Dictionary<string, string>();
+                var response = TestSetup.CreateResponse(HttpStatusCode.OK, new byte[] { 1, 2, 3, 4 }, headers);
+                var responseTask = Task.FromResult<IApiResponse<byte[]>>(new ApiResponse<byte[]>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/logs"), null, null)
+                connection.GetRaw(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/logs"), null)
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -219,7 +215,7 @@ namespace Octokit.Tests.Clients
 
                 var actual = await client.GetLogs("fake", "repo", 123);
 
-                Assert.Equal("https://github.local/logs", actual);
+                Assert.Equal(new byte[] { 1, 2, 3, 4 }, actual);
             }
 
             [Fact]
@@ -302,16 +298,12 @@ namespace Octokit.Tests.Clients
             [Fact]
             public async Task RequestsCorrectUrl()
             {
-                var headers = new Dictionary<string, string>()
-                {
-                    ["Location"] = "https://github.local/logs"
-                };
-
-                var response = TestSetup.CreateResponse(HttpStatusCode.Found, headers);
-                var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
+                var headers = new Dictionary<string, string>();
+                var response = TestSetup.CreateResponse(HttpStatusCode.OK, new byte[] { 1, 2, 3, 4 }, headers);
+                var responseTask = Task.FromResult<IApiResponse<byte[]>>(new ApiResponse<byte[]>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456/logs"), null, null)
+                connection.GetRaw(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456/logs"), null)
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -321,7 +313,7 @@ namespace Octokit.Tests.Clients
 
                 var actual = await client.GetAttemptLogs("fake", "repo", 123, 456);
 
-                Assert.Equal("https://github.local/logs", actual);
+                Assert.Equal(new byte[] { 1, 2, 3, 4 }, actual);
             }
 
             [Fact]

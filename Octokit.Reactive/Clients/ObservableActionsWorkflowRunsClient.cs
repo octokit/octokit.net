@@ -169,7 +169,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets a redirect URL to download an archive of log files for a specific workflow run attempt.
+        /// Gets a byte array containing an archive of log files for a specific workflow run attempt.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-attempt-logs
@@ -178,7 +178,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        public IObservable<string> GetAttemptLogs(string owner, string name, long runId, long attemptNumber)
+        public IObservable<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -204,7 +204,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Gets a redirect URL to download an archive of log files for a workflow run.
+        /// Gets a byte array containing an archive of log files for a workflow run.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
@@ -212,7 +212,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        public IObservable<string> GetLogs(string owner, string name, long runId)
+        public IObservable<byte[]> GetLogs(string owner, string name, long runId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
