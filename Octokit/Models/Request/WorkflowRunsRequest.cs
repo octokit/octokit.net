@@ -26,6 +26,12 @@ namespace Octokit
         public string Event { get; set; }
 
         /// <summary>
+        /// Only returns workflow runs that are associated with the specified head SHA.
+        /// </summary>
+        [Parameter(Key = "head_sha")]
+        public string HeadSha { get; set; }
+
+        /// <summary>
         /// Returns workflow runs with the check run status or conclusion that you specify.
         /// </summary>
         public StringEnum<CheckRunStatusFilter> Status { get; set; }
@@ -49,13 +55,14 @@ namespace Octokit
 
         internal string DebuggerDisplay => string.Format(
             CultureInfo.InvariantCulture,
-            "Actor: {0}, Branch: {1}, Event: {2}, Status: {3}, Created: {4}, ExcludePullRequests: {5}, CheckSuiteId: {6}",
+            "Actor: {0}, Branch: {1}, Event: {2}, Status: {3}, Created: {4}, ExcludePullRequests: {5}, CheckSuiteId: {6}, HeadSha: {7}",
             Actor,
             Branch,
             Event,
             Status,
             Created,
             ExcludePullRequests,
-            CheckSuiteId);
+            CheckSuiteId,
+            HeadSha);
     }
 }
