@@ -15,7 +15,7 @@ namespace Octokit.Reactive
         /// Manually triggers a GitHub Actions workflow run in a repository by Id.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflows/#disable-a-workflow
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -27,7 +27,7 @@ namespace Octokit.Reactive
         /// Manually triggers a GitHub Actions workflow run in a repository by Id.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflows/#disable-a-workflow
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
