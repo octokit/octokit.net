@@ -28,5 +28,7 @@ namespace Octokit
         Queued,
         [Parameter(Value = "waiting")]
         Waiting,
+        [Parameter(Value = "skipped")]
+        Skipped,
     }
 }
