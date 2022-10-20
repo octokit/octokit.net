@@ -4798,7 +4798,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsDispatchWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowFileName);
+            return "/repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4810,7 +4810,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsDisableWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowFileName);
+            return "/repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4834,7 +4834,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsEnableWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowFileName);
+            return "/repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4858,7 +4858,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowFileName);
+            return "/repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4882,7 +4882,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflowUsage(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowFileName);
+            return "/repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -5086,7 +5086,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that handles the Actions workflows runs for a workflow.</returns>
         public static Uri ActionsListWorkflowRuns(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/runs".FormatUri(owner, repo, workflowFileName);
+            return "/repos/{0}/{1}/actions/workflows/{2}/runs".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
     }
 }
