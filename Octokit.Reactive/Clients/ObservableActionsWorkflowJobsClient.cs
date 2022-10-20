@@ -41,5 +41,122 @@ namespace Octokit.Reactive
 
             return _client.Rerun(owner, name, jobId).ToObservable();
         }
+
+        /// <summary>
+        /// Gets a specific job in a workflow run.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="jobId">The unique identifier of the job.</param>
+        public IObservable<WorkflowJob> Get(string owner, string name, long jobId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.Get(owner, name, jobId).ToObservable();
+        }
+
+        /// <summary>
+        /// Gets a byte array containing an archive of log files for a workflow job.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#download-job-logs-for-a-workflow-run
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="jobId">The Id of the workflow job.</param>
+        public IObservable<byte[]> GetLogs(string owner, string name, long jobId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.GetLogs(owner, name, jobId).ToObservable();
+        }
+
+        /// <summary>
+        /// Lists jobs for a specific workflow run.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId)
+        {
+            return _client.List(owner, name, runId).ToObservable();
+        }
+
+        /// <summary>
+        /// Lists jobs for a specific workflow run.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest)
+        {
+            return _client.List(owner, name, runId, workflowRunJobsRequest).ToObservable();
+        }
+
+        /// <summary>
+        /// Lists jobs for a specific workflow run.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
+        /// <param name="options">Options to change the API response.</param>
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(workflowRunJobsRequest, nameof(workflowRunJobsRequest));
+
+            return _client.List(owner, name, runId, workflowRunJobsRequest, options).ToObservable();
+        }
+
+        /// <summary>
+        /// Lists jobs for a specific workflow run attempt.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="attemptNumber">The attempt number of the workflow run.</param>
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber)
+        {
+            return _client.List(owner, name, runId, attemptNumber).ToObservable();
+        }
+
+        /// <summary>
+        /// Lists jobs for a specific workflow run attempt.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="attemptNumber">The attempt number of the workflow run.</param>
+        /// <param name="options">Options to change the API response.</param>
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return _client.List(owner, name, runId, attemptNumber, options).ToObservable();
+        }
     }
 }
