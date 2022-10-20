@@ -56,7 +56,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets a byte array containing an archive of log files for a workflow job.
+        /// Gets the plain text log file for a workflow job.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
@@ -65,12 +65,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/jobs/{job_id}/logs")]
-        public async Task<byte[]> GetLogs(string owner, string name, long jobId)
+        public async Task<string> GetLogs(string owner, string name, long jobId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var response = await Connection.GetRaw(ApiUrls.ActionsGetWorkflowJobLogs(owner, name, jobId), null).ConfigureAwait(false);
+            var response = await Connection.Get<string>(ApiUrls.ActionsGetWorkflowJobLogs(owner, name, jobId), null).ConfigureAwait(false);
             return response.Body;
         }
 

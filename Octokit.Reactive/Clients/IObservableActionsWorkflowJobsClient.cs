@@ -34,7 +34,7 @@ namespace Octokit.Reactive
         IObservable<WorkflowJob> Get(string owner, string name, long jobId);
 
         /// <summary>
-        /// Gets a byte array containing an archive of log files for a workflow job.
+        /// Gets the plain text log file for a workflow job.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
@@ -42,7 +42,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
-        IObservable<byte[]> GetLogs(string owner, string name, long jobId);
+        IObservable<string> GetLogs(string owner, string name, long jobId);
 
         /// <summary>
         /// Lists jobs for a specific workflow run.

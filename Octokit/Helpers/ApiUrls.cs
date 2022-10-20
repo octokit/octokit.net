@@ -4940,7 +4940,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow job for a repository.</returns>
         public static Uri ActionsGetWorkflowJobLogs(string owner, string repo, long jobId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/logs".FormatUri(owner, repo, jobId);
+            return "/repos/{0}/{1}/actions/jobs/{2}/logs".FormatUri(owner, repo, jobId);
         }
 
         /// <summary>
