@@ -282,7 +282,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runs/{run_id}/rerun")]
         public IObservable<Unit> Rerun(string owner, string name, long runId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

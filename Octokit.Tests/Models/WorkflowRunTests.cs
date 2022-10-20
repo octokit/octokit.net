@@ -17,8 +17,10 @@ namespace Octokit.Tests.Models
 ""check_suite_node_id"": ""MDEwOkNoZWNrU3VpdGU0Mg=="",
 ""head_branch"": ""master"",
 ""head_sha"": ""acb5820ced9479c074f688cc328bf03f341a511d"",
+""path"": "".github/workflows/build.yml@main"",
 ""run_number"": 562,
 ""event"": ""push"",
+""display_title"": ""Update README.md"",
 ""status"": ""queued"",
 ""conclusion"": null,
 ""workflow_id"": 159038,
@@ -48,6 +50,22 @@ namespace Octokit.Tests.Models
 ""site_admin"": false
 },
 ""run_attempt"": 1,
+""referenced_workflows"": [
+  {
+     ""path"": ""octocat/Hello-World/.github/workflows/deploy.yml@main"",
+     ""sha"": ""86e8bc9ecf7d38b1ed2d2cfb8eb87ba9b35b01db"",
+     ""ref"": ""refs/heads/main""
+  },
+  {  
+     ""path"": ""octo-org/octo-repo/.github/workflows/report.yml@v2"",
+     ""sha"": ""79e9790903e1c3373b1a3e3a941d57405478a232"",
+     ""ref"": ""refs/tags/v2""
+  },
+  {  
+     ""path"": ""octo-org/octo-repo/.github/workflows/secure.yml@1595d4b6de6a9e9751fb270a41019ce507d4099e"",
+     ""sha"": ""1595d4b6de6a9e9751fb270a41019ce507d4099e""
+  }
+],
 ""run_started_at"": ""2020-01-22T19:33:08Z"",
 ""triggering_actor"": {
 ""login"": ""octocat"",

@@ -87,6 +87,9 @@ namespace Octokit.Reactive
         /// <param name="runId">The Id of the workflow run.</param>
         public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
             return _client.List(owner, name, runId).ToObservable();
         }
 
@@ -102,6 +105,10 @@ namespace Octokit.Reactive
         /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
         public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(workflowRunJobsRequest, nameof(workflowRunJobsRequest));
+
             return _client.List(owner, name, runId, workflowRunJobsRequest).ToObservable();
         }
 
@@ -137,6 +144,9 @@ namespace Octokit.Reactive
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
         public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber)
         {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
             return _client.List(owner, name, runId, attemptNumber).ToObservable();
         }
 
