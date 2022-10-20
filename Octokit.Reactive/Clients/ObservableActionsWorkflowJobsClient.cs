@@ -80,7 +80,7 @@ namespace Octokit.Reactive
         /// Lists jobs for a specific workflow run.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -94,7 +94,7 @@ namespace Octokit.Reactive
         /// Lists jobs for a specific workflow run.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -109,7 +109,7 @@ namespace Octokit.Reactive
         /// Lists jobs for a specific workflow run.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run-attempt
+        /// https://developer.github.com/v3/actions/workflow-runs/#list-jobs-for-a-workflow-run
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
