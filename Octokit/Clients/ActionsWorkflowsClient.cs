@@ -22,10 +22,10 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Manually triggers a GitHub Actions workflow run in a repository by Id.
+        /// Manually triggers a GitHub Actions workflow run in a repository by file name.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflows/#disable-a-workflow
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -46,7 +46,7 @@ namespace Octokit
         /// Manually triggers a GitHub Actions workflow run in a repository by Id.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflows/#disable-a-workflow
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
@@ -63,7 +63,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Disables a specific workflow in a repository by Id.
+        /// Disables a specific workflow in a repository by file name.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#disable-a-workflow
@@ -100,7 +100,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Enables a specific workflow in a repository by Id.
+        /// Enables a specific workflow in a repository by file name.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#enable-a-workflow
@@ -137,7 +137,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// Gets a specific workflow in a repository by file name. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#get-a-workflow
@@ -174,7 +174,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// Gets useage of a specific workflow in a repository by file name. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
