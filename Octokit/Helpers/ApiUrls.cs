@@ -4952,7 +4952,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that handles the Actions workflows runs for a workflow.</returns>
         public static Uri ActionsListWorkflowJobs(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/{3}/jobs".FormatUri(owner, repo, runId);
+            return "/repos/{0}/{1}/actions/runs/{2}/jobs".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
