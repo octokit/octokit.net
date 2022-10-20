@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// Gets a byte array containing an archive of log files for a workflow job.
         /// </summary>
         /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#download-job-logs-for-a-workflow-run
+        /// https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
