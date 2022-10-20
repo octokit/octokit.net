@@ -153,7 +153,7 @@ jobs:
             new CreateFileRequest("Create test workflow", HelloWorldWorkflow));
 
         var totalTimeout = TimeSpan.FromMinutes(1);
-        var loopDelay = TimeSpan.FromSeconds(1);
+        var loopDelay = TimeSpan.FromSeconds(2);
 
         using (var cts = new CancellationTokenSource(totalTimeout))
         {
