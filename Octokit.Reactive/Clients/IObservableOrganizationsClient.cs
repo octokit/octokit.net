@@ -27,6 +27,11 @@ namespace Octokit.Reactive
         IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
 
         /// <summary>
+        /// Returns a client to manage organization actions.
+        /// </summary>
+        IObservableOrganizationActionsClient Actions { get; }
+
+        /// <summary>
         /// Returns the specified organization.
         /// </summary>
         /// <param name="org">The login of the specified organization,</param>
