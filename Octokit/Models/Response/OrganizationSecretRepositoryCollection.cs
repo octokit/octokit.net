@@ -1,9 +1,7 @@
 ﻿using Octokit.Internal;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 
 namespace Octokit
 {
@@ -27,13 +25,13 @@ namespace Octokit
         /// The total count of repositories with visibility to the secret in the organization
         /// </summary>
         [Parameter(Key = "total_count")]
-        public int Count { get; protected set; }
+        public int Count { get; private set; }
 
         /// <summary>
         /// The list of repositories with visibility to the secret in the organization
         /// </summary>
         [Parameter(Key = "repositories")]
-        public IReadOnlyList<Repository> Repositories { get; protected set; }
+        public IReadOnlyList<Repository> Repositories { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "OrganizationSecretRepositoryCollection: Count: {0}", Count);
     }

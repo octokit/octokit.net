@@ -28,12 +28,12 @@ namespace Octokit
         /// <summary>
         /// The visibility level of the secret within the organization
         /// </summary>
-        public string Visibility { get; protected set; }
+        public string Visibility { get; private set; }
 
         /// <summary>
         /// The URL to retrieve the list of selected repositories
         /// </summary>
         [Parameter(Key = "selected_repositories_url")]
-        public string SelectedRepositoriesUrl { get; protected set; }
+        public string SelectedRepositoriesUrl { get; private set; }
     }
 }

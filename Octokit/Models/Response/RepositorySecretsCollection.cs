@@ -24,12 +24,12 @@ namespace Octokit
         /// <summary>
         /// The total count of secrets for the repository
         /// </summary>
-        public int TotalCount { get; protected set; }
+        public int TotalCount { get; private set; }
 
         /// <summary>
         /// The list of secrets for the repository
         /// </summary>
-        public IReadOnlyList<RepositorySecret> Secrets { get; protected set; }
+        public IReadOnlyList<RepositorySecret> Secrets { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "RepositorySecretsCollection: Count: {0}", TotalCount);
     }

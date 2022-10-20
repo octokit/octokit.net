@@ -22,12 +22,12 @@ namespace Octokit
         /// <summary>
         /// The id of this repository public key. Needed to create or update a secret
         /// </summary>
-        public string KeyId { get; protected set; }
+        public string KeyId { get; private set; }
 
         /// <summary>
         /// The public key for this repository
         /// </summary>
-        public string Key { get; protected set; }
+        public string Key { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -26,17 +26,17 @@ namespace Octokit
         /// <summary>
         /// The name of the repository secret
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The date and time that the secret was created
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The date and time the secret was last updated
         /// </summary>
-        public DateTimeOffset? UpdatedAt { get; protected set; }
+        public DateTimeOffset? UpdatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {
