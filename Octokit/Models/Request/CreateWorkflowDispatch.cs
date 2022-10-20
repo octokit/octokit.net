@@ -13,11 +13,11 @@ namespace Octokit
         /// <summary>
         /// Creates a new workflow dispatch event.
         /// </summary>
-        /// <param name="reference">Required. The git reference for the workflow. The reference can be a branch or tag name.</param>
-        public CreateWorkflowDispatch(string reference)
+        /// <param name="ref">Required. The git reference for the workflow. The reference can be a branch or tag name.</param>
+        public CreateWorkflowDispatch(string @ref)
         {
-            Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
-            Ref = reference;
+            Ensure.ArgumentNotNullOrEmptyString(@ref, nameof(@ref));
+            Ref = @ref;
         }
 
         /// <summary>
