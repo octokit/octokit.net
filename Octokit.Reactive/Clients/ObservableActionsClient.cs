@@ -19,7 +19,6 @@
             Artifacts = new ObservableActionsArtifactsClient(client);
             Cache = new ObservableActionsCacheClient(client);
             Permissions = new ObservableActionsPermissionsClient(client);
-            Secrets = new ObservableActionsSecretsClient(client);
             SelfHostedRunnerGroups = new ObservableActionsSelfHostedRunnerGroupsClient(client);
             SelfHostedRunners = new ObservableActionsSelfHostedRunnersClient(client);
             Workflows = new ObservableActionsWorkflowsClient(client);
@@ -39,11 +38,6 @@
         /// Client for the Permissions API.
         /// </summary>
         public IObservableActionsPermissionsClient Permissions { get; private set; }
-
-        /// <summary>
-        /// Client for the Secrets API.
-        /// </summary>
-        public IObservableActionsSecretsClient Secrets { get; private set; }
 
         /// <summary>
         /// Client for the Self-hosted runner groups API.

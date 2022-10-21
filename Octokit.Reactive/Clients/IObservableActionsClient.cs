@@ -24,11 +24,6 @@
         IObservableActionsPermissionsClient Permissions { get; }
 
         /// <summary>
-        /// Client for the Secrets API.
-        /// </summary>
-        IObservableActionsSecretsClient Secrets { get; }
-
-        /// <summary>
         /// Client for the Self-hosted runner groups API.
         /// </summary>
         IObservableActionsSelfHostedRunnerGroupsClient SelfHostedRunnerGroups { get; }

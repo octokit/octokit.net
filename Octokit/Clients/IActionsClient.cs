@@ -24,11 +24,6 @@
         IActionsPermissionsClient Permissions { get; }
 
         /// <summary>
-        /// Client for the Secrets API.
-        /// </summary>
-        IActionsSecretsClient Secrets { get; }
-
-        /// <summary>
         /// Client for the Self-hosted runner groups API.
         /// </summary>
         IActionsSelfHostedRunnerGroupsClient SelfHostedRunnerGroups { get; }

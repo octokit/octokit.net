@@ -18,7 +18,6 @@
             Artifacts = new ActionsArtifactsClient(apiConnection);
             Cache = new ActionsCacheClient(apiConnection);
             Permissions = new ActionsPermissionsClient(apiConnection);
-            Secrets = new ActionsSecretsClient(apiConnection);
             SelfHostedRunnerGroups = new ActionsSelfHostedRunnerGroupsClient(apiConnection);
             SelfHostedRunners = new ActionsSelfHostedRunnersClient(apiConnection);
             Workflows = new ActionsWorkflowsClient(apiConnection);
@@ -38,11 +37,6 @@
         /// Client for the Permissions API.
         /// </summary>
         public IActionsPermissionsClient Permissions { get; private set; }
-
-        /// <summary>
-        /// Client for the Secrets API.
-        /// </summary>
-        public IActionsSecretsClient Secrets { get; private set; }
 
         /// <summary>
         /// Client for the Self-hosted runner groups API.
