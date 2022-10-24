@@ -20,7 +20,7 @@ namespace Octokit
         /// <summary>
         /// The Identifier of the check run requested action.
         /// </summary>
-        public string Identifier { get; protected set; }
+        public string Identifier { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Identifier: {0}", Identifier);
     }

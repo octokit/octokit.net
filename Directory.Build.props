@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup Label="Strong name signing">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\key.snk</AssemblyOriginatorKeyFile>
+    <StrongNameSuffix>, PublicKey=0024000004800000940000000602000000240000525341310004000001000100f1e6b635f0c0b44c03d712e4f2cf789ddb54d7f74a9b34e2ece3aafb6afbfd46ec2b033f4104ef88f6afec226c5c647f453852ba3847fd9e37727c7dcb54e24731a288a107457a2c3e8b26ab04c25b206797be48cfe7a2b2c427422d0b0dd18c82111f21798f997e5d33ecc25c677744709c3785e0e650d6e0456a034a31acc4</StrongNameSuffix>
+  </PropertyGroup>
+</Project>

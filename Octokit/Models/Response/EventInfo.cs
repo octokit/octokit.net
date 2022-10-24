@@ -27,47 +27,47 @@ namespace Octokit
         /// <summary>
         /// The id of the issue/pull request event.
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The URL for this event.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// Always the User that generated the event.
         /// </summary>
-        public User Actor { get; protected set; }
+        public User Actor { get; private set; }
 
         /// <summary>
         /// The user that was assigned, if the event was 'Assigned'.
         /// </summary>
-        public User Assignee { get; protected set; }
+        public User Assignee { get; private set; }
 
         /// <summary>
         /// The label that was assigned, if the event was 'Labeled'
         /// </summary>
-        public Label Label { get; protected set; }
+        public Label Label { get; private set; }
 
         /// <summary>
         /// Identifies the actual type of Event that occurred.
         /// </summary>
-        public StringEnum<EventInfoState> Event { get; protected set; }
+        public StringEnum<EventInfoState> Event { get; private set; }
 
         /// <summary>
         /// The String SHA of a commit that referenced this Issue.
         /// </summary>
-        public string CommitId { get; protected set; }
+        public string CommitId { get; private set; }
 
         /// <summary>
         /// Date the event occurred for the issue/pull request.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {
@@ -81,42 +81,10 @@ namespace Octokit
     public enum EventInfoState
     {
         /// <summary>
-        /// The issue was closed by the actor. When the commit_id is present, it identifies the commit that 
-        /// closed the issue using “closes / fixes #NN” syntax.
+        /// The issue was added to a project board.
         /// </summary>
-        [Parameter(Value = "closed")]
-        Closed,
-
-        /// <summary>
-        /// The issue was reopened by the actor.
-        /// </summary>
-        [Parameter(Value = "reopened")]
-        Reopened,
-
-        /// <summary>
-        /// The actor subscribed to receive notifications for an issue.
-        /// </summary>
-        [Parameter(Value = "subscribed")]
-        Subscribed,
-
-        /// <summary>
-        /// The issue was merged by the actor. The commit_id attribute is the SHA1 of the HEAD commit that was merged.
-        /// </summary>
-        [Parameter(Value = "merged")]
-        Merged,
-
-        /// <summary>
-        /// The issue was referenced from a commit message. The commit_id attribute is the commit SHA1 of where 
-        /// that happened.
-        /// </summary>
-        [Parameter(Value = "referenced")]
-        Referenced,
-
-        /// <summary>
-        /// The actor was @mentioned in an issue body.
-        /// </summary>
-        [Parameter(Value = "mentioned")]
-        Mentioned,
+        [Parameter(Value = "added_to_project")]
+        AddedToProject,
 
         /// <summary>
         /// The issue was assigned to the actor.
@@ -125,29 +93,69 @@ namespace Octokit
         Assigned,
 
         /// <summary>
-        /// The issue was unassigned to the actor.
+        /// GitHub unsuccessfully attempted to automatically change the base branch of the pull request.
         /// </summary>
-        [Parameter(Value = "unassigned")]
-        Unassigned,
+        [Parameter(Value = "automatic_base_change_failed")]
+        AutomaticBaseChangeFailed,
 
         /// <summary>
-        /// A label was added to the issue.
+        /// GitHub successfully attempted to automatically change the base branch of the pull request.
         /// </summary>
-        [Parameter(Value = "labeled")]
-        Labeled,
+        [Parameter(Value = "automatic_base_change_succeeded")]
+        AutomaticBaseChangeSucceeded,
 
         /// <summary>
-        /// A label was removed from the issue.
+        /// The base reference branch of the pull request changed.
         /// </summary>
-        [Parameter(Value = "unlabeled")]
-        Unlabeled,
+        [Parameter(Value = "base_ref_changed")]
+        BaseRefChanged,
 
         /// <summary>
-        /// The issue was added to a milestone.
+        /// The issue was closed by the actor. When the commit_id is present, it identifies the commit that
+        /// closed the issue using “closes / fixes #NN” syntax.
         /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Milestoned")]
-        [Parameter(Value = "milestoned")]
-        Milestoned,
+        [Parameter(Value = "closed")]
+        Closed,
+
+        /// <summary>
+        /// A comment was added to the issue.
+        /// </summary>
+        [Parameter(Value = "commented")]
+        Commented,
+
+        /// <summary>
+        /// A commit was added to the pull request's HEAD branch.
+        /// Only provided for pull requests.
+        /// </summary>
+        [Parameter(Value = "committed")]
+        Committed,
+
+        /// <summary>
+        /// An issue was connected.
+        /// </summary>
+        [Parameter(Value = "connected")]
+        Connected,
+
+        /// <summary>
+        /// The pull request was converted to draft mode.
+        /// </summary>
+        [Parameter(Value = "convert_to_draft")]
+        ConvertToDraft,
+
+        /// <summary>
+        /// The issue was created by converting a note in a project board to an issue.
+        /// </summary>
+        [Parameter(Value = "converted_note_to_issue")]
+        ConvertedNoteToIssue,
+
+        /// <summary>
+        /// The issue was referenced from another issue.
+        /// The source attribute contains the id, actor, and
+        /// url of the reference's source.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
+        [Parameter(Value = "cross-referenced")]
+        Crossreferenced,
 
         /// <summary>
         /// The issue was removed from a milestone.
@@ -157,22 +165,22 @@ namespace Octokit
         Demilestoned,
 
         /// <summary>
-        /// The issue title was changed.
+        /// The pull request was deployed.
         /// </summary>
-        [Parameter(Value = "renamed")]
-        Renamed,
+        [Parameter(Value = "deployed")]
+        Deployed,
 
         /// <summary>
-        /// The issue was locked by the actor.
+        /// The pull request deployment environment was changed.
         /// </summary>
-        [Parameter(Value = "locked")]
-        Locked,
+        [Parameter(Value = "deployment_environment_changed")]
+        DeploymentEnvironmentChanged,
 
         /// <summary>
-        /// The issue was unlocked by the actor.
+        /// The issue or pull request was unlinked from another issue or pull request.
         /// </summary>
-        [Parameter(Value = "unlocked")]
-        Unlocked,
+        [Parameter(Value = "disconnected")]
+        Disconnected,
 
         /// <summary>
         /// The pull request’s branch was deleted.
@@ -187,16 +195,90 @@ namespace Octokit
         HeadRefRestored,
 
         /// <summary>
-        /// The pull request’s branch was force pushed to. 
+        /// The pull request’s branch was force pushed to.
         /// </summary>
         [Parameter(Value = "head_ref_force_pushed")]
         HeadRefForcePushed,
+
+        /// <summary>
+        /// A label was added to the issue.
+        /// </summary>
+        [Parameter(Value = "labeled")]
+        Labeled,
+
+        /// <summary>
+        /// The issue was locked by the actor.
+        /// </summary>
+        [Parameter(Value = "locked")]
+        Locked,
+
+        /// <summary>
+        /// The actor was @mentioned in an issue body.
+        /// </summary>
+        [Parameter(Value = "mentioned")]
+        Mentioned,
+
+        /// <summary>
+        /// A user with write permissions marked an issue as a duplicate of another issue or a pull request as a duplicate of another pull request.
+        /// </summary>
+        [Parameter(Value = "marked_as_duplicate")]
+        MarkedAsDuplicate,
+
+        /// <summary>
+        /// The issue was merged by the actor. The commit_id attribute is the SHA1 of the HEAD commit that was merged.
+        /// </summary>
+        [Parameter(Value = "merged")]
+        Merged,
+
+        /// <summary>
+        /// The issue was added to a milestone.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Milestoned")]
+        [Parameter(Value = "milestoned")]
+        Milestoned,
+
+        /// <summary>
+        /// The issue was moved between columns in a project board.
+        /// </summary>
+        [Parameter(Value = "moved_columns_in_project")]
+        MovedColumnsInProject,
+
+        /// <summary>
+        /// An issue was pinned.
+        /// </summary>
+        [Parameter(Value = "pinned")]
+        Pinned,
 
         /// <summary>
         /// The pull request is ready for review
         /// </summary>
         [Parameter(Value = "ready_for_review")]
         ReadyForReview,
+
+        /// <summary>
+        /// The issue was referenced from a commit message. The commit_id attribute is the commit SHA1 of where
+        /// that happened.
+        /// </summary>
+        [Parameter(Value = "referenced")]
+        Referenced,
+
+        /// <summary>
+        /// The issue was removed from a project board.
+        /// </summary>
+        [Parameter(Value = "removed_from_project")]
+        RemovedFromProject,
+
+        /// <summary>
+        /// The issue title was changed.
+        /// </summary>
+        [Parameter(Value = "renamed")]
+        Renamed,
+
+        /// <summary>
+        /// The issue was reopened by the actor.
+        /// </summary>
+        [Parameter(Value = "reopened")]
+        Reopened,
 
         /// <summary>
         /// The actor dismissed a review from the pull request.
@@ -217,28 +299,52 @@ namespace Octokit
         ReviewRequestRemoved,
 
         /// <summary>
-        /// The issue was added to a project board.
+        /// The issue was reviewed.
         /// </summary>
-        [Parameter(Value = "added_to_project")]
-        AddedToProject,
+        [Parameter(Value = "reviewed")]
+        Reviewed,
 
         /// <summary>
-        /// The issue was moved between columns in a project board.
+        /// The actor subscribed to receive notifications for an issue.
         /// </summary>
-        [Parameter(Value = "moved_columns_in_project")]
-        MovedColumnsInProject,
+        [Parameter(Value = "subscribed")]
+        Subscribed,
 
         /// <summary>
-        /// The issue was removed from a project board.
+        /// An issue was transferred.
         /// </summary>
-        [Parameter(Value = "removed_from_project")]
-        RemovedFromProject,
+        [Parameter(Value = "transferred")]
+        Transferred,
 
         /// <summary>
-        /// The issue was created by converting a note in a project board to an issue.
+        /// The issue was unassigned to the actor.
         /// </summary>
-        [Parameter(Value = "converted_note_to_issue")]
-        ConvertedNoteToIssue,
+        [Parameter(Value = "unassigned")]
+        Unassigned,
+
+        /// <summary>
+        /// A label was removed from the issue.
+        /// </summary>
+        [Parameter(Value = "unlabeled")]
+        Unlabeled,
+
+        /// <summary>
+        /// The issue was unlocked by the actor.
+        /// </summary>
+        [Parameter(Value = "unlocked")]
+        Unlocked,
+
+        /// <summary>
+        /// An issue that a user had previously marked as a duplicate of another issue is no longer considered a duplicate.
+        /// </summary>
+        [Parameter(Value = "unmarked_as_duplicate")]
+        UnmarkedAsDuplicate,
+
+        /// <summary>
+        /// An issue was unpinned.
+        /// </summary>
+        [Parameter(Value = "unpinned")]
+        Unpinned,
 
         /// <summary>
         /// The actor unsubscribed from notifications for an issue.
@@ -247,38 +353,19 @@ namespace Octokit
         Unsubscribed,
 
         /// <summary>
-        /// A comment was added to the issue.
+        /// An organization owner blocked a user from the organization.
         /// </summary>
-        [Parameter(Value = "commented")]
-        Commented,
+        [Parameter(Value = "user_blocked")]
+        UserBlocked,
 
-        /// <summary>
-        /// A commit was added to the pull request's HEAD branch.
-        /// Only provided for pull requests.
-        /// </summary>
-        [Parameter(Value = "committed")]
-        Committed,
 
-        /// <summary>
-        /// Base branch of the pull request was changed.
-        /// </summary>
-        [Parameter(Value = "base_ref_changed")]
-        BaseRefChanged,
 
-        /// <summary>
-        /// The issue was referenced from another issue.
-        /// The source attribute contains the id, actor, and
-        /// url of the reference's source.
-        /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crossreferenced")]
-        [Parameter(Value = "cross-referenced")]
-        Crossreferenced,
 
-        /// <summary>
-        /// The issue was reviewed.
-        /// </summary>
-        [Parameter(Value = "reviewed")]
-        Reviewed,
+
+
+
+
+
 
         /// <summary>
         /// A line comment was made.
@@ -292,17 +379,7 @@ namespace Octokit
         [Parameter(Value = "commit-commented")]
         CommitCommented,
 
-        /// <summary>
-        /// A user with write permissions marked an issue as a duplicate of another issue or a pull request as a duplicate of another pull request.
-        /// </summary>
-        [Parameter(Value = "marked_as_duplicate")]
-        MarkedAsDuplicate,
 
-        /// <summary>
-        /// An issue that a user had previously marked as a duplicate of another issue is no longer considered a duplicate.
-        /// </summary>
-        [Parameter(Value = "unmarked_as_duplicate")]
-        UnmarkedAsDuplicate,
 
         /// <summary>
         /// An issue comment was deleted.
@@ -310,28 +387,8 @@ namespace Octokit
         [Parameter(Value = "comment_deleted")]
         CommentDeleted,
 
-        /// <summary>
-        /// An issue was transferred.
-        /// </summary>
-        [Parameter(Value = "transferred")]
-        Transferred,
 
-        /// <summary>
-        /// An issue was connected.
-        /// </summary>
-        [Parameter(Value = "connected")]
-        Connected,
 
-        /// <summary>
-        /// An issue was pinned.
-        /// </summary>
-        [Parameter(Value = "pinned")]
-        Pinned,
 
-        /// <summary>
-        /// An issue was unpinned.
-        /// </summary>
-        [Parameter(Value = "unpinned")]
-        Unpinned,
     }
 }

@@ -146,7 +146,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckSuitesResponse>(ApiUrls.CheckSuitesForReference(owner, name, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckSuitesResponse>(ApiUrls.CheckSuitesForReference(owner, name, reference), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckSuitesResponse>(ApiUrls.CheckSuitesForReference(repositoryId, reference), request.ToParametersDictionary(), AcceptHeaders.ChecksApiPreview, options);
+            return _connection.GetAndFlattenAllPages<CheckSuitesResponse>(ApiUrls.CheckSuitesForReference(repositoryId, reference), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

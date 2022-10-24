@@ -64,7 +64,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("ant-man")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/deployments")]
         public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options)
         {
@@ -72,10 +71,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name),
-                                                    null,
-                                                    AcceptHeaders.DeploymentApiPreview,
-                                                    options);
+            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name), null, options);
         }
 
         /// <summary>
@@ -105,7 +101,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        [Preview("ant-man")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/deployments")]
         public Task<Deployment> Create(string owner, string name, NewDeployment newDeployment)
         {
@@ -113,9 +108,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));
 
-            return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name),
-                                                  newDeployment,
-                                                  AcceptHeaders.DeploymentApiPreview);
+            return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name), newDeployment);
         }
 
         /// <summary>

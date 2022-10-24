@@ -18,7 +18,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Get("fake", "repo", 42);
 
-                connection.Received().Get<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.shadow-cat-preview+json");
+                connection.Received().Get<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"), Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -29,7 +29,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Get(1, 42);
 
-                connection.Received().Get<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42"), Arg.Any<Dictionary<string, string>>(), "application/vnd.github.shadow-cat-preview+json");
+                connection.Received().Get<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42"), Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForRepository("fake", "repo");
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
-                    Arg.Any<Dictionary<string, string>>(), "application/vnd.github.shadow-cat-preview+json", Args.ApiOptions);
+                    Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
             }
 
             [Fact]
@@ -68,7 +68,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForRepository(1);
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls"),
-                    Arg.Any<Dictionary<string, string>>(), "application/vnd.github.shadow-cat-preview+json", Args.ApiOptions);
+                    Arg.Any<Dictionary<string, string>>(), Args.ApiOptions);
             }
 
             [Fact]
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForRepository("fake", "repo", options);
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
-                    Arg.Any<Dictionary<string, string>>(), "application/vnd.github.shadow-cat-preview+json", options);
+                    Arg.Any<Dictionary<string, string>>(), options);
             }
 
             [Fact]
@@ -106,7 +106,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForRepository(1, options);
 
                 connection.Received().GetAll<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls"),
-                    Arg.Any<Dictionary<string, string>>(), "application/vnd.github.shadow-cat-preview+json", options);
+                    Arg.Any<Dictionary<string, string>>(), options);
             }
 
             [Fact]
@@ -123,7 +123,7 @@ namespace Octokit.Tests.Clients
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json", Args.ApiOptions);
+                        && d["direction"] == "desc"), Args.ApiOptions);
             }
 
             [Fact]
@@ -140,7 +140,7 @@ namespace Octokit.Tests.Clients
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json", Args.ApiOptions);
+                        && d["direction"] == "desc"), Args.ApiOptions);
             }
 
             [Fact]
@@ -164,7 +164,7 @@ namespace Octokit.Tests.Clients
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json", options);
+                        && d["direction"] == "desc"), options);
             }
 
             [Fact]
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Clients
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json", options);
+                        && d["direction"] == "desc"), options);
             }
 
             [Fact]
@@ -243,7 +243,7 @@ namespace Octokit.Tests.Clients
                 await client.Create("fake", "repo", newPullRequest);
 
                 connection.Received().Post<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls"),
-                    newPullRequest, "application/vnd.github.shadow-cat-preview+json");
+                    newPullRequest);
             }
 
             [Fact]
@@ -256,7 +256,7 @@ namespace Octokit.Tests.Clients
                 await client.Create(1, newPullRequest);
 
                 connection.Received().Post<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls"),
-                    newPullRequest, "application/vnd.github.shadow-cat-preview+json");
+                    newPullRequest);
             }
 
             [Fact]
@@ -288,7 +288,7 @@ namespace Octokit.Tests.Clients
                 await client.Update("fake", "repo", 42, pullRequestUpdate);
 
                 connection.Received().Patch<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42"),
-                    pullRequestUpdate, "application/vnd.github.shadow-cat-preview+json");
+                    pullRequestUpdate);
             }
 
             [Fact]
@@ -301,7 +301,7 @@ namespace Octokit.Tests.Clients
                 await client.Update(1, 42, pullRequestUpdate);
 
                 connection.Received().Patch<PullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42"),
-                    pullRequestUpdate, "application/vnd.github.shadow-cat-preview+json");
+                    pullRequestUpdate);
             }
 
             [Fact]
@@ -461,7 +461,7 @@ namespace Octokit.Tests.Clients
                 await client.Files("fake", "repo", 42);
 
                 connection.Received()
-                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/files"));
+                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/files"), Args.ApiOptions);
             }
 
             [Fact]
@@ -473,7 +473,7 @@ namespace Octokit.Tests.Clients
                 await client.Files(1, 42);
 
                 connection.Received()
-                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42/files"));
+                    .GetAll<PullRequestFile>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42/files"), Args.ApiOptions);
             }
 
             [Fact]

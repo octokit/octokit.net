@@ -45,6 +45,11 @@ namespace Octokit.Reactive
         IObservableIssueTimelineClient Timeline { get; }
 
         /// <summary>
+        /// Client for locking/unlocking conversation on an issue
+        /// </summary>
+        IObservableLockUnlockClient LockUnlock { get; }
+
+        /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
         /// <remarks>
@@ -316,39 +321,5 @@ namespace Octokit.Reactive
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
         IObservable<Issue> Update(long repositoryId, int number, IssueUpdate issueUpdate);
-
-        /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        IObservable<Unit> Lock(string owner, string name, int number);
-
-        /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
-        IObservable<Unit> Lock(long repositoryId, int number);
-
-        /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        IObservable<Unit> Unlock(string owner, string name, int number);
-
-        /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
-        IObservable<Unit> Unlock(long repositoryId, int number);
     }
 }

@@ -285,7 +285,7 @@ public class RepositoryCommitsClientTests
         [IntegrationTest]
         public async Task CanGetSha1()
         {
-            var sha1 = await _fixture.GetSha1(octokitNetRepositoryOwner, octokitNetRepositorName, "master");
+            var sha1 = await _fixture.GetSha1(octokitNetRepositoryOwner, octokitNetRepositorName, "main");
 
             Assert.NotNull(sha1);
         }
@@ -293,7 +293,7 @@ public class RepositoryCommitsClientTests
         [IntegrationTest]
         public async Task CanGetSha1WithRepositoryId()
         {
-            var sha1 = await _fixture.GetSha1(octokitNetRepositoryId, "master");
+            var sha1 = await _fixture.GetSha1(octokitNetRepositoryId, "main");
 
             Assert.NotNull(sha1);
         }
@@ -311,7 +311,7 @@ public class RepositoryCommitsClientTests
 
             _fixture = _github.Repository.Commit;
 
-            _context = _github.CreateRepositoryContext("source-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("source-repo").Result;
         }
 
         [IntegrationTest]
@@ -319,7 +319,7 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "master", "my-branch");
+            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "main", "my-branch");
 
             Assert.Equal(1, result.TotalCommits);
             Assert.Equal(1, result.Commits.Count);
@@ -332,7 +332,7 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var result = await _fixture.Compare(_context.Repository.Id, "master", "my-branch");
+            var result = await _fixture.Compare(_context.Repository.Id, "main", "my-branch");
 
             Assert.Equal(1, result.TotalCommits);
             Assert.Equal(1, result.Commits.Count);
@@ -345,7 +345,7 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "my-branch", "master");
+            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "my-branch", "main");
 
             Assert.Equal(0, result.TotalCommits);
             Assert.Equal(0, result.Commits.Count);
@@ -358,7 +358,7 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var result = await _fixture.Compare(_context.Repository.Id, "my-branch", "master");
+            var result = await _fixture.Compare(_context.Repository.Id, "my-branch", "main");
 
             Assert.Equal(0, result.TotalCommits);
             Assert.Equal(0, result.Commits.Count);
@@ -371,7 +371,7 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "my-branch", "master");
+            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "my-branch", "main");
 
             Assert.NotNull(result.DiffUrl);
             Assert.NotNull(result.HtmlUrl);
@@ -384,7 +384,7 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var result = await _fixture.Compare(_context.Repository.Id, "my-branch", "master");
+            var result = await _fixture.Compare(_context.Repository.Id, "my-branch", "main");
 
             Assert.NotNull(result.DiffUrl);
             Assert.NotNull(result.HtmlUrl);
@@ -397,10 +397,10 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+            var main = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/main");
             var branch = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/my-branch");
 
-            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, master.Object.Sha, branch.Object.Sha);
+            var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, main.Object.Sha, branch.Object.Sha);
 
             Assert.Equal(1, result.Commits.Count);
             Assert.Equal(1, result.AheadBy);
@@ -412,10 +412,10 @@ public class RepositoryCommitsClientTests
         {
             await CreateTheWorld();
 
-            var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+            var main = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/main");
             var branch = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/my-branch");
 
-            var result = await _fixture.Compare(_context.Repository.Id, master.Object.Sha, branch.Object.Sha);
+            var result = await _fixture.Compare(_context.Repository.Id, main.Object.Sha, branch.Object.Sha);
 
             Assert.Equal(1, result.Commits.Count);
             Assert.Equal(1, result.AheadBy);
@@ -444,18 +444,18 @@ public class RepositoryCommitsClientTests
 
         async Task<Reference> CreateTheWorld()
         {
-            var master = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/master");
+            var main = await _github.Git.Reference.Get(Helper.UserName, _context.RepositoryName, "heads/main");
 
-            // create new commit for master branch
-            var newMasterTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
-            var newMaster = await CreateCommit("baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+            // create new commit for main branch
+            var newMainTree = await CreateTree(new Dictionary<string, string> { { "README.md", "Hello World!" } });
+            var newMain = await CreateCommit("baseline for pull request", newMainTree.Sha, main.Object.Sha);
 
-            // update master
-            await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/master", new ReferenceUpdate(newMaster.Sha));
+            // update main
+            await _github.Git.Reference.Update(Helper.UserName, _context.RepositoryName, "heads/main", new ReferenceUpdate(newMain.Sha));
 
             // create new commit for feature branch
             var featureBranchTree = await CreateTree(new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new" } });
-            var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
+            var newFeature = await CreateCommit("this is the commit to merge into the pull request", featureBranchTree.Sha, newMain.Sha);
 
             // create branch
             return await _github.Git.Reference.Create(Helper.UserName, _context.RepositoryName, new NewReference("refs/heads/my-branch", newFeature.Sha));

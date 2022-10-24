@@ -168,7 +168,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        [Preview("mercy")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/forks")]
         public Task<Repository> Create(string owner, string name, NewRepositoryFork fork)
         {
@@ -187,7 +186,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        [Preview("mercy")]
         [ManualRoute("POST", "/repositories/{id}/forks")]
         public Task<Repository> Create(long repositoryId, NewRepositoryFork fork)
         {

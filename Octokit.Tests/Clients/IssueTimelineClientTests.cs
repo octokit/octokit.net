@@ -31,7 +31,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<TimelineEventInfo>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.mockingbird-preview+json,application/vnd.github.starfox-preview+json",
                     Arg.Any<ApiOptions>());
             }
 
@@ -46,7 +45,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<TimelineEventInfo>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.mockingbird-preview+json,application/vnd.github.starfox-preview+json",
                     Arg.Is<ApiOptions>(ao => ao.PageSize == 30));
             }
 
@@ -61,7 +59,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<TimelineEventInfo>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.mockingbird-preview+json,application/vnd.github.starfox-preview+json",
                     Arg.Any<ApiOptions>());
             }
 
@@ -76,7 +73,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<TimelineEventInfo>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.mockingbird-preview+json,application/vnd.github.starfox-preview+json",
                     Arg.Is<ApiOptions>(ao => ao.PageSize == 30));
             }
 

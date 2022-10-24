@@ -21,7 +21,7 @@ namespace Octokit.Tests.Reactive
                 authEndpoint.GetAll();
 
                 client.Connection.Received(1).Get<List<Authorization>>(Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
             }
 
             [Fact]
@@ -33,7 +33,7 @@ namespace Octokit.Tests.Reactive
                 authEndpoint.GetAll(ApiOptions.None);
 
                 client.Connection.Received(1).Get<List<Authorization>>(Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), null);
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
             }
 
             [Fact]

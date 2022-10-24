@@ -19,7 +19,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanCreateAndRetrieveContributors()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -40,7 +40,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanCreateAndRetrieveContributorsWithRepositoryId()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetCommitActivityForTheLastYear()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -106,7 +106,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetCommitActivityForTheLastYearWithRepositoryId()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -124,7 +124,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetAdditionsAndDeletionsPerWeek()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -137,7 +137,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetAdditionsAndDeletionsPerWeekWithRepositoryId()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -151,7 +151,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetParticipationStatistics()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -163,7 +163,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetParticipationStatisticsWithRepositoryId()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -175,7 +175,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetPunchCardForRepository()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Integration.Clients
         [IntegrationTest]
         public async Task CanGetPunchCardForRepositoryWithRepositoryId()
         {
-            using (var context = await _client.CreateRepositoryContext("public-repo"))
+            using (var context = await _client.CreateRepositoryContextWithAutoInit("public-repo"))
             {
                 var repository = new RepositorySummary(context);
                 await CommitToRepository(repository);

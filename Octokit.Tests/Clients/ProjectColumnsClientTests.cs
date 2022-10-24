@@ -30,7 +30,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<ProjectColumn>(
                     Arg.Is<Uri>(u => u.ToString() == "projects/1/columns"),
                     Args.EmptyDictionary,
-                    "application/vnd.github.inertia-preview+json",
                     Args.ApiOptions);
             }
 
@@ -55,8 +54,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<ProjectColumn>(
                     Arg.Is<Uri>(u => u.ToString() == "projects/columns/1"),
-                    null,
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
         }
 
@@ -73,8 +71,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<ProjectColumn>(
                     Arg.Is<Uri>(u => u.ToString() == "projects/1/columns"),
-                    newProjectColumn,
-                    "application/vnd.github.inertia-preview+json");
+                    newProjectColumn);
             }
 
             [Fact]
@@ -100,8 +97,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Patch<ProjectColumn>(
                     Arg.Is<Uri>(u => u.ToString() == "projects/columns/1"),
-                    updateProjectColumn,
-                    "application/vnd.github.inertia-preview+json");
+                    updateProjectColumn);
             }
 
             [Fact]
@@ -125,8 +121,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "projects/columns/1"),
-                    Arg.Any<object>(),
-                    "application/vnd.github.inertia-preview+json");
+                    Arg.Any<object>());
             }
         }
 
@@ -144,7 +139,7 @@ namespace Octokit.Tests.Clients
                 connection.Connection.Received().Post(
                     Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/moves"),
                     position,
-                    "application/vnd.github.inertia-preview+json");
+                    null);
             }
 
             [Fact]

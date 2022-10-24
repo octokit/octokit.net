@@ -8,9 +8,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit.Internal;
-#if !HAS_ENVIRONMENT
-using System.Runtime.InteropServices;
-#endif
 
 namespace Octokit
 {
@@ -171,6 +168,13 @@ namespace Octokit
             return _lastApiInfo == null ? null : _lastApiInfo.Clone();
         }
         private ApiInfo _lastApiInfo;
+
+        public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, null, null, CancellationToken.None);
+        }
 
         public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
         {
@@ -724,6 +728,11 @@ namespace Octokit
                 return new RateLimitExceededException(response);
             }
 
+            if (body.Contains("secondary rate limit"))
+            {
+                return new SecondaryRateLimitExceededException(response);
+            }
+
             if (body.Contains("number of login attempts exceeded"))
             {
                 return new LoginAttemptsExceededException(response);
@@ -763,7 +772,7 @@ namespace Octokit
 
         static string FormatUserAgent(ProductHeaderValue productInformation)
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0} ({1}; {2}; Octokit {3})",
+            return string.Format(CultureInfo.InvariantCulture, "{0} ({1}; {2}; Octokit.net {3})",
                 productInformation,
                 GetPlatformInformation(),
                 GetCultureInformation(),
@@ -778,17 +787,11 @@ namespace Octokit
                 try
                 {
                     _platformInformation = string.Format(CultureInfo.InvariantCulture,
-#if !HAS_ENVIRONMENT
-                        "{0}; {1}",
-                        RuntimeInformation.OSDescription.Trim(),
-                        RuntimeInformation.OSArchitecture.ToString().ToLowerInvariant().Trim()
-#else
                         "{0} {1}; {2}",
                         Environment.OSVersion.Platform,
                         Environment.OSVersion.Version.ToString(3),
                         Environment.Is64BitOperatingSystem ? "amd64" : "x86"
-#endif
-                        );
+                    );
                 }
                 catch
                 {
@@ -820,7 +823,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// Sets the timeout for the connection between the client and the server.
         /// </summary>
         /// <param name="timeout">The Timeout value</param>
         public void SetRequestTimeout(TimeSpan timeout)

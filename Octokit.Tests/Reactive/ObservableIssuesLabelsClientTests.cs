@@ -30,7 +30,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForIssue("fake", "repo", 42);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -42,7 +42,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForIssue(1, 42);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForIssue("fake", "repo", 42, options);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -80,7 +80,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForIssue(1, 42, options);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -114,7 +114,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo");
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -126,7 +126,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -145,7 +145,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", options);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -164,7 +164,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, options);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -198,7 +198,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForMilestone("fake", "repo", 42);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -210,7 +210,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForMilestone(1, 42);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), Args.EmptyDictionary, null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -229,7 +229,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForMilestone("fake", "repo", 42, options);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/milestones/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForMilestone(1, 42, options);
 
-                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), null);
+                connection.Received().Get<List<Label>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/milestones/42/labels"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]

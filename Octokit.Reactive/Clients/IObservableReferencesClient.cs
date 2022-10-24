@@ -20,7 +20,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
@@ -33,7 +33,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/git/refs/#get-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
@@ -162,7 +162,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
         IObservable<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate);
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/git/refs/#update-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
         IObservable<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate);
@@ -187,7 +187,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         IObservable<Unit> Delete(string owner, string name, string reference);
 
@@ -198,7 +198,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/git/refs/#delete-a-reference
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/master" or "tags/release-1"</param>
+        /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
         IObservable<Unit> Delete(long repositoryId, string reference);
     }

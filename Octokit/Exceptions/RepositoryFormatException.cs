@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 using System.Security;
 
 namespace Octokit
 {
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class RepositoryFormatException : Exception
@@ -35,7 +31,6 @@ namespace Octokit
             }
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of LoginAttemptsExceededException
         /// </summary>
@@ -60,6 +55,5 @@ namespace Octokit
             base.GetObjectData(info, context);
             info.AddValue("Message", Message);
         }
-#endif
     }
 }

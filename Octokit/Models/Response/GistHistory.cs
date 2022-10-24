@@ -24,27 +24,27 @@ namespace Octokit
         /// <summary>
         /// The url that can be used by the API to retrieve this version of the <see cref="Gist"/>.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// A git sha representing the version.
         /// </summary>
-        public string Version { get; protected set; }
+        public string Version { get; private set; }
 
         /// <summary>
         /// The <see cref="User"/> who create this version.
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         /// <summary>
         /// A <see cref="GistHistory"/> that represents the level of change for this <see cref="GistHistory"/>.
         /// </summary>
-        public GistChangeStatus ChangeStatus { get; protected set; }
+        public GistChangeStatus ChangeStatus { get; private set; }
 
         /// <summary>
         /// The <see cref="DateTimeOffset"/> the version was created.
         /// </summary>
-        public DateTimeOffset CommittedAt { get; protected set; }
+        public DateTimeOffset CommittedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

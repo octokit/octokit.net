@@ -19,17 +19,17 @@ namespace Octokit
         /// <summary>
         /// Name of this <see cref="Branch"/>.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Whether this <see cref="Branch"/> is protected. 
+        /// Whether this <see cref="Branch"/> is protected.
         /// </summary>
-        public bool Protected { get; protected set; }
+        public bool Protected { get; private set; }
 
         /// <summary>
         /// The <see cref="GitReference"/> history for this <see cref="Branch"/>.
         /// </summary>
-        public GitReference Commit { get; protected set; }
+        public GitReference Commit { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -72,7 +72,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, AcceptHeaders.GitHubAppsPreview, options);
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, options);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser()
         {
-            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview);
+            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations());
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options)
         {
-            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), null, AcceptHeaders.GitHubAppsPreview, options);
+            return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), options);
         }
 
         /// <summary>

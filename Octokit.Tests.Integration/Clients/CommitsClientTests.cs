@@ -12,7 +12,7 @@ public class CommitsClientTests
         var github = Helper.GetAuthenticatedClient();
         var fixture = github.Git.Commit;
 
-        using (var context = await github.CreateRepositoryContext("public-repo"))
+        using (var context = await github.CreateRepositoryContextWithAutoInit("public-repo"))
         {
             var owner = context.Repository.Owner.Login;
 
@@ -67,7 +67,7 @@ public class CommitsClientTests
         var github = Helper.GetAuthenticatedClient();
         var fixture = github.Git.Commit;
 
-        using (var context = await github.CreateRepositoryContext("public-repo"))
+        using (var context = await github.CreateRepositoryContextWithAutoInit("public-repo"))
         {
             var owner = context.Repository.Owner.Login;
 

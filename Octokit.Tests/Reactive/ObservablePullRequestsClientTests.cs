@@ -211,11 +211,11 @@ namespace Octokit.Tests.Reactive
                     }
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
+                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -264,11 +264,11 @@ namespace Octokit.Tests.Reactive
                     }
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
+                gitHubClient.Connection.Get<List<PullRequest>>(firstPageUrl, Args.EmptyDictionary)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
+                gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Args.EmptyDictionary)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary, "application/vnd.github.shadow-cat-preview+json")
+                gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Args.EmptyDictionary)
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -323,21 +323,21 @@ namespace Octokit.Tests.Reactive
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
+                        && d["direction"] == "desc"))
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
+                        && d["direction"] == "desc"))
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
+                        && d["direction"] == "desc"))
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -392,21 +392,21 @@ namespace Octokit.Tests.Reactive
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
+                        && d["direction"] == "desc"))
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
+                        && d["direction"] == "desc"))
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequest>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["head"] == "user:ref-name"
                         && d["state"] == "open"
                         && d["base"] == "fake_base_branch"
                         && d["sort"] == "created"
-                        && d["direction"] == "desc"), "application/vnd.github.shadow-cat-preview+json")
+                        && d["direction"] == "desc"))
                     .Returns(Task.FromResult<IApiResponse<List<PullRequest>>>(lastPageResponse));
                 var client = new ObservablePullRequestsClient(gitHubClient);
 
@@ -640,7 +640,7 @@ namespace Octokit.Tests.Reactive
                     CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestCommit> { commit }
                 );
-                connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
+                connection.Get<List<PullRequestCommit>>(Args.Uri, null)
                     .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -649,7 +649,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Equal(1, commits.Count);
                 Assert.Same(commit, commits[0]);
-                connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+                connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null);
             }
 
             [Fact]
@@ -664,7 +664,7 @@ namespace Octokit.Tests.Reactive
                     CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestCommit> { commit }
                 );
-                connection.Get<List<PullRequestCommit>>(Args.Uri, null, null)
+                connection.Get<List<PullRequestCommit>>(Args.Uri, null)
                     .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -673,7 +673,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Equal(1, commits.Count);
                 Assert.Same(commit, commits[0]);
-                connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+                connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null);
             }
 
             [Fact]
@@ -704,7 +704,7 @@ namespace Octokit.Tests.Reactive
                     CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestFile> { file }
                 );
-                connection.Get<List<PullRequestFile>>(Args.Uri, null, null)
+                connection.Get<List<PullRequestFile>>(Args.Uri, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -713,7 +713,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Equal(1, files.Count);
                 Assert.Same(file, files[0]);
-                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]
@@ -728,7 +728,7 @@ namespace Octokit.Tests.Reactive
                     CreateResponse(HttpStatusCode.OK),
                     new List<PullRequestFile> { file }
                 );
-                connection.Get<List<PullRequestFile>>(Args.Uri, null, null)
+                connection.Get<List<PullRequestFile>>(Args.Uri, Arg.Any<IDictionary<string, string>>())
                     .Returns(Task.FromResult(response));
                 gitHubClient.Connection.Returns(connection);
                 var client = new ObservablePullRequestsClient(gitHubClient);
@@ -737,7 +737,7 @@ namespace Octokit.Tests.Reactive
 
                 Assert.Equal(1, files.Count);
                 Assert.Same(file, files[0]);
-                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), null, null);
+                connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), Arg.Any<IDictionary<string, string>>());
             }
 
             [Fact]

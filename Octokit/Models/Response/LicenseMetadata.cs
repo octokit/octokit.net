@@ -21,7 +21,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// The 
+        /// Keyword for the given license (i.e. mit, gpl, cc)
         /// </summary>
         public string Key { get; protected set; }
 

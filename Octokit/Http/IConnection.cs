@@ -36,6 +36,16 @@ namespace Octokit
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
@@ -317,7 +327,7 @@ namespace Octokit
         Credentials Credentials { get; set; }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// Sets the timeout for the connection between the client and the server.
         /// </summary>
         /// <param name="timeout">The Timeout value</param>
         void SetRequestTimeout(TimeSpan timeout);

@@ -27,6 +27,11 @@ namespace Octokit.Reactive
         IObservableOrganizationOutsideCollaboratorsClient OutsideCollaborator { get; }
 
         /// <summary>
+        /// Returns a client to manage organization actions.
+        /// </summary>
+        IObservableOrganizationActionsClient Actions { get; }
+
+        /// <summary>
         /// Returns the specified organization.
         /// </summary>
         /// <param name="org">The login of the specified organization,</param>
@@ -88,5 +93,37 @@ namespace Octokit.Reactive
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
         IObservable<Organization> Update(string org, OrganizationUpdate updateRequest);
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        IObservable<OrganizationCredential> GetAllAuthorizations(string org);
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        IObservable<OrganizationCredential> GetAllAuthorizations(string org, ApiOptions options);
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        IObservable<OrganizationCredential> GetAllAuthorizations(string org, string login);
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        IObservable<OrganizationCredential> GetAllAuthorizations(string org, string login, ApiOptions options);
     }
 }

@@ -259,7 +259,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(owner, name, reference), null, AcceptHeaders.CommitReferenceSha1MediaType);
+            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(owner, name, reference), null);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(repositoryId, reference), null, AcceptHeaders.CommitReferenceSha1MediaType);
+            return ApiConnection.Get<string>(ApiUrls.RepositoryCommit(repositoryId, reference), null);
         }
 
         /// <summary>

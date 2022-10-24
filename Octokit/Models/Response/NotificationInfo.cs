@@ -17,15 +17,15 @@ namespace Octokit
             Type = type;
         }
 
-        public string Title { get; protected set; }
+        public string Title { get; private set; }
 
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
-        public string LatestCommentUrl { get; protected set; }
+        public string LatestCommentUrl { get; private set; }
 
         [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods",
             Justification = "Matches the property name used by the API")]
-        public string Type { get; protected set; }
+        public string Type { get; private set; }
 
         internal string DebuggerDisplay
         {

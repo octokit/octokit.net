@@ -23,6 +23,7 @@ namespace Octokit
             Milestone = new MilestonesClient(apiConnection);
             Comment = new IssueCommentsClient(apiConnection);
             Timeline = new IssueTimelineClient(apiConnection);
+            LockUnlock = new LockUnlockClient(apiConnection);
         }
 
         /// <summary>
@@ -58,6 +59,11 @@ namespace Octokit
         public IIssueTimelineClient Timeline { get; private set; }
 
         /// <summary>
+        /// Client for locking and unlocking a conversation on a Issue or Pull request
+        /// </summary>
+        public ILockUnlockClient LockUnlock { get; private set; }
+
+        /// <summary>
         /// Gets a single Issue by number.
         /// </summary>
         /// <remarks>
@@ -66,14 +72,13 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The issue number</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}")]
         public Task<Issue> Get(string owner, string name, int number)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number), null, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number), null);
         }
 
         /// <summary>
@@ -84,11 +89,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The issue number</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/issues/{number}")]
         public Task<Issue> Get(long repositoryId, int number)
         {
-            return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, number), null, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, number), null);
         }
 
         /// <summary>
@@ -147,14 +151,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -211,14 +214,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/user/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -279,7 +281,6 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/orgs/{org}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options)
         {
@@ -287,7 +288,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -400,7 +401,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options)
         {
@@ -409,7 +409,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -421,14 +421,13 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/issues")]
         public Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -498,62 +497,6 @@ namespace Octokit
             Ensure.ArgumentNotNull(issueUpdate, nameof(issueUpdate));
 
             return ApiConnection.Patch<Issue>(ApiUrls.Issue(repositoryId, number), issueUpdate);
-        }
-
-        /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        [ManualRoute("PUT", "/repos/{owner}/{repo}/issues/{issue_number}/lock")]
-        public Task Lock(string owner, string name, int number)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, number), new object());
-        }
-
-        /// <summary>
-        /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#lock-an-issue</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
-        [ManualRoute("PUT", "/repositories/{id}/issues/{number}/lock")]
-        public Task Lock(long repositoryId, int number)
-        {
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, number), new object());
-        }
-
-        /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/lock")]
-        public Task Unlock(string owner, string name, int number)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-
-            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, number));
-        }
-
-        /// <summary>
-        /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
-        /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
-        [ManualRoute("DELETE", "/repositories/{id}/issues/{number}/lock")]
-        public Task Unlock(long repositoryId, int number)
-        {
-            return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, number));
-        }
+        }        
     }
 }

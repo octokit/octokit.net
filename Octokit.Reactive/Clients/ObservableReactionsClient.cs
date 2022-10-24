@@ -51,16 +51,5 @@ namespace Octokit.Reactive
         /// Refer to the API documentation for more information: https://developer.github.com/v3/reactions/
         /// </remarks>
         public IObservablePullRequestReviewCommentReactionsClient PullRequestReviewComment { get; private set; }
-
-        /// <summary>
-        /// Delete a reaction.
-        /// </summary>
-        /// <remarks>https://developer.github.com/v3/reactions/#delete-a-reaction</remarks>        
-        /// <param name="number">The reaction id</param>        
-        /// <returns></returns>
-        public IObservable<Unit> Delete(int number)
-        {
-            return _client.Delete(number).ToObservable();
-        }
     }
 }

@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit.Tests.Integration",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{64FD6CD6-3714-4A7B-AF5A-B8E7DFEEC807}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit.AsyncPaginationExtension", "Octokit.AsyncPaginationExtension\Octokit.AsyncPaginationExtension.csproj", "{0E8013E0-0CCF-4433-9E01-51AC288824C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Generators", "Octokit.Generators\Octokit.Generators.csproj", "{6A577AD0-2319-4FFC-8EF2-3CCDD31B0CD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF19E577-D810-4357-BF95-9029A359CB4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E8013E0-0CCF-4433-9E01-51AC288824C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E8013E0-0CCF-4433-9E01-51AC288824C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E8013E0-0CCF-4433-9E01-51AC288824C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E8013E0-0CCF-4433-9E01-51AC288824C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A577AD0-2319-4FFC-8EF2-3CCDD31B0CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A577AD0-2319-4FFC-8EF2-3CCDD31B0CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A577AD0-2319-4FFC-8EF2-3CCDD31B0CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A577AD0-2319-4FFC-8EF2-3CCDD31B0CD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

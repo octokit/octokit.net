@@ -1,6 +1,6 @@
 using Cake.Frosting;
 
-[Dependency(typeof(TestSourceLink))]
+[IsDependentOn(typeof(TestSourceLink))]
 public sealed class Default : FrostingTask<Context>
 {
 }

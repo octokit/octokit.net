@@ -26,6 +26,41 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="owner">The repository's owner</param>
+        /// <param name="name">The repository's name</param>
+        /// <param name="data">The request for generating release notes</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<GeneratedReleaseNotes> GenerateReleaseNotes(string owner, string name, GenerateReleaseNotesRequest data)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNull(data, nameof(data));
+
+            return _client.GenerateReleaseNotes(owner, name, data).ToObservable();
+        }
+
+        /// <summary>
+        /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/releases/releases#generate-release-notes-content-for-a-release">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="data">The request for generating release notes</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        public IObservable<GeneratedReleaseNotes> GenerateReleaseNotes(long repositoryId, GenerateReleaseNotesRequest data)
+        {
+            Ensure.ArgumentNotNull(data, nameof(data));
+
+            return _client.GenerateReleaseNotes(repositoryId, data).ToObservable();
+        }
+
+        /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
         /// </summary>
         /// <remarks>

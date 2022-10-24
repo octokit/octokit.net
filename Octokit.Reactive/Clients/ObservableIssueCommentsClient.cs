@@ -147,7 +147,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(repositoryId), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(owner, name, number), request.ToParametersDictionary(), options);
 
         }
 
@@ -286,7 +286,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(repositoryId, number), request.ToParametersDictionary(), AcceptHeaders.ReactionsPreview, options);
+            return _connection.GetAndFlattenAllPages<IssueComment>(ApiUrls.IssueComments(repositoryId, number), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

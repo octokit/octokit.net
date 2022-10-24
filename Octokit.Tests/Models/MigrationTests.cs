@@ -92,7 +92,7 @@ namespace Octokit.Tests.Models
                   ""stargazers_count"": 80,
                   ""watchers_count"": 80,
                   ""size"": 108,
-                  ""default_branch"": ""master"",
+                  ""default_branch"": ""main"",
                   ""open_issues_count"": 0,
                   ""has_issues"": true,
                   ""has_wiki"": true,

@@ -22,32 +22,32 @@ namespace Octokit
         /// <summary>
         /// The Id for this column.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The name for this column.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// The URL for this columns project.
         /// </summary>
-        public string ProjectUrl { get; protected set; }
+        public string ProjectUrl { get; private set; }
 
         /// <summary>
         /// When this column was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// When this column was last updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -317,8 +317,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetSha1("fake", "repo", "ref");
 
-                connection.Received().Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref"),
-                    null, "application/vnd.github.v3.sha");
+                connection.Received().Get<string>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref"), null);
             }
 
             [Fact]
@@ -329,8 +328,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetSha1(1, "ref");
 
-                connection.Received().Get<string>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref"),
-                    null, "application/vnd.github.v3.sha");
+                connection.Received().Get<string>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref"), null);
             }
 
             [Fact]

@@ -37,7 +37,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options)
         {
@@ -45,7 +44,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.PullRequestReviewCommentReaction(owner, name, number), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.PullRequestReviewCommentReactions(owner, name, number), null, options);
         }
 
         /// <summary>
@@ -67,13 +66,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("GET", "/repositories/{id}/pulls/comments/{comment_id}/reactions")]
         public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.PullRequestReviewCommentReaction(repositoryId, number), null, AcceptHeaders.ReactionsPreview, options);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.PullRequestReviewCommentReactions(repositoryId, number), null, options);
         }
 
         /// <summary>
@@ -84,7 +82,6 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions")]
         public Task<Reaction> Create(string owner, string name, int number, NewReaction reaction)
         {
@@ -92,7 +89,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return ApiConnection.Post<Reaction>(ApiUrls.PullRequestReviewCommentReaction(owner, name, number), reaction, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Post<Reaction>(ApiUrls.PullRequestReviewCommentReactions(owner, name, number), reaction);
         }
 
         /// <summary>
@@ -102,13 +99,44 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="number">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        [Preview("squirrel-girl")]
         [ManualRoute("POST", "/repositories/{id}/pulls/comments/{comment_id}/reactions")]
         public Task<Reaction> Create(long repositoryId, int number, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return ApiConnection.Post<Reaction>(ApiUrls.PullRequestReviewCommentReaction(repositoryId, number), reaction, AcceptHeaders.ReactionsPreview);
+            return ApiConnection.Post<Reaction>(ApiUrls.PullRequestReviewCommentReactions(repositoryId, number), reaction);
+        }
+
+        /// <summary>
+        /// Deletes a reaction for a specified Pull Request comment
+        /// </summary>
+        /// <remarks>https://docs.github.com/rest/reactions#delete-a-pull-request-comment-reaction</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="commentId">The comment id</param>
+        /// <param name="reactionId">The reaction id</param>
+        /// <returns></returns>
+        [ManualRoute("DELETE", "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}")]
+        public Task Delete(string owner, string name, int commentId, int reactionId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewCommentReaction(owner, name, commentId, reactionId));
+        }
+
+        /// <summary>
+        /// Deletes a reaction for a specified Pull Request comment
+        /// </summary>
+        /// <remarks>https://docs.github.com/rest/reactions#delete-a-pull-request-comment-reaction</remarks>
+        /// <param name="repositoryId">The owner of the repository</param>
+        /// <param name="commentId">The comment id</param>
+        /// <param name="reactionId">The reaction id</param>
+        /// <returns></returns>
+        [ManualRoute("DELETE", "/repositories/{id}/pulls/comments/{comment_id}/reactions/{reaction_id}")]
+        public Task Delete(long repositoryId, int commentId, int reactionId)
+        {
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewCommentReaction(repositoryId, commentId, reactionId));
         }
     }
 }

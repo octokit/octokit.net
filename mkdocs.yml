@@ -12,7 +12,7 @@ theme: readthedocs
 #theme_dir: ./theme/mkdocs/
 #theme_center_lead: false
 
-pages:
+nav:
 - 'Home' : 'index.md'
 
 - 'Getting Started' : getting-started.md

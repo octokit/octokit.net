@@ -13,8 +13,8 @@ namespace Octokit
             User = user;
         }
 
-        public StringEnum<PermissionLevel> Permission { get; protected set; }
-        public User User { get; protected set; }
+        public StringEnum<PermissionLevel> Permission { get; private set; }
+        public User User { get; private set; }
 
         internal string DebuggerDisplay => $"User: {User.Id} Permission: {Permission}";
     }

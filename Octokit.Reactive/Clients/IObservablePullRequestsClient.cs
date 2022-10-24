@@ -27,6 +27,11 @@ namespace Octokit.Reactive
         IObservablePullRequestReviewRequestsClient ReviewRequest { get; }
 
         /// <summary>
+        /// Client for locking/unlocking a conversation on a pull request
+        /// </summary>
+        IObservableLockUnlockClient LockUnlock { get; }
+
+        /// <summary>
         /// Gets a single Pull Request by number.
         /// </summary>
         /// <remarks>
@@ -233,7 +238,26 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<PullRequestFile> Files(string owner, string name, int number, ApiOptions options);
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="number">The pull request number</param>
         IObservable<PullRequestFile> Files(string owner, string name, int number);
+
+        /// <summary>
+        /// Get the list of files on a pull request.
+        /// </summary>
+        /// <remarks>https://developer.github.com/v3/pulls/#list-pull-requests-files</remarks>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="number">The pull request number</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<PullRequestFile> Files(long repositoryId, int number, ApiOptions options);
 
         /// <summary>
         /// Get the list of files on a pull request.

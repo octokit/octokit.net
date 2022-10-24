@@ -22,22 +22,22 @@ namespace Octokit
         /// <summary>
         /// The title of the check run
         /// </summary>
-        public string Title { get; protected set; }
+        public string Title { get; private set; }
 
         /// <summary>
         /// The summary of the check run
         /// </summary>
-        public string Summary { get; protected set; }
+        public string Summary { get; private set; }
 
         /// <summary>
         /// The details of the check run
         /// </summary>
-        public string Text { get; protected set; }
+        public string Text { get; private set; }
 
         /// <summary>
         /// The number of annotation entries for the check run (use <see cref="ICheckRunsClient.GetAllAnnotations(string, string, long)"/> to get annotation details)
         /// </summary>
-        public long AnnotationsCount { get; protected set; }
+        public long AnnotationsCount { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.CurrentCulture, "Title: {0}", Title);
     }

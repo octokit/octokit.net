@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System;
 
 namespace Octokit
 {
@@ -10,6 +10,7 @@ namespace Octokit
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/misc/">Miscellaneous API documentation</a> for more details.
     /// </remarks>
+    [Obsolete("Use individual clients available on the GitHubClient for these methods")]
     public interface IMiscellaneousClient
     {
         /// <summary>
@@ -17,8 +18,8 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use EmojisClient.GetAllEmojis instead.")]
         Task<IReadOnlyList<Emoji>> GetAllEmojis();
 
         /// <summary>
@@ -27,6 +28,7 @@ namespace Octokit
         /// <param name="markdown">A plain-text Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderRawMarkdown instead.")]
         Task<string> RenderRawMarkdown(string markdown);
 
         /// <summary>
@@ -35,14 +37,15 @@ namespace Octokit
         /// <param name="markdown">An arbitrary Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderArbitraryMarkdown instead.")] 
         Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown);
 
         /// <summary>
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>A list of template names</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetAllGitIgnoreTemplates instead.")]
         Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates();
 
         /// <summary>
@@ -50,6 +53,7 @@ namespace Octokit
         /// </summary>
         /// <param name="templateName"></param>
         /// <returns>A template and its source</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetAllGitIgnoreTemplates instead.")] 
         Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName);
 
         /// <summary>
@@ -57,7 +61,7 @@ namespace Octokit
         /// list of all possible OSS licenses.
         /// </summary>
         /// <returns>A list of licenses available on the site</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetGitIgnoreTemplate instead.")]
         Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses();
 
         /// <summary>
@@ -66,6 +70,7 @@ namespace Octokit
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of licenses available on the site</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetAllLicenses instead.")] 
         Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options);
 
         /// <summary>
@@ -73,6 +78,7 @@ namespace Octokit
         /// </summary>
         /// <param name="key">The license identifier to look for</param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
+        [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetLicense instead.")] 
         Task<License> GetLicense(string key);
 
         /// <summary>
@@ -80,7 +86,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use RateLimitClient.GetRateLimits instead.")] 
         Task<MiscellaneousRateLimit> GetRateLimits();
 
         /// <summary>
@@ -88,7 +94,7 @@ namespace Octokit
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
+        [Obsolete("This client is being deprecated and will be removed in the future. Use MetaClient.GetMetadata instead.")] 
         Task<Meta> GetMetadata();
     }
 }

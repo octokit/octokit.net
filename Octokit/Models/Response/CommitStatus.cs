@@ -27,53 +27,53 @@ namespace Octokit
         /// <summary>
         /// The date the commit status was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The date the commit status was updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; protected set; }
+        public DateTimeOffset UpdatedAt { get; private set; }
 
         /// <summary>
         /// The state of the commit
         /// </summary>
-        public StringEnum<CommitState> State { get; protected set; }
+        public StringEnum<CommitState> State { get; private set; }
 
         /// <summary>
         /// URL associated with this status. GitHub.com displays this URL as a link to allow users to easily see the
         /// ‘source’ of the Status.
         /// </summary>
-        public string TargetUrl { get; protected set; }
+        public string TargetUrl { get; private set; }
 
         /// <summary>
         /// Short description of the status.
         /// </summary>
-        public string Description { get; protected set; }
+        public string Description { get; private set; }
 
         /// <summary>
         /// A string label to differentiate this status from the status of other systems.
         /// </summary>
-        public string Context { get; protected set; }
+        public string Context { get; private set; }
 
         /// <summary>
         /// The unique identifier of the status.
         /// </summary>
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The URL of the status.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The user that created the status.
         /// </summary>
-        public User Creator { get; protected set; }
+        public User Creator { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -21,8 +21,9 @@ namespace Octokit.Tests.Models
                            "\"has_wiki\":true," +
                            "\"has_downloads\":true}";
 
-            var update = new RepositoryUpdate("Hello-World")
+            var update = new RepositoryUpdate()
             {
+                Name = "Hello-World",
                 Description = "This is your first repository",
                 Homepage = "https://github.com",
                 Private = true,

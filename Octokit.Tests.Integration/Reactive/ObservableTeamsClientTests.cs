@@ -254,7 +254,7 @@ public class ObservableTeamsClientTests
             var github = Helper.GetAuthenticatedClient();
             var client = new ObservableTeamsClient(github);
 
-            using (var repositoryContext = await github.CreateRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            using (var repositoryContext = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
             {
                 client.AddRepository(_team.Id, Helper.Organization, repositoryContext.RepositoryName);
 

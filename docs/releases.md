@@ -8,8 +8,8 @@ To retrieve all releases for a repository:
 var releases = await client.Repository.Release.GetAll("octokit", "octokit.net");
 var latest = releases[0];
 Console.WriteLine(
-    "The latest release is tagged at {0} and is named {1}", 
-    latest.TagName, 
+    "The latest release is tagged at {0} and is named {1}",
+    latest.TagName,
     latest.Name);
 ```
 
@@ -30,6 +30,33 @@ Console.WriteLine("Created release id {0}", result.Id);
 
 Note that the `Draft` flag is used to indicate when a release should be published to the world, whereas the `PreRelease` flag is used to indicate whether a release is unofficial or preview release.
 
+### Generate release notes
+
+GitHub can generate a name and body for a new release [automatically](https://github.blog/2021-10-04-beta-github-releases-improving-release-experience/#introducing-auto-generated-release-notes), based upon merged pull requests.
+[This is an example](https://github.com/MylesBorins/release-notes-test/releases/tag/v2.0.0) of automatically generated text.
+
+```csharp
+var newTag = "v1.5.7";
+var newRelease = new NewRelease(newTag);
+newRelease.GenerateReleaseNotes = true; // Set for Name and Body to be generated.
+newRelease.TargetCommitish = "main"; // Optional, can be a branch, tag, or SHA; defaults to the main branch.
+```
+
+#### Customizing generated notes
+```csharp
+var newTag = "v1.5.7";
+var generationRequest = new GenerateReleaseNotesRequest(newTag);
+generationRequest.TargetCommitish = "main"; // Optional, can be a branch, tag, or SHA; defaults to the main branch.
+generationRequest.PreviousTagName = "v1.5.6"; // Optional; default is automagically determined, based on existing tags.
+var releaseNotes = await client.Repository.Release.GenerateReleaseNotes("octokit", "octokit.net", generationRequest);
+
+var newRelease = new NewRelease(newTag); // Use the same tag as before, because it now appears in generated text.
+newRelease.Name = releaseNotes.Name;
+newRelease.Body = releaseNotes.Body;
+```
+
+This feature can be customized at the repository level, by following [these instructions](https://docs.github.com/repositories/releasing-projects-on-github/automatically-generated-release-notes#configuring-automatically-generated-release-notes).
+
 ### Update
 
 Once the release is ready for the public, you can apply an update to the release:
@@ -49,7 +76,7 @@ If you have any assets to include with the release, you can upload them after cr
 
 ```csharp
 using(var archiveContents = File.OpenRead("output.zip")) { // TODO: better sample
-    var assetUpload = new ReleaseAssetUpload() 
+    var assetUpload = new ReleaseAssetUpload()
     {
          FileName = "my-cool-project-1.0.zip",
          ContentType = "application/zip",

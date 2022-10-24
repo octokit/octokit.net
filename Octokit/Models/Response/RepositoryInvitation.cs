@@ -35,26 +35,26 @@ namespace Octokit
             HtmlUrl = htmlUrl;
         }
 
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public Repository Repository { get; protected set; }
+        public Repository Repository { get; private set; }
 
-        public User Invitee { get; protected set; }
+        public User Invitee { get; private set; }
 
-        public User Inviter { get; protected set; }
+        public User Inviter { get; private set; }
 
-        public StringEnum<InvitationPermissionType> Permissions { get; protected set; }
+        public StringEnum<InvitationPermissionType> Permissions { get; private set; }
 
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get; private set; }
 
         internal string DebuggerDisplay
         {

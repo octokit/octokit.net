@@ -13,8 +13,7 @@ public sealed class Clean : FrostingTask<Context>
 
         var directories = context.GetDirectories("./**/bin", globberSettings)
             + context.GetDirectories("./**/obj", globberSettings)
-            + context.Artifacts
-            + context.CodeCoverage;
+            + context.Artifacts;
 
         foreach (var directory in directories)
         {

@@ -17,7 +17,7 @@ namespace Octokit.Tests.Integration
 
         public IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
-            if (Helper.Organization == null)
+            if (Helper.HasNoOrganization)
             {
                 return Enumerable.Empty<IXunitTestCase>();
             }

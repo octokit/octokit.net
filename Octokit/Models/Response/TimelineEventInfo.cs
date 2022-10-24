@@ -26,39 +26,39 @@ namespace Octokit
             ProjectCard = projectCard;
         }
 
-        public long Id { get; protected set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public string Url { get; protected set; }
-        public User Actor { get; protected set; }
-        public string CommitId { get; protected set; }
-        public StringEnum<EventInfoState> Event { get; protected set; }
-        public DateTimeOffset CreatedAt { get; protected set; }
-        public Label Label { get; protected set; }
-        public User Assignee { get; protected set; }
-        public Milestone Milestone { get; protected set; }
+        public string Url { get; private set; }
+        public User Actor { get; private set; }
+        public string CommitId { get; private set; }
+        public StringEnum<EventInfoState> Event { get; private set; }
+        public DateTimeOffset CreatedAt { get; private set; }
+        public Label Label { get; private set; }
+        public User Assignee { get; private set; }
+        public Milestone Milestone { get; private set; }
 
         /// <summary>
         /// The source of reference from another issue
         /// Only provided for cross-referenced events
         /// </summary>
-        public SourceInfo Source { get; protected set; }
+        public SourceInfo Source { get; private set; }
 
         /// <summary>
         /// An object containing rename details
         /// Only provided for renamed events
         /// </summary>
-        public RenameInfo Rename { get; protected set; }
+        public RenameInfo Rename { get; private set; }
 
         /// <summary>
         /// The name of the column that the card was listed in prior to column_name.
         /// Only returned for moved_columns_in_project events
         /// </summary>
-        public IssueEventProjectCard ProjectCard { get; protected set; }
+        public IssueEventProjectCard ProjectCard { get; private set; }
 
         internal string DebuggerDisplay
         {

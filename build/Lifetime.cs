@@ -16,7 +16,6 @@ public class Lifetime : FrostingLifetime<Context>
         context.FormatCode = context.Argument("formatCode", false);
 
         context.Artifacts = "./packaging/";
-        context.CodeCoverage = "./coverage-results/";
 
         // Build system information.
         var buildSystem = context.BuildSystem();
@@ -52,8 +51,8 @@ public class Lifetime : FrostingLifetime<Context>
             new Project { Name = "Octokit.Tests.Integration", Path = "./Octokit.Tests.Integration/Octokit.Tests.Integration.csproj", IntegrationTests = true }
         };
 
-        context.GitVersionToolPath = ToolInstaller.DotNetCoreToolInstall(context, "GitVersion.Tool", "5.6.5", "dotnet-gitversion");
-        ToolInstaller.DotNetCoreToolInstall(context, "coverlet.console", "1.7.2", "coverlet");
+        context.GitVersionToolPath = ToolInstaller.DotNetToolInstall(context, "GitVersion.Tool", "5.6.5", "dotnet-gitversion");
+        ToolInstaller.DotNetToolInstall(context, "coverlet.console", "1.7.2", "coverlet");
 
         // Calculate semantic version.
         context.Version = BuildVersion.Calculate(context);

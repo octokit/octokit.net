@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
-#endif
 
 namespace Octokit
 {
     /// <summary>
     /// Represents a "Login Attempts Exceeded" response returned from the API.
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class LoginAttemptsExceededException : ForbiddenException
@@ -40,7 +36,6 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "Maximum number of login attempts exceeded"; }
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of LoginAttemptsExceededException
         /// </summary>
@@ -56,6 +51,5 @@ namespace Octokit
             : base(info, context)
         {
         }
-#endif
     }
 }

@@ -16,16 +16,16 @@ namespace Octokit
             Object = @object;
         }
 
-        public string Ref { get; protected set; }
+        public string Ref { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
-        public TagObject Object { get; protected set; }
+        public TagObject Object { get; private set; }
 
         internal string DebuggerDisplay
         {

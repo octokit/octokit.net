@@ -23,37 +23,37 @@ namespace Octokit
         /// <summary>
         /// The gist comment id.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
         /// </summary>
-        public string NodeId { get; protected set; }
+        public string NodeId { get; private set; }
 
         /// <summary>
         /// The URL for this gist comment.
         /// </summary>
-        public string Url { get; protected set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// The body of this gist comment.
         /// </summary>t
-        public string Body { get; protected set; }
+        public string Body { get; private set; }
 
         /// <summary>
         /// The user that created this gist comment.
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         /// <summary>
         /// The date this comment was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         /// <summary>
         /// The date this comment was last updated.
         /// </summary>
-        public DateTimeOffset? UpdatedAt { get; protected set; }
+        public DateTimeOffset? UpdatedAt { get; private set; }
 
         internal string DebuggerDisplay
         {

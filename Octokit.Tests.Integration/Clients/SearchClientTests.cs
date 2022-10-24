@@ -640,7 +640,7 @@ public class SearchClientTests
     [IntegrationTest]
     public async Task SearchForExcludedBase()
     {
-        var branch = "master";
+        var branch = "main";
 
         // Search for issues by target branch
         var request = new SearchIssuesRequest();

@@ -28,19 +28,19 @@ namespace Octokit
             ExpiresAt = expiresAt;
         }
 
-        public int Id { get; protected set; }
-        public int? PrimaryKeyId { get; protected set; }
-        public string KeyId { get; protected set; }
-        public string PublicKey { get; protected set; }
-        public IReadOnlyList<EmailAddress> Emails { get; protected set; }
-        public IReadOnlyList<GpgKey> Subkeys { get; protected set; }
-        public bool CanSign { get; protected set; }
+        public int Id { get; private set; }
+        public int? PrimaryKeyId { get; private set; }
+        public string KeyId { get; private set; }
+        public string PublicKey { get; private set; }
+        public IReadOnlyList<EmailAddress> Emails { get; private set; }
+        public IReadOnlyList<GpgKey> Subkeys { get; private set; }
+        public bool CanSign { get; private set; }
         [Parameter(Key = "can_encrypt_comms")]
-        public bool CanEncryptCommunications { get; protected set; }
-        public bool CanEncryptStorage { get; protected set; }
-        public bool CanCertify { get; protected set; }
-        public DateTimeOffset CreatedAt { get; protected set; }
-        public DateTimeOffset? ExpiresAt { get; protected set; }
+        public bool CanEncryptCommunications { get; private set; }
+        public bool CanEncryptStorage { get; private set; }
+        public bool CanCertify { get; private set; }
+        public DateTimeOffset CreatedAt { get; private set; }
+        public DateTimeOffset? ExpiresAt { get; private set; }
 
         internal string DebuggerDisplay
         {

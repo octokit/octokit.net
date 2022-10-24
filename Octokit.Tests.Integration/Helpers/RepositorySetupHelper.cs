@@ -44,18 +44,18 @@ namespace Octokit.Tests.Integration.Helpers
 
         public static async Task<Reference> CreateTheWorld(this IGitHubClient client, Repository repository)
         {
-            var master = await client.Git.Reference.Get(repository.Owner.Login, repository.Name, "heads/master");
+            var main = await client.Git.Reference.Get(repository.Owner.Login, repository.Name, "heads/main");
 
-            // create new commit for master branch
-            var newMasterTree = await client.CreateTree(repository, new Dictionary<string, string> { { "README.md", "Hello World!" } });
-            var newMaster = await client.CreateCommit(repository, "baseline for pull request", newMasterTree.Sha, master.Object.Sha);
+            // create new commit for main branch
+            var newMainTree = await client.CreateTree(repository, new Dictionary<string, string> { { "README.md", "Hello World!" } });
+            var newMain = await client.CreateCommit(repository, "baseline for pull request", newMainTree.Sha, main.Object.Sha);
 
-            // update master
-            await client.Git.Reference.Update(repository.Owner.Login, repository.Name, "heads/master", new ReferenceUpdate(newMaster.Sha));
+            // update main
+            await client.Git.Reference.Update(repository.Owner.Login, repository.Name, "heads/main", new ReferenceUpdate(newMain.Sha));
 
             // create new commit for feature branch
             var featureBranchTree = await client.CreateTree(repository, new Dictionary<string, string> { { "README.md", "I am overwriting this blob with something new\nand a second line too" } });
-            var featureBranchCommit = await client.CreateCommit(repository, "this is the commit to merge into the pull request", featureBranchTree.Sha, newMaster.Sha);
+            var featureBranchCommit = await client.CreateCommit(repository, "this is the commit to merge into the pull request", featureBranchTree.Sha, newMain.Sha);
 
             // create branch
             return await client.Git.Reference.Create(repository.Owner.Login, repository.Name, new NewReference("refs/heads/my-branch", featureBranchCommit.Sha));
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Integration.Helpers
 
         public static async Task<PullRequest> CreatePullRequest(this IGitHubClient client, Repository repository, string branch = "my-branch")
         {
-            var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "master");
+            var pullRequest = new NewPullRequest("Nice title for the pull request", branch, "main");
             var createdPullRequest = await client.PullRequest.Create(repository.Owner.Login, repository.Name, pullRequest);
 
             return createdPullRequest;

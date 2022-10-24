@@ -49,6 +49,13 @@ namespace Octokit.Reactive
             Migration = new ObservableMigrationClient(gitHubClient);
             Reaction = new ObservableReactionsClient(gitHubClient);
             Check = new ObservableChecksClient(gitHubClient);
+            Packages = new ObservablePackagesClient(gitHubClient);
+            Emojis = new ObservableEmojisClient(gitHubClient);
+            Markdown = new ObservableMarkdownClient(gitHubClient);
+            GitIgnore = new ObservableGitIgnoreClient(gitHubClient);
+            Licenses = new ObservableLicensesClient(gitHubClient);
+            RateLimit = new ObservableRateLimitClient(gitHubClient);
+            Meta = new ObservableMetaClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -57,7 +64,8 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Set the GitHub Api request timeout.
+        /// Sets the timeout for the connection between the client and the server.
+        /// Github will terminate the request if it takes more than 10 seconds to process the request
         /// Useful to set a specific timeout for lengthy operations, such as uploading release assets
         /// </summary>
         /// <remarks>
@@ -87,6 +95,13 @@ namespace Octokit.Reactive
         public IObservableMigrationClient Migration { get; private set; }
         public IObservableReactionsClient Reaction { get; private set; }
         public IObservableChecksClient Check { get; private set; }
+        public IObservablePackagesClient Packages { get; private set; }
+        public IObservableEmojisClient Emojis { get; private set; }
+        public IObservableMarkdownClient Markdown { get; private set; }
+        public IObservableGitIgnoreClient GitIgnore { get; private set; }
+        public IObservableLicensesClient Licenses { get; private set; }
+        public IObservableRateLimitClient RateLimit { get; private set; }
+        public IObservableMetaClient Meta { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made

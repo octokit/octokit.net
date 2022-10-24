@@ -21,6 +21,7 @@
             Organization = new EnterpriseOrganizationClient(apiConnection);
             SearchIndexing = new EnterpriseSearchIndexingClient(apiConnection);
             PreReceiveEnvironment = new EnterprisePreReceiveEnvironmentsClient(apiConnection);
+            PreReceiveHook = new EnterprisePreReceiveHooksClient(apiConnection);
         }
 
         /// <summary>
@@ -78,5 +79,13 @@
         /// See the <a href="https://developer.github.com/v3/enterprise-admin/pre_receive_environments/">Enterprise Pre-receive Environments API documentation</a> for more information.
         ///</remarks>
         public IEnterprisePreReceiveEnvironmentsClient PreReceiveEnvironment { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Pre-receive Hooks API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/enterprise-server/rest/reference/enterprise-admin#pre-receive-hooks">Enterprise Pre-receive Hooks API documentation</a> for more information.
+        ///</remarks>
+        public IEnterprisePreReceiveHooksClient PreReceiveHook { get; private set; }
     }
 }

@@ -74,8 +74,6 @@ namespace Octokit.Tests.Integration
 
         static readonly Lazy<Credentials> _githubAppCredentials = new Lazy<Credentials>(() =>
         {
-            // GitHubJwt nuget package only available for netstandard2.0+
-#if GITHUBJWT_HELPER_AVAILABLE
             var generator = new GitHubJwt.GitHubJwtFactory(
                 new GitHubJwt.FilePrivateKeySource(GitHubAppPemFile),
                 new GitHubJwt.GitHubJwtFactoryOptions
@@ -87,11 +85,6 @@ namespace Octokit.Tests.Integration
 
             var jwtToken = generator.CreateEncodedJwtToken();
             return new Credentials(jwtToken, AuthenticationType.Bearer);
-#else
-            // return null, which will cause the [GitHubAppTest]'s to not be discovered
-            return null;
-#endif
-
         });
 
         static readonly Lazy<Uri> _customUrl = new Lazy<Uri>(() =>
@@ -113,7 +106,12 @@ namespace Octokit.Tests.Integration
         }
 
         public static string UserName { get; private set; }
+        
         public static string Organization { get; private set; }
+
+        public static bool HasNoOrganization => Organization == null;
+
+        public static bool HasOrganization => Organization != null;
 
         /// <summary>
         /// These credentials should be set to a test GitHub account using the powershell script configure-integration-tests.ps1
@@ -242,6 +240,8 @@ namespace Octokit.Tests.Integration
             return string.Concat(name, "-", DateTime.UtcNow.ToString("yyyyMMddhhmmssfff"));
         }
 
+        public static bool IsNameTimestamped(string name) => name.Contains("-") && name.Substring(name.LastIndexOf("-")).Length == 18;
+
         public static Stream LoadFixture(string fileName)
         {
             var key = "Octokit.Tests.Integration.fixtures." + fileName;
@@ -329,7 +329,7 @@ namespace Octokit.Tests.Integration
             {
                 foreach (var invitee in invitees)
                 {
-                    connection.Delete(new Uri($"orgs/{Organization}/memberships/{invitee}", UriKind.Relative), null, AcceptHeaders.OrganizationMembershipPreview).Wait(TimeSpan.FromSeconds(15));
+                    connection.Delete(new Uri($"orgs/{Organization}/memberships/{invitee}", UriKind.Relative)).Wait(TimeSpan.FromSeconds(15));
                 }
             }
             catch { }

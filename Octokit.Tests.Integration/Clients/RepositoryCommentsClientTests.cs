@@ -41,7 +41,7 @@ public class RepositoryCommentsClientTests
         [IntegrationTest]
         public async Task CanGetReactionPayload()
         {
-            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
+            using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
             {
                 // Create a test commit
                 var commit = await HelperCreateCommit(context.RepositoryOwner, context.RepositoryName);
@@ -204,7 +204,7 @@ public class RepositoryCommentsClientTests
         public async Task CanGetReactionPayload()
         {
             var numberToCreate = 2;
-            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
+            using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
             {
                 var commentIds = new List<int>();
 
@@ -379,7 +379,7 @@ public class RepositoryCommentsClientTests
         public async Task CanGetReactionPayload()
         {
             var numberToCreate = 2;
-            using (var context = await _github.CreateRepositoryContext(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
+            using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
             {
                 var commentIds = new List<int>();
 
@@ -423,7 +423,7 @@ public class RepositoryCommentsClientTests
         public TheCreateMethod()
         {
             _github = Helper.GetAuthenticatedClient();
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         private async Task<Commit> SetupCommitForRepository(IGitHubClient client)
@@ -532,7 +532,7 @@ public class RepositoryCommentsClientTests
         {
             _github = Helper.GetAuthenticatedClient();
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         private async Task<Commit> SetupCommitForRepository(IGitHubClient client)
@@ -621,7 +621,7 @@ public class RepositoryCommentsClientTests
         {
             _github = Helper.GetAuthenticatedClient();
 
-            _context = _github.CreateRepositoryContext("public-repo").Result;
+            _context = _github.CreateRepositoryContextWithAutoInit("public-repo").Result;
         }
 
         private async Task<Commit> SetupCommitForRepository(IGitHubClient client)

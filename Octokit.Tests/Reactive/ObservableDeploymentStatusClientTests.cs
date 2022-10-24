@@ -30,9 +30,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll("owner", "repo", 1);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri),
-                                                      Args.EmptyDictionary,
-                                                      null);
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -43,9 +41,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(1, 1);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri),
-                                                      Args.EmptyDictionary,
-                                                      null);
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Args.EmptyDictionary);
             }
 
             [Fact]
@@ -63,9 +59,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll("owner", "repo", 1, options);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri),
-                                                      Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2),
-                                                      null);
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
             }
 
             [Fact]
@@ -83,9 +77,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(1, 1, options);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri),
-                                                      Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2),
-                                                      null);
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
             }
 
             [Fact]

@@ -161,6 +161,20 @@ namespace Octokit.Tests.Integration
             }
         }
 
+        public static void DeletePreReceiveHook(IConnection connection, PreReceiveHook preReceiveHook)
+        {
+            if (preReceiveHook != null)
+            {
+                try
+                {
+                    var client = new GitHubClient(connection);
+                    client.Enterprise.PreReceiveHook.Delete(preReceiveHook.Id).Wait(TimeSpan.FromSeconds(15));
+                }
+                catch
+                { }
+            }
+        }
+
         public static void SetMaintenanceMode(IConnection connection, bool enabled)
         {
             try

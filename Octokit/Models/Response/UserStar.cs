@@ -21,12 +21,12 @@ namespace Octokit
         /// <summary>
         /// The date the star was created.
         /// </summary>
-        public DateTimeOffset StarredAt { get; protected set; }
+        public DateTimeOffset StarredAt { get; private set; }
 
         /// <summary>
         /// The user associated with the star.
         /// </summary>
-        public User User { get; protected set; }
+        public User User { get; private set; }
 
         internal string DebuggerDisplay
         {

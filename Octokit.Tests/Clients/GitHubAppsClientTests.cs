@@ -44,7 +44,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get("foobar");
 
-                connection.Received().Get<GitHubApp>(Arg.Is<Uri>(u => u.ToString() == "apps/foobar"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<GitHubApp>(Arg.Is<Uri>(u => u.ToString() == "apps/foobar"), null);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetCurrent();
 
-                connection.Received().Get<GitHubApp>(Arg.Is<Uri>(u => u.ToString() == "app"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<GitHubApp>(Arg.Is<Uri>(u => u.ToString() == "app"), null);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllInstallationsForCurrent();
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, "application/vnd.github.machine-man-preview+json", Args.ApiOptions);
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, Args.ApiOptions);
             }
 
             [Fact]
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAllInstallationsForCurrent(options);
 
-                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+                connection.Received().GetAll<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations"), null, options);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetInstallationForCurrent(123);
 
-                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations/123"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "app/installations/123"), null);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllInstallationsForCurrentUser();
 
-                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json");
+                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"));
             }
 
             [Fact]
@@ -145,7 +145,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllInstallationsForCurrentUser(options);
 
-                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, "application/vnd.github.machine-man-preview+json", options);
+                await connection.Received().GetAll<InstallationsResponse>(Arg.Is<Uri>(u => u.ToString() == "user/installations"), null, options);
             }
         }
 
@@ -161,7 +161,7 @@ namespace Octokit.Tests.Clients
 
                 client.CreateInstallationToken(fakeInstallationId);
 
-                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "app/installations/3141/access_tokens"), string.Empty, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Post<AccessToken>(Arg.Is<Uri>(u => u.ToString() == "app/installations/3141/access_tokens"), string.Empty);
             }
         }
 
@@ -193,7 +193,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetOrganizationInstallationForCurrent("ducks");
 
-                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "orgs/ducks/installation"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "orgs/ducks/installation"), null);
             }
         }
 
@@ -227,7 +227,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetRepositoryInstallationForCurrent("mighty", "ducks");
 
-                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "repos/mighty/ducks/installation"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "repos/mighty/ducks/installation"), null);
             }
 
             [Fact]
@@ -238,7 +238,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetRepositoryInstallationForCurrent(1234);
 
-                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/installation"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "repositories/1234/installation"), null);
             }
         }
 
@@ -270,7 +270,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetUserInstallationForCurrent("ducks");
 
-                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "users/ducks/installation"), null, "application/vnd.github.machine-man-preview+json");
+                connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "users/ducks/installation"), null);
             }
         }
     }

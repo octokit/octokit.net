@@ -22,6 +22,7 @@ namespace Octokit
             Team = new TeamsClient(apiConnection);
             Hook = new OrganizationHooksClient(apiConnection);
             OutsideCollaborator = new OrganizationOutsideCollaboratorsClient(apiConnection);
+            Actions = new OrganizationActionsClient(apiConnection);
         }
 
         /// <summary>
@@ -33,6 +34,11 @@ namespace Octokit
         /// Returns a client to manage teams of an organization.
         /// </summary>
         public ITeamsClient Team { get; private set; }
+
+        /// <summary>
+        /// Returns a client to manage organization actions.
+        /// </summary>
+        public IOrganizationActionsClient Actions { get; private set; }
 
         /// <summary>
         /// Returns a client to manage outside collaborators of an organization.
@@ -85,11 +91,15 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns all <see cref="Organization" />s for the specified user.
+        /// Returns <see cref="Organization" />s which the specified user is a member of,
+        /// where the user hasn't marked their membership as private.
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        /// <returns>
+        /// A list of the <see cref="Organization"/>s which the specified user is a member
+        /// of, where they haven't marked their membership as private
+        /// </returns>
         [ManualRoute("GET", "/users/{username}/orgs")]
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user)
         {
@@ -99,12 +109,16 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Returns all <see cref="Organization" />s for the specified user.
+        /// Returns <see cref="Organization" />s which the specified user is a member of,
+        /// where the user hasn't marked their membership as private.
         /// </summary>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A list of the specified user's <see cref="Organization"/>s.</returns>
+        /// <returns>
+        /// A list of the <see cref="Organization"/>s which the specified user is a member
+        /// of, where they haven't marked their membership as private
+        /// </returns>
         [ManualRoute("GET", "/users/{username}/orgs")]
         public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options)
         {
@@ -158,6 +172,74 @@ namespace Octokit
             var updateUri = new Uri("orgs/" + org, UriKind.Relative);
 
             return ApiConnection.Patch<Organization>(updateUri, updateRequest);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            var url = ApiUrls.AllOrganizationCredentials(org);
+
+            return ApiConnection.GetAll<OrganizationCredential>(url);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var url = ApiUrls.AllOrganizationCredentials(org);
+
+            return ApiConnection.GetAll<OrganizationCredential>(url, options);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+
+            var url = ApiUrls.AllOrganizationCredentials(org, login);
+
+            return ApiConnection.GetAll<OrganizationCredential>(url);
+        }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationCredential" />s.
+        /// </summary>
+        /// <param name="org">The organization name.</param>
+        /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
+        [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var url = ApiUrls.AllOrganizationCredentials(org, login);
+
+            return ApiConnection.GetAll<OrganizationCredential>(url, options);
         }
     }
 }

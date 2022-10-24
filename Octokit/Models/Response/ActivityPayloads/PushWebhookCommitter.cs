@@ -35,7 +35,7 @@ namespace Octokit
         /// <value>
         /// The name.
         /// </value>
-        public string Name { get; protected set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the email of the author or committer.
@@ -43,7 +43,7 @@ namespace Octokit
         /// <value>
         /// The email.
         /// </value>
-        public string Email { get; protected set; }
+        public string Email { get; private set; }
 
         /// <summary>
         /// Gets the GitHub username associated with the commit
@@ -51,7 +51,7 @@ namespace Octokit
         /// <value>
         /// The username.
         /// </value>
-        public string Username { get; protected set; }
+        public string Username { get; private set; }
 
         internal string DebuggerDisplay
         {

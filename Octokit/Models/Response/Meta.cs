@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -24,23 +25,40 @@ namespace Octokit
         /// <param name="verifiablePasswordAuthentication">Whether authentication with username and password is supported.</param>
         /// <param name="gitHubServicesSha">The currently-deployed SHA of github-services.</param>
         /// <param name="hooks">An array of IP addresses in CIDR format specifying the addresses that incoming service hooks will originate from on GitHub.com.</param>
+        /// <param name="web">An array of IP addresses in CIDR format specifying the Web servers for GitHub</param>
+        /// <param name="api">An array of IP addresses in CIDR format specifying the Api servers for GitHub</param>
         /// <param name="git">An array of IP addresses in CIDR format specifying the Git servers for the GitHub server</param>
+        /// <param name="packages">An array of IP addresses in CIDR format specifying the Packages servers for GitHub</param>
         /// <param name="pages">An array of IP addresses in CIDR format specifying the A records for GitHub Pages.</param>
         /// <param name="importer">An Array of IP addresses specifying the addresses that source imports will originate from on GitHub.com.</param>
+        /// <param name="actions">An array of IP addresses in CIDR format specifying the Actions servers for GitHub</param>
+        /// <param name="dependabot">An array of IP addresses in CIDR format specifying the Dependabot servers for GitHub</param>
         public Meta(
             bool verifiablePasswordAuthentication,
             string gitHubServicesSha,
             IReadOnlyList<string> hooks,
+            IReadOnlyList<string> web,
+            IReadOnlyList<string> api,
             IReadOnlyList<string> git,
+            IReadOnlyList<string> packages,
             IReadOnlyList<string> pages,
-            IReadOnlyList<string> importer)
+            IReadOnlyList<string> importer,
+            IReadOnlyList<string> actions,
+            IReadOnlyList<string> dependabot)
         {
             VerifiablePasswordAuthentication = verifiablePasswordAuthentication;
+#pragma warning disable CS0618 // Type or member is obsolete
             GitHubServicesSha = gitHubServicesSha;
+#pragma warning restore CS0618 // Type or member is obsolete
             Hooks = hooks;
+            Web = web;
+            Api = api;
             Git = git;
+            Packages = packages;
             Pages = pages;
             Importer = importer;
+            Actions = actions;
+            Dependabot = dependabot;
         }
 
         /// <summary>
@@ -54,6 +72,7 @@ namespace Octokit
         /// The currently-deployed SHA of github-services.
         /// </summary>
         [Parameter(Key = "github_services_sha")]
+        [Obsolete("No longer returned so always null")]
         public string GitHubServicesSha { get; private set; }
 
         /// <summary>
@@ -64,9 +83,26 @@ namespace Octokit
         public IReadOnlyList<string> Hooks { get; private set; }
 
         /// <summary>
+        /// An Array of IP addresses in CIDR format specifying the Web servers for GitHub.com.
+        /// </summary>
+        public IReadOnlyList<string> Web { get; private set; }
+
+
+        /// <summary>
+        /// An Array of IP addresses in CIDR format specifying the Api servers for GitHub.com.
+        /// </summary>
+        public IReadOnlyList<string> Api { get; private set; }
+
+        /// <summary>
         /// An Array of IP addresses in CIDR format specifying the Git servers for GitHub.com.
         /// </summary>
         public IReadOnlyList<string> Git { get; private set; }
+
+
+        /// <summary>
+        /// An Array of IP addresses in CIDR format specifying the Packages servers for GitHub.com.
+        /// </summary>
+        public IReadOnlyList<string> Packages { get; private set; }
 
         /// <summary>
         /// An Array of IP addresses in CIDR format specifying the A records for GitHub Pages.
@@ -77,6 +113,16 @@ namespace Octokit
         /// An Array of IP addresses specifying the addresses that source imports will originate from on GitHub.com.
         /// </summary>
         public IReadOnlyList<string> Importer { get; private set; }
+
+        /// <summary>
+        /// An Array of IP addresses in CIDR format specifying the Actions servers.
+        /// </summary>
+        public IReadOnlyList<string> Actions { get; private set; }
+
+        /// <summary>
+        /// An Array of IP addresses in CIDR format specifying the Dependabot servers.
+        /// </summary>
+        public IReadOnlyList<string> Dependabot { get; private set; }
 
         internal string DebuggerDisplay
         {

@@ -1,246 +1,262 @@
-﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Octokit.Reactive;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
-namespace Octokit.Tests.Integration
+namespace Octokit.Tests.Integration.Reactive
 {
     public class ObservableRepositoryBranchesClientTests
     {
-        public class TheGetBranchProtectionMethod : IDisposable
+        public class TheGetBranchProtectionMethod
         {
+            IGitHubClient _github;
             IObservableRepositoryBranchesClient _client;
-            RepositoryContext _userRepoContext;
-            OrganizationRepositoryWithTeamContext _orgRepoContext;
 
             public TheGetBranchProtectionMethod()
             {
-                var github = Helper.GetAuthenticatedClient();
-                _client = new ObservableRepositoryBranchesClient(github);
-
-                _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-                _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+                _github = Helper.GetAuthenticatedClient();
+                _client = new ObservableRepositoryBranchesClient(_github);
             }
 
             [IntegrationTest]
             public async Task GetsBranchProtection()
             {
-                var repoOwner = _userRepoContext.RepositoryOwner;
-                var repoName = _userRepoContext.RepositoryName;
-                var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryOwner;
+                    var repoName = context.RepositoryName;
+                    var protection = await _client.GetBranchProtection(repoOwner, repoName, "main");
 
-                Assert.True(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.True(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
-                Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+                    Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Null(protection.Restrictions);
+                    Assert.Null(protection.Restrictions);
 
-                Assert.True(protection.EnforceAdmins.Enabled);
+                    Assert.True(protection.EnforceAdmins.Enabled);
+                }
             }
 
             [IntegrationTest]
             public async Task GetsBranchProtectionWithRepositoryId()
             {
-                var repoId = _userRepoContext.RepositoryId;
-                var protection = await _client.GetBranchProtection(repoId, "master");
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryId;
+                    var protection = await _client.GetBranchProtection(repoId, "main");
 
-                Assert.True(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.True(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
-                Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+                    Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Null(protection.Restrictions);
+                    Assert.Null(protection.Restrictions);
 
-                Assert.True(protection.EnforceAdmins.Enabled);
+                    Assert.True(protection.EnforceAdmins.Enabled);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task GetsBranchProtectionForOrgRepo()
             {
-                var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-                var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-                var protection = await _client.GetBranchProtection(repoOwner, repoName, "master");
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryContext.RepositoryOwner;
+                    var repoName = context.RepositoryContext.RepositoryName;
+                    var protection = await _client.GetBranchProtection(repoOwner, repoName, "main");
 
-                Assert.True(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.True(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
-                Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
-                Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
+                    Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+                    Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Equal(1, protection.Restrictions.Teams.Count);
-                Assert.Equal(0, protection.Restrictions.Users.Count);
+                    Assert.Equal(1, protection.Restrictions.Teams.Count);
+                    Assert.Equal(0, protection.Restrictions.Users.Count);
 
-                Assert.True(protection.EnforceAdmins.Enabled);
+                    Assert.True(protection.EnforceAdmins.Enabled);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task GetsBranchProtectionForOrgRepoWithRepositoryId()
             {
-                var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-                var protection = await _client.GetBranchProtection(repoId, "master");
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryContext.RepositoryId;
+                    var protection = await _client.GetBranchProtection(repoId, "main");
 
-                Assert.True(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.True(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
-                Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
-                Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
+                    Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+                    Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Equal(1, protection.Restrictions.Teams.Count);
-                Assert.Equal(0, protection.Restrictions.Users.Count);
+                    Assert.Equal(1, protection.Restrictions.Teams.Count);
+                    Assert.Equal(0, protection.Restrictions.Users.Count);
 
-                Assert.True(protection.EnforceAdmins.Enabled);
-            }
-
-            public void Dispose()
-            {
-                if (_userRepoContext != null)
-                    _userRepoContext.Dispose();
-
-                if (_orgRepoContext != null)
-                    _orgRepoContext.Dispose();
+                    Assert.True(protection.EnforceAdmins.Enabled);
+                }
             }
         }
 
-        public class TheUpdateBranchProtectionMethod : IDisposable
+        public class TheUpdateBranchProtectionMethod
         {
+            IGitHubClient _github;
             IObservableRepositoryBranchesClient _client;
-            RepositoryContext _userRepoContext;
-            OrganizationRepositoryWithTeamContext _orgRepoContext;
 
             public TheUpdateBranchProtectionMethod()
             {
-                var github = Helper.GetAuthenticatedClient();
-                _client = new ObservableRepositoryBranchesClient(github);
-
-                _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-                _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+                _github = Helper.GetAuthenticatedClient();
+                _client = new ObservableRepositoryBranchesClient(_github);
             }
 
             [IntegrationTest]
             public async Task UpdatesBranchProtection()
             {
-                var repoOwner = _userRepoContext.RepositoryOwner;
-                var repoName = _userRepoContext.RepositoryName;
-                var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(false, true, 2),
-                    false);
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryOwner;
+                    var repoName = context.RepositoryName;
+                    var update = new BranchProtectionSettingsUpdate(
+                        new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                        new BranchProtectionRequiredReviewsUpdate(false, true, 2),
+                        false);
 
-                var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
+                    var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "main", update);
 
-                Assert.False(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.False(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
-                Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+                    Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Null(protection.Restrictions);
+                    Assert.Null(protection.Restrictions);
 
-                Assert.False(protection.EnforceAdmins.Enabled);
+                    Assert.False(protection.EnforceAdmins.Enabled);
+                }
             }
 
             [IntegrationTest]
             public async Task UpdatesBranchProtectionWithRepositoryId()
             {
-                var repoId = _userRepoContext.RepositoryId;
-                var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(false, true, 2),
-                    false);
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryId;
+                    var update = new BranchProtectionSettingsUpdate(
+                        new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                        new BranchProtectionRequiredReviewsUpdate(false, true, 2),
+                        false);
 
-                var protection = await _client.UpdateBranchProtection(repoId, "master", update);
+                    var protection = await _client.UpdateBranchProtection(repoId, "main", update);
 
-                Assert.False(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.False(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
-                Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+                    Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Null(protection.Restrictions);
+                    Assert.Null(protection.Restrictions);
 
-                Assert.False(protection.EnforceAdmins.Enabled);
+                    Assert.False(protection.EnforceAdmins.Enabled);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task UpdatesBranchProtectionForOrgRepo()
             {
-                var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-                var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-                var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
-                    new BranchProtectionPushRestrictionsUpdate(),
-                    false);
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryContext.RepositoryOwner;
+                    var repoName = context.RepositoryContext.RepositoryName;
+                    var update = new BranchProtectionSettingsUpdate(
+                        new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                        new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
+                        new BranchProtectionPushRestrictionsUpdate(),
+                        false,
+                        true,
+                        true,
+                        true,
+                        true,
+                        true);
 
-                var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "master", update);
+                    var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "main", update);
 
-                Assert.False(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.False(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
-                Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+                    Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Empty(protection.Restrictions.Teams);
-                Assert.Empty(protection.Restrictions.Users);
+                    Assert.Empty(protection.Restrictions.Teams);
+                    Assert.Empty(protection.Restrictions.Users);
 
-                Assert.False(protection.EnforceAdmins.Enabled);
+                    Assert.False(protection.EnforceAdmins.Enabled);
+                    Assert.True(protection.RequiredLinearHistory.Enabled);
+                    Assert.True(protection.AllowForcePushes.Enabled);
+                    Assert.True(protection.AllowDeletions.Enabled);
+                    Assert.True(protection.BlockCreations.Enabled);
+                    Assert.True(protection.RequiredConversationResolution.Enabled);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task UpdatesBranchProtectionForOrgRepoWithRepositoryId()
             {
-                var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-                var update = new BranchProtectionSettingsUpdate(
-                    new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
-                    new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
-                    new BranchProtectionPushRestrictionsUpdate(),
-                    false);
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryContext.RepositoryId;
+                    var update = new BranchProtectionSettingsUpdate(
+                        new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
+                        new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
+                        new BranchProtectionPushRestrictionsUpdate(),
+                        false,
+                        true,
+                        true,
+                        true,
+                        true,
+                        true);
 
-                var protection = await _client.UpdateBranchProtection(repoId, "master", update);
+                    var protection = await _client.UpdateBranchProtection(repoId, "main", update);
 
-                Assert.False(protection.RequiredStatusChecks.Strict);
-                Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.False(protection.RequiredStatusChecks.Strict);
+                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
 
-                Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
-                Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
-                Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
+                    Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
+                    Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
+                    Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                Assert.Empty(protection.Restrictions.Teams);
-                Assert.Empty(protection.Restrictions.Users);
+                    Assert.Empty(protection.Restrictions.Teams);
+                    Assert.Empty(protection.Restrictions.Users);
 
-                Assert.False(protection.EnforceAdmins.Enabled);
-            }
-
-            public void Dispose()
-            {
-                if (_userRepoContext != null)
-                    _userRepoContext.Dispose();
-
-                if (_orgRepoContext != null)
-                    _orgRepoContext.Dispose();
+                    Assert.False(protection.EnforceAdmins.Enabled);
+                    Assert.True(protection.RequiredLinearHistory.Enabled);
+                    Assert.True(protection.AllowForcePushes.Enabled);
+                    Assert.True(protection.AllowDeletions.Enabled);
+                    Assert.True(protection.BlockCreations.Enabled);
+                    Assert.True(protection.RequiredConversationResolution.Enabled);
+                }
             }
         }
 
@@ -262,7 +278,7 @@ namespace Octokit.Tests.Integration
                 {
                     var repoOwner = context.RepositoryOwner;
                     var repoName = context.RepositoryName;
-                    var deleted = await _client.DeleteBranchProtection(repoOwner, repoName, "master");
+                    var deleted = await _client.DeleteBranchProtection(repoOwner, repoName, "main");
 
                     Assert.True(deleted);
                 }
@@ -274,237 +290,241 @@ namespace Octokit.Tests.Integration
                 using (var context = await _github.CreateRepositoryWithProtectedBranch())
                 {
                     var repoId = context.RepositoryId;
-                    var deleted = await _client.DeleteBranchProtection(repoId, "master");
+                    var deleted = await _client.DeleteBranchProtection(repoId, "main");
 
                     Assert.True(deleted);
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task DeletesBranchProtectionForOrgRepo()
             {
                 using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
                 {
                     var repoOwner = context.RepositoryContext.RepositoryOwner;
                     var repoName = context.RepositoryContext.RepositoryName;
-                    var deleted = await _client.DeleteBranchProtection(repoOwner, repoName, "master");
+                    var deleted = await _client.DeleteBranchProtection(repoOwner, repoName, "main");
 
                     Assert.True(deleted);
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task DeletesBranchProtectionForOrgRepoWithRepositoryId()
             {
                 using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
                 {
                     var repoId = context.RepositoryContext.RepositoryId;
-                    var deleted = await _client.DeleteBranchProtection(repoId, "master");
+                    var deleted = await _client.DeleteBranchProtection(repoId, "main");
 
                     Assert.True(deleted);
                 }
             }
         }
 
-        public class TheGetReviewEnforcementMethod : IDisposable
+        public class TheGetReviewEnforcementMethod
         {
+            IGitHubClient _github;
             IObservableRepositoryBranchesClient _client;
-            RepositoryContext _userRepoContext;
-            OrganizationRepositoryWithTeamContext _orgRepoContext;
 
             public TheGetReviewEnforcementMethod()
             {
-                var github = Helper.GetAuthenticatedClient();
-                _client = new ObservableRepositoryBranchesClient(github);
-
-                _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-                _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+                _github = Helper.GetAuthenticatedClient();
+                _client = new ObservableRepositoryBranchesClient(_github);
             }
 
             [IntegrationTest]
             public async Task GetsReviewEnforcement()
             {
-                var repoOwner = _userRepoContext.RepositoryOwner;
-                var repoName = _userRepoContext.RepositoryName;
-                var requiredReviews = await _client.GetReviewEnforcement(repoOwner, repoName, "master");
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryOwner;
+                    var repoName = context.RepositoryName;
+                    var requiredReviews = await _client.GetReviewEnforcement(repoOwner, repoName, "main");
 
-                Assert.Null(requiredReviews.DismissalRestrictions);
-                Assert.True(requiredReviews.DismissStaleReviews);
-                Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Null(requiredReviews.DismissalRestrictions);
+                    Assert.True(requiredReviews.DismissStaleReviews);
+                    Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                }
             }
 
             [IntegrationTest]
             public async Task GetsReviewEnforcementWithRepositoryId()
             {
-                var repoId = _userRepoContext.RepositoryId;
-                var requiredReviews = await _client.GetReviewEnforcement(repoId, "master");
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryId;
+                    var requiredReviews = await _client.GetReviewEnforcement(repoId, "main");
 
-                Assert.Null(requiredReviews.DismissalRestrictions);
-                Assert.True(requiredReviews.DismissStaleReviews);
-                Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Null(requiredReviews.DismissalRestrictions);
+                    Assert.True(requiredReviews.DismissStaleReviews);
+                    Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task GetsReviewEnforcementForOrgRepo()
             {
-                var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-                var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-                var requiredReviews = await _client.GetReviewEnforcement(repoOwner, repoName, "master");
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryContext.RepositoryOwner;
+                    var repoName = context.RepositoryContext.RepositoryName;
+                    var requiredReviews = await _client.GetReviewEnforcement(repoOwner, repoName, "main");
 
-                Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
-                Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
-                Assert.True(requiredReviews.DismissStaleReviews);
-                Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
+                    Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
+                    Assert.True(requiredReviews.DismissStaleReviews);
+                    Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task GetsReviewEnforcementForOrgRepoWithRepositoryId()
             {
-                var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-                var requiredReviews = await _client.GetReviewEnforcement(repoId, "master");
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryContext.RepositoryId;
+                    var requiredReviews = await _client.GetReviewEnforcement(repoId, "main");
 
-                Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
-                Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
-                Assert.True(requiredReviews.DismissStaleReviews);
-                Assert.True(requiredReviews.RequireCodeOwnerReviews);
-            }
-
-            public void Dispose()
-            {
-                if (_userRepoContext != null)
-                    _userRepoContext.Dispose();
-
-                if (_orgRepoContext != null)
-                    _orgRepoContext.Dispose();
+                    Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
+                    Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
+                    Assert.True(requiredReviews.DismissStaleReviews);
+                    Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                }
             }
         }
 
-        public class TheUpdateReviewEnforcementMethod : IDisposable
+        public class TheUpdateReviewEnforcementMethod
         {
+            IGitHubClient _github;
             IObservableRepositoryBranchesClient _client;
-            RepositoryContext _userRepoContext;
-            OrganizationRepositoryWithTeamContext _orgRepoContext;
 
             public TheUpdateReviewEnforcementMethod()
             {
-                var github = Helper.GetAuthenticatedClient();
-                _client = new ObservableRepositoryBranchesClient(github);
-
-                _userRepoContext = github.CreateRepositoryWithProtectedBranch().Result;
-                _orgRepoContext = github.CreateOrganizationRepositoryWithProtectedBranch().Result;
+                _github = Helper.GetAuthenticatedClient();
+                _client = new ObservableRepositoryBranchesClient(_github);
             }
 
             [IntegrationTest]
             public async Task UpdatesReviewEnforcement()
             {
-                var repoOwner = _userRepoContext.RepositoryOwner;
-                var repoName = _userRepoContext.RepositoryName;
-                var update = new BranchProtectionRequiredReviewsUpdate(false, true, 2);
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryOwner;
+                    var repoName = context.RepositoryName;
+                    var update = new BranchProtectionRequiredReviewsUpdate(false, true, 2);
 
-                var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "master", update);
+                    var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "main", update);
 
-                Assert.Null(requiredReviews.DismissalRestrictions);
-                Assert.False(requiredReviews.DismissStaleReviews);
-                Assert.True(requiredReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                    Assert.Null(requiredReviews.DismissalRestrictions);
+                    Assert.False(requiredReviews.DismissStaleReviews);
+                    Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                }
             }
 
             [IntegrationTest]
             public async Task UpdatesReviewEnforcementWithRepositoryId()
             {
-                var repoId = _userRepoContext.RepositoryId;
-                var update = new BranchProtectionRequiredReviewsUpdate(false, true, 2);
+                using (var context = await _github.CreateRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryId;
+                    var update = new BranchProtectionRequiredReviewsUpdate(false, true, 2);
 
-                var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "master", update);
+                    var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "main", update);
 
-                Assert.Null(requiredReviews.DismissalRestrictions);
-                Assert.False(requiredReviews.DismissStaleReviews);
-                Assert.True(requiredReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                    Assert.Null(requiredReviews.DismissalRestrictions);
+                    Assert.False(requiredReviews.DismissStaleReviews);
+                    Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepo()
             {
-                var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-                var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-                var update = new BranchProtectionRequiredReviewsUpdate(
-                    new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false),
-                    false,
-                    false,
-                    2);
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryContext.RepositoryOwner;
+                    var repoName = context.RepositoryContext.RepositoryName;
+                    var update = new BranchProtectionRequiredReviewsUpdate(
+                        new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false),
+                        false,
+                        false,
+                        2);
 
-                var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "master", update);
+                    var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "main", update);
 
-                Assert.Null(requiredReviews.DismissalRestrictions);
-                Assert.False(requiredReviews.DismissStaleReviews);
-                Assert.False(requiredReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                    Assert.Null(requiredReviews.DismissalRestrictions);
+                    Assert.False(requiredReviews.DismissStaleReviews);
+                    Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepoWithRepositoryId()
             {
-                var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-                var update = new BranchProtectionRequiredReviewsUpdate(
-                    new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false),
-                    false,
-                    false,
-                    2);
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryContext.RepositoryId;
+                    var update = new BranchProtectionRequiredReviewsUpdate(
+                        new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false),
+                        false,
+                        false,
+                        2);
 
-                var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "master", update);
+                    var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "main", update);
 
-                Assert.Null(requiredReviews.DismissalRestrictions);
-                Assert.False(requiredReviews.DismissStaleReviews);
-                Assert.False(requiredReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                    Assert.Null(requiredReviews.DismissalRestrictions);
+                    Assert.False(requiredReviews.DismissStaleReviews);
+                    Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepoWithAdminOnly()
             {
-                var repoOwner = _orgRepoContext.RepositoryContext.RepositoryOwner;
-                var repoName = _orgRepoContext.RepositoryContext.RepositoryName;
-                var update = new BranchProtectionRequiredReviewsUpdate(
-                    new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(true),
-                    false,
-                    false,
-                    2);
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoOwner = context.RepositoryContext.RepositoryOwner;
+                    var repoName = context.RepositoryContext.RepositoryName;
+                    var update = new BranchProtectionRequiredReviewsUpdate(
+                        new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(true),
+                        false,
+                        false,
+                        2);
 
-                var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "master", update);
+                    var requiredReviews = await _client.UpdateReviewEnforcement(repoOwner, repoName, "main", update);
 
-                Assert.Empty(requiredReviews.DismissalRestrictions.Teams);
-                Assert.Empty(requiredReviews.DismissalRestrictions.Users);
-                Assert.False(requiredReviews.DismissStaleReviews);
-                Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Users);
+                    Assert.False(requiredReviews.DismissStaleReviews);
+                    Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task UpdatesReviewEnforcementForOrgRepoWithAdminOnlyWithRepositoryId()
             {
-                var repoId = _orgRepoContext.RepositoryContext.RepositoryId;
-                var update = new BranchProtectionRequiredReviewsUpdate(
-                    new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(true),
-                    false,
-                    false,
-                    2);
+                using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
+                {
+                    var repoId = context.RepositoryContext.RepositoryId;
+                    var update = new BranchProtectionRequiredReviewsUpdate(
+                        new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(true),
+                        false,
+                        false,
+                        2);
 
-                var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "master", update);
+                    var requiredReviews = await _client.UpdateReviewEnforcement(repoId, "main", update);
 
-                Assert.Empty(requiredReviews.DismissalRestrictions.Teams);
-                Assert.Empty(requiredReviews.DismissalRestrictions.Users);
-                Assert.False(requiredReviews.DismissStaleReviews);
-                Assert.False(requiredReviews.RequireCodeOwnerReviews);
-                Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
-            }
-
-            public void Dispose()
-            {
-                if (_userRepoContext != null)
-                    _userRepoContext.Dispose();
-
-                if (_orgRepoContext != null)
-                    _orgRepoContext.Dispose();
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Users);
+                    Assert.False(requiredReviews.DismissStaleReviews);
+                    Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
+                }
             }
         }
 
@@ -526,7 +546,7 @@ namespace Octokit.Tests.Integration
                 {
                     var repoOwner = context.RepositoryOwner;
                     var repoName = context.RepositoryName;
-                    var deleted = await _client.RemoveReviewEnforcement(repoOwner, repoName, "master");
+                    var deleted = await _client.RemoveReviewEnforcement(repoOwner, repoName, "main");
 
                     Assert.True(deleted);
                 }
@@ -538,32 +558,32 @@ namespace Octokit.Tests.Integration
                 using (var context = await _github.CreateRepositoryWithProtectedBranch())
                 {
                     var repoId = context.RepositoryId;
-                    var deleted = await _client.RemoveReviewEnforcement(repoId, "master");
+                    var deleted = await _client.RemoveReviewEnforcement(repoId, "main");
 
                     Assert.True(deleted);
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task RemovesReviewEnforcementForOrgRepo()
             {
                 using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
                 {
                     var repoOwner = context.RepositoryContext.RepositoryOwner;
                     var repoName = context.RepositoryContext.RepositoryName;
-                    var deleted = await _client.RemoveReviewEnforcement(repoOwner, repoName, "master");
+                    var deleted = await _client.RemoveReviewEnforcement(repoOwner, repoName, "main");
 
                     Assert.True(deleted);
                 }
             }
 
-            [IntegrationTest]
+            [OrganizationTest]
             public async Task RemovesReviewEnforcementForOrgRepoWithRepositoryId()
             {
                 using (var context = await _github.CreateOrganizationRepositoryWithProtectedBranch())
                 {
                     var repoId = context.RepositoryContext.RepositoryId;
-                    var deleted = await _client.RemoveReviewEnforcement(repoId, "master");
+                    var deleted = await _client.RemoveReviewEnforcement(repoId, "main");
 
                     Assert.True(deleted);
                 }

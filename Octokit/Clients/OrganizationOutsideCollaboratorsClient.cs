@@ -57,7 +57,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org), null, AcceptHeaders.OrganizationMembershipPreview, options);
+            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org), null, options);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org, filter), null, AcceptHeaders.OrganizationMembershipPreview, options);
+            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org, filter), null, options);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Octokit
 
             try
             {
-                var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user), null, AcceptHeaders.OrganizationMembershipPreview).ConfigureAwait(false);
+                var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user)).ConfigureAwait(false);
 
                 if (statusCode != HttpStatusCode.NoContent
                     && statusCode != (HttpStatusCode)422)
@@ -160,7 +160,7 @@ namespace Octokit
 
             try
             {
-                var statusCode = await Connection.Put(ApiUrls.OutsideCollaborator(org, user), AcceptHeaders.OrganizationMembershipPreview);
+                var statusCode = await Connection.Put(ApiUrls.OutsideCollaborator(org, user));
 
                 if (statusCode != HttpStatusCode.NoContent
                     && statusCode != HttpStatusCode.Forbidden)

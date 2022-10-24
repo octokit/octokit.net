@@ -43,9 +43,19 @@ namespace Octokit
         public bool? HasIssues { get; set; }
 
         /// <summary>
+        /// Optional. Gets or sets whether to enable projects for the new repository. The default is true.
+        /// </summary>
+        public bool? HasProjects { get; set; }
+
+        /// <summary>
         /// Optional. Gets or sets whether to enable the wiki for the new repository. The default is true.
         /// </summary>
         public bool? HasWiki { get; set; }
+
+        /// <summary>
+        /// Either true to make this repo available as a template repository or false to prevent it. Default: false.
+        /// </summary>
+        public bool? IsTemplate { get; set; }
 
         /// <summary>
         /// Optional. Gets or sets the new repository's optional website.
@@ -89,6 +99,31 @@ namespace Octokit
         /// Optional. Gets or sets whether the new repository is public, private, or internal. A value provided here overrides any value set in the existing private field.
         /// </summary>
         public RepositoryVisibility? Visibility { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows rebase merges.
+        /// </summary>
+        public bool? AllowRebaseMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows squash merges.
+        /// </summary>
+        public bool? AllowSquashMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows merge commits.
+        /// </summary>
+        public bool? AllowMergeCommit { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the new repository allows auto merge.
+        /// </summary>
+        public bool? AllowAutoMerge { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether the squash pr title is used as default when using Squash Merge. Default is false. Cannot currently be tested as it isn't returned in the GET method.
+        /// </summary>
+        public bool? UseSquashPrTitleAsDefault { get; set; }
 
         internal string DebuggerDisplay
         {

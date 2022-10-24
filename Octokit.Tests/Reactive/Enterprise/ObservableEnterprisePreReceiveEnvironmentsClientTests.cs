@@ -29,8 +29,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<PreReceiveEnvironment>>(
                     new Uri("admin/pre-receive-environments", UriKind.Relative),
-                    Args.EmptyDictionary,
-                    "application/vnd.github.eye-scream-preview+json");
+                    Args.EmptyDictionary);
             }
 
             [Fact]
@@ -50,8 +49,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<PreReceiveEnvironment>>(
                     new Uri("admin/pre-receive-environments", UriKind.Relative),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2),
-                    "application/vnd.github.eye-scream-preview+json");
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
             }
 
             [Fact]

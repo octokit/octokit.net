@@ -24,8 +24,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments/42"),
-                    Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json");
+                    Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -37,8 +36,7 @@ namespace Octokit.Tests.Clients
                 await client.Get(1, 42);
 
                 connection.Received().Get<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments/42"),
-                    Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json");
+                    Arg.Any<Dictionary<string, string>>());
             }
 
             [Fact]
@@ -67,7 +65,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -81,7 +78,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -103,7 +99,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -124,7 +119,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -164,7 +158,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -178,7 +171,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/3/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -198,7 +190,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -217,7 +208,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/3/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     Args.ApiOptions);
             }
 
@@ -239,7 +229,6 @@ namespace Octokit.Tests.Clients
                 connection.Received().GetAll<IssueComment>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/3/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 
@@ -260,7 +249,6 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().GetAll<IssueComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/3/comments"),
                     Arg.Any<Dictionary<string, string>>(),
-                    "application/vnd.github.squirrel-girl-preview+json",
                     options);
             }
 

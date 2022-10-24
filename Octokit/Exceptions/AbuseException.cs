@@ -4,10 +4,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
-#if !NO_SERIALIZABLE
 using System.Runtime.Serialization;
 using System.Security;
-#endif
 
 namespace Octokit
 {
@@ -15,9 +13,7 @@ namespace Octokit
     /// Represents a subset of the HTTP 403 - Forbidden response returned from the API when the forbidden response is related to an abuse detection mechanism.
     /// Contains the amount of seconds after which it's safe to retry the request.
     /// </summary>
-#if !NO_SERIALIZABLE
     [Serializable]
-#endif
     [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
         Justification = "These exceptions are specific to the GitHub API and not general purpose exceptions")]
     public class AbuseException : ForbiddenException
@@ -63,7 +59,6 @@ namespace Octokit
             get { return ApiErrorMessageSafe ?? "Request Forbidden - Abuse Detection"; }
         }
 
-#if !NO_SERIALIZABLE
         /// <summary>
         /// Constructs an instance of AbuseException
         /// </summary>
@@ -86,6 +81,5 @@ namespace Octokit
             base.GetObjectData(info, context);
             info.AddValue("RetryAfterSeconds", RetryAfterSeconds);
         }
-#endif
     }
 }
