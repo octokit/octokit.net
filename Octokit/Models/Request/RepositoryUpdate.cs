@@ -114,6 +114,11 @@ namespace Octokit
         /// </summary>
         public bool? AllowForking { get; set; }
 
+        /// <summary>
+        /// Optional. Get or set whether to always allow a pull request head branch that is behind its base branch to be updated even if it is not required to be up to date before merging, or false otherwise. The default is null (do not update). The default when created is false.
+        /// </summary>
+        public bool? AllowUpdateBranch { get; set; }
+
         internal string DebuggerDisplay => new SimpleJsonSerializer().Serialize(this);
     }
 }

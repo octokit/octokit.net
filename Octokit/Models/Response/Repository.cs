@@ -158,6 +158,8 @@ namespace Octokit
         public RepositoryVisibility? Visibility { get; private set; }
 
         public bool? AllowAutoMerge { get; private set; }
+        
+        public bool? AllowUpdateBranch { get; private set; }
 
         internal string DebuggerDisplay
         {
