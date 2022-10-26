@@ -23,5 +23,5 @@ jobs:
             Thank you for your contributions and help in keeping things tidy!
           days-before-stale: 270
           days-before-close: 7
-          exempt-issue-labels: 'pinned, work-in-progress'
-          exempt-pr-labels: 'pinned, work-in-progress'
+          exempt-issue-labels: 'Status: Pinned'
+          exempt-pr-labels: 'Status: Pinned'
