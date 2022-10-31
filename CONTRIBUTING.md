@@ -29,7 +29,7 @@ to ensure everything builds and the tests pass.
 
 ## How can I get involved?
 
-We have an [`up-for-grabs`](https://github.com/octokit/octokit.net/labels/up-for-grabs)
+We have an [`Status: Up for grabs`](https://github.com/octokit/octokit.net/labels/Status%3A%20Up%20for%20grabs)
 tag on our issue tracker to indicate tasks which contributors can pick up.
 
 If you've found something you'd like to contribute to, leave a comment in the issue
