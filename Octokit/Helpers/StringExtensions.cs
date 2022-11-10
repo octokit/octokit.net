@@ -89,11 +89,6 @@ namespace Octokit
             return string.Concat(value[0].ToString().ToUpperInvariant(), value.Substring(1));
         }
 
-        public static string EncodeSharp(this string value)
-        {
-	        return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
-        }
-
         internal static string EscapeDoubleQuotes(this string value)
         {
             if (value != null)
@@ -136,6 +131,11 @@ namespace Octokit
             RegexOptions.Compiled |
 #endif
             RegexOptions.IgnoreCase);
+
+        static string EncodeSharp(this string value)
+        {
+	        return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
+        }
 
         internal static bool IsNameWithOwnerFormat(this string input)
         {
