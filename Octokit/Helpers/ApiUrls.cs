@@ -2479,6 +2479,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the Deployment Environments API for the given repository.
+        /// </summary>
+        /// <param name="owner">Owner of the repository</param>
+        /// <param name="name">Name of the repository</param>
+        /// <returns>The <see cref="Uri"/> for the Deployments API for the given repository.</returns>
+        public static Uri DeploymentEnvironments(string owner, string name)
+        {
+            return "repos/{0}/{1}/environments".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="System.Uri"/> for the Deployment Statuses API for the given deployment.
         /// </summary>
         /// <param name="owner">Owner of the repository</param>
@@ -3135,6 +3146,16 @@ namespace Octokit
         public static Uri Deployments(long repositoryId)
         {
             return "repositories/{0}/deployments".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the Deployment Environments API for the given repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="Uri"/> for the Deployments API for the given repository.</returns>
+        public static Uri DeploymentEnvironments(long repositoryId)
+        {
+            return "repositories/{0}/environments".FormatUri(repositoryId);
         }
 
         /// <summary>
