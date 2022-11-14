@@ -101,7 +101,7 @@ namespace Octokit
 
         internal static string EncodeSharp(this string value)
         {
-	        return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
+            return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
         }
 
         static IEnumerable<string> SplitUpperCase(this string source)
