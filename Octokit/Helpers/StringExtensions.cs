@@ -99,6 +99,11 @@ namespace Octokit
             return value;
         }
 
+        internal static string EncodeSharp(this string value)
+        {
+	        return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
+        }
+
         static IEnumerable<string> SplitUpperCase(this string source)
         {
             Ensure.ArgumentNotNullOrEmptyString(source, nameof(source));
@@ -131,11 +136,6 @@ namespace Octokit
             RegexOptions.Compiled |
 #endif
             RegexOptions.IgnoreCase);
-
-        static string EncodeSharp(this string value)
-        {
-	        return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
-        }
 
         internal static bool IsNameWithOwnerFormat(this string input)
         {
