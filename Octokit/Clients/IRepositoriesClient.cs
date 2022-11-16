@@ -344,6 +344,12 @@ namespace Octokit
         /// </remarks>
         IDeploymentsClient Deployment { get; }
 
+        /// <summary>
+        /// Client for GitHub's Repository Environments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/deployments/environments/">Environments API documentation</a> for more details
+        /// </remarks>
         IRepositoryDeployEnvironmentsClient Environment { get;  }
 
         /// <summary>

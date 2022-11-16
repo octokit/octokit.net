@@ -226,9 +226,17 @@ namespace Octokit.Reactive
         /// Client for GitHub's Repository Deployments API
         /// </summary>
         /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/repos/deployment/">Collaborators API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/en/rest/deployments/deployments">Deployments API documentation</a> for more details
         /// </remarks>
         IObservableDeploymentsClient Deployment { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Envirinments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/deployments/environments/">Envirinments API documentation</a> for more details
+        /// </remarks>
+        IObservableEnvironmentsClient Environments { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Statistics API.
