@@ -14,12 +14,12 @@ jobs:
           stale-issue-message: >
             👋 Hey Friends, this issue has been automatically marked as `stale` because it has no recent activity.
             It will be closed if no further activity occurs.
-            Please add the `pinned` label if you feel that this issue needs to remain open/active.
+            Please add the `Status: Pinned` label if you feel that this issue needs to remain open/active.
             Thank you for your contributions and help in keeping things tidy!
           stale-pr-message: >
             👋 Hey Friends, this pull request has been automatically marked as `stale` because it has no recent activity.
             It will be closed if no further activity occurs.
-            Please add the `pinned` label if you feel that this issue needs to remain open/active.
+            Please add the `Status: Pinned` label if you feel that this issue needs to remain open/active.
             Thank you for your contributions and help in keeping things tidy!
           days-before-stale: 270
           days-before-close: 7
