@@ -7,9 +7,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ApiOptions
     {
+        private static ApiOptions emptyOptions = new ApiOptions();
+
         public static ApiOptions None
         {
-            get { return new ApiOptions(); }
+            get { return emptyOptions; }
         }
 
         /// <summary>
