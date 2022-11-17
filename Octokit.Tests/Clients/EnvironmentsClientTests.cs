@@ -77,8 +77,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll(repositoryId);
 
                 connection.Received()
-                    .Get<DeploymentEnvironmentsResponse>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                         null);
+                    .Get<DeploymentEnvironmentsResponse>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
             }
 
             [Fact]
@@ -130,8 +129,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(owner, name);
                 connection.Received()
-                    .Get<DeploymentEnvironmentsResponse>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                                                         null);
+                    .Get<DeploymentEnvironmentsResponse>(Arg.Is<Uri>(u => u.ToString() == expectedUrl));
             }
         }
 

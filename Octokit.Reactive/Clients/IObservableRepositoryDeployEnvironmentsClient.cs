@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
-    public interface IObservableEnvironmentsClient
+    public interface IObservableRepositoryDeployEnvironmentsClient
     {
         /// <summary>
         /// Gets all the environments for the specified repository. Any user with pull access

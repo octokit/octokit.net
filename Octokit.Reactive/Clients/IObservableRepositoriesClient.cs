@@ -236,7 +236,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://docs.github.com/en/rest/deployments/environments/">Envirinments API documentation</a> for more details
         /// </remarks>
-        IObservableEnvironmentsClient Environments { get; }
+        IObservableRepositoryDeployEnvironmentsClient Environment { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Statistics API.

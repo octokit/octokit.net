@@ -27,7 +27,7 @@ namespace Octokit.Reactive
             Forks = new ObservableRepositoryForksClient(client);
             Collaborator = new ObservableRepoCollaboratorsClient(client);
             Deployment = new ObservableDeploymentsClient(client);
-            Environments = new ObservableEnvironmentsClient(client);
+            Environment = new ObservableEnvironmentsClient(client);
             Statistics = new ObservableStatisticsClient(client);
             PullRequest = new ObservablePullRequestsClient(client);
             Branch = new ObservableRepositoryBranchesClient(client);
@@ -359,7 +359,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://docs.github.com/en/rest/deployments/environments#about-the-deployment-environments-api/">Environments API documentation</a> for more details
         /// </remarks>
-        public IObservableEnvironmentsClient Environments { get; private set; }
+        public IObservableRepositoryDeployEnvironmentsClient Environment { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Statistics API

@@ -5,7 +5,7 @@ using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive.Clients
 {
-    public class ObservableEnvironmentsClient : IObservableEnvironmentsClient
+    public class ObservableEnvironmentsClient : IObservableRepositoryDeployEnvironmentsClient
     {
         readonly IRepositoryDeployEnvironmentsClient _client;
         readonly IConnection _connection;
