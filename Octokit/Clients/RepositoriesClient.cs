@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace Octokit
 {
@@ -27,6 +28,7 @@ namespace Octokit
             Collaborator = new RepoCollaboratorsClient(apiConnection);
             Statistics = new StatisticsClient(apiConnection);
             Deployment = new DeploymentsClient(apiConnection);
+            Environment = new DeploymentEnvironmentsClient(apiConnection);
             PullRequest = new PullRequestsClient(apiConnection);
             Comment = new RepositoryCommentsClient(apiConnection);
             Commit = new RepositoryCommitsClient(apiConnection);
@@ -537,6 +539,14 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/deployments/">Deployments API documentation</a> for more details
         /// </remarks>
         public IDeploymentsClient Deployment { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Deployment Environments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/deployments/environments">Deployments Environments API documentation</a> for more details
+        /// </remarks>
+        public IRepositoryDeployEnvironmentsClient Environment { get; private set; }
 
         /// <summary>
         /// Client for GitHub's Repository Statistics API
