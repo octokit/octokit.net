@@ -345,6 +345,14 @@ namespace Octokit
         IDeploymentsClient Deployment { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Environments API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/deployments/environments/">Environments API documentation</a> for more details
+        /// </remarks>
+        IRepositoryDeployEnvironmentsClient Environment { get;  }
+
+        /// <summary>
         /// Client for GitHub's Repository Statistics API.
         /// Note that the GitHub API uses caching on these endpoints,
         /// see <a href="https://developer.github.com/v3/repos/statistics/#a-word-about-caching">a word about caching</a> for more details.
