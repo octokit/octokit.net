@@ -239,24 +239,6 @@ jobs:
     }
 
     [IntegrationTest]
-    public async Task CanGetPendingDeployments()
-    {
-        var github = Helper.GetAuthenticatedClient();
-        var fixture = github.Actions.Workflows.Runs;
-
-        using (var context = await github.CreateRepositoryContextWithAutoInit())
-        {
-            var owner = context.Repository.Owner.Login;
-            var name = context.Repository.Name;
-            (var workflowFileName, var runId) = await CreateWorkflowAndWaitForFirstRun(github, context, WorkflowRunStatus.Completed);
-
-            var approvals = await fixture.GetPendingDeployments(owner, name, runId);
-            Assert.NotNull(approvals);
-            Assert.Empty(approvals);
-        }
-    }
-
-    [IntegrationTest]
     public async Task CanRerunWorkflow()
     {
         var github = Helper.GetAuthenticatedClient();

@@ -372,41 +372,6 @@ namespace Octokit.Tests.Reactive
             }
         }
 
-        public class TheGetPendingDeploymentsMethod
-        {
-            [Fact]
-            public async Task CallsGetPendingDeploymentsOnClient()
-            {
-                var connection = Substitute.For<IGitHubClient>();
-                var client = new ObservableActionsWorkflowRunsClient(connection);
-
-                client.GetPendingDeployments("fake", "repo", 123);
-
-                connection.Connection.Received().Get<List<PendingDeployment>>(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
-                    null);
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var connection = Substitute.For<IGitHubClient>();
-                var client = new ObservableActionsWorkflowRunsClient(connection);
-
-                Assert.Throws<ArgumentNullException>(() => client.GetPendingDeployments(null, "repo", 123));
-                Assert.Throws<ArgumentNullException>(() => client.GetPendingDeployments("fake", null, 123));
-            }
-
-            [Fact]
-            public async Task EnsuresNonEmptyArguments()
-            {
-                var connection = Substitute.For<IGitHubClient>();
-                var client = new ObservableActionsWorkflowRunsClient(connection);
-
-                Assert.Throws<ArgumentException>(() => client.GetPendingDeployments("", "repo", 123));
-                Assert.Throws<ArgumentException>(() => client.GetPendingDeployments("fake", "", 123));
-            }
-        }
-
         public class TheGetReviewHistoryMethod
         {
             [Fact]

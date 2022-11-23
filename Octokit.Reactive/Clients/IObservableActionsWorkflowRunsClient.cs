@@ -146,17 +146,6 @@ namespace Octokit.Reactive
         IObservable<Unit> DeleteLogs(string owner, string name, long runId);
 
         /// <summary>
-        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#get-pending-deployments-for-a-workflow-run
-        /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
-        /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<PendingDeployment> GetPendingDeployments(string owner, string name, long runId);
-
-        /// <summary>
         /// Approve or reject pending deployments that are waiting on approval by a required reviewer.
         /// </summary>
         /// <remarks>

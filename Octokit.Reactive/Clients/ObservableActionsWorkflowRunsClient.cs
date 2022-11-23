@@ -238,23 +238,6 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#get-pending-deployments-for-a-workflow-run
-        /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
-        /// <param name="runId">The Id of the workflow run.</param>
-        public IObservable<PendingDeployment> GetPendingDeployments(string owner, string name, long runId)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-
-            return _connection.GetAndFlattenAllPages<PendingDeployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId));
-        }
-
-        /// <summary>
         /// Approve or reject pending deployments that are waiting on approval by a required reviewer.
         /// </summary>
         /// <remarks>

@@ -319,47 +319,6 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheGetPendingDeploymentsMethod
-        {
-            [Fact]
-            public async Task RequestsCorrectUrl()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ActionsWorkflowRunsClient(connection);
-
-                await client.GetPendingDeployments("fake", "repo", 123);
-
-                connection.Received().GetAll<PendingDeployment>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"));
-            }
-
-            [Fact]
-            public async Task EnsuresNonNullArguments()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ActionsWorkflowRunsClient(connection);
-
-                var workflowRunsRequest = new WorkflowRunsRequest();
-                var options = new ApiOptions();
-
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetPendingDeployments(null, "repo", 123));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetPendingDeployments("fake", null, 123));
-            }
-
-            [Fact]
-            public async Task EnsuresNonEmptyArguments()
-            {
-                var connection = Substitute.For<IApiConnection>();
-                var client = new ActionsWorkflowRunsClient(connection);
-
-                var workflowRunsRequest = new WorkflowRunsRequest();
-                var options = new ApiOptions();
-
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetPendingDeployments("", "repo", 123));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.GetPendingDeployments("fake", "", 123));
-            }
-        }
-
         public class TheGetReviewHistoryMethod
         {
             [Fact]

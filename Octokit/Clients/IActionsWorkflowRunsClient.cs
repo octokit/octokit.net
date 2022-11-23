@@ -160,19 +160,6 @@ namespace Octokit
         Task DeleteLogs(string owner, string name, long runId);
 
         /// <summary>
-        /// Get all deployment environments for a workflow run that are waiting for protection rules to pass.
-        /// </summary>
-        /// <remarks>
-        /// https://developer.github.com/v3/actions/workflow-runs/#get-pending-deployments-for-a-workflow-run
-        /// </remarks>
-        /// <param name="owner">The owner of the repository.</param>
-        /// <param name="name">The name of the repository.</param>
-        /// <param name="runId">The Id of the workflow run.</param>
-        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 30/03/2022)")]
-        [ExcludeFromPaginationNamingConventionTest("Pagination not supported by GitHub API (tested 30/03/2022)")]
-        Task<IReadOnlyList<PendingDeployment>> GetPendingDeployments(string owner, string name, long runId);
-
-        /// <summary>
         /// Re-runs your workflow run using its Id.
         /// </summary>
         /// <remarks>
