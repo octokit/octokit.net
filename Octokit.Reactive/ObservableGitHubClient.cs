@@ -56,6 +56,7 @@ namespace Octokit.Reactive
             Licenses = new ObservableLicensesClient(gitHubClient);
             RateLimit = new ObservableRateLimitClient(gitHubClient);
             Meta = new ObservableMetaClient(gitHubClient);
+            Actions = new ObservableActionsClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -102,6 +103,7 @@ namespace Octokit.Reactive
         public IObservableLicensesClient Licenses { get; private set; }
         public IObservableRateLimitClient RateLimit { get; private set; }
         public IObservableMetaClient Meta { get; private set; }
+        public IObservableActionsClient Actions { get; private set; }
 
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made
