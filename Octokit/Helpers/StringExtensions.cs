@@ -23,8 +23,9 @@ namespace Octokit
         public static Uri FormatUri(this string pattern, params object[] args)
         {
             Ensure.ArgumentNotNullOrEmptyString(pattern, nameof(pattern));
+            var uriString = string.Format(CultureInfo.InvariantCulture, pattern, args).EncodeSharp();
 
-            return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
+            return new Uri(uriString, UriKind.Relative);
         }
 
         public static string UriEncode(this string input)
@@ -104,6 +105,11 @@ namespace Octokit
             }
 
             return value;
+        }
+
+        internal static string EncodeSharp(this string value)
+        {
+            return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
         }
 
         static IEnumerable<string> SplitUpperCase(this string source)
