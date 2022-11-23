@@ -1,0 +1,157 @@
+﻿using System;
+using System.Reactive;
+
+namespace Octokit.Reactive
+{
+    /// <summary>
+    /// A client for GitHub's Actions Workflows API.
+    /// </summary>
+    /// <remarks>
+    /// See the <a href="https://developer.github.com/v3/actions/workflows/">Actions Workflows API documentation</a> for more information.
+    /// </remarks>
+    public interface IObservableActionsWorkflowsClient
+    {
+        /// <summary>
+        /// Manually triggers a GitHub Actions workflow run in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
+        IObservable<Unit> CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch);
+
+        /// <summary>
+        /// Manually triggers a GitHub Actions workflow run in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
+        IObservable<Unit> CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch);
+
+        /// <summary>
+        /// Disables a specific workflow in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#disable-a-workflow
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        IObservable<Unit> Disable(string owner, string name, string workflowFileName);
+
+        /// <summary>
+        /// Disables a specific workflow in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#disable-a-workflow
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        IObservable<Unit> Disable(string owner, string name, long workflowId);
+
+        /// <summary>
+        /// Enables a specific workflow in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#enable-a-workflow
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        IObservable<Unit> Enable(string owner, string name, string workflowFileName);
+
+        /// <summary>
+        /// Enables a specific workflow in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#enable-a-workflow
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        IObservable<Unit> Enable(string owner, string name, long workflowId);
+
+        /// <summary>
+        /// Gets a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#get-a-workflow
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        IObservable<Workflow> Get(string owner, string name, string workflowFileName);
+
+        /// <summary>
+        /// Gets a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#get-a-workflow
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        IObservable<Workflow> Get(string owner, string name, long workflowId);
+
+        /// <summary>
+        /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        IObservable<WorkflowUsage> GetUsage(string owner, string name, string workflowFileName);
+
+        /// <summary>
+        /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        IObservable<WorkflowUsage> GetUsage(string owner, string name, long workflowId);
+
+        /// <summary>
+        /// Lists the workflows in a repository. Anyone with read access to the repository can use this endpoint.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#list-repository-workflows
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        IObservable<WorkflowsResponse> List(string owner, string name);
+
+        /// <summary>
+        /// Lists the workflows in a repository. Anyone with read access to the repository can use this endpoint.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#list-repository-workflows
+        /// </remarks>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="name">The name of the repository.</param>
+        /// <param name="options">Options to change the API response.</param>
+        IObservable<WorkflowsResponse> List(string owner, string name, ApiOptions options);
+
+        /// <summary>
+        /// Client for the Workflow jobs API.
+        /// </summary>
+        IObservableActionsWorkflowJobsClient Jobs { get; }
+
+        /// <summary>
+        /// Client for the Workflow runs API.
+        /// </summary>
+        IObservableActionsWorkflowRunsClient Runs { get; }
+    }
+}

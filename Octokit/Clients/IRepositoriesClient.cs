@@ -1,7 +1,6 @@
-using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace Octokit
 {
@@ -9,7 +8,7 @@ namespace Octokit
     /// A client for GitHub's Repositories API.
     /// </summary>
     /// <remarks>
-    /// See the <https://docs.github.com/en/rest/reference/repos">Repositories API documentation</a> for more details.
+    /// See the <a href="https://docs.github.com/en/rest/reference/repos">Repositories API documentation</a> for more details.
     /// </remarks>
     public interface IRepositoriesClient
     {
