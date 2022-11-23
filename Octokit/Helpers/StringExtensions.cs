@@ -74,6 +74,14 @@ namespace Octokit
         public static string ToRubyCase(this string propertyName)
         {
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
+
+            // If the entire property is already all upper case, then do not split it across
+            // word boundaries. For example, "UBUNTU" should not be changed to "u_b_u_n_t_u".
+            if (string.Equals(propertyName, propertyName.ToUpperInvariant(), StringComparison.Ordinal))
+            {
+                return propertyName;
+            }
+
             return string.Join("_", propertyName.SplitUpperCase()).ToLowerInvariant();
         }
 
