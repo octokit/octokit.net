@@ -89,5 +89,30 @@ namespace Octokit.Tests.Helpers
                 Assert.Equal("\\\"test milestone\\\"", input.EscapeDoubleQuotes());
             }
         }
+
+        public class EncodeSharpMethod
+        {
+            [Fact]
+            public void EncodeSharpReturnsNullForNullInput()
+            {
+                Assert.Equal(string.Empty, (null as string).EncodeSharp());
+            }
+
+            [Fact]
+            public void EncodeSharpReturnsInputWithoutDoubleQuotes()
+            {
+                string input = "some test input without double quotes in it";
+
+                Assert.Equal(input, input.EncodeSharp());
+            }
+
+            [Fact]
+            public void EncodeAllSharp()
+            {
+                string input = "#some test input with # in it#";
+
+                Assert.Equal("%23some test input with %23 in it%23", input.EncodeSharp());
+            }
+        }
     }
 }

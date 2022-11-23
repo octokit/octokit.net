@@ -41,5 +41,6 @@ namespace Octokit.Reactive
         IObservableLicensesClient Licenses { get; }
         IObservableRateLimitClient RateLimit { get; }
         IObservableMetaClient Meta { get; }
+        IObservableActionsClient Actions { get; }
     }
 }

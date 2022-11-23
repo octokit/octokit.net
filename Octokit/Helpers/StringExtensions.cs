@@ -23,8 +23,9 @@ namespace Octokit
         public static Uri FormatUri(this string pattern, params object[] args)
         {
             Ensure.ArgumentNotNullOrEmptyString(pattern, nameof(pattern));
+            var uriString = string.Format(CultureInfo.InvariantCulture, pattern, args).EncodeSharp();
 
-            return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
+            return new Uri(uriString, UriKind.Relative);
         }
 
         public static string UriEncode(this string input)
@@ -73,6 +74,14 @@ namespace Octokit
         public static string ToRubyCase(this string propertyName)
         {
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
+
+            // If the entire property is already all upper case, then do not split it across
+            // word boundaries. For example, "UBUNTU" should not be changed to "u_b_u_n_t_u".
+            if (string.Equals(propertyName, propertyName.ToUpperInvariant(), StringComparison.Ordinal))
+            {
+                return propertyName;
+            }
+
             return string.Join("_", propertyName.SplitUpperCase()).ToLowerInvariant();
         }
 
@@ -96,6 +105,11 @@ namespace Octokit
             }
 
             return value;
+        }
+
+        internal static string EncodeSharp(this string value)
+        {
+            return !string.IsNullOrEmpty(value) ? value?.Replace("#", "%23") : string.Empty;
         }
 
         static IEnumerable<string> SplitUpperCase(this string source)
