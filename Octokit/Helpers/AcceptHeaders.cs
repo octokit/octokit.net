@@ -13,7 +13,5 @@
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#custom-media-types</remarks>
         public const string RawContentMediaType = "application/vnd.github.v3.raw";
-
-        public const string ListBranchOrPullForCommitPreview = "application/vnd.github.groot-preview+json";
     }
 }

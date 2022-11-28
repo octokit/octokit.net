@@ -46,7 +46,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(repositoryId, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(repositoryId, sha1), null, options);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(owner, name, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return _connection.GetAndFlattenAllPages<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(owner, name, sha1), null, options);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(repositoryId, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return _connection.GetAndFlattenAllPages<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(repositoryId, sha1), null, options);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(owner, name, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return _connection.GetAndFlattenAllPages<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(owner, name, sha1), null, options);
         }
     }
 }

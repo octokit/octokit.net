@@ -39,7 +39,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(repositoryId, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(repositoryId, sha1), null, options);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(owner, name, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepositoryCommitsBranchesWhereHead(owner, name, sha1), null, options);
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(repositoryId, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return ApiConnection.GetAll<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(repositoryId, sha1), null, options);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(sha1, nameof(sha1));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(owner, name, sha1), null, AcceptHeaders.ListBranchOrPullForCommitPreview, options);
+            return ApiConnection.GetAll<CommitPullRequest>(ApiUrls.RepositoryCommitsPull(owner, name, sha1), null, options);
         }
     }
 }

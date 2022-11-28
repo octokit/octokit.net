@@ -368,7 +368,7 @@ namespace Octokit.Tests.Clients
                 await client.PullRequests("fake", "repo", "ref", options);
 
                 connection.Received().GetAll<CommitPullRequest>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/pulls"),
-                    null, "application/vnd.github.groot-preview+json", options);
+                    null, options);
             }
 
             [Fact]
@@ -386,7 +386,7 @@ namespace Octokit.Tests.Clients
                 await client.PullRequests(1, "ref", options);
 
                 connection.Received().GetAll<CommitPullRequest>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/pulls"),
-                    null, "application/vnd.github.groot-preview+json", options);
+                    null, options);
             }
 
             [Fact]
