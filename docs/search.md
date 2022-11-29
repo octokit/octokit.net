@@ -61,6 +61,14 @@ request.Involves = "terrajobst";
 request.State = ItemState.All;
 // or to just search closed issues
 request.State = ItemState.Closed;
+
+// you can filter by the is qualifier
+// the enum IssueIsQualifier contains the supported values
+// here is how you will can filter with issue and locked
+request.Is = new List<IssueIsQualifier> {
+  IssueIsQualifier.Issue,
+  IssueIsQualifier.Locked
+};
 ```
 
 There's other options available to control how the results are returned:
