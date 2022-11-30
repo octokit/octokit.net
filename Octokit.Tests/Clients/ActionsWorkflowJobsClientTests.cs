@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
                 await client.Rerun("fake", "repo", 123);
 
                 connection.Received().Post(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/jobs/123/rerun"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/jobs/123/rerun"));
             }
 
             [Fact]
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Clients
                 await client.Get("fake", "repo", 123);
 
                 connection.Received().Get<WorkflowJob>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/jobs/123"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/jobs/123"));
             }
 
             [Fact]
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Clients
                 await client.GetLogs("fake", "repo", 123);
 
                 connection.Connection.Received().Get<string>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/jobs/123/logs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/jobs/123/logs"),
                     null);
             }
 
@@ -134,14 +134,14 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo", 123);
 
                 connection.Received().GetAll<WorkflowJobsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/jobs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/jobs"),
                     Args.EmptyDictionary,
                     Args.ApiOptions);
 
                 await client.List("fake", "repo", 123, 456);
 
                 connection.Received().GetAll<WorkflowJobsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456/jobs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/attempts/456/jobs"),
                     null,
                     Args.ApiOptions);
             }
@@ -160,7 +160,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo", 123, request);
 
                 connection.Received().GetAll<WorkflowJobsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/jobs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/jobs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 1
                             && x["filter"] == "all"),
@@ -179,7 +179,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo", 123, request, options);
 
                 connection.Received().GetAll<WorkflowJobsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/jobs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/jobs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 1
                             && x["filter"] == "latest"),
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo", 123, 456, options);
 
                 connection.Received().GetAll<WorkflowJobsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456/jobs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/attempts/456/jobs"),
                     null,
                     options);
             }

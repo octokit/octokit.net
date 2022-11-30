@@ -27,7 +27,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForOrg("fake", PackageType.RubyGems);
 
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
             }
 
             [Fact]
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForOrg("fake", PackageType.RubyGems, PackageVisibility.Public);
 
                 var calls = connection.ReceivedCalls();
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
             }
 
             [Fact]
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetForOrg("fake", PackageType.Npm, "name");
 
-                connection.Received().Get<Package>(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/npm/name"));
+                connection.Received().Get<Package>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/npm/name"));
             }
 
             [Fact]
@@ -89,7 +89,7 @@ namespace Octokit.Tests.Clients
 
                 await client.DeleteForOrg("fake", PackageType.Npm, "name");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/npm/name"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/npm/name"));
             }
 
             [Fact]
@@ -115,7 +115,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RestoreForOrg("fake", PackageType.Npm, "name");
 
-                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/npm/name/restore"));
+                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/npm/name/restore"));
             }
 
             [Fact]
@@ -141,7 +141,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForActiveUser(PackageType.RubyGems);
 
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "/user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
             }
 
             [Fact]
@@ -153,7 +153,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForActiveUser(PackageType.RubyGems, PackageVisibility.Public);
 
                 var calls = connection.ReceivedCalls();
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "/user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
             }
         }
 
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetForActiveUser(PackageType.Npm, "name");
 
-                connection.Received().Get<Package>(Arg.Is<Uri>(u => u.ToString() == "/user/packages/npm/name"));
+                connection.Received().Get<Package>(Arg.Is<Uri>(u => u.ToString() == "user/packages/npm/name"));
             }
 
             [Fact]
@@ -190,7 +190,7 @@ namespace Octokit.Tests.Clients
 
                 await client.DeleteForActiveUser(PackageType.Npm, "name");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/user/packages/npm/name"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "user/packages/npm/name"));
             }
 
             [Fact]
@@ -213,7 +213,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RestoreForActiveUser(PackageType.Npm, "name");
 
-                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "/user/packages/npm/name/restore"));
+                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "user/packages/npm/name/restore"));
             }
 
             [Fact]
@@ -236,7 +236,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUser("fake", PackageType.RubyGems);
 
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
             }
 
             [Fact]
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForUser("fake", PackageType.RubyGems, PackageVisibility.Public);
 
                 var calls = connection.ReceivedCalls();
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
             }
 
             [Fact]
@@ -272,7 +272,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetForUser("fake", PackageType.Npm, "name");
 
-                connection.Received().Get<Package>(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages/npm/name"));
+                connection.Received().Get<Package>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages/npm/name"));
             }
 
             [Fact]
@@ -298,7 +298,7 @@ namespace Octokit.Tests.Clients
 
                 await client.DeleteForUser("fake", PackageType.Npm, "name");
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages/npm/name"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages/npm/name"));
             }
 
             [Fact]
@@ -324,7 +324,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RestoreForUser("fake", PackageType.Npm, "name");
 
-                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages/npm/name/restore"));
+                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages/npm/name/restore"));
             }
 
             [Fact]
