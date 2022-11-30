@@ -62,9 +62,9 @@ request.State = ItemState.All;
 // or to just search closed issues
 request.State = ItemState.Closed;
 
-// you can filter by the is qualifier
+// you can filter by the "Is" qualifier
 // the enum IssueIsQualifier contains the supported values
-// here is how you will can filter with issue and locked
+// you can filter for locked issues like this:
 request.Is = new List<IssueIsQualifier> {
   IssueIsQualifier.Issue,
   IssueIsQualifier.Locked
