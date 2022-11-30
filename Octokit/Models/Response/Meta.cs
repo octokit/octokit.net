@@ -7,7 +7,7 @@ using Octokit.Internal;
 namespace Octokit
 {
     /// <summary>
-    /// Response from the /meta endpoint that provides information about GitHub.com or a GitHub Enterprise instance. 
+    /// Response from the /meta endpoint that provides information about GitHub.com or a GitHub Enterprise instance.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Meta
@@ -33,6 +33,7 @@ namespace Octokit
         /// <param name="importer">An Array of IP addresses specifying the addresses that source imports will originate from on GitHub.com.</param>
         /// <param name="actions">An array of IP addresses in CIDR format specifying the Actions servers for GitHub</param>
         /// <param name="dependabot">An array of IP addresses in CIDR format specifying the Dependabot servers for GitHub</param>
+        /// <param name="installedVersion">The installed version of GitHub Enterprise Server</param>
         public Meta(
             bool verifiablePasswordAuthentication,
             string gitHubServicesSha,
@@ -44,7 +45,8 @@ namespace Octokit
             IReadOnlyList<string> pages,
             IReadOnlyList<string> importer,
             IReadOnlyList<string> actions,
-            IReadOnlyList<string> dependabot)
+            IReadOnlyList<string> dependabot,
+            string installedVersion)
         {
             VerifiablePasswordAuthentication = verifiablePasswordAuthentication;
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -59,6 +61,7 @@ namespace Octokit
             Importer = importer;
             Actions = actions;
             Dependabot = dependabot;
+            InstalledVersion = installedVersion;
         }
 
         /// <summary>
@@ -123,6 +126,11 @@ namespace Octokit
         /// An Array of IP addresses in CIDR format specifying the Dependabot servers.
         /// </summary>
         public IReadOnlyList<string> Dependabot { get; private set; }
+
+        /// <summary>
+        /// The installed version of GitHub Enterprise Server.
+        /// </summary>
+        public string InstalledVersion { get; private set; }
 
         internal string DebuggerDisplay
         {

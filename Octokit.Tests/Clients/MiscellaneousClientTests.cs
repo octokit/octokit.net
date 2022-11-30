@@ -156,7 +156,8 @@ namespace Octokit.Tests.Clients
                      new[] { "1.1.6.1/24", "1.1.6.2/24" },
                      new[] { "1.1.7.1", "1.1.7.2" },
                      new[] { "1.1.8.1/24", "1.1.8.2/24" },
-                     new[] { "1.1.9.1", "1.1.9.2" }
+                     new[] { "1.1.9.1", "1.1.9.2" },
+                     null
                  );
 
                 var apiConnection = Substitute.For<IApiConnection>();
