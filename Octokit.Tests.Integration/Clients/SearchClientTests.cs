@@ -282,6 +282,28 @@ public class SearchClientTests
     }
 
     [IntegrationTest]
+    public async Task SearchForLockedUnlockedIssues()
+    {
+
+        var lockedIssuesRequest = new SearchIssuesRequest();
+        lockedIssuesRequest.Repos.Add("octokit", "octokit.net");
+        lockedIssuesRequest.Is = new List<IssueIsQualifier> { IssueIsQualifier.Issue, IssueIsQualifier.Locked };
+
+        var lockedIssues = await _gitHubClient.Search.SearchIssues(lockedIssuesRequest);
+
+        var unlockedIssuesRequest = new SearchIssuesRequest();
+
+        unlockedIssuesRequest.Repos.Add("octokit", "octokit.net");
+        unlockedIssuesRequest.Is = new List<IssueIsQualifier> { IssueIsQualifier.Issue, IssueIsQualifier.Unlocked };
+
+
+        var unlockedIssues = await _gitHubClient.Search.SearchIssues(unlockedIssuesRequest);
+
+        Assert.All(lockedIssues.Items, i => Assert.True(i.Locked));
+        Assert.All(unlockedIssues.Items, i => Assert.False(i.Locked));
+    }
+
+    [IntegrationTest]
     public async Task SearchForMergedPullRequests()
     {
         var allRequest = new SearchIssuesRequest();

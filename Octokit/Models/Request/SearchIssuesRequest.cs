@@ -489,7 +489,11 @@ namespace Octokit
         [Parameter(Value = "private")]
         Private,
         [Parameter(Value = "public")]
-        Public
+        Public,
+        [Parameter(Value = "locked")]
+        Locked,
+        [Parameter(Value = "unlocked")]
+        Unlocked
     }
 
     public enum IssueNoMetadataQualifier
