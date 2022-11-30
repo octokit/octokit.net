@@ -171,6 +171,17 @@ public class SearchIssuesRequestTests
         }
 
         [Fact]
+        public void HandlesIsLockedUnlockedAttributeCorrectly()
+        {
+            var request = new SearchIssuesRequest("test");
+            Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("is:"));
+
+            request.Is = new List<IssueIsQualifier> { IssueIsQualifier.Locked, IssueIsQualifier.Unlocked };
+            Assert.Contains("is:locked", request.MergedQualifiers());
+            Assert.Contains("is:unlocked", request.MergedQualifiers());
+        }
+
+        [Fact]
         public void HandlesStatusAttributeCorrectly()
         {
             var request = new SearchIssuesRequest("test");
