@@ -30,7 +30,7 @@ namespace Octokit.Tests.Clients
                 await client.Approve("fake", "repo", 123);
 
                 connection.Received().Post(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/approve"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/approve"));
             }
 
             [Fact]
@@ -65,7 +65,7 @@ namespace Octokit.Tests.Clients
                 await client.Cancel("fake", "repo", 123);
 
                 connection.Received().Post(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/cancel"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/cancel"));
             }
 
             [Fact]
@@ -100,7 +100,7 @@ namespace Octokit.Tests.Clients
                 await client.Delete("fake", "repo", 123);
 
                 connection.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123"));
             }
 
             [Fact]
@@ -135,7 +135,7 @@ namespace Octokit.Tests.Clients
                 await client.DeleteLogs("fake", "repo", 123);
 
                 connection.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/logs"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/logs"));
             }
 
             [Fact]
@@ -170,7 +170,7 @@ namespace Octokit.Tests.Clients
                 await client.Get("fake", "repo", 123);
 
                 connection.Received().Get<WorkflowRun>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123"),
                     null);
             }
 
@@ -205,7 +205,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<byte[]>>(new ApiResponse<byte[]>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.GetRaw(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/logs"), null)
+                connection.GetRaw(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/logs"), null)
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -250,7 +250,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAttempt("fake", "repo", 123, 456);
 
                 connection.Received().Get<WorkflowRun>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/attempts/456"),
                     null);
             }
 
@@ -285,7 +285,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<byte[]>>(new ApiResponse<byte[]>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.GetRaw(Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/attempts/456/logs"), null)
+                connection.GetRaw(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/attempts/456/logs"), null)
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -330,7 +330,7 @@ namespace Octokit.Tests.Clients
                 await client.GetReviewHistory("fake", "repo", 123);
 
                 connection.Received().GetAll<EnvironmentApprovals>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/approvals"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/approvals"));
             }
 
             [Fact]
@@ -371,7 +371,7 @@ namespace Octokit.Tests.Clients
                 await client.GetUsage("fake", "repo", 123);
 
                 connection.Received().Get<WorkflowRunUsage>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/timing"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/timing"),
                     null);
             }
 
@@ -407,7 +407,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo");
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs"),
                     Args.EmptyDictionary,
                     Args.ApiOptions);
             }
@@ -432,7 +432,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo", request);
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 7
                             && x["actor"] == "octocat"
@@ -458,7 +458,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo", request, options);
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 3
                             && x["branch"] == "main"
@@ -520,7 +520,7 @@ namespace Octokit.Tests.Clients
                 await client.ListByWorkflow("fake", "repo", 123);
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/runs"),
                     Args.EmptyDictionary,
                     Args.ApiOptions);
             }
@@ -534,7 +534,7 @@ namespace Octokit.Tests.Clients
                 await client.ListByWorkflow("fake", "repo", "main.yml");
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yml/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yml/runs"),
                     Args.EmptyDictionary,
                     Args.ApiOptions);
             }
@@ -559,7 +559,7 @@ namespace Octokit.Tests.Clients
                 await client.ListByWorkflow("fake", "repo", 123, request);
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 7
                             && x["actor"] == "octocat"
@@ -593,7 +593,7 @@ namespace Octokit.Tests.Clients
                 await client.ListByWorkflow("fake", "repo", "main.yml", request);
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yml/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yml/runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 7
                             && x["actor"] == "octocat"
@@ -619,7 +619,7 @@ namespace Octokit.Tests.Clients
                 await client.ListByWorkflow("fake", "repo", 123, request, options);
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 3
                             && x["branch"] == "main"
@@ -640,7 +640,7 @@ namespace Octokit.Tests.Clients
                 await client.ListByWorkflow("fake", "repo", "main.yml", request, options);
 
                 connection.Received().GetAll<WorkflowRunsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yml/runs"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yml/runs"),
                     Arg.Is<Dictionary<string, string>>(x =>
                             x.Count == 3
                             && x["branch"] == "main"
@@ -732,7 +732,7 @@ namespace Octokit.Tests.Clients
                 await client.Rerun("fake", "repo", 123);
 
                 connection.Received().Post(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/rerun"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/rerun"));
             }
 
             [Fact]
@@ -769,7 +769,7 @@ namespace Octokit.Tests.Clients
                 await client.RerunFailedJobs("fake", "repo", 123);
 
                 connection.Received().Post(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/rerun-failed-jobs"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/rerun-failed-jobs"));
             }
 
             [Fact]
@@ -806,7 +806,7 @@ namespace Octokit.Tests.Clients
                 await client.ReviewPendingDeployments("fake", "repo", 123, review);
 
                 connection.Received().Post<Deployment>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/runs/123/pending_deployments"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/pending_deployments"),
                     review);
             }
 

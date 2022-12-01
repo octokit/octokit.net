@@ -42,7 +42,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateDispatch("fake", "repo", 123, createDispatch);
 
                 connection.Received().Post<object>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/dispatches"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/dispatches"),
                     createDispatch);
             }
 
@@ -57,7 +57,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateDispatch("fake", "repo", "main.yaml", createDispatch);
 
                 connection.Received().Post<object>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml/dispatches"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yaml/dispatches"),
                     createDispatch);
             }
 
@@ -107,7 +107,7 @@ namespace Octokit.Tests.Clients
                 await client.Disable("fake", "repo", 123);
 
                 connection.Received().Put(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/disable"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/disable"));
             }
 
             [Fact]
@@ -119,7 +119,7 @@ namespace Octokit.Tests.Clients
                 await client.Disable("fake", "repo", "main.yaml");
 
                 connection.Received().Put(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml/disable"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yaml/disable"));
             }
 
             [Fact]
@@ -162,7 +162,7 @@ namespace Octokit.Tests.Clients
                 await client.Enable("fake", "repo", 123);
 
                 connection.Received().Put(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/enable"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/enable"));
             }
 
             [Fact]
@@ -174,7 +174,7 @@ namespace Octokit.Tests.Clients
                 await client.Enable("fake", "repo", "main.yaml");
 
                 connection.Received().Put(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml/enable"));
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yaml/enable"));
             }
 
             [Fact]
@@ -217,7 +217,7 @@ namespace Octokit.Tests.Clients
                 await client.Get("fake", "repo", 123);
 
                 connection.Received().Get<Workflow>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123"),
                     null);
             }
 
@@ -230,7 +230,7 @@ namespace Octokit.Tests.Clients
                 await client.Get("fake", "repo", "main.yaml");
 
                 connection.Received().Get<Workflow>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yaml"),
                     null);
             }
 
@@ -274,7 +274,7 @@ namespace Octokit.Tests.Clients
                 await client.GetUsage("fake", "repo", 123);
 
                 connection.Received().Get<WorkflowUsage>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/123/timing"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/timing"),
                     null);
             }
 
@@ -287,7 +287,7 @@ namespace Octokit.Tests.Clients
                 await client.GetUsage("fake", "repo", "main.yaml");
 
                 connection.Received().Get<WorkflowUsage>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows/main.yaml/timing"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yaml/timing"),
                     null);
             }
 
@@ -331,7 +331,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo");
 
                 connection.Received().GetAll<WorkflowsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows"),
                     null,
                     Args.ApiOptions);
             }
@@ -347,7 +347,7 @@ namespace Octokit.Tests.Clients
                 await client.List("fake", "repo", options);
 
                 connection.Received().GetAll<WorkflowsResponse>(
-                    Arg.Is<Uri>(u => u.ToString() == "/repos/fake/repo/actions/workflows"),
+                    Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows"),
                     null,
                     options);
             }

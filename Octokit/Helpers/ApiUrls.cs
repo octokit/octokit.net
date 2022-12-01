@@ -4620,7 +4620,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
         public static Uri PackagesOrg(string org)
         {
-            return "/orgs/{0}/packages".FormatUri(org);
+            return "orgs/{0}/packages".FormatUri(org);
         }
 
         /// <summary>
@@ -4629,7 +4629,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageOrg(string org, PackageType packageType, string packageName)
         {
-            return "/orgs/{0}/packages/{1}/{2}".FormatUri(org, packageType.ToParameter(), packageName);
+            return "orgs/{0}/packages/{1}/{2}".FormatUri(org, packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4638,7 +4638,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package Restore endpoint.</returns>
         public static Uri PackageRestoreOrg(string org, PackageType packageType, string packageName)
         {
-            return "/orgs/{0}/packages/{1}/{2}/restore".FormatUri(org, packageType.ToParameter(), packageName);
+            return "orgs/{0}/packages/{1}/{2}/restore".FormatUri(org, packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4647,7 +4647,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionsOrg(string org, PackageType packageType, string packageName)
         {
-            return "/orgs/{0}/packages/{1}/{2}/versions".FormatUri(org, packageType.ToParameter(), packageName);
+            return "orgs/{0}/packages/{1}/{2}/versions".FormatUri(org, packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4656,7 +4656,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionOrg(string org, PackageType packageType, string packageName, int packageVersionId)
         {
-            return "/orgs/{0}/packages/{1}/{2}/versions/{3}".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
+            return "orgs/{0}/packages/{1}/{2}/versions/{3}".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
         }
 
         /// <summary>
@@ -4665,7 +4665,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionRestoreOrg(string org, PackageType packageType, string packageName, int packageVersionId)
         {
-            return "/orgs/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
+            return "orgs/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(org, packageType.ToParameter(), packageName, packageVersionId);
         }
 
         /// <summary>
@@ -4674,7 +4674,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
         public static Uri PackagesActiveUser()
         {
-            return "/user/packages".FormatUri();
+            return "user/packages".FormatUri();
         }
 
         /// <summary>
@@ -4683,7 +4683,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageActiveUser(PackageType packageType, string packageName)
         {
-            return "/user/packages/{0}/{1}".FormatUri(packageType.ToParameter(), packageName);
+            return "user/packages/{0}/{1}".FormatUri(packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4692,7 +4692,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package Restore endpoint.</returns>
         public static Uri PackageRestoreActiveUser(PackageType packageType, string packageName)
         {
-            return "/user/packages/{0}/{1}/restore".FormatUri(packageType.ToParameter(), packageName);
+            return "user/packages/{0}/{1}/restore".FormatUri(packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4701,7 +4701,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionsActiveUser(PackageType packageType, string packageName)
         {
-            return "/user/packages/{0}/{1}/versions".FormatUri(packageType.ToParameter(), packageName);
+            return "user/packages/{0}/{1}/versions".FormatUri(packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4710,7 +4710,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionActiveUser(PackageType packageType, string packageName, int packageVersionId)
         {
-            return "/user/packages/{0}/{1}/versions/{2}".FormatUri(packageType.ToParameter(), packageName, packageVersionId);
+            return "user/packages/{0}/{1}/versions/{2}".FormatUri(packageType.ToParameter(), packageName, packageVersionId);
         }
 
         /// <summary>
@@ -4719,7 +4719,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionRestoreActiveUser(PackageType packageType, string packageName, int packageVersionId)
         {
-            return "/user/packages/{0}/{1}/versions/{2}/restore".FormatUri(packageType.ToParameter(), packageName, packageVersionId);
+            return "user/packages/{0}/{1}/versions/{2}/restore".FormatUri(packageType.ToParameter(), packageName, packageVersionId);
         }
 
         /// <summary>
@@ -4728,7 +4728,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Packages endpoint.</returns>
         public static Uri PackagesUser(string username)
         {
-            return "/users/{0}/packages".FormatUri(username);
+            return "users/{0}/packages".FormatUri(username);
         }
 
         /// <summary>
@@ -4737,7 +4737,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageUser(string username, PackageType packageType, string packageName)
         {
-            return "/users/{0}/packages/{1}/{2}".FormatUri(username, packageType.ToParameter(), packageName);
+            return "users/{0}/packages/{1}/{2}".FormatUri(username, packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4746,7 +4746,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package Restore endpoint.</returns>
         public static Uri PackageRestoreUser(string username, PackageType packageType, string packageName)
         {
-            return "/users/{0}/packages/{1}/{2}/restore".FormatUri(username, packageType.ToParameter(), packageName);
+            return "users/{0}/packages/{1}/{2}/restore".FormatUri(username, packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4755,7 +4755,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionsUser(string username, PackageType packageType, string packageName)
         {
-            return "/users/{0}/packages/{1}/{2}/versions".FormatUri(username, packageType.ToParameter(), packageName);
+            return "users/{0}/packages/{1}/{2}/versions".FormatUri(username, packageType.ToParameter(), packageName);
         }
 
         /// <summary>
@@ -4764,7 +4764,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionUser(string username, PackageType packageType, string packageName, int packageVersionId)
         {
-            return "/users/{0}/packages/{1}/{2}/versions/{3}".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
+            return "users/{0}/packages/{1}/{2}/versions/{3}".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
         }
 
         /// <summary>
@@ -4773,7 +4773,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> Package endpoint.</returns>
         public static Uri PackageVersionRestoreUser(string username, PackageType packageType, string packageName, int packageVersionId)
         {
-            return "/users/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
+            return "users/{0}/packages/{1}/{2}/versions/{3}/restore".FormatUri(username, packageType.ToParameter(), packageName, packageVersionId);
         }
 
         /// <summary>
@@ -4785,7 +4785,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsDispatchWorkflow(string owner, string repo, long workflowId)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowId);
+            return "repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowId);
         }
 
         /// <summary>
@@ -4797,7 +4797,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsDispatchWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowFileName.UriEncode());
+            return "repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4809,7 +4809,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsDisableWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowFileName.UriEncode());
+            return "repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4821,7 +4821,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsDisableWorkflow(string owner, string repo, long workflowId)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowId);
+            return "repos/{0}/{1}/actions/workflows/{2}/disable".FormatUri(owner, repo, workflowId);
         }
 
         /// <summary>
@@ -4833,7 +4833,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsEnableWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowFileName.UriEncode());
+            return "repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4845,7 +4845,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsEnableWorkflow(string owner, string repo, long workflowId)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowId);
+            return "repos/{0}/{1}/actions/workflows/{2}/enable".FormatUri(owner, repo, workflowId);
         }
 
         /// <summary>
@@ -4857,7 +4857,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflow(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowFileName.UriEncode());
+            return "repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4869,7 +4869,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflow(string owner, string repo, long workflowId)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowId);
+            return "repos/{0}/{1}/actions/workflows/{2}".FormatUri(owner, repo, workflowId);
         }
 
         /// <summary>
@@ -4881,7 +4881,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflowUsage(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowFileName.UriEncode());
+            return "repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -4893,7 +4893,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflowUsage(string owner, string repo, long workflowId)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowId);
+            return "repos/{0}/{1}/actions/workflows/{2}/timing".FormatUri(owner, repo, workflowId);
         }
 
         /// <summary>
@@ -4904,7 +4904,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that handles the Actions workflows for the repository.</returns>
         public static Uri ActionsListWorkflows(string owner, string repo)
         {
-            return "/repos/{0}/{1}/actions/workflows".FormatUri(owner, repo);
+            return "repos/{0}/{1}/actions/workflows".FormatUri(owner, repo);
         }
 
         /// <summary>
@@ -4916,7 +4916,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsRerunWorkflowJob(string owner, string repo, long jobId)
         {
-            return "/repos/{0}/{1}/actions/jobs/{2}/rerun".FormatUri(owner, repo, jobId);
+            return "repos/{0}/{1}/actions/jobs/{2}/rerun".FormatUri(owner, repo, jobId);
         }
 
         /// <summary>
@@ -4928,7 +4928,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflowJob(string owner, string repo, long jobId)
         {
-            return "/repos/{0}/{1}/actions/jobs/{2}".FormatUri(owner, repo, jobId);
+            return "repos/{0}/{1}/actions/jobs/{2}".FormatUri(owner, repo, jobId);
         }
 
         /// <summary>
@@ -4940,7 +4940,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow job for a repository.</returns>
         public static Uri ActionsGetWorkflowJobLogs(string owner, string repo, long jobId)
         {
-            return "/repos/{0}/{1}/actions/jobs/{2}/logs".FormatUri(owner, repo, jobId);
+            return "repos/{0}/{1}/actions/jobs/{2}/logs".FormatUri(owner, repo, jobId);
         }
 
         /// <summary>
@@ -4952,7 +4952,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that handles the Actions workflows runs for a workflow.</returns>
         public static Uri ActionsListWorkflowJobs(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/jobs".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/jobs".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -4965,7 +4965,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that handles the Actions workflows runs for a workflow.</returns>
         public static Uri ActionsListWorkflowJobs(string owner, string repo, long runId, int attemptNumber)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/attempts/{3}/jobs".FormatUri(owner, repo, runId, attemptNumber);
+            return "repos/{0}/{1}/actions/runs/{2}/attempts/{3}/jobs".FormatUri(owner, repo, runId, attemptNumber);
         }
 
         /// <summary>
@@ -4976,7 +4976,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets Actions workflow runs for a repository.</returns>
         public static Uri ActionsWorkflowRuns(string owner, string repo)
         {
-            return "/repos/{0}/{1}/actions/runs".FormatUri(owner, repo);
+            return "repos/{0}/{1}/actions/runs".FormatUri(owner, repo);
         }
 
         /// <summary>
@@ -4988,7 +4988,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow run for a repository.</returns>
         public static Uri ActionsWorkflowRun(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5001,7 +5001,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow run for a repository.</returns>
         public static Uri ActionsWorkflowRunAttempt(string owner, string repo, long runId, long attemptNumber)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/attempts/{3}".FormatUri(owner, repo, runId, attemptNumber);
+            return "repos/{0}/{1}/actions/runs/{2}/attempts/{3}".FormatUri(owner, repo, runId, attemptNumber);
         }
 
         /// <summary>
@@ -5013,7 +5013,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that approves an Actions workflow run for a repository.</returns>
         public static Uri ActionsApproveWorkflowRun(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/approve".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/approve".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5025,7 +5025,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that cancels an Actions workflow run for a repository.</returns>
         public static Uri ActionsCancelWorkflowRun(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/cancel".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/cancel".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5037,7 +5037,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow run for a repository.</returns>
         public static Uri ActionsGetWorkflowRunLogs(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/logs".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/logs".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5050,7 +5050,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow run for a repository.</returns>
         public static Uri ActionsGetWorkflowRunAttemptLogs(string owner, string repo, long runId, long attemptNumber)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/attempts/{3}/logs".FormatUri(owner, repo, runId, attemptNumber);
+            return "repos/{0}/{1}/actions/runs/{2}/attempts/{3}/logs".FormatUri(owner, repo, runId, attemptNumber);
         }
 
         /// <summary>
@@ -5062,7 +5062,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsRerunWorkflowRun(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/rerun".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/rerun".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5074,7 +5074,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsRerunWorkflowRunFailedJobs(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/rerun-failed-jobs".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/rerun-failed-jobs".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5086,7 +5086,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
         public static Uri ActionsGetWorkflowRunUsage(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/timing".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/timing".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5098,7 +5098,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets Actions workflow run approvals for a repository.</returns>
         public static Uri ActionsWorkflowRunApprovals(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/approvals".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/approvals".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5110,7 +5110,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that gets Actions workflow run pending deployments for a repository.</returns>
         public static Uri ActionsWorkflowRunPendingDeployments(string owner, string repo, long runId)
         {
-            return "/repos/{0}/{1}/actions/runs/{2}/pending_deployments".FormatUri(owner, repo, runId);
+            return "repos/{0}/{1}/actions/runs/{2}/pending_deployments".FormatUri(owner, repo, runId);
         }
 
         /// <summary>
@@ -5122,7 +5122,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that handles the Actions workflows runs for a workflow.</returns>
         public static Uri ActionsListWorkflowRuns(string owner, string repo, long workflowId)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/runs".FormatUri(owner, repo, workflowId);
+            return "repos/{0}/{1}/actions/workflows/{2}/runs".FormatUri(owner, repo, workflowId);
         }
 
         /// <summary>
@@ -5134,7 +5134,7 @@ namespace Octokit
         /// <returns>The <see cref="Uri"/> that handles the Actions workflows runs for a workflow.</returns>
         public static Uri ActionsListWorkflowRuns(string owner, string repo, string workflowFileName)
         {
-            return "/repos/{0}/{1}/actions/workflows/{2}/runs".FormatUri(owner, repo, workflowFileName.UriEncode());
+            return "repos/{0}/{1}/actions/workflows/{2}/runs".FormatUri(owner, repo, workflowFileName.UriEncode());
         }
     }
 }
