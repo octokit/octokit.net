@@ -28,7 +28,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForOrg("fake", PackageType.RubyGems);
 
                 gitHubClient.Connection.Received(1).Get<List<Package>>(
-                    new Uri("/orgs/fake/packages", UriKind.Relative),
+                    new Uri("orgs/fake/packages", UriKind.Relative),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
             }
 
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForOrg("fake", PackageType.RubyGems, PackageVisibility.Public);
 
                 gitHubClient.Connection.Received().Get<List<Package>>(
-                    Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages"),
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
             }
 
@@ -143,7 +143,7 @@ namespace Octokit.Tests.Reactive
                     client.GetAllForActiveUser(PackageType.RubyGems);
 
                     gitHubClient.Connection.Received(1).Get<List<Package>>(
-                        new Uri("/user/packages", UriKind.Relative),
+                        new Uri("user/packages", UriKind.Relative),
                         Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
                 }
 
@@ -156,7 +156,7 @@ namespace Octokit.Tests.Reactive
                     client.GetAllForActiveUser(PackageType.RubyGems, PackageVisibility.Public);
 
                     gitHubClient.Connection.Received().Get<List<Package>>(
-                        Arg.Is<Uri>(u => u.ToString() == "/user/packages"),
+                        Arg.Is<Uri>(u => u.ToString() == "user/packages"),
                         Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
                 }
             }
@@ -241,7 +241,7 @@ namespace Octokit.Tests.Reactive
                     client.GetAllForUser("fake", PackageType.RubyGems);
 
                     gitHubClient.Connection.Received(1).Get<List<Package>>(
-                        new Uri("/users/fake/packages", UriKind.Relative),
+                        new Uri("users/fake/packages", UriKind.Relative),
                         Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
                 }
 
@@ -254,7 +254,7 @@ namespace Octokit.Tests.Reactive
                     client.GetAllForUser("fake", PackageType.RubyGems, PackageVisibility.Public);
 
                     gitHubClient.Connection.Received().Get<List<Package>>(
-                        Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages"),
+                        Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"),
                         Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
                 }
 

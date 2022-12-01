@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForOrg("fake", PackageType.RubyGems, "name");
 
                 connection.Received().GetAll<PackageVersion>(Arg.Is<Uri>(u => 
-                    u.ToString() == "/orgs/fake/packages/rubygems/name/versions"),
+                    u.ToString() == "orgs/fake/packages/rubygems/name/versions"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
                     Args.ApiOptions);
             }
@@ -43,7 +43,7 @@ namespace Octokit.Tests.Clients
 
                 var calls = connection.ReceivedCalls();
                 connection.Received().GetAll<PackageVersion>(Arg.Is<Uri>(u =>
-                    u.ToString() == "/orgs/fake/packages/rubygems/name/versions"),
+                    u.ToString() == "orgs/fake/packages/rubygems/name/versions"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state") && d["state"] == "deleted"),
                     Args.ApiOptions);
             }
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetForOrg("fake", PackageType.Npm, "name", 5);
 
-                connection.Received().Get<PackageVersion>(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/npm/name/versions/5"));
+                connection.Received().Get<PackageVersion>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/npm/name/versions/5"));
             }
 
             [Fact]
@@ -100,7 +100,7 @@ namespace Octokit.Tests.Clients
 
                 await client.DeleteForOrg("fake", PackageType.Npm, "name", 5);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/npm/name/versions/5"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/npm/name/versions/5"));
             }
 
             [Fact]
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RestoreForOrg("fake", PackageType.Npm, "name", 5);
 
-                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/npm/name/versions/5/restore"));
+                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/npm/name/versions/5/restore"));
             }
 
             [Fact]
@@ -157,7 +157,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForActiveUser(PackageType.RubyGems, "name");
 
                 connection.Received().GetAll<PackageVersion>(Arg.Is<Uri>(u =>
-                    u.ToString() == "/user/packages/rubygems/name/versions"),
+                    u.ToString() == "user/packages/rubygems/name/versions"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
                     Args.ApiOptions);
             }
@@ -172,7 +172,7 @@ namespace Octokit.Tests.Clients
 
                 var calls = connection.ReceivedCalls();
                 connection.Received().GetAll<PackageVersion>(Arg.Is<Uri>(u =>
-                    u.ToString() == "/user/packages/rubygems/name/versions"),
+                    u.ToString() == "user/packages/rubygems/name/versions"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state") && d["state"] == "deleted"),
                     Args.ApiOptions);
             }
@@ -198,7 +198,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetForActiveUser(PackageType.Npm, "name", 5);
 
-                connection.Received().Get<PackageVersion>(Arg.Is<Uri>(u => u.ToString() == "/user/packages/npm/name/versions/5"));
+                connection.Received().Get<PackageVersion>(Arg.Is<Uri>(u => u.ToString() == "user/packages/npm/name/versions/5"));
             }
 
             [Fact]
@@ -223,7 +223,7 @@ namespace Octokit.Tests.Clients
 
                 await client.DeleteForActiveUser(PackageType.Npm, "name", 5);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/user/packages/npm/name/versions/5"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "user/packages/npm/name/versions/5"));
             }
 
             [Fact]
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RestoreForActiveUser(PackageType.Npm, "name", 5);
 
-                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "/user/packages/npm/name/versions/5/restore"));
+                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "user/packages/npm/name/versions/5/restore"));
             }
 
             [Fact]
@@ -274,7 +274,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForUser("fake", PackageType.RubyGems, "name");
 
                 connection.Received().GetAll<PackageVersion>(Arg.Is<Uri>(u =>
-                    u.ToString() == "/users/fake/packages/rubygems/name/versions"),
+                    u.ToString() == "users/fake/packages/rubygems/name/versions"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")),
                     Args.ApiOptions);
             }
@@ -289,7 +289,7 @@ namespace Octokit.Tests.Clients
 
                 var calls = connection.ReceivedCalls();
                 connection.Received().GetAll<PackageVersion>(Arg.Is<Uri>(u =>
-                    u.ToString() == "/users/fake/packages/rubygems/name/versions"),
+                    u.ToString() == "users/fake/packages/rubygems/name/versions"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state") && d["state"] == "deleted"),
                     Args.ApiOptions);
             }
@@ -318,7 +318,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetForUser("fake", PackageType.Npm, "name", 5);
 
-                connection.Received().Get<PackageVersion>(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages/npm/name/versions/5"));
+                connection.Received().Get<PackageVersion>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages/npm/name/versions/5"));
             }
 
             [Fact]
@@ -346,7 +346,7 @@ namespace Octokit.Tests.Clients
 
                 await client.DeleteForUser("fake", PackageType.Npm, "name", 5);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages/npm/name/versions/5"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages/npm/name/versions/5"));
             }
 
             [Fact]
@@ -374,7 +374,7 @@ namespace Octokit.Tests.Clients
 
                 await client.RestoreForUser("fake", PackageType.Npm, "name", 5);
 
-                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "/users/fake/packages/npm/name/versions/5/restore"));
+                connection.Received().Post(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages/npm/name/versions/5/restore"));
             }
 
             [Fact]

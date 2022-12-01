@@ -28,7 +28,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForOrg("fake", PackageType.RubyGems, "name");
 
                 gitHubClient.Connection.Received().Get<List<PackageVersion>>(
-                    new Uri("/orgs/fake/packages/rubygems/name/versions", UriKind.Relative),
+                    new Uri("orgs/fake/packages/rubygems/name/versions", UriKind.Relative),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")));
             }
 
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForOrg("fake", PackageType.RubyGems, "name", PackageVersionState.Deleted);
 
                 gitHubClient.Connection.Received().Get<List<PackageVersion>>(
-                    Arg.Is<Uri>(u => u.ToString() == "/orgs/fake/packages/rubygems/name/versions"),
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/rubygems/name/versions"),
                     Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state") && d["state"] == "deleted"));
             }
 
