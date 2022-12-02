@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
@@ -12,7 +13,7 @@ namespace Octokit
     {
         public GitHubApp() { }
 
-        public GitHubApp(long id, string slug, string name, User owner, string description, string externalUrl, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public GitHubApp(long id, string slug, string name, User owner, string description, string externalUrl, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, InstallationPermissions permissions, IReadOnlyList<string> events)
         {
             Id = id;
             Slug = slug;
@@ -23,6 +24,8 @@ namespace Octokit
             HtmlUrl = htmlUrl;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
+            Permissions = permissions;
+            Events = events;
         }
 
         /// <summary>
@@ -69,6 +72,16 @@ namespace Octokit
         /// Date the GitHub App was last updated.
         /// </summary>
         public DateTimeOffset UpdatedAt { get; private set; }
+
+        /// <summary>
+        /// The Permissions granted to the Installation
+        /// </summary>
+        public InstallationPermissions Permissions { get; private set; }
+
+        /// <summary>
+        /// The Events subscribed to by the Installation
+        /// </summary>
+        public IReadOnlyList<string> Events { get; private set; }
 
         internal string DebuggerDisplay
         {
