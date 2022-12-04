@@ -472,12 +472,12 @@ namespace Octokit.Tests
                 var result = new SimpleJsonSerializer().Deserialize<Team>(teamJson);
 
                 // original value works as expected
-                Assert.Equal(PermissionLevel.Admin, result.Permission.Value);
+                Assert.Equal(TeamPermission.Admin, result.Permission.Value);
                 Assert.Equal("admin", result.Permission.StringValue);
 
                 // parent permission is marked as null and cannot be parsed
                 Assert.Equal("null", result.Parent.Permission.StringValue);
-                PermissionLevel value;
+                TeamPermission value;
                 Assert.False(result.Parent.Permission.TryParse(out value));
             }
         }

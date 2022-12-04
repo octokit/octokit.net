@@ -53,9 +53,9 @@ namespace Octokit
         public TeamPrivacy? Privacy { get; set; }
 
         /// <summary>
-        /// The permission that new repositories will be added to the team with when none is specified (default: Pull)
+        /// Deprecated. The permission that new repositories will be added to the team with when none is specified.
         /// </summary>
-        public Permission? Permission { get; set; }
+        public TeamPermissionOnCreate? Permission { get; set; }
 
         /// <summary>
         /// Id of a team to set as the parent team
