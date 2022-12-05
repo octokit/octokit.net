@@ -37,7 +37,7 @@ namespace Octokit
         /// <summary>
         /// The permission that new repositories will be added to the team with when none is specified (default: Pull)
         /// </summary>
-        public Permission? Permission { get; set; }
+        public TeamPermission? Permission { get; set; }
 
         /// <summary>
         /// Id of a team to set as the parent team

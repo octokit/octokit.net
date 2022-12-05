@@ -1,0 +1,3 @@
+root=true
+[*.cs]
+end_of_line = lf
