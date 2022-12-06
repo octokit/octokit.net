@@ -66,6 +66,7 @@ namespace Octokit
     /// Default: pull
     /// Can be one of: pull, push, admin
     /// </summary>
+    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public enum TeamPermission
     {
         /// <summary>
