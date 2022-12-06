@@ -1923,6 +1923,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for teams
+        /// use for updating, or deleteing a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="org"></param>
+        /// <param name="teamSlug"></param>
+        /// <returns></returns>
+        public static Uri TeamsByOrganizationAndSlug(string org, string teamSlug)
+        {
+            return "orgs/{0}/teams/{1}".FormatUri(org,teamSlug);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for team member
         /// </summary>
         /// <param name="id">The team id</param>

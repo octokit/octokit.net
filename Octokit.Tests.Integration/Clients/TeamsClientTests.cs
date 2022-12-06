@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -457,12 +456,50 @@ public class TeamsClientTests
                     ParentTeamId = parentTeamContext.TeamId
                 };
 
-                var team = await _github.Organization.Team.Update(teamContext.TeamId, update);
+                var team = await _github.Organization.Team.Update(Helper.Organization, teamContext.Team.Slug, update);
 
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
                 Assert.Equal(teamPermission, team.Permission);
+                Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
+            }
+        }
+    }
+
+    public class TheUpdateLegacyMethod
+    {
+        private readonly IGitHubClient _github;
+
+        public TheUpdateLegacyMethod()
+        {
+            _github = Helper.GetAuthenticatedClient();
+        }
+
+        [OrganizationTest]
+        public async Task UpdatesTeamLegacy()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"))))
+            {
+                var teamName = Helper.MakeNameWithTimestamp("updated-team");
+                var teamDescription = Helper.MakeNameWithTimestamp("updated description");
+
+                // setting TeamPermission.Admin fails with Octokit.ApiValidationException : Setting team permission to admin is no longer supported
+                var update = new UpdateTeam(teamName)
+                {
+                    Description = teamDescription,
+                    Privacy = TeamPrivacy.Closed,
+                    Permission = TeamPermission.Push,
+                    ParentTeamId = parentTeamContext.TeamId
+                };
+
+                var team = await _github.Organization.Team.UpdateLegacy(teamContext.TeamId, update);
+
+                Assert.Equal(teamName, team.Name);
+                Assert.Equal(teamDescription, team.Description);
+                Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(TeamPermission.Push, team.Permission);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
             }
         }

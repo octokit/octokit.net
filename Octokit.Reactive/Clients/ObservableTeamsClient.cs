@@ -194,15 +194,29 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Updates a team
+        /// To edit a team, the authenticated user must either be an organization owner or a team maintainer
+        /// </summary>
+        /// <returns>updated <see cref="Team" /> for the current org</returns>
+        public IObservable<Team> Update(string org, string teamSlug, UpdateTeam team)
+        {
+            Ensure.ArgumentNotNull(org, nameof(org));
+            Ensure.ArgumentNotNull(teamSlug, nameof(teamSlug));
+            Ensure.ArgumentNotNull(team, nameof(team));
+
+            return _client.Update(org, teamSlug, team).ToObservable();
+        }
+
+        /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        public IObservable<Team> Update(int id, UpdateTeam team)
+        public IObservable<Team> UpdateLegacy(int id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, nameof(team));
 
-            return _client.Update(id, team).ToObservable();
+            return _client.UpdateLegacy(id, team).ToObservable();
         }
 
         /// <summary>

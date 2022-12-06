@@ -169,7 +169,37 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 var team = new UpdateTeam("Octokittens");
 
-                client.Update(1, team);
+                var org = "org";
+                var slug = "slug";
+                client.Update(org, slug , team);
+
+                connection.Received().Patch<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/teams/slug"),
+                    team);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(null, "b", new UpdateTeam("update-team")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("a", null, new UpdateTeam("update-team")));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update("a", "b", null));
+            }
+        }
+
+        public class TheUpdateTeamLegacyMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                var team = new UpdateTeam("Octokittens");
+
+                client.UpdateLegacy(1, team);
 
                 connection.Received().Patch<Team>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1"),
@@ -182,7 +212,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateLegacy(1, null));
             }
         }
 

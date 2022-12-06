@@ -228,12 +228,29 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Updates a team
+        /// To edit a team, the authenticated user must either be an organization owner or a team maintainer
+        /// </summary>
+        /// <returns>updated <see cref="Team" /> for the current org</returns>
+        [ManualRoute("PATCH", "/orgs/{org}/teams/{team_slug}")]
+        public Task<Team> Update(string org, string teamSlug, UpdateTeam team)
+        {
+            Ensure.ArgumentNotNull(org, nameof(org));
+            Ensure.ArgumentNotNull(teamSlug, nameof(teamSlug));
+            Ensure.ArgumentNotNull(team, nameof(team));
+
+            var endpoint = ApiUrls.TeamsByOrganizationAndSlug(org, teamSlug);
+            return ApiConnection.Patch<Team>(endpoint, team);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
         [ManualRoute("PATCH", "/teams/{team_id}")]
-        public Task<Team> Update(int id, UpdateTeam team)
+        public Task<Team> UpdateLegacy(int id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, nameof(team));
 
