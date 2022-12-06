@@ -220,13 +220,27 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Delete a team - must have owner permissions to this
+        /// To delete a team, the authenticated user must be an organization owner or team maintainer.
+        /// If you are an organization owner, deleting a parent team will delete all of its child teams as well.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public IObservable<Unit> Delete(int id)
+        public IObservable<Unit> Delete(string org, string teamSlug)
         {
-            return _client.Delete(id).ToObservable();
+            Ensure.ArgumentNotNull(org, nameof(org));
+            Ensure.ArgumentNotNull(teamSlug, nameof(teamSlug));
+            
+            return _client.Delete(org, teamSlug).ToObservable();
+        }
+
+        /// <summary>
+        /// Delete a team - must have owner permissions to do this
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public IObservable<Unit> DeleteLegacy(int id)
+        {
+            return _client.DeleteLegacy(id).ToObservable();
         }
 
         /// <summary>

@@ -187,18 +187,18 @@ namespace Octokit.Tests.Integration
             catch { }
         }
 
-        public static void DeleteTeam(IConnection connection, Team team)
+        public static void DeleteTeamLegacy(IConnection connection, Team team)
         {
             if (team != null)
-                DeleteTeam(connection, team.Id);
+                DeleteTeamLegacy(connection, team.Id);
         }
 
-        public static void DeleteTeam(IConnection connection, int teamId)
+        public static void DeleteTeamLegacy(IConnection connection, int teamId)
         {
             try
             {
                 var client = new GitHubClient(connection);
-                client.Organization.Team.Delete(teamId).Wait(TimeSpan.FromSeconds(15));
+                client.Organization.Team.DeleteLegacy(teamId).Wait(TimeSpan.FromSeconds(15));
             }
             catch { }
         }

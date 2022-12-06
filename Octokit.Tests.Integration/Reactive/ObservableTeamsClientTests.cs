@@ -393,7 +393,7 @@ public class ObservableTeamsClientTests
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
 
-                _github.Organization.Team.Delete(teamContext.TeamId);
+                _github.Organization.Team.Delete(Helper.Organization, team.Slug);
             }
         }
     }
@@ -429,7 +429,7 @@ public class ObservableTeamsClientTests
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
 
-                _github.Organization.Team.Delete(teamContext.TeamId);
+                _github.Organization.Team.DeleteLegacy(teamContext.TeamId);
             }
         }
     }

@@ -259,12 +259,29 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Delte a team - must have owner permissions to this
+        /// To delete a team, the authenticated user must be an organization owner or team maintainer.
+        /// If you are an organization owner, deleting a parent team will delete all of its child teams as well.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/teams/{team_slug}")]
+        public Task Delete(string org, string teamSlug)
+        {
+            Ensure.ArgumentNotNull(org, nameof(org));
+            Ensure.ArgumentNotNull(teamSlug, nameof(teamSlug));
+
+            var endpoint = ApiUrls.TeamsByOrganizationAndSlug(org, teamSlug);
+
+            return ApiConnection.Delete(endpoint);
+        }
+
+        /// <summary>
+        /// Delete a team - must have owner permissions to do this
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/teams/{team_id}")]
-        public Task Delete(int id)
+        public Task DeleteLegacy(int id)
         {
             var endpoint = ApiUrls.Teams(id);
 

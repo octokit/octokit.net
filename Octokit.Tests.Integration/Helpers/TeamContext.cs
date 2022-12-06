@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Octokit.Tests.Integration.Helpers
 {
@@ -34,7 +32,8 @@ namespace Octokit.Tests.Integration.Helpers
             if (Invitations.Any())
                 Helper.DeleteInvitations(_connection, Invitations, TeamId);
 
-            Helper.DeleteTeam(_connection, Team);
+            // TODO :: incorporate the new delete team 
+            Helper.DeleteTeamLegacy(_connection, Team);
         }
     }
 }

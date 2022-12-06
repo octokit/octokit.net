@@ -36,7 +36,7 @@ public class TeamsClientTests
                 Assert.Equal(1, team.MembersCount);
                 Assert.Equal(1, team.ReposCount);
 
-                await github.Organization.Team.Delete(team.Id);
+                await github.Organization.Team.Delete(Helper.Organization, team.Slug);
             }
         }
     }

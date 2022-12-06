@@ -140,11 +140,19 @@ namespace Octokit
         Task<Team> UpdateLegacy(int id, UpdateTeam team);
 
         /// <summary>
-        /// Delte a team - must have owner permissions to this
+        /// To delete a team, the authenticated user must be an organization owner or team maintainer.
+        /// If you are an organization owner, deleting a parent team will delete all of its child teams as well.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task Delete(int id);
+        Task Delete(string org, string teamSlug);
+
+        /// <summary>
+        /// Delete a team - must have owner permissions to do this
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task DeleteLegacy(int id);
 
         /// <summary>
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.

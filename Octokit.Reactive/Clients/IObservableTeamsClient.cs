@@ -139,11 +139,19 @@ namespace Octokit.Reactive
         IObservable<Team> UpdateLegacy(int id, UpdateTeam team);
 
         /// <summary>
+        /// To delete a team, the authenticated user must be an organization owner or team maintainer.
+        /// If you are an organization owner, deleting a parent team will delete all of its child teams as well.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        IObservable<Unit> Delete(string org, string teamSlug);
+
+        /// <summary>
         /// Delete a team - must have owner permissions to this
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<Unit> Delete(int id);
+        IObservable<Unit> DeleteLegacy(int id);
 
         /// <summary>
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.

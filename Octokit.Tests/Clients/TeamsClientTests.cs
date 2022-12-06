@@ -223,7 +223,35 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.Delete(1);
+
+                var org = "org";
+                var slug = "slug";
+
+                client.Delete(org, slug);
+
+                connection.Received().Delete(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/org/teams/slug"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("a", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "a"));
+            }
+        }
+
+        public class TheDeleteTeamLegacuMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+                client.DeleteLegacy(1);
 
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1"));
