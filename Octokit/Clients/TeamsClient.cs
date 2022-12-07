@@ -246,11 +246,13 @@ namespace Octokit
 
         /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
+        /// This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new Update a team endpoint
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
         [ManualRoute("PATCH", "/teams/{team_id}")]
-        public Task<Team> UpdateLegacy(int id, UpdateTeam team)
+        public Task<Team> Update(int id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, nameof(team));
 
@@ -277,11 +279,13 @@ namespace Octokit
 
         /// <summary>
         /// Delete a team - must have owner permissions to do this
+        /// This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new Delete a team endpoint.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/teams/{team_id}")]
-        public Task DeleteLegacy(int id)
+        public Task Delete(int id)
         {
             var endpoint = ApiUrls.Teams(id);
 

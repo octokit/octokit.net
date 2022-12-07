@@ -133,10 +133,12 @@ namespace Octokit.Reactive
 
         /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
+        /// This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new Update a team endpoint
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        IObservable<Team> UpdateLegacy(int id, UpdateTeam team);
+        IObservable<Team> Update(int id, UpdateTeam team);
 
         /// <summary>
         /// To delete a team, the authenticated user must be an organization owner or team maintainer.
@@ -148,10 +150,12 @@ namespace Octokit.Reactive
 
         /// <summary>
         /// Delete a team - must have owner permissions to this
+        /// This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new Delete a team endpoint.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<Unit> DeleteLegacy(int id);
+        IObservable<Unit> Delete(int id);
 
         /// <summary>
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.

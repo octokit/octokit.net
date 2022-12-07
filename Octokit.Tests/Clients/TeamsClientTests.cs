@@ -199,7 +199,7 @@ namespace Octokit.Tests.Clients
                 var client = new TeamsClient(connection);
                 var team = new UpdateTeam("Octokittens");
 
-                client.UpdateLegacy(1, team);
+                client.Update(1, team);
 
                 connection.Received().Patch<Team>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1"),
@@ -212,7 +212,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.UpdateLegacy(1, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Update(1, null));
             }
         }
 
@@ -251,7 +251,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
-                client.DeleteLegacy(1);
+                client.Delete(1);
 
                 connection.Received().Delete(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1"));

@@ -422,14 +422,14 @@ public class ObservableTeamsClientTests
                     ParentTeamId = parentTeamContext.TeamId
                 };
 
-                var team = await _github.Organization.Team.UpdateLegacy(teamContext.TeamId, update);
+                var team = await _github.Organization.Team.Update(teamContext.TeamId, update);
 
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
 
-                _github.Organization.Team.DeleteLegacy(teamContext.TeamId);
+                _github.Organization.Team.Delete(teamContext.TeamId);
             }
         }
     }
