@@ -68,7 +68,7 @@ namespace Octokit
     /// Default: pull
     /// </summary>
     [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-    public enum TeamResponsePermission
+    public enum TeamRespositoryPermission
     {
         /// <summary>
         /// Can read and clone repository.

@@ -33,7 +33,7 @@ public class TeamsClientTests
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
                 // Permission defaults to pull when no permission is specified when creating a team
-                Assert.Equal(TeamResponsePermission.Pull, team.Permission);
+                Assert.Equal(TeamRespositoryPermission.Pull, team.Permission);
                 Assert.Equal(1, team.MembersCount);
                 Assert.Equal(1, team.ReposCount);
 
@@ -460,7 +460,7 @@ public class TeamsClientTests
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
-                Assert.Equal(TeamResponsePermission.Push, team.Permission);
+                Assert.Equal(TeamRespositoryPermission.Push, team.Permission);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
             }
         }
@@ -497,7 +497,7 @@ public class TeamsClientTests
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
-                Assert.Equal(TeamResponsePermission.Push, team.Permission);
+                Assert.Equal(TeamRespositoryPermission.Push, team.Permission);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
             }
         }
