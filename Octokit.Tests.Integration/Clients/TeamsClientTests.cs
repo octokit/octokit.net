@@ -32,7 +32,8 @@ public class TeamsClientTests
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
-                Assert.Equal(TeamPermission.Pull, team.Permission);
+                // Permission defaults to pull when no permission is specified when creating a team
+                Assert.Equal(TeamResponsePermission.Pull, team.Permission);
                 Assert.Equal(1, team.MembersCount);
                 Assert.Equal(1, team.ReposCount);
 
@@ -446,13 +447,11 @@ public class TeamsClientTests
                 var teamName = Helper.MakeNameWithTimestamp("updated-team");
                 var teamDescription = Helper.MakeNameWithTimestamp("updated description");
 
-                // setting TeamPermission.Admin fails with Octokit.ApiValidationException : Setting team permission to admin is no longer supported
-                var teamPermission = TeamPermission.Push;
                 var update = new UpdateTeam(teamName)
                 {
                     Description = teamDescription,
                     Privacy = TeamPrivacy.Closed,
-                    Permission = teamPermission,
+                    Permission = TeamPermission.Push,
                     ParentTeamId = parentTeamContext.TeamId
                 };
 
@@ -461,7 +460,7 @@ public class TeamsClientTests
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
-                Assert.Equal(teamPermission, team.Permission);
+                Assert.Equal(TeamResponsePermission.Push, team.Permission);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
             }
         }
@@ -485,7 +484,6 @@ public class TeamsClientTests
                 var teamName = Helper.MakeNameWithTimestamp("updated-team");
                 var teamDescription = Helper.MakeNameWithTimestamp("updated description");
 
-                // setting TeamPermission.Admin fails with Octokit.ApiValidationException : Setting team permission to admin is no longer supported
                 var update = new UpdateTeam(teamName)
                 {
                     Description = teamDescription,
@@ -499,7 +497,7 @@ public class TeamsClientTests
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
-                Assert.Equal(TeamPermission.Push, team.Permission);
+                Assert.Equal(TeamResponsePermission.Push, team.Permission);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
             }
         }
