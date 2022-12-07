@@ -46,27 +46,6 @@ namespace Octokit
     /// Can be one of: pull, push
     /// </summary>
     [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-    public enum NewTeamPermission
-    {
-        /// <summary>
-        /// team members can pull, but not push to or administer these repositories
-        /// </summary>
-        [Parameter(Value = "pull")]
-        Pull,
-
-        /// <summary>
-        /// team members can pull and push, but not administer these repositories
-        /// </summary>
-        [Parameter(Value = "push")]
-        Push
-    }
-
-    /// <summary>
-    /// Deprecated. The permission that new repositories will be added to the team with when none is specified.
-    /// Default: pull
-    /// Can be one of: pull, push, admin
-    /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public enum TeamPermission
     {
         /// <summary>
@@ -79,12 +58,6 @@ namespace Octokit
         /// team members can pull and push, but not administer these repositories
         /// </summary>
         [Parameter(Value = "push")]
-        Push,
-
-        /// <summary>
-        ///  team members can pull, push and administer these repositories.
-        /// </summary>
-        [Parameter(Value = "admin")]
-        Admin,
+        Push
     }
 }

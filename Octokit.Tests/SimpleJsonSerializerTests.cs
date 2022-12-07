@@ -450,7 +450,7 @@ namespace Octokit.Tests
                     ""slug"": ""justice-league"",
                     ""description"": ""A great team."",
                     ""privacy"": ""closed"",
-                    ""permission"": ""admin"",
+                    ""permission"": ""push"",
                     ""members_url"": ""https://api.github.com/teams/1/members{/member}"",
                     ""repositories_url"": ""https://api.github.com/teams/1/repos"",
                     ""parent"": {
@@ -472,8 +472,8 @@ namespace Octokit.Tests
                 var result = new SimpleJsonSerializer().Deserialize<Team>(teamJson);
 
                 // original value works as expected
-                Assert.Equal(TeamPermission.Admin, result.Permission.Value);
-                Assert.Equal("admin", result.Permission.StringValue);
+                Assert.Equal(TeamPermission.Push, result.Permission.Value);
+                Assert.Equal("push", result.Permission.StringValue);
 
                 // parent permission is marked as null and cannot be parsed
                 Assert.Equal("null", result.Parent.Permission.StringValue);
