@@ -32,8 +32,7 @@ namespace Octokit.Tests.Integration.Helpers
             if (Invitations.Any())
                 Helper.DeleteInvitations(_connection, Invitations, TeamId);
 
-            // TODO :: incorporate the new delete team 
-            Helper.DeleteTeamLegacy(_connection, Team);
+            Helper.DeleteTeam(_connection, Team);
         }
     }
 }
