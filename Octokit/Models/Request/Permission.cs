@@ -64,49 +64,6 @@ namespace Octokit
     }
 
     /// <summary>
-    /// Deprecated. The permission that new repositories will be added to the team with when none is specified
-    /// Default: pull
-    /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-    public enum TeamRespositoryPermission
-    {
-        /// <summary>
-        /// Can read and clone repository.
-        /// Can also open and comment on issues and pull requests.
-        /// </summary>
-        [Parameter(Value = "pull")]
-        Pull,
-
-        /// <summary>
-        /// Can read and clone repository.
-        /// Can also manage issues and pull requests.
-        /// </summary>
-        [Parameter(Value = "triage")]
-        Triage,
-
-        /// <summary>
-        /// Can read, clone, and push to repository.
-        /// Can also manage issues and pull requests.
-        /// </summary>
-        [Parameter(Value = "push")]
-        Push,
-
-        /// <summary>
-        /// Can read, clone, and push to repository.
-        /// They can also manage issues, pull requests, and some repository settings.
-        /// </summary>
-        [Parameter(Value = "maintain")]
-        Maintain,
-
-        /// <summary>
-        /// Can read, clone, and push to repository.
-        /// Can also manage issues, pull requests, and repository settings, including adding collaborators.
-        /// </summary>
-        [Parameter(Value = "admin")]
-        Admin,
-    }
-
-    /// <summary>
     /// Object for team repository permissions
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
