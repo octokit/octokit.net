@@ -520,7 +520,7 @@ public class TeamsClientTests
                     team.Slug,
                     repositoryContext.RepositoryOwner,
                     repositoryContext.RepositoryName,
-                    true);
+                    false);
 
                 Assert.Null(teamPermission);
             }
