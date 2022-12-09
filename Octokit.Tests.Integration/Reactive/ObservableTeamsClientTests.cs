@@ -442,6 +442,7 @@ public class ObservableTeamsClientTests
             _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
 
         }
+
         [OrganizationTest]
         public async Task ChecksTeamPermissions()
         {
@@ -482,7 +483,7 @@ public class ObservableTeamsClientTests
         }
 
         [OrganizationTest]
-        public async Task ChecksTeamPermissionsThrowNotFoundException()
+        public async Task ChecksTeamPermissionsThrowsNotFoundException()
         {
             using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
             using (var repositoryContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))

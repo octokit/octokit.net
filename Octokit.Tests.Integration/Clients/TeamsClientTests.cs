@@ -532,7 +532,7 @@ public class TeamsClientTests
         }
 
         [OrganizationTest]
-        public async Task ChecksTeamPermissionsWithRepositoryMediaTypeInAcceots()
+        public async Task ChecksTeamPermissionsWithRepositoryMediaTypeInAccepts()
         {
             using (var teamContext = await github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
             using (var repositoryContext = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
@@ -553,7 +553,7 @@ public class TeamsClientTests
         }
 
         [OrganizationTest]
-        public async Task ChecksTeamPermissionsThrowNotFoundException()
+        public async Task ChecksTeamPermissionsThrowsNotFoundException()
         {
             using (var teamContext = await github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
             using (var repositoryContext = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
