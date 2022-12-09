@@ -289,5 +289,39 @@ namespace Octokit
         /// </returns>
         Task<TeamRepository> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo,
             bool provideRepositoryMediaTypeInAcceptHeader = false);
+
+        /// <summary>
+        /// Add or update team repository permissions
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#add-or-update-team-repository-permissions">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <param name="permission">
+        ///     The permission to grant the team on this repository. We accept the following permissions to be set: 
+        ///     pull, triage, push, maintain, admin and you can also specify a custom repository role name, if the 
+        ///     owning organization has defined any. If no permission is specified, the team's permission attribute 
+        ///     will be used to determine what permission to grant the team on this repository
+        /// </param>
+        /// <returns></returns>
+        Task AddOrUpdateTeamRepositoryPermissions(string org, string teamSlug, string owner, string repo, string permission);
+
+        /// <summary>
+        /// Remove a repository from a team
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#remove-a-repository-from-a-team">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <returns></returns>
+        Task RemoveRepositoryFromTeam(string org, string teamSlug, string owner, string repo);
     }
 }
