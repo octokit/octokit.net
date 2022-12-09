@@ -345,6 +345,6 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<Unit> RemoveRepositoryFromTeam(string org, string teamSlug, string owner, string repo);
+        IObservable<Unit> RemoveRepositoryFromATeam(string org, string teamSlug, string owner, string repo);
     }
 }

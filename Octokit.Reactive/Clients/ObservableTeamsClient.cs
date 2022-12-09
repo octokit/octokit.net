@@ -500,9 +500,9 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
-        public IObservable<Unit> RemoveRepositoryFromTeam(string org, string teamSlug, string owner, string repo)
+        public IObservable<Unit> RemoveRepositoryFromATeam(string org, string teamSlug, string owner, string repo)
         {
-            return _client.RemoveRepositoryFromTeam(org, teamSlug, owner, repo).ToObservable();
+            return _client.RemoveRepositoryFromATeam(org, teamSlug, owner, repo).ToObservable();
         }
     }
 }

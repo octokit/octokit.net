@@ -646,7 +646,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
-        public Task RemoveRepositoryFromTeam(string org, string teamSlug, string owner, string repo)
+        public Task RemoveRepositoryFromATeam(string org, string teamSlug, string owner, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(teamSlug, nameof(teamSlug));

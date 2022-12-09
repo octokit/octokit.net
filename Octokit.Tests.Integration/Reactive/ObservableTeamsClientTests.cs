@@ -571,10 +571,10 @@ public class ObservableTeamsClientTests
         }
     }
 
-    public class TheRemoveRepositoryFromTeamMethod
+    public class TheRemoveRepositoryFromATeamMethod
     {
         [OrganizationTest]
-        public async Task RemovesRepositoryFromTeam()
+        public async Task RemovesRepositoryFromATeam()
         {
             var github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
 
@@ -588,7 +588,7 @@ public class ObservableTeamsClientTests
                     repoContext.RepositoryName,
                     "admin");
 
-                await github.Organization.Team.RemoveRepositoryFromTeam(
+                await github.Organization.Team.RemoveRepositoryFromATeam(
                     Helper.Organization,
                     teamContext.Team.Slug,
                     repoContext.RepositoryOwner,
