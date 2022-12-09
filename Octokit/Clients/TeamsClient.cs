@@ -543,5 +543,38 @@ namespace Octokit
         {
             return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.TeamPendingInvitations(id), null, options);
         }
+
+        /// <summary>
+        /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.
+        /// Repositories inherited through a parent team will also be checked.
+        /// </summary>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <param name="provideRepositoryMediaTypeInAcceptHeader">privides repository as a media typ in accepts header</param>
+        /// <returns>
+        /// 
+        ///     200     Alternative response with repository permissions
+        ///     204     Response if team has permission for the repository. 
+        ///             This is the response when the repository media type hasn't been provded in the Accept header.
+        ///     404     Not Found if team does not have permission for the repository
+        /// 
+        /// </returns>
+        [ManualRoute("GET", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
+        public Task<TeamRepository> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo,
+            bool provideRepositoryMediaTypeInAcceptHeader = false)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(teamSlug, nameof(teamSlug));
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
+            var endpoint = ApiUrls.CheckTeamPermissionsForARepository(org, teamSlug, owner, repo);
+
+            return provideRepositoryMediaTypeInAcceptHeader 
+                ? ApiConnection.Get<TeamRepository>(endpoint, null, "application/vnd.github.v3.repository+json")
+                : ApiConnection.Get<TeamRepository>(endpoint);
+        }
     }
 }

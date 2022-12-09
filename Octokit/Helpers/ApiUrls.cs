@@ -1974,6 +1974,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// returns the <see cref="Uri"/> for a team repository
+        /// </summary>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        public static Uri CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo)
+        {
+            return "/orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamSlug, owner, repo);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for the teams pending invitations
         /// </summary>
         /// <param name="id">The team id</param>
