@@ -370,11 +370,14 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add a repository to the team
+        /// Add or update team repository permissions (Legacy)
+        /// Deprecation Notice: This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new "Add or update team repository permissions" endpoint.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        [ManualRoute("PUT", "/orgs/{org}/team/{team_slug}/repos/{owner}/{repo}")]
+        [ManualRoute("PUT", "/teams/{team_id}/repos/{owner}/{repo}")]
+        // TODO :: rename method to AddOrUpdateTeamRepositoryPermissions
         public async Task<bool> AddRepository(int id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -406,7 +409,9 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Add a repository to the team
+        /// Add or update team repository permissions (Legacy)
+        /// Deprecation Notice: This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new "Add or update team repository permissions" endpoint.
         /// </summary>
         /// <param name="id">The team identifier.</param>
         /// <param name="organization">Org to associate the repo with.</param>
@@ -414,7 +419,8 @@ namespace Octokit
         /// <param name="permission">The permission to grant the team on this repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        [ManualRoute("PUT", "/orgs/{org}/team/{team_slug}/repos/{owner}/{repo}")]
+        [ManualRoute("PUT", "/teams/{team_id}/repos/{owner}/{repo}")]
+        // TODO :: rename method to AddOrUpdateTeamRepositoryPermissions
         public async Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -446,11 +452,14 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Remove a repository from the team
+        /// Remove a repository from a team (Legacy)
+        /// Deprecation Notice: This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new Remove a repository from a team endpoint.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        [ManualRoute("DELETE", "/orgs/:org/teams/:team_slug/repos/:owner/:repo")]
+        [ManualRoute("DELETE", "/teams/{team_id}/repos/{owner}/{repo}")]
+        // TODO :: rename to RemoveRepositoryFromTeam
         public async Task<bool> RemoveRepository(int id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -598,7 +607,14 @@ namespace Octokit
         [ManualRoute("PUT", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
         public Task AddOrUpdateTeamRepositoryPermissions(string org, string teamSlug, string owner, string repo, string permission)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(teamSlug, nameof(teamSlug));
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
+            var endpoint = ApiUrls.TeamPermissionsForARepository(org, teamSlug, owner, repo);
+
+            return ApiConnection.Put(endpoint, new { permission }, null);
         }
 
         /// <summary>
@@ -616,7 +632,14 @@ namespace Octokit
         [ManualRoute("DELETE", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
         public Task RemoveRepositoryFromTeam(string org, string teamSlug, string owner, string repo)
         {
-            throw new NotImplementedException();
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(teamSlug, nameof(teamSlug));
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
+            var endpoint = ApiUrls.TeamPermissionsForARepository(org, teamSlug, owner, repo);
+
+            return ApiConnection.Delete(endpoint);
         }
     }
 }
