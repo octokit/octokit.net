@@ -546,8 +546,16 @@ namespace Octokit
         /// </summary>
         public DateTimeOffset? PushedAt { get; private set; }
 
+        /// <summary>
+        /// format: date-time
+        /// example: '2011-01-26T19:01:12Z'
+        /// </summary>
         public DateTimeOffset CreatedAt { get; private set; }
 
+        /// <summary>
+        /// format: date-time
+        /// example: '2011-01-26T19:14:43Z'
+        /// </summary>
         public DateTimeOffset UpdatedAt { get; private set; }
 
         /// <summary>
@@ -555,7 +563,9 @@ namespace Octokit
         /// </summary>
         public bool? AllowRebaseMerge { get; private set; }
 
-        // TODO :: is Repository nullable-repository?
+        /// <summary>
+        /// Template repository (nullable)
+        /// </summary>
         public Repository TemplateRepository { get; private set; }
 
         public string TempCloneToken { get; private set; }
