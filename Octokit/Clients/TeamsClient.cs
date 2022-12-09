@@ -570,7 +570,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            var endpoint = ApiUrls.CheckTeamPermissionsForARepository(org, teamSlug, owner, repo);
+            var endpoint = ApiUrls.TeamPermissionsForARepository(org, teamSlug, owner, repo);
 
             return provideRepositoryMediaTypeInAcceptHeader 
                 ? ApiConnection.Get<TeamRepository>(endpoint, null, "application/vnd.github.v3.repository+json")
