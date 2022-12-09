@@ -448,6 +448,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#check-team-permissions-for-a-repository">API Documentation</a>
         /// for more information.
+        /// </remarks>
         /// <param name="org">The organization name. The name is not case sensitive.</param>
         /// <param name="teamSlug">The slug of the team name.</param>
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
