@@ -252,9 +252,8 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
-        /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Put(Uri uri, object body, string accepts);
+        Task<HttpStatusCode> Put(Uri uri, object body);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.

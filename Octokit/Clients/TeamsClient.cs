@@ -394,7 +394,6 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("PUT", "/teams/{team_id}/repos/{owner}/{repo}")]
-        // TODO :: rename method to AddOrUpdateTeamRepositoryPermissions
         public async Task<bool> AddRepository(int id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -437,7 +436,6 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("PUT", "/teams/{team_id}/repos/{owner}/{repo}")]
-        // TODO :: rename method to AddOrUpdateTeamRepositoryPermissions
         public async Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -476,7 +474,6 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/teams/{team_id}/repos/{owner}/{repo}")]
-        // TODO :: rename to RemoveRepositoryFromTeam
         public async Task<bool> RemoveRepository(int id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
@@ -630,7 +627,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamPermissionsForARepository(org, teamSlug, owner, repo);
 
-            return ApiConnection.Put(endpoint, new { permission }, null);
+            return ApiConnection.Put(endpoint, new { permission });
         }
 
         /// <summary>

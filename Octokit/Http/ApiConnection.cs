@@ -343,14 +343,13 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to put</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
-        /// <param name="accepts">Accept header to use for the API request</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Put(Uri uri, object data, string accepts)
+        public Task Put(Uri uri, object data)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            return Connection.Put(uri, data, null);
+            return Connection.Put(uri, data);
         }
 
         /// <summary>

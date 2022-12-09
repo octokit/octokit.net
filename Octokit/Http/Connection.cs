@@ -499,14 +499,13 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
-        /// <param name="accepts">Specifies accepted response media types.</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Put(Uri uri, object body, string accepts)
+        public async Task<HttpStatusCode> Put(Uri uri, object body)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            var response = await SendData<object>(uri, HttpMethod.Put, body, accepts, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Put, body, null, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
