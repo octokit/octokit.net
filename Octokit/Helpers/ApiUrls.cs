@@ -2233,6 +2233,53 @@ namespace Octokit
             return "repos/{0}/{1}/commits".FormatUri(owner, name);
         }
 
+        ///repos/{owner}/{repo}/commits/{commit_sha}/
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists all branches where the given commit SHA is the HEAD, or latest commit for the branch.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsBranchesWhereHead(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/commits/{2}/branches-where-head".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists all branches where the given commit SHA is the HEAD, or latest commit for the branch.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The commit reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsBranchesWhereHead(long repositoryId, string reference)
+        {
+            return "repositories/{0}/commits/{1}/branches-where-head".FormatUri(repositoryId, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check suites for the specified reference.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="reference">The commit reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsPull(string owner, string name, string reference)
+        {
+            return "repos/{0}/{1}/commits/{2}/pulls".FormatUri(owner, name, reference);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the check suites for the specified reference.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="reference">The commit reference (SHA)</param>
+        /// <returns></returns>
+        public static Uri RepositoryCommitsPull(long repositoryId, string reference)
+        {
+            return "repositories/{0}/commits/{1}/pulls".FormatUri(repositoryId, reference);
+        }
+
         /// <summary>
         /// Returns the <see cref="Uri"/> for comparing two commits.
         /// </summary>
