@@ -76,7 +76,7 @@ namespace Octokit
             string defaultBranch,
             int openIssuesCount,
             bool isTemplate,
-            ICollection<string> topics,
+            IReadOnlyList<string> topics,
             bool hasIssues,
             bool hasProjects,
             bool hasWiki,
@@ -213,7 +213,7 @@ namespace Octokit
         /// <summary>
         /// example: octocat/Hello-World
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; private set; }
 
         public LicenseMetadata License { get; private set; }
 
@@ -247,7 +247,7 @@ namespace Octokit
         /// format: uri
         /// example: https://api.github.com/repos/octocat/Hello-World
         /// </summary>
-        public string Url { get; set; }
+        public string Url { get; private set; }
 
         /// <summary>
         /// example: http://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}
@@ -492,7 +492,7 @@ namespace Octokit
         /// </summary>
         public string DefaultBranch { get; private set; }
 
-        public int OpenIssuesCount { get; set; }
+        public int OpenIssuesCount { get; private set; }
 
         /// <summary>
         /// Whether this repository acts as a template that can be used to generate new repositories
@@ -500,7 +500,7 @@ namespace Octokit
         /// </summary>
         public bool IsTemplate { get; private set; }
 
-        public ICollection<string> Topics { get; private set; }
+        public IReadOnlyList<string> Topics { get; private set; }
 
         /// <summary>
         /// Whether issues are enabled.
