@@ -231,6 +231,10 @@ namespace Octokit
         /// Updates a team
         /// To edit a team, the authenticated user must either be an organization owner or a team maintainer
         /// </summary>
+        /// /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#update-a-team">API documentation</a> 
+        /// for more information.
+        /// </remarks>
         /// <returns>updated <see cref="Team" /> for the current org</returns>
         [ManualRoute("PATCH", "/orgs/{org}/teams/{team_slug}")]
         public Task<Team> Update(string org, string teamSlug, UpdateTeam team)
@@ -249,6 +253,10 @@ namespace Octokit
         /// This endpoint route is deprecated and will be removed from the Teams API.
         /// We recommend migrating your existing code to use the new Update a team endpoint
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#update-a-team-legacy">API documentation</a> 
+        /// for more information.
+        /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
         [ManualRoute("PATCH", "/teams/{team_id}")]
@@ -264,6 +272,11 @@ namespace Octokit
         /// To delete a team, the authenticated user must be an organization owner or team maintainer.
         /// If you are an organization owner, deleting a parent team will delete all of its child teams as well.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#delete-a-team">API documentation</a> 
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/teams/{team_slug}")]
@@ -282,6 +295,10 @@ namespace Octokit
         /// This endpoint route is deprecated and will be removed from the Teams API.
         /// We recommend migrating your existing code to use the new Delete a team endpoint.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#delete-a-team-legacy">API documentation</a> 
+        /// </remarks>
+        /// <param name="id">The unique identifier of the team.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/teams/{team_id}")]
@@ -557,19 +574,16 @@ namespace Octokit
         /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.
         /// Repositories inherited through a parent team will also be checked.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#check-team-permissions-for-a-repository">API Documentation</a>
+        /// for more information.
         /// <param name="org">The organization name. The name is not case sensitive.</param>
         /// <param name="teamSlug">The slug of the team name.</param>
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
         /// <param name="provideRepositoryMediaTypeInAcceptHeader">privides repository as a media typ in accepts header</param>
-        /// <returns>
-        /// 
-        ///     200     Alternative response with repository permissions
-        ///     204     Response if team has permission for the repository. 
-        ///             This is the response when the repository media type hasn't been provded in the Accept header.
-        ///     404     Not Found if team does not have permission for the repository
-        /// 
-        /// </returns>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
         [ManualRoute("GET", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
         public Task<TeamRepository> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo,
             bool provideRepositoryMediaTypeInAcceptHeader = false)
@@ -598,11 +612,12 @@ namespace Octokit
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
         /// <param name="permission">
-        ///     The permission to grant the team on this repository. We accept the following permissions to be set: 
-        ///     pull, triage, push, maintain, admin and you can also specify a custom repository role name, if the 
-        ///     owning organization has defined any. If no permission is specified, the team's permission attribute 
-        ///     will be used to determine what permission to grant the team on this repository
+        /// The permission to grant the team on this repository. We accept the following permissions to be set: 
+        /// pull, triage, push, maintain, admin and you can also specify a custom repository role name, if the 
+        /// owning organization has defined any. If no permission is specified, the team's permission attribute 
+        /// will be used to determine what permission to grant the team on this repository
         /// </param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("PUT", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
         public Task AddOrUpdateTeamRepositoryPermissions(string org, string teamSlug, string owner, string repo, string permission)
@@ -628,6 +643,7 @@ namespace Octokit
         /// <param name="teamSlug">The slug of the team name.</param>
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
         public Task RemoveRepositoryFromTeam(string org, string teamSlug, string owner, string repo)
