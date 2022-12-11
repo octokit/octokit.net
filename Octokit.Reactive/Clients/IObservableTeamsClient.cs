@@ -128,7 +128,7 @@ namespace Octokit.Reactive
         /// Updates a team
         /// To edit a team, the authenticated user must either be an organization owner or a team maintainer
         /// </summary>
-        /// /// <remarks>
+        /// <remarks>
         /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#update-a-team">API documentation</a> 
         /// for more information.
         /// </remarks>
