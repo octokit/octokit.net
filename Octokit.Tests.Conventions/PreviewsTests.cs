@@ -70,7 +70,8 @@ namespace Octokit.Tests.Conventions
                 // https://developer.github.com/v3/repos/commits/#get-a-single-commit
                 "application/vnd.github.v3.sha",
                 // https://developer.github.com/v3/activity/starring/#alternative-response-with-star-creation-timestamps
-                "application/vnd.github.v3.star+json"
+                "application/vnd.github.v3.star+json",
+                "application/vnd.github.v3.repository+json"
             };
 
             var validHeaders = defaultHeaders.Concat(previewAcceptHeaders);

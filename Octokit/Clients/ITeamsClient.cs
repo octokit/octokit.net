@@ -298,11 +298,24 @@ namespace Octokit
         /// <param name="teamSlug">The slug of the team name.</param>
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
-        /// <param name="provideRepositoryMediaTypeInAcceptHeader">privides repository as a media typ in accepts header</param>
+        /// <returns></returns>
+        Task<bool> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo);
+
+        /// <summary>
+        /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.
+        /// Repositories inherited through a parent team will also be checked.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#check-team-permissions-for-a-repository">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task<TeamRepository> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo,
-            bool provideRepositoryMediaTypeInAcceptHeader = false);
+        Task<TeamRepository> CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(string org, string teamSlug, string owner, string repo);
 
         /// <summary>
         /// Add or update team repository permissions

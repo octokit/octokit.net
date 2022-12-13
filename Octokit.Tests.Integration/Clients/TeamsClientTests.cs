@@ -520,15 +520,40 @@ public class TeamsClientTests
             {
                 github.Organization.Team.AddRepository(teamContext.TeamId, Helper.Organization, repositoryContext.RepositoryName);
 
-                var teamPermission = await github.Organization.Team.CheckTeamPermissionsForARepository(
+                var teamPermissionResponse = await github.Organization.Team.CheckTeamPermissionsForARepository(
                     Helper.Organization,
                     teamContext.Team.Slug,
                     repositoryContext.RepositoryOwner,
-                    repositoryContext.RepositoryName,
-                    false);
+                    repositoryContext.RepositoryName);
 
-                Assert.Null(teamPermission);
+                Assert.True(teamPermissionResponse);
             }
+        }
+
+        [OrganizationTest]
+        public async Task ChecksTeamPermissionsReturnsFalseOnNonTeamRepository()
+        {
+            using (var teamContext = await github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repositoryContext = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            {
+                var response = await github.Organization.Team.CheckTeamPermissionsForARepository(
+                        Helper.Organization,
+                        teamContext.Team.Slug,
+                        repositoryContext.RepositoryOwner,
+                        repositoryContext.RepositoryName);
+
+                Assert.False(response);
+            }
+        }
+    }
+
+    public class TheCheckTeamPermissionsForARepositoryWithCustomAcceptHeaderMethod
+    {
+        private readonly IGitHubClient github;
+
+        public TheCheckTeamPermissionsForARepositoryWithCustomAcceptHeaderMethod()
+        {
+            github = Helper.GetAuthenticatedClient();
         }
 
         [OrganizationTest]
@@ -539,12 +564,11 @@ public class TeamsClientTests
             {
                 github.Organization.Team.AddRepository(teamContext.TeamId, Helper.Organization, repositoryContext.RepositoryName);
 
-                var teamPermission = await github.Organization.Team.CheckTeamPermissionsForARepository(
+                var teamPermission = await github.Organization.Team.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(
                     Helper.Organization,
                     teamContext.Team.Slug,
                     repositoryContext.RepositoryOwner,
-                    repositoryContext.RepositoryName,
-                    true);
+                    repositoryContext.RepositoryName);
 
                 Assert.NotNull(teamPermission);
                 Assert.NotNull(teamPermission.Permissions);
@@ -559,12 +583,11 @@ public class TeamsClientTests
             using (var repositoryContext = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
             {
                 await Assert.ThrowsAsync<NotFoundException>(async () =>
-                    await github.Organization.Team.CheckTeamPermissionsForARepository(
+                    await github.Organization.Team.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(
                         Helper.Organization,
                         teamContext.Team.Slug,
                         repositoryContext.RepositoryOwner,
-                        repositoryContext.RepositoryName,
-                        false));
+                        repositoryContext.RepositoryName));
             }
         }
     }

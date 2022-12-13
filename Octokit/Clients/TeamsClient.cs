@@ -579,12 +579,9 @@ namespace Octokit
         /// <param name="teamSlug">The slug of the team name.</param>
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
-        /// <param name="provideRepositoryMediaTypeInAcceptHeader">privides repository as a media typ in accepts header</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         [ManualRoute("GET", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
-        public Task<TeamRepository> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo,
-            bool provideRepositoryMediaTypeInAcceptHeader = false)
+        public async Task<bool> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(teamSlug, nameof(teamSlug));
@@ -593,9 +590,42 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamPermissionsForARepository(org, teamSlug, owner, repo);
 
-            return provideRepositoryMediaTypeInAcceptHeader 
-                ? ApiConnection.Get<TeamRepository>(endpoint, null, "application/vnd.github.v3.repository+json")
-                : ApiConnection.Get<TeamRepository>(endpoint);
+            try
+            {
+                var response = await ApiConnection.Get<TeamRepository>(endpoint);
+                return response == null;
+            }
+            catch(NotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.
+        /// Repositories inherited through a parent team will also be checked.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#check-team-permissions-for-a-repository">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        [ManualRoute("GET", "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}")]
+        public Task<TeamRepository> CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(string org, string teamSlug, string owner, string repo)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(teamSlug, nameof(teamSlug));
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
+            var endpoint = ApiUrls.TeamPermissionsForARepository(org, teamSlug, owner, repo);
+
+            return ApiConnection.Get<TeamRepository>(endpoint, null, AcceptHeaders.RepositoryContentMediaType);
         }
 
         /// <summary>

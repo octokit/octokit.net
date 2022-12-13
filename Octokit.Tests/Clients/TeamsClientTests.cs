@@ -498,14 +498,33 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<TeamRepository>(Arg.Is<Uri>(u => u.ToString() == expected));
             }
+        }
 
+        public class TheCheckTeamPermissionsForARepositoryWithCustomAcceptHeaderMethod
+        {
             [Fact]
-            public async Task RequestsTheCorrectUrlWithCustomMediaTypeHeader()
+            public async Task EnsuresNonNullOrEmptyArguments()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                await client.CheckTeamPermissionsForARepository("org", "teamSlug", "owner", "repo", true);
+                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                    client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(null, "teamSlug", "owner", "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                    client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", null, "owner", "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                    client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", "teamSlug", null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                    client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", "teamSlug", "owner", null));
+            }
+
+            [Fact]
+            public async Task RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                await client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", "teamSlug", "owner", "repo");
 
                 var expected = "/orgs/org/teams/teamSlug/repos/owner/repo";
 
