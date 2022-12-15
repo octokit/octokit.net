@@ -520,6 +520,7 @@ public class ObservableTeamsClientTests
             }
         }
     }
+    
     public class TheAddOrUpdateTeamRepositoryPermissionsMethod
     {
         private readonly IObservableGitHubClient _github;
