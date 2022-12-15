@@ -138,7 +138,8 @@ namespace Octokit.Reactive
         /// <summary>
         /// Returns updated <see cref="Team" /> for the current org.
         /// This endpoint route is deprecated and will be removed from the Teams API.
-        /// We recommend migrating your existing code to use the new Update a team endpoint
+        /// We recommend migrating your existing code to use the new Update a team endpoint.
+        /// <see cref="Update(string, string, UpdateTeam)"/>
         /// </summary>
         /// <remarks>
         /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#update-a-team-legacy">API documentation</a> 
@@ -165,6 +166,7 @@ namespace Octokit.Reactive
         /// Delete a team - must have owner permissions to do this
         /// This endpoint route is deprecated and will be removed from the Teams API.
         /// We recommend migrating your existing code to use the new Delete a team endpoint.
+        /// <see cref="Delete(string, string)"/>.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#delete-a-team-legacy">API documentation</a> 
