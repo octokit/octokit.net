@@ -14,7 +14,7 @@ namespace Octokit.Caching
 
         public CachingHttpClient(IHttpClient httpClient, IResponseCache responseCache)
         {
-            _httpClient = httpClient;
+            _httpClient = httpClient is CachingHttpClient cachingHttpClient ? cachingHttpClient._httpClient : httpClient;
             _responseCache = responseCache;
         }
 
