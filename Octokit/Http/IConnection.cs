@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Octokit.Caching;
 using Octokit.Internal;
 
 namespace Octokit
@@ -302,7 +303,7 @@ namespace Octokit
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
-        /// <param name="accepts">Specifies accept response media type</param>        
+        /// <param name="accepts">Specifies accept response media type</param>
         Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts);
 
         /// <summary>
@@ -319,12 +320,20 @@ namespace Octokit
         /// Gets or sets the credentials used by the connection.
         /// </summary>
         /// <remarks>
-        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an 
-        /// <see cref="ICredentialStore"/> to the constructor. 
-        /// Setting this property will change the <see cref="ICredentialStore"/> to use 
+        /// You can use this property if you only have a single hard-coded credential. Otherwise, pass in an
+        /// <see cref="ICredentialStore"/> to the constructor.
+        /// Setting this property will change the <see cref="ICredentialStore"/> to use
         /// the default <see cref="InMemoryCredentialStore"/> with just these credentials.
         /// </remarks>
         Credentials Credentials { get; set; }
+
+        /// <summary>
+        /// Sets response cache used by the connection.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property will wrap existing <see cref="IHttpClient"/> in <see cref="CachingHttpClient"/>.
+        /// </remarks>
+        IResponseCache ResponseCache { set; }
 
         /// <summary>
         /// Sets the timeout for the connection between the client and the server.
