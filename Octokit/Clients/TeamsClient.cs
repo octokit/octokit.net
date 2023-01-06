@@ -245,7 +245,6 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamsByOrganizationAndSlug(org, teamSlug);
             return ApiConnection.Patch<Team>(endpoint, team);
-            throw new NotImplementedException();
         }
 
         /// <summary>
