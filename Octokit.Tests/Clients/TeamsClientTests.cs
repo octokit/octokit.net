@@ -244,7 +244,7 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheDeleteTeamLegacuMethod
+        public class TheDeleteTeamLegacyMethod
         {
             [Fact]
             public void RequestsTheCorrectUrl()
