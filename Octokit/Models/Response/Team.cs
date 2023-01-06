@@ -23,7 +23,7 @@ namespace Octokit
             Description = description;
             Privacy = privacy;
             Permission = permission;
-            Permissions = teamRepositoryPermissions;
+            TeamRepositoryPermissions = teamRepositoryPermissions;
             MembersCount = membersCount;
             ReposCount = reposCount;
             Organization = organization;
@@ -79,7 +79,7 @@ namespace Octokit
         /// <summary>
         /// 
         /// </summary>
-        public TeamRepositoryPermissions Permissions { get; private set; }
+        public TeamRepositoryPermissions TeamRepositoryPermissions { get; private set; }
 
         /// <summary>
         /// how many members in this team
