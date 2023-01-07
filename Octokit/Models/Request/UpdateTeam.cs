@@ -36,6 +36,9 @@ namespace Octokit
 
         /// <summary>
         /// The permission that new repositories will be added to the team with when none is specified (default: Pull)
+        /// Although permission can be one of : pull, push, or admin based on documentation, passing admin results in an error response.
+        /// That's why TeamPermission does not contain an admin value.
+        /// See the issue here https://github.com/github/rest-api-description/issues/1952
         /// </summary>
         public TeamPermission? Permission { get; set; }
 
