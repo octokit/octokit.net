@@ -293,5 +293,37 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Empty(pendingInvitations);
             }
         }
+
+        public class TheGetAllOrganizationMembershipsForCurrentMethod
+        {
+            private IGitHubClient _gitHub;
+
+            public TheGetAllOrganizationMembershipsForCurrentMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsMemberships()
+            {
+                var memberships = await _gitHub.Organization.Member.GetAllOrganizationMembershipsForCurrent();
+                Assert.NotEmpty(memberships);
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsCorrectCountOfMembersWithoutStart()
+            {
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    PageSize = 1
+                };
+
+                var memberships = await _gitHub.Organization.Member.GetAllOrganizationMembershipsForCurrent(options);
+
+                Assert.Equal(1, memberships.Count);
+            }
+
+        }
     }
 }

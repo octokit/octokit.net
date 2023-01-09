@@ -506,5 +506,34 @@ namespace Octokit.Reactive
 
             return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationFailedInvitations(org), null, options);
         }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationMembership" />s for the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-organization-memberships-for-the-authenticated-user">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        public IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent()
+        {
+            return _connection.GetAndFlattenAllPages<OrganizationMembership>(ApiUrls.UserOrganizationMemberships());
+        }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationMembership" />s for the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-organization-memberships-for-the-authenticated-user">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent(ApiOptions options)
+        {
+            return _connection.GetAndFlattenAllPages<OrganizationMembership>(ApiUrls.UserOrganizationMemberships(), options);
+        }
     }
 }
