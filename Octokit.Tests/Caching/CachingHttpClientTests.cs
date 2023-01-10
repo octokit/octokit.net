@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 using NSubstitute.ReturnsExtensions;
 using Octokit.Caching;
 using Octokit.Internal;
@@ -104,8 +105,8 @@ namespace Octokit.Tests.Caching
             }
 
             [Theory]
-            [MemberData(nameof(NonNotModifiedHttpStatusCodes))]
-            public async Task UsesGithubResponseIfEtagIsPresentAndGithubReturnsNon304(HttpStatusCode httpStatusCode)
+            [MemberData(nameof(NonNotModifiedHttpStatusCodesWithSetCacheFailure))]
+            public async Task UsesGithubResponseIfEtagIsPresentAndGithubReturnsNon304(HttpStatusCode httpStatusCode, bool setCacheThrows)
             {
                 // arrange
                 var underlyingClient = Substitute.For<IHttpClient>();
@@ -126,6 +127,10 @@ namespace Octokit.Tests.Caching
 
                 underlyingClient.Send(Arg.Is<IRequest>(req => req == request && req.Headers["If-None-Matched"] == etag), cancellationToken).ReturnsForAnyArgs(githubResponse);
                 responseCache.GetAsync(request).Returns(cachedV1Response);
+                if (setCacheThrows)
+                {
+                    responseCache.SetAsync(request, Arg.Any<CachedResponse.V1>()).ThrowsForAnyArgs<Exception>();
+                }
 
                 var cachingHttpClient = new CachingHttpClient(underlyingClient, responseCache);
 
@@ -141,19 +146,20 @@ namespace Octokit.Tests.Caching
                 responseCache.Received(1).SetAsync(request, Arg.Is<CachedResponse.V1>(v1 => new ResponseComparer().Equals(v1, CachedResponse.V1.Create(githubResponse))));
             }
 
-            public static IEnumerable<object[]> NonNotModifiedHttpStatusCodes()
+            public static IEnumerable<object[]> NonNotModifiedHttpStatusCodesWithSetCacheFailure()
             {
                 foreach (var statusCode in Enum.GetValues(typeof(HttpStatusCode)))
                 {
-                    if (!statusCode.Equals(HttpStatusCode.NotModified))
-                    {
-                        yield return new[] { statusCode };
-                    }
+                    if (statusCode.Equals(HttpStatusCode.NotModified)) continue;
+                    yield return new[] { statusCode, true };
+                    yield return new[] { statusCode, false };
                 }
             }
 
-            [Fact]
-            public async Task UsesGithubResponseIfCachedEntryIsNull()
+            [Theory]
+            [InlineData(true)]
+            [InlineData(false)]
+            public async Task UsesGithubResponseIfCachedEntryIsNull(bool setCacheThrows)
             {
                 // arrange
                 var underlyingClient = Substitute.For<IHttpClient>();
@@ -168,6 +174,10 @@ namespace Octokit.Tests.Caching
 
                 underlyingClient.Send(Arg.Is<IRequest>(req => req == request && !req.Headers.Any()), cancellationToken).ReturnsForAnyArgs(githubResponse);
                 responseCache.GetAsync(request).ReturnsNull();
+                if (setCacheThrows)
+                {
+                    responseCache.SetAsync(request, Arg.Any<CachedResponse.V1>()).ThrowsForAnyArgs<Exception>();
+                }
 
                 var cachingHttpClient = new CachingHttpClient(underlyingClient, responseCache);
 
@@ -184,9 +194,48 @@ namespace Octokit.Tests.Caching
             }
 
             [Theory]
-            [InlineData(null)]
-            [InlineData("")]
-            public async Task UsesGithubResponseIfCachedEntryEtagIsNullOrEmpty(string etag)
+            [InlineData(true)]
+            [InlineData(false)]
+            public async Task UsesGithubResponseIfGetCachedEntryThrows(bool setCacheThrows)
+            {
+                // arrange
+                var underlyingClient = Substitute.For<IHttpClient>();
+                var responseCache = Substitute.For<IResponseCache>();
+                var request = Substitute.For<IRequest>();
+                request.Method.Returns(HttpMethod.Get);
+                request.Headers.Returns(new Dictionary<string, string>());
+
+                var cancellationToken = CancellationToken.None;
+
+                var githubResponse = Substitute.For<IResponse>();
+
+                underlyingClient.Send(Arg.Is<IRequest>(req => req == request && !req.Headers.Any()), cancellationToken).ReturnsForAnyArgs(githubResponse);
+                responseCache.GetAsync(Args.Request).ThrowsForAnyArgs<Exception>();
+                if (setCacheThrows)
+                {
+                    responseCache.SetAsync(request, Arg.Any<CachedResponse.V1>()).ThrowsForAnyArgs<Exception>();
+                }
+
+                var cachingHttpClient = new CachingHttpClient(underlyingClient, responseCache);
+
+                // act
+                var response = await cachingHttpClient.Send(request, cancellationToken);
+
+                // assert
+                Assert.Equal(githubResponse, response, new ResponseComparer());
+                Assert.Single(underlyingClient.ReceivedCalls());
+                underlyingClient.Received(1).Send(request, cancellationToken);
+                Assert.Equal(2, responseCache.ReceivedCalls().Count());
+                responseCache.Received(1).GetAsync(request);
+                responseCache.Received(1).SetAsync(request, Arg.Is<CachedResponse.V1>(v1 => new ResponseComparer().Equals(v1, CachedResponse.V1.Create(githubResponse))));
+            }
+
+            [Theory]
+            [InlineData(null, true)]
+            [InlineData(null, false)]
+            [InlineData("", true)]
+            [InlineData("", false)]
+            public async Task UsesGithubResponseIfCachedEntryEtagIsNullOrEmpty(string etag, bool setCacheThrows)
             {
                 // arrange
                 var underlyingClient = Substitute.For<IHttpClient>();
@@ -205,6 +254,10 @@ namespace Octokit.Tests.Caching
 
                 underlyingClient.Send(Arg.Is<IRequest>(req => req == request && !req.Headers.Any()), cancellationToken).ReturnsForAnyArgs(githubResponse);
                 responseCache.GetAsync(request).Returns(cachedV1Response);
+                if (setCacheThrows)
+                {
+                    responseCache.SetAsync(request, Arg.Any<CachedResponse.V1>()).ThrowsForAnyArgs<Exception>();
+                }
 
                 var cachingHttpClient = new CachingHttpClient(underlyingClient, responseCache);
 
