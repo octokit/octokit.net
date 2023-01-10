@@ -6,6 +6,7 @@ using Xunit;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using Octokit.Caching;
 
 namespace Octokit.Tests
 {
@@ -131,6 +132,47 @@ namespace Octokit.Tests
 
                 Assert.Equal("foo", client.Credentials.Login);
                 Assert.Equal("bar", client.Credentials.Password);
+            }
+        }
+
+        public class TheResponseCacheProperty
+        {
+            [Fact]
+            public void WhenSetWrapsExistingHttpClientWithCachingHttpClient()
+            {
+                var responseCache = Substitute.For<IResponseCache>();
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests"));
+                Assert.IsType<Connection>(client.Connection);
+                var existingConnection = (Connection) client.Connection;
+                var existingHttpClient = existingConnection._httpClient;
+
+                client.ResponseCache = responseCache;
+
+                Assert.Equal(existingConnection, client.Connection);
+                Assert.IsType<CachingHttpClient>(existingConnection._httpClient);
+                var cachingHttpClient = (CachingHttpClient) existingConnection._httpClient;
+                Assert.Equal(existingHttpClient, cachingHttpClient._httpClient);
+                Assert.Equal(responseCache, cachingHttpClient._responseCache);
+            }
+
+            [Fact]
+            public void WhenResetWrapsUnderlyingHttpClientWithCachingHttpClient()
+            {
+                var responseCache = Substitute.For<IResponseCache>();
+
+                var client = new GitHubClient(new ProductHeaderValue("OctokitTests"));
+                Assert.IsType<Connection>(client.Connection);
+                var existingConnection = (Connection) client.Connection;
+                var existingHttpClient = existingConnection._httpClient;
+                client.ResponseCache = Substitute.For<IResponseCache>();
+
+                client.ResponseCache = responseCache;
+
+                Assert.Equal(existingConnection, client.Connection);
+                Assert.IsType<CachingHttpClient>(existingConnection._httpClient);
+                var cachingHttpClient = (CachingHttpClient) existingConnection._httpClient;
+                Assert.Equal(existingHttpClient, cachingHttpClient._httpClient);
+                Assert.Equal(responseCache, cachingHttpClient._responseCache);
             }
         }
 

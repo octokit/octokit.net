@@ -9,8 +9,8 @@ namespace Octokit.Caching
 {
     public sealed class CachingHttpClient : IHttpClient
     {
-        private readonly IHttpClient _httpClient;
-        private readonly IResponseCache _responseCache;
+        internal readonly IHttpClient _httpClient;
+        internal readonly IResponseCache _responseCache;
 
         public CachingHttpClient(IHttpClient httpClient, IResponseCache responseCache)
         {

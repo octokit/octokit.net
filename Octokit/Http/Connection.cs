@@ -24,7 +24,7 @@ namespace Octokit
 
         readonly Authenticator _authenticator;
         readonly JsonHttpPipeline _jsonPipeline;
-        private IHttpClient _httpClient;
+        internal IHttpClient _httpClient;
 
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
