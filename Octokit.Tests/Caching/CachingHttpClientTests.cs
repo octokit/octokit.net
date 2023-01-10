@@ -8,6 +8,26 @@ namespace Octokit.Tests.Caching
 {
     public class CachingHttpClientTests
     {
+        public class TheSetRequestTimeoutMethod
+        {
+            [Fact]
+            public void SetsRequestTimeoutForUnderlyingClient()
+            {
+                // arrange
+                var underlyingClient = Substitute.For<IHttpClient>();
+                var responseCache = Substitute.For<IResponseCache>();
+                var timeout = TimeSpan.Zero;
+
+                var cachingHttpClient = new CachingHttpClient(underlyingClient, responseCache);
+
+                // act
+                cachingHttpClient.SetRequestTimeout(timeout);
+
+                // assert
+                underlyingClient.Received(1).SetRequestTimeout(timeout);
+            }
+        }
+
         public class TheCtor
         {
             [Theory]
