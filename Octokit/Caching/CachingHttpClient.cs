@@ -14,6 +14,9 @@ namespace Octokit.Caching
 
         public CachingHttpClient(IHttpClient httpClient, IResponseCache responseCache)
         {
+            Ensure.ArgumentNotNull(httpClient, nameof(httpClient));
+            Ensure.ArgumentNotNull(responseCache, nameof(responseCache));
+
             _httpClient = httpClient is CachingHttpClient cachingHttpClient ? cachingHttpClient._httpClient : httpClient;
             _responseCache = responseCache;
         }
