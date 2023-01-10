@@ -23,6 +23,8 @@ namespace Octokit.Caching
 
         public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
         {
+            Ensure.ArgumentNotNull(request, nameof(request));
+
             if (request.Method != HttpMethod.Get)
             {
                 return await _httpClient.Send(request, cancellationToken);
