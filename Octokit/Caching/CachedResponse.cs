@@ -54,6 +54,8 @@ namespace Octokit.Caching
 
             public static V1 Create(IResponse response)
             {
+                Ensure.ArgumentNotNull(response, nameof(response));
+
                 return new V1(response.Body, response.Headers, response.ApiInfo, response.StatusCode, response.ContentType);
             }
         }
