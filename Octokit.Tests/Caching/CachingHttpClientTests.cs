@@ -28,6 +28,25 @@ namespace Octokit.Tests.Caching
             }
         }
 
+        public class TheDisposeMethod
+        {
+            [Fact]
+            public void CallsDisposeForUnderlyingClient()
+            {
+                // arrange
+                var underlyingClient = Substitute.For<IHttpClient>();
+                var responseCache = Substitute.For<IResponseCache>();
+
+                var cachingHttpClient = new CachingHttpClient(underlyingClient, responseCache);
+
+                // act
+                cachingHttpClient.Dispose();
+
+                // assert
+                underlyingClient.Received(1).Dispose();
+            }
+        }
+
         public class TheCtor
         {
             [Theory]
