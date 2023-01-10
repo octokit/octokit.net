@@ -19,6 +19,8 @@ namespace Octokit.Caching
         {
             public V1(object body, IReadOnlyDictionary<string, string> headers, ApiInfo apiInfo, HttpStatusCode statusCode, string contentType)
             {
+                Ensure.ArgumentNotNull(headers, nameof(headers));
+
                 StatusCode = statusCode;
                 Body = body;
                 Headers = headers;
