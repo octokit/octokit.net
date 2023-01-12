@@ -8,8 +8,8 @@ namespace Octokit.Reactive
 
         /// <summary>
         /// Sets the timeout for the connection between the client and the server.
-        /// Github will terminate the request if it takes more than 10 seconds to process the request
-        /// Useful to set a specific timeout for lengthy operations, such as uploading release assets
+        /// GitHub will terminate the request if it takes more than 10 seconds to process the request
+        /// /// Useful to set a specific timeout for lengthy operations, such as uploading release assets
         /// </summary>
         /// <remarks>
         /// See more information here: https://technet.microsoft.com/library/system.net.http.httpclient.timeout(v=vs.110).aspx

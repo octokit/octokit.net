@@ -41,12 +41,12 @@ var ghe = new Uri("https://github.myenterprise.com/");
 var client = new GitHubClient(new ProductHeaderValue("my-cool-app"), ghe);
 ```
 
-You can use the `EnterpriseProbe` class to test whether a URL points to a Github Enterprise instance.
+You can use the `EnterpriseProbe` class to test whether a URL points to a GitHub Enterprise instance.
 
 ```csharp
 var probe = new EnterpriseProbe(new ProductHeaderValue("my-cool-app"));
 var result = await probe.Probe(new Uri("http://ghe.example.com/"));
-Assert.Equal(EnterpriseProbeResult.Ok, result); 
+Assert.Equal(EnterpriseProbeResult.Ok, result);
 ```
 
 ### Get some data
@@ -69,14 +69,14 @@ var user = await client.User.Current();
 
 ### Too Much of a Good Thing: Dealing with API Rate Limits
 
-Like any popular API, Github needs to throttle some requests. The OctoKit.NET client allows you to get some insight into how many requests you have left and when you can start making requests again.
+Like any popular API, GitHub needs to throttle some requests. The OctoKit.NET client allows you to get some insight into how many requests you have left and when you can start making requests again.
 
 In fact, there are two ways to get the Rate Limits via OctoKit.NET. Calling `GitHubClient.GetLastApiInfo()` returns the Rate Limit status which has been returned with the last api call. So, calling `GitHubClient.GetLastApiInfo()` will not send any extra HTTP requests to GitHub's servers.
 
 Example usage:
 
 ```csharp
-GitHubClient client; 
+GitHubClient client;
 //Create & initialize the client here
 
 // Prior to first API call, this will be null, because it only deals with the last call.
@@ -90,12 +90,12 @@ var howManyRequestsDoIHaveLeft = rateLimit?.Remaining;
 var whenDoesTheLimitReset = rateLimit?.Reset; // UTC time
 ```
 
-However, if in some cases you need to get the Rate Limit directly from Github, you should call `GitHubClient.Miscellaneous.GetRateLimits()`.
+However, if in some cases you need to get the Rate Limit directly from GitHub, you should call `GitHubClient.Miscellaneous.GetRateLimits()`.
 
 Example usage:
 
 ```csharp
-GitHubClient client; 
+GitHubClient client;
 //Create & initialize the client here
 
 var miscellaneousRateLimit = await client.Miscellaneous.GetRateLimits();
@@ -115,6 +115,6 @@ var howManySearchRequestsDoIHaveLeft = searchRateLimit.Remaining;
 var whenDoesTheSearchLimitReset = searchRateLimit.Reset; // UTC time
 ```
 
-An authenticated client will have a significantly higher limit than an anonymous client. 
+An authenticated client will have a significantly higher limit than an anonymous client.
 
-For more information on the API and understanding rate limits, you may want to consult [the Github API docs on rate limits](https://developer.github.com/v3/#rate-limiting).
+For more information on the API and understanding rate limits, you may want to consult [the GitHub API docs on rate limits](https://developer.github.com/v3/#rate-limiting).
