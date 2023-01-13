@@ -104,7 +104,7 @@ namespace Octokit
         public DateTimeOffset UpdatedAt { get; private set; }
 
         /// <summary>
-        /// The URL for this comment on Github.com
+        /// The URL for this comment on GitHub.com
         /// </summary>
         public string HtmlUrl { get; private set; }
 
