@@ -60,7 +60,7 @@ namespace Octokit
         public string Body { get; private set; }
 
         /// <summary>
-        /// The URL for this review on Github.com
+        /// The URL for this review on GitHub.com
         /// </summary>
         public string HtmlUrl { get; private set; }
 
