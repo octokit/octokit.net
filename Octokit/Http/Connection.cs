@@ -498,14 +498,14 @@ namespace Octokit
         /// Performs an asynchronous HTTP PUT request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
-        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="body">The object to serialize as the body of the request</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Put(Uri uri, string accepts)
+        public async Task<HttpStatusCode> Put(Uri uri, object body)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
-            Ensure.ArgumentNotNull(accepts, nameof(accepts));
+            Ensure.ArgumentNotNull(body, nameof(body));
 
-            var response = await SendData<object>(uri, HttpMethod.Put, null, accepts, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Put, body, null, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
