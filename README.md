@@ -102,6 +102,6 @@ problem.
 
 ## Copyright and License
 
-Copyright 2017 GitHub, Inc.
+Copyright 2023 GitHub, Inc.
 
 Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/main/LICENSE.txt)
