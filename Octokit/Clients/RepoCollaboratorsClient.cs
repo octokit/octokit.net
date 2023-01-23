@@ -232,14 +232,14 @@ namespace Octokit
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/collaborators/{username}/permission")]
-        public Task<CollaboratorPermission> ReviewPermission(string owner, string name, string user)
+        public Task<CollaboratorPermissionResponse> ReviewPermission(string owner, string name, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
-                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(owner, name, user), null);
+                .Get<CollaboratorPermissionResponse>(ApiUrls.RepoCollaboratorPermission(owner, name, user), null);
         }
 
         /// <summary>
@@ -252,12 +252,12 @@ namespace Octokit
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repository/{id}/collaborators/{username}/permission")]
-        public Task<CollaboratorPermission> ReviewPermission(long repositoryId, string user)
+        public Task<CollaboratorPermissionResponse> ReviewPermission(long repositoryId, string user)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             return ApiConnection
-                .Get<CollaboratorPermission>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null);
+                .Get<CollaboratorPermissionResponse>(ApiUrls.RepoCollaboratorPermission(repositoryId, user), null);
         }
 
         /// <summary>

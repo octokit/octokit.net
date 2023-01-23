@@ -136,7 +136,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<CollaboratorPermission> ReviewPermission(string owner, string name, string user);
+        Task<CollaboratorPermissionResponse> ReviewPermission(string owner, string name, string user);
 
         /// <summary>
         /// Review a user's permission level in a repository
@@ -147,7 +147,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<CollaboratorPermission> ReviewPermission(long repositoryId, string user);
+        Task<CollaboratorPermissionResponse> ReviewPermission(long repositoryId, string user);
 
         /// <summary>
         /// Adds a new collaborator to the repository.

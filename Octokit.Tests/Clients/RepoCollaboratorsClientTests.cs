@@ -301,7 +301,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 client.ReviewPermission("owner", "test", "user1");
-                connection.Received().Get<CollaboratorPermission>(
+                connection.Received().Get<CollaboratorPermissionResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1/permission"),
                     Arg.Any<Dictionary<string, string>>());
             }
@@ -313,7 +313,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 client.ReviewPermission(1L, "user1");
-                connection.Received().Get<CollaboratorPermission>(
+                connection.Received().Get<CollaboratorPermissionResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1/permission"),
                     Arg.Any<Dictionary<string, string>>());
             }

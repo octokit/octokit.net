@@ -63,6 +63,18 @@ namespace Octokit
         Push
     }
 
+    public enum PermissionLevel
+    {
+        [Parameter(Value = "admin")]
+        Admin,
+        [Parameter(Value = "write")]
+        Write,
+        [Parameter(Value = "read")]
+        Read,
+        [Parameter(Value = "none")]
+        None
+    }
+
     /// <summary>
     /// Object for team repository permissions
     /// </summary>

@@ -136,7 +136,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<CollaboratorPermission> ReviewPermission(string owner, string name, string user);
+        IObservable<CollaboratorPermissionResponse> ReviewPermission(string owner, string name, string user);
 
         /// <summary>
         /// Review a user's permission level in a repository
@@ -147,7 +147,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<CollaboratorPermission> ReviewPermission(long repositoryId, string user);
+        IObservable<CollaboratorPermissionResponse> ReviewPermission(long repositoryId, string user);
 
         /// <summary>
         /// Adds a new collaborator to the repository.

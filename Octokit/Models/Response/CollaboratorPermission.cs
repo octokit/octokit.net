@@ -3,11 +3,11 @@
 namespace Octokit
 {
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class CollaboratorPermission
+    public class CollaboratorPermissionResponse
     {
-        public CollaboratorPermission() { }
+        public CollaboratorPermissionResponse() { }
 
-        public CollaboratorPermission(PermissionLevel permission, User user)
+        public CollaboratorPermissionResponse(PermissionLevel permission, User user)
         {
             Permission = permission;
             User = user;
