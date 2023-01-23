@@ -63,6 +63,16 @@ namespace Octokit
         Push
     }
 
+    public enum InvitationPermissionType
+    {
+        [Parameter(Value = "read")]
+        Read,
+        [Parameter(Value = "write")]
+        Write,
+        [Parameter(Value = "admin")]
+        Admin
+    }
+
     public enum PermissionLevel
     {
         [Parameter(Value = "admin")]
