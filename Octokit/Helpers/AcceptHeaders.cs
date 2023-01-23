@@ -13,5 +13,7 @@
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#custom-media-types</remarks>
         public const string RawContentMediaType = "application/vnd.github.v3.raw";
+
+        public const string RepositoryContentMediaType = "application/vnd.github.v3.repository+json";
     }
 }

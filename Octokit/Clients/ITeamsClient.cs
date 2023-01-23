@@ -126,15 +126,53 @@ namespace Octokit
         Task<Team> Create(string org, NewTeam team);
 
         /// <summary>
-        /// Returns updated <see cref="Team" /> for the current org.
+        /// Updates a team
+        /// To edit a team, the authenticated user must either be an organization owner or a team maintainer
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#update-a-team">API documentation</a> 
+        /// for more information.
+        /// </remarks>
+        /// <returns>updated <see cref="Team" /> for the current org</returns>
+        Task<Team> Update(string org, string teamSlug, UpdateTeam team);
+
+        /// <summary>
+        /// Returns updated <see cref="Team" /> for the current org.
+        /// This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new Update a team endpoint.
+        /// <see cref="Update(string, string, UpdateTeam)"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#update-a-team-legacy">API documentation</a> 
+        /// for more information.
+        /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
         Task<Team> Update(int id, UpdateTeam team);
 
         /// <summary>
-        /// Delte a team - must have owner permissions to this
+        /// To delete a team, the authenticated user must be an organization owner or team maintainer.
+        /// If you are an organization owner, deleting a parent team will delete all of its child teams as well.
         /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#delete-a-team">API documentation</a> 
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task Delete(string org, string teamSlug);
+
+        /// <summary>
+        /// Delete a team - must have owner permissions to do this
+        /// This endpoint route is deprecated and will be removed from the Teams API.
+        /// We recommend migrating your existing code to use the new Delete a team endpoint.
+        /// <see cref="Delete(string, string)"/>.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#delete-a-team-legacy">API documentation</a> 
+        /// </remarks>
+        /// <param name="id">The unique identifier of the team.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         Task Delete(int id);
@@ -249,5 +287,72 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour.</param>
         /// <returns></returns>
         Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id, ApiOptions options);
+
+        /// <summary>
+        /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.
+        /// Repositories inherited through a parent team will also be checked.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#check-team-permissions-for-a-repository">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <returns></returns>
+        Task<bool> CheckTeamPermissionsForARepository(string org, string teamSlug, string owner, string repo);
+
+        /// <summary>
+        /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.
+        /// Repositories inherited through a parent team will also be checked.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#check-team-permissions-for-a-repository">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task<TeamRepository> CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(string org, string teamSlug, string owner, string repo);
+
+        /// <summary>
+        /// Add or update team repository permissions
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#add-or-update-team-repository-permissions">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <param name="permission">
+        /// The permission to grant the team on this repository. We accept the following permissions to be set: 
+        /// pull, triage, push, maintain, admin and you can also specify a custom repository role name, if the 
+        /// owning organization has defined any. If no permission is specified, the team's permission attribute 
+        /// will be used to determine what permission to grant the team on this repository
+        /// </param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task AddOrUpdateTeamRepositoryPermissions(string org, string teamSlug, string owner, string repo, string permission);
+
+        /// <summary>
+        /// Remove a repository from a team
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#remove-a-repository-from-a-team">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        Task RemoveRepositoryFromATeam(string org, string teamSlug, string owner, string repo);
     }
 }
