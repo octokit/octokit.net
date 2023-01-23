@@ -1923,6 +1923,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for teams
+        /// use for updating, or deleteing a <see cref="Team"/>.
+        /// </summary>
+        /// <param name="org"></param>
+        /// <param name="teamSlug"></param>
+        /// <returns></returns>
+        public static Uri TeamsByOrganizationAndSlug(string org, string teamSlug)
+        {
+            return "orgs/{0}/teams/{1}".FormatUri(org,teamSlug);
+        }
+
+        /// <summary>
         /// returns the <see cref="Uri"/> for team member
         /// </summary>
         /// <param name="id">The team id</param>
@@ -1959,6 +1971,18 @@ namespace Octokit
         public static Uri TeamRepository(int id, string organization, string repoName)
         {
             return "teams/{0}/repos/{1}/{2}".FormatUri(id, organization, repoName);
+        }
+
+        /// <summary>
+        /// returns the <see cref="Uri"/> for a team repository
+        /// </summary>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
+        /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
+        public static Uri TeamPermissionsForARepository(string org, string teamSlug, string owner, string repo)
+        {
+            return "/orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamSlug, owner, repo);
         }
 
         /// <summary>

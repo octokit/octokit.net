@@ -235,6 +235,14 @@ namespace Octokit
         Task Put(Uri uri);
 
         /// <summary>
+        /// Creates or replaces the API resource at the specified URI
+        /// </summary>
+        /// <param name="uri">URI of the API resource to put</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        Task Put(Uri uri, object data);
+
+        /// <summary>
         /// Creates or replaces the API resource at the specified URI.
         /// </summary>
         /// <typeparam name="T">The API resource's type.</typeparam>
