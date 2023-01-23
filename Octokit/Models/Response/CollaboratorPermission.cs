@@ -7,13 +7,13 @@ namespace Octokit
     {
         public CollaboratorPermissionResponse() { }
 
-        public CollaboratorPermissionResponse(PermissionLevel permission, User user)
+        public CollaboratorPermissionResponse(CollaboratorPermission permission, User user)
         {
             Permission = permission;
             User = user;
         }
 
-        public StringEnum<PermissionLevel> Permission { get; private set; }
+        public StringEnum<CollaboratorPermission> Permission { get; private set; }
         public User User { get; private set; }
 
         internal string DebuggerDisplay => $"User: {User.Id} Permission: {Permission}";

@@ -275,7 +275,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.Read, permission.Permission);
+                Assert.Equal(CollaboratorPermission.Read, permission.Permission);
             }
         }
 
@@ -291,7 +291,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.Read, permission.Permission);
+                Assert.Equal(CollaboratorPermission.Read, permission.Permission);
             }
         }
 
@@ -310,7 +310,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.Write, permission.Permission);
+                Assert.Equal(CollaboratorPermission.Write, permission.Permission);
             }
         }
 
@@ -329,7 +329,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.Write, permission.Permission);
+                Assert.Equal(CollaboratorPermission.Write, permission.Permission);
             }
         }
 
@@ -345,7 +345,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
 
-                Assert.Equal(PermissionLevel.Admin, permission.Permission);
+                Assert.Equal(CollaboratorPermission.Admin, permission.Permission);
             }
         }
 
@@ -361,7 +361,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, context.RepositoryOwner);
 
-                Assert.Equal(PermissionLevel.Admin, permission.Permission);
+                Assert.Equal(CollaboratorPermission.Admin, permission.Permission);
             }
         }
 
@@ -382,7 +382,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.None, permission.Permission);
+                Assert.Equal(CollaboratorPermission.None, permission.Permission);
             }
         }
 
@@ -403,7 +403,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.None, permission.Permission);
+                Assert.Equal(CollaboratorPermission.None, permission.Permission);
             }
         }
     }
