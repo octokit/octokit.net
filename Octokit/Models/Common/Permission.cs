@@ -8,7 +8,6 @@ namespace Octokit
     /// <summary>
     /// The permission to grant the team on this repository(Legacy).
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public enum TeamPermissionLegacy
     {
         [Parameter(Value = "pull")]
