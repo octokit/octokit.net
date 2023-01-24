@@ -9,7 +9,7 @@ namespace Octokit.Reactive
     /// A client for GitHub's Collaborators API.
     /// </summary>
     /// <remarks>
-    /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details.
+    /// See the <a href="https://docs.github.com/en/rest/collaborators/collaborators?apiVersion=2022-11-28">Collaborators API documentation</a> for more details.
     /// </remarks>
     public class ObservableRepoCollaboratorsClient : IObservableRepoCollaboratorsClient
     {
