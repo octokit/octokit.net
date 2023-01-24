@@ -507,7 +507,7 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonNullArguments()
             {
                 SetupWithNonReactiveClient();
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 Assert.Throws<ArgumentNullException>(() => _client.Invite(null, "repo", "user", permission));
                 Assert.Throws<ArgumentNullException>(() => _client.Invite("owner", null, "user", permission));
@@ -519,7 +519,7 @@ namespace Octokit.Tests.Reactive
             public void EnsuresNonEmptyArguments()
             {
                 SetupWithNonReactiveClient();
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 Assert.Throws<ArgumentException>(() => _client.Invite("", "repo", "user", permission));
                 Assert.Throws<ArgumentException>(() => _client.Invite("owner", "", "user", permission));
@@ -530,7 +530,7 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonWhitespaceArguments()
             {
                 SetupWithNonReactiveClient();
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 await AssertEx.ThrowsWhenGivenWhitespaceArgument(
                     async whitespace => await _client.Invite(whitespace, "repo", "user", permission));
@@ -544,7 +544,7 @@ namespace Octokit.Tests.Reactive
             public void CallsInviteOnRegularDeploymentsClient()
             {
                 SetupWithoutNonReactiveClient();
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 _client.Invite("owner", "repo", "user", permission);
 

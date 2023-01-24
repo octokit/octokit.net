@@ -393,8 +393,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Put<RepositoryInvitation>(Arg.Any<Uri>(), Arg.Any<object>()).ThrowsAsync(new AuthorizationException());
 
-                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1", new CollaboratorRequest(Permission.Pull)));
-                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1", new CollaboratorRequest(Permission.Pull)));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1", new CollaboratorRequest("pull")));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1", new CollaboratorRequest("pull")));
             }
         }
 
@@ -406,7 +406,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepoCollaboratorsClient(connection);
 
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 client.Invite("owner", "test", "user1", permission);
                 connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission));
@@ -416,7 +416,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite(null, "test", "user1", permission));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("", "test", "user1", permission));
