@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("owner", "test");
 
-                connection.Received().GetAll<User>(
+                connection.Received().GetAll<Collaborator>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                     Arg.Any<Dictionary<string, string>>(),
                     Args.ApiOptions);
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(1);
 
-                connection.Received().GetAll<User>(
+                connection.Received().GetAll<Collaborator>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                     Arg.Any<Dictionary<string, string>>(),
                     Args.ApiOptions);
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Any<Dictionary<string, string>>(),
                         options);
             }
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", request);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
                         Args.ApiOptions);
 
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", request);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
                         Args.ApiOptions);
 
@@ -111,7 +111,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", request);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
                         Args.ApiOptions);
             }
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, options);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Any<Dictionary<string, string>>(),
                         options);
@@ -149,7 +149,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, request);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
                         Args.ApiOptions);
@@ -162,7 +162,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, request);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
                         Args.ApiOptions);
@@ -175,7 +175,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, request);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
                         Args.ApiOptions);
