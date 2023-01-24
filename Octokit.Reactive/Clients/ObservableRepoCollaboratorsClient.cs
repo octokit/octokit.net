@@ -6,7 +6,7 @@ using Octokit.Reactive.Internal;
 namespace Octokit.Reactive
 {
     /// <summary>
-    /// A client for GitHub's Collaborators on a Repository.
+    /// A client for GitHub's Collaborators API.
     /// </summary>
     /// <remarks>
     /// See the <a href="http://developer.github.com/v3/repos/collaborators/">Collaborators API documentation</a> for more details.
