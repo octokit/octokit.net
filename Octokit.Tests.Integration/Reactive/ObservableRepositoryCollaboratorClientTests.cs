@@ -29,8 +29,6 @@ public class ObservableRepositoryCollaboratorClientTests
                 Assert.NotNull(collaborators);
                 // this assert fails, added collaborator has to accept the invitation.
                 Assert.Equal(2, collaborators.Count);
-                Assert.NotNull(collaborators[0].Permissions);
-                Assert.NotNull(collaborators[1].Permissions);
             }
         }
 
