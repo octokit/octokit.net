@@ -145,4 +145,40 @@ namespace Octokit
             }
         }
     }
+
+    /// <summary>
+    /// Object for collaborator permissions
+    /// </summary>
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
+    public class CollaboratorPermissions
+    {
+        public CollaboratorPermissions() { }
+        public CollaboratorPermissions(bool pull, bool? triage, bool push, bool? maintain, bool admin)
+        {
+            Pull = pull;
+            Triage = triage;
+            Push = push;
+            Maintain = maintain;
+            Admin = admin;
+        }
+
+        public bool Pull { get; private set; }
+
+        public bool? Triage { get; private set; }
+
+        public bool Push { get; private set; }
+
+        public bool? Maintain { get; private set; }
+
+        public bool Admin { get; private set; }
+
+        internal string DebuggerDisplay
+        {
+            get
+            {
+                return string.Format(CultureInfo.InvariantCulture,
+                    $"Permissions: Pull: {Pull}, Triage: {Triage}, Push: {Push}, Maintain: {Maintain}, Admin: {Admin}");
+            }
+        }
+    }
 }
