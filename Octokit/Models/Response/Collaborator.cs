@@ -79,7 +79,7 @@ namespace Octokit
 
         public bool SiteAdmin { get; protected set; }
 
-        public CollaboratorPermission Permissions { get; protected set; }
+        public StringEnum<CollaboratorPermission> Permissions { get; protected set; }
 
         public string RoleName { get; protected set; }
 

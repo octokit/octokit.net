@@ -63,6 +63,9 @@ namespace Octokit
         Push
     }
 
+    /// <summary>
+    /// The permission associated with the invitation for a collaborator in a repository
+    /// </summary>
     public enum InvitationPermissionType
     {
         [Parameter(Value = "read")]
@@ -70,7 +73,11 @@ namespace Octokit
         [Parameter(Value = "write")]
         Write,
         [Parameter(Value = "admin")]
-        Admin
+        Admin,
+        [Parameter(Value = "triage")]
+        Triage,
+        [Parameter(Value = "maintain")]
+        Maintain
     }
 
     public enum CollaboratorPermission
