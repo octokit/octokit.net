@@ -37,7 +37,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(string owner, string name)
+        public IObservable<Collaborator> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(long repositoryId)
+        public IObservable<Collaborator> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -68,7 +68,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(string owner, string name, ApiOptions options)
+        public IObservable<Collaborator> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -86,7 +86,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(long repositoryId, ApiOptions options)
+        public IObservable<Collaborator> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -103,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(string owner, string name, RepositoryCollaboratorListRequest request)
+        public IObservable<Collaborator> GetAll(string owner, string name, RepositoryCollaboratorListRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -121,7 +121,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(long repositoryId, RepositoryCollaboratorListRequest request)
+        public IObservable<Collaborator> GetAll(long repositoryId, RepositoryCollaboratorListRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -139,14 +139,14 @@ namespace Octokit.Reactive
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, ApiOptions options)
+        public IObservable<Collaborator> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Collaborator>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
@@ -159,12 +159,12 @@ namespace Octokit.Reactive
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<User> GetAll(long repositoryId, RepositoryCollaboratorListRequest request, ApiOptions options)
+        public IObservable<Collaborator> GetAll(long repositoryId, RepositoryCollaboratorListRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Collaborator>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string owner, string name)
+        public Task<IReadOnlyList<Collaborator>> GetAll(string owner, string name)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -47,7 +47,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repository/{id}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(long repositoryId)
+        public Task<IReadOnlyList<Collaborator>> GetAll(long repositoryId)
         {
             return GetAll(repositoryId, ApiOptions.None);
         }
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Collaborator>> GetAll(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -82,7 +82,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repository/{id}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Collaborator>> GetAll(long repositoryId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -100,7 +100,7 @@ namespace Octokit
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string owner, string name, RepositoryCollaboratorListRequest request)
+        public Task<IReadOnlyList<Collaborator>> GetAll(string owner, string name, RepositoryCollaboratorListRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -119,7 +119,7 @@ namespace Octokit
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repository/{id}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(long repositoryId, RepositoryCollaboratorListRequest request)
+        public Task<IReadOnlyList<Collaborator>> GetAll(long repositoryId, RepositoryCollaboratorListRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -138,14 +138,14 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Collaborator>> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Collaborator>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options);
 
         }
 
@@ -160,12 +160,12 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repository/{id}/collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(long repositoryId, RepositoryCollaboratorListRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Collaborator>> GetAll(long repositoryId, RepositoryCollaboratorListRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Collaborator>(ApiUrls.RepoCollaborators(repositoryId), request.ToParametersDictionary(), options);
         }
 
         /// <summary>
