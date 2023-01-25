@@ -19,6 +19,8 @@ namespace Octokit
         public Installation(long id, User account, string accessTokenUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection) : base(id)
         {
             Account = account;
+            AccessTokensUrl = accessTokenUrl;
+            RepositoriesUrl = repositoriesUrl;
             HtmlUrl = htmlUrl;
             AppId = appId;
             TargetId = targetId;
@@ -33,6 +35,10 @@ namespace Octokit
         /// The user who owns the Installation.
         /// </summary>
         public User Account { get; private set; }
+
+        public string AccessTokensUrl { get; private set; }
+
+        public string RepositoriesUrl { get; private set; }
 
         /// <summary>
         /// The URL to view the Installation on GitHub.
