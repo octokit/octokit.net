@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Octokit.Internal;
 
 namespace Octokit
 {
@@ -252,41 +251,5 @@ namespace Octokit
         {
             get => $"Actions: {Actions}, Administration: {Administration}, Checks: {Checks}, Contents: {Contents}, Deployments: {Deployments}, Environments: {Environments}, Issues: {Issues}, Metadata: {Metadata}, Packages: {Packages}, Pages: {Pages}, PullRequests: {PullRequests}, RepositoryAnnouncementBanners: {RepositoryAnnouncementBanners}, RepositoryHooks: {RepositoryHooks}, RepositoryProjects: {RepositoryProjects}, SecretScanningAlerts: {SecretScanningAlerts}, Secrets: {Secrets}, SecurityEvents: {SecurityEvents}, SingleFile: {SingleFile}, Statuses: {Statuses}, VulnerabilityAlerts: {VulnerabilityAlerts}, Workflows: {Workflows}, Members: {Members}, OrganizationAdministration: {OrganizationAdministration}, OrganizationCustomRoles: {OrganizationCustomRoles}, OrganizationAnnouncementBanners: {OrganizationAnnouncementBanners}, OrganizationHooks: {OrganizationHooks}, OrganizationPlan: {OrganizationPlan}, OrganizationProjects: {OrganizationProjects}, OrganizationPackages: {OrganizationPackages}, OrganizationSecrets: {OrganizationSecrets}, OrganizationSelfHostedRunners: {OrganizationSelfHostedRunners}, OrganizationUserBlocking: {OrganizationUserBlocking}, TeamDiscussions: {TeamDiscussions}";
         }
-    }
-
-    public enum InstallationReadWritePermissionLevel
-    {
-        [Parameter(Value = "read")]
-        Read,
-
-        [Parameter(Value = "write")]
-        Write
-    }
-
-    // TODO :: find a better name for this enum
-    public enum InstallationReadWriteAdminPermissionLevel
-    {
-        [Parameter(Value = "read")]
-        Read,
-
-        [Parameter(Value = "write")]
-        Write,
-
-        [Parameter(Value = "admin")]
-        Admin
-    }
-
-    // TODO :: find a better name for this enum
-    public enum InstallationWritePermissionLevel
-    {
-        [Parameter(Value = "write")]
-        Write
-    }
-
-    // TODO :: find a better name for this enum
-    public enum InstallationReadPermissionLevel
-    {
-        [Parameter(Value = "read")]
-        Read
     }
 }

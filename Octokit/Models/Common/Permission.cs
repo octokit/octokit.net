@@ -4,6 +4,36 @@ using Octokit.Internal;
 
 namespace Octokit
 {
+    public enum InstallationReadWritePermissionLevel
+    {
+        [Parameter(Value = "read")]
+        Read,
+        [Parameter(Value = "write")]
+        Write
+    }
+
+    public enum InstallationReadWriteAdminPermissionLevel
+    {
+        [Parameter(Value = "read")]
+        Read,
+        [Parameter(Value = "write")]
+        Write,
+        [Parameter(Value = "admin")]
+        Admin
+    }
+
+    public enum InstallationWritePermissionLevel
+    {
+        [Parameter(Value = "write")]
+        Write
+    }
+
+    public enum InstallationReadPermissionLevel
+    {
+        [Parameter(Value = "read")]
+        Read
+    }
+
     /// <summary>
     /// The permission to grant the team on this repository(Legacy).
     /// </summary>
