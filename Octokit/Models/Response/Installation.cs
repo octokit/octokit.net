@@ -9,7 +9,7 @@ namespace Octokit
     /// Represents an application installation.
     /// </summary>
     /// <remarks>
-    /// For more information see https://developer.github.com/v3/apps/#find-installations
+    /// For more information see https://docs.github.com/en/rest/apps/installations?apiVersion=2022-11-28#list-app-installations-accessible-to-the-user-access-token
     /// </remarks>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Installation : InstallationId
