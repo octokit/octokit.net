@@ -16,10 +16,10 @@ namespace Octokit
     {
         public Installation() { }
 
-        public Installation(long id, User account, string accessTokenUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection) : base(id)
+        public Installation(long id, User account, string accessTokensUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection) : base(id)
         {
             Account = account;
-            AccessTokensUrl = accessTokenUrl;
+            AccessTokensUrl = accessTokensUrl;
             RepositoriesUrl = repositoriesUrl;
             HtmlUrl = htmlUrl;
             AppId = appId;
