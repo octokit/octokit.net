@@ -73,7 +73,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(Helper.GitHubAppId, installation.AppId);
                     Assert.NotNull(installation.Account);
                     Assert.NotNull(installation.Permissions);
-                    Assert.Equal(InstallationPermissionLevel.Read, installation.Permissions.Metadata);
+                    Assert.Equal(InstallationReadWritePermissionLevel.Read, installation.Permissions.Metadata);
                     Assert.False(string.IsNullOrEmpty(installation.HtmlUrl));
                     Assert.NotEqual(0, installation.TargetId);
                 }
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Integration.Clients
                 Assert.Equal(Helper.GitHubAppId, result.AppId);
                 Assert.NotNull(result.Account);
                 Assert.NotNull(result.Permissions);
-                Assert.Equal(InstallationPermissionLevel.Read, result.Permissions.Metadata);
+                Assert.Equal(InstallationReadWritePermissionLevel.Read, result.Permissions.Metadata);
                 Assert.False(string.IsNullOrEmpty(result.HtmlUrl));
                 Assert.NotEqual(0, result.TargetId);
             }
