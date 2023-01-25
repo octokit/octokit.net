@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Octokit.Internal;
 
@@ -23,7 +22,6 @@ namespace Octokit
     /// Default: pull
     /// Can be one of: pull, push
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
     public enum TeamPermission
     {
         /// <summary>
