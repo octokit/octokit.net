@@ -8,6 +8,7 @@ fi
 
 echo "Restoring global tools"
 dotnet tool restore
+dotnet dev-certs https --trust
 
 cd build
 echo "Preparing Cake.Frosting build runner..."
