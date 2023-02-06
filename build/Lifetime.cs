@@ -12,7 +12,6 @@ public class Lifetime : FrostingLifetime<Context>
     {
         context.Target = context.Argument("target", "Default");
         context.Configuration = context.Argument("configuration", "Release");
-        context.LinkSources = context.Argument("linkSources", false);
         context.FormatCode = context.Argument("formatCode", false);
 
         context.Artifacts = "./packaging/";
@@ -62,7 +61,6 @@ public class Lifetime : FrostingLifetime<Context>
         context.Information("Version:        {0}", context.Version.Prefix);
         context.Information("Version suffix: {0}", context.Version.Suffix);
         context.Information("Configuration:  {0}", context.Configuration);
-        context.Information("LinkSources:    {0}", context.LinkSources);
         context.Information("Target:         {0}", context.Target);
         context.Information("AppVeyor:       {0}", context.AppVeyor);
         context.Information("GitHub Actions: {0}", context.GitHubActions);
