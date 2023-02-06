@@ -21,16 +21,8 @@ public class Lifetime : FrostingLifetime<Context>
         context.IsLocalBuild = buildSystem.IsLocalBuild;
 
         context.GitHubActions = buildSystem.GitHubActions.IsRunningOnGitHubActions;
-        context.AppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor;
-        context.IsTagged = IsBuildTagged(buildSystem);
 
-        if (context.AppVeyor)
-        {
-            context.IsPullRequest = buildSystem.AppVeyor.Environment.PullRequest.IsPullRequest;
-            context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.AppVeyor.Environment.Repository.Name);
-            context.IsMainBranch = StringComparer.OrdinalIgnoreCase.Equals("main", buildSystem.AppVeyor.Environment.Repository.Branch);
-        }
-        else if (context.GitHubActions)
+        if (context.GitHubActions)
         {
             context.IsPullRequest = buildSystem.GitHubActions.Environment.PullRequest.IsPullRequest;
             context.IsOriginalRepo = StringComparer.OrdinalIgnoreCase.Equals("octokit/octokit.net", buildSystem.GitHubActions.Environment.Workflow.Repository);
@@ -62,14 +54,7 @@ public class Lifetime : FrostingLifetime<Context>
         context.Information("Version suffix: {0}", context.Version.Suffix);
         context.Information("Configuration:  {0}", context.Configuration);
         context.Information("Target:         {0}", context.Target);
-        context.Information("AppVeyor:       {0}", context.AppVeyor);
         context.Information("GitHub Actions: {0}", context.GitHubActions);
-    }
-
-    private static bool IsBuildTagged(BuildSystem buildSystem)
-    {
-        return buildSystem.AppVeyor.Environment.Repository.Tag.IsTag
-            && !string.IsNullOrWhiteSpace(buildSystem.AppVeyor.Environment.Repository.Tag.Name);
     }
 
     private static string GetEnvironmentValueOrArgument(Context context, string environmentVariable, string argumentName)
