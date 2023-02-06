@@ -8,8 +8,11 @@ fi
 
 echo "Restoring global tools"
 dotnet tool restore
-dotnet dev-certs https --trust
 
+if [[ ! "$OSTYPE" == "linux-gnu"* ]]; then
+  dotnet dev-certs https --clear
+  dotnet dev-certs https --trust
+fi
 cd build
 echo "Preparing Cake.Frosting build runner..."
 dotnet restore
