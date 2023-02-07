@@ -22,6 +22,7 @@
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);1591;1701;1702;1705</NoWarn>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <PropertyGroup Label="Source Link">
