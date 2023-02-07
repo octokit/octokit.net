@@ -26,7 +26,7 @@ Or can be run individually:
 
 ### Create NuGet Packages
 
-NuGet packages are automatically generated (and SourceLinked) by the CAKE build script.
+NuGet packages are automatically generated (and SourceLinked) by the csproj configration.
 > `.\build.ps1`
 
 The output .nupkg files will be located in the `packaging` directory.

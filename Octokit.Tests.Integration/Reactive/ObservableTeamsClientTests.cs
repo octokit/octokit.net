@@ -386,12 +386,239 @@ public class ObservableTeamsClientTests
                     ParentTeamId = parentTeamContext.TeamId
                 };
 
+                var team = await _github.Organization.Team.Update(Helper.Organization, teamContext.Team.Slug, update);
+
+                Assert.Equal(teamName, team.Name);
+                Assert.Equal(teamDescription, team.Description);
+                Assert.Equal(TeamPrivacy.Closed, team.Privacy);
+                Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
+
+                _github.Organization.Team.Delete(Helper.Organization, team.Slug);
+            }
+        }
+    }
+
+    public class TheUpdateLegacyMethod
+    {
+        private readonly IObservableGitHubClient _github;
+
+        public TheUpdateLegacyMethod()
+        {
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+        }
+
+        [OrganizationTest]
+        public async Task UpdatesTeamLegacy()
+        {
+            using (var parentTeamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("parent-team"))))
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team-fixture"))))
+            {
+                var teamName = Helper.MakeNameWithTimestamp("updated-team");
+                var teamDescription = Helper.MakeNameWithTimestamp("updated description");
+                var update = new UpdateTeam(teamName)
+                {
+                    Description = teamDescription,
+                    Privacy = TeamPrivacy.Closed,
+                    ParentTeamId = parentTeamContext.TeamId
+                };
+
                 var team = await _github.Organization.Team.Update(teamContext.TeamId, update);
 
                 Assert.Equal(teamName, team.Name);
                 Assert.Equal(teamDescription, team.Description);
                 Assert.Equal(TeamPrivacy.Closed, team.Privacy);
                 Assert.Equal(parentTeamContext.TeamId, team.Parent.Id);
+
+                _github.Organization.Team.Delete(teamContext.TeamId);
+            }
+        }
+    }
+
+    public class TheCheckTeamPermissionsForARepositoryMethod
+    {
+        private readonly IObservableGitHubClient _github;
+        public TheCheckTeamPermissionsForARepositoryMethod()
+        {
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+
+        }
+
+        [OrganizationTest]
+        public async Task ChecksTeamPermissions()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repositoryContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            {
+                _github.Organization.Team.AddRepository(teamContext.TeamId, Helper.Organization, repositoryContext.RepositoryName);
+
+                var teamPermissionResponse = await _github.Organization.Team.CheckTeamPermissionsForARepository(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repositoryContext.RepositoryOwner,
+                    repositoryContext.RepositoryName);
+
+                Assert.True(teamPermissionResponse);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ChecksTeamPermissionsReturnsFalseOnNonTeamRepository()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repositoryContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            {
+                var response = await _github.Organization.Team.CheckTeamPermissionsForARepository(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repositoryContext.RepositoryOwner,
+                    repositoryContext.RepositoryName);
+
+                Assert.False(response);
+            }
+        }
+    }
+
+    public class TheCheckTeamPermissionsForARepositoryWithCustomAcceptHeaderMethod
+    {
+        private readonly IObservableGitHubClient _github;
+        public TheCheckTeamPermissionsForARepositoryWithCustomAcceptHeaderMethod()
+        {
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+
+        }
+
+        [OrganizationTest]
+        public async Task ChecksTeamPermissions()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repositoryContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            {
+                _github.Organization.Team.AddRepository(teamContext.TeamId, Helper.Organization, repositoryContext.RepositoryName);
+
+                var teamPermissionResponse = await _github.Organization.Team.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repositoryContext.RepositoryOwner,
+                    repositoryContext.RepositoryName);
+
+                Assert.NotNull(teamPermissionResponse);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task ChecksTeamPermissionsThrowsNotFoundException()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repositoryContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("teamrepo"))))
+            {
+                await Assert.ThrowsAsync<NotFoundException>(async () =>
+                    await _github.Organization.Team.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(
+                        Helper.Organization,
+                        teamContext.Team.Slug,
+                        repositoryContext.RepositoryOwner,
+                        repositoryContext.RepositoryName));
+            }
+        }
+    }
+    
+    public class TheAddOrUpdateTeamRepositoryPermissionsMethod
+    {
+        private readonly IObservableGitHubClient _github;
+
+        public TheAddOrUpdateTeamRepositoryPermissionsMethod()
+        {
+            _github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+        }
+
+        [OrganizationTest]
+        public async Task AddsTeamRepositoryPermissions()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repoContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("team-repository"))))
+            {
+                var teamRepository = await _github.Organization.Team
+                    .GetAllRepositories(teamContext.TeamId)
+                    .FirstOrDefaultAsync(x => x.Id == repoContext.RepositoryId);
+
+                Assert.Null(teamRepository);
+
+                await _github.Organization.Team.AddOrUpdateTeamRepositoryPermissions(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repoContext.RepositoryOwner,
+                    repoContext.RepositoryName,
+                    "admin");
+
+                teamRepository = await _github.Organization.Team
+                    .GetAllRepositories(teamContext.TeamId)
+                    .FirstOrDefaultAsync(x => x.Id == repoContext.RepositoryId);
+
+                Assert.NotNull(teamRepository);
+            }
+        }
+
+        [OrganizationTest]
+        public async Task UpdatesTeamRepositoryPermissions()
+        {
+            using (var teamContext = await _github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repoContext = await _github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("team-repository"))))
+            {
+                await _github.Organization.Team.AddOrUpdateTeamRepositoryPermissions(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repoContext.RepositoryOwner,
+                    repoContext.RepositoryName,
+                    "admin");
+
+                var teamRepository = await _github.Organization.Team
+                    .GetAllRepositories(teamContext.TeamId)
+                    .FirstOrDefaultAsync(x => x.Id == repoContext.RepositoryId);
+
+                Assert.True(teamRepository.Permissions.Admin);
+
+                await _github.Organization.Team.AddOrUpdateTeamRepositoryPermissions(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repoContext.RepositoryOwner,
+                    repoContext.RepositoryName,
+                    "maintain");
+
+                teamRepository = await _github.Organization.Team
+                    .GetAllRepositories(teamContext.TeamId)
+                    .FirstOrDefaultAsync(x => x.Id == repoContext.RepositoryId);
+                
+                Assert.True(teamRepository.Permissions.Maintain);
+                Assert.False(teamRepository.Permissions.Admin);
+            }
+        }
+    }
+
+    public class TheRemoveRepositoryFromATeamMethod
+    {
+        [OrganizationTest]
+        public async Task RemovesRepositoryFromATeam()
+        {
+            var github = new ObservableGitHubClient(Helper.GetAuthenticatedClient());
+
+            using (var teamContext = await github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            using (var repoContext = await github.CreateOrganizationRepositoryContext(Helper.Organization, new NewRepository(Helper.MakeNameWithTimestamp("team-repository"))))
+            {
+                await github.Organization.Team.AddOrUpdateTeamRepositoryPermissions(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repoContext.RepositoryOwner,
+                    repoContext.RepositoryName,
+                    "admin");
+
+                await github.Organization.Team.RemoveRepositoryFromATeam(
+                    Helper.Organization,
+                    teamContext.Team.Slug,
+                    repoContext.RepositoryOwner,
+                    repoContext.RepositoryName);
+
+                var addedRepo = await github.Organization.Team.GetAllRepositories(teamContext.TeamId).ToList();
+
+                Assert.Equal(0, addedRepo.Count);
             }
         }
     }

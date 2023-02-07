@@ -1,7 +1,6 @@
 # Octokit - GitHub API Client Library for .NET
 
 ![Build status](https://github.com/octokit/octokit.net/workflows/CI%20Build/badge.svg)
-[![Build status](https://ci.appveyor.com/api/projects/status/cego2g42yw26th26/branch/main?svg=true)](https://ci.appveyor.com/project/github-windows/octokit-net/branch/main)
 [![codecov](https://codecov.io/gh/octokit/octokit.net/branch/main/graph/badge.svg)](https://codecov.io/gh/octokit/octokit.net)
 [![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NuGet](https://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
@@ -41,13 +40,6 @@ There is also an IObservable based GitHub API client library for .NET using Reac
 ```
 dotnet add package Octokit.Reactive
 ```
-
-
-### Beta packages ###
-Unstable NuGet packages that track the `main` branch of this repository are available at
-[https://ci.appveyor.com/nuget/octokit-net](https://ci.appveyor.com/nuget/octokit-net)
-
-In Xamarin Studio you can find this option under the project's context menu: **Add | Add Packages...***.
 
 ## Documentation
 
@@ -102,6 +94,6 @@ problem.
 
 ## Copyright and License
 
-Copyright 2017 GitHub, Inc.
+Copyright 2023 GitHub, Inc.
 
 Licensed under the [MIT License](https://github.com/octokit/octokit.net/blob/main/LICENSE.txt)

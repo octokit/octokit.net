@@ -9,7 +9,6 @@ public class Context : FrostingContext
 {
     public string Target { get; set; }
     public new string Configuration { get; set; }
-    public bool LinkSources { get; set; }
     public bool FormatCode { get; set; }
     public BuildVersion Version { get; set; }
 
@@ -17,11 +16,8 @@ public class Context : FrostingContext
     public bool IsLocalBuild { get; set; }
     public bool IsPullRequest { get; set; }
     public bool IsOriginalRepo { get; set; }
-    public bool IsTagged { get; set; }
     public bool IsMainBranch { get; set; }
     public bool ForcePublish { get; set; }
-
-    public bool AppVeyor { get; set; }
     public bool GitHubActions { get; set; }
 
     public Project[] Projects { get; set; }

@@ -5,7 +5,7 @@ using System.Globalization;
 namespace Octokit
 {
     /// <summary>
-    /// Metadata of a Github Pages build.
+    /// Metadata of a GitHub Pages build.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PagesBuild
