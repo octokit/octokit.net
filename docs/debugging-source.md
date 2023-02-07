@@ -27,6 +27,4 @@ in the debugging session.
 
 ### Acknowledgements
 
-Thanks to previous of [Cameron Taggart](http://blog.ctaggart.com/) and the newer implementation of
-[SourceLink](https://github.com/dotnet/sourcelink) which we use
-to support this behaviour.
+Thanks to Cameron Taggart for the initial implementation and the .NET foundation for ongoing support of [SourceLink](https://github.com/dotnet/sourcelink) which we use to provide source debugging.
