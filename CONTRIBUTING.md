@@ -72,11 +72,11 @@ To install dependencies and run the CAKE build script use the following wrapper 
 
 - Windows (Powershell)
 
-`.\build.ps1 -Target <target> -Configuration Release -LinkSources [Additional Parameters]`
+`.\build.ps1 -Target <target> -Configuration Release [Additional Parameters]`
 
 - Linux/OSX (bash)
 
-`./build.sh --target=<target> --configuration==Release --linksources=true [Additional Parameters]`
+`./build.sh --target=<target> --configuration==Release [Additional Parameters]`
 
 ### Running Tests
 
