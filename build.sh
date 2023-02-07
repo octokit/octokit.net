@@ -13,11 +13,6 @@ cd build
 echo "Preparing Cake.Frosting build runner..."
 dotnet restore
 
-if [[ ! "$OSTYPE" == "linux-gnu"* ]]; then
-  dotnet dev-certs https --clear
-  dotnet dev-certs https --trust
-fi
-
 echo "Executing Cake.Frosting build runner..."
 echo  "dotnet run -- $@"
 dotnet run -- "$@"
