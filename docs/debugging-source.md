@@ -22,11 +22,9 @@ with a specific type, and cache it in your local symbols cache.
 
 ![F11 step into symbol](https://cloud.githubusercontent.com/assets/359239/5389259/74600502-8149-11e4-94f7-10dc79a0573f.gif)
 
-You can then set subsequent breakpoints inside the source code, to return to 
+You can then set subsequent breakpoints inside the source code, to return to
 in the debugging session.
 
 ### Acknowledgements
 
-Thanks to [Cameron Taggart](http://blog.ctaggart.com/) for building the
-[SourceLink](https://github.com/ctaggart/SourceLink) framework which we use
-to support this behaviour.
+Thanks to Cameron Taggart for the initial implementation and the .NET foundation for ongoing support of [SourceLink](https://github.com/dotnet/sourcelink) which we use to provide source debugging.

@@ -2,12 +2,6 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "sourcelink": {
-      "version": "3.1.1",
-      "commands": [
-        "sourcelink"
-      ]
-    },
     "dotnet-format": {
       "version": "5.1.250801",
       "commands": [
