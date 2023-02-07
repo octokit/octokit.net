@@ -28,5 +28,5 @@ jobs:
       with:
         dotnet-version: 6.0.*
     - name: Build with dotnet
-      run: ./build.sh --linksources=true --verbosity=verbose
+      run: ./build.sh --verbosity=verbose
       shell: bash
