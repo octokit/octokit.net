@@ -61,13 +61,7 @@ namespace Octokit
 
         public string HtmlUrl { get; private set; }
 
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture,
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture,
                     "Repository Invitation: Id: {0} Permissions: {1}", Id, Permissions);
-            }
-        }
     }
 }

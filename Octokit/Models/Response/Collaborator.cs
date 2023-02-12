@@ -81,13 +81,7 @@ namespace Octokit
 
         public string RoleName { get; protected set; }
 
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture,
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture,
                     $"Collaborator: Id: {Id} Login: {Login}");
-            }
-        }
     }
 }

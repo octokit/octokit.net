@@ -80,10 +80,7 @@ namespace Octokit
         /// </summary>
         public StringEnum<InstallationRepositorySelection> RepositorySelection { get; private set; }
 
-        internal new string DebuggerDisplay
-        {
-            get { return string.Format(CultureInfo.InvariantCulture, "Id: {0} AppId: {1}", Id, AppId); }
-        }
+        internal new string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0} AppId: {1}", Id, AppId);
     }
 
     public enum InstallationRepositorySelection

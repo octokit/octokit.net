@@ -149,14 +149,8 @@ namespace Octokit
         /// </summary>
         public bool Admin { get; private set; }
 
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, 
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture,
                     $"Permissions: Pull: {Pull}, Triage: {Triage}, Push: {Push}, Maintain: {Maintain}, Admin: {Admin}");
-            }
-        }
     }
 
     /// <summary>
@@ -185,13 +179,7 @@ namespace Octokit
 
         public bool Admin { get; private set; }
 
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture,
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture,
                     $"Permissions: Pull: {Pull}, Triage: {Triage}, Push: {Push}, Maintain: {Maintain}, Admin: {Admin}");
-            }
-        }
     }
 }

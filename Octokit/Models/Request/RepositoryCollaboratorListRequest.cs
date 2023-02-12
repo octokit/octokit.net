@@ -31,10 +31,7 @@ namespace Octokit
         /// </summary>
         public CollaboratorPermission? Permission { get; set; }
 
-        internal string DebuggerDisplay
-        {
-            get { return string.Format(CultureInfo.InvariantCulture, $"Affiliation: {Affiliation} Permission: {Permission}"); }
-        }
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, $"Affiliation: {Affiliation} Permission: {Permission}");
     }
 
     /// <summary>
