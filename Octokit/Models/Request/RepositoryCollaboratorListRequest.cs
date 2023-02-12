@@ -26,6 +26,8 @@ namespace Octokit
         /// </value>
         public CollaboratorAffiliation Affiliation { get; set; }
 
+        public CollaboratorPermission? Permission { get; set; }
+
         internal string DebuggerDisplay
         {
             get { return string.Format(CultureInfo.InvariantCulture, "Affiliation: {0}", Affiliation); }

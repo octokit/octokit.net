@@ -8,7 +8,7 @@ namespace Octokit
     {
         public Collaborator() { }
 
-        public Collaborator(string login, int id, string email, string name, string nodeId, string avatarUrl, string gravatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin, CollaboratorPermission permissions, string roleName)
+        public Collaborator(string login, int id, string email, string name, string nodeId, string avatarUrl, string gravatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin, CollaboratorPermissions permissions, string roleName)
         {
             Login = login;
             Id = id;
@@ -77,7 +77,7 @@ namespace Octokit
 
         public bool SiteAdmin { get; protected set; }
 
-        public StringEnum<CollaboratorPermission> Permissions { get; protected set; }
+        public CollaboratorPermissions Permissions { get; protected set; }
 
         public string RoleName { get; protected set; }
 
