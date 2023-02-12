@@ -9,9 +9,9 @@ namespace Octokit
         /// <summary>
         /// Used to set the permission for a collaborator.
         /// </summary>
-        public CollaboratorRequest(string permissions)
+        public CollaboratorRequest(string permission)
         {
-            Permission = permissions;
+            Permission = permission;
         }
 
         /// <summary>
@@ -22,12 +22,6 @@ namespace Octokit
         /// </summary>
         public string Permission { get; private set; }
 
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "Permission: {0}", Permission);
-            }
-        }
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, $"Permission: {Permission}");
     }
 }
