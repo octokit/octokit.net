@@ -26,11 +26,14 @@ namespace Octokit
         /// </value>
         public CollaboratorAffiliation Affiliation { get; set; }
 
+        /// <summary>
+        /// Filter collaborators by the permissions they have on the repository. If not specified, all collaborators will be returned.
+        /// </summary>
         public CollaboratorPermission? Permission { get; set; }
 
         internal string DebuggerDisplay
         {
-            get { return string.Format(CultureInfo.InvariantCulture, "Affiliation: {0}", Affiliation); }
+            get { return string.Format(CultureInfo.InvariantCulture, $"Affiliation: {Affiliation} Permission: {Permission}"); }
         }
     }
 

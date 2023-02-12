@@ -86,14 +86,16 @@ namespace Octokit
 
     public enum CollaboratorPermission
     {
+        [Parameter(Value = "pull")]
+        Pull,
+        [Parameter(Value = "triage")]
+        Triage,
+        [Parameter(Value = "push")]
+        Push,
+        [Parameter(Value = "maintain")]
+        Maintain,
         [Parameter(Value = "admin")]
-        Admin,
-        [Parameter(Value = "write")]
-        Write,
-        [Parameter(Value = "read")]
-        Read,
-        [Parameter(Value = "none")]
-        None
+        Admin
     }
 
     /// <summary>
