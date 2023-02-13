@@ -214,10 +214,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
-                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
 
                 Assert.True(isCollab);
             }
@@ -233,10 +230,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add a collaborator
-                await fixture.Add(context.Repository.Id, "m-zuber-octokit-integration-tests");
-
-                var isCollab = await fixture.IsCollaborator(context.Repository.Id, "m-zuber-octokit-integration-tests");
+                var isCollab = await fixture.IsCollaborator(context.Repository.Id, context.RepositoryOwner);
 
                 Assert.True(isCollab);
             }
@@ -277,9 +271,8 @@ public class RepositoryCollaboratorClientTests
             }
         }
 
-        // TODO :: This test is failing in current main, should I remove this test?
         [IntegrationTest]
-        public async Task ReturnsWritePermissionForCollaborator()
+        public async Task ReturnsWritePermissionForCollaboratorInvitation()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -289,18 +282,15 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                var invitation = await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1", new CollaboratorRequest("write"));
 
-                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
-
-                Assert.Equal("write", permission.Permission);
+                Assert.Equal(InvitationPermissionType.Write, invitation.Permissions);
             }
         }
 
 
-        // TODO :: This test is failing in current main, should I remove this test?
         [IntegrationTest]
-        public async Task ReturnsWritePermissionForCollaboratorWithRepositoryId()
+        public async Task ReturnsWritePermissionForCollaboratorInvitationWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -310,11 +300,9 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                var invitation = await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1", new CollaboratorRequest("write"));
 
-                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
-
-                Assert.Equal("write", permission.Permission);
+                Assert.Equal(InvitationPermissionType.Write, invitation.Permissions);
             }
         }
 

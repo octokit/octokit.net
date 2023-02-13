@@ -120,10 +120,7 @@ public class ObservableRepositoryCollaboratorClientTests
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
 
-                // add a collaborator
-                fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
-                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
 
                 Assert.True(isCollab);
             }
