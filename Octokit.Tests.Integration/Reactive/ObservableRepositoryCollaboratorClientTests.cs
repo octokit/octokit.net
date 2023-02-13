@@ -161,7 +161,7 @@ public class ObservableRepositoryCollaboratorClientTests
         }
 
         [IntegrationTest]
-        public async Task ReturnsWritePermissionForCollaborator()
+        public async Task ReturnsWritePermissionForCollaboratorInvitation()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -171,16 +171,14 @@ public class ObservableRepositoryCollaboratorClientTests
                 var fixture = new ObservableRepoCollaboratorsClient(github);
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                var invitation = await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1", new CollaboratorRequest("write"));
 
-                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
-
-                Assert.Equal("write", permission.Permission);
+                Assert.Equal(InvitationPermissionType.Write, invitation.Permissions);
             }
         }
 
         [IntegrationTest]
-        public async Task ReturnsWritePermissionForCollaboratorWithRepositoryId()
+        public async Task ReturnsWritePermissionForCollaboratorInvitationWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -190,11 +188,9 @@ public class ObservableRepositoryCollaboratorClientTests
                 var fixture = new ObservableRepoCollaboratorsClient(github);
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                var invitation = await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1", new CollaboratorRequest("write"));
 
-                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
-
-                Assert.Equal("write", permission.Permission);
+                Assert.Equal(InvitationPermissionType.Write, invitation.Permissions);
             }
         }
 
