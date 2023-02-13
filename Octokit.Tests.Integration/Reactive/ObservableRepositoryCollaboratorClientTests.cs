@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Octokit;
 using Octokit.Reactive;
 using Octokit.Tests.Integration;
-using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using Xunit;
 
 public class ObservableRepositoryCollaboratorClientTests
 {
