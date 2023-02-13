@@ -383,7 +383,7 @@ public class RepositoryCollaboratorClientTests
 
     public class TheDeleteMethod
     {
-        [IntegrationTest]
+        [Fact(Skip = "Adding a collaborator sends an invitation, need to figure out a way to test the remove method.")]
         public async Task CheckDeleteMethod()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -405,7 +405,7 @@ public class RepositoryCollaboratorClientTests
             }
         }
 
-        [IntegrationTest]
+        [Fact(Skip = "Adding a collaborator sends an invitation, need to figure out a way to test the remove method.")]
         public async Task CheckDeleteMethodWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
