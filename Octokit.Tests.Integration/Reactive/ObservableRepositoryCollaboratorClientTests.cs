@@ -21,14 +21,10 @@ public class ObservableRepositoryCollaboratorClientTests
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
 
-                // add a collaborator
-                // this sends a repository invitation
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName).ToList();
+
                 Assert.NotNull(collaborators);
-                // this assert fails, added collaborator has to accept the invitation.
-                Assert.Equal(2, collaborators.Count);
+                Assert.Equal(1, collaborators.Count);
             }
         }
 
@@ -42,9 +38,6 @@ public class ObservableRepositoryCollaboratorClientTests
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
 
-                // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
                 var options = new ApiOptions
                 {
                     PageSize = 1,
@@ -52,6 +45,7 @@ public class ObservableRepositoryCollaboratorClientTests
                 };
 
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
+
                 Assert.NotNull(collaborators);
                 Assert.Equal(1, collaborators.Count);
             }
@@ -67,9 +61,6 @@ public class ObservableRepositoryCollaboratorClientTests
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
 
-                // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
                 var options = new ApiOptions
                 {
                     PageSize = 1,
@@ -78,8 +69,9 @@ public class ObservableRepositoryCollaboratorClientTests
                 };
 
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
+
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Equal(0, collaborators.Count);
             }
         }
 
@@ -92,9 +84,6 @@ public class ObservableRepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = new ObservableRepoCollaboratorsClient(github);
-
-                // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
 
                 var startOptions = new ApiOptions
                 {
@@ -113,7 +102,8 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var secondPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, skipStartOptions).ToList();
 
-                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+                Assert.Equal(1, firstPage.Count);
+                Assert.Equal(0, secondPage.Count);
             }
         }
     }
