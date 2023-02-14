@@ -27,6 +27,25 @@ public class RepositoryCollaboratorClientTests
         }
 
         [IntegrationTest]
+        public async Task ReturnsCollaboratorsWithPermissionFilter()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var collaborators = await fixture.GetAll(context.RepositoryOwner,
+                                                         context.RepositoryName,
+                                                         new RepositoryCollaboratorListRequest() { Permission = CollaboratorPermission.Admin });
+
+                Assert.NotNull(collaborators);
+                Assert.Equal(1, collaborators.Count);
+            }
+        }
+
+        [IntegrationTest]
         public async Task ReturnsAllCollaboratorsWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
