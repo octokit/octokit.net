@@ -117,6 +117,88 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void RequestsCorrectUrlWithPermissionFilter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => !d.ContainsKey("permission")),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Admin
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["permission"] == "admin"),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Maintain
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["permission"] == "maintain"),
+                                          Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterAndPermissionFilter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all" && !d.ContainsKey("permission")),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct,
+                    Permission = CollaboratorPermission.Admin
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct" && d["permission"] == "admin"),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside,
+                    Permission = CollaboratorPermission.Pull
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside" && d["permission"] == "pull"),
+                                          Args.ApiOptions);
+            }
+
+            [Fact]
             public void RequestsCorrectUrlWithApiOptionsAndRepositoryId()
             {
                 var connection = Substitute.For<IApiConnection>();
@@ -178,6 +260,94 @@ namespace Octokit.Tests.Clients
                     .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithPermissionFilterAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => !d.ContainsKey("permission")),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Triage
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["permission"] == "triage"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Push
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["permission"] == "push"),
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterPermissionFilterAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all" && !d.ContainsKey("permission")),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct,
+                    Permission = CollaboratorPermission.Triage
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct" && d["permission"] == "triage"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside,
+                    Permission = CollaboratorPermission.Push
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside" && d["permission"] == "push"),
                         Args.ApiOptions);
             }
 
