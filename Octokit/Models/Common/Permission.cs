@@ -2,6 +2,9 @@ using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
 
+// Permission.cs file houses all permission-related enums / classes
+// This file was created based on this suggestion https://github.com/octokit/octokit.net/issues/2323#issuecomment-1322766701
+
 namespace Octokit
 {
     public enum InstallationReadWritePermissionLevel
