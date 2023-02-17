@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Octokit.Caching;
 using Octokit.Internal;
 
 namespace Octokit
@@ -24,7 +23,7 @@ namespace Octokit
 
         readonly Authenticator _authenticator;
         readonly JsonHttpPipeline _jsonPipeline;
-        internal IHttpClient _httpClient;
+        readonly IHttpClient _httpClient;
 
         /// <summary>
         /// Creates a new connection instance used to make requests of the GitHub API.
@@ -648,21 +647,6 @@ namespace Octokit
             {
                 Ensure.ArgumentNotNull(value, nameof(value));
                 _authenticator.CredentialStore = new InMemoryCredentialStore(value);
-            }
-        }
-
-        /// <summary>
-        /// Sets response cache used by the connection.
-        /// </summary>
-        /// <remarks>
-        /// Setting this property will wrap existing <see cref="IHttpClient"/> in <see cref="CachingHttpClient"/>.
-        /// </remarks>
-        public IResponseCache ResponseCache
-        {
-            set
-            {
-                Ensure.ArgumentNotNull(value, nameof(value));
-                _httpClient = new CachingHttpClient(_httpClient, value);
             }
         }
 

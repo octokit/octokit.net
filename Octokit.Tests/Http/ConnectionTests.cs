@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
-using Octokit.Caching;
 using Octokit.Internal;
 using Xunit;
 
@@ -858,48 +857,6 @@ namespace Octokit.Tests.Http
                 Assert.Equal(4, result.AcceptedOauthScopes.Count);
                 Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", result.Etag);
                 Assert.Equal(100, result.RateLimit.Limit);
-            }
-        }
-
-        public class TheResponseCacheProperty
-        {
-            [Fact]
-            public void WhenSetWrapsExistingHttpClientWithCachingHttpClient()
-            {
-                var responseCache = Substitute.For<IResponseCache>();
-                var httpClient = Substitute.For<IHttpClient>();
-                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    _exampleUri,
-                    Substitute.For<ICredentialStore>(),
-                    httpClient,
-                    Substitute.For<IJsonSerializer>());
-
-                connection.ResponseCache = responseCache;
-
-                Assert.IsType<CachingHttpClient>(connection._httpClient);
-                var cachingHttpClient = (CachingHttpClient) connection._httpClient;
-                Assert.Equal(httpClient, cachingHttpClient._httpClient);
-                Assert.Equal(responseCache, cachingHttpClient._responseCache);
-            }
-
-            [Fact]
-            public void WhenResetWrapsUnderlyingHttpClientWithCachingHttpClient()
-            {
-                var responseCache = Substitute.For<IResponseCache>();
-                var httpClient = Substitute.For<IHttpClient>();
-                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
-                    _exampleUri,
-                    Substitute.For<ICredentialStore>(),
-                    httpClient,
-                    Substitute.For<IJsonSerializer>());
-                connection.ResponseCache = Substitute.For<IResponseCache>();
-
-                connection.ResponseCache = responseCache;
-
-                Assert.IsType<CachingHttpClient>(connection._httpClient);
-                var cachingHttpClient = (CachingHttpClient) connection._httpClient;
-                Assert.Equal(httpClient, cachingHttpClient._httpClient);
-                Assert.Equal(responseCache, cachingHttpClient._responseCache);
             }
         }
     }

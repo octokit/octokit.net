@@ -1,5 +1,4 @@
 ﻿using System;
-using Octokit.Caching;
 using Octokit.Internal;
 
 namespace Octokit
@@ -161,21 +160,6 @@ namespace Octokit
             {
                 Ensure.ArgumentNotNull(value, nameof(value));
                 Connection.Credentials = value;
-            }
-        }
-
-        /// <summary>
-        /// Convenience property for setting response cache.
-        /// </summary>
-        /// <remarks>
-        /// Setting this property will wrap existing <see cref="IHttpClient"/> in <see cref="CachingHttpClient"/>.
-        /// </remarks>
-        public IResponseCache ResponseCache
-        {
-            set
-            {
-                Ensure.ArgumentNotNull(value, nameof(value));
-                Connection.ResponseCache = value;
             }
         }
 
