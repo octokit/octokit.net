@@ -168,6 +168,30 @@ namespace Octokit
     }
 
     /// <summary>
+    /// The reason for the state change.
+    /// </summary>
+    public enum ItemStateReason
+    {
+      /// <summary>
+      /// Item closed as completed.
+      /// </summary>
+      [Parameter(Value = "completed")]
+      Completed,
+
+      /// <summary>
+      /// Item closed as unplanned.
+      /// </summary>
+      [Parameter(Value = "not_planned")]
+      NotPlanned,
+
+      /// <summary>
+      /// Item reopened.
+      /// </summary>
+      [Parameter(Value = "reopened")]
+      Reopened
+    }
+
+    /// <summary>
     /// The available properties to sort issues by.
     /// </summary>
     public enum IssueSort
