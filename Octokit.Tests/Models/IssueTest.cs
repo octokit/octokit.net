@@ -145,6 +145,7 @@ public class IssueTest
 ""html_url"": ""https://github.com/octocat/Hello-World/issues/1347"",
 ""number"": 1347,
 ""state"": ""open"",
+""state_reason"": ""reopened"",
 ""title"": ""Found a bug"",
 ""body"": ""I'm having a problem with this."",
 ""user"": {
@@ -283,6 +284,7 @@ public class IssueTest
             Assert.NotNull(update.Labels);
             Assert.Equal(1, update.Milestone.GetValueOrDefault());
             Assert.Equal("octocat", update.Assignees.FirstOrDefault());
+            Assert.Equal(ItemStateReason.Reopened, update.StateReason.GetValueOrDefault());
         }
     }
 }
