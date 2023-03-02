@@ -12,7 +12,7 @@ namespace Octokit
     {
         public Issue() { }
 
-        public Issue(string url, string htmlUrl, string commentsUrl, string eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, string nodeId, bool locked, Repository repository, ReactionSummary reactions, LockReason? activeLockReason)
+        public Issue(string url, string htmlUrl, string commentsUrl, string eventsUrl, int number, ItemState state, string title, string body, User closedBy, User user, IReadOnlyList<Label> labels, User assignee, IReadOnlyList<User> assignees, Milestone milestone, int comments, PullRequest pullRequest, DateTimeOffset? closedAt, DateTimeOffset createdAt, DateTimeOffset? updatedAt, int id, string nodeId, bool locked, Repository repository, ReactionSummary reactions, LockReason? activeLockReason, ItemStateReason? stateReason)
         {
             Id = id;
             NodeId = nodeId;
@@ -39,6 +39,7 @@ namespace Octokit
             Repository = repository;
             Reactions = reactions;
             ActiveLockReason = activeLockReason;
+            StateReason = stateReason;
         }
 
         /// <summary>
@@ -80,6 +81,11 @@ namespace Octokit
         /// Whether the issue is open or closed.
         /// </summary>
         public StringEnum<ItemState> State { get; private set; }
+
+        /// <summary>
+        /// The reason for the state change. Ignored unless <see cref="State"/> is changed.
+        /// </summary>
+        public StringEnum<ItemStateReason>? StateReason { get; private set; }
 
         /// <summary>
         /// Title of the issue
@@ -186,11 +192,13 @@ namespace Octokit
                 : Labels.Select(x => x.Name);
 
             ItemState state;
+            ItemStateReason stateReason;
             var issueUpdate = new IssueUpdate
             {
                 Body = Body,
                 Milestone = milestoneId,
                 State = (State.TryParse(out state) ? (ItemState?)state : null),
+                StateReason = (StateReason.HasValue && StateReason.Value.TryParse(out stateReason) ? (ItemStateReason?)stateReason : null),
                 Title = Title
             };
 
