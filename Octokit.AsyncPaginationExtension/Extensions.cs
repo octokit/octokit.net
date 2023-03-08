@@ -547,20 +547,20 @@ namespace Octokit.AsyncPaginationExtension
         => pageSize > 0 ? new PaginatedList<ReleaseAsset>(options => t.GetAllAssets(repositoryId, id, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IRepoCollaboratorsClient.GetAll(string, string, ApiOptions)"/>
-    public static IPaginatedList<User> GetAllAsync(this IRepoCollaboratorsClient t, string owner, string name, int pageSize = DEFAULT_PAGE_SIZE)
-        => pageSize > 0 ? new PaginatedList<User>(options => t.GetAll(owner, name, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
+    public static IPaginatedList<Collaborator> GetAllAsync(this IRepoCollaboratorsClient t, string owner, string name, int pageSize = DEFAULT_PAGE_SIZE)
+        => pageSize > 0 ? new PaginatedList<Collaborator>(options => t.GetAll(owner, name, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IRepoCollaboratorsClient.GetAll(long, ApiOptions)"/>
-    public static IPaginatedList<User> GetAllAsync(this IRepoCollaboratorsClient t, long repositoryId, int pageSize = DEFAULT_PAGE_SIZE)
-        => pageSize > 0 ? new PaginatedList<User>(options => t.GetAll(repositoryId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
+    public static IPaginatedList<Collaborator> GetAllAsync(this IRepoCollaboratorsClient t, long repositoryId, int pageSize = DEFAULT_PAGE_SIZE)
+        => pageSize > 0 ? new PaginatedList<Collaborator>(options => t.GetAll(repositoryId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IRepoCollaboratorsClient.GetAll(string, string, RepositoryCollaboratorListRequest, ApiOptions)"/>
-    public static IPaginatedList<User> GetAllAsync(this IRepoCollaboratorsClient t, string owner, string name, RepositoryCollaboratorListRequest request, int pageSize = DEFAULT_PAGE_SIZE)
-        => pageSize > 0 ? new PaginatedList<User>(options => t.GetAll(owner, name, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
+    public static IPaginatedList<Collaborator> GetAllAsync(this IRepoCollaboratorsClient t, string owner, string name, RepositoryCollaboratorListRequest request, int pageSize = DEFAULT_PAGE_SIZE)
+        => pageSize > 0 ? new PaginatedList<Collaborator>(options => t.GetAll(owner, name, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IRepoCollaboratorsClient.GetAll(long, RepositoryCollaboratorListRequest, ApiOptions)"/>
-    public static IPaginatedList<User> GetAllAsync(this IRepoCollaboratorsClient t, long repositoryId, RepositoryCollaboratorListRequest request, int pageSize = DEFAULT_PAGE_SIZE)
-        => pageSize > 0 ? new PaginatedList<User>(options => t.GetAll(repositoryId, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
+    public static IPaginatedList<Collaborator> GetAllAsync(this IRepoCollaboratorsClient t, long repositoryId, RepositoryCollaboratorListRequest request, int pageSize = DEFAULT_PAGE_SIZE)
+        => pageSize > 0 ? new PaginatedList<Collaborator>(options => t.GetAll(repositoryId, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IRepositoriesClient.GetAllForCurrent(ApiOptions)"/>
     public static IPaginatedList<Repository> GetAllForCurrentAsync(this IRepositoriesClient t, int pageSize = DEFAULT_PAGE_SIZE)
