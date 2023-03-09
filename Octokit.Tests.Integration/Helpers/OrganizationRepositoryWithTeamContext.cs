@@ -73,7 +73,7 @@ namespace Octokit.Tests.Integration.Helpers
                 team.TeamId,
                 repoContext.RepositoryOwner,
                 repoContext.RepositoryName,
-                new RepositoryPermissionRequest(Permission.Push));
+                new RepositoryPermissionRequest(TeamPermissionLegacy.Push));
 
             // Protect default branch
             var protection = new BranchProtectionSettingsUpdate(
@@ -100,7 +100,7 @@ namespace Octokit.Tests.Integration.Helpers
                 contextOrgTeam.TeamId,
                 contextOrgRepo.RepositoryOwner,
                 contextOrgRepo.RepositoryName,
-                new RepositoryPermissionRequest(Permission.Push));
+                new RepositoryPermissionRequest(TeamPermissionLegacy.Push));
 
             // Protect default branch
             var protection = new BranchProtectionSettingsUpdate(

@@ -20,7 +20,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, collaborator, permission);
@@ -50,7 +50,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response1 = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, collaborator1, permission);
@@ -86,7 +86,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, collaborator, permission);
@@ -116,7 +116,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response1 = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, collaborator1, permission);
@@ -161,7 +161,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
@@ -195,7 +195,7 @@ public class RepositoryInvitationsClientTests
                     contexts.Add(await github.CreateRepositoryContext(new NewRepository(repoName)));
                 }
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator to all repos
                 foreach (var context in contexts)
@@ -243,7 +243,7 @@ public class RepositoryInvitationsClientTests
                     contexts.Add(await github.CreateRepositoryContext(new NewRepository(repoName)));
                 }
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator to all repos
                 foreach (var context in contexts)
@@ -290,7 +290,7 @@ public class RepositoryInvitationsClientTests
                     contexts.Add(await github.CreateRepositoryContext(new NewRepository(repoName)));
                 }
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator to all repos
                 foreach (var context in contexts)
@@ -351,7 +351,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
@@ -378,7 +378,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
@@ -406,7 +406,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);
@@ -433,7 +433,7 @@ public class RepositoryInvitationsClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner, permission);

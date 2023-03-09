@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll("owner", "test");
 
-                connection.Received().GetAll<User>(
+                connection.Received().GetAll<Collaborator>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                     Arg.Any<Dictionary<string, string>>(),
                     Args.ApiOptions);
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetAll(1);
 
-                connection.Received().GetAll<User>(
+                connection.Received().GetAll<Collaborator>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                     Arg.Any<Dictionary<string, string>>(),
                     Args.ApiOptions);
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", options);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Any<Dictionary<string, string>>(),
                         options);
             }
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", request);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
                         Args.ApiOptions);
 
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", request);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
                         Args.ApiOptions);
 
@@ -111,9 +111,91 @@ namespace Octokit.Tests.Clients
                 client.GetAll("owner", "test", request);
 
                 connection.Received()
-                    .GetAll<User>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
                         Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithPermissionFilter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => !d.ContainsKey("permission")),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Admin
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["permission"] == "admin"),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Maintain
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["permission"] == "maintain"),
+                                          Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterAndPermissionFilter()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all" && !d.ContainsKey("permission")),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct,
+                    Permission = CollaboratorPermission.Admin
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct" && d["permission"] == "admin"),
+                                          Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside,
+                    Permission = CollaboratorPermission.Pull
+                };
+
+                client.GetAll("owner", "test", request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators"),
+                                          Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside" && d["permission"] == "pull"),
+                                          Args.ApiOptions);
             }
 
             [Fact]
@@ -132,7 +214,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, options);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Any<Dictionary<string, string>>(),
                         options);
@@ -149,7 +231,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, request);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all"),
                         Args.ApiOptions);
@@ -162,7 +244,7 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, request);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct"),
                         Args.ApiOptions);
@@ -175,9 +257,97 @@ namespace Octokit.Tests.Clients
                 client.GetAll(1, request);
 
                 connection.Received()
-                    .GetAll<User>(
+                    .GetAll<Collaborator>(
                         Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
                         Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside"),
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithPermissionFilterAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => !d.ContainsKey("permission")),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Triage
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["permission"] == "triage"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Permission = CollaboratorPermission.Push
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["permission"] == "push"),
+                        Args.ApiOptions);
+            }
+
+            [Fact]
+            public void RequestsCorrectUrlWithCollaboratorFilterPermissionFilterAndRepositoryId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new RepoCollaboratorsClient(connection);
+
+                var request = new RepositoryCollaboratorListRequest();
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "all" && !d.ContainsKey("permission")),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Direct,
+                    Permission = CollaboratorPermission.Triage
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "direct" && d["permission"] == "triage"),
+                        Args.ApiOptions);
+
+                request = new RepositoryCollaboratorListRequest
+                {
+                    Affiliation = CollaboratorAffiliation.Outside,
+                    Permission = CollaboratorPermission.Push
+                };
+
+                client.GetAll(1, request);
+
+                connection.Received()
+                    .GetAll<Collaborator>(
+                        Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators"),
+                        Arg.Is<Dictionary<string, string>>(d => d["affiliation"] == "outside" && d["permission"] == "push"),
                         Args.ApiOptions);
             }
 
@@ -301,7 +471,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 client.ReviewPermission("owner", "test", "user1");
-                connection.Received().Get<CollaboratorPermission>(
+                connection.Received().Get<CollaboratorPermissionResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1/permission"),
                     Arg.Any<Dictionary<string, string>>());
             }
@@ -313,7 +483,7 @@ namespace Octokit.Tests.Clients
                 var client = new RepoCollaboratorsClient(connection);
 
                 client.ReviewPermission(1L, "user1");
-                connection.Received().Get<CollaboratorPermission>(
+                connection.Received().Get<CollaboratorPermissionResponse>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1/permission"),
                     Arg.Any<Dictionary<string, string>>());
             }
@@ -393,8 +563,8 @@ namespace Octokit.Tests.Clients
 
                 connection.Put<RepositoryInvitation>(Arg.Any<Uri>(), Arg.Any<object>()).ThrowsAsync(new AuthorizationException());
 
-                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1", new CollaboratorRequest(Permission.Pull)));
-                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1", new CollaboratorRequest(Permission.Pull)));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add("owner", "test", "user1", new CollaboratorRequest("pull")));
+                await Assert.ThrowsAsync<AuthorizationException>(() => client.Add(1, "user1", new CollaboratorRequest("pull")));
             }
         }
 
@@ -406,7 +576,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepoCollaboratorsClient(connection);
 
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 client.Invite("owner", "test", "user1", permission);
                 connection.Received().Put<RepositoryInvitation>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), Arg.Is<CollaboratorRequest>(permission));
@@ -416,7 +586,7 @@ namespace Octokit.Tests.Clients
             public async Task EnsuresNonNullArguments()
             {
                 var client = new RepoCollaboratorsClient(Substitute.For<IApiConnection>());
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Invite(null, "test", "user1", permission));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Invite("", "test", "user1", permission));

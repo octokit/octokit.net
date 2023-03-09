@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
-using Xunit;
 using Octokit.Tests.Integration.Helpers;
+using Xunit;
 
 public class RepositoryCollaboratorClientTests
 {
@@ -19,14 +19,29 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName);
+
                 Assert.NotNull(collaborators);
-                Assert.Equal(2, collaborators.Count);
-                Assert.NotNull(collaborators[0].Permissions);
-                Assert.NotNull(collaborators[1].Permissions);
+                Assert.Equal(1, collaborators.Count);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReturnsCollaboratorsWithPermissionFilter()
+        {
+            var github = Helper.GetAuthenticatedClient();
+            var repoName = Helper.MakeNameWithTimestamp("public-repo");
+
+            using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
+            {
+                var fixture = github.Repository.Collaborator;
+
+                var collaborators = await fixture.GetAll(context.RepositoryOwner,
+                                                         context.RepositoryName,
+                                                         new RepositoryCollaboratorListRequest() { Permission = CollaboratorPermission.Admin });
+
+                Assert.NotNull(collaborators);
+                Assert.Equal(1, collaborators.Count);
             }
         }
 
@@ -40,12 +55,10 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add a collaborator
-                await fixture.Add(context.Repository.Id, "m-zuber-octokit-integration-tests");
-
                 var collaborators = await fixture.GetAll(context.Repository.Id);
+
                 Assert.NotNull(collaborators);
-                Assert.Equal(2, collaborators.Count);
+                Assert.Equal(1, collaborators.Count);
             }
         }
 
@@ -59,9 +72,6 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
                 var options = new ApiOptions
                 {
                     PageSize = 1,
@@ -69,6 +79,7 @@ public class RepositoryCollaboratorClientTests
                 };
 
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options);
+
                 Assert.NotNull(collaborators);
                 Assert.Equal(1, collaborators.Count);
             }
@@ -84,9 +95,6 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add some collaborators
-                await fixture.Add(context.Repository.Id, "m-zuber-octokit-integration-tests");
-
                 var options = new ApiOptions
                 {
                     PageSize = 1,
@@ -94,6 +102,7 @@ public class RepositoryCollaboratorClientTests
                 };
 
                 var collaborators = await fixture.GetAll(context.Repository.Id, options);
+
                 Assert.NotNull(collaborators);
                 Assert.Equal(1, collaborators.Count);
             }
@@ -109,9 +118,6 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
                 var options = new ApiOptions
                 {
                     PageSize = 1,
@@ -120,8 +126,9 @@ public class RepositoryCollaboratorClientTests
                 };
 
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options);
+
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Equal(0, collaborators.Count);
             }
         }
 
@@ -135,9 +142,6 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add some collaborators
-                await fixture.Add(context.Repository.Id, "m-zuber-octokit-integration-tests");
-
                 var options = new ApiOptions
                 {
                     PageSize = 1,
@@ -146,8 +150,9 @@ public class RepositoryCollaboratorClientTests
                 };
 
                 var collaborators = await fixture.GetAll(context.Repository.Id, options);
+
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Equal(0, collaborators.Count);
             }
         }
 
@@ -160,9 +165,6 @@ public class RepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-
-                // add some collaborators
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
 
                 var startOptions = new ApiOptions
                 {
@@ -181,7 +183,8 @@ public class RepositoryCollaboratorClientTests
 
                 var secondPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, skipStartOptions);
 
-                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+                Assert.Equal(1, firstPage.Count);
+                Assert.Equal(0, secondPage.Count);
             }
         }
 
@@ -194,9 +197,6 @@ public class RepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-
-                // add some collaborators
-                await fixture.Add(context.Repository.Id, "m-zuber-octokit-integration-tests");
 
                 var startOptions = new ApiOptions
                 {
@@ -215,7 +215,8 @@ public class RepositoryCollaboratorClientTests
 
                 var secondPage = await fixture.GetAll(context.Repository.Id, skipStartOptions);
 
-                Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
+                Assert.Equal(1, firstPage.Count);
+                Assert.Equal(0, secondPage.Count);
             }
         }
     }
@@ -232,10 +233,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
-
-                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, "m-zuber-octokit-integration-tests");
+                var isCollab = await fixture.IsCollaborator(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
 
                 Assert.True(isCollab);
             }
@@ -251,10 +249,7 @@ public class RepositoryCollaboratorClientTests
             {
                 var fixture = github.Repository.Collaborator;
 
-                // add a collaborator
-                await fixture.Add(context.Repository.Id, "m-zuber-octokit-integration-tests");
-
-                var isCollab = await fixture.IsCollaborator(context.Repository.Id, "m-zuber-octokit-integration-tests");
+                var isCollab = await fixture.IsCollaborator(context.Repository.Id, context.RepositoryOwner);
 
                 Assert.True(isCollab);
             }
@@ -275,7 +270,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.Read, permission.Permission);
+                Assert.Equal("read", permission.Permission);
             }
         }
 
@@ -291,12 +286,12 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.Read, permission.Permission);
+                Assert.Equal("read", permission.Permission);
             }
         }
 
         [IntegrationTest]
-        public async Task ReturnsWritePermissionForCollaborator()
+        public async Task ReturnsWritePermissionForCollaboratorInvitation()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -306,16 +301,15 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                var invitation = await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1", new CollaboratorRequest("write"));
 
-                var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
-
-                Assert.Equal(PermissionLevel.Write, permission.Permission);
+                Assert.Equal(InvitationPermissionType.Write, invitation.Permissions);
             }
         }
 
+
         [IntegrationTest]
-        public async Task ReturnsWritePermissionForCollaboratorWithRepositoryId()
+        public async Task ReturnsWritePermissionForCollaboratorInvitationWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
             var repoName = Helper.MakeNameWithTimestamp("public-repo");
@@ -325,11 +319,9 @@ public class RepositoryCollaboratorClientTests
                 var fixture = github.Repository.Collaborator;
 
                 // add a collaborator
-                await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
+                var invitation = await fixture.Add(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1", new CollaboratorRequest("write"));
 
-                var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
-
-                Assert.Equal(PermissionLevel.Write, permission.Permission);
+                Assert.Equal(InvitationPermissionType.Write, invitation.Permissions);
             }
         }
 
@@ -345,7 +337,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, context.RepositoryOwner);
 
-                Assert.Equal(PermissionLevel.Admin, permission.Permission);
+                Assert.Equal("admin", permission.Permission);
             }
         }
 
@@ -361,7 +353,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, context.RepositoryOwner);
 
-                Assert.Equal(PermissionLevel.Admin, permission.Permission);
+                Assert.Equal("admin", permission.Permission);
             }
         }
 
@@ -382,7 +374,7 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryOwner, context.RepositoryName, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.None, permission.Permission);
+                Assert.Equal("none", permission.Permission);
             }
         }
 
@@ -403,14 +395,14 @@ public class RepositoryCollaboratorClientTests
 
                 var permission = await fixture.ReviewPermission(context.RepositoryId, "octokitnet-test1");
 
-                Assert.Equal(PermissionLevel.None, permission.Permission);
+                Assert.Equal("none", permission.Permission);
             }
         }
     }
 
     public class TheDeleteMethod
     {
-        [IntegrationTest]
+        [Fact(Skip = "Adding a collaborator sends an invitation, need to figure out a way to test the remove method.")]
         public async Task CheckDeleteMethod()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -432,7 +424,7 @@ public class RepositoryCollaboratorClientTests
             }
         }
 
-        [IntegrationTest]
+        [Fact(Skip = "Adding a collaborator sends an invitation, need to figure out a way to test the remove method.")]
         public async Task CheckDeleteMethodWithRepositoryId()
         {
             var github = Helper.GetAuthenticatedClient();
@@ -466,7 +458,7 @@ public class RepositoryCollaboratorClientTests
             using (var context = await github.CreateRepositoryContext(new NewRepository(repoName)))
             {
                 var fixture = github.Repository.Collaborator;
-                var permission = new CollaboratorRequest(Permission.Push);
+                var permission = new CollaboratorRequest("push");
 
                 // invite a collaborator
                 var response = await fixture.Invite(context.RepositoryOwner, context.RepositoryName, "octokat", permission);

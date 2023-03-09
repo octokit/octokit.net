@@ -326,7 +326,7 @@ public class TeamsClientTests
                 var team = teamContext.Team;
                 var repo = repoContext.Repository;
 
-                var addRepo = await _github.Organization.Team.AddRepository(team.Id, team.Organization.Login, repo.Name, new RepositoryPermissionRequest(Permission.Admin));
+                var addRepo = await _github.Organization.Team.AddRepository(team.Id, team.Organization.Login, repo.Name, new RepositoryPermissionRequest(TeamPermissionLegacy.Admin));
 
                 Assert.True(addRepo);
 
