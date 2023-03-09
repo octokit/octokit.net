@@ -53,6 +53,11 @@ namespace Octokit
         /// </summary>
         public ItemState? State { get; set; }
 
+        /// <summary>
+        /// The reason for the state change. Ignored unless <see cref="State"/> is changed.
+        /// </summary>
+        public ItemStateReason? StateReason { get; set; }
+
         internal string DebuggerDisplay
         {
             get

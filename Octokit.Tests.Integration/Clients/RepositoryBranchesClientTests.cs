@@ -1241,7 +1241,7 @@ namespace Octokit.Tests.Integration.Clients
                         team2.TeamId,
                         repoContext.RepositoryOwner,
                         repoContext.RepositoryName,
-                        new RepositoryPermissionRequest(Permission.Push));
+                        new RepositoryPermissionRequest(TeamPermissionLegacy.Push));
 
                     var newTeam = new BranchProtectionTeamCollection() { team2.TeamName };
                     var restrictions = await _github.Repository.Branch.UpdateProtectedBranchTeamRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, newTeam);
@@ -1265,7 +1265,7 @@ namespace Octokit.Tests.Integration.Clients
                      team2.TeamId,
                     repoContext.RepositoryOwner,
                     repoContext.RepositoryName,
-                    new RepositoryPermissionRequest(Permission.Push));
+                    new RepositoryPermissionRequest(TeamPermissionLegacy.Push));
 
                     var newTeam = new BranchProtectionTeamCollection() { team2.TeamName };
                     var restrictions = await _github.Repository.Branch.UpdateProtectedBranchTeamRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, newTeam);
@@ -1292,7 +1292,7 @@ namespace Octokit.Tests.Integration.Clients
                     team2.TeamId,
                     repoContext.RepositoryOwner,
                     repoContext.RepositoryName,
-                    new RepositoryPermissionRequest(Permission.Push));
+                    new RepositoryPermissionRequest(TeamPermissionLegacy.Push));
 
                     var newTeam = new BranchProtectionTeamCollection() { team2.TeamName };
                     var restrictions = await _github.Repository.Branch.AddProtectedBranchTeamRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, newTeam);
@@ -1316,7 +1316,7 @@ namespace Octokit.Tests.Integration.Clients
                     team2.TeamId,
                     repoContext.RepositoryOwner,
                     repoContext.RepositoryName,
-                    new RepositoryPermissionRequest(Permission.Push));
+                    new RepositoryPermissionRequest(TeamPermissionLegacy.Push));
 
                     var newTeam = new BranchProtectionTeamCollection() { team2.TeamName };
                     var restrictions = await _github.Repository.Branch.AddProtectedBranchTeamRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, newTeam);
