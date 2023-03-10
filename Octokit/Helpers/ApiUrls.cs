@@ -143,6 +143,15 @@ namespace Octokit
         {
             return "user/orgs".FormatUri();
         }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the organization memberships for the currently logged in user.
+        /// </summary>
+        /// <returns></returns>
+        public static Uri UserOrganizationMemberships()
+        {
+            return "user/memberships/orgs".FormatUri();
+        }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the specified login.

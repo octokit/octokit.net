@@ -603,5 +603,29 @@ namespace Octokit
 
             return ApiConnection.GetAll<OrganizationMembershipInvitation>(ApiUrls.OrganizationFailedInvitations(org), null, options);
         }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationMembership" />s for the current user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A list of the current user's <see cref="OrganizationMembership"/>s.</returns>
+        [ManualRoute("GET", "/user/memberships/orgs")]
+        public Task<IReadOnlyList<OrganizationMembership>> GetAllOrganizationMembershipsForCurrent()
+        {
+            return ApiConnection.GetAll<OrganizationMembership>(ApiUrls.UserOrganizationMemberships());
+        }
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationMembership" />s for the current user.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns>A list of the current user's <see cref="OrganizationMembership"/>s.</returns>
+        [ManualRoute("GET", "/user/memberships/orgs")]
+        public Task<IReadOnlyList<OrganizationMembership>> GetAllOrganizationMembershipsForCurrent(ApiOptions options)
+        {
+            return ApiConnection.GetAll<OrganizationMembership>(ApiUrls.UserOrganizationMemberships(), options);
+        }
+
     }
 }

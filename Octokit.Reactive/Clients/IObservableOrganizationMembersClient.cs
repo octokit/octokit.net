@@ -363,5 +363,28 @@ namespace Octokit.Reactive
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
         IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org, ApiOptions options);
+        
+        /// <summary>
+        /// Returns all <see cref="OrganizationMembership" />s for the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-organization-memberships-for-the-authenticated-user">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns></returns>
+        IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent();
+
+        /// <summary>
+        /// Returns all <see cref="OrganizationMembership" />s for the current user.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-organization-memberships-for-the-authenticated-user">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <param name="options">Options to change API behaviour</param>
+        /// <returns></returns>
+        IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent(ApiOptions options);
     }
 }
