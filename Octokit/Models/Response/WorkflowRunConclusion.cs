@@ -18,5 +18,9 @@ namespace Octokit
         ActionRequired,
         [Parameter(Value = "stale")]
         Stale,
+        [Parameter(Value = "startup_failure")]
+        StartupFailure,
+        [Parameter(Value = "skipped")]
+        Skipped,
     }
 }
