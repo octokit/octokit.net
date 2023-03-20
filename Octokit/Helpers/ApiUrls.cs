@@ -136,6 +136,53 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the variable for the specified organization in
+        /// response to a GET request.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositoryVariables(string organization)
+        {
+            return "orgs/{0}/actions/variables".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a variable for the specified organization in
+        /// response to a GET request. A POST to this URL creates a new variable for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="variable">The name of the variable</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositoryVariable(string organization, string variable)
+        {
+            return "orgs/{0}/actions/variables/{1}".FormatUri(organization, variable);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a list of repositories for a variable for the specified organization in
+        /// response to a GET request. A POST to this URL sets the full repository list for a variable in the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="variable">The name of the variable</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositoryVariableRepositories(string organization, string variable)
+        {
+            return "orgs/{0}/actions/variables/{1}/repositories".FormatUri(organization, variable);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that adds (PUT) or removes (DELETE) a repository from the visibility list of a variable.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="variable">The name of the variable</param>
+        /// <param name="repoId">The id of the repo to target</param>
+        /// <returns></returns>
+        public static Uri OrganizationRepositoryVariableRepository(string organization, string variable, long repoId)
+        {
+            return "orgs/{0}/actions/variables/{1}/repositories/{2}".FormatUri(organization, variable, repoId.ToString());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organizations for the currently logged in user.
         /// </summary>
         /// <returns></returns>
@@ -4577,6 +4624,29 @@ namespace Octokit
         public static Uri RepositorySecretsPublicKey(string owner, string repo)
         {
             return "repos/{0}/{1}/actions/secrets/public-key".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository variables for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <param name="variable">The name of the variable</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository variables for the repository</returns>
+        public static Uri RepositoryVariable(string owner, string repo, string variable)
+        {
+            return "repos/{0}/{1}/actions/variables/{2}".FormatUri(owner, repo, variable);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository variables for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository variables for the repository</returns>
+        public static Uri RepositoryVariables(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/variables".FormatUri(owner, repo);
         }
 
         /// <summary>
