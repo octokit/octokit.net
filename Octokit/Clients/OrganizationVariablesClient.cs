@@ -68,7 +68,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(createVariable.Value, nameof(createVariable.Value));
             Ensure.ArgumentNotNullOrEmptyString(createVariable.Visibility, nameof(createVariable.Visibility));
 
-            await ApiConnection.Put<OrganizationVariable>(ApiUrls.OrganizationRepositoryVariable(org, variableName), createVariable);
+            await ApiConnection.Post<OrganizationVariable>(ApiUrls.OrganizationRepositoryVariable(org, variableName), createVariable);
             return await ApiConnection.Get<OrganizationVariable>(ApiUrls.OrganizationRepositoryVariable(org, variableName));
         }
 
@@ -92,7 +92,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(updateVariable.Value, nameof(updateVariable.Value));
             Ensure.ArgumentNotNullOrEmptyString(updateVariable.Visibility, nameof(updateVariable.Visibility));
 
-            await ApiConnection.Put<OrganizationVariable>(ApiUrls.OrganizationRepositoryVariable(org, variableName), updateVariable);
+            await ApiConnection.Patch<OrganizationVariable>(ApiUrls.OrganizationRepositoryVariable(org, variableName), updateVariable);
             return await ApiConnection.Get<OrganizationVariable>(ApiUrls.OrganizationRepositoryVariable(org, variableName));
         }
 

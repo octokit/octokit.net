@@ -79,7 +79,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
 
-            await ApiConnection.Put<RepositoryVariable>(url, createVariable);
+            await ApiConnection.Post<RepositoryVariable>(url, createVariable);
 
             return await Get(owner, repoName, variableName);
         }
@@ -107,7 +107,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
 
-            await ApiConnection.Put<RepositoryVariable>(url, updateVariable);
+            await ApiConnection.Patch<RepositoryVariable>(url, updateVariable);
 
             return await Get(owner, repoName, variableName);
         }
