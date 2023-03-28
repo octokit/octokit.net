@@ -837,6 +837,43 @@ namespace Octokit.Tests.Clients
         }
 
         [Fact]
+        public async Task DeserializesPullRequestReviewEventChangesRequestedCorrectly()
+        {
+            var jsonObj = new JsonObject
+            {
+                { "type", "PullRequestReviewEvent" },
+                {
+                    "payload", new
+                    {
+                        action = "submitted",
+                        review = new {
+                            id = 2626884,
+                            body = "Needs changes!",
+                            state = "changes_requested",
+                            html_url = "https://github.com/baxterthehacker/public-repo/pull/8#pullrequestreview-2626884",
+                        },
+                        pull_request = new
+                        {
+                            title = "PR Title"
+                        }
+                    }
+                }
+            };
+
+            var client = GetTestingEventsClient(jsonObj);
+            var activities = await client.GetAll();
+            Assert.Equal(1, activities.Count);
+
+            var payload = activities.FirstOrDefault().Payload as PullRequestReviewEventPayload;
+            Assert.Equal("submitted", payload.Action);
+            Assert.Equal(2626884, payload.Review.Id);
+            Assert.Equal("Needs changes!", payload.Review.Body);
+            Assert.Equal(PullRequestReviewState.ChangesRequested, payload.Review.State.Value);
+            Assert.Equal("https://github.com/baxterthehacker/public-repo/pull/8#pullrequestreview-2626884", payload.Review.HtmlUrl);
+            Assert.Equal("PR Title", payload.PullRequest.Title);
+        }
+
+        [Fact]
         public async Task DeserializesPullRequestCommentEventCorrectly()
         {
             var jsonObj = new JsonObject
