@@ -63,6 +63,27 @@ namespace Octokit.Reactive
         IObservable<CompareResult> Compare(long repositoryId, string @base, string head);
 
         /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <param name="options">Options for changing the API response</param>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
+        IObservable<CompareResult> Compare(string owner, string name, string @base, string head, ApiOptions options);
+
+        /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <param name="options">Options for changing the API response</param>
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
+        IObservable<CompareResult> Compare(long repositoryId, string @base, string head, ApiOptions options);
+
+        /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>

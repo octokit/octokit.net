@@ -297,6 +297,28 @@ public class RepositoryCommitsClientTests
 
             Assert.NotNull(sha1);
         }
+
+        [IntegrationTest]
+        public async Task CanFetchAllCommitsInComparision()
+        {
+            const string @base = "8dcb1db0da7c86596bf1d63631bd335363c64b8c";
+            const string head = "7349ecd6685c370ba84eb13f4c39f75f33";
+
+            var compareResultWithoutOptions = await _fixture.Compare(octokitNetRepositoryId, @base, head);
+            Assert.Equal(250, compareResultWithoutOptions.Commits.Count);
+
+            var compareResult = await _fixture.Compare(octokitNetRepositoryId, @base, head, new ApiOptions { PageSize = 100 });
+            Assert.Equal(534, compareResult.Commits.Count);
+        }
+
+        [IntegrationTest]
+        public async Task CanCompareTheSameCommitWithApiOptions()
+        {
+            const string head = "7349ecd6685c370ba84eb13f4c39f75f33";
+
+            var compareResult = await _fixture.Compare(octokitNetRepositoryId, head, head, new ApiOptions { PageSize = 100 });
+            Assert.Equal(0, compareResult.Commits.Count);
+        }
     }
 
     public class TestsWithNewRepository : IDisposable
