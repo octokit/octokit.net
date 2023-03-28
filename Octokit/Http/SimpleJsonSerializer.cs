@@ -134,7 +134,7 @@ namespace Octokit.Internal
                 });
 
                 // If type cache does not contain enum value and has no custom attribute, add it for future loops
-                return cachedEnumsForType.GetOrAdd(value.ToUpper(), v => Enum.Parse(type, value, ignoreCase: true));
+                return cachedEnumsForType.GetOrAdd(value, v => Enum.Parse(type, value, ignoreCase: true));
             }
 
             private string _type;
