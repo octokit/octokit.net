@@ -143,7 +143,7 @@ namespace Octokit
         {
             return "user/orgs".FormatUri();
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the organization memberships for the currently logged in user.
         /// </summary>
@@ -4693,7 +4693,7 @@ namespace Octokit
         {
             return "orgs/{0}/credential-authorizations?login={1}".FormatUri(org, login);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> for the Packages request
         /// </summary>
@@ -5215,6 +5215,17 @@ namespace Octokit
         public static Uri ActionsListWorkflowRuns(string owner, string repo, string workflowFileName)
         {
             return "repos/{0}/{1}/actions/workflows/{2}/runs".FormatUri(owner, repo, workflowFileName.UriEncode());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runners for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runners for a repository.</returns>
+        public static Uri ActionsListSelfHostedRunnersForRepo(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/runners".FormatUri(owner, repo);
         }
     }
 }
