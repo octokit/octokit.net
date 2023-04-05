@@ -17,7 +17,7 @@ namespace Octokit.Tests.Clients
       }
     }
 
-    public class TheGetMethod
+    public class TheListMethod
     {
       [Fact]
       public async Task RequestsCorrectUrl()
@@ -25,7 +25,11 @@ namespace Octokit.Tests.Clients
         var connection = Substitute.For<IApiConnection>();
         var client = new ActionsSelfHostedRunnersClient(connection);
 
-        // Get some data
+        await client.List("fake", "repo");
+
+        connection.Received().GetAll<Runner>(
+          Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners"));
+
       }
 
       [Fact]
@@ -34,8 +38,8 @@ namespace Octokit.Tests.Clients
         var connection = Substitute.For<IApiConnection>();
         var client = new ActionsSelfHostedRunnersClient(connection);
 
-        await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "repo"));
-        await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake", null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.List(null, "repo"));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.List("fake", null));
       }
 
       [Fact]
@@ -44,8 +48,8 @@ namespace Octokit.Tests.Clients
         var connection = Substitute.For<IApiConnection>();
         var client = new ActionsSelfHostedRunnersClient(connection);
 
-        await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "repo"));
-        await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("fake", ""));
+        await Assert.ThrowsAsync<ArgumentException>(() => client.List("", "repo"));
+        await Assert.ThrowsAsync<ArgumentException>(() => client.List("fake", ""));
       }
     }
 
