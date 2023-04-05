@@ -34,8 +34,8 @@ namespace Octokit.Tests.Clients
         var connection = Substitute.For<IApiConnection>();
         var client = new ActionsSelfHostedRunnersClient(connection);
 
-        // await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "repo"));
-        // await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("fake", null));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, "repo"));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("fake", null));
       }
 
       [Fact]
@@ -44,8 +44,8 @@ namespace Octokit.Tests.Clients
         var connection = Substitute.For<IApiConnection>();
         var client = new ActionsSelfHostedRunnersClient(connection);
 
-        // await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "repo"));
-        // await Assert.ThrowsAsync<ArgumentException>(() => client.Get("fake", ""));
+        await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", "repo"));
+        await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("fake", ""));
       }
     }
 
