@@ -19,12 +19,22 @@ namespace Octokit
     {
     }
 
-    public async Task<IReadOnlyList<Runner>> GetAll(string owner, string name)
+    [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners")]
+    public async Task<IReadOnlyList<Runner>> List(string owner, string name)
     {
       Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
       Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
       return await ApiConnection.GetAll<Runner>(ApiUrls.ActionsListSelfHostedRunnersForRepo(owner, name));
+    }
+
+    [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners")]
+    public async Task<IReadOnlyList<Runner>> List(string owner, string name, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+      Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+
+      return await ApiConnection.GetAll<Runner>(ApiUrls.ActionsListSelfHostedRunnersForRepo(owner, name), options);
     }
   }
 }

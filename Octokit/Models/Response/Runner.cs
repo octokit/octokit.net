@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
 
 namespace Octokit
 {
@@ -28,6 +30,16 @@ namespace Octokit
     public string Os { get; private set; }
     public string Status { get; private set; }
     public bool Busy { get; private set; }
-    public List<Label> Labels { get; private set; }
+    public IReadOnlyList<Label> Labels { get; private set; }
+
+    internal string DebuggerDisplay
+    {
+      get
+      {
+        return string.Format(CultureInfo.InvariantCulture,
+          "Runner Id: {0}; Name: {1}; OS: {2}; Status: {3}; Busy: {4}; Labels: {5};",
+          Id, Name, Os, Status, Busy, string.Join(", ", Labels.Select(l => l.Name)));
+      }
+    }
   }
 }
