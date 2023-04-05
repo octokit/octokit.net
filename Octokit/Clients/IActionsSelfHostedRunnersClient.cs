@@ -19,7 +19,7 @@ namespace Octokit
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    Task<IReadOnlyList<Runner>> List(string owner, string name);
+    Task<RunnerResponse> List(string owner, string name);
 
     /// <summary>
     /// Gets a list of all self-hosted runners for a repository.
@@ -30,6 +30,6 @@ namespace Octokit
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="options">Options to change the API response.</param>
-    Task<IReadOnlyList<Runner>> List(string owner, string name, ApiOptions options);
+    Task<RunnerResponse> List(string owner, string name, ApiOptions options);
   }
 }
