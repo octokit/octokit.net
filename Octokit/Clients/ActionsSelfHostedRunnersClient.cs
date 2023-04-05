@@ -32,7 +32,7 @@ namespace Octokit
       Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
       Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-      var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForRepo(owner, name), ApiOptions.None).ConfigureAwait(false);
+      var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForRepo(owner, name), options).ConfigureAwait(false);
 
       return new RunnerResponse(
         results.Count > 0 ? results.Max(x => x.TotalCount) : 0,

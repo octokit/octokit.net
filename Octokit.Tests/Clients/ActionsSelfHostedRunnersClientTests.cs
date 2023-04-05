@@ -27,8 +27,8 @@ namespace Octokit.Tests.Clients
 
         await client.List("fake", "repo");
 
-        connection.Received().GetAll<Runner>(
-          Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners"));
+        connection.Received().GetAll<RunnerResponse>(
+          Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners"), Args.ApiOptions);
 
       }
 
