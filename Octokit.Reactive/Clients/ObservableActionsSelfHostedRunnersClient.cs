@@ -19,15 +19,12 @@ namespace Octokit.Reactive
       _client = client.Actions.SelfHostedRunners;
     }
 
-    public IObservable<IReadOnlyList<Runner>> List(string owner, string name)
+    public IObservable<RunnerResponse> List(string owner, string name)
     {
-      Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-      Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
-
-      return _client.List(owner, name).ToObservable();
+      return List(owner, name, ApiOptions.None);
     }
 
-    public IObservable<IReadOnlyList<Runner>> List(string owner, string name, ApiOptions options)
+    public IObservable<RunnerResponse> List(string owner, string name, ApiOptions options)
     {
       Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
       Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
