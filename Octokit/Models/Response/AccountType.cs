@@ -22,10 +22,10 @@ namespace Octokit
         [Parameter(Value = "Bot")]
         Bot,
 
-		/// <summary>
-		/// Mannequin account
-		/// </summary>
-		[Parameter(Value = "Mannequin")]
-		Mannequin
+	/// <summary>
+	/// Mannequin account
+	/// </summary>
+	[Parameter(Value = "Mannequin")]
+	Mannequin
     }
 }
