@@ -5378,6 +5378,5 @@ namespace Octokit
             return "repos/{0}/{1}/actions/runners/registration-token".FormatUri(owner, repo);
         }
 
-
     }
 }
