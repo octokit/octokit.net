@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Reactive;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -120,6 +120,78 @@ namespace Octokit.Reactive
       Ensure.ArgumentNotNull(options, nameof(options));
 
       return _client.ListAllRunnerApplicationsForRepository(owner, name, options).ToObservable();
+    }
+
+    public IObservable<Unit> DeleteEnterpriseRunner(string enterprise, long runnerId)
+    {
+      return DeleteEnterpriseRunner(enterprise, runnerId, ApiOptions.None);
+    }
+
+    public IObservable<Unit> DeleteEnterpriseRunner(string enterprise, long groupId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.DeleteEnterpriseRunner(enterprise, groupId, options).ToObservable();
+    }
+
+    public IObservable<Unit> DeleteOrganizationRunner(string organization, long runnerId)
+    {
+      return DeleteOrganizationRunner(organization, runnerId, ApiOptions.None);
+    }
+
+    public IObservable<Unit> DeleteOrganizationRunner(string organization, long groupId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.DeleteOrganizationRunner(organization, groupId, options).ToObservable();
+    }
+
+    public IObservable<Unit> DeleteRepositoryRunner(string owner, string name, long runnerId)
+    {
+      return DeleteRepositoryRunner(owner, name, runnerId, ApiOptions.None);
+    }
+
+    public IObservable<Unit> DeleteRepositoryRunner(string owner, string name, long groupId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.DeleteRepositoryRunner(owner, name, groupId, options).ToObservable();
+    }
+
+    public IObservable<AccessToken> CreateEnterpriseRegistrationToken(string enterprise)
+    {
+      return CreateEnterpriseRegistrationToken(enterprise, ApiOptions.None);
+    }
+
+    public IObservable<AccessToken> CreateEnterpriseRegistrationToken(string enterprise, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.CreateEnterpriseRegistrationToken(enterprise, options).ToObservable();
+    }
+
+    public IObservable<AccessToken> CreateOrganizationRegistrationToken(string organization)
+    {
+      return CreateOrganizationRegistrationToken(organization, ApiOptions.None);
+    }
+
+    public IObservable<AccessToken> CreateOrganizationRegistrationToken(string organization, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.CreateOrganizationRegistrationToken(organization, options).ToObservable();
+    }
+
+    public IObservable<AccessToken> CreateRepositoryRegistrationToken(string owner, string name)
+    {
+      return CreateRepositoryRegistrationToken(owner, name, ApiOptions.None);
+    }
+
+    public IObservable<AccessToken> CreateRepositoryRegistrationToken(string owner, string name, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.CreateRepositoryRegistrationToken(owner, name, options).ToObservable();
     }
   }
 }

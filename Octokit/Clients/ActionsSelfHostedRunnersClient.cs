@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Linq;
 
 namespace Octokit
@@ -8,7 +7,7 @@ namespace Octokit
   /// A client for GitHub's Actions Self-hosted runners API.
   /// </summary>
   /// <remarks>
-  /// See the <a href="https://developer.github.com/v3/actions/self-hosted-runners/">Actions Self-hosted runners API documentation</a> for more information.
+  /// See the <a href="https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#about-self-hosted-runners-in-github-actions">Actions Self-hosted runners API documentation</a> for more information.
   /// </remarks>
   public class ActionsSelfHostedRunnersClient : ApiClient, IActionsSelfHostedRunnersClient
   {
@@ -313,5 +312,191 @@ namespace Octokit
       );
     }
 
+    /// <summary>
+    /// Delete a self-hosted runner from an enterprise
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#delete-a-self-hosted-runner-from-an-enterprise
+    /// </remarks>
+    /// <param name="enterprise">The enterprise.</param>
+    /// <param name="runnerId">The runner id.</param>
+    [ManualRoute("DELETE", "/enterprises/{enterprise}/actions/runners/{runner_id}")]
+    public Task DeleteEnterpriseRunner(string enterprise, long runnerId)
+    {
+      return DeleteEnterpriseRunner(enterprise, runnerId, ApiOptions.None);
+    }
+
+    /// <summary>
+    /// Delete a self-hosted runner from an enterprise
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#delete-a-self-hosted-runner-from-an-enterprise
+    /// </remarks>
+    /// <param name="enterprise">The enterprise.</param>
+    /// <param name="runnerId">The runner id.</param>
+    /// <param name="options">Options for changing the API response</param>
+    [ManualRoute("DELETE", "/enterprises/{enterprise}/actions/runners/{runner_id}")]
+    public Task DeleteEnterpriseRunner(string enterprise, long runnerId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
+
+      return ApiConnection.Delete(ApiUrls.ActionsDeleteEnterpriseRunner(enterprise, runnerId), options);
+    }
+
+    /// <summary>
+    /// Delete a self-hosted runner from an organization
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#delete-a-self-hosted-runner-from-an-organization
+    /// </remarks>
+    /// <param name="organization">The organization.</param>
+    /// <param name="runnerId">The runner id.</param>
+    [ManualRoute("DELETE", "/orgs/{org}/actions/runners/{runner_id}")]
+    public Task DeleteOrganizationRunner(string organization, long runnerId)
+    {
+      return DeleteOrganizationRunner(organization, runnerId, ApiOptions.None);
+    }
+
+    /// <summary>
+    /// Delete a self-hosted runner from an organization
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#delete-a-self-hosted-runner-from-an-organization
+    /// </remarks>
+    /// <param name="organization">The organization.</param>
+    /// <param name="runnerId">The runner id.</param>
+    /// <param name="options">Options for changing the API response</param>
+    [ManualRoute("DELETE", "/orgs/{org}/actions/runners/{runner_id}")]
+    public Task DeleteOrganizationRunner(string organization, long runnerId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+
+      return ApiConnection.Delete(ApiUrls.ActionsDeleteOrganizationRunner(organization, runnerId), options);
+    }
+
+
+    /// <summary>
+    /// Delete a self-hosted runner from a repository
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#delete-a-self-hosted-runner-from-a-repository
+    /// </remarks>
+    /// <param name="owner">The owner.</param>
+    /// <param name="repo">The repo.</param>
+    /// <param name="runnerId">The runner id.</param>
+    [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/runners/{runner_id}")]
+    public Task DeleteRepositoryRunner(string owner, string repo, long runnerId)
+    {
+      return DeleteRepositoryRunner(owner, repo, runnerId, ApiOptions.None);
+    }
+
+    /// <summary>
+    /// Delete a self-hosted runner from a repository
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#delete-a-self-hosted-runner-from-a-repository
+    /// </remarks>
+    /// <param name="owner">The owner.</param>
+    /// <param name="repo">The repo.</param>
+    /// <param name="runnerId">The runner id.</param>
+    /// <param name="options">Options for changing the API response</param>
+    [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/runners/{runner_id}")]
+    public Task DeleteRepositoryRunner(string owner, string repo, long runnerId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+      Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
+      return ApiConnection.Delete(ApiUrls.ActionsDeleteRepositoryRunner(owner, repo, runnerId), options);
+    }
+
+    /// <summary>
+    /// Create a self-hosted runner registration token for an enterprise
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-enterprise
+    /// </remarks>
+    /// <param name="enterprise">The enterprise.</param>
+    [ManualRoute("POST", "/enterprises/{enterprise}/actions/runners/registration-token")]
+    public Task<AccessToken> CreateEnterpriseRegistrationToken(string enterprise)
+    {
+      return CreateEnterpriseRegistrationToken(enterprise, ApiOptions.None);
+    }
+
+    /// <summary>
+    /// Create a self-hosted runner registration token for an enterprise
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-enterprise
+    /// </remarks>
+    /// <param name="enterprise">The enterprise.</param>
+    /// <param name="options">Options for changing the API response</param>
+    [ManualRoute("POST", "/enterprises/{enterprise}/actions/runners/registration-token")]
+    public Task<AccessToken> CreateEnterpriseRegistrationToken(string enterprise, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
+
+      return ApiConnection.Post<AccessToken>(ApiUrls.ActionsCreateEnterpriseRegistrationToken(enterprise), options);
+    }
+
+    /// <summary>
+    /// Create a self-hosted runner registration token for an organization
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-organization
+    /// </remarks>
+    /// <param name="organization">The organization.</param>
+    [ManualRoute("POST", "/orgs/{org}/actions/runners/registration-token")]
+    public Task<AccessToken> CreateOrganizationRegistrationToken(string organization)
+    {
+      return CreateOrganizationRegistrationToken(organization, ApiOptions.None);
+    }
+
+    /// <summary>
+    /// Create a self-hosted runner registration token for an organization
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-organization
+    /// </remarks>
+    /// <param name="organization">The organization.</param>
+    /// <param name="options">Options for changing the API response</param>
+    [ManualRoute("POST", "/orgs/{org}/actions/runners/registration-token")]
+    public Task<AccessToken> CreateOrganizationRegistrationToken(string organization, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+
+      return ApiConnection.Post<AccessToken>(ApiUrls.ActionsCreateOrganizationRegistrationToken(organization), options);
+    }
+
+    /// <summary>
+    /// Create a self-hosted runner registration token for a repository
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-a-repository
+    /// </remarks>
+    /// <param name="owner">The owner.</param>
+    /// <param name="repo">The repo.</param>
+    [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runners/registration-token")]
+    public Task<AccessToken> CreateRepositoryRegistrationToken(string owner, string repo)
+    {
+      return CreateRepositoryRegistrationToken(owner, repo, ApiOptions.None);
+    }
+
+    /// <summary>
+    /// Create a self-hosted runner registration token for a repository
+    /// </summary>
+    /// <remarks>
+    /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-a-repository
+    /// </remarks>
+    /// <param name="owner">The owner.</param>
+    /// <param name="repo">The repo.</param>
+    /// <param name="options">Options for changing the API response</param>
+    [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runners/registration-token")]
+    public Task<AccessToken> CreateRepositoryRegistrationToken(string owner, string repo, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+      Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
+      return ApiConnection.Post<AccessToken>(ApiUrls.ActionsCreateRepositoryRegistrationToken(owner, repo), options);
+    }
   }
 }
