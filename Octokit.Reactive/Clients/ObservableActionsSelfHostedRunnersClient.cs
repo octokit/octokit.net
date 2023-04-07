@@ -19,18 +19,107 @@ namespace Octokit.Reactive
       _client = client.Actions.SelfHostedRunners;
     }
 
-    public IObservable<RunnerResponse> List(string owner, string name)
+    public IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise)
     {
-      return List(owner, name, ApiOptions.None);
+      return ListAllRunnersForEnterprise(enterprise, ApiOptions.None);
     }
 
-    public IObservable<RunnerResponse> List(string owner, string name, ApiOptions options)
+    public IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.ListAllRunnersForEnterprise(enterprise, options).ToObservable();
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization)
+    {
+      return ListAllRunnersForOrganization(organization, ApiOptions.None);
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.ListAllRunnersForOrganization(organization, options).ToObservable();
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name)
+    {
+      return ListAllRunnersForRepository(owner, name, ApiOptions.None);
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options)
     {
       Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
       Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
       Ensure.ArgumentNotNull(options, nameof(options));
 
-      return _client.List(owner, name, options).ToObservable();
+      return _client.ListAllRunnersForRepository(owner, name, options).ToObservable();
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long groupId)
+    {
+      return ListAllRunnersForEnterpriseRunnerGroup(enterprise, groupId, ApiOptions.None);
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long groupId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.ListAllRunnersForEnterpriseRunnerGroup(enterprise, groupId, options).ToObservable();
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long groupId)
+    {
+      return ListAllRunnersForOrganizationRunnerGroup(organization, groupId, ApiOptions.None);
+    }
+
+    public IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long groupId, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.ListAllRunnersForOrganizationRunnerGroup(organization, groupId, options).ToObservable();
+    }
+
+    public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise)
+    {
+      return ListAllRunnerApplicationsForEnterprise(enterprise, ApiOptions.None);
+    }
+
+    public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options)
+    {
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.ListAllRunnerApplicationsForEnterprise(enterprise, options).ToObservable();
+    }
+
+    public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization)
+    {
+      return ListAllRunnerApplicationsForOrganization(organization, ApiOptions.None);
+    }
+
+    public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.ListAllRunnerApplicationsForOrganization(organization, options).ToObservable();
+    }
+
+    public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name)
+    {
+      return ListAllRunnerApplicationsForRepository(owner, name, ApiOptions.None);
+    }
+
+    public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options)
+    {
+      Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+      Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+      Ensure.ArgumentNotNull(options, nameof(options));
+
+      return _client.ListAllRunnerApplicationsForRepository(owner, name, options).ToObservable();
     }
   }
 }

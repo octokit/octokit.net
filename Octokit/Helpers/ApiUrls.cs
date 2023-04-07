@@ -5218,14 +5218,99 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runners for an enterprise.
+        /// </summary>
+        /// <param name="enterprise">The name of the enterprise.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runners for an enterprise.</returns>
+        public static Uri ActionsListSelfHostedRunnersForEnterprise(string enterprise)
+        {
+            return "enterprises/{0}/actions/runners".FormatUri(enterprise);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runners for an organization.
+        /// </summary>
+        /// <param name="org">The name of the organization.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runners for an organization.</returns>
+        public static Uri ActionsListSelfHostedRunnersForOrganization(string org)
+        {
+            return "orgs/{0}/actions/runners".FormatUri(org);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runners for a repository.
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
         /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runners for a repository.</returns>
-        public static Uri ActionsListSelfHostedRunnersForRepo(string owner, string repo)
+        public static Uri ActionsListSelfHostedRunnersForRepository(string owner, string repo)
         {
             return "repos/{0}/{1}/actions/runners".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner for a runner group in an enterprise.
+        /// </summary>
+        /// <param name="enterprise">The name of the enterprise.</param>
+        /// <param name="runnerGroupId">The Id of the runner group.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner for a runner group in an enterprise.</returns>
+        public static Uri ActionsListSelfHostedRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId)
+        {
+            return "enterprises/{0}/actions/runner-groups/{1}/runners".FormatUri(enterprise, runnerGroupId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner for a runner group in an organization.
+        /// </summary>
+        /// <param name="org">The name of the organization.</param>
+        /// <param name="runnerGroupId">The Id of the runner group.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner for a runner group in an organization.</returns>
+        public static Uri ActionsListSelfHostedRunnersForOrganizationRunnerGroup(string org, long runnerGroupId)
+        {
+            return "orgs/{0}/actions/runner-groups/{1}/runners".FormatUri(org, runnerGroupId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner for a runner group in a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <param name="runnerGroupId">The Id of the runner group.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner for a runner group in a repository.</returns>
+        public static Uri ActionsListSelfHostedRunnersForRepositoryRunnerGroup(string owner, string repo, long runnerGroupId)
+        {
+            return "repos/{0}/{1}/actions/runner-groups/{2}/runners".FormatUri(owner, repo, runnerGroupId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner applications for an enterprise.
+        /// </summary>
+        /// <param name="enterprise">The name of the enterprise.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner applications for an enterprise.</returns>
+        public static Uri ActionsListRunnerApplicationsForEnterprise(string enterprise)
+        {
+            return "enterprises/{0}/actions/runners/downloads".FormatUri(enterprise);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner applications for an organization.
+        /// </summary>
+        /// <param name="org">The name of the organization.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner applications for an organization.</returns>
+        public static Uri ActionsListRunnerApplicationsForOrganization(string org)
+        {
+            return "orgs/{0}/actions/runners/downloads".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner applications for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of repo</param>
+        /// <param name="repo">The name of repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner applications for a repository.</returns>
+        public static Uri ActionsListRunnerApplicationsForRepository(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/runners/downloads".FormatUri(owner, repo);
         }
     }
 }
