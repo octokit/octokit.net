@@ -5378,5 +5378,47 @@ namespace Octokit
             return "repos/{0}/{1}/actions/runners/registration-token".FormatUri(owner, repo);
         }
 
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner groups for an enterprise.
+        /// </summary>
+        /// <param name="enterprise">The name of the enterprise.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner groups for an enterprise.</returns>
+        public static Uri ActionsListEnterpriseRunnerGroups(string enterprise)
+        {
+            return "enterprises/{0}/actions/runner-groups".FormatUri(enterprise);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner groups for an organization.
+        /// </summary>
+        /// <param name="org">The name of the organization.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner groups for an organization.</returns>
+        public static Uri ActionsListOrganizationRunnerGroups(string org)
+        {
+            return "orgs/{0}/actions/runner-groups".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner group organizations that belong to an enterprise.
+        /// </summary>
+        /// <param name="enterprise">The name of the enterprise.</param>
+        /// <param name="runnerGroupId">The Id of the runner group.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner group organizations that belong to an enterprise.</returns>
+        public static Uri ActionsListEnterpriseRunnerGroupOrganizations(string enterprise, long runnerGroupId)
+        {
+            return "enterprises/{0}/actions/runner-groups/{1}/organizations".FormatUri(enterprise, runnerGroupId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner group repositories that belong to an organization.
+        /// </summary>
+        /// <param name="org">The name of the organization.</param>
+        /// <param name="runnerGroupId">The Id of the runner group.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner group repositories that belong to an organization.</returns>
+        public static Uri ActionsListOrganizationRunnerGroupRepositories(string org, long runnerGroupId)
+        {
+            return "orgs/{0}/actions/runner-groups/{1}/repositories".FormatUri(org, runnerGroupId);
+        }
+
     }
 }
