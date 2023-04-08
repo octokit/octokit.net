@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableActionsSelfHostedRunnerGroupsClient : IObservableActionsSelfHostedRunnerGroupsClient
     {
         readonly IActionsSelfHostedRunnerGroupsClient _client;
+        readonly IConnection _connection;
 
         /// <summary>
         /// Instantiate a new GitHub Actions Self-hosted runner groups API client.
@@ -83,7 +84,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
-        public IObservable<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId)
+        public IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId)
         {
             return ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, ApiOptions.None);
         }
@@ -97,12 +98,12 @@ namespace Octokit.Reactive
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options)
+        public IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, options).ToObservable();
+            return _connection.GetAndFlattenAllPages<Organization>(ApiUrls.ActionsListEnterpriseRunnerGroupOrganizations(enterprise, runnerGroupId), options);
         }
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
-        public IObservable<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId)
+        public IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId)
         {
             return ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, ApiOptions.None);
         }
@@ -127,14 +128,13 @@ namespace Octokit.Reactive
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options)
+        public IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, options).ToObservable();
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.ActionsListOrganizationRunnerGroupRepositories(org, runnerGroupId), options);
         }
-
 
     }
 }

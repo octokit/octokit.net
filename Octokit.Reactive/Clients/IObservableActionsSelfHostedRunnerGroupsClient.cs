@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Octokit.Reactive
 {
@@ -58,7 +57,7 @@ namespace Octokit.Reactive
       /// </remarks>
       /// <param name="enterprise">The enterprise name</param>
       /// <param name="runnerGroupId">The runner group id</param>
-      IObservable<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
+      IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
 
       /// <summary>
       /// List organization access to a self-hosted runner group in an enterprise
@@ -69,7 +68,7 @@ namespace Octokit.Reactive
       /// <param name="enterprise">The enterprise name</param>
       /// <param name="runnerGroupId">The runner group id</param>
       /// <param name="options">Options for changing the API response</param>
-      IObservable<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
+      IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
 
       /// <summary>
       /// List repository access to a self-hosted runner group in an organization
@@ -79,7 +78,7 @@ namespace Octokit.Reactive
       /// </remarks>
       /// <param name="org">The organization name</param>
       /// <param name="runnerGroupId">The runner group id</param>
-      IObservable<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
+      IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
 
       /// <summary>
       /// List repository access to a self-hosted runner group in an organization
@@ -90,7 +89,7 @@ namespace Octokit.Reactive
       /// <param name="org">The organization name</param>
       /// <param name="runnerGroupId">The runner group id</param>
       /// <param name="options">Options for changing the API response</param>
-      IObservable<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
+      IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
 
     }
 }
