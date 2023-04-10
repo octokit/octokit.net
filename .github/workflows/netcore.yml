@@ -31,3 +31,6 @@ jobs:
     - name: Build with dotnet
       run: ./build.sh --verbosity=verbose
       shell: bash
+    - name: Integration Tests
+      run: ./build.sh --target=IntegrationTests
+      shell: bash
