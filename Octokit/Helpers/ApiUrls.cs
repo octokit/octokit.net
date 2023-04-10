@@ -97,7 +97,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri OrganizationRepositorySecret(string organization, string secret)
         {
-            return "orgs/{0}/actions/secrets/{1}".FormatUri(organization,secret);
+            return "orgs/{0}/actions/secrets/{1}".FormatUri(organization, secret);
         }
 
         /// <summary>
@@ -1940,7 +1940,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri TeamsByOrganizationAndSlug(string org, string teamSlug)
         {
-            return "orgs/{0}/teams/{1}".FormatUri(org,teamSlug);
+            return "orgs/{0}/teams/{1}".FormatUri(org, teamSlug);
         }
 
         /// <summary>
