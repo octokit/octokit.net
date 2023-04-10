@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -131,7 +132,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerApplicationsForEnterprise("fake");
 
-                connection.Received().GetAll<RunnerApplicationResponse>(
+                connection.Received().GetAll<IReadOnlyList<RunnerApplication>>(
                   Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runners/downloads"), Args.ApiOptions);
 
             }
@@ -165,7 +166,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerApplicationsForOrganization("fake");
 
-                connection.Received().GetAll<RunnerApplicationResponse>(
+                connection.Received().GetAll<IReadOnlyList<RunnerApplication>>(
                   Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runners/downloads"), Args.ApiOptions);
 
             }
@@ -199,7 +200,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerApplicationsForRepository("fake", "repo");
 
-                connection.Received().GetAll<RunnerApplicationResponse>(
+                connection.Received().GetAll<IReadOnlyList<RunnerApplication>>(
                   Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners/downloads"), Args.ApiOptions);
 
             }

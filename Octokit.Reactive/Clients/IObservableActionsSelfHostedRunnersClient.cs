@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -119,7 +120,7 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
-        IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise);
+        IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise);
 
         /// <summary>
         /// List runner applications for an enterprise
@@ -129,7 +130,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options);
+        IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options);
 
         /// <summary>
         /// List runner applications for an organization
@@ -138,7 +139,7 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-organization
         /// </remarks>
         /// <param name="organization">The organization.</param>
-        IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization);
+        IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization);
 
         /// <summary>
         /// List runner applications for an organization
@@ -148,7 +149,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The organization.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options);
+        IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options);
 
         /// <summary>
         /// List runner applications for a repository
@@ -158,7 +159,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name);
+        IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name);
 
         /// <summary>
         /// List runner applications for a repository
@@ -169,7 +170,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options);
+        IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
         /// Deletes a self-hosted runner from an enterprise.

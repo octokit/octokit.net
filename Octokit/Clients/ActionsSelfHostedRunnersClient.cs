@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Octokit
 {
@@ -214,7 +215,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runners/downloads")]
-        public Task<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise)
+        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise)
         {
             return ListAllRunnerApplicationsForEnterprise(enterprise, ApiOptions.None);
         }
@@ -228,16 +229,13 @@ namespace Octokit
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runners/downloads")]
-        public async Task<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options)
+        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
-            var results = await ApiConnection.GetAll<RunnerApplicationResponse>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<IReadOnlyList<RunnerApplication>>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise), options).ConfigureAwait(false);
 
-            return new RunnerApplicationResponse(
-              results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
-              results.SelectMany(x => x.RunnerApplications).ToList()
-            );
+            return results.SelectMany(x => x).ToList();
         }
 
         /// <summary>
@@ -248,7 +246,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The organization.</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runners/downloads")]
-        public Task<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization)
+        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization)
         {
             return ListAllRunnerApplicationsForOrganization(organization, ApiOptions.None);
         }
@@ -262,16 +260,13 @@ namespace Octokit
         /// <param name="organization">The organization.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runners/downloads")]
-        public async Task<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options)
+        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            var results = await ApiConnection.GetAll<RunnerApplicationResponse>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<IReadOnlyList<RunnerApplication>>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization), options).ConfigureAwait(false);
 
-            return new RunnerApplicationResponse(
-              results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
-              results.SelectMany(x => x.RunnerApplications).ToList()
-            );
+            return results.SelectMany(x => x).ToList();
         }
 
         /// <summary>
@@ -283,7 +278,7 @@ namespace Octokit
         /// <param name="owner">The owner.</param>
         /// <param name="repo">The repo.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners/downloads")]
-        public Task<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string repo)
+        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string repo)
         {
             return ListAllRunnerApplicationsForRepository(owner, repo, ApiOptions.None);
         }
@@ -299,17 +294,14 @@ namespace Octokit
         /// <param name="repo">The repo.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners/downloads")]
-        public async Task<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string repo, ApiOptions options)
+        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string repo, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            var results = await ApiConnection.GetAll<RunnerApplicationResponse>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, repo), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<IReadOnlyList<RunnerApplication>>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, repo), options).ConfigureAwait(false);
 
-            return new RunnerApplicationResponse(
-              results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
-              results.SelectMany(x => x.RunnerApplications).ToList()
-            );
+            return results.SelectMany(x => x).ToList();
         }
 
         /// <summary>

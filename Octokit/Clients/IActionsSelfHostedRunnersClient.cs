@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -118,7 +119,7 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
-        Task<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise);
+        Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise);
 
         /// <summary>
         /// List runner applications for an enterprise
@@ -128,7 +129,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options);
+        Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options);
 
         /// <summary>
         /// List runner applications for an organization
@@ -137,7 +138,7 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-organization
         /// </remarks>
         /// <param name="organization">The organization.</param>
-        Task<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization);
+        Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization);
 
         /// <summary>
         /// List runner applications for an organization
@@ -147,7 +148,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The organization.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options);
+        Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options);
 
         /// <summary>
         /// List runner applications for a repository
@@ -157,7 +158,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        Task<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name);
+        Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string name);
 
         /// <summary>
         /// List runner applications for a repository
@@ -168,7 +169,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options);
 
         /// <summary>
         /// Delete a self-hosted runner from an enterprise

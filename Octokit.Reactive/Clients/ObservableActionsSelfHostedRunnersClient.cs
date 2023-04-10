@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
 {
     public class ObservableActionsSelfHostedRunnersClient : IObservableActionsSelfHostedRunnersClient
     {
         readonly IActionsSelfHostedRunnersClient _client;
+        readonly IConnection _connection;
 
         /// <summary>
         /// Instantiate a new GitHub Actions Self-hosted runners API client.
@@ -17,6 +20,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Actions.SelfHostedRunners;
+            _connection = client.Connection;
         }
 
         public IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise)
@@ -83,43 +87,43 @@ namespace Octokit.Reactive
             return _client.ListAllRunnersForOrganizationRunnerGroup(organization, groupId, options).ToObservable();
         }
 
-        public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise)
+        public IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise)
         {
             return ListAllRunnerApplicationsForEnterprise(enterprise, ApiOptions.None);
         }
 
-        public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options)
+        public IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerApplicationsForEnterprise(enterprise, options).ToObservable();
+            return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise));
         }
 
-        public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization)
+        public IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization)
         {
             return ListAllRunnerApplicationsForOrganization(organization, ApiOptions.None);
         }
 
-        public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options)
+        public IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerApplicationsForOrganization(organization, options).ToObservable();
+            return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization));
         }
 
-        public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name)
+        public IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name)
         {
             return ListAllRunnerApplicationsForRepository(owner, name, ApiOptions.None);
         }
 
-        public IObservable<RunnerApplicationResponse> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options)
+        public IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerApplicationsForRepository(owner, name, options).ToObservable();
+            return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, name));
         }
 
         public IObservable<Unit> DeleteEnterpriseRunner(string enterprise, long runnerId)
