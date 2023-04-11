@@ -23,7 +23,8 @@ namespace Octokit
         Bot,
 
 	/// <summary>
-	/// Mannequin account
+	/// Mannequin account - all user activity in the migrated repository (except Git commits) 
+	/// 			is attributed to placeholder identities called mannequins.
 	/// </summary>
 	[Parameter(Value = "Mannequin")]
 	Mannequin
