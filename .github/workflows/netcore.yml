@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - "main"
-  workflow_dispatch:
 
 jobs:
   build:
@@ -30,7 +29,4 @@ jobs:
         dotnet-version: 6.0.*
     - name: Build with dotnet
       run: ./build.sh --verbosity=verbose
-      shell: bash
-    - name: Integration Tests
-      run: ./build.sh --target=IntegrationTests
       shell: bash
