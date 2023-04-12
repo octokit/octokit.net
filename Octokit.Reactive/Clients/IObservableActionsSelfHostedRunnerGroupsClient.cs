@@ -48,6 +48,47 @@ namespace Octokit.Reactive
         /// <param name="org">The organization name</param>
         /// <param name="options">Options for changing the API response</param>
         IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options);
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an enterprise.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId);
+
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an enterprise.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        /// <param name="options">Options to change the API response.</param>
+        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options);
+
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an organization.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-organization
+        /// </remarks>
+        /// <param name="organization">The organization.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId);
+
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an organization.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-organization
+        /// </remarks>
+        /// <param name="organization">The organization.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        /// <param name="options">Options to change the API response.</param>
+        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options);
 
         /// <summary>
         /// List organization access to a self-hosted runner group in an enterprise

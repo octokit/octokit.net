@@ -18,18 +18,18 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheListAllRunnersForRepositoryMethod
+        public class TheListAllRunnersForEnterproseMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrl()
+            public async Task RequstsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsSelfHostedRunnersClient(connection);
 
-                await client.ListAllRunnersForRepository("fake", "repo");
+                await client.ListAllRunnersForEnterprise("fake");
 
                 connection.Received().GetAll<RunnerResponse>(
-                  Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners"), Args.ApiOptions);
+                  Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runners"), Args.ApiOptions);
 
             }
 
@@ -39,8 +39,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsSelfHostedRunnersClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListAllRunnersForRepository(null, "repo"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListAllRunnersForRepository("fake", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListAllRunnersForEnterprise(null));
             }
 
             [Fact]
@@ -49,8 +48,7 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsSelfHostedRunnersClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.ListAllRunnersForRepository("", "repo"));
-                await Assert.ThrowsAsync<ArgumentException>(() => client.ListAllRunnersForRepository("fake", ""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListAllRunnersForEnterprise(""));
             }
         }
 
@@ -88,18 +86,18 @@ namespace Octokit.Tests.Clients
             }
         }
 
-        public class TheListAllRunnersForOrganizationRunnerGroupMethod
+        public class TheListAllRunnersForRepositoryMethod
         {
             [Fact]
-            public async Task RequstsCorrectUrl()
+            public async Task RequestsCorrectUrl()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsSelfHostedRunnersClient(connection);
 
-                await client.ListAllRunnersForOrganizationRunnerGroup("fake", 1);
+                await client.ListAllRunnersForRepository("fake", "repo");
 
                 connection.Received().GetAll<RunnerResponse>(
-                  Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runner-groups/1/runners"), Args.ApiOptions);
+                  Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners"), Args.ApiOptions);
 
             }
 
@@ -109,7 +107,8 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsSelfHostedRunnersClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListAllRunnersForOrganizationRunnerGroup(null, 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListAllRunnersForRepository(null, "repo"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.ListAllRunnersForRepository("fake", null));
             }
 
             [Fact]
@@ -118,9 +117,11 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsSelfHostedRunnersClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.ListAllRunnersForOrganizationRunnerGroup("", 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListAllRunnersForRepository("", "repo"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.ListAllRunnersForRepository("fake", ""));
             }
         }
+
 
         public class TheListAllRunnerApplicationsForEnterpriseMethod
         {
