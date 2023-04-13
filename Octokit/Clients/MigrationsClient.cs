@@ -130,7 +130,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
-            return ApiConnection.Delete(endpoint, new object());
+            return ApiConnection.Delete(endpoint);
         }
 
         /// <summary>
