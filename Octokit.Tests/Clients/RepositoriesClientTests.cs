@@ -1186,6 +1186,23 @@ namespace Octokit.Tests.Clients
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", "repo", "base", null));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("owner", "repo", "base", ""));
+
+
+                var options = new ApiOptions();
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare(null, "repo", "base", "head", options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("", "repo", "base", "head", options));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", null, "base", "head", options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("owner", "", "base", "head", options));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", "repo", null, "head", options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("owner", "repo", "", "head", options));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", "repo", "base", null, options));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Compare("owner", "repo", "base", "", options));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", "repo", "base", "head", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Compare("owner", "repo", "base", "head", null));
             }
 
             [Fact]
