@@ -177,8 +177,7 @@ namespace Octokit.Tests.Clients
                 client.DeleteArchive("fake", 69);
 
                 connection.Received().Delete(
-                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"),
-                    Arg.Any<object>());
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/fake/migrations/69/archive"));
             }
 
             [Fact]

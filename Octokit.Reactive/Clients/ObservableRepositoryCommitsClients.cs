@@ -111,6 +111,41 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<CompareResult> Compare(string owner, string name, string @base, string head, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
+            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _commit.Compare(owner, name, @base, head, options).ToObservable();
+        }
+
+        /// <summary>
+        /// Compare two references in a repository
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="base">The reference to use as the base commit</param>
+        /// <param name="head">The reference to use as the head commit</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<CompareResult> Compare(long repositoryId, string @base, string head, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(@base, "base");
+            Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return _commit.Compare(repositoryId, @base, head, options).ToObservable();
+        }
+
+        /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
