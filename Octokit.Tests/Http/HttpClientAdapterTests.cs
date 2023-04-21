@@ -189,9 +189,9 @@ namespace Octokit.Tests.Http
                 return BuildRequestMessage(request);
             }
 
-            public async Task<IResponse> BuildResponseTester(HttpResponseMessage responseMessage)
+            public async Task<IResponse> BuildResponseTester(HttpResponseMessage responseMessage, Func<object, object> preprocessResponseBody = null)
             {
-                return await BuildResponse(responseMessage);
+                return await BuildResponse(responseMessage, preprocessResponseBody);
             }
         }
     }

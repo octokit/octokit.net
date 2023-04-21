@@ -560,7 +560,7 @@ namespace Octokit.Tests.Clients
 
             private class CancellationTestHttpClient : IHttpClient
             {
-                public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
+                public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody = null)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
 

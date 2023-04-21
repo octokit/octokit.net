@@ -15,6 +15,7 @@
         public EnterpriseClient(IApiConnection apiConnection) : base(apiConnection)
         {
             AdminStats = new EnterpriseAdminStatsClient(apiConnection);
+            AuditLog = new EnterpriseAuditLogClient(apiConnection);
             Ldap = new EnterpriseLdapClient(apiConnection);
             License = new EnterpriseLicenseClient(apiConnection);
             ManagementConsole = new EnterpriseManagementConsoleClient(apiConnection);
@@ -31,6 +32,14 @@
         /// See the <a href="http://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
         /// </remarks>
         public IEnterpriseAdminStatsClient AdminStats { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Audit Log API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/audit-log">Enterprise Audit Log API documentation</a> for more information.
+        /// </remarks>
+        public IEnterpriseAuditLogClient AuditLog { get; }
 
         /// <summary>
         /// A client for GitHub's Enterprise LDAP API

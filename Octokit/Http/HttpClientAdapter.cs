@@ -37,8 +37,9 @@ namespace Octokit.Internal
         /// </summary>
         /// <param name="request">A <see cref="IRequest"/> that represents the HTTP request</param>
         /// <param name="cancellationToken">Used to cancel the request</param>
+        /// <param name="preprocessResponseBody">Function to preprocess HTTP response prior to deserialization (can be null)</param>
         /// <returns>A <see cref="Task" /> of <see cref="IResponse"/></returns>
-        public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
+        public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody = null)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -48,7 +49,7 @@ namespace Octokit.Internal
             {
                 var responseMessage = await SendAsync(requestMessage, cancellationTokenForRequest).ConfigureAwait(false);
 
-                return await BuildResponse(responseMessage).ConfigureAwait(false);
+                return await BuildResponse(responseMessage, preprocessResponseBody).ConfigureAwait(false);
             }
         }
 
@@ -67,7 +68,7 @@ namespace Octokit.Internal
             return cancellationTokenForRequest;
         }
 
-        protected virtual async Task<IResponse> BuildResponse(HttpResponseMessage responseMessage)
+        protected virtual async Task<IResponse> BuildResponse(HttpResponseMessage responseMessage, Func<object, object> preprocessResponseBody)
         {
             Ensure.ArgumentNotNull(responseMessage, nameof(responseMessage));
 
@@ -97,6 +98,9 @@ namespace Octokit.Internal
                     {
                         responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
                     }
+
+                    if (!(preprocessResponseBody is null))
+                        responseBody = preprocessResponseBody(responseBody);
                 }
             }
 

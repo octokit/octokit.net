@@ -1422,7 +1422,9 @@ namespace Octokit
             bool valueIsDouble = value is double;
             if ((valueIsLong && type == typeof(long)) || (valueIsDouble && type == typeof(double)))
                 return value;
-            if ((valueIsDouble && type != typeof(double)) || (valueIsLong && type != typeof(long)))
+            if (valueIsLong && type == typeof(IReadOnlyList<long>))
+                obj = new long[] { (long)value };
+            else if ((valueIsDouble && type != typeof(double)) || (valueIsLong && type != typeof(long)))
             {
                 if (valueIsLong && (type == typeof(DateTimeOffset) || type == typeof(DateTimeOffset?)))
                 {
@@ -1436,6 +1438,8 @@ namespace Octokit
                             ? Convert.ChangeType(value, type, CultureInfo.InvariantCulture)
                             : value;
             }
+            else if (type == typeof(object) || (ReflectionUtils.IsNullableType(type) && Nullable.GetUnderlyingType(type) == typeof(object)))
+                obj = value;
             else
             {
                 IDictionary<string, object> objects = value as IDictionary<string, object>;

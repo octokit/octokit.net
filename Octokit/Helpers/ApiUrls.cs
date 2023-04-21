@@ -2827,6 +2827,11 @@ namespace Octokit
             return "repos/{0}/{1}/stats/punch_card".FormatUri(owner, name);
         }
 
+        public static Uri EnterpriseAuditLog(string enterprise)
+        {
+            return "enterprises/{0}/audit-log".FormatUri(enterprise);
+        }
+
         private static Uri EnterpriseAdminStats(string type)
         {
             return "enterprise/stats/{0}".FormatUri(type);

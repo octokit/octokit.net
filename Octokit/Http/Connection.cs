@@ -191,6 +191,13 @@ namespace Octokit
             return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, cancellationToken);
         }
 
+        public Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+
+            return SendData<T>(uri.ApplyParameters(parameters), HttpMethod.Get, null, accepts, null, cancellationToken, null, null, preprocessResponseBody);
+        }
+
         public Task<IApiResponse<T>> Get<T>(Uri uri, TimeSpan timeout)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
@@ -382,7 +389,8 @@ namespace Octokit
             TimeSpan timeout,
             CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null,
-            Uri baseAddress = null)
+            Uri baseAddress = null, 
+            Func<object, object> preprocessResponseBody = null)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.GreaterThanZero(timeout, nameof(timeout));
@@ -395,7 +403,7 @@ namespace Octokit
                 Timeout = timeout
             };
 
-            return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
+            return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request, preprocessResponseBody);
         }
 
         Task<IApiResponse<T>> SendData<T>(
@@ -406,7 +414,8 @@ namespace Octokit
             string contentType,
             CancellationToken cancellationToken,
             string twoFactorAuthenticationCode = null,
-            Uri baseAddress = null)
+            Uri baseAddress = null,
+            Func<object, object> preprocessResponseBody = null)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -417,10 +426,10 @@ namespace Octokit
                 Endpoint = uri
             };
 
-            return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request);
+            return SendDataInternal<T>(body, accepts, contentType, cancellationToken, twoFactorAuthenticationCode, request, preprocessResponseBody);
         }
 
-        Task<IApiResponse<T>> SendDataInternal<T>(object body, string accepts, string contentType, CancellationToken cancellationToken, string twoFactorAuthenticationCode, Request request)
+        Task<IApiResponse<T>> SendDataInternal<T>(object body, string accepts, string contentType, CancellationToken cancellationToken, string twoFactorAuthenticationCode, Request request, Func<object, object> preprocessResponseBody)
         {
             if (!string.IsNullOrEmpty(accepts))
             {
@@ -439,7 +448,7 @@ namespace Octokit
                 request.ContentType = contentType ?? "application/x-www-form-urlencoded";
             }
 
-            return Run<T>(request, cancellationToken);
+            return Run<T>(request, cancellationToken, preprocessResponseBody);
         }
 
         /// <summary>
@@ -680,19 +689,19 @@ namespace Octokit
             return new ApiResponse<byte[]>(response, response.Body as byte[]);
         }
 
-        async Task<IApiResponse<T>> Run<T>(IRequest request, CancellationToken cancellationToken)
+        async Task<IApiResponse<T>> Run<T>(IRequest request, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody = null)
         {
             _jsonPipeline.SerializeRequest(request);
-            var response = await RunRequest(request, cancellationToken).ConfigureAwait(false);
+            var response = await RunRequest(request, cancellationToken, preprocessResponseBody).ConfigureAwait(false);
             return _jsonPipeline.DeserializeResponse<T>(response);
         }
 
         // THIS IS THE METHOD THAT EVERY REQUEST MUST GO THROUGH!
-        async Task<IResponse> RunRequest(IRequest request, CancellationToken cancellationToken)
+        async Task<IResponse> RunRequest(IRequest request, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody = null)
         {
             request.Headers.Add("User-Agent", UserAgent);
             await _authenticator.Apply(request).ConfigureAwait(false);
-            var response = await _httpClient.Send(request, cancellationToken).ConfigureAwait(false);
+            var response = await _httpClient.Send(request, cancellationToken, preprocessResponseBody).ConfigureAwait(false);
             if (response != null)
             {
                 // Use the clone method to avoid keeping hold of the original (just in case it effect the lifetime of the whole response
