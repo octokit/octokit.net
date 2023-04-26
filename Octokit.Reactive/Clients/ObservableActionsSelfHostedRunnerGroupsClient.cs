@@ -18,6 +18,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, nameof(client));
 
             _client = client.Actions.SelfHostedRunnerGroups;
+            _connection = client.Connection;
         }
 
         /// <summary>
