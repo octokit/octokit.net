@@ -1,4 +1,6 @@
-﻿namespace Octokit.Reactive
+﻿using System;
+
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Actions Self-hosted runner groups API.
@@ -8,5 +10,127 @@
     /// </remarks>
     public interface IObservableActionsSelfHostedRunnerGroupsClient
     {
+
+        /// <summary>
+        /// List self-hosted runner groups for an enterprise
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise name</param>
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise);
+
+        /// <summary>
+        /// List self-hosted runner groups for an enterprise
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise name</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options);
+
+        /// <summary>
+        /// List self-hosted runner groups for an organization
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-organization
+        /// </remarks>
+        /// <param name="org">The organization name</param>
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org);
+
+        /// <summary>
+        /// List self-hosted runner groups for an organization
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-organization
+        /// </remarks>
+        /// <param name="org">The organization name</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options);
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an enterprise.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId);
+
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an enterprise.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        /// <param name="options">Options to change the API response.</param>
+        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options);
+
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an organization.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-organization
+        /// </remarks>
+        /// <param name="organization">The organization.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId);
+
+        /// <summary>
+        /// Gets a list of all self-hosted runners in a group for an organization.
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runners-in-a-group-for-an-organization
+        /// </remarks>
+        /// <param name="organization">The organization.</param>
+        /// <param name="runnerGroupId">The runner group ID.</param>
+        /// <param name="options">Options to change the API response.</param>
+        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options);
+
+        /// <summary>
+        /// List organization access to a self-hosted runner group in an enterprise
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise name</param>
+        /// <param name="runnerGroupId">The runner group id</param>
+        IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
+
+        /// <summary>
+        /// List organization access to a self-hosted runner group in an enterprise
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise name</param>
+        /// <param name="runnerGroupId">The runner group id</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
+
+        /// <summary>
+        /// List repository access to a self-hosted runner group in an organization
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-repository-access-to-a-self-hosted-runner-group-in-an-organization
+        /// </remarks>
+        /// <param name="org">The organization name</param>
+        /// <param name="runnerGroupId">The runner group id</param>
+        IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
+
+        /// <summary>
+        /// List repository access to a self-hosted runner group in an organization
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-repository-access-to-a-self-hosted-runner-group-in-an-organization
+        /// </remarks>
+        /// <param name="org">The organization name</param>
+        /// <param name="runnerGroupId">The runner group id</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
+
     }
 }

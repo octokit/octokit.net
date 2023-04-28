@@ -23,6 +23,8 @@ nav:
   - 'Milestones' : 'milestones.md'
   - 'Releases' : 'releases.md'
   - 'Search' : 'search.md'
+  - 'Self-hosted runners': 'self-hosted-runners.md'
+  - 'Self-hosted runner groups': 'self-hosted-runner-groups.md'
   - 'Git Database' : 'git-database.md'
   - 'GitHub Apps' : 'github-apps.md'
 
