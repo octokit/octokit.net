@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Models.Request.Enterprise;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -89,8 +90,10 @@ namespace Octokit.Tests.Conventions
             var lastParameter = actual.LastOrDefault();
 
             return lastParameter != null
-                   && lastParameter.Name == "options"
-                   && lastParameter.ParameterType == typeof(ApiOptions);
+                   && (
+                        (lastParameter.Name == "options" && lastParameter.ParameterType == typeof(ApiOptions)) || 
+                        (lastParameter.Name == "auditLogApiOptions" && lastParameter.ParameterType == typeof(AuditLogApiOptions))
+                      );
         }
 
         public static IEnumerable<object[]> GetClientInterfaces()

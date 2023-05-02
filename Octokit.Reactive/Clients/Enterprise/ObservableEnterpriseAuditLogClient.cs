@@ -2,6 +2,7 @@
 using Octokit.Reactive.Internal;
 using System;
 using System.Collections.Generic;
+using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -35,7 +36,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
 
-            return GetAll(enterprise, new AuditLogRequest(), new ApiOptions() { PageSize = 100 });
+            return GetAll(enterprise, new AuditLogRequest(), new AuditLogApiOptions());
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAll(enterprise, request, new ApiOptions() { PageSize = 100 });
+            return GetAll(enterprise, request, new AuditLogApiOptions());
         }
 
         /// <summary>
@@ -62,14 +63,14 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/audit-log/#get-the-audit-log-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         /// <returns>The <see cref="AuditLogEvent"/> list.</returns>
-        public IObservable<AuditLogEvent> GetAll(string enterprise, ApiOptions options)
+        public IObservable<AuditLogEvent> GetAll(string enterprise, AuditLogApiOptions auditLogApiOptions)
         {
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
-            Ensure.ArgumentNotNull(options, nameof(options));
+            Ensure.ArgumentNotNull(auditLogApiOptions, nameof(auditLogApiOptions));
 
-            return GetAll(enterprise, new AuditLogRequest(), options);
+            return GetAll(enterprise, new AuditLogRequest(), auditLogApiOptions);
         }
 
         /// <summary>
@@ -80,18 +81,19 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
         /// <param name="request">Used to filter and sort the list of events returned</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         /// <returns>The <see cref="AuditLogEvent"/> list.</returns>
-        public IObservable<AuditLogEvent> GetAll(string enterprise, AuditLogRequest request, ApiOptions options)
+        public IObservable<AuditLogEvent> GetAll(string enterprise, AuditLogRequest request, AuditLogApiOptions auditLogApiOptions)
         {
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
 
-            return _connection.GetAndFlattenAllPages<AuditLogEvent>(ApiUrls.EnterpriseAuditLog(enterprise), request.ToParametersDictionary(), null, options, (r) =>
+            ApiOptionsExtended options = new ApiOptionsExtended()
             {
-                if (r is string body)
-                    r = body.Replace("_document_id", "document_id").Replace("@timestamp", "timestamp");
-                return r;
-            });
+                PageSize = auditLogApiOptions.PageSize
+            };
+
+
+            return _connection.GetAndFlattenAllPages<AuditLogEvent>(ApiUrls.EnterpriseAuditLog(enterprise), request.ToParametersDictionary(), null, options, GeneratePreProcessFunction(auditLogApiOptions, options));
         }
 
         /// <summary>
@@ -106,7 +108,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
 
-            return GetAllJson(enterprise, new AuditLogRequest(), new ApiOptions() { PageSize = 100 });
+            return GetAllJson(enterprise, new AuditLogRequest(), new AuditLogApiOptions());
         }
 
         /// <summary>
@@ -122,7 +124,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
 
-            return GetAllJson(enterprise, request, new ApiOptions() { PageSize = 100 });
+            return GetAllJson(enterprise, request, new AuditLogApiOptions());
         }
 
         /// <summary>
@@ -132,13 +134,13 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/audit-log/#get-the-audit-log-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         /// <returns>The <see cref="AuditLogEvent"/> list.</returns>
-        public IObservable<object> GetAllJson(string enterprise, ApiOptions options)
+        public IObservable<object> GetAllJson(string enterprise, AuditLogApiOptions auditLogApiOptions)
         {
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
 
-            return GetAllJson(enterprise, new AuditLogRequest(), options);
+            return GetAllJson(enterprise, new AuditLogRequest(), auditLogApiOptions);
         }
 
         /// <summary>
@@ -149,13 +151,45 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
         /// <param name="request">Used to filter and sort the list of events returned</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         /// <returns>The <see cref="AuditLogEvent"/> list.</returns>
-        public IObservable<object> GetAllJson(string enterprise, AuditLogRequest request, ApiOptions options)
+        public IObservable<object> GetAllJson(string enterprise, AuditLogRequest request, AuditLogApiOptions auditLogApiOptions)
         {
             Ensure.ArgumentNotNull(enterprise, nameof(enterprise));
 
-            return _connection.GetAndFlattenAllPages<AuditLogEvent>(ApiUrls.EnterpriseAuditLog(enterprise), request.ToParametersDictionary(), null, options);
+            ApiOptionsExtended options = new ApiOptionsExtended()
+            {
+                PageSize = auditLogApiOptions.PageSize
+            };
+
+            return _connection.GetAndFlattenAllPages<AuditLogEvent>(ApiUrls.EnterpriseAuditLog(enterprise), request.ToParametersDictionary(), null, options, GeneratePreProcessFunction(auditLogApiOptions, options));
+        }
+
+        private static Func<object, object> GeneratePreProcessFunction(AuditLogApiOptions auditLogApiOptions, ApiOptionsExtended options)
+        {
+            Func<object, object> preProcessResponseBody = null;
+            if (string.IsNullOrEmpty(auditLogApiOptions?.StopWhenFound))
+                preProcessResponseBody = (r) =>
+                {
+                    if (r is string body)
+                        r = body.Replace("_document_id", "document_id").Replace("@timestamp", "timestamp");
+
+                    return r;
+                };
+            else
+                preProcessResponseBody = (r) =>
+                {
+                    if (r is string body)
+                    {
+                        if (body.Contains(auditLogApiOptions.StopWhenFound))
+                            options.IsDone = true;
+
+                        r = body.Replace("_document_id", "document_id").Replace("@timestamp", "timestamp");
+                    }
+                    return r;
+                };
+
+            return preProcessResponseBody;
         }
     }
 }

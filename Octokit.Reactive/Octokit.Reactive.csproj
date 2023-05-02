@@ -35,7 +35,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs" />
+    <Compile Include="..\Octokit\Helpers\Ensure.cs;..\Octokit\Helpers\Pagination.cs;..\Octokit\Models\Request\Enterprise\ApiOptionsExtended.cs" />
     <None Include="app.config" />
   </ItemGroup>
 

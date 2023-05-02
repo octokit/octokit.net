@@ -43,10 +43,10 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/audit-log/#get-the-audit-log-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         /// <returns>The <see cref="AuditLogEvent"/> list.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<AuditLogEvent>> GetAll(string enterprise, ApiOptions options);
+        Task<IReadOnlyList<AuditLogEvent>> GetAll(string enterprise, AuditLogApiOptions auditLogApiOptions);
 
         /// <summary>
         /// Gets GitHub Enterprise Audit Log Entries (must be Site Admin user).
@@ -56,10 +56,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
         /// <param name="request">Used to filter and sort the list of events returned</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         /// <returns>The <see cref="AuditLogEvent"/> list.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<AuditLogEvent>> GetAll(string enterprise, AuditLogRequest request, ApiOptions options);
+        Task<IReadOnlyList<AuditLogEvent>> GetAll(string enterprise, AuditLogRequest request, AuditLogApiOptions auditLogApiOptions);
 
         /// <summary>
         /// Gets GitHub Enterprise Audit Log Entries as raw Json (must be Site Admin user).
@@ -91,10 +91,10 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/audit-log/#get-the-audit-log-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         /// <returns>The <see cref="AuditLogEvent"/> list.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<object>> GetAllJson(string enterprise, ApiOptions options);
+        Task<IReadOnlyList<object>> GetAllJson(string enterprise, AuditLogApiOptions auditLogApiOptions);
 
         /// <summary>
         /// Gets GitHub Enterprise Audit Log Entries as raw Json (must be Site Admin user).
@@ -104,9 +104,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">Name of enterprise</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="auditLogApiOptions">Options for changing the API response</param>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        [ManualRoute("GET", "/enterprise/audit-log")]
-        Task<IReadOnlyList<object>> GetAllJson(string enterprise, AuditLogRequest request, ApiOptions options);
+        Task<IReadOnlyList<object>> GetAllJson(string enterprise, AuditLogRequest request, AuditLogApiOptions auditLogApiOptions);
     }
 }
