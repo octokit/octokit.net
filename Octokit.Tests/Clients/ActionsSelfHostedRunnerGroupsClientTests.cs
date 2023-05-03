@@ -26,7 +26,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetRunnerGroupForEnterprise("fake", 1);
 
-                connection.Received().Get<RunnerGroupResponse>(
+                connection.Received().Get<RunnerGroup>(
                   Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runner-groups/1"));
             }
 
@@ -57,7 +57,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetRunnerGroupForOrganization("fake", 1);
 
-                connection.Received().Get<RunnerGroupResponse>(
+                connection.Received().Get<RunnerGroup>(
                   Arg.Is<Uri>(u => u.ToString() == "org/fake/actions/runner-groups/1"));
             }
 
