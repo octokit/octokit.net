@@ -58,7 +58,7 @@ namespace Octokit.Tests.Clients
                 await client.GetRunnerGroupForOrganization("fake", 1);
 
                 connection.Received().Get<RunnerGroup>(
-                  Arg.Is<Uri>(u => u.ToString() == "org/fake/actions/runner-groups/1"));
+                  Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runner-groups/1"));
             }
 
             [Fact]
