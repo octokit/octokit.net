@@ -10,6 +10,25 @@ namespace Octokit.Reactive
     /// </remarks>
     public interface IObservableActionsSelfHostedRunnerGroupsClient
     {
+        /// <summary>
+        /// Get a self-hosted runner group for an enterprise
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#get-a-self-hosted-runner-group-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise name.</param>
+        /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
+        IObservable<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId);
+
+        /// <summary>
+        /// Get a self-hosted runner group for an organization
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#get-a-self-hosted-runner-group-for-an-organization
+        /// </remarks>
+        /// <param name="org">The organization name.</param>
+        /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
+        IObservable<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId);
 
         /// <summary>
         /// List self-hosted runner groups for an enterprise
