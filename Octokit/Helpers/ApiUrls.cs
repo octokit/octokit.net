@@ -5382,6 +5382,28 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner groups for an enterprise.
         /// </summary>
         /// <param name="enterprise">The name of the enterprise.</param>
+        /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner groups for an enterprise.</returns>
+        public static Uri ActionsGetEnterpriseRunnerGroup(string enterprise, long runnerGroupId)
+        {
+            return "enterprises/{0}/actions/runner-groups/{1}".FormatUri(enterprise, runnerGroupId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner groups for an organization.
+        /// </summary>
+        /// <param name="org">The name of the organization.</param>
+        /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
+        /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner groups for an organization.</returns>
+        public static Uri ActionsGetOrganizationRunnerGroup(string org, long runnerGroupId)
+        {
+            return "orgs/{0}/actions/runner-groups/{1}".FormatUri(org, runnerGroupId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the Actions self-hosted runner groups for an enterprise.
+        /// </summary>
+        /// <param name="enterprise">The name of the enterprise.</param>
         /// <returns>The <see cref="Uri"/> that handles the Actions self-hosted runner groups for an enterprise.</returns>
         public static Uri ActionsListEnterpriseRunnerGroups(string enterprise)
         {

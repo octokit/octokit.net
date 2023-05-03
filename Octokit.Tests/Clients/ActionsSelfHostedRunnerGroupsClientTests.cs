@@ -16,6 +16,68 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheGetRunnerGroupForEnterpriseMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsSelfHostedRunnerGroupsClient(connection);
+
+                await client.GetRunnerGroupForEnterprise("fake", 1);
+
+                connection.Received().Get<RunnerGroupResponse>(
+                  Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runner-groups/1"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ActionsSelfHostedRunnerGroupsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRunnerGroupForEnterprise(null, 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var client = new ActionsSelfHostedRunnerGroupsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRunnerGroupForEnterprise("", 1));
+            }
+        }
+
+        public class TheGetRunnerGroupForOrganizationMethod
+        {
+            [Fact]
+            public async Task RequestsCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsSelfHostedRunnerGroupsClient(connection);
+
+                await client.GetRunnerGroupForOrganization("fake", 1);
+
+                connection.Received().Get<RunnerGroupResponse>(
+                  Arg.Is<Uri>(u => u.ToString() == "org/fake/actions/runner-groups/1"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ActionsSelfHostedRunnerGroupsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetRunnerGroupForOrganization(null, 1));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var client = new ActionsSelfHostedRunnerGroupsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetRunnerGroupForOrganization("", 1));
+            }
+        }
+
         public class TheListAllRunnerGroupsForEnterpriseMethod
         {
             [Fact]
