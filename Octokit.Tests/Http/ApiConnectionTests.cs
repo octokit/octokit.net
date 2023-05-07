@@ -98,8 +98,8 @@ namespace Octokit.Tests.Http
 
                 var data = await apiConnection.GetAll<object>(getAllUri);
 
-                Assert.Equal(2, data.Count);
-                connection.Received().Get<List<object>>(getAllUri, Args.EmptyDictionary, null);
+                Assert.Equal(0, data.Count);
+                connection.Received().Get<List<object>>(getAllUri, Args.EmptyDictionary, null, CancellationToken.None, null);
             }
 
             [Fact]

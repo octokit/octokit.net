@@ -25,7 +25,7 @@ namespace Octokit.Internal
 
         public async Task<IReadOnlyPagedCollection<T>> GetNextPage()
         {
-            var nextPageUrl = _info.GetNextPageUrl();
+            var nextPageUrl = _info?.GetNextPageUrl();
             if (nextPageUrl == null) return null;
 
             var maybeTask = _nextPageFunc(nextPageUrl);
