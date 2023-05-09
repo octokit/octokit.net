@@ -21,6 +21,38 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Get a self-hosted runner group for an enterprise
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#get-a-self-hosted-runner-group-for-an-enterprise
+        /// </remarks>
+        /// <param name="enterprise">The enterprise name.</param>
+        /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
+        [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}")]
+        public async Task<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
+
+            return await ApiConnection.Get<RunnerGroup>(ApiUrls.ActionsGetEnterpriseRunnerGroup(enterprise, runnerGroupId)).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a self-hosted runner group for an organization
+        /// </summary>
+        /// <remarks>
+        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#get-a-self-hosted-runner-group-for-an-organization
+        /// </remarks>
+        /// <param name="org">The organization name.</param>
+        /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
+        [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}")]
+        public async Task<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+
+            return await ApiConnection.Get<RunnerGroup>(ApiUrls.ActionsGetOrganizationRunnerGroup(org, runnerGroupId)).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// List self-hosted runner groups for an enterprise
         /// </summary>
         /// <remarks>
