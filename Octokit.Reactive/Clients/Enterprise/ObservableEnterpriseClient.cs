@@ -13,6 +13,7 @@
             Ensure.ArgumentNotNull(client, nameof(client));
 
             AdminStats = new ObservableEnterpriseAdminStatsClient(client);
+            AuditLog = new ObservableEnterpriseAuditLogClient(client);
             Ldap = new ObservableEnterpriseLdapClient(client);
             License = new ObservableEnterpriseLicenseClient(client);
             ManagementConsole = new ObservableEnterpriseManagementConsoleClient(client);
@@ -29,6 +30,14 @@
         /// See the <a href="http://developer.github.com/v3/enterprise/admin_stats/">Enterprise Admin Stats API documentation</a> for more information.
         /// </remarks>
         public IObservableEnterpriseAdminStatsClient AdminStats { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Enterprise Audit Log API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/enterprise-cloud@latest/rest/enterprise-admin/audit-log">Enterprise Audit Log API documentation</a> for more information.
+        /// </remarks>
+        public IObservableEnterpriseAuditLogClient AuditLog { get; }
 
         /// <summary>
         /// A client for GitHub's Enterprise LDAP API

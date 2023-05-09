@@ -71,6 +71,20 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="cancellationToken">A token used to cancel the Get request</param>
+        /// <param name="preprocessResponseBody">Function to preprocess HTTP response prior to deserialization (can be null)</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
+        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody);
+
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request.
+        /// Attempts to map the response to an object of type <typeparamref name="T"/>
+        /// </summary>
+        /// <typeparam name="T">The type to map the response to</typeparam>
+        /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="timeout">Expiration time of the request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]

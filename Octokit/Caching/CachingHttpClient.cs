@@ -21,13 +21,13 @@ namespace Octokit.Caching
             _responseCache = responseCache;
         }
 
-        public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken)
+        public async Task<IResponse> Send(IRequest request, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody = null)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
             if (request.Method != HttpMethod.Get)
             {
-                return await _httpClient.Send(request, cancellationToken);
+                return await _httpClient.Send(request, cancellationToken, preprocessResponseBody);
             }
 
             var cachedResponse = await TryGetCachedResponse(request);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Models.Request.Enterprise;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -32,6 +33,9 @@ namespace Octokit
             {
                 return false;
             }
+
+            if (options is ApiOptionsExtended apiOptionsInternal)
+                return !apiOptionsInternal.IsDone;
 
             if (uri.Query.Contains("page=") && options.PageCount.HasValue)
             {
