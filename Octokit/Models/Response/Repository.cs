@@ -159,7 +159,7 @@ namespace Octokit
         public RepositoryVisibility? Visibility { get; private set; }
 
         public bool? AllowAutoMerge { get; private set; }
-        
+
         public bool? AllowUpdateBranch { get; private set; }
 
         internal string DebuggerDisplay
@@ -167,7 +167,7 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "Repository: Id: {0} Owner: {1}, Name: {2}", Id, Owner, Name);
+                    "Repository: Id: {0} Owner: {1}, Name: {2}", Id, Owner?.Login, Name);
             }
         }
     }
