@@ -153,9 +153,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
-            var results = await ApiConnection.GetAll<IReadOnlyList<RunnerApplication>>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise), options).ConfigureAwait(false);
-
-            return results.SelectMany(x => x).ToList();
+            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise), options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -184,9 +182,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            var results = await ApiConnection.GetAll<IReadOnlyList<RunnerApplication>>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization), options).ConfigureAwait(false);
-
-            return results.SelectMany(x => x).ToList();
+            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization), options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,9 +215,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            var results = await ApiConnection.GetAll<IReadOnlyList<RunnerApplication>>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, repo), options).ConfigureAwait(false);
-
-            return results.SelectMany(x => x).ToList();
+            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, repo), options).ConfigureAwait(false);
         }
 
         /// <summary>
