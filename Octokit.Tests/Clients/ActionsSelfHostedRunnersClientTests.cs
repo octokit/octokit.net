@@ -133,7 +133,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerApplicationsForEnterprise("fake");
 
-                connection.Received().GetAll<IReadOnlyList<RunnerApplication>>(
+                connection.Received().GetAll<RunnerApplication>(
                   Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runners/downloads"), Args.ApiOptions);
 
             }
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerApplicationsForOrganization("fake");
 
-                connection.Received().GetAll<IReadOnlyList<RunnerApplication>>(
+                connection.Received().GetAll<RunnerApplication>(
                   Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runners/downloads"), Args.ApiOptions);
 
             }
@@ -201,7 +201,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerApplicationsForRepository("fake", "repo");
 
-                connection.Received().GetAll<IReadOnlyList<RunnerApplication>>(
+                connection.Received().GetAll<RunnerApplication>(
                   Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners/downloads"), Args.ApiOptions);
 
             }

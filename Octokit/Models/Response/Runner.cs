@@ -15,7 +15,7 @@ namespace Octokit
       Id = id;
     }
 
-    public Runner(long id, string name, string os, string status, bool busy, List<Label> labels)
+    public Runner(long id, string name, string os, string status, bool busy, List<RunnerLabel> labels)
     {
       Id = id;
       Name = name;
@@ -30,7 +30,7 @@ namespace Octokit
     public string Os { get; private set; }
     public string Status { get; private set; }
     public bool Busy { get; private set; }
-    public IReadOnlyList<Label> Labels { get; private set; }
+    public IReadOnlyList<RunnerLabel> Labels { get; private set; }
 
     internal string DebuggerDisplay
     {
