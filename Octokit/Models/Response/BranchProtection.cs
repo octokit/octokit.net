@@ -18,25 +18,25 @@ namespace Octokit
                                         BranchProtectionRequiredReviews requiredPullRequestReviews,
                                         BranchProtectionPushRestrictions restrictions,
                                         EnforceAdmins enforceAdmins,
-                                        EnforceLock lockBranch,
                                         BranchProtectionEnabledCommon requiredLinearHistory,
                                         BranchProtectionEnabledCommon allowForcePushes,
                                         BranchProtectionEnabledCommon allowDeletions,
                                         BranchProtectionEnabledCommon blockCreations,
                                         BranchProtectionEnabledCommon requiredConversationResolution,
-                                        BranchProtectionEnabledCommon requiredSignatures)
+                                        BranchProtectionEnabledCommon requiredSignatures,
+                                        EnforceLock lockBranch = null)
         {
             RequiredStatusChecks = requiredStatusChecks;
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = restrictions;
             EnforceAdmins = enforceAdmins;
-            LockBranch = lockBranch;
             RequiredLinearHistory = requiredLinearHistory;
             AllowForcePushes = allowForcePushes;
             AllowDeletions = allowDeletions;
             BlockCreations = blockCreations;
             RequiredConversationResolution = requiredConversationResolution;
             RequiredSignatures = requiredSignatures;
+            LockBranch = lockBranch != null ? lockBranch : new EnforceLock(false);
         }
 
         /// <summary>
