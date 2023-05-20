@@ -296,6 +296,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.Restrictions);
 
                     Assert.True(protection.EnforceAdmins.Enabled);
+                    Assert.True(protection.LockBranch.Enabled);
                     Assert.True(protection.RequiredLinearHistory.Enabled);
                     Assert.True(protection.AllowForcePushes.Enabled);
                     Assert.True(protection.AllowDeletions.Enabled);
@@ -323,6 +324,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.Restrictions);
 
                     Assert.True(protection.EnforceAdmins.Enabled);
+                    Assert.True(protection.LockBranch.Enabled);
                     Assert.True(protection.RequiredLinearHistory.Enabled);
                     Assert.True(protection.AllowForcePushes.Enabled);
                     Assert.True(protection.AllowDeletions.Enabled);
