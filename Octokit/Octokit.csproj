@@ -1,51 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Description>An async-based GitHub API client library for .NET and .NET Core</Description>
-    <AssemblyTitle>Neon.Octokit</AssemblyTitle>
-    <Authors>GitHub</Authors>
-    <Version>0.0.0-dev</Version>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Octokit</AssemblyName>
-    <PackageId>Neon.Octokit</PackageId>
-    <DebugType>embedded</DebugType>
-    <RepositoryUrl>https://github.com/neonforge-forks/octokit.net</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/neonforge-forks/octokit.net</PackageProjectUrl>
-    <PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
-    <PackageIcon>octokit.png</PackageIcon>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
-    <Copyright>Copyright GitHub 2017</Copyright>
-	<Description>NEONFORGE: This is a temporary Octokit upgrade that supports locking branches.  This is currently required by the Neon.GitHub package but we've submitted a pull request, so hopefully that will be accepted and we'll be able to deprecate this package.</Description>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Description>An async-based GitHub API client library for .NET and .NET Core</Description>
+		<AssemblyTitle>Octokit</AssemblyTitle>
+		<Authors>GitHub</Authors>
+		<Version>0.0.0-dev</Version>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<AssemblyName>Octokit</AssemblyName>
+		<PackageId>Octokit</PackageId>
+		<DebugType>embedded</DebugType>
+		<RepositoryUrl>https://github.com/octokit/octokit.net</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/octokit/octokit.net</PackageProjectUrl>
+		<PackageIconUrl>https://f.cloud.github.com/assets/19977/1510987/64af2b26-4a9d-11e3-89fc-96a185171c75.png</PackageIconUrl>
+		<PackageIcon>octokit.png</PackageIcon>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
+		<Copyright>Copyright GitHub 2017</Copyright>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO</DefineConstants>
-    <NoWarn>$(NoWarn);1591;1701;1702;1705</NoWarn>
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-  </PropertyGroup>
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);SIMPLE_JSON_INTERNAL;SIMPLE_JSON_OBJARRAYINTERNAL;SIMPLE_JSON_READONLY_COLLECTIONS;SIMPLE_JSON_TYPEINFO</DefineConstants>
+		<NoWarn>$(NoWarn);1591;1701;1702;1705</NoWarn>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
 
-  <PropertyGroup Label="Source Link">
-    <!-- Optional: Declare that the Repository URL can be published to NuSpec -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <!-- Optional: Include PDB in the built .nupkg -->
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-  </PropertyGroup>
+	<PropertyGroup Label="Source Link">
+		<!-- Optional: Declare that the Repository URL can be published to NuSpec -->
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<!-- Optional: Embed source files that are not tracked by the source control manager to the PDB -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<!-- Optional: Include PDB in the built .nupkg -->
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="images\octokit.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="images\octokit.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+	</ItemGroup>
 
-  <ItemGroup Label="InternalsVisibleTo attributes">
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>Octokit.Tests$(StrongNameSuffix)</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
+	<ItemGroup Label="InternalsVisibleTo attributes">
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>Octokit.Tests$(StrongNameSuffix)</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 </Project>
