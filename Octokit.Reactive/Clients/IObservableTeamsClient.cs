@@ -362,5 +362,18 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
         IObservable<Unit> RemoveRepositoryFromATeam(string org, string teamSlug, string owner, string repo);
+        
+        /// <summary>
+        /// Get a team by slug name
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#get-a-team-by-name">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <returns>A <see cref="Team"/> instance if found, otherwise null</returns>
+        IObservable<Team> GetByName(string org, string teamSlug);
     }
 }
