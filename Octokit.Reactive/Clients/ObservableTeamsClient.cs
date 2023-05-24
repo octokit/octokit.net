@@ -534,7 +534,8 @@ namespace Octokit.Reactive
         /// <param name="org">The organization name. The name is not case sensitive.</param>
         /// <param name="teamSlug">The slug of the team name.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="Team"/> instance if found, otherwise null</returns>
+        /// <exception cref="NotFoundException">Thrown when the team wasn't found</exception>
+        /// <returns>A <see cref="Team"/> instance if found, otherwise a <see cref="NotFoundException"/></returns>
         [ManualRoute("GET", "/orgs/{org}/teams/{teamSlug}")]
         public IObservable<Team> GetByName(string org, string teamSlug)
         {
