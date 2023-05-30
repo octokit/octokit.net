@@ -119,3 +119,5 @@ if (AskYesNoQuestion "Do you wish to enable GitHub Enterprise (GHE) Integration 
     VerifyEnvironmentVariable "GitHub Enterprise application ClientID" "OCTOKIT_GHE_CLIENTID" $true
     VerifyEnvironmentVariable "GitHub Enterprise application Secret" "OCTOKIT_GHE_CLIENTSECRET" $true
 }
+
+VerifyEnvironmentVariable "Repository with codespaces" "OCTOKIT_REPOSITORY_WITH_CODESPACES" $true

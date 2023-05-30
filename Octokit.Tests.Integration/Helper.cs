@@ -171,6 +171,11 @@ namespace Octokit.Tests.Integration
             get { return Environment.GetEnvironmentVariable("OCTOKIT_GITHUBAPP_SLUG"); }
         }
 
+        public static string RepositoryWithCodespaces
+        {
+            get { return Environment.GetEnvironmentVariable("OCTOKIT_REPOSITORY_WITH_CODESPACES"); }
+        }
+
         public static void DeleteRepo(IConnection connection, Repository repository)
         {
             if (repository != null)

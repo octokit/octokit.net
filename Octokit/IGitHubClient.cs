@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Octokit.Clients;
+using System;
 
 namespace Octokit
 {
@@ -215,5 +216,7 @@ namespace Octokit
         /// </remarks>
         ILicensesClient Licenses { get; }
         IEmojisClient Emojis { get; }
+
+        ICodespacesClient Codespaces { get; }
     }
 }
