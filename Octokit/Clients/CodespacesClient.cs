@@ -12,7 +12,7 @@ namespace Octokit.Clients
     /// <remarks>
     /// See the <a href="https://docs.github.com/en/rest/codespaces/codespaces?apiVersion=2022-11-28">Codespaces API documentation</a> for more information.
     /// </remarks>
-    internal class CodespacesClient : ApiClient, ICodespacesClient
+    public class CodespacesClient : ApiClient, ICodespacesClient
     {
         /// <summary>
         /// Instantiates a new GitHub Codespaces API client.
