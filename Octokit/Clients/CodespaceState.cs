@@ -1,4 +1,4 @@
-﻿namespace Octokit.Clients
+﻿namespace Octokit
 {
     public enum CodespaceState
     {

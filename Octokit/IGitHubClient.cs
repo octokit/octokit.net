@@ -1,5 +1,4 @@
-﻿using Octokit.Clients;
-using System;
+﻿using System;
 
 namespace Octokit
 {

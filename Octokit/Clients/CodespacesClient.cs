@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     /// <summary>
     /// A client for GitHub's Codespaces API.

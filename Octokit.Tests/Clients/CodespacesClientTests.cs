@@ -9,10 +9,18 @@ using Octokit.Tests;
 using Xunit;
 
 using static Octokit.Internal.TestSetup;
-using Octokit.Clients;
 
 public class CodespacesClientTests
 {
+    public class TheCtor
+    {
+        [Fact]
+        public void EnsuresNonNullArguments()
+        {
+            Assert.Throws<ArgumentNullException>(() => new CodespacesClient(null));
+        }
+    }
+
     public class TheGetAllMethod
     {
         [Fact]

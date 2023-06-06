@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Octokit.Clients
+namespace Octokit
 {
     public class Codespace
     {

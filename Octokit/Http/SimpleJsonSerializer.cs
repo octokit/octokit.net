@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Octokit.Reflection;
-using Octokit.Clients;
 
 namespace Octokit.Internal
 {
