@@ -120,6 +120,7 @@ namespace Octokit
             RateLimit = new RateLimitClient(apiConnection);
             Meta = new MetaClient(apiConnection);
             Actions = new ActionsClient(apiConnection);
+            Codespaces = new CodespacesClient(apiConnection);
         }
 
         /// <summary>
@@ -392,6 +393,8 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/actions/
         /// </remarks>
         public IActionsClient Actions { get; private set; }
+
+        public ICodespacesClient Codespaces { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

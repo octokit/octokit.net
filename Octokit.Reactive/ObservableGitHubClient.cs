@@ -57,6 +57,7 @@ namespace Octokit.Reactive
             RateLimit = new ObservableRateLimitClient(gitHubClient);
             Meta = new ObservableMetaClient(gitHubClient);
             Actions = new ObservableActionsClient(gitHubClient);
+            Codespaces = new ObservableCodespacesClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -105,6 +106,7 @@ namespace Octokit.Reactive
         public IObservableMetaClient Meta { get; private set; }
         public IObservableActionsClient Actions { get; private set; }
 
+        public IObservableCodespacesClient Codespaces { get; private set; }
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made
         /// </summary>
