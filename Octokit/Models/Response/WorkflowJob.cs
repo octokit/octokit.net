@@ -10,7 +10,7 @@ namespace Octokit
     {
         public WorkflowJob() { }
 
-        public WorkflowJob(long id, long runId, string runUrl, string nodeId, string headSha, string url, string htmlUrl, WorkflowJobStatus status, WorkflowJobConclusion? conclusion, DateTimeOffset startedAt, DateTimeOffset? completedAt, string name, IReadOnlyList<WorkflowJobStep> steps, string checkRunUrl, IReadOnlyList<string> labels, long runnerId, string runnerName, long runnerGroupId, string runnerGroupName)
+        public WorkflowJob(long id, long runId, string runUrl, string nodeId, string headSha, string url, string htmlUrl, WorkflowJobStatus status, WorkflowJobConclusion? conclusion, DateTimeOffset startedAt, DateTimeOffset? completedAt, string name, IReadOnlyList<WorkflowJobStep> steps, string checkRunUrl, IReadOnlyList<string> labels, long? runnerId = default, string runnerName = default, long? runnerGroupId = default, string runnerGroupName = default)
         {
             Id = id;
             RunId = runId;
@@ -111,7 +111,7 @@ namespace Octokit
         /// <summary>
         /// The Id of the runner to which this job has been assigned.
         /// </summary>
-        public long RunnerId { get; private set; }
+        public long? RunnerId { get; private set; }
 
         /// <summary>
         /// The name of the runner to which this job has been assigned.
@@ -121,7 +121,7 @@ namespace Octokit
         /// <summary>
         /// The Id of the runner group to which this job has been assigned.
         /// </summary>
-        public long RunnerGroupId { get; private set; }
+        public long? RunnerGroupId { get; private set; }
 
         /// <summary>
         /// The name of the runner group to which this job has been assigned.
