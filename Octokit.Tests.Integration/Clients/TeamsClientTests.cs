@@ -682,4 +682,20 @@ public class TeamsClientTests
             }
         }
     }
+    
+    public class TheGetByNameMethod
+    {
+        [OrganizationTest]
+        public async Task GetsTeamByNameWhenAuthenticated()
+        {
+            var github = Helper.GetAuthenticatedClient();
+
+            using (var teamContext = await github.CreateTeamContext(Helper.Organization, new NewTeam(Helper.MakeNameWithTimestamp("team"))))
+            {
+                var foundTeam = await github.Organization.Team.GetByName(Helper.Organization, teamContext.TeamName);
+
+                Assert.Equal(foundTeam.Name, teamContext.TeamName);
+            }
+        }
+    }
 }
