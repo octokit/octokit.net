@@ -686,5 +686,27 @@ namespace Octokit
 
             return ApiConnection.Delete(endpoint);
         }
+
+        /// <summary>
+        /// Get a team by slug name
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/teams/teams?apiVersion=2022-11-28#get-a-team-by-name">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The organization name. The name is not case sensitive.</param>
+        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        /// <exception cref="NotFoundException">Thrown when the team wasn't found</exception>
+        /// <returns>A <see cref="Team"/> instance if found, otherwise a <see cref="NotFoundException"/></returns>
+        [ManualRoute("GET", "/orgs/{org}/teams/{teamSlug}")]
+        public Task<Team> GetByName(string org, string teamSlug)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrEmptyString(teamSlug, nameof(teamSlug));
+            
+            var endpoint = ApiUrls.TeamsByOrganizationAndSlug(org, teamSlug);
+            return ApiConnection.Get<Team>(endpoint);
+        }
     }
 }

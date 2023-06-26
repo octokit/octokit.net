@@ -17,6 +17,7 @@ namespace Octokit
         static readonly Uri _currentUserNotificationsEndpoint = new Uri("notifications", UriKind.Relative);
         static readonly Uri _currentUserAllIssues = new Uri("issues", UriKind.Relative);
         static readonly Uri _currentUserOwnedAndMemberIssues = new Uri("user/issues", UriKind.Relative);
+        static readonly Uri _currentUserAllCodespaces = new Uri("user/codespaces", UriKind.Relative);
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all public repositories in
@@ -5447,5 +5448,29 @@ namespace Octokit
             return "orgs/{0}/actions/runner-groups/{1}/repositories".FormatUri(org, runnerGroupId);
         }
 
+        public static Uri Codespaces()
+        {
+            return _currentUserAllCodespaces;
+        }
+
+        public static Uri CodespacesForRepository(string owner, string repo)
+        {
+            return "repos/{0}/{1}/codespaces".FormatUri(owner, repo);
+        }
+
+        public static Uri Codespace(string codespaceName)
+        {
+            return "user/codespaces/{0}".FormatUri(codespaceName);
+        }
+
+        public static Uri CodespaceStart(string codespaceName)
+        {
+            return "user/codespaces/{0}/start".FormatUri(codespaceName);
+        }
+
+        public static Uri CodespaceStop(string codespaceName)
+        {
+            return "user/codespaces/{0}/stop".FormatUri(codespaceName);
+        }
     }
 }

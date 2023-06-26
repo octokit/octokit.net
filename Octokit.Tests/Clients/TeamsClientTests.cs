@@ -618,5 +618,29 @@ namespace Octokit.Tests.Clients
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == expected));
             }
         }
+        
+        public class TheGetByNameMethod
+        {
+            [Fact]
+            public void RequestsTheCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new TeamsClient(connection);
+
+                client.GetByName("orgName", "teamSlug");
+
+                connection.Received().Get<Team>(
+                    Arg.Is<Uri>(u => u.ToString() == "orgs/orgName/teams/teamSlug"));
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var teams = new TeamsClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetByName(null, "teamSlug"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => teams.GetByName("orgName", null));
+            }
+        }
     }
 }
