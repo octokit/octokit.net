@@ -19,6 +19,7 @@ namespace Octokit.Tests.Models
 ""html_url"": ""https://github.com/octo-org/octo-repo/runs/399444496"",
 ""status"": ""completed"",
 ""conclusion"": ""success"",
+""created_at"": ""2020-01-20T17:42:40Z"",
 ""started_at"": ""2020-01-20T17:42:40Z"",
 ""completed_at"": ""2020-01-20T17:44:39Z"",
 ""name"": ""build"",
@@ -129,6 +130,7 @@ namespace Octokit.Tests.Models
             Assert.Equal("https://github.com/octo-org/octo-repo/runs/399444496", payload.HtmlUrl);
             Assert.Equal(WorkflowJobStatus.Completed, payload.Status);
             Assert.Equal(WorkflowJobConclusion.Success, payload.Conclusion);
+            Assert.Equal(new DateTimeOffset(2020, 01, 20, 17, 42, 40, TimeSpan.Zero), payload.CreatedAt);
             Assert.Equal(new DateTimeOffset(2020, 01, 20, 17, 42, 40, TimeSpan.Zero), payload.StartedAt);
             Assert.Equal(new DateTimeOffset(2020, 01, 20, 17, 44, 39, TimeSpan.Zero), payload.CompletedAt);
             Assert.Equal("build", payload.Name);
