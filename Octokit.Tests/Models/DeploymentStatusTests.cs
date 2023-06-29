@@ -94,7 +94,7 @@ namespace Octokit.Tests.Models
 
             var actual = new SimpleJsonSerializer().Deserialize<DeploymentStatus>(json);
 
-            Assert.Equal<long>(2151661540, actual.Id);
+            Assert.Equal(2151661540, actual.Id);
             Assert.Equal("https://api.github.com/repos/tgstation/TerraGov-Marine-Corps/deployments/965900823/statuses/2151661540", actual.Url);
             Assert.Equal(DeploymentState.InProgress, actual.State);
             Assert.Null(actual.Payload);
