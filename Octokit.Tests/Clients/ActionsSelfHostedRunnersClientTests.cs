@@ -272,8 +272,7 @@ namespace Octokit.Tests.Clients
                 await client.DeleteOrganizationRunner("fake", 1);
 
                 connection.Received().Delete(
-                  Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runners/1"),
-                  ApiOptions.None);
+                  Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runners/1"));
             }
 
             [Fact]
@@ -306,8 +305,7 @@ namespace Octokit.Tests.Clients
                 await client.DeleteRepositoryRunner("fake", "repo", 1);
 
                 connection.Received().Delete(
-                  Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners/1"),
-                  ApiOptions.None);
+                  Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners/1"));
             }
 
             [Fact]
@@ -342,8 +340,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateEnterpriseRegistrationToken("fake");
 
                 connection.Received().Post<AccessToken>(
-                  Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runners/registration-token"),
-                  ApiOptions.None);
+                  Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runners/registration-token"));
             }
 
             [Fact]
@@ -376,8 +373,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateOrganizationRegistrationToken("fake");
 
                 connection.Received().Post<AccessToken>(
-                  Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runners/registration-token"),
-                  ApiOptions.None);
+                  Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runners/registration-token"));
             }
 
             [Fact]
@@ -410,8 +406,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateRepositoryRegistrationToken("fake", "repo");
 
                 connection.Received().Post<AccessToken>(
-                  Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners/registration-token"),
-                  ApiOptions.None);
+                  Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runners/registration-token"));
             }
 
             [Fact]
