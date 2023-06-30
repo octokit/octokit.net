@@ -238,8 +238,7 @@ namespace Octokit.Tests.Clients
                 await client.DeleteEnterpriseRunner("fake", 1);
 
                 connection.Received().Delete(
-                  Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runners/1"),
-                  ApiOptions.None);
+                  Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runners/1"));
             }
 
             [Fact]
