@@ -10,5 +10,7 @@ namespace Octokit
         InProgress,
         [Parameter(Value = "completed")]
         Completed,
+        [Parameter(Value = "waiting")]
+        Waiting,
     }
 }
