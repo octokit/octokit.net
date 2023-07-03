@@ -11,7 +11,7 @@ namespace Octokit
     {
         public DeploymentStatus() { }
 
-        public DeploymentStatus(int id, string nodeId, string url, DeploymentState state, User creator, IReadOnlyDictionary<string, string> payload, string targetUrl, string logUrl, string environmentUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description)
+        public DeploymentStatus(long id, string nodeId, string url, DeploymentState state, User creator, IReadOnlyDictionary<string, string> payload, string targetUrl, string logUrl, string environmentUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description)
         {
             Id = id;
             NodeId = nodeId;
@@ -30,7 +30,7 @@ namespace Octokit
         /// <summary>
         /// Id of this deployment status.
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
