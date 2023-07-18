@@ -50,5 +50,12 @@ namespace Octokit
         /// <param name="deviceFlowResponse">The response you received from <see cref="InitiateDeviceFlow(OauthDeviceFlowRequest)"/></param>
         /// <returns></returns>
         Task<OauthToken> CreateAccessTokenForDeviceFlow(string clientId, OauthDeviceFlowResponse deviceFlowResponse);
+
+        /// <summary>
+        /// Makes a request to get an access token using the refresh token returned in <see cref="CreateAccessToken(OauthTokenRequest)"/>.
+        /// </summary>
+        /// <param name="request">Token renewal request.</param>
+        /// <returns><see cref="OauthToken"/> with the new token set.</returns>
+        Task<OauthToken> CreateAccessTokenFromRenewalToken(OauthTokenRenewalRequest request);
     }
 }
