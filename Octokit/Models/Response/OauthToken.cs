@@ -10,6 +10,16 @@ namespace Octokit
     {
         public OauthToken() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OauthToken"/> class.
+        /// Use this constructor, when you don't have a refreshToken.
+        /// </summary>
+        /// <param name="tokenType">The type of token returned by GitHub.</param>
+        /// <param name="accessToken">The access token returned by GitHub.</param>
+        /// <param name="scope">The auhtorization scope of the returned token.</param>
+        /// <param name="error">The error code returned by the GitHub API.</param>
+        /// <param name="errorDescription">The error message, if any, returned by the GitHub API.</param>
+        /// <param name="errorUri">The GitHub documentation link, detailing the error message.</param>
         public OauthToken(string tokenType, string accessToken, IReadOnlyList<string> scope, string error, string errorDescription, string errorUri)
         {
             this.TokenType = tokenType;
@@ -20,6 +30,19 @@ namespace Octokit
             this.ErrorUri = errorUri;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OauthToken"/> class.
+        /// Use this constructor, when you have all the parameters returned by the GitHub API.
+        /// </summary>
+        /// <param name="tokenType">The type of token returned by GitHub.</param>
+        /// <param name="accessToken">The access token returned by GitHub.</param>
+        /// <param name="expiresIn">The amount of seconds, before the access token expires.</param>
+        /// <param name="refreshToken">The refresh token returned by GitHub. Use this, to get a new access token if it expires.</param>
+        /// <param name="refreshTokenExpiresIn">The amount of seconds, before the refresh token expires.</param>
+        /// <param name="scope">The auhtorization scope of the returned token.</param>
+        /// <param name="error">The error code returned by the GitHub API.</param>
+        /// <param name="errorDescription">The error message, if any, returned by the GitHub API.</param>
+        /// <param name="errorUri">The GitHub documentation link, detailing the error message.</param>
         public OauthToken(string tokenType, string accessToken, int expiresIn, string refreshToken, int refreshTokenExpiresIn, IReadOnlyList<string> scope, string error, string errorDescription, string errorUri)
         {
             this.TokenType = tokenType;
