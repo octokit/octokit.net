@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -12,7 +13,8 @@ namespace Octokit
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OauthToken"/> class.
-        /// Use this constructor, when you don't have a refreshToken.
+        /// Use this constructor when you don't have a refreshToken.
+        /// Note: deprecated
         /// </summary>
         /// <param name="tokenType">The type of token returned by GitHub.</param>
         /// <param name="accessToken">The access token returned by GitHub.</param>
@@ -20,6 +22,7 @@ namespace Octokit
         /// <param name="error">The error code returned by the GitHub API.</param>
         /// <param name="errorDescription">The error message, if any, returned by the GitHub API.</param>
         /// <param name="errorUri">The GitHub documentation link, detailing the error message.</param>
+        [Obsolete("This constructor is being deprecated and will be removed in the future. Use OauthToken.OauthToken (with refreshToken paramters) instead.")]
         public OauthToken(string tokenType, string accessToken, IReadOnlyList<string> scope, string error, string errorDescription, string errorUri)
         {
             this.TokenType = tokenType;
@@ -32,7 +35,7 @@ namespace Octokit
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OauthToken"/> class.
-        /// Use this constructor, when you have all the parameters returned by the GitHub API.
+        /// Use this constructor by default.
         /// </summary>
         /// <param name="tokenType">The type of token returned by GitHub.</param>
         /// <param name="accessToken">The access token returned by GitHub.</param>
