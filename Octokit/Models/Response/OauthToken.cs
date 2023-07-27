@@ -14,7 +14,6 @@ namespace Octokit
         /// <summary>
         /// Initializes a new instance of the <see cref="OauthToken"/> class.
         /// Use this constructor when you don't have a refreshToken.
-        /// Note: deprecated
         /// </summary>
         /// <param name="tokenType">The type of token returned by GitHub.</param>
         /// <param name="accessToken">The access token returned by GitHub.</param>
