@@ -11,8 +11,8 @@ public class ProjectsClientTests
 {
     public class TheGetAllForRepositoryMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetAllForRepositoryMethod()
         {
@@ -213,7 +213,7 @@ public class ProjectsClientTests
 
     public class TheGetAllForOrganizationMethod
     {
-        IGitHubClient _github;
+        readonly IGitHubClient _github;
 
         public TheGetAllForOrganizationMethod()
         {
@@ -286,8 +286,8 @@ public class ProjectsClientTests
 
     public class TheGetMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetMethod()
         {
@@ -317,8 +317,8 @@ public class ProjectsClientTests
 
     public class TheUpdateMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheUpdateMethod()
         {
@@ -355,8 +355,8 @@ public class ProjectsClientTests
 
     public class TheDeleteMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheDeleteMethod()
         {

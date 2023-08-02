@@ -11,7 +11,7 @@ namespace Octokit.Tests.Integration.Clients
     {
         public class TheGetMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheGetMethod()
             {
@@ -33,7 +33,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetCurrentMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheGetCurrentMethod()
             {
@@ -55,7 +55,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllInstallationsForCurrentMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheGetAllInstallationsForCurrentMethod()
             {
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetInstallationForCurrentMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheGetInstallationForCurrentMethod()
             {
@@ -111,7 +111,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllInstallationsForCurrentUserMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheGetAllInstallationsForCurrentUserMethod()
             {
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheCreateInstallationTokenMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheCreateInstallationTokenMethod()
             {
@@ -156,7 +156,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetOrganizationInstallationForCurrentMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheGetOrganizationInstallationForCurrentMethod()
             {
@@ -175,8 +175,8 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetRepositoryInstallationForCurrentMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheGetRepositoryInstallationForCurrentMethod()
             {
@@ -216,7 +216,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetUserInstallationForCurrentMethod
         {
-            IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _github;
 
             public TheGetUserInstallationForCurrentMethod()
             {

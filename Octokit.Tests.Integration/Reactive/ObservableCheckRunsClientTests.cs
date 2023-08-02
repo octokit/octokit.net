@@ -12,8 +12,8 @@ namespace Octokit.Tests.Integration.Reactive
     {
         public class TheCreateMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheCreateMethod()
             {
@@ -70,8 +70,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheUpdateMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheUpdateMethod()
             {
@@ -148,8 +148,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetAllForReferenceMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheGetAllForReferenceMethod()
             {
@@ -232,8 +232,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetAllForCheckSuiteMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheGetAllForCheckSuiteMethod()
             {
@@ -316,8 +316,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheGetMethod()
             {
@@ -384,8 +384,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetAllAnnotationsMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheGetAllAnnotationsMethod()
             {

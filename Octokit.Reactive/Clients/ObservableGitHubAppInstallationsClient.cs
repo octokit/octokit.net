@@ -11,7 +11,7 @@ namespace Octokit.Reactive
     /// </remarks>
     public class ObservableGitHubAppInstallationsClient : IObservableGitHubAppInstallationsClient
     {
-        private IGitHubAppInstallationsClient _client;
+        private readonly IGitHubAppInstallationsClient _client;
         private readonly IConnection _connection;
 
         public ObservableGitHubAppInstallationsClient(IGitHubClient client)

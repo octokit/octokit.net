@@ -11,8 +11,8 @@ namespace Octokit.Tests.Integration.Reactive
     {
         public class TheGetMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheGetMethod()
             {
@@ -61,8 +61,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetAllForReferenceMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheGetAllForReferenceMethod()
             {
@@ -109,8 +109,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheUpdatePreferencesMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheUpdatePreferencesMethod()
             {
@@ -157,8 +157,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheCreateMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheCreateMethod()
             {
@@ -217,8 +217,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheRerequestMethod
         {
-            IObservableGitHubClient _github;
-            IObservableGitHubClient _githubAppInstallation;
+            readonly IObservableGitHubClient _github;
+            readonly IObservableGitHubClient _githubAppInstallation;
 
             public TheRerequestMethod()
             {
