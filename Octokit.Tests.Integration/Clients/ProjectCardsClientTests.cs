@@ -9,8 +9,8 @@ public class ProjectCardsClientTests
 {
     public class TheGetAllMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetAllMethod()
         {
@@ -164,8 +164,8 @@ public class ProjectCardsClientTests
 
     public class TheGetMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetMethod()
         {
@@ -196,8 +196,8 @@ public class ProjectCardsClientTests
 
     public class TheCreateMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheCreateMethod()
         {
@@ -252,8 +252,8 @@ public class ProjectCardsClientTests
 
     public class TheUpdateMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheUpdateMethod()
         {
@@ -325,8 +325,8 @@ public class ProjectCardsClientTests
 
     public class TheDeleteMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheDeleteMethod()
         {
@@ -357,8 +357,8 @@ public class ProjectCardsClientTests
 
     public class TheMoveMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheMoveMethod()
         {

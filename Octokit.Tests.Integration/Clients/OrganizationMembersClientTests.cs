@@ -9,8 +9,8 @@ namespace Octokit.Tests.Integration.Clients
     {
         public class TheGetAllMethod
         {
-            private IGitHubClient _gitHub;
-            private string _organizationFixture;
+            private readonly IGitHubClient _gitHub;
+            private readonly string _organizationFixture;
 
             public TheGetAllMethod()
             {
@@ -296,7 +296,7 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllOrganizationMembershipsForCurrentMethod
         {
-            private IGitHubClient _gitHub;
+            private readonly IGitHubClient _gitHub;
 
             public TheGetAllOrganizationMembershipsForCurrentMethod()
             {

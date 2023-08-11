@@ -5,8 +5,8 @@ namespace Octokit.Reactive
 {
     public class ObservableCodespacesClient : IObservableCodespacesClient
     {
-        private ICodespacesClient _client;
-        private IConnection _connection;
+        private readonly ICodespacesClient _client;
+        private readonly IConnection _connection;
 
         public ObservableCodespacesClient(IGitHubClient githubClient)
         {

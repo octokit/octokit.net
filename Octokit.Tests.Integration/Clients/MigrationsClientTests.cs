@@ -11,9 +11,9 @@ using Xunit;
 public class MigrationsClientTests : IDisposable
 {
     private readonly IGitHubClient _gitHub;
-    private List<RepositoryContext> _repos;
+    private readonly List<RepositoryContext> _repos;
     private Migration _migrationContext;
-    private string _orgName;
+    private readonly string _orgName;
     private bool isExported = false;
 
     public MigrationsClientTests()
