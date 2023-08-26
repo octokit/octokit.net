@@ -114,9 +114,13 @@ public class SearchIssuesRequestTests
             var request = new SearchIssuesRequest("test");
             Assert.DoesNotContain(request.MergedQualifiers(), x => x.Contains("label:"));
 
-            request.Labels = new[] { "label1", "label 2" };
-            Assert.Contains("label:\"label1\"", request.MergedQualifiers());
-            Assert.Contains("label:\"label 2\"", request.MergedQualifiers());
+            request.Labels = new[] { "label1", "label 2", "label3,label 4" };
+
+            var qualifiers = request.MergedQualifiers();
+
+            Assert.Contains("label:label1", qualifiers);
+            Assert.Contains("label:\"label 2\"", qualifiers);
+            Assert.Contains("label:label3,\"label 4\"", qualifiers);
         }
 
         [Fact]

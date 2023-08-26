@@ -328,7 +328,7 @@ namespace Octokit
 
             if (Labels != null)
             {
-                parameters.AddRange(Labels.Select(label => string.Format(CultureInfo.InvariantCulture, "label:\"{0}\"", label)));
+                parameters.AddRange(Labels.Select(label => string.Format(CultureInfo.InvariantCulture, "label:{0}", FormatLabel(label))));
             }
 
             if (No.HasValue)
@@ -427,6 +427,31 @@ namespace Octokit
             {
                 return string.Format(CultureInfo.InvariantCulture, "Search: {0} {1}", Term, string.Join(" ", MergedQualifiers()));
             }
+        }
+
+        /// <summary>
+        /// Wrap the label in quotes if it contains a space
+        /// </summary>
+        /// <param name="label">The input label</param>
+        /// <returns></returns>
+        private static string FormatLabel(string label)
+        {
+            var singleLabel = !label.Contains(",");
+            var containSpace = label.Contains(" ");
+
+            if (singleLabel)
+            {
+                return WrapInQuotesIfContainsSpace(label);
+            }
+
+            if (containSpace)
+            {
+                return string.Join(",", label.Split(',').Select(WrapInQuotesIfContainsSpace));
+            }
+
+            return label;
+
+            string WrapInQuotesIfContainsSpace(string l) => l.Contains(" ") ? $"\"{l}\"" : l;
         }
     }
 
