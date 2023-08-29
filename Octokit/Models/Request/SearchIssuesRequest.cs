@@ -436,15 +436,13 @@ namespace Octokit
         /// <returns></returns>
         private static string FormatLabel(string label)
         {
-            var singleLabel = !label.Contains(",");
-            var containSpace = label.Contains(" ");
-
-            if (singleLabel)
+            // singleLabel
+            if (!label.Contains(","))
             {
                 return WrapInQuotesIfContainsSpace(label);
             }
 
-            if (containSpace)
+            if (label.Contains(" "))
             {
                 return string.Join(",", label.Split(',').Select(WrapInQuotesIfContainsSpace));
             }
