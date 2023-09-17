@@ -17,7 +17,7 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, int watchersCount, bool? deleteBranchOnMerge, RepositoryVisibility visibility, IEnumerable<string> topics, bool? allowAutoMerge, bool? allowUpdateBranch)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, int watchersCount, bool? deleteBranchOnMerge, RepositoryVisibility visibility, IEnumerable<string> topics, bool? allowAutoMerge, bool? allowUpdateBranch, bool? webCommitSignoffRequired)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -66,6 +66,7 @@ namespace Octokit
             Visibility = visibility;
             AllowAutoMerge = allowAutoMerge;
             AllowUpdateBranch = allowUpdateBranch;
+            WebCommitSignoffRequired = webCommitSignoffRequired;
         }
 
         public string Url { get; private set; }
@@ -161,6 +162,8 @@ namespace Octokit
         public bool? AllowAutoMerge { get; private set; }
 
         public bool? AllowUpdateBranch { get; private set; }
+
+        public bool? WebCommitSignoffRequired { get; private set; }
 
         internal string DebuggerDisplay
         {
