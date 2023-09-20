@@ -13,8 +13,8 @@ public class ObservableProjectColumnsClientTests
 {
     public class TheGetAllColumnsMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetAllColumnsMethod()
         {
@@ -113,8 +113,8 @@ public class ObservableProjectColumnsClientTests
 
     public class TheGetColumnMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetColumnMethod()
         {
@@ -144,8 +144,8 @@ public class ObservableProjectColumnsClientTests
 
     public class TheCreateColumnMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheCreateColumnMethod()
         {
@@ -173,8 +173,8 @@ public class ObservableProjectColumnsClientTests
 
     public class TheUpdateColumnMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheUpdateColumnMethod()
         {
@@ -207,8 +207,8 @@ public class ObservableProjectColumnsClientTests
 
     public class TheDeleteColumnMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheDeleteColumnMethod()
         {
@@ -238,8 +238,8 @@ public class ObservableProjectColumnsClientTests
 
     public class TheMoveColumnMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheMoveColumnMethod()
         {

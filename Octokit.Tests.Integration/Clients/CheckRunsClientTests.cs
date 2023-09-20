@@ -10,8 +10,8 @@ namespace Octokit.Tests.Integration.Clients
     {
         public class TheCreateMethod
         {
-            IGitHubClient _github;
-            IGitHubClient _githubAppInstallation;
+            readonly IGitHubClient _github;
+            readonly IGitHubClient _githubAppInstallation;
 
             public TheCreateMethod()
             {
@@ -68,8 +68,8 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheUpdateMethod
         {
-            IGitHubClient _github;
-            IGitHubClient _githubAppInstallation;
+            readonly IGitHubClient _github;
+            readonly IGitHubClient _githubAppInstallation;
 
             public TheUpdateMethod()
             {
@@ -146,8 +146,8 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllForReferenceMethod
         {
-            IGitHubClient _github;
-            IGitHubClient _githubAppInstallation;
+            readonly IGitHubClient _github;
+            readonly IGitHubClient _githubAppInstallation;
 
             public TheGetAllForReferenceMethod()
             {
@@ -230,8 +230,8 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllForCheckSuiteMethod
         {
-            IGitHubClient _github;
-            IGitHubClient _githubAppInstallation;
+            readonly IGitHubClient _github;
+            readonly IGitHubClient _githubAppInstallation;
 
             public TheGetAllForCheckSuiteMethod()
             {
@@ -315,8 +315,8 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetMethod
         {
-            IGitHubClient _github;
-            IGitHubClient _githubAppInstallation;
+            readonly IGitHubClient _github;
+            readonly IGitHubClient _githubAppInstallation;
 
             public TheGetMethod()
             {
@@ -383,8 +383,8 @@ namespace Octokit.Tests.Integration.Clients
 
         public class TheGetAllAnnotationsMethod
         {
-            IGitHubClient _github;
-            IGitHubClient _githubAppInstallation;
+            readonly IGitHubClient _github;
+            readonly IGitHubClient _githubAppInstallation;
 
             public TheGetAllAnnotationsMethod()
             {

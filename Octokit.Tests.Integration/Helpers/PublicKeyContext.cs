@@ -17,7 +17,7 @@ namespace Octokit.Tests.Integration.Helpers
             KeyData = key.Key;
         }
 
-        private IConnection _connection;
+        private readonly IConnection _connection;
         internal int KeyId { get; private set; }
         internal string KeyTitle { get; private set; }
         internal string KeyData { get; private set; }

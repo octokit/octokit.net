@@ -10,8 +10,8 @@ namespace Octokit.Tests.Integration.Reactive
     {
         public class TheGetBranchProtectionMethod
         {
-            IGitHubClient _github;
-            IObservableRepositoryBranchesClient _client;
+            readonly IGitHubClient _github;
+            readonly IObservableRepositoryBranchesClient _client;
 
             public TheGetBranchProtectionMethod()
             {
@@ -116,8 +116,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheUpdateBranchProtectionMethod
         {
-            IGitHubClient _github;
-            IObservableRepositoryBranchesClient _client;
+            readonly IGitHubClient _github;
+            readonly IObservableRepositoryBranchesClient _client;
 
             public TheUpdateBranchProtectionMethod()
             {
@@ -262,8 +262,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheDeleteBranchProtectionMethod
         {
-            IGitHubClient _github;
-            IObservableRepositoryBranchesClient _client;
+            readonly IGitHubClient _github;
+            readonly IObservableRepositoryBranchesClient _client;
 
             public TheDeleteBranchProtectionMethod()
             {
@@ -324,8 +324,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheGetReviewEnforcementMethod
         {
-            IGitHubClient _github;
-            IObservableRepositoryBranchesClient _client;
+            readonly IGitHubClient _github;
+            readonly IObservableRepositoryBranchesClient _client;
 
             public TheGetReviewEnforcementMethod()
             {
@@ -396,8 +396,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheUpdateReviewEnforcementMethod
         {
-            IGitHubClient _github;
-            IObservableRepositoryBranchesClient _client;
+            readonly IGitHubClient _github;
+            readonly IObservableRepositoryBranchesClient _client;
 
             public TheUpdateReviewEnforcementMethod()
             {
@@ -530,8 +530,8 @@ namespace Octokit.Tests.Integration.Reactive
 
         public class TheRemoveReviewEnforcementMethod
         {
-            IGitHubClient _github;
-            IObservableRepositoryBranchesClient _client;
+            readonly IGitHubClient _github;
+            readonly IObservableRepositoryBranchesClient _client;
 
             public TheRemoveReviewEnforcementMethod()
             {

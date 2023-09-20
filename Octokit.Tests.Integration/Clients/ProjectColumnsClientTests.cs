@@ -11,8 +11,8 @@ public class ProjectColumnsClientTests
 {
     public class TheGetAllColumnsMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetAllColumnsMethod()
         {
@@ -111,8 +111,8 @@ public class ProjectColumnsClientTests
 
     public class TheGetColumnMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetColumnMethod()
         {
@@ -142,8 +142,8 @@ public class ProjectColumnsClientTests
 
     public class TheCreateColumnMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheCreateColumnMethod()
         {
@@ -171,8 +171,8 @@ public class ProjectColumnsClientTests
 
     public class TheUpdateColumnMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheUpdateColumnMethod()
         {
@@ -205,8 +205,8 @@ public class ProjectColumnsClientTests
 
     public class TheDeleteColumnMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheDeleteColumnMethod()
         {
@@ -236,8 +236,8 @@ public class ProjectColumnsClientTests
 
     public class TheMoveColumnMethod : IDisposable
     {
-        IGitHubClient _github;
-        RepositoryContext _context;
+        readonly IGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheMoveColumnMethod()
         {

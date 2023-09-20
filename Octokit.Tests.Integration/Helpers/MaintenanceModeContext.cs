@@ -17,7 +17,7 @@ namespace Octokit.Tests.Integration.Helpers
             EnterpriseHelper.SetMaintenanceMode(_connection, enabled);
         }
 
-        private IConnection _connection;
+        private readonly IConnection _connection;
 
         public void Dispose()
         {

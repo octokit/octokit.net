@@ -12,8 +12,8 @@ public class ObservableProjectCardsClientTests
 {
     public class TheGetAllMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetAllMethod()
         {
@@ -167,8 +167,8 @@ public class ObservableProjectCardsClientTests
 
     public class TheGetMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheGetMethod()
         {
@@ -199,8 +199,8 @@ public class ObservableProjectCardsClientTests
 
     public class TheCreateMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheCreateMethod()
         {
@@ -240,8 +240,8 @@ public class ObservableProjectCardsClientTests
 
     public class TheUpdateMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheUpdateMethod()
         {
@@ -313,8 +313,8 @@ public class ObservableProjectCardsClientTests
 
     public class TheDeleteMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheDeleteMethod()
         {
@@ -345,8 +345,8 @@ public class ObservableProjectCardsClientTests
 
     public class TheMoveMethod : IDisposable
     {
-        IObservableGitHubClient _github;
-        RepositoryContext _context;
+        readonly IObservableGitHubClient _github;
+        readonly RepositoryContext _context;
 
         public TheMoveMethod()
         {
