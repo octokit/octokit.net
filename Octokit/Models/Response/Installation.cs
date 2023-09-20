@@ -16,7 +16,7 @@ namespace Octokit
     {
         public Installation() { }
 
-        public Installation(long id, User account, string accessTokensUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection) : base(id)
+        public Installation(long id, User account, string accessTokensUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection, User suspendedBy, DateTimeOffset? suspendedAt) : base(id)
         {
             Account = account;
             AccessTokensUrl = accessTokensUrl;
@@ -29,6 +29,8 @@ namespace Octokit
             Events = events;
             SingleFileName = singleFileName;
             RepositorySelection = repositorySelection;
+            SuspendedBy = suspendedBy;
+            SuspendedAt = suspendedAt;
         }
 
         /// <summary>
@@ -79,6 +81,16 @@ namespace Octokit
         /// The choice of repositories the installation is on. Can be either "selected" or "all".
         /// </summary>
         public StringEnum<InstallationRepositorySelection> RepositorySelection { get; private set; }
+
+        /// <summary>
+        /// The user who suspended the Installation. Can be null if the Installation is not suspended.
+        /// </summary>
+        public User SuspendedBy { get; private set; }
+
+        /// <summary>
+        /// The date the Installation was suspended. Can be null if the Installation is not suspended.
+        /// </summary>
+        public DateTimeOffset? SuspendedAt { get; private set; }
 
         internal new string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0} AppId: {1}", Id, AppId);
     }
