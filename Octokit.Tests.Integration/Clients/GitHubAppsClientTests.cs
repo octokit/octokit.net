@@ -74,6 +74,8 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(InstallationReadWritePermissionLevel.Read, installation.Permissions.Metadata);
                     Assert.False(string.IsNullOrEmpty(installation.HtmlUrl));
                     Assert.NotEqual(0, installation.TargetId);
+                    Assert.Null(installation.SuspendedBy);
+                    Assert.Null(installation.SuspendedAt);
                 }
             }
         }
