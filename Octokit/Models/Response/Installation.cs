@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -16,7 +17,7 @@ namespace Octokit
     {
         public Installation() { }
 
-        public Installation(long id, User account, string accessTokensUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection, User suspendedBy, DateTimeOffset? suspendedAt) : base(id)
+        public Installation(long id, User account, string accessTokensUrl, string repositoriesUrl, string htmlUrl, long appId, long targetId, AccountType targetType, InstallationPermissions permissions, IReadOnlyList<string> events, string singleFileName, string repositorySelection, User? suspendedBy, DateTimeOffset? suspendedAt) : base(id)
         {
             Account = account;
             AccessTokensUrl = accessTokensUrl;
@@ -85,7 +86,7 @@ namespace Octokit
         /// <summary>
         /// The user who suspended the Installation. Can be null if the Installation is not suspended.
         /// </summary>
-        public User SuspendedBy { get; private set; }
+        public User? SuspendedBy { get; private set; }
 
         /// <summary>
         /// The date the Installation was suspended. Can be null if the Installation is not suspended.
