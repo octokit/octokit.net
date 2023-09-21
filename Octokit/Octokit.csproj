@@ -17,8 +17,6 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>GitHub API Octokit linqpad-samples dotnetcore</PackageTags>
 		<Copyright>Copyright GitHub 2017</Copyright>
-    <LangVersion>9</LangVersion>
-    <Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<PropertyGroup>
