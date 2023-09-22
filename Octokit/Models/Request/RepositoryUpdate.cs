@@ -128,6 +128,11 @@ namespace Octokit
         /// </summary>
         public bool? WebCommitSignoffRequired { get; set; }
 
+        /// <summary>
+        /// Optional. Gets or sets whether to enable discussions for the repository. The default is null (do not update). The default when created is false.
+        /// </summary>
+        public bool? HasDiscussions { get; set; }
+
         internal string DebuggerDisplay => new SimpleJsonSerializer().Serialize(this);
     }
 }
