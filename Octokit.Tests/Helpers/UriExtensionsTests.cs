@@ -161,6 +161,64 @@ namespace Octokit.Tests.Helpers
                 Uri uri = null;
                 Assert.Throws<ArgumentNullException>(() => uri.ApplyParameters(new Dictionary<string, string>()));
             }
+
+            [Fact]
+            public void AppendsStartPageIfNone()
+            {
+                var uri = new Uri("https://api.github.com/repositories/1/labels");
+
+                var parameters = new Dictionary<string, string>();
+                Pagination.Setup(parameters, new ApiOptions { StartPage = 3, PageSize = 7 });
+
+                var actual = uri.ApplyParameters(parameters);
+
+                Assert.Equal(
+                    new Uri("https://api.github.com/repositories/1/labels?per_page=7&page=3"),
+                    actual);
+            }
+
+            [Fact]
+            public void AppendsStartPageIfNoneForRelativeUri()
+            {
+                var uri = new Uri("/repositories/1/labels", UriKind.Relative);
+
+                var parameters = new Dictionary<string, string>();
+                Pagination.Setup(parameters, new ApiOptions { StartPage = 3, PageSize = 7 });
+
+                var actual = uri.ApplyParameters(parameters);
+
+                Assert.Equal(
+                    new Uri("/repositories/1/labels?per_page=7&page=3", UriKind.Relative),
+                    actual);
+            }
+
+            [Fact]
+            public void DoesNotChangePageNumberInNextPageUriWithStartPage()
+            {
+                const string nextPageUriString = "https://api.github.com/repositories/1/labels?per_page=5&page=2";
+                var nextPageUri = new Uri(nextPageUriString);
+
+                var parameters = new Dictionary<string, string>();
+                Pagination.Setup(parameters, new ApiOptions { StartPage = 1, PageSize = 5 });
+
+                var actual = nextPageUri.ApplyParameters(parameters);
+
+                Assert.Equal(new Uri(nextPageUriString), actual);
+            }
+
+            [Fact]
+            public void DoesNotChangePageNumberInNextPageUriWithStartPageForRelativeUri()
+            {
+                const string nextPageUriString = "/repositories/1/labels?per_page=5&page=2";
+                var nextPageUri = new Uri(nextPageUriString, UriKind.Relative);
+
+                var parameters = new Dictionary<string, string>();
+                Pagination.Setup(parameters, new ApiOptions { StartPage = 1, PageSize = 5 });
+
+                var actual = nextPageUri.ApplyParameters(parameters);
+
+                Assert.Equal(new Uri(nextPageUriString, UriKind.Relative), actual);
+            }
         }
     }
 }

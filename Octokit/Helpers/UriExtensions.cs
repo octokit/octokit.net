@@ -76,7 +76,14 @@ namespace Octokit
 
             foreach (var existing in existingParameters)
             {
-                if (!p.ContainsKey(existing.Key))
+                if (existing.Key == "page")
+                {
+                    // See https://github.com/octokit/octokit.net/issues/1955
+                    // See https://github.com/octokit/octokit.net/issues/2602
+                    // Desired behavior: don't replace page number in nextPageUri
+                    p[existing.Key] = existing.Value;
+                }
+                else if (!p.ContainsKey(existing.Key))
                 {
                     p.Add(existing);
                 }
