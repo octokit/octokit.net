@@ -5,7 +5,7 @@ using Octokit.Internal;
 namespace Octokit
 {
     /// <summary>
-    /// Used to filter requests for lists of pull requests.
+    /// Used to filter requests for lists of artifacts.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ListArtifactsRequest : RequestParameters
