@@ -1,6 +1,4 @@
-﻿// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-
-using System;
+﻿using System;
 
 public class Artifact
 {
