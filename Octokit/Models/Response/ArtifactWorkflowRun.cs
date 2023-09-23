@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using System.Globalization;
+
+[DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class ArtifactWorkflowRun
 {
     /// <summary>
@@ -24,4 +28,6 @@ public class ArtifactWorkflowRun
     /// The head Sha
     /// </summary>
     public string HeadSha { get; private set; }
+    
+    internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0}", Id);
 }

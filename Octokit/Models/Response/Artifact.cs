@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Globalization;
 
+[DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Artifact
 {
     /// <summary>
@@ -56,4 +59,6 @@ public class Artifact
     /// The workflow from where the artifact was created
     /// </summary>
     public ArtifactWorkflowRun WorkflowRun { get; private set; }
+    
+    internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0}", Id);
 }
