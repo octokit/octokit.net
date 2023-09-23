@@ -19,6 +19,8 @@ namespace Octokit
         {
         }
 
+        /// <inheritdoc cref="IActionsArtifactsClient.ListArtifacts"/>
+        [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts")]
         public Task<ListArtifactsResponse> ListArtifacts(string owner, string repository)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -27,6 +29,8 @@ namespace Octokit
             return ApiConnection.Get<ListArtifactsResponse>(ApiUrls.ListArtifacts(owner, repository), null);
         }
 
+        /// <inheritdoc cref="IActionsArtifactsClient.GetArtifact"/>
+        [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}")]
         public Task<Artifact> GetArtifact(string owner, string repository, int artifactId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -36,6 +40,8 @@ namespace Octokit
             return ApiConnection.Get<Artifact>(ApiUrls.Artifact(owner, repository, artifactId), null);
         }
 
+        /// <inheritdoc cref="IActionsArtifactsClient.DeleteArtifact"/>
+        [ManualRoute("DELETE", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}")]
         public Task DeleteArtifact(string owner, string repository, int artifactId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -45,6 +51,8 @@ namespace Octokit
             return ApiConnection.Delete(ApiUrls.Artifact(owner, repository, artifactId), null);
         }
 
+        /// <inheritdoc cref="IActionsArtifactsClient.DownloadArtifact"/>
+        [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}/{archive_format}")]
         public Task<Stream> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -55,6 +63,8 @@ namespace Octokit
             return ApiConnection.GetRawStream(ApiUrls.DownloadArtifact(owner, repository, artifactId, archiveFormat), null);
         }
 
+        /// <inheritdoc cref="IActionsArtifactsClient.ListWorkflowArtifacts"/>
+        [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/artifacts")]
         public Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));

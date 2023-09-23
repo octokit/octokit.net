@@ -11,10 +11,49 @@ namespace Octokit
     /// </remarks>
     public interface IActionsArtifactsClient
     {
+        /// <summary>
+        /// Lists artifacts for a repository
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="repository"></param>
+        /// <returns></returns>
         Task<ListArtifactsResponse> ListArtifacts(string owner, string repository);
+        
+        /// <summary>
+        /// Gets the specified artifact
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="repository"></param>
+        /// <param name="artifactId"></param>
+        /// <returns></returns>
         Task<Artifact> GetArtifact(string owner, string repository, int artifactId);
+        
+        /// <summary>
+        /// Deletes the specified artifact
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="repository"></param>
+        /// <param name="artifactId"></param>
+        /// <returns></returns>
         Task DeleteArtifact(string owner, string repository, int artifactId);
+        
+        /// <summary>
+        /// Downloads the specified artifact's contents
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="repository"></param>
+        /// <param name="artifactId"></param>
+        /// <param name="archiveFormat"></param>
+        /// <returns></returns>
         Task<Stream> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat);
+        
+        /// <summary>
+        /// Lists the artifacts for a specific workflow run
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="repository"></param>
+        /// <param name="runId"></param>
+        /// <returns></returns>
         Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId);
     }
 }
