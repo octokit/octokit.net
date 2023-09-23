@@ -83,25 +83,24 @@ namespace Octokit.Internal
                 "application/x-gzip" ,
                 "application/octet-stream"};
 
-            using (var content = responseMessage.Content)
+            var content = responseMessage.Content;
+            if (content != null)
             {
-                if (content != null)
-                {
-                    contentType = GetContentMediaType(responseMessage.Content);
+                contentType = GetContentMediaType(content);
 
-                    if (contentType != null && (contentType.StartsWith("image/") || binaryContentTypes
+                if (contentType != null && (contentType.StartsWith("image/") || binaryContentTypes
                         .Any(item => item.Equals(contentType, StringComparison.OrdinalIgnoreCase))))
-                    {
-                        responseBody = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        responseBody = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    }
-
-                    if (!(preprocessResponseBody is null))
-                        responseBody = preprocessResponseBody(responseBody);
+                {
+                    responseBody = await content.ReadAsStreamAsync().ConfigureAwait(false);
                 }
+                else
+                {
+                    responseBody = await content.ReadAsStringAsync().ConfigureAwait(false);
+                    content.Dispose();
+                }
+
+                if (!(preprocessResponseBody is null))
+                    responseBody = preprocessResponseBody(responseBody);
             }
 
             var responseHeaders = responseMessage.Headers.ToDictionary(h => h.Key, h => h.Value.First());

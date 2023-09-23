@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -44,14 +45,14 @@ namespace Octokit
             return ApiConnection.Delete(ApiUrls.Artifact(owner, repository, artifactId), null);
         }
 
-        public Task<byte[]> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat)
+        public Task<Stream> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
             Ensure.ArgumentNotNullOrDefault(artifactId, nameof(artifactId));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(archiveFormat));
             
-            return ApiConnection.GetRaw(ApiUrls.DownloadArtifact(owner, repository, artifactId, archiveFormat), null);
+            return ApiConnection.GetRawStream(ApiUrls.DownloadArtifact(owner, repository, artifactId, archiveFormat), null);
         }
 
         public Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId)
