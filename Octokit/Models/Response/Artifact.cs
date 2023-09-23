@@ -5,6 +5,25 @@ using System.Globalization;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class Artifact
 {
+    public Artifact()
+    {
+    }
+    
+    public Artifact(int id, string nodeId, string name, int sizeInBytes, string url, string archiveDownloadUrl, bool expired, DateTime createdAt, DateTime expiresAt, DateTime updatedAt, ArtifactWorkflowRun workflowRun)
+    {
+        Id = id;
+        NodeId = nodeId;
+        Name = name;
+        SizeInBytes = sizeInBytes;
+        Url = url;
+        ArchiveDownloadUrl = archiveDownloadUrl;
+        Expired = expired;
+        CreatedAt = createdAt;
+        ExpiresAt = expiresAt;
+        UpdatedAt = updatedAt;
+        WorkflowRun = workflowRun;
+    }
+    
     /// <summary>
     /// The artifact Id
     /// </summary>

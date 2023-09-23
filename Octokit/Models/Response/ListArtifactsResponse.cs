@@ -5,6 +5,16 @@ using System.Globalization;
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class ListArtifactsResponse
 {
+    public ListArtifactsResponse()
+    {
+    }
+    
+    public ListArtifactsResponse(int totalCount, IReadOnlyList<Artifact> artifacts)
+    {
+        TotalCount = totalCount;
+        Artifacts = artifacts;
+    }
+
     /// <summary>
     /// The number of artifacts found
     /// </summary>
