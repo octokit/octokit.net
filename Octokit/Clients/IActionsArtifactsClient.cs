@@ -17,7 +17,7 @@ namespace Octokit
         /// <param name="owner"></param>
         /// <param name="repository"></param>
         /// <returns></returns>
-        Task<ListArtifactsResponse> ListArtifacts(string owner, string repository);
+        Task<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null);
         
         /// <summary>
         /// Gets the specified artifact
@@ -54,6 +54,6 @@ namespace Octokit
         /// <param name="repository"></param>
         /// <param name="runId"></param>
         /// <returns></returns>
-        Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId);
+        Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId, ListArtifactsRequest listArtifactsRequest = null);
     }
 }

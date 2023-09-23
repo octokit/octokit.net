@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reactive;
-using System.Threading.Tasks;
 
 namespace Octokit.Reactive
 {
@@ -13,7 +12,7 @@ namespace Octokit.Reactive
     /// </remarks>
     public interface IObservableActionsArtifactsClient
     {
-        IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository);
+        IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null);
         
         /// <summary>
         /// Gets the specified artifact
@@ -50,6 +49,6 @@ namespace Octokit.Reactive
         /// <param name="repository"></param>
         /// <param name="runId"></param>
         /// <returns></returns>
-        IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId);
+        IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId, ListArtifactsRequest listArtifactsRequest = null);
     }
 }

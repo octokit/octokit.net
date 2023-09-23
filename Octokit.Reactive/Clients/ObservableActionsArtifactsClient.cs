@@ -21,9 +21,9 @@ namespace Octokit.Reactive
         }
 
         /// <inheritdoc/>
-        public IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository)
+        public IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null)
         {
-            return _client.ListArtifacts(owner, repository).ToObservable();
+            return _client.ListArtifacts(owner, repository, listArtifactsRequest).ToObservable();
         }
 
         /// <inheritdoc/>
@@ -45,9 +45,9 @@ namespace Octokit.Reactive
         }
         
         /// <inheritdoc/>
-        public IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId)
+        public IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId, ListArtifactsRequest listArtifactsRequest = null)
         {
-            return _client.ListWorkflowArtifacts(owner, repository, runId).ToObservable();
+            return _client.ListWorkflowArtifacts(owner, repository, runId, listArtifactsRequest).ToObservable();
         }
     }
 }
