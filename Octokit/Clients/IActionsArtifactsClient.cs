@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -11,5 +12,10 @@ namespace Octokit
     /// </remarks>
     public interface IActionsArtifactsClient
     {
+        Task<ListArtifactsResponse> ListArtifacts(string owner, string repository);
+        Task<Artifact> GetArtifact(string owner, string repository, int artifactId);
+        Task DeleteArtifact(string owner, string repository, int artifactId);
+        Task<byte[]> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat);
+        Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId);
     }
 }
