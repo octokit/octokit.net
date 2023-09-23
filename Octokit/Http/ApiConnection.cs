@@ -140,7 +140,7 @@ namespace Octokit
             return response.Body;
         }
         
-        /// <inheritdoc cref="IApiConnection.GetRawStream"/>
+        /// <inheritdoc/>
         public async Task<Stream> GetRawStream(Uri uri, IDictionary<string, string> parameters)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
