@@ -19,7 +19,7 @@ namespace Octokit
         {
         }
 
-        /// <inheritdoc cref="IActionsArtifactsClient.ListArtifacts"/>
+        /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts")]
         public Task<ListArtifactsResponse> ListArtifacts(string owner, string repository)
         {
@@ -29,7 +29,7 @@ namespace Octokit
             return ApiConnection.Get<ListArtifactsResponse>(ApiUrls.ListArtifacts(owner, repository), null);
         }
 
-        /// <inheritdoc cref="IActionsArtifactsClient.GetArtifact"/>
+        /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}")]
         public Task<Artifact> GetArtifact(string owner, string repository, int artifactId)
         {
@@ -40,7 +40,7 @@ namespace Octokit
             return ApiConnection.Get<Artifact>(ApiUrls.Artifact(owner, repository, artifactId), null);
         }
 
-        /// <inheritdoc cref="IActionsArtifactsClient.DeleteArtifact"/>
+        /// <inheritdoc/>
         [ManualRoute("DELETE", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}")]
         public Task DeleteArtifact(string owner, string repository, int artifactId)
         {
@@ -51,7 +51,7 @@ namespace Octokit
             return ApiConnection.Delete(ApiUrls.Artifact(owner, repository, artifactId), null);
         }
 
-        /// <inheritdoc cref="IActionsArtifactsClient.DownloadArtifact"/>
+        /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}/{archive_format}")]
         public Task<Stream> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat)
         {
@@ -63,7 +63,7 @@ namespace Octokit
             return ApiConnection.GetRawStream(ApiUrls.DownloadArtifact(owner, repository, artifactId, archiveFormat), null);
         }
 
-        /// <inheritdoc cref="IActionsArtifactsClient.ListWorkflowArtifacts"/>
+        /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/artifacts")]
         public Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId)
         {
