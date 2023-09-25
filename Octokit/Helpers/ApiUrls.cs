@@ -5505,7 +5505,7 @@ namespace Octokit
         /// <returns></returns>
         public static Uri DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat)
         {
-            return "repos/{0}/{1}/actions/artifacts/{2}/{3}".FormatUri(owner, repository, artifactId);
+            return "repos/{0}/{1}/actions/artifacts/{2}/{3}".FormatUri(owner, repository, artifactId, archiveFormat);
         }
         
         /// <summary>
