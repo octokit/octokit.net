@@ -126,7 +126,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(repositoryId), null, options);
+            return _connection.GetAndFlattenAllPages<UserStar>(ApiUrls.Stargazers(repositoryId), null, AcceptHeaders.StarJson, options);
         }
 
         /// <summary>
