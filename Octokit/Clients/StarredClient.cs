@@ -117,7 +117,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(owner, name), null, options);
+            return ApiConnection.GetAll<UserStar>(ApiUrls.Stargazers(owner, name), null, AcceptHeaders.StarJson, options);
         }
 
         /// <summary>
