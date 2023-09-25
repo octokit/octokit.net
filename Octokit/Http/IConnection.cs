@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +30,15 @@ namespace Octokit
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         /// <remarks>The <see cref="IResponse.Body"/> property will be <c>null</c> if the <paramref name="uri"/> points to a directory instead of a file</remarks>
         Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters);
+        
+        /// <summary>
+        /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing raw data.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="parameters">Querystring parameters for the request</param>
+        /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
+        /// <remarks>The <see cref="IResponse.Body"/> property will be <c>null</c> if the <paramref name="uri"/> points to a directory instead of a file</remarks>
+        Task<IApiResponse<Stream>> GetRawStream(Uri uri, IDictionary<string, string> parameters);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request.
