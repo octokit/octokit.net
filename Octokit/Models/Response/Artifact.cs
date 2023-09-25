@@ -9,7 +9,7 @@ public class Artifact
     {
     }
     
-    public Artifact(int id, string nodeId, string name, int sizeInBytes, string url, string archiveDownloadUrl, bool expired, DateTime createdAt, DateTime expiresAt, DateTime updatedAt, ArtifactWorkflowRun workflowRun)
+    public Artifact(long id, string nodeId, string name, int sizeInBytes, string url, string archiveDownloadUrl, bool expired, DateTime createdAt, DateTime expiresAt, DateTime updatedAt, ArtifactWorkflowRun workflowRun)
     {
         Id = id;
         NodeId = nodeId;
@@ -27,7 +27,7 @@ public class Artifact
     /// <summary>
     /// The artifact Id
     /// </summary>
-    public int Id { get; private set; }
+    public long Id { get; private set; }
     
     /// <summary>
     /// The artifact node Id

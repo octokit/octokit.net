@@ -8,7 +8,7 @@ public class ArtifactWorkflowRun
     {
     }
     
-    public ArtifactWorkflowRun(int id, int repositoryId, int headRepositoryId, string headBranch, string headSha)
+    public ArtifactWorkflowRun(long id, long repositoryId, long headRepositoryId, string headBranch, string headSha)
     {
         Id = id;
         RepositoryId = repositoryId;
@@ -20,17 +20,17 @@ public class ArtifactWorkflowRun
     /// <summary>
     /// The workflow run Id
     /// </summary>
-    public int Id { get; private set; }
+    public long Id { get; private set; }
     
     /// <summary>
     /// The repository Id
     /// </summary>
-    public int RepositoryId { get; private set; }
+    public long RepositoryId { get; private set; }
     
     /// <summary>
     /// The head repository Id
     /// </summary>
-    public int HeadRepositoryId { get; private set; }
+    public long HeadRepositoryId { get; private set; }
     
     /// <summary>
     /// The head branch
