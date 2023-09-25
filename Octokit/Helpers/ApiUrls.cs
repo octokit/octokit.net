@@ -5495,13 +5495,14 @@ namespace Octokit
         {
             return "repos/{0}/{1}/actions/artifacts/{2}".FormatUri(owner, repository, artifactId);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> to download the specified artifact.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repository">The name of the repository</param>
         /// <param name="artifactId">The id of the artifact</param>
+        /// <param name="archiveFormat">The archive format e.g. zip</param>
         /// <returns></returns>
         public static Uri DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat)
         {
