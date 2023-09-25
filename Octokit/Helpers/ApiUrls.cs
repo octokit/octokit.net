@@ -5491,7 +5491,7 @@ namespace Octokit
         /// <param name="repository">The name of the repository</param>
         /// <param name="artifactId">The id of the artifact</param>
         /// <returns></returns>
-        public static Uri Artifact(string owner, string repository, int artifactId)
+        public static Uri Artifact(string owner, string repository, long artifactId)
         {
             return "repos/{0}/{1}/actions/artifacts/{2}".FormatUri(owner, repository, artifactId);
         }
@@ -5503,7 +5503,7 @@ namespace Octokit
         /// <param name="repository">The name of the repository</param>
         /// <param name="artifactId">The id of the artifact</param>
         /// <returns></returns>
-        public static Uri DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat)
+        public static Uri DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat)
         {
             return "repos/{0}/{1}/actions/artifacts/{2}/{3}".FormatUri(owner, repository, artifactId);
         }
@@ -5515,7 +5515,7 @@ namespace Octokit
         /// <param name="repository">The name of the repository</param>
         /// <param name="runId">The id of the workflow run</param>
         /// <returns></returns>
-        public static Uri ListWorkflowArtifacts(string owner, string repository, int runId)
+        public static Uri ListWorkflowArtifacts(string owner, string repository, long runId)
         {
             return "repos/{0}/{1}/actions/runs/{2}/artifacts".FormatUri(owner, repository, runId);
         }

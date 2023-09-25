@@ -26,7 +26,7 @@ namespace Octokit
         /// <param name="repository"></param>
         /// <param name="artifactId"></param>
         /// <returns></returns>
-        Task<Artifact> GetArtifact(string owner, string repository, int artifactId);
+        Task<Artifact> GetArtifact(string owner, string repository, long artifactId);
         
         /// <summary>
         /// Deletes the specified artifact
@@ -35,7 +35,7 @@ namespace Octokit
         /// <param name="repository"></param>
         /// <param name="artifactId"></param>
         /// <returns></returns>
-        Task DeleteArtifact(string owner, string repository, int artifactId);
+        Task DeleteArtifact(string owner, string repository, long artifactId);
         
         /// <summary>
         /// Downloads the specified artifact's contents
@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="artifactId"></param>
         /// <param name="archiveFormat"></param>
         /// <returns></returns>
-        Task<Stream> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat);
+        Task<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat);
         
         /// <summary>
         /// Lists the artifacts for a specific workflow run
@@ -54,6 +54,6 @@ namespace Octokit
         /// <param name="repository"></param>
         /// <param name="runId"></param>
         /// <returns></returns>
-        Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId, ListArtifactsRequest listArtifactsRequest = null);
+        Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null);
     }
 }

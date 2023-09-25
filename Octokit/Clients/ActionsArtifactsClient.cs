@@ -31,7 +31,7 @@ namespace Octokit
 
         /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}")]
-        public Task<Artifact> GetArtifact(string owner, string repository, int artifactId)
+        public Task<Artifact> GetArtifact(string owner, string repository, long artifactId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
@@ -42,7 +42,7 @@ namespace Octokit
 
         /// <inheritdoc/>
         [ManualRoute("DELETE", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}")]
-        public Task DeleteArtifact(string owner, string repository, int artifactId)
+        public Task DeleteArtifact(string owner, string repository, long artifactId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
@@ -53,7 +53,7 @@ namespace Octokit
 
         /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repository}/actions/artifacts/{artifact_id}/{archive_format}")]
-        public Task<Stream> DownloadArtifact(string owner, string repository, int artifactId, string archiveFormat)
+        public Task<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
@@ -65,7 +65,7 @@ namespace Octokit
 
         /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/artifacts")]
-        public Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, int runId, ListArtifactsRequest listArtifactsRequest = null)
+        public Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
