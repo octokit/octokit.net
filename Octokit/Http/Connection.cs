@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -235,6 +236,19 @@ namespace Octokit
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
             return GetRaw(new Request
+            {
+                Method = HttpMethod.Get,
+                BaseAddress = BaseAddress,
+                Endpoint = uri.ApplyParameters(parameters)
+            });
+        }
+        
+        /// <inheritdoc/>
+        public Task<IApiResponse<Stream>> GetRawStream(Uri uri, IDictionary<string, string> parameters)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+
+            return GetRawStream(new Request
             {
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
@@ -686,7 +700,30 @@ namespace Octokit
         {
             request.Headers.Add("Accept", AcceptHeaders.RawContentMediaType);
             var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
-            return new ApiResponse<byte[]>(response, response.Body as byte[]);
+            
+            return new ApiResponse<byte[]>(response, await StreamToByteArray(response.Body as Stream));
+        }
+        
+        async Task<IApiResponse<Stream>> GetRawStream(IRequest request)
+        {
+            request.Headers.Add("Accept", AcceptHeaders.RawContentMediaType);
+            var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
+            
+            return new ApiResponse<Stream>(response, response.Body as Stream);
+        }
+
+        async Task<byte[]> StreamToByteArray(Stream stream)
+        {
+            if (stream is MemoryStream memoryStream)
+            {
+                return memoryStream.ToArray();                
+            }
+            
+            using (var ms = new MemoryStream())
+            {
+                await stream.CopyToAsync(ms);
+                return ms.ToArray();
+            }
         }
 
         async Task<IApiResponse<T>> Run<T>(IRequest request, CancellationToken cancellationToken, Func<object, object> preprocessResponseBody = null)

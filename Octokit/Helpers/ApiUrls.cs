@@ -5472,5 +5472,53 @@ namespace Octokit
         {
             return "user/codespaces/{0}/stop".FormatUri(codespaceName);
         }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that lists the artifacts for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri ListArtifacts(string owner, string repository)
+        {
+            return "repos/{0}/{1}/actions/artifacts".FormatUri(owner, repository);
+        }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified artifact.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <param name="artifactId">The id of the artifact</param>
+        /// <returns></returns>
+        public static Uri Artifact(string owner, string repository, long artifactId)
+        {
+            return "repos/{0}/{1}/actions/artifacts/{2}".FormatUri(owner, repository, artifactId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to download the specified artifact.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <param name="artifactId">The id of the artifact</param>
+        /// <param name="archiveFormat">The archive format e.g. zip</param>
+        /// <returns></returns>
+        public static Uri DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat)
+        {
+            return "repos/{0}/{1}/actions/artifacts/{2}/{3}".FormatUri(owner, repository, artifactId, archiveFormat);
+        }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to list the artifacts for a workflow.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <param name="runId">The id of the workflow run</param>
+        /// <returns></returns>
+        public static Uri ListWorkflowArtifacts(string owner, string repository, long runId)
+        {
+            return "repos/{0}/{1}/actions/runs/{2}/artifacts".FormatUri(owner, repository, runId);
+        }
     }
 }
