@@ -443,7 +443,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps("fake", "repo", options);
 
-                connection.Received().GetAll<UserStar>(endpoint, null, options);
+                connection.Received().GetAll<UserStar>(endpoint, null, AcceptHeaders.StarJson, options);
             }
 
             [Fact]
@@ -462,7 +462,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps(1, options);
 
-                connection.Received().GetAll<UserStar>(endpoint, null, options);
+                connection.Received().GetAll<UserStar>(endpoint, null, AcceptHeaders.StarJson, options);
             }
 
             [Fact]
