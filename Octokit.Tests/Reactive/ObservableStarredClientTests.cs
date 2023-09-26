@@ -102,7 +102,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps("fight", "club");
 
-                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, AcceptHeaders.StarJson);
             }
 
             [Fact]
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps(1);
 
-                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, AcceptHeaders.StarJson);
             }
 
             [Fact]
@@ -137,7 +137,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps("fight", "club", options);
 
-                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), AcceptHeaders.StarJson);
             }
 
             [Fact]
@@ -158,7 +158,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps(1, options);
 
-                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), AcceptHeaders.StarJson);
             }
 
             [Fact]

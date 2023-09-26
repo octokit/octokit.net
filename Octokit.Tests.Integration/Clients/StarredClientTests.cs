@@ -736,6 +736,9 @@ namespace Octokit.Tests.Integration.Clients
 
             var userStar = users.FirstOrDefault(star => star.User.Login == _repositoryContext.RepositoryOwner);
             Assert.NotNull(userStar);
+            Assert.NotEqual(DateTimeOffset.MinValue, userStar.StarredAt);
+            Assert.NotNull(userStar.User);
+            Assert.NotNull(userStar.User.Login);
 
             Assert.True(DateTimeOffset.UtcNow.Subtract(userStar.StarredAt) < TimeSpan.FromMinutes(5));
         }
