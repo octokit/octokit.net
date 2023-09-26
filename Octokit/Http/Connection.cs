@@ -783,9 +783,11 @@ namespace Octokit
 
         static Exception GetExceptionForForbidden(IResponse response)
         {
-            string body = response.Body as string ?? "";
+            var body = response.Body as string ?? "";
 
-            if (body.Contains("rate limit exceeded"))
+            if (body.Contains("rate limit exceeded")
+                || (response.Headers.ContainsKey(ResponseHeaders.RateLimitRemaining)
+                    && response.Headers[ResponseHeaders.RateLimitRemaining] == "0"))
             {
                 return new RateLimitExceededException(response);
             }
