@@ -412,7 +412,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps("fake", "repo");
 
-                connection.Received().GetAll<UserStar>(endpoint, null, Args.ApiOptions);
+                connection.Received().GetAll<UserStar>(endpoint, null, AcceptHeaders.StarJson, Args.ApiOptions);
             }
 
             [Fact]
@@ -424,7 +424,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllStargazersWithTimestamps(1);
 
-                connection.Received().GetAll<UserStar>(endpoint, null, Args.ApiOptions);
+                connection.Received().GetAll<UserStar>(endpoint, null, AcceptHeaders.StarJson, Args.ApiOptions);
             }
 
             [Fact]
