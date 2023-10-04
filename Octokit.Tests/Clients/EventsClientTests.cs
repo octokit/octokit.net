@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
+using Octokit.Tests.Helpers;
 using Xunit;
 
 using static Octokit.Internal.TestSetup;
@@ -880,6 +881,9 @@ namespace Octokit.Tests.Clients
                         head = "head",
                         @ref = "ref",
                         size = 1337,
+                        before = "before",
+                        distinct_size = 1337,
+                        push_id = 1337,
                         commits = new []
                         {
                             new
@@ -902,6 +906,9 @@ namespace Octokit.Tests.Clients
             Assert.NotNull(payload.Commits);
             Assert.Equal(1, payload.Commits.Count);
             Assert.Equal("message", payload.Commits.FirstOrDefault().Message);
+            Assert.Equal("before", payload.Before);
+            Assert.Equal(1337, payload.DistinctSize);
+            Assert.Equal(1337, payload.PushId);
         }
 
         [Fact]
