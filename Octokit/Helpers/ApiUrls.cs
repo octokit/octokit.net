@@ -5520,5 +5520,17 @@ namespace Octokit
         {
             return "repos/{0}/{1}/actions/runs/{2}/artifacts".FormatUri(owner, repository, runId);
         }
+
+		/// <summary>
+		/// Returns the <see cref="Uri"/> to rename a repository branch.
+		/// </summary>
+		/// <param name="owner">The owner of the repository</param>
+		/// <param name="repository">The name of the repository</param>
+		/// <param name="branch">The name of the branch to rename</param>
+		/// <returns></returns>
+		public static Uri RepositoryBranchRename(string owner, string repository, string branch)
+        {
+            return "repos/{0}/{1}/branches/{2}/rename".FormatUri(owner, repository, branch);
+        }
     }
 }
