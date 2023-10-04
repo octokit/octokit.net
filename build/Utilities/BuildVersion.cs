@@ -46,7 +46,7 @@ public class BuildVersion
         // Run in interactive mode to get the properties for the rest of the script
         var assertedversions = GitVersionRunner.Run(context, GitVersionOutput.Json);
 
-        version = "9.2.0"; // assertedversions.MajorMinorPatch;
+        version = assertedversions.MajorMinorPatch;
         semVersion = assertedversions.LegacySemVerPadded;
         fullSemVer = assertedversions.FullSemVer;
 
