@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Octokit;
@@ -1041,6 +1042,25 @@ public class RepositoriesClientTests
                 var repository = await github.Repository.Get(context.RepositoryId);
 
                 Assert.NotNull(repository.DeleteBranchOnMerge);
+            }
+        }
+
+        [IntegrationTest]
+        public async Task ReceivesCorrectArchiveUrl()
+        {
+            var github = new GitHubClient(new ProductHeaderValue("OctokitTests"),
+            new ObservableCredentialProvider());
+
+            var repo = await github.Repository.Get("octokit", "octokit.net");
+
+            Assert.Equal("https://api.github.com/repos/octokit/octokit.net/{archive_format}{/ref}", repo.ArchiveUrl);
+        }
+
+        class ObservableCredentialProvider : ICredentialStore
+        {
+            public async Task<Credentials> GetCredentials()
+            {
+                return await Observable.Return(Helper.Credentials);
             }
         }
     }
