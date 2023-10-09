@@ -9,11 +9,19 @@
     public interface IRepositoryActionsClient
     {
         /// <summary>
-        /// Client for GitHub's Repository Actions API
+        /// Client for GitHub's Repository Actions Secrets API
         /// </summary>
         /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/reference/actions">Deployments API documentation</a> for more details
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions">Secrets API documentation</a> for more details
         /// </remarks>
         IRepositorySecretsClient Secrets { get; }
+        
+        /// <summary>
+        /// Client for GitHub's Repository Actions Variables API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions">Variables API documentation</a> for more details
+        /// </remarks>
+        IRepositoryVariablesClient Variables { get; }
     }
 }

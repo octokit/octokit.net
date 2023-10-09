@@ -15,6 +15,7 @@
         public OrganizationActionsClient(IApiConnection apiConnection) : base(apiConnection)
         {
             Secrets = new OrganizationSecretsClient(apiConnection);
+            Variables = new OrganizationVariablesClient(apiConnection);
         }
 
         /// <summary>
@@ -24,5 +25,13 @@
         /// See the <a href="https://docs.github.com/v3/actions#secrets"> Secrets API documentation</a> for more information.
         /// </remarks>
         public IOrganizationSecretsClient Secrets { get; private set; }
+
+        /// <summary>
+        /// Returns a client to manage organization variables.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/v3/actions#variables"> Variables API documentation</a> for more information.
+        /// </remarks>
+        public IOrganizationVariablesClient Variables { get; private set; }
     }
 }

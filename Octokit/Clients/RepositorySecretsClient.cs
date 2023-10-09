@@ -8,7 +8,7 @@ namespace Octokit
     public class RepositorySecretsClient : ApiClient, IRepositorySecretsClient
     {
         /// <summary>
-        /// Initializes a new GitHub Repository Branches API client.
+        /// Initializes a new GitHub Repository Secrets API client.
         /// </summary>
         /// <param name="apiConnection">An API connection</param>
         public RepositorySecretsClient(IApiConnection apiConnection) : base(apiConnection)

@@ -15,5 +15,13 @@
         /// See the <a href="https://docs.github.com/en/rest/reference/actions#secrets"> Secrets API documentation</a> for more information.
         /// </remarks>
         IOrganizationSecretsClient Secrets { get; }
+        
+        /// <summary>
+        /// Returns a client to manage organization variables.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions#secrets"> Secrets API documentation</a> for more information.
+        /// </remarks>
+        IOrganizationVariablesClient Variables { get; }
     }
 }
