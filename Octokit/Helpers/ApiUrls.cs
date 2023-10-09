@@ -4586,6 +4586,40 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository variables for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <param name="variable">The name of the variable</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository variables for the repository</returns>
+        public static Uri RepositoryVariable(string owner, string repo, string variable)
+        {
+            return "repos/{0}/{1}/actions/variables/{2}".FormatUri(owner, repo, variable);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository variables for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository variables for the repository</returns>
+        public static Uri RepositoryVariables(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/variables".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the organization variables for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the organization variables for the repository</returns>
+        public static Uri RepositoryOrganizationVariables(string owner, string repo)
+        {
+            return "repos/{0}/{1}/actions/organization-variables".FormatUri(owner, repo);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all emojis in
         /// response to a GET request.
         /// </summary>

@@ -19,6 +19,7 @@
             _connection = client.Connection;
 
             Secrets = new ObservableRepositorySecretsClient(client);
+            Variables = new ObservableRepositoryVariablesClient(client);
         }
 
         /// <summary>
@@ -28,5 +29,13 @@
         /// See the <a href="https://docs.github.com/en/rest/reference/actions">Deployments API documentation</a> for more details
         /// </remarks>
         public IObservableRepositorySecretsClient Secrets { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Actions API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions">Deployments API documentation</a> for more details
+        /// </remarks>
+        public IObservableRepositoryVariablesClient Variables { get; private set; }
     }
 }
