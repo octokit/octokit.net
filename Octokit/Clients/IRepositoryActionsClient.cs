@@ -15,5 +15,13 @@
         /// See the <a href="https://docs.github.com/en/rest/reference/actions">Deployments API documentation</a> for more details
         /// </remarks>
         IRepositorySecretsClient Secrets { get; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Actions API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/reference/actions">Deployments API documentation</a> for more details
+        /// </remarks>
+        IRepositoryVariablesClient Variables { get; }
     }
 }
