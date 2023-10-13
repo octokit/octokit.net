@@ -1400,50 +1400,49 @@ namespace Octokit.Tests.Clients
             }
         }
 
-		public class TheRenameBranchMethod
-		{
-			[Fact]
-			public void RequestsTheCorrectUrl()
-			{
-				var connection = Substitute.For<IApiConnection>();
-				var client = new RepositoryBranchesClient(connection);
+    public class TheRenameBranchMethod
+    {
+      [Fact]
+      public void RequestsTheCorrectUrl()
+      {
+        var connection = Substitute.For<IApiConnection>();
+        var client = new RepositoryBranchesClient(connection);
 
-				client.RenameBranch("owner", "repo", "branch", "new_name");
+        client.RenameBranch("owner", "repo", "branch", "new_name");
 
-				connection.Received()
-					.Post<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/rename"), Arg.Any<object>());
-			}
+        connection.Received()
+        .Post<Branch>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/branches/branch/rename"), Arg.Any<object>());
+      }
 
+      [Fact]
+      public async Task PassesTheCorrectNewBranchParameter()
+      {
+        var connection = Substitute.For<IApiConnection>();
+        var client = new RepositoryBranchesClient(connection);
+        var newBranch = "a";
 
-			[Fact]
-			public async Task PassesTheCorrectNewBranchParameter()
-			{
-				var connection = Substitute.For<IApiConnection>();
-				var client = new RepositoryBranchesClient(connection);
-				var newBranch = "a";
+        await client.RenameBranch("owner", "repo", "branch", newBranch);
 
-				await client.RenameBranch("owner", "repo", "branch", newBranch);
+        connection.Received().Post<Branch>(
+          Arg.Any<Uri>(),
+          Arg.Is<object>(o => o.GetType().GetProperty("new_name").GetValue(o).ToString() == newBranch));
+      }
 
-				connection.Received().Post<Branch>(
-					Arg.Any<Uri>(),
-					Arg.Is<object>(o => o.GetType().GetProperty("new_name").GetValue(o).ToString() == newBranch));
-			}
+      [Fact]
+      public async Task EnsuresNonNullArguments()
+      {
+        var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
 
-			[Fact]
-			public async Task EnsuresNonNullArguments()
-			{
-				var client = new RepositoryBranchesClient(Substitute.For<IApiConnection>());
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch(null, "repo", "branch", "new_name"));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch("owner", null, "branch", "new_name"));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch("owner", "repo", null, "new_name"));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch("owner", "repo", "branch", null));
 
-				await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch(null, "repo", "branch", "new_name"));
-				await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch("owner", null, "branch", "new_name"));
-				await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch("owner", "repo", null, "new_name"));
-				await Assert.ThrowsAsync<ArgumentNullException>(() => client.RenameBranch("owner", "repo", "branch", null));
-
-				await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("", "repo", "branch", "new_name"));
-				await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("owner", "", "branch", "new_name"));
-				await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("owner", "repo", "", "new_name"));
-				await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("owner", "repo", "branch", ""));
-			}
+        await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("", "repo", "branch", "new_name"));
+        await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("owner", "", "branch", "new_name"));
+        await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("owner", "repo", "", "new_name"));
+        await Assert.ThrowsAsync<ArgumentException>(() => client.RenameBranch("owner", "repo", "branch", ""));
+      }
 		}
 	}
 }

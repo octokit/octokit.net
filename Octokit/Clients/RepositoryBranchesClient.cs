@@ -1177,25 +1177,25 @@ namespace Octokit
             return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users);
         }
 
-		/// <summary>
-		/// Renames a branch in a repository
-		/// </summary>
-		/// <remarks>
-		/// See the <a href="https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#rename-a-branch">API documentation</a> for more details
-		/// </remarks>
-		/// <param name="owner">The owner of the repository</param>
-		/// <param name="repository">The name of the repository</param>
-		/// <param name="branch">The name of the branch to rename</param>
-		/// <param name="newName">The new name of the branch</param>
-		[ManualRoute("POST", "/repos/{owner}/{repo}/branches/{branch}/rename")]
+        /// <summary>
+        /// Renames a branch in a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#rename-a-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <param name="branch">The name of the branch to rename</param>
+        /// <param name="newName">The new name of the branch</param>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/branches/{branch}/rename")]
         public Task<Branch> RenameBranch(string owner, string repository, string branch, string newName)
         {
-			Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
-			Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
-			Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
-			Ensure.ArgumentNotNullOrEmptyString(newName, nameof(newName));
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNullOrEmptyString(newName, nameof(newName));
 
             return ApiConnection.Post<Branch>(ApiUrls.RepositoryBranchRename(owner, repository, branch), new { new_name = newName });
-		}
+        }
     }
 }

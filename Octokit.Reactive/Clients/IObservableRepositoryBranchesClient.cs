@@ -644,16 +644,16 @@ namespace Octokit.Reactive
         /// <param name="users">List of users with push access to remove</param>
         IObservable<User> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users);
 
-		/// <summary>
-		/// Renames a branch in a repository
-		/// </summary>
-		/// <remarks>
-		/// See the <a href="https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#rename-a-branch">API documentation</a> for more details
-		/// </remarks>
-		/// <param name="owner">The owner of the repository</param>
-		/// <param name="repository">The name of the repository</param>
-		/// <param name="branch">The name of the branch to rename</param>
-		/// <param name="newName">The new name of the branch</param>
-		IObservable<Branch> RenameBranch(string owner, string repository, string branch, string newName);
-	}
+        /// <summary>
+        /// Renames a branch in a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#rename-a-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <param name="branch">The name of the branch to rename</param>
+        /// <param name="newName">The new name of the branch</param>
+        IObservable<Branch> RenameBranch(string owner, string repository, string branch, string newName);
+    }
 }
