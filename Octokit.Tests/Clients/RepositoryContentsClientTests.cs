@@ -750,7 +750,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repos/org/repo/tarball/";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -764,7 +764,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repositories/1/tarball/";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -778,7 +778,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repos/org/repo/zipball/";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -792,7 +792,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repositories/1/zipball/";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -806,7 +806,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repos/org/repo/zipball/ref";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -820,7 +820,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repositories/1/zipball/ref";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -834,7 +834,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repos/org/repo/zipball/ref";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -848,7 +848,7 @@ namespace Octokit.Tests.Clients
                 const string expectedUri = "repositories/1/zipball/ref";
                 var expectedTimeSpan = TimeSpan.FromMinutes(60);
 
-                connection.Connection.Received().Get<byte[]>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
+                connection.Connection.Received().GetRaw(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), null, Arg.Is<TimeSpan>(span => span == expectedTimeSpan));
             }
 
             [Fact]
@@ -893,7 +893,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<byte[]>>(new ApiResponse<byte[]>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<byte[]>(Arg.Is<Uri>(u => u.ToString() == "repos/org/repo/tarball/"), null)
+                connection.GetRaw(Arg.Is<Uri>(u => u.ToString() == "repos/org/repo/tarball/"), null, TimeSpan.FromMinutes(60))
                     .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
