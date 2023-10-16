@@ -242,7 +242,21 @@ namespace Octokit
                 Endpoint = uri.ApplyParameters(parameters)
             });
         }
-        
+
+        /// <inheritdoc/>
+        public Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, TimeSpan timeout)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+
+            return GetRaw(new Request
+            {
+                Method = HttpMethod.Get,
+                BaseAddress = BaseAddress,
+                Endpoint = uri.ApplyParameters(parameters),
+                Timeout = timeout
+            });
+        }
+
         /// <inheritdoc/>
         public Task<IApiResponse<Stream>> GetRawStream(Uri uri, IDictionary<string, string> parameters)
         {
