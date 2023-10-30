@@ -5506,7 +5506,7 @@ namespace Octokit
         {
             return "user/codespaces/{0}/stop".FormatUri(codespaceName);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that lists the artifacts for a repository.
         /// </summary>
@@ -5517,7 +5517,7 @@ namespace Octokit
         {
             return "repos/{0}/{1}/actions/artifacts".FormatUri(owner, repository);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified artifact.
         /// </summary>
@@ -5542,7 +5542,7 @@ namespace Octokit
         {
             return "repos/{0}/{1}/actions/artifacts/{2}/{3}".FormatUri(owner, repository, artifactId, archiveFormat);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> to list the artifacts for a workflow.
         /// </summary>
@@ -5553,6 +5553,18 @@ namespace Octokit
         public static Uri ListWorkflowArtifacts(string owner, string repository, long runId)
         {
             return "repos/{0}/{1}/actions/runs/{2}/artifacts".FormatUri(owner, repository, runId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to rename a repository branch.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <param name="branch">The name of the branch to rename</param>
+        /// <returns></returns>
+        public static Uri RepositoryBranchRename(string owner, string repository, string branch)
+        {
+            return "repos/{0}/{1}/branches/{2}/rename".FormatUri(owner, repository, branch);
         }
     }
 }
