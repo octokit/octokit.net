@@ -5,7 +5,7 @@ ARG VARIANT="6.0-bullseye"
 FROM mcr.microsoft.com/vscode/devcontainers/dotnet
 
 # "install" the dotnet 5.0 & 6.0 runtime for tests
-COPY --from=mcr.microsoft.com/dotnet/sdk:5.0 /usr/share/dotnet/shared /usr/share/dotnet/shared
+# COPY --from=mcr.microsoft.com/dotnet/sdk:5.0 /usr/share/dotnet/shared /usr/share/dotnet/shared
 COPY --from=mcr.microsoft.com/dotnet/sdk:6.0 /usr/share/dotnet/shared /usr/share/dotnet/shared
 
 # # Add mkdocs for doc generation
