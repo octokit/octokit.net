@@ -9,7 +9,6 @@ namespace Octokit.Tests.Integration.Clients
         public async Task CanRetrieveResourceRateLimits()
         {
             var github = Helper.GetAuthenticatedClient();
-
             var result = await github.RateLimit.GetRateLimits();
 
             // Test the core limits
@@ -25,6 +24,13 @@ namespace Octokit.Tests.Integration.Clients
             Assert.True(result.Resources.Search.Remaining <= result.Resources.Search.Limit);
             Assert.True(result.Resources.Search.ResetAsUtcEpochSeconds > 0);
             Assert.NotEqual(default, result.Resources.Search.Reset);
+
+            // Test the graphql limits
+            Assert.True(result.Resources.Graphql.Limit > 0);
+            Assert.True(result.Resources.Graphql.Remaining > -1);
+            Assert.True(result.Resources.Graphql.Remaining <= result.Resources.Graphql.Limit);
+            Assert.True(result.Resources.Graphql.ResetAsUtcEpochSeconds > 0);
+            Assert.NotEqual(default, result.Resources.Graphql.Reset);
 
             // Test the depreciated rate limits
             Assert.True(result.Rate.Limit > 0);

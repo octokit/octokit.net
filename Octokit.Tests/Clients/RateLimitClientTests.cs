@@ -16,7 +16,8 @@ namespace Octokit.Tests.Clients
                 var rateLimit = new MiscellaneousRateLimit(
                      new ResourceRateLimit(
                          new RateLimit(5000, 4999, 1372700873),
-                         new RateLimit(30, 18, 1372700873)
+                         new RateLimit(30, 18, 1372700873),
+                         new RateLimit(5000, 4999, 1372700873)
                      ),
                      new RateLimit(100, 75, 1372700873)
                  );
@@ -46,6 +47,16 @@ namespace Octokit.Tests.Clients
                     "ddd dd MMM yyyy h:mm:ss tt zzz",
                     CultureInfo.InvariantCulture);
                 Assert.Equal(expectedReset, result.Resources.Search.Reset);
+
+                // Test the graphql limits
+                Assert.Equal(5000, result.Resources.Graphql.Limit);
+                Assert.Equal(4999, result.Resources.Graphql.Remaining);
+                Assert.Equal(1372700873, result.Resources.Graphql.ResetAsUtcEpochSeconds);
+                expectedReset = DateTimeOffset.ParseExact(
+                    "Mon 01 Jul 2013 5:47:53 PM -00:00",
+                    "ddd dd MMM yyyy h:mm:ss tt zzz",
+                    CultureInfo.InvariantCulture);
+                Assert.Equal(expectedReset, result.Resources.Graphql.Reset);
 
                 // Test the depreciated rate limits
                 Assert.Equal(100, result.Rate.Limit);
