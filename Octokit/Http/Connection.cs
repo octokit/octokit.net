@@ -714,8 +714,13 @@ namespace Octokit
         {
             request.Headers.Add("Accept", AcceptHeaders.RawContentMediaType);
             var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
-            
-            return new ApiResponse<byte[]>(response, await StreamToByteArray(response.Body as Stream));
+
+            if (response.Body is Stream stream)
+            {
+                return new ApiResponse<byte[]>(response, await StreamToByteArray(stream));
+            }
+
+            return new ApiResponse<byte[]>(response, response.Body as byte[]);
         }
         
         async Task<IApiResponse<Stream>> GetRawStream(IRequest request)
