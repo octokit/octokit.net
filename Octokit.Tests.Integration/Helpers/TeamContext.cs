@@ -15,7 +15,7 @@ namespace Octokit.Tests.Integration.Helpers
             Invitations = new List<string>();
         }
 
-        private IConnection _connection;
+        private readonly IConnection _connection;
         internal int TeamId { get; private set; }
         internal string TeamName { get; private set; }
 

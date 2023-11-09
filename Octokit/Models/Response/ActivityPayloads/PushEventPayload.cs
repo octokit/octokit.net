@@ -6,6 +6,9 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class PushEventPayload : ActivityPayload
     {
+        public int PushId { get; private set; }
+        public int DistinctSize { get; private set; }
+        public string Before { get; private set; }
         public string Head { get; private set; }
         public string Ref { get; private set; }
         public int Size { get; private set; }

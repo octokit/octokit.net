@@ -19,7 +19,7 @@ namespace Octokit.Tests.Integration.Helpers
             RepositoryDefaultBranch = repo.DefaultBranch;
         }
 
-        private IConnection _connection;
+        private readonly IConnection _connection;
         internal long RepositoryId { get; private set; }
         internal string RepositoryOwner { get; private set; }
         internal string RepositoryName { get; private set; }

@@ -117,10 +117,21 @@ namespace Octokit
         /// <summary>
         /// Optional. Get or set whether to always allow a pull request head branch that is behind its base branch
         /// to be updated even if it is not required to be up to date before merging, or false otherwise.
-        /// The default is null (do not update). The default when created is false. 
+        /// The default is null (do not update). The default when created is false.
         /// Available since GitHub Enterprise 3.1 (2021-05-06)
         /// </summary>
         public bool? AllowUpdateBranch { get; set; }
+
+         /// <summary>
+        /// Optional. Either true to require contributors to sign off on web-based commits, or false to not require contributors to sign off on web-based commits.
+        /// The default when created is false.
+        /// </summary>
+        public bool? WebCommitSignoffRequired { get; set; }
+
+        /// <summary>
+        /// Optional. Gets or sets whether to enable discussions for the repository. The default is null (do not update). The default when created is false.
+        /// </summary>
+        public bool? HasDiscussions { get; set; }
 
         internal string DebuggerDisplay => new SimpleJsonSerializer().Serialize(this);
     }

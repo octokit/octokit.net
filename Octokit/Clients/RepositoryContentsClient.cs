@@ -395,7 +395,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.RepositoryArchiveLink(owner, name, archiveFormat, reference);
 
-            var response = await Connection.Get<byte[]>(endpoint, timeout).ConfigureAwait(false);
+            var response = await Connection.GetRaw(endpoint, null, timeout).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -416,7 +416,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.RepositoryArchiveLink(repositoryId, archiveFormat, reference);
 
-            var response = await Connection.Get<byte[]>(endpoint, timeout).ConfigureAwait(false);
+            var response = await Connection.GetRaw(endpoint, null, timeout).ConfigureAwait(false);
 
             return response.Body;
         }

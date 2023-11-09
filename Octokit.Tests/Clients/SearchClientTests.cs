@@ -998,7 +998,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+label:\"bug\""));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+label:bug"));
             }
 
             [Fact]
@@ -1013,7 +1013,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+label:\"bug\"+label:\"feature\""));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+label:bug+label:feature"));
             }
 
             [Fact]
@@ -1596,7 +1596,7 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<SearchIssuesResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/issues"),
                     Arg.Is<Dictionary<string, string>>(d => d["q"] ==
-                        "something+label:\"bug\"+user:alfhenrik+repo:octokit/octokit.net"));
+                        "something+label:bug+user:alfhenrik+repo:octokit/octokit.net"));
             }
         }
 

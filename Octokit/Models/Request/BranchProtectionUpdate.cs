@@ -26,6 +26,7 @@ namespace Octokit
             RequiredPullRequestReviews = null;
             Restrictions = null;
             EnforceAdmins = false;
+            LockBranch = false;
         }
 
         /// <summary>
@@ -38,6 +39,7 @@ namespace Octokit
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = null;
             EnforceAdmins = false;
+            LockBranch = false;
         }
 
         /// <summary>
@@ -50,18 +52,21 @@ namespace Octokit
             RequiredPullRequestReviews = null;
             Restrictions = restrictions;
             EnforceAdmins = false;
+            LockBranch = false;
         }
 
         /// <summary>
         /// Create a BranchProtection update request
         /// </summary>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
-        public BranchProtectionSettingsUpdate(bool enforceAdmins)
+        /// <param name="lockBranch">Optionally specfies that the branch should be read-only.</param>
+        public BranchProtectionSettingsUpdate(bool enforceAdmins, bool lockBranch = false)
         {
             RequiredStatusChecks = null;
             RequiredPullRequestReviews = null;
             Restrictions = null;
             EnforceAdmins = enforceAdmins;
+            LockBranch = lockBranch;
         }
 
         /// <summary>
@@ -70,12 +75,14 @@ namespace Octokit
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
-        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews, bool enforceAdmins)
+        /// <param name="lockBranch">Optionally specfies that the branch should be read-only.</param>
+        public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks, BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews, bool enforceAdmins, bool lockBranch = false)
         {
             RequiredStatusChecks = requiredStatusChecks;
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = null;
             EnforceAdmins = enforceAdmins;
+            LockBranch = lockBranch;
         }
 
         /// <summary>
@@ -85,15 +92,18 @@ namespace Octokit
         /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
+        /// <param name="lockBranch">Optionally specfies that the branch should be read-only.</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks,
                                               BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews,
                                               BranchProtectionPushRestrictionsUpdate restrictions,
-                                              bool enforceAdmins)
+                                              bool enforceAdmins,
+                                              bool lockBranch = false)
         {
             RequiredStatusChecks = requiredStatusChecks;
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = restrictions;
             EnforceAdmins = enforceAdmins;
+            LockBranch = lockBranch;
         }
 
         /// <summary>
@@ -108,6 +118,7 @@ namespace Octokit
         /// <param name="allowDeletions">Allows deletion of the protected branch</param>
         /// <param name="blockCreations">The restrictions branch protection settings will also block pushes which create new branches</param>
         /// <param name="requiredConversationResolution">Requires all conversations on code to be resolved before a pull request can be merged</param>
+        /// <param name="lockBranch">Optionally specfies that the branch should be read-only.</param>
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks,
                                               BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews,
                                               BranchProtectionPushRestrictionsUpdate restrictions,
@@ -116,12 +127,14 @@ namespace Octokit
                                               bool? allowForcePushes,
                                               bool allowDeletions,
                                               bool blockCreations,
-                                              bool requiredConversationResolution)
+                                              bool requiredConversationResolution,
+                                              bool lockBranch = false)
         {
             RequiredStatusChecks = requiredStatusChecks;
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = restrictions;
             EnforceAdmins = enforceAdmins;
+            LockBranch = lockBranch;
             RequiredLinearHistory = requiredLinearHistory;
             AllowForcePushes = allowForcePushes;
             AllowDeletions = allowDeletions;
@@ -151,6 +164,11 @@ namespace Octokit
         /// Specifies whether the protections applied to this branch also apply to repository admins
         /// </summary>
         public bool EnforceAdmins { get; set; }
+
+        /// <summary>
+        /// Specifies whether this branch should be read-only.
+        /// </summary>
+        public bool LockBranch { get; set; }
 
         /// <summary>
         /// Enforces a linear commit Git history. Default is false.
@@ -183,11 +201,12 @@ namespace Octokit
             get
             {
                 return string.Format(CultureInfo.InvariantCulture,
-                    "RequiredStatusChecks: {0} RequiredPullRequestReviews: {1} Restrictions: {2} EnforceAdmins: {3}",
+                    "RequiredStatusChecks: {0} RequiredPullRequestReviews: {1} Restrictions: {2} EnforceAdmins: {3} LockBranch: {4}",
                     RequiredStatusChecks?.DebuggerDisplay ?? "disabled",
                     RequiredPullRequestReviews?.DebuggerDisplay ?? "disabled",
                     Restrictions?.DebuggerDisplay ?? "disabled",
-                    EnforceAdmins);
+                    EnforceAdmins,
+                    LockBranch);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Octokit.Tests.Clients
     {
         public class TheGetAllRepositoriesForCurrentMethod
         {
-            IGitHubClient _github;
+            readonly IGitHubClient _github;
 
             public TheGetAllRepositoriesForCurrentMethod()
             {
@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
 
         public class TheGetAllRepositoriesForCurrentUserMethod
         {
-            IGitHubClient _github;
+            readonly IGitHubClient _github;
 
             public TheGetAllRepositoriesForCurrentUserMethod()
             {

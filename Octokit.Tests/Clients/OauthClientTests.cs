@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -206,6 +205,77 @@ public class OauthClientTests
             Assert.Equal("bearer", token.TokenType);
             Assert.Contains("notifications", token.Scope);
             Assert.Contains("user:email", token.Scope);
+        }
+    }
+
+    public class TheCreateAccessTokenFromRenewalTokenMethod
+    {
+        [Fact]
+        public async Task PostsWithCorrectBodyAndContentType()
+        {
+            var responseToken = new OauthToken("bearer", "someaccesstoken", 3000, "refreshtoken", 10000, Array.Empty<string>(), null, null, null);
+            var response = Substitute.For<IApiResponse<OauthToken>>();
+            response.Body.Returns(responseToken);
+
+            var connection = Substitute.For<IConnection>();
+            connection.BaseAddress.Returns(new Uri("https://api.github.com/"));
+
+            Uri calledUri = null;
+            FormUrlEncodedContent calledBody = null;
+            Uri calledHostAddress = null;
+            connection.Post<OauthToken>(
+                Arg.Do<Uri>(uri => calledUri = uri),
+                Arg.Do<object>(body => calledBody = body as FormUrlEncodedContent),
+                "application/json",
+                null,
+                Arg.Do<Uri>(uri => calledHostAddress = uri))
+                .Returns(_ => Task.FromResult(response));
+            var client = new OauthClient(connection);
+
+            var token = await client.CreateAccessTokenFromRenewalToken(
+                new OauthTokenRenewalRequest("secretid", "secretsecret", "refreshToken"));
+
+            Assert.Same(responseToken, token);
+            Assert.Equal("login/oauth/access_token", calledUri.ToString());
+            Assert.NotNull(calledBody);
+            Assert.Equal("https://github.com/", calledHostAddress.ToString());
+            Assert.Equal(
+                "client_id=secretid&client_secret=secretsecret&grant_type=refresh_token&refresh_token=refreshToken",
+                await calledBody.ReadAsStringAsync());
+        }
+
+        [Fact]
+        public async Task PostsWithCorrectBodyAndContentTypeForGHE()
+        {
+            var responseToken = new OauthToken("bearer", "someaccesstoken", 3000, "refreshtoken", 10000, Array.Empty<string>(), null, null, null);
+            var response = Substitute.For<IApiResponse<OauthToken>>();
+            response.Body.Returns(responseToken);
+
+            var connection = Substitute.For<IConnection>();
+            connection.BaseAddress.Returns(new Uri("https://example.com/api/v3"));
+
+            Uri calledUri = null;
+            FormUrlEncodedContent calledBody = null;
+            Uri calledHostAddress = null;
+            connection.Post<OauthToken>(
+                Arg.Do<Uri>(uri => calledUri = uri),
+                Arg.Do<object>(body => calledBody = body as FormUrlEncodedContent),
+                "application/json",
+                null,
+                Arg.Do<Uri>(uri => calledHostAddress = uri))
+                .Returns(_ => Task.FromResult(response));
+            var client = new OauthClient(connection);
+
+            var token = await client.CreateAccessTokenFromRenewalToken(
+                new OauthTokenRenewalRequest("secretid", "secretsecret", "refreshToken"));
+
+            Assert.Same(responseToken, token);
+            Assert.Equal("login/oauth/access_token", calledUri.ToString());
+            Assert.NotNull(calledBody);
+            Assert.Equal("https://example.com/", calledHostAddress.ToString());
+            Assert.Equal(
+                "client_id=secretid&client_secret=secretsecret&grant_type=refresh_token&refresh_token=refreshToken",
+                await calledBody.ReadAsStringAsync());
         }
     }
 }

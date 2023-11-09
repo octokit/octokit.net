@@ -416,6 +416,116 @@ namespace Octokit.Tests.Http
             }
         }
 
+        public class TheGetRawMethod
+        {
+            [Fact]
+            public async Task SendsProperlyFormattedRequestWithProperAcceptHeader()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                var response = CreateResponse(HttpStatusCode.OK);
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.GetRaw(new Uri("endpoint", UriKind.Relative), new Dictionary<string, string>());
+
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
+                    req.ContentType == null &&
+                    req.Body == null &&
+                    req.Method == HttpMethod.Get &&
+                    req.Headers["Accept"] == "application/vnd.github.v3.raw" &&
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task SendsProperlyFormattedRequestWithProperAcceptHeaderAndTimeout()
+            {
+                var httpClient = Substitute.For<IHttpClient>();
+                var response = CreateResponse(HttpStatusCode.OK);
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                await connection.GetRaw(new Uri("endpoint", UriKind.Relative), new Dictionary<string, string>(), TimeSpan.FromSeconds(1));
+
+                httpClient.Received(1).Send(Arg.Is<IRequest>(req =>
+                    req.BaseAddress == _exampleUri &&
+                    req.Timeout == TimeSpan.FromSeconds(1) &&
+                    req.ContentType == null &&
+                    req.Body == null &&
+                    req.Method == HttpMethod.Get &&
+                    req.Headers["Accept"] == "application/vnd.github.v3.raw" &&
+                    req.Endpoint == new Uri("endpoint", UriKind.Relative)), Args.CancellationToken);
+            }
+
+            [Fact]
+            public async Task ReturnsCorrectContentForNull()
+            {
+                object body = null;
+                var httpClient = Substitute.For<IHttpClient>();
+                var response = CreateResponse(HttpStatusCode.OK, body);
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var actual = await connection.GetRaw(new Uri("endpoint", UriKind.Relative), new Dictionary<string, string>());
+
+                Assert.NotNull(actual);
+                Assert.Null(actual.Body);
+            }
+
+            [Fact]
+            public async Task ReturnsCorrectContentForByteArray()
+            {
+                var body = new byte[] { 1, 2, 3 };
+
+                var httpClient = Substitute.For<IHttpClient>();
+                var response = CreateResponse(HttpStatusCode.OK, body);
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var actual = await connection.GetRaw(new Uri("endpoint", UriKind.Relative), new Dictionary<string, string>());
+
+                Assert.NotNull(actual);
+                Assert.Equal(body, actual.Body);
+            }
+
+            [Fact]
+            public async Task ReturnsCorrectContentForStream()
+            {
+                var bytes = new byte[] { 1, 2, 3 };
+                var body = new MemoryStream(bytes);
+
+                var httpClient = Substitute.For<IHttpClient>();
+                var response = CreateResponse(HttpStatusCode.OK, body);
+                httpClient.Send(Args.Request, Args.CancellationToken).Returns(Task.FromResult(response));
+                var connection = new Connection(new ProductHeaderValue("OctokitTests"),
+                    _exampleUri,
+                    Substitute.For<ICredentialStore>(),
+                    httpClient,
+                    Substitute.For<IJsonSerializer>());
+
+                var actual = await connection.GetRaw(new Uri("endpoint", UriKind.Relative), new Dictionary<string, string>());
+
+                Assert.NotNull(actual);
+                Assert.Equal(bytes, actual.Body);
+            }
+        }
+
         public class ThePatchMethod
         {
             [Fact]

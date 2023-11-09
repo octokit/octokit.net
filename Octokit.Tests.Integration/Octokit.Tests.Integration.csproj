@@ -34,10 +34,10 @@
 
   <ItemGroup>
 	<PackageReference Include="GitHubJwt" Version="0.0.6" />
-	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
 	<PackageReference Include="System.IO.Compression" Version="4.3.0" />
-	<PackageReference Include="xunit" Version="2.5.0" />
-	<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+  <PackageReference Include="xunit" Version="2.6.1" />
+  <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
   <ItemGroup>

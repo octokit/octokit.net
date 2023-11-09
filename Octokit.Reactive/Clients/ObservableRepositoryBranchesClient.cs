@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
+
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -297,7 +299,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="branch">The name of the branch</param>   
+        /// <param name="branch">The name of the branch</param>
         public IObservable<bool> DeleteRequiredStatusChecks(string owner, string name, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -314,7 +316,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/branches/#remove-required-status-checks-of-protected-branch">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="branch">The name of the branch</param> 
+        /// <param name="branch">The name of the branch</param>
         public IObservable<bool> DeleteRequiredStatusChecks(long repositoryId, string branch)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
@@ -1021,5 +1023,25 @@ namespace Octokit.Reactive
 
             return _client.DeleteProtectedBranchUserRestrictions(repositoryId, branch, users).ToObservable().SelectMany(x => x);
         }
-    }
+
+        /// <summary>
+        /// Renames a branch in a repository
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/branches/branches?apiVersion=2022-11-28#rename-a-branch">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <param name="branch">The name of the branch to rename</param>
+        /// <param name="newName">The new name of the branch</param>
+        public IObservable<Branch> RenameBranch(string owner, string repository, string branch, string newName)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
+            Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
+            Ensure.ArgumentNotNullOrEmptyString(newName, nameof(newName));
+
+            return _client.RenameBranch(owner, repository, branch, newName).ToObservable();
+        }
+	}
 }

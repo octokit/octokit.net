@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -53,6 +53,21 @@ public class ReleasesClientTests
             var release = await _releaseClient.Create(_context.Repository.Id, releaseWithNoUpdate);
 
             Assert.NotNull(release);
+        }
+
+        [IntegrationTest]
+        public async Task CreateReleaseAsLatest()
+        {
+            var firstReleaseRequest = new NewRelease("0.1") { MakeLatest = MakeLatestQualifier.False };
+            await _releaseClient.Create(_context.Repository.Id, firstReleaseRequest);
+
+            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.GetLatest(_context.RepositoryOwner, _context.RepositoryName));
+
+            var secondReleaseRequest = new NewRelease("0.2") { MakeLatest = MakeLatestQualifier.True };
+            var secondRelease = await _releaseClient.Create(_context.Repository.Id, secondReleaseRequest);
+
+            var latestRelease = await _releaseClient.GetLatest(_context.RepositoryOwner, _context.RepositoryName);
+            Assert.Equal(secondRelease.Id, latestRelease.Id);
         }
 
         public void Dispose()
@@ -442,6 +457,28 @@ public class ReleasesClientTests
             Assert.Equal(release.Id, updatedRelease.Id);
             Assert.False(updatedRelease.Draft);
             Assert.Equal(newHead.Object.Sha, updatedRelease.TargetCommitish);
+        }
+
+        [IntegrationTest]
+        public async Task CanMakeReleaseLatest()
+        {
+            var firstReleaseRequest = new NewRelease("0.1");
+            var firstRelease = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, firstReleaseRequest);
+
+            var secondReleaseRequest = new NewRelease("0.2") { Draft = true };
+            var secondRelease = await _releaseClient.Create(_context.RepositoryOwner, _context.RepositoryName, secondReleaseRequest);
+
+            var latestRelease = await _releaseClient.GetLatest(_context.RepositoryOwner, _context.RepositoryName);
+            Assert.Equal(firstRelease.Id, latestRelease.Id);
+
+            var editRelease = secondRelease.ToUpdate();
+            editRelease.Draft = false;
+            editRelease.MakeLatest = MakeLatestQualifier.True;
+
+            await _releaseClient.Edit(_context.RepositoryOwner, _context.RepositoryName, secondRelease.Id, editRelease);
+
+            latestRelease = await _releaseClient.GetLatest(_context.RepositoryOwner, _context.RepositoryName);
+            Assert.Equal(secondRelease.Id, latestRelease.Id);
         }
 
         public void Dispose()
