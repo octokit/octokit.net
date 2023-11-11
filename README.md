@@ -5,6 +5,7 @@
 [![Join the chat at https://gitter.im/octokit/octokit.net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/octokit/octokit.net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NuGet](https://img.shields.io/nuget/v/Octokit.svg)](https://www.nuget.org/packages/Octokit)
 [![NuGet](https://img.shields.io/nuget/v/Octokit.Reactive.svg)](https://www.nuget.org/packages/Octokit.Reactive)
+[![Static Badge](https://img.shields.io/badge/API%20Docs-DNDocs-190088?logo=readme&logoColor=white)](https://dndocs.com/d/octokit/api/Octokit.html)
 
 ![logo](octokit-dotnet_2.png)
 
@@ -43,7 +44,8 @@ dotnet add package Octokit.Reactive
 
 ## Documentation
 
-Documentation is available at http://octokitnet.readthedocs.io/en/latest/.
+Documentation is available at http://octokitnet.readthedocs.io/en/latest/.  
+API browser is available at [https://dndocs.com/d/octokit/](https://dndocs.com/d/octokit/api/Octokit.html)
 
 ## Build
 
