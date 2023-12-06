@@ -144,7 +144,7 @@ namespace Octokit.Tests.Integration.Helpers
         
         internal static async Task<CopilotUserLicenseContext> CreateCopilotUserLicenseContext(this IGitHubClient client, string organization, string userName)
         {
-            await client.Copilot.License.Add(organization, userName);
+            await client.Copilot.License.Assign(organization, userName);
 
             return new CopilotUserLicenseContext(client.Connection, organization, userName);
         }

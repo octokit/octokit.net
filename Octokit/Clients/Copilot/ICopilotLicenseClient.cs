@@ -25,26 +25,27 @@ namespace Octokit
         Task<CopilotSeatAllocation> Remove(string organization, UserSeatAllocation userSeatAllocation);
 
         /// <summary>
-        /// Adds a license for a user
+        /// Assigns a license to a user
         /// </summary>
         /// <param name="organization">The organization name</param>
         /// <param name="userName">The github users profile name to add a license to</param>
         /// <returns>A <see cref="CopilotSeatAllocation"/> instance with results</returns>
-        Task<CopilotSeatAllocation> Add(string organization, string userName);
+        Task<CopilotSeatAllocation> Assign(string organization, string userName);
 
         /// <summary>
-        /// Adds a license for one or many users
+        /// Assigns a license for one or many users
         /// </summary>
         /// <param name="organization">The organization name</param>
         /// <param name="userSeatAllocation">A <see cref="UserSeatAllocation"/> instance, containing the names of the user(s) to add licenses to</param>
         /// <returns>A <see cref="CopilotSeatAllocation"/> instance with results</returns>
-        Task<CopilotSeatAllocation> Add(string organization, UserSeatAllocation userSeatAllocation);
+        Task<CopilotSeatAllocation> Assign(string organization, UserSeatAllocation userSeatAllocation);
 
         /// <summary>
         /// Gets all of the currently allocated licenses for an organization
         /// </summary>
         /// <param name="organization">The organization</param>
+        /// <param name="copilotApiOptions">The api options to use when making the API call, such as paging</param>
         /// <returns>A <see cref="CopilotSeats"/> instance containing the currently allocated user licenses</returns>
-        Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, CopilotSeatsRequest request, CopilotApiOptions copilotApiOptions);
+        Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, CopilotApiOptions copilotApiOptions);
     }
 }

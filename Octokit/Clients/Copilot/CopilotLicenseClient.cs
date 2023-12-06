@@ -30,7 +30,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
         return await ApiConnection.Delete<CopilotSeatAllocation>(ApiUrls.CopilotBillingLicense(organization), userSeatAllocation);
     }
 
-    public async Task<CopilotSeatAllocation> Add(string organization, string userName)
+    public async Task<CopilotSeatAllocation> Assign(string organization, string userName)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
         Ensure.ArgumentNotNull(userName, nameof(userName));
@@ -40,10 +40,10 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
             SelectedUsernames = new[] { userName }
         };
 
-        return await Add(organization, allocation);
+        return await Assign(organization, allocation);
     }
 
-    public async Task<CopilotSeatAllocation> Add(string organization, UserSeatAllocation userSeatAllocation)
+    public async Task<CopilotSeatAllocation> Assign(string organization, UserSeatAllocation userSeatAllocation)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
         Ensure.ArgumentNotNull(userSeatAllocation, nameof(userSeatAllocation));
@@ -55,10 +55,9 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     /// Gets all of the currently allocated licenses for an organization
     /// </summary>
     /// <param name="organization">The organization</param>
-    /// <param name="request">Any parameters to include on the API call</param>
     /// <param name="copilotApiOptions">Options to control page size when making API requests</param>
     /// <returns>A list of <see cref="CopilotSeats"/> instance containing the currently allocated user licenses.</returns>
-    public async Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, CopilotSeatsRequest request, CopilotApiOptions copilotApiOptions)
+    public async Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, CopilotApiOptions copilotApiOptions)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
 
@@ -67,7 +66,6 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
             PageSize = copilotApiOptions.PageSize
         };
 
-        return await ApiConnection.GetAll<CopilotSeats>(ApiUrls.CopilotAllocatedLicenses(organization),
-            request.ToParametersDictionary(), null, options);
+        return await ApiConnection.GetAll<CopilotSeats>(ApiUrls.CopilotAllocatedLicenses(organization), options);
     }
 }

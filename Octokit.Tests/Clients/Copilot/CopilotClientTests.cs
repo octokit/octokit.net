@@ -33,13 +33,13 @@ namespace Octokit.Tests.Clients
                 var client = new CopilotClient(connection);
 
                 var expectedUri = $"orgs/{orgName}/copilot/billing/seats";
-                client.License.GetAll("test", new CopilotSeatsRequest(), new CopilotApiOptions());
+                client.License.GetAll("test", new CopilotApiOptions());
                 
                 connection.Received().GetAll<CopilotSeats>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<IDictionary<string, string>>(), null, Arg.Any<ApiOptions>());
             }
         }
         
-        public class TheAddCopilotLicenseMethod
+        public class TheAssignCopilotLicenseMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -48,13 +48,13 @@ namespace Octokit.Tests.Clients
                 var client = new CopilotClient(connection);
                 var expectedUri = $"orgs/{orgName}/copilot/billing/selected_users";
 
-                client.License.Add(orgName, "copilot-user");
+                client.License.Assign(orgName, "copilot-user");
                 
                 connection.Received().Post<CopilotSeatAllocation>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<UserSeatAllocation>());
             }
         }
         
-        public class TheAddCopilotLicensesMethod
+        public class TheAssignCopilotLicensesMethod
         {
             [Fact]
             public void RequestsCorrectUrl()
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
                 var expectedUri = $"orgs/{orgName}/copilot/billing/selected_users";
 
                 var payloadData = new UserSeatAllocation() { SelectedUsernames = new[] { "copilot-user" } };
-                client.License.Add(orgName, payloadData);
+                client.License.Assign(orgName, payloadData);
                 
                 connection.Received().Post<CopilotSeatAllocation>(Arg.Is<Uri>(u => u.ToString() == expectedUri), payloadData);
             }
