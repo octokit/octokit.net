@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
 namespace Octokit.Tests.Integration.Clients.Copilot
@@ -19,8 +20,8 @@ namespace Octokit.Tests.Integration.Clients.Copilot
             {
                 var billingSettings = await _gitHub.Copilot.Get(Helper.Organization);
 
-                Assert.True(string.IsNullOrEmpty(billingSettings.SeatManagementSetting));
-                Assert.True(string.IsNullOrEmpty(billingSettings.PublicCodeSuggestions));
+                Assert.NotNull(billingSettings.SeatManagementSetting);
+                Assert.NotNull(billingSettings.PublicCodeSuggestions);
             }
         }
         
@@ -36,9 +37,12 @@ namespace Octokit.Tests.Integration.Clients.Copilot
             [OrganizationTest]
             public async Task ReturnsUserCopilotLicenseDetailsAsList()
             {
-                var licenses = await _gitHub.Copilot.License.GetAll(Helper.Organization,  new CopilotApiOptions());
+                using (var context = await _gitHub.CreateCopilotUserLicenseContext(Helper.Organization, Helper.UserName))
+                {
+                    var licenses = await _gitHub.Copilot.License.GetAll(Helper.Organization,  new CopilotApiOptions());
 
-                Assert.True(licenses.Count > 0);
+                    Assert.True(licenses.Count > 0);                   
+                }
             }
         }
 
@@ -54,19 +58,25 @@ namespace Octokit.Tests.Integration.Clients.Copilot
             [OrganizationTest]
             public async Task AddsLicenseForUser()
             {
-                var allocation = await _gitHub.Copilot.License.Assign(Helper.Organization, Helper.UserName);
+                using (var context = await _gitHub.CreateCopilotUserLicenseContext(Helper.Organization, Helper.UserName))
+                {
+                    var allocation = await _gitHub.Copilot.License.Assign(Helper.Organization, Helper.UserName);
 
-                Assert.True(allocation.SeatsCreated > 0);
+                    Assert.True(allocation.SeatsCreated > 0);                    
+                }
             }
             
             [OrganizationTest]
             public async Task AddsLicenseForUsers()
             {
-                var seatAllocation = new UserSeatAllocation() { SelectedUsernames = new[] { Helper.UserName } };
+                using (var context = await _gitHub.CreateCopilotUserLicenseContext(Helper.Organization, Helper.UserName))
+                {
+                    var seatAllocation = new UserSeatAllocation() { SelectedUsernames = new[] { Helper.UserName } };
 
-                var allocation = await _gitHub.Copilot.License.Assign(Helper.Organization, seatAllocation);
+                    var allocation = await _gitHub.Copilot.License.Assign(Helper.Organization, seatAllocation);
 
-                Assert.True(allocation.SeatsCreated > 0);
+                    Assert.True(allocation.SeatsCreated > 0);
+                }
             }
         }
 
@@ -82,19 +92,25 @@ namespace Octokit.Tests.Integration.Clients.Copilot
             [OrganizationTest]
             public async Task RemovesLicenseForUser()
             {
-                var allocation = await _gitHub.Copilot.License.Remove(Helper.Organization, Helper.UserName);
+                using (var context = await _gitHub.CreateCopilotUserLicenseContext(Helper.Organization, Helper.UserName))
+                {
+                    var allocation = await _gitHub.Copilot.License.Remove(Helper.Organization, Helper.UserName);
 
-                Assert.True(allocation.SeatsCancelled > 0);
+                    Assert.True(allocation.SeatsCancelled > 0);
+                }
             }
 
             [OrganizationTest]
             public async Task RemovesLicenseForUsers()
             {
-                var seatAllocation = new UserSeatAllocation() { SelectedUsernames = new[] { Helper.UserName } };
+                using (var context = await _gitHub.CreateCopilotUserLicenseContext(Helper.Organization, Helper.UserName))
+                {
+                    var seatAllocation = new UserSeatAllocation() { SelectedUsernames = new[] { Helper.UserName } };
 
-                var allocation = await _gitHub.Copilot.License.Remove(Helper.Organization, seatAllocation);
+                    var allocation = await _gitHub.Copilot.License.Remove(Helper.Organization, seatAllocation);
 
-                Assert.True(allocation.SeatsCancelled > 0);
+                    Assert.True(allocation.SeatsCancelled > 0);                    
+                }
             }
         }
     }
