@@ -8,7 +8,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     public CopilotLicenseClient(IApiConnection apiConnection) : base(apiConnection)
     {
     }
-
+    
     public async Task<CopilotSeatAllocation> Remove(string organization, string userName)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
@@ -42,7 +42,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
 
         return await Assign(organization, allocation);
     }
-
+    
     public async Task<CopilotSeatAllocation> Assign(string organization, UserSeatAllocation userSeatAllocation)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
@@ -57,7 +57,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     /// <param name="organization">The organization</param>
     /// <param name="copilotApiOptions">Options to control page size when making API requests</param>
     /// <returns>A list of <see cref="CopilotSeats"/> instance containing the currently allocated user licenses.</returns>
-    public async Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, CopilotApiOptions copilotApiOptions)
+    public async Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, ApiOptions copilotApiOptions)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
 

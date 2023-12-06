@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -22,6 +23,11 @@ namespace Octokit
         /// A string that indicates if public code suggestions are enabled or blocked for the organization.
         /// </summary>
         public string PublicCodeSuggestions { get; set; }
+        
+        internal string DebuggerDisplay
+        {
+            get { return string.Format(CultureInfo.InvariantCulture, "SeatManagementSetting: {0}, PublicCodeSuggestions: {1}", SeatManagementSetting, PublicCodeSuggestions); }
+        }
     }
 }
 

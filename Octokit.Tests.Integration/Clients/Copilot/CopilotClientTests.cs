@@ -39,7 +39,7 @@ namespace Octokit.Tests.Integration.Clients.Copilot
             {
                 using (var context = await _gitHub.CreateCopilotUserLicenseContext(Helper.Organization, Helper.UserName))
                 {
-                    var licenses = await _gitHub.Copilot.License.GetAll(Helper.Organization,  new CopilotApiOptions());
+                    var licenses = await _gitHub.Copilot.License.GetAll(Helper.Organization,  new ApiOptions());
 
                     Assert.True(licenses.Count > 0);                   
                 }
