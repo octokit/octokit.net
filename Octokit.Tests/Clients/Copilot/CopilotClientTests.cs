@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
                 var expectedUri = $"orgs/{orgName}/copilot/billing/seats";
                 client.License.GetAll("test", new ApiOptions());
                 
-                connection.Received().GetAll<CopilotSeats>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<IDictionary<string, string>>(), null, Arg.Any<ApiOptions>());
+                connection.Received().GetAll<CopilotSeats>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<ApiOptions>());
             }
         }
         
