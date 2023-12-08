@@ -19,6 +19,11 @@
         IObservableActionsCacheClient Cache { get; }
 
         /// <summary>
+        /// Client for the OIDC API.
+        /// </summary>
+        IObservableActionsOidcClient Oidc { get; }
+
+        /// <summary>
         /// Client for the Permissions API.
         /// </summary>
         IObservableActionsPermissionsClient Permissions { get; }

@@ -5566,5 +5566,26 @@ namespace Octokit
         {
             return "repos/{0}/{1}/branches/{2}/rename".FormatUri(owner, repository, branch);
         }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to get or set an organization OIDC subject claim.
+        /// </summary>
+        /// <param name="organization">The organization name</param>
+        /// <returns></returns>
+        public static Uri ActionsOrganizationOidcSubjectClaim(string organization)
+        {
+            return "orgs/{0}/actions/oidc/customization/sub".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to get or set a repository OIDC subject claim.
+        /// </summary>
+        /// <param name="owner">The account owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri ActionsRepositoryOidcSubjectClaim(string owner, string repository)
+        {
+            return "repos/{0}/{1}/actions/oidc/customization/sub".FormatUri(owner, repository);
+        }
     }
 }

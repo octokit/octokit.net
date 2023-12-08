@@ -18,6 +18,7 @@
 
             Artifacts = new ObservableActionsArtifactsClient(client);
             Cache = new ObservableActionsCacheClient(client);
+            Oidc = new ObservableActionsOidcClient(client);
             Permissions = new ObservableActionsPermissionsClient(client);
             SelfHostedRunnerGroups = new ObservableActionsSelfHostedRunnerGroupsClient(client);
             SelfHostedRunners = new ObservableActionsSelfHostedRunnersClient(client);
@@ -33,6 +34,12 @@
         /// Client for the Cache API.
         /// </summary>
         public IObservableActionsCacheClient Cache { get; private set; }
+
+
+        /// <summary>
+        /// Client for the OIDC API.
+        /// </summary>
+        public IObservableActionsOidcClient Oidc { get; private set; }
 
         /// <summary>
         /// Client for the Permissions API.
