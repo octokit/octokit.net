@@ -4,6 +4,7 @@ using System.Reactive.Threading.Tasks;
 using Octokit;
 using Octokit.Models.Request.Enterprise;
 using Octokit.Reactive;
+using Octokit.Reactive.Internal;
 
 /// <summary>
 /// A client for managing licenses for GitHub Copilot for Business
@@ -11,10 +12,12 @@ using Octokit.Reactive;
 public class ObservableCopilotLicenseClient : IObservableCopilotLicenseClient
 {
     private readonly ICopilotLicenseClient _client;
+    private readonly IConnection _connection;
 
     public ObservableCopilotLicenseClient(IGitHubClient client)
     {
         _client = client.Copilot.License;
+        _connection = client.Connection;
     }
     
     /// <summary>
@@ -77,13 +80,13 @@ public class ObservableCopilotLicenseClient : IObservableCopilotLicenseClient
     /// Gets all of the currently allocated licenses for an organization
     /// </summary>
     /// <param name="organization">The organization</param>
-    /// <param name="copilotApiOptions">Options to control page size when making API requests</param>
+    /// <param name="options">Options to control page size when making API requests</param>
     /// <returns>A list of <see cref="CopilotSeats"/> instance containing the currently allocated user licenses.</returns>
-    public IObservable<IReadOnlyList<CopilotSeats>> GetAll(string organization, ApiOptions copilotApiOptions)
+    public IObservable<CopilotSeats> GetAll(string organization, ApiOptions options)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
-        Ensure.ArgumentNotNull(copilotApiOptions, nameof(copilotApiOptions));
-        
-        return _client.GetAll(organization, copilotApiOptions).ToObservable();
+        Ensure.ArgumentNotNull(options, nameof(options));
+       
+        return _connection.GetAndFlattenAllPages<CopilotSeats>( ApiUrls.CopilotAllocatedLicenses(organization), options);
     }
 }

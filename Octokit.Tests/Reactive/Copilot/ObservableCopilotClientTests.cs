@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -28,13 +29,17 @@ namespace Octokit.Tests.Reactive
             [Fact]
             public void RequestsCorrectUrl()
             {
-                var githubClient = Substitute.For<IGitHubClient>();
-                var client = new ObservableCopilotClient(githubClient);
-                var apiOptions = new ApiOptions();
-                
+                var endpoint = new Uri($"orgs/test/copilot/billing/seats", UriKind.Relative);
+                var connection = Substitute.For<IConnection>();
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                gitHubClient.Connection.Returns(connection);
+                var client = new ObservableCopilotClient(gitHubClient);
+
+                var apiOptions = new ApiOptions() { PageSize = 50, PageCount = 10 };
                 client.License.GetAll("test", apiOptions);
                 
-                githubClient.Copilot.License.Received().GetAll(orgName, apiOptions);
+                connection.Received().Get<List<CopilotSeats>>(endpoint,
+                    Arg.Is<IDictionary<string, string>>(d => d.Count > 0));
             }
         }
         

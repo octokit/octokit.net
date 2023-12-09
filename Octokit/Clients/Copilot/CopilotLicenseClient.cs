@@ -22,6 +22,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     /// <param name="organization">The organization name</param>
     /// <param name="userName">The github users profile name to remove a license from</param>
     /// <returns>A <see cref="CopilotSeatAllocation"/> instance with results</returns>
+    [ManualRoute("DELETE", "/orgs/{org}/copilot/billing/selected_users")]
     public async Task<CopilotSeatAllocation> Remove(string organization, string userName)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
@@ -41,6 +42,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     /// <param name="organization">The organization name</param>
     /// <param name="userSeatAllocation">A <see cref="UserSeatAllocation"/> instance, containing the names of the user(s) to remove licenses for</param>
     /// <returns>A <see cref="CopilotSeatAllocation"/> instance with results</returns>
+    [ManualRoute("DELETE", "/orgs/{org}/copilot/billing/selected_users")]
     public async Task<CopilotSeatAllocation> Remove(string organization, UserSeatAllocation userSeatAllocation)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
@@ -55,6 +57,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     /// <param name="organization">The organization name</param>
     /// <param name="userName">The github users profile name to add a license to</param>
     /// <returns>A <see cref="CopilotSeatAllocation"/> instance with results</returns>
+    [ManualRoute("POST", "/orgs/{org}/copilot/billing/selected_users")]
     public async Task<CopilotSeatAllocation> Assign(string organization, string userName)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
@@ -74,6 +77,7 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     /// <param name="organization">The organization name</param>
     /// <param name="userSeatAllocation">A <see cref="UserSeatAllocation"/> instance, containing the names of the user(s) to add licenses to</param>
     /// <returns>A <see cref="CopilotSeatAllocation"/> instance with results</returns>
+    [ManualRoute("POST", "/orgs/{org}/copilot/billing/selected_users")]
     public async Task<CopilotSeatAllocation> Assign(string organization, UserSeatAllocation userSeatAllocation)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
@@ -86,17 +90,18 @@ public class CopilotLicenseClient : ApiClient, ICopilotLicenseClient
     /// Gets all of the currently allocated licenses for an organization
     /// </summary>
     /// <param name="organization">The organization</param>
-    /// <param name="copilotApiOptions">Options to control page size when making API requests</param>
+    /// <param name="options">Options to control page size when making API requests</param>
     /// <returns>A list of <see cref="CopilotSeats"/> instance containing the currently allocated user licenses.</returns>
-    public async Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, ApiOptions copilotApiOptions)
+    [ManualRoute("GET", "/orgs/{org}/copilot/billing/seats")]
+    public async Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, ApiOptions options)
     {
         Ensure.ArgumentNotNull(organization, nameof(organization));
 
-        ApiOptionsExtended options = new ApiOptionsExtended()
+        var extendedOptions = new ApiOptionsExtended()
         {
-            PageSize = copilotApiOptions.PageSize
+            PageSize = options.PageSize
         };
 
-        return await ApiConnection.GetAll<CopilotSeats>(ApiUrls.CopilotAllocatedLicenses(organization), options);
+        return await ApiConnection.GetAll<CopilotSeats>(ApiUrls.CopilotAllocatedLicenses(organization), extendedOptions);
     }
 }

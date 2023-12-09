@@ -20,6 +20,12 @@ namespace Octokit
             License = new CopilotLicenseClient(apiConnection);
         }
         
+        /// <summary>
+        /// Returns the top level billing settings for an organization. 
+        /// </summary>
+        /// <param name="organization">the organization name to retrieve billing settings for</param>
+        /// <returns>A <see cref="BillingSettings"/> instance</returns>
+        [ManualRoute("GET", "/orgs/{org}/copilot/billing")]
         public async Task<BillingSettings> Get(string organization)
         {
             Ensure.ArgumentNotNull(organization, nameof(organization));

@@ -44,8 +44,8 @@ namespace Octokit
         /// Gets all of the currently allocated licenses for an organization
         /// </summary>
         /// <param name="organization">The organization</param>
-        /// <param name="copilotApiOptions">The api options to use when making the API call, such as paging</param>
+        /// <param name="options">The api options to use when making the API call, such as paging</param>
         /// <returns>A <see cref="CopilotSeats"/> instance containing the currently allocated user licenses</returns>
-        Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, ApiOptions copilotApiOptions);
+        Task<IReadOnlyList<CopilotSeats>> GetAll(string organization, ApiOptions options);
     }
 }
