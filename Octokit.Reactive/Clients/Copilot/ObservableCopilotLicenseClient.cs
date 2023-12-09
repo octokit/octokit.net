@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using Octokit;
-using Octokit.Models.Request.Enterprise;
 using Octokit.Reactive;
 using Octokit.Reactive.Internal;
 
@@ -16,7 +14,7 @@ public class ObservableCopilotLicenseClient : IObservableCopilotLicenseClient
 
     public ObservableCopilotLicenseClient(IGitHubClient client)
     {
-        _client = client.Copilot.License;
+        _client = client.Copilot.Licensing;
         _connection = client.Connection;
     }
     

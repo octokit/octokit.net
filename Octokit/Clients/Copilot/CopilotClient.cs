@@ -17,16 +17,17 @@ namespace Octokit
         /// <param name="apiConnection"></param>
         public CopilotClient(IApiConnection apiConnection) : base(apiConnection)
         {
-            License = new CopilotLicenseClient(apiConnection);
+            Licensing = new CopilotLicenseClient(apiConnection);
         }
         
         /// <summary>
-        /// Returns the top level billing settings for an organization. 
+        /// Returns a summary of the Copilot for Business configuration for an organization. Includes a seat 
+        /// details summary of the current billing cycle, and the mode of seat management.
         /// </summary>
         /// <param name="organization">the organization name to retrieve billing settings for</param>
         /// <returns>A <see cref="BillingSettings"/> instance</returns>
         [ManualRoute("GET", "/orgs/{org}/copilot/billing")]
-        public async Task<BillingSettings> Get(string organization)
+        public async Task<BillingSettings> GetSummaryForOrganization(string organization)
         {
             Ensure.ArgumentNotNull(organization, nameof(organization));
             
@@ -36,6 +37,6 @@ namespace Octokit
         /// <summary>
         /// Client for maintaining Copilot licenses for users in an organization.
         /// </summary>
-        public ICopilotLicenseClient License { get; private set; }
+        public ICopilotLicenseClient Licensing { get; private set; }
     }
 }

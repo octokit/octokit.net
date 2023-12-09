@@ -7,7 +7,7 @@ namespace Octokit.Tests.Integration.Helpers
         public static void RemoveUserLicense(IConnection connection, string organization, string userLogin)
         {
             var client = new GitHubClient(connection);
-            client.Copilot.License.Remove(organization, userLogin).Wait(TimeSpan.FromSeconds(15));
+            client.Copilot.Licensing.Remove(organization, userLogin).Wait(TimeSpan.FromSeconds(15));
         }
     }
 }

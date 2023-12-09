@@ -23,24 +23,25 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(client, nameof(client));
             
             _client = client.Copilot;
-            License = new ObservableCopilotLicenseClient(client);
+            Licensing = new ObservableCopilotLicenseClient(client);
         }
         
         /// <summary>
-        /// Returns the top level billing settings for an organization. 
+        /// Returns a summary of the Copilot for Business configuration for an organization. Includes a seat 
+        /// details summary of the current billing cycle, and the mode of seat management.
         /// </summary>
         /// <param name="organization">the organization name to retrieve billing settings for</param>
         /// <returns>A <see cref="BillingSettings"/> instance</returns>
-        public IObservable<BillingSettings> Get(string organization)
+        public IObservable<BillingSettings> GetSummaryForOrganization(string organization)
         {
             Ensure.ArgumentNotNull(organization, nameof(organization));
             
-            return _client.Get(organization).ToObservable();
+            return _client.GetSummaryForOrganization(organization).ToObservable();
         }
         
         /// <summary>
         /// Client for maintaining Copilot licenses for users in an organization.
         /// </summary>
-        public IObservableCopilotLicenseClient License { get; private set; }
+        public IObservableCopilotLicenseClient Licensing { get; private set; }
     }
 }

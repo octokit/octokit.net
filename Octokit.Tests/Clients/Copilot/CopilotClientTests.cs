@@ -18,7 +18,7 @@ namespace Octokit.Tests.Clients
                 var client = new CopilotClient(connection);
 
                 var expectedUri = $"orgs/{orgName}/copilot/billing";
-                client.Get("test");
+                client.GetSummaryForOrganization("test");
                 
                 connection.Received().Get<BillingSettings>(Arg.Is<Uri>(u => u.ToString() == expectedUri));
             }
@@ -33,7 +33,7 @@ namespace Octokit.Tests.Clients
                 var client = new CopilotClient(connection);
 
                 var expectedUri = $"orgs/{orgName}/copilot/billing/seats";
-                client.License.GetAll("test", new ApiOptions());
+                client.Licensing.GetAll("test", new ApiOptions());
                 
                 connection.Received().GetAll<CopilotSeats>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<ApiOptions>());
             }
@@ -48,7 +48,7 @@ namespace Octokit.Tests.Clients
                 var client = new CopilotClient(connection);
                 var expectedUri = $"orgs/{orgName}/copilot/billing/selected_users";
 
-                client.License.Assign(orgName, "copilot-user");
+                client.Licensing.Assign(orgName, "copilot-user");
                 
                 connection.Received().Post<CopilotSeatAllocation>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<UserSeatAllocation>());
             }
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Clients
                 var expectedUri = $"orgs/{orgName}/copilot/billing/selected_users";
 
                 var payloadData = new UserSeatAllocation() { SelectedUsernames = new[] { "copilot-user" } };
-                client.License.Assign(orgName, payloadData);
+                client.Licensing.Assign(orgName, payloadData);
                 
                 connection.Received().Post<CopilotSeatAllocation>(Arg.Is<Uri>(u => u.ToString() == expectedUri), payloadData);
             }
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Clients
                 var client = new CopilotClient(connection);
                 var expectedUri = $"orgs/{orgName}/copilot/billing/selected_users";
                 
-                client.License.Remove(orgName, "copilot-user" );
+                client.Licensing.Remove(orgName, "copilot-user" );
                 
                 connection.Received().Delete<CopilotSeatAllocation>(Arg.Is<Uri>(u => u.ToString() == expectedUri), Arg.Any<UserSeatAllocation>());
             }
@@ -95,7 +95,7 @@ namespace Octokit.Tests.Clients
                 var expectedUri = $"orgs/{orgName}/copilot/billing/selected_users";
 
                 var payloadData = new UserSeatAllocation() { SelectedUsernames = new[] { "copilot-user" } };
-                client.License.Remove(orgName, payloadData);
+                client.Licensing.Remove(orgName, payloadData);
                 
                 connection.Received().Delete<CopilotSeatAllocation>(Arg.Is<Uri>(u => u.ToString() == expectedUri), payloadData);
             }

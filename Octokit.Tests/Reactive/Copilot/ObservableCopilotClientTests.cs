@@ -18,9 +18,9 @@ namespace Octokit.Tests.Reactive
                 var githubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableCopilotClient(githubClient);
                 
-                client.Get("test");
+                client.GetSummaryForOrganization("test");
                 
-                githubClient.Copilot.Received(1).Get(orgName);
+                githubClient.Copilot.Received(1).GetSummaryForOrganization(orgName);
             }
         }
         
@@ -36,7 +36,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableCopilotClient(gitHubClient);
 
                 var apiOptions = new ApiOptions() { PageSize = 50, PageCount = 10 };
-                client.License.GetAll("test", apiOptions);
+                client.Licensing.GetAll("test", apiOptions);
                 
                 connection.Received().Get<List<CopilotSeats>>(endpoint,
                     Arg.Is<IDictionary<string, string>>(d => d.Count > 0));
@@ -52,9 +52,9 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableCopilotClient(githubClient);
                 const string expectedUser = "copilot-user";
                 
-                client.License.Assign(orgName, expectedUser);
+                client.Licensing.Assign(orgName, expectedUser);
                 
-                githubClient.Copilot.License.Received().Assign(orgName, expectedUser);
+                githubClient.Copilot.Licensing.Received().Assign(orgName, expectedUser);
             }
         }
         
@@ -67,9 +67,9 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableCopilotClient(githubClient);
 
                 var payloadData = new UserSeatAllocation() { SelectedUsernames = new[] { "copilot-user" } };
-                client.License.Assign(orgName, payloadData);
+                client.Licensing.Assign(orgName, payloadData);
                 
-                githubClient.Copilot.License.Received().Assign(orgName, payloadData);
+                githubClient.Copilot.Licensing.Received().Assign(orgName, payloadData);
             }
         }
         
@@ -82,9 +82,9 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableCopilotClient(githubClient);
                 const string expectedUser = "copilot-user";
                 
-                client.License.Remove(orgName, expectedUser);
+                client.Licensing.Remove(orgName, expectedUser);
                 
-                githubClient.Copilot.License.Received().Remove(orgName, expectedUser);
+                githubClient.Copilot.Licensing.Received().Remove(orgName, expectedUser);
             }
         }
         
@@ -97,9 +97,9 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableCopilotClient(githubClient);
 
                 var payloadData = new UserSeatAllocation() { SelectedUsernames = new[] { "copilot-user" } };
-                client.License.Remove(orgName, payloadData);
+                client.Licensing.Remove(orgName, payloadData);
                 
-                githubClient.Copilot.License.Received().Remove(orgName, payloadData);
+                githubClient.Copilot.Licensing.Received().Remove(orgName, payloadData);
             }
         }
 
