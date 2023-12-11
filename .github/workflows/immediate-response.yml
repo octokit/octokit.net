@@ -6,12 +6,12 @@ on:
   issues:
     types:
       - opened
-  pull_request:
+  pull_request_target:
     types:
       - opened
 jobs:
   respond-to-issue:
-    if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' }}
+    if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]' && github.actor != 'githubactions[bot]' && github.actor != 'octokitbot' }}
     runs-on: ubuntu-latest
     steps:
       - name: Determine issue or PR number
