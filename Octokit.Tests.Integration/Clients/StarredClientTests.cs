@@ -167,6 +167,8 @@ namespace Octokit.Tests.Integration.Clients
 
             var repo = stars.FirstOrDefault(star => star.Repo.Owner.Login == _repositoryContext.RepositoryOwner && star.Repo.Name == _repositoryContext.RepositoryName);
             Assert.NotNull(repo);
+            Assert.NotEqual(DateTimeOffset.MinValue, repo.StarredAt);
+            Assert.NotNull(repo.Repo);
         }
 
         [IntegrationTest]
@@ -232,6 +234,8 @@ namespace Octokit.Tests.Integration.Clients
 
             var repo = stars.FirstOrDefault(star => star.Repo.Owner.Login == _repositoryContext.RepositoryOwner && star.Repo.Name == _repositoryContext.RepositoryName);
             Assert.NotNull(repo);
+            Assert.NotEqual(DateTimeOffset.MinValue, repo.StarredAt);
+            Assert.NotNull(repo.Repo);
 
             for (int i = 1; i < stars.Count; i++)
             {
@@ -456,6 +460,8 @@ namespace Octokit.Tests.Integration.Clients
 
             var star = stars.FirstOrDefault(repositoryStar => repositoryStar.Repo.Owner.Login == _repositoryContext.RepositoryOwner && repositoryStar.Repo.Name == _repositoryContext.RepositoryName);
             Assert.NotNull(star);
+            Assert.NotEqual(DateTimeOffset.MinValue, star.StarredAt);
+            Assert.NotNull(star.Repo);
         }
 
         [IntegrationTest]
@@ -521,6 +527,8 @@ namespace Octokit.Tests.Integration.Clients
 
             var repo = stars.FirstOrDefault(repository => repository.Repo.Owner.Login == _repositoryContext.RepositoryOwner && repository.Repo.Name == _repositoryContext.RepositoryName);
             Assert.NotNull(repo);
+            Assert.NotEqual(DateTimeOffset.MinValue, repo.StarredAt);
+            Assert.NotNull(repo.Repo);
 
             for (int i = 1; i < stars.Count; i++)
             {
