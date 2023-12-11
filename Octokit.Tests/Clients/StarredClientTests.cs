@@ -99,7 +99,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps();
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null, Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, AcceptHeaders.StarJson, Args.ApiOptions);
             }
 
             [Fact]
@@ -118,7 +118,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps(options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null, options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, AcceptHeaders.StarJson, options);
             }
 
             [Fact]
@@ -132,7 +132,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps(request);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), AcceptHeaders.StarJson, Args.ApiOptions);
             }
 
             [Fact]
@@ -153,7 +153,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForCurrentWithTimestamps(request, options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), AcceptHeaders.StarJson, options);
             }
 
             [Fact]
@@ -250,7 +250,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana");
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null, Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, AcceptHeaders.StarJson, Args.ApiOptions);
             }
 
             [Fact]
@@ -269,7 +269,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana", options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, null, options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, null, AcceptHeaders.StarJson, options);
             }
 
             [Fact]
@@ -283,7 +283,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana", starredRequest);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Args.ApiOptions);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), AcceptHeaders.StarJson, Args.ApiOptions);
             }
 
             [Fact]
@@ -304,7 +304,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUserWithTimestamps("banana", starredRequest, options);
 
-                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), options);
+                connection.Received().GetAll<RepositoryStar>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), AcceptHeaders.StarJson, options);
             }
 
             [Fact]
