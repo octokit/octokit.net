@@ -123,7 +123,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
                 var config = new Dictionary<string, string> { { "url", "" } };
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Edit("", 123, new EditOrganizationHook()));
@@ -197,7 +197,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Ping("", 123));
@@ -237,7 +237,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Delete("", 123));

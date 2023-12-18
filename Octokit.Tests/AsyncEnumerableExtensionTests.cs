@@ -13,7 +13,7 @@ namespace Octokit.Tests
         public class ThePaginatedList
         {
             [Fact]
-            public async void RejectsInvalidValues()
+            public async Task RejectsInvalidValues()
             {
                 var client = Substitute.For<IRepositoriesClient>();
 

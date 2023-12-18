@@ -20,7 +20,7 @@ namespace Octokit.Tests.Caching
         public class TheSendMethod
         {
             [Fact]
-            public async void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 // arrange
                 var underlyingClient = Substitute.For<IHttpClient>();

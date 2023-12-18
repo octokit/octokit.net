@@ -207,7 +207,7 @@ namespace Octokit.Tests.Clients
         public class TheGetAllLicensesMethod
         {
             [Fact]
-            public async void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new MiscellaneousClient(Substitute.For<IApiConnection>());
 
