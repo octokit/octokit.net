@@ -13,11 +13,11 @@ namespace Octokit.Tests
         public class ThePaginatedList
         {
             [Fact]
-            public void RejectsInvalidValues()
+            public async void RejectsInvalidValues()
             {
                 var client = Substitute.For<IRepositoriesClient>();
 
-                Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => client.GetAllForOrgAsync("octokit")[-1]);
+                await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => client.GetAllForOrgAsync("octokit")[-1]);
             }
 
             [Fact]
@@ -72,7 +72,7 @@ namespace Octokit.Tests
             public void RejectInvalidValues()
             {
                 var client = Substitute.For<IRepositoriesClient>();
-                
+
                 Assert.Throws<ArgumentOutOfRangeException>(() => client.GetAllForUserAsync("fake", -1));
                 Assert.Throws<ArgumentOutOfRangeException>(() => client.GetAllForUserAsync("fake", 0));
             }

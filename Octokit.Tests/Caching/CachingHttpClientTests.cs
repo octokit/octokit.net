@@ -20,7 +20,7 @@ namespace Octokit.Tests.Caching
         public class TheSendMethod
         {
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async void EnsuresNonNullArguments()
             {
                 // arrange
                 var underlyingClient = Substitute.For<IHttpClient>();
@@ -29,7 +29,7 @@ namespace Octokit.Tests.Caching
                 var cachingHttpClient = new CachingHttpClient(underlyingClient, responseCache);
 
                 // act + assert
-                Assert.ThrowsAsync<ArgumentNullException>(() => cachingHttpClient.Send(null, CancellationToken.None));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => cachingHttpClient.Send(null, CancellationToken.None));
             }
 
             [Theory]
