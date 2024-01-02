@@ -55,6 +55,18 @@ newRelease.GenerateReleaseNotes = true; // Set for Name and Body to be generated
 newRelease.TargetCommitish = "main"; // Optional, can be a branch, tag, or SHA; defaults to the main branch.
 ```
 
+### Generate a discussion
+
+Using the `DiscussionCategoryName`, it's possible to create a discussion linked to the upcoming release.
+The value must be a category that already exists in the repository.
+For more information, see "[Managing categories for discussions in your repository](https://docs.github.com/discussions/managing-discussions-for-your-community/managing-categories-for-discussions-in-your-repository)."
+
+```csharp
+var newTag = "v1.5.7";
+var newRelease = new NewRelease(newTag);
+newRelease.DiscussionCategoryName = "Announcements";
+```
+
 #### Customizing generated notes
 ```csharp
 var newTag = "v1.5.7";
