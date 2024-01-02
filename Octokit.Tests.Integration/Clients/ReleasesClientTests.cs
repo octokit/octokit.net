@@ -61,7 +61,7 @@ public class ReleasesClientTests
             var firstReleaseRequest = new NewRelease("0.1") { MakeLatest = MakeLatestQualifier.False };
             await _releaseClient.Create(_context.Repository.Id, firstReleaseRequest);
 
-            Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.GetLatest(_context.RepositoryOwner, _context.RepositoryName));
+            await Assert.ThrowsAsync<NotFoundException>(async () => await _releaseClient.GetLatest(_context.RepositoryOwner, _context.RepositoryName));
 
             var secondReleaseRequest = new NewRelease("0.2") { MakeLatest = MakeLatestQualifier.True };
             var secondRelease = await _releaseClient.Create(_context.Repository.Id, secondReleaseRequest);
