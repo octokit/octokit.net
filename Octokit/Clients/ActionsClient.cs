@@ -1,4 +1,6 @@
-﻿namespace Octokit
+﻿using Octokit.Clients;
+
+namespace Octokit
 {
     /// <summary>
     /// A client for GitHub's Actions API.
@@ -17,6 +19,7 @@
         {
             Artifacts = new ActionsArtifactsClient(apiConnection);
             Cache = new ActionsCacheClient(apiConnection);
+            Oidc = new ActionsOidcClient(apiConnection);
             Permissions = new ActionsPermissionsClient(apiConnection);
             SelfHostedRunnerGroups = new ActionsSelfHostedRunnerGroupsClient(apiConnection);
             SelfHostedRunners = new ActionsSelfHostedRunnersClient(apiConnection);
@@ -32,6 +35,11 @@
         /// Client for the Cache API.
         /// </summary>
         public IActionsCacheClient Cache { get; private set; }
+
+        /// <summary>
+        /// Client for the OIDC API.
+        /// </summary>
+        public IActionsOidcClient Oidc { get; private set; }
 
         /// <summary>
         /// Client for the Permissions API.

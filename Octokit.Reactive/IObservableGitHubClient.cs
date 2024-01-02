@@ -43,5 +43,6 @@ namespace Octokit.Reactive
         IObservableMetaClient Meta { get; }
         IObservableActionsClient Actions { get; }
         IObservableCodespacesClient Codespaces { get; }
+        IObservableCopilotClient Copilot { get; }
     }
 }

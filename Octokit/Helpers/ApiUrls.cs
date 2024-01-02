@@ -5481,7 +5481,37 @@ namespace Octokit
         {
             return "orgs/{0}/actions/runner-groups/{1}/repositories".FormatUri(org, runnerGroupId);
         }
-
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles adding or removing of copilot licenses for an organisation
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri CopilotBillingLicense(string org)
+        {
+            return $"orgs/{org}/copilot/billing/selected_users".FormatUri(org);
+        }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles reading copilot billing settings for an organization
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri CopilotBillingSettings(string org)
+        {
+            return $"orgs/{org}/copilot/billing".FormatUri(org);
+        }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that allows for searching across all licenses for an organisation
+        /// </summary>
+        /// <param name="org"></param>
+        /// <returns></returns>
+        public static Uri CopilotAllocatedLicenses(string org)
+        {
+            return $"orgs/{org}/copilot/billing/seats".FormatUri(org);
+        }
+        
         public static Uri Codespaces()
         {
             return _currentUserAllCodespaces;
@@ -5565,6 +5595,27 @@ namespace Octokit
         public static Uri RepositoryBranchRename(string owner, string repository, string branch)
         {
             return "repos/{0}/{1}/branches/{2}/rename".FormatUri(owner, repository, branch);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to get or set an organization OIDC subject claim.
+        /// </summary>
+        /// <param name="organization">The organization name</param>
+        /// <returns></returns>
+        public static Uri ActionsOrganizationOidcSubjectClaim(string organization)
+        {
+            return "orgs/{0}/actions/oidc/customization/sub".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to get or set a repository OIDC subject claim.
+        /// </summary>
+        /// <param name="owner">The account owner of the repository</param>
+        /// <param name="repository">The name of the repository</param>
+        /// <returns></returns>
+        public static Uri ActionsRepositoryOidcSubjectClaim(string owner, string repository)
+        {
+            return "repos/{0}/{1}/actions/oidc/customization/sub".FormatUri(owner, repository);
         }
     }
 }
