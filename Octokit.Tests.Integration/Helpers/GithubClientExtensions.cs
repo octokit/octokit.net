@@ -141,6 +141,13 @@ namespace Octokit.Tests.Integration.Helpers
 
             return new EnterpriseUserContext(client.Connection, user);
         }
+        
+        internal static async Task<CopilotUserLicenseContext> CreateCopilotUserLicenseContext(this IGitHubClient client, string organization, string userName)
+        {
+            await client.Copilot.Licensing.Assign(organization, userName);
+
+            return new CopilotUserLicenseContext(client.Connection, organization, userName);
+        }
 
         internal static async Task<PublicKeyContext> CreatePublicKeyContext(this IGitHubClient client)
         {
