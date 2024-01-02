@@ -8,7 +8,7 @@ using Cake.Core;
 
 public class Lifetime : FrostingLifetime<Context>
 {
-    public override void Setup(Context context)
+    public override void Setup(Context context, ISetupContext setupContext)
     {
         context.Target = context.Argument("target", "Default");
         context.Configuration = context.Argument("configuration", "Release");

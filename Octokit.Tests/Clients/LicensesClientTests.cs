@@ -21,11 +21,11 @@ namespace Octokit.Tests.Clients
         public class TheGetAllLicensesMethod
         {
             [Fact]
-            public void EnsuresNonNullArguments()
+            public async Task EnsuresNonNullArguments()
             {
                 var client = new LicensesClient(Substitute.For<IApiConnection>());
 
-                Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLicenses(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllLicenses(null));
             }
 
             [Fact]

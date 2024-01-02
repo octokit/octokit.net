@@ -123,11 +123,11 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
                 var config = new Dictionary<string, string> { { "url", "" } };
-                Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Create("", new NewOrganizationHook("name", config)));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Create("", new NewOrganizationHook("name", config)));
             }
 
             [Fact]
@@ -167,10 +167,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
-                Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Edit("", 123, new EditOrganizationHook()));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Edit("", 123, new EditOrganizationHook()));
             }
 
             [Fact]
@@ -197,10 +197,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
-                Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Ping("", 123));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Ping("", 123));
             }
 
             [Fact]
@@ -237,10 +237,10 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void EnsuresNonEmptyArguments()
+            public async Task EnsuresNonEmptyArguments()
             {
                 var client = new OrganizationsClient(Substitute.For<IApiConnection>());
-                Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Delete("", 123));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Hook.Delete("", 123));
             }
 
         }
