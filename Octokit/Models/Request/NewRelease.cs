@@ -74,6 +74,15 @@ namespace Octokit
         public bool Prerelease { get; set; }
 
         /// <summary>
+        /// If specified, a discussion of the specified category is created and linked to the release.
+        /// The value must be a category that already exists in the repository.
+        /// <value>
+        /// The discussion category name.
+        /// </value>
+        /// </summary>
+        public string DiscussionCategoryName { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to automatically generate the name and body for this release.
         /// If <see cref="Name">name</see> is specified, the specified name will be used; otherwise, a name will
         /// be automatically generated. If <see cref="Body">body</see> is specified, the body will be pre-pended to the

@@ -5481,7 +5481,37 @@ namespace Octokit
         {
             return "orgs/{0}/actions/runner-groups/{1}/repositories".FormatUri(org, runnerGroupId);
         }
-
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles adding or removing of copilot licenses for an organisation
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri CopilotBillingLicense(string org)
+        {
+            return $"orgs/{org}/copilot/billing/selected_users".FormatUri(org);
+        }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles reading copilot billing settings for an organization
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri CopilotBillingSettings(string org)
+        {
+            return $"orgs/{org}/copilot/billing".FormatUri(org);
+        }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that allows for searching across all licenses for an organisation
+        /// </summary>
+        /// <param name="org"></param>
+        /// <returns></returns>
+        public static Uri CopilotAllocatedLicenses(string org)
+        {
+            return $"orgs/{org}/copilot/billing/seats".FormatUri(org);
+        }
+        
         public static Uri Codespaces()
         {
             return _currentUserAllCodespaces;
