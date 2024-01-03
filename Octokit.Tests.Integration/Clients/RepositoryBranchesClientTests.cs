@@ -292,6 +292,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
 
                     Assert.Null(protection.Restrictions);
 
@@ -320,6 +321,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
 
                     Assert.Null(protection.Restrictions);
 
@@ -349,6 +351,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
 
                     Assert.Equal(1, protection.Restrictions.Teams.Count);
                     Assert.Equal(0, protection.Restrictions.Users.Count);
@@ -373,6 +376,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
 
                     Assert.Equal(1, protection.Restrictions.Teams.Count);
                     Assert.Equal(0, protection.Restrictions.Users.Count);
@@ -404,6 +408,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
                     Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                     Assert.Null(protection.Restrictions);
@@ -432,6 +437,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
                     Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                     Assert.Null(protection.Restrictions);
@@ -461,6 +467,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.False(protection.RequiredPullRequestReviews.RequireLastPushApproval);
                     Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                     Assert.Empty(protection.Restrictions.Teams);
@@ -490,6 +497,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.False(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
+                    Assert.False(protection.RequiredPullRequestReviews.RequireLastPushApproval);
                     Assert.Equal(2, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
                     Assert.Empty(protection.Restrictions.Teams);
@@ -798,6 +806,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(requiredReviews.DismissalRestrictions);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.True(requiredReviews.RequireLastPushApproval);
                 }
             }
 
@@ -813,6 +822,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(requiredReviews.DismissalRestrictions);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.True(requiredReviews.RequireLastPushApproval);
                 }
             }
 
@@ -829,6 +839,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.True(requiredReviews.RequireLastPushApproval);
                 }
             }
 
@@ -845,6 +856,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.True(requiredReviews.RequireLastPushApproval);
                 }
             }
         }
@@ -865,6 +877,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(requiredReviews.DismissalRestrictions);
                     Assert.False(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.True(requiredReviews.RequireLastPushApproval);
                     Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
                 }
             }
@@ -883,6 +896,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(requiredReviews.DismissalRestrictions);
                     Assert.False(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.True(requiredReviews.RequireLastPushApproval);
                     Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
                 }
             }
@@ -905,6 +919,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(requiredReviews.DismissalRestrictions);
                     Assert.False(requiredReviews.DismissStaleReviews);
                     Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.False(requiredReviews.RequireLastPushApproval);
                     Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
                 }
             }
@@ -927,6 +942,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Null(requiredReviews.DismissalRestrictions);
                     Assert.False(requiredReviews.DismissStaleReviews);
                     Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.False(requiredReviews.RequireLastPushApproval);
                     Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
                 }
             }
@@ -950,6 +966,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Empty(requiredReviews.DismissalRestrictions.Users);
                     Assert.False(requiredReviews.DismissStaleReviews);
                     Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.False(requiredReviews.RequireLastPushApproval);
                     Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
                 }
             }
@@ -973,6 +990,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.Empty(requiredReviews.DismissalRestrictions.Users);
                     Assert.False(requiredReviews.DismissStaleReviews);
                     Assert.False(requiredReviews.RequireCodeOwnerReviews);
+                    Assert.False(requiredReviews.RequireLastPushApproval);
                     Assert.Equal(2, requiredReviews.RequiredApprovingReviewCount);
                 }
             }

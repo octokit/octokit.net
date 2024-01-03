@@ -28,7 +28,7 @@ namespace Octokit.Tests.Integration.Helpers
             // Protect default branch
             var update = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
-                new BranchProtectionRequiredReviewsUpdate(true, true, 3),
+                new BranchProtectionRequiredReviewsUpdate(true, true, 3, true),
                 null,
                 true,
                 true,
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Integration.Helpers
             // Protect default branch
             var protection = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
-                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { team.TeamName }), true, true, 3),
+                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { team.TeamName }), true, true, 3, true),
                 new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { team.TeamName }),
                 true);
             await client.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, protection);
@@ -105,7 +105,7 @@ namespace Octokit.Tests.Integration.Helpers
             // Protect default branch
             var protection = new BranchProtectionSettingsUpdate(
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
-                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }), true, true, 3),
+                new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }), true, true, 3, true),
                 new BranchProtectionPushRestrictionsUpdate(new BranchProtectionTeamCollection { contextOrgTeam.TeamName }),
                 true);
             await client.Repository.Branch.UpdateBranchProtection(contextOrgRepo.RepositoryOwner, contextOrgRepo.RepositoryName, "main", protection);

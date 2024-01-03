@@ -370,11 +370,13 @@ namespace Octokit
         /// <param name="dismissStaleReviews">Dismiss approved reviews automatically when a new commit is pushed.</param>
         /// <param name="requireCodeOwnerReviews">Blocks merge until code owners have reviewed.</param>
         /// <param name="requiredApprovingReviewCount">Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.</param>
-        public BranchProtectionRequiredReviewsUpdate(bool dismissStaleReviews, bool requireCodeOwnerReviews, int requiredApprovingReviewCount)
+        /// <param name="requireLastPushApproval">Whether the most recent push must be approved by someone other than the person who pushed it. Default: false.</param>
+        public BranchProtectionRequiredReviewsUpdate(bool dismissStaleReviews, bool requireCodeOwnerReviews, int requiredApprovingReviewCount, bool requireLastPushApproval = false)
         {
             DismissStaleReviews = dismissStaleReviews;
             RequireCodeOwnerReviews = requireCodeOwnerReviews;
             RequiredApprovingReviewCount = requiredApprovingReviewCount;
+            RequireLastPushApproval = requireLastPushApproval;
         }
 
         /// <summary>
@@ -384,7 +386,8 @@ namespace Octokit
         /// <param name="dismissStaleReviews">Dismiss approved reviews automatically when a new commit is pushed.</param>
         /// <param name="requireCodeOwnerReviews">Blocks merge until code owners have reviewed.</param>
         /// <param name="requiredApprovingReviewCount">Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.</param>
-        public BranchProtectionRequiredReviewsUpdate(BranchProtectionRequiredReviewsDismissalRestrictionsUpdate dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews, int requiredApprovingReviewCount)
+        /// <param name="requireLastPushApproval">Whether the most recent push must be approved by someone other than the person who pushed it. Default: false.</param>
+        public BranchProtectionRequiredReviewsUpdate(BranchProtectionRequiredReviewsDismissalRestrictionsUpdate dismissalRestrictions, bool dismissStaleReviews, bool requireCodeOwnerReviews, int requiredApprovingReviewCount, bool requireLastPushApproval = false)
         {
             Ensure.ArgumentNotNull(dismissalRestrictions, nameof(dismissalRestrictions));
 
@@ -392,6 +395,7 @@ namespace Octokit
             DismissStaleReviews = dismissStaleReviews;
             RequireCodeOwnerReviews = requireCodeOwnerReviews;
             RequiredApprovingReviewCount = requiredApprovingReviewCount;
+            RequireLastPushApproval = requireLastPushApproval;
         }
 
         /// <summary>
@@ -413,16 +417,22 @@ namespace Octokit
         /// Specify the number of reviewers required to approve pull requests. Use a number between 1 and 6.
         /// </summary>
         public int RequiredApprovingReviewCount { get; protected set; }
+        
+        /// <summary>
+        /// Whether the most recent push must be approved by someone other than the person who pushed it. Default: false
+        /// </summary>
+        public bool RequireLastPushApproval { get; protected set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2} RequiredApprovingReviewCount: {3}",
+                return string.Format(CultureInfo.InvariantCulture, "DismissalRestrictions: {0} DismissStaleReviews: {1} RequireCodeOwnerReviews: {2} RequiredApprovingReviewCount: {3} RequireLastPushApproval: {4}",
                     DismissalRestrictions?.DebuggerDisplay ?? "disabled",
                     DismissStaleReviews,
                     RequireCodeOwnerReviews,
-                    RequiredApprovingReviewCount);
+                    RequiredApprovingReviewCount,
+                    RequireLastPushApproval);
             }
         }
     }
