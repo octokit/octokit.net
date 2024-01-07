@@ -45,15 +45,13 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/variables/{variableName}")]
-        public Task<RepositoryVariable> Get(string owner, string repoName, string variableName)
+        public async Task<RepositoryVariable> Get(string owner, string repoName, string variableName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(variableName, nameof(variableName));
 
-            var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
-
-            return ApiConnection.Get<RepositoryVariable>(url);
+            return await ApiConnection.Get<RepositoryVariable>(ApiUrls.RepositoryVariable(owner, repoName, variableName));
         }
 
         /// <summary>
@@ -68,7 +66,7 @@ namespace Octokit
         /// <param name="createVariable">The value and id of the variable</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was created or updated.</returns>
-        [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/variables/{variableName}")]
+        [ManualRoute("POST", "/repos/{owner}/{repo}/actions/variables")]
         public async Task<RepositoryVariable> Create(string owner, string repoName, string variableName, CreateRepositoryVariable createVariable)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -77,11 +75,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(createVariable, nameof(createVariable));
             Ensure.ArgumentNotNullOrEmptyString(createVariable.Value, nameof(createVariable.Value));
 
-            var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
-
-            await ApiConnection.Post<RepositoryVariable>(url, createVariable);
-
-            return await Get(owner, repoName, variableName);
+            await ApiConnection.Post<RepositoryVariable>(ApiUrls.RepositoryVariable(owner, repoName, variableName), createVariable);
+            return await ApiConnection.Get<RepositoryVariable>(ApiUrls.RepositoryVariable(owner, repoName, variableName));
         }
 
         /// <summary>
@@ -96,7 +91,7 @@ namespace Octokit
         /// <param name="updateVariable">The value and id of the variable</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was created or updated.</returns>
-        [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/variables/{variableName}")]
+        [ManualRoute("PATCH", "/repos/{owner}/{repo}/actions/variables/{variableName}")]
         public async Task<RepositoryVariable> Update(string owner, string repoName, string variableName, UpdateRepositoryVariable updateVariable)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
@@ -105,11 +100,8 @@ namespace Octokit
             Ensure.ArgumentNotNull(updateVariable, nameof(updateVariable));
             Ensure.ArgumentNotNullOrEmptyString(updateVariable.Value, nameof(updateVariable.Value));
 
-            var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
-
-            await ApiConnection.Patch<RepositoryVariable>(url, updateVariable);
-
-            return await Get(owner, repoName, variableName);
+            await ApiConnection.Patch<RepositoryVariable>(ApiUrls.RepositoryVariable(owner, repoName, variableName), updateVariable);
+            return await ApiConnection.Get<RepositoryVariable>(ApiUrls.RepositoryVariable(owner, repoName, variableName));
         }
 
         /// <summary>
@@ -129,9 +121,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(variableName, nameof(variableName));
 
-            var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
-
-            return ApiConnection.Delete(url);
+            return ApiConnection.Delete(ApiUrls.RepositoryVariable(owner, repoName, variableName));
         }
     }
 }

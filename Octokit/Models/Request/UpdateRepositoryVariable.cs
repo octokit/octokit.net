@@ -10,6 +10,13 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class UpdateRepositoryVariable
     {
+        public UpdateRepositoryVariable() { }
+
+        public UpdateRepositoryVariable(string value)
+        {
+            Value = value;
+        }
+        
         /// <summary>
         /// The value of the variable.
         /// </summary>
