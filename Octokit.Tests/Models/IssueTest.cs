@@ -122,7 +122,19 @@ public class IssueTest
 ""type"": ""User"",
 ""site_admin"": false,
 },
-""active_lock_reason"": null
+""active_lock_reason"": null,
+""reactions"": {
+""url"": ""https://api.github.com/repos/octocat/Hello-World/issues/1347/reactions"",
+""total_count"": 5,
+""+1"": 1,
+""-1"": 2,
+""laugh"": 0,
+""hooray"": 0,
+""confused"": 0,
+""heart"": 0,
+""rocket"": 1,
+""eyes"": 1
+}
 }";
         var serializer = new SimpleJsonSerializer();
 
@@ -132,6 +144,16 @@ public class IssueTest
         Assert.Equal("octocat", issue.User.Login);
         Assert.Equal("bug", issue.Labels.First().Name);
         Assert.Null(issue.ActiveLockReason);
+
+        Assert.Equal(5, issue.Reactions.TotalCount);
+        Assert.Equal(1, issue.Reactions.Plus1);
+        Assert.Equal(2, issue.Reactions.Minus1);
+        Assert.Equal(0, issue.Reactions.Laugh);
+        Assert.Equal(0, issue.Reactions.Hooray);
+        Assert.Equal(0, issue.Reactions.Confused);
+        Assert.Equal(0, issue.Reactions.Heart);
+        Assert.Equal(1, issue.Reactions.Rocket);
+        Assert.Equal(1, issue.Reactions.Eyes);
     }
 
     public class TheToUpdateMethod
