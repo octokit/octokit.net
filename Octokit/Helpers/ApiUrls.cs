@@ -4619,12 +4619,71 @@ namespace Octokit
             return "repos/{0}/{1}/actions/organization-variables".FormatUri(owner, repo);
         }
 
-        /// <summary>
-        /// Returns the <see cref="Uri"/> that returns all emojis in
-        /// response to a GET request.
-        /// </summary>
-        /// <returns>The <see cref="Uri"/> for emojis.</returns>
-        public static Uri Emojis()
+		/// <summary>
+		/// Returns the <see cref="Uri"/> that handles the environment secrets for the repository environment (environment)
+		/// </summary>
+		/// <param name="repoId">The unique identifier of the repository for the environment.</param>
+		/// <param name="envName">The name of the environment. The name must be URL encoded. For example, any slashes in the name must be replaced with %2F</param>
+		/// <param name="secret">The name of the secret</param>
+		/// <returns>The <see cref="Uri"/> that handles the environment secrets for the environment</returns>
+		public static Uri EnvironmentSecret(int repoId, string envName, string secret)
+		{
+			return "repositories/{0}/environments/{1}/secrets/{2}".FormatUri(repoId, envName, secret);
+		}
+
+		/// <summary>
+		/// Returns the <see cref="Uri"/> that handles the environment secrets for the repository environment (environment)
+		/// </summary>
+		/// <param name="repoId">The unique identifier of the repository for the environment.</param>
+		/// <param name="envName">The name of the environment. The name must be URL encoded. For example, any slashes in the name must be replaced with %2F</param>
+		/// <param name="perPage">Optional number of pages to return.  Default is 30, per GitHub</param>
+		/// <returns>The <see cref="Uri"/> that handles the environment secrets for the environment</returns>
+		public static Uri EnvironmentSecrets(int repoId, string envName, int? perPage = 30)
+		{
+			return "repositories/{0}/environments/{1}/secrets?per_page={2}".FormatUri(repoId, envName, perPage);
+		}
+
+		/// <summary>
+		/// Returns the <see cref="Uri"/> that handles the environment secrets for the repository environment (environment)
+		/// </summary>
+		/// <param name="repoId">The unique identifier of the repository for the environment.</param>
+		/// <param name="envName">The name of the environment. The name must be URL encoded. For example, any slashes in the name must be replaced with %2F</param>
+		/// <returns>The <see cref="Uri"/> that handles the environment secrets for the environment</returns>
+		public static Uri EnvironmentSecretsPublicKey(int repoId, string envName)
+		{
+			return "repositories/{0}/environments/{1}/secrets/public-key".FormatUri(repoId, envName);
+		}
+
+		/// <summary>
+		/// Returns the <see cref="Uri"/> that handles the environment variables for the repository environment (environment)
+		/// </summary>
+		/// <param name="repoId">The unique identifier of the repository for the environment.</param>
+		/// <param name="envName">The name of the environment. The name must be URL encoded. For example, any slashes in the name must be replaced with %2F</param>
+		/// <param name="variable">The name of the variable</param>
+		/// <returns>The <see cref="Uri"/> that handles the environment variables for the environment</returns>
+		public static Uri EnvironmentVariable(int repoId, string envName, string variable)
+		{
+			return "repositories/{0}/environments/{1}/variables/{2}".FormatUri(repoId, envName, variable);
+		}
+
+		/// <summary>
+		/// Returns the <see cref="Uri"/> that handles the environment variables for the repository environment (environment)
+		/// </summary>
+		/// <param name="repoId">The unique identifier of the repository for the environment.</param>
+		/// <param name="envName">The name of the environment. The name must be URL encoded. For example, any slashes in the name must be replaced with %2F</param>
+		/// <param name="perPage">Optional number of pages to return.  Default is 30, per GitHub</param>
+		/// <returns>The <see cref="Uri"/> that handles the environment variables for the environment</returns>
+		public static Uri EnvironmentVariables(int repoId, string envName, int? perPage = 30)
+		{
+			return "repositories/{0}/environments/{1}/variables?per_page={2}".FormatUri(repoId, envName, perPage);
+		}
+
+		/// <summary>
+		/// Returns the <see cref="Uri"/> that returns all emojis in
+		/// response to a GET request.
+		/// </summary>
+		/// <returns>The <see cref="Uri"/> for emojis.</returns>
+		public static Uri Emojis()
         {
             return "emojis".FormatUri();
         }
