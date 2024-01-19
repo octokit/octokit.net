@@ -24,6 +24,7 @@ Param(
     [string]$Target = "Default",
     [ValidateSet("Release", "Debug")]
     [string]$Configuration = "Release",
+	[string]$ForceVersion = "0.0.0",
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
     [string]$Verbosity = "Normal",
     [switch]$WhatIf,
@@ -97,6 +98,7 @@ if (!(Test-Path $NugetPath)) {
 $Arguments = @{
     target=$Target;
     configuration=$Configuration;
+	forceVersion=$ForceVersion;
     verbosity=$Verbosity;
     dryrun=$WhatIf;
 }.GetEnumerator() | %{"--{0}=`"{1}`"" -f $_.key, $_.value };

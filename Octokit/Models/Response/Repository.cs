@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -17,7 +16,15 @@ namespace Octokit
             Id = id;
         }
 
-        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, string archiveUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasDiscussions, bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, bool? allowSquashMerge, bool? allowMergeCommit, bool archived, int watchersCount, bool? deleteBranchOnMerge, RepositoryVisibility visibility, IEnumerable<string> topics, bool? allowAutoMerge, bool? allowUpdateBranch, bool? webCommitSignoffRequired)
+        public Repository(string url, string htmlUrl, string cloneUrl, string gitUrl, string sshUrl, string svnUrl, string mirrorUrl, 
+            string archiveUrl, long id, string nodeId, User owner, string name, string fullName, bool isTemplate, string description, 
+            string homepage, string language, bool @private, bool fork, int forksCount, int stargazersCount, string defaultBranch, 
+            int openIssuesCount, DateTimeOffset? pushedAt, DateTimeOffset createdAt, DateTimeOffset updatedAt, 
+            RepositoryPermissions permissions, Repository parent, Repository source, LicenseMetadata license, bool hasDiscussions, 
+            bool hasIssues, bool hasWiki, bool hasDownloads, bool hasPages, int subscribersCount, long size, bool? allowRebaseMerge, 
+            bool? allowSquashMerge, bool? allowMergeCommit, bool archived, int watchersCount, bool? deleteBranchOnMerge, 
+            RepositoryVisibility visibility, IEnumerable<string> topics, bool? allowAutoMerge, bool? allowUpdateBranch, 
+            bool? webCommitSignoffRequired, SecurityAndAnalysis securityAndAnalysis)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -69,6 +76,7 @@ namespace Octokit
             AllowAutoMerge = allowAutoMerge;
             AllowUpdateBranch = allowUpdateBranch;
             WebCommitSignoffRequired = webCommitSignoffRequired;
+            SecurityAndAnalysis = securityAndAnalysis;
         }
 
         public string Url { get; private set; }
@@ -169,6 +177,8 @@ namespace Octokit
         public bool? AllowUpdateBranch { get; private set; }
 
         public bool? WebCommitSignoffRequired { get; private set; }
+
+        public SecurityAndAnalysis SecurityAndAnalysis { get; private set; }
 
         internal string DebuggerDisplay
         {
