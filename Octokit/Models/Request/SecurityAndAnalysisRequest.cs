@@ -8,12 +8,14 @@ namespace Octokit
     /// The security and analysis features that are enabled or disabled for the repository
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SecurityAndAnalysis
+    public class SecurityAndAnalysisRequest
     {
-        public SecurityAndAnalysis()
+        public SecurityAndAnalysisRequest()
         { }
 
-        public SecurityAndAnalysis(AdvancedSecurity advancedSecurity, DependabotSecurityUpdates dependabotSecurityUpdates, SecretScanning secretScanning, SecretScanningPushProtection secretScanningPushProtection, SecretScanningValidityChecks secretScanningValidityChecks)
+        public SecurityAndAnalysisRequest(AdvancedSecurityRequest advancedSecurity, DependabotSecurityUpdatesRequest dependabotSecurityUpdates, 
+            SecretScanningRequest secretScanning, SecretScanningPushProtectionRequest secretScanningPushProtection, 
+            SecretScanningValidityChecksRequest secretScanningValidityChecks)
         {
             this.AdvancedSecurity = advancedSecurity;
             this.DependabotSecurityUpdates = dependabotSecurityUpdates;
@@ -23,15 +25,11 @@ namespace Octokit
         }
 
 
-        public AdvancedSecurity AdvancedSecurity { get; protected set; }
-
-        public DependabotSecurityUpdates DependabotSecurityUpdates { get; protected set; }
-
-        public SecretScanning SecretScanning { get; protected set; }
-
-        public SecretScanningPushProtection SecretScanningPushProtection { get; protected set; }
-
-        public SecretScanningValidityChecks SecretScanningValidityChecks { get; protected set; }
+        public AdvancedSecurityRequest AdvancedSecurity { get; set; }
+        public DependabotSecurityUpdatesRequest DependabotSecurityUpdates { get; set; }
+        public SecretScanningRequest SecretScanning { get; set; }
+        public SecretScanningPushProtectionRequest SecretScanningPushProtection { get; set; }
+        public SecretScanningValidityChecksRequest SecretScanningValidityChecks { get; set; }
 
 
         internal string DebuggerDisplay
@@ -48,18 +46,20 @@ namespace Octokit
     /// Use the status property to enable or disable GitHub Advanced Security for this repository
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class AdvancedSecurity
+    public class AdvancedSecurityRequest
     {
-        public AdvancedSecurity()
+        public AdvancedSecurityRequest()
         { }
 
-        public AdvancedSecurity(string status)
+        public AdvancedSecurityRequest(Status? status)
         {
             this.Status = status;
         }
 
-        
-        public string Status { get; protected set; }
+        /// <summary>
+        /// Can be enabled, disabled, or null
+        /// </summary>
+        public Status? Status { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -74,18 +74,20 @@ namespace Octokit
     /// Use the status property to enable or disable Dependabot security updates for this repository
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class DependabotSecurityUpdates
+    public class DependabotSecurityUpdatesRequest
     {
-        public DependabotSecurityUpdates()
+        public DependabotSecurityUpdatesRequest()
         { }
 
-        public DependabotSecurityUpdates(string status)
+        public DependabotSecurityUpdatesRequest(Status? status)
         {
             this.Status = status;
         }
 
-
-        public string Status { get; protected set; }
+        /// <summary>
+        /// Can be enabled, disabled, or null
+        /// </summary>
+        public Status? Status { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -100,18 +102,20 @@ namespace Octokit
     /// Use the status property to enable or disable secret scanning for this repository
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SecretScanning
+    public class SecretScanningRequest
     {
-        public SecretScanning()
+        public SecretScanningRequest()
         { }
 
-        public SecretScanning(string status)
+        public SecretScanningRequest(Status? status)
         {
             this.Status = status;
         }
 
-
-        public string Status { get; protected set; }
+        /// <summary>
+        /// Can be enabled, disabled, or null
+        /// </summary>
+        public Status? Status { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -126,18 +130,20 @@ namespace Octokit
     /// Use the status property to enable or disable secret scanning push protection for this repository
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SecretScanningPushProtection
+    public class SecretScanningPushProtectionRequest
     {
-        public SecretScanningPushProtection()
+        public SecretScanningPushProtectionRequest()
         { }
 
-        public SecretScanningPushProtection(string status)
+        public SecretScanningPushProtectionRequest(Status? status)
         {
             this.Status = status;
         }
 
-
-        public string Status { get; protected set; }
+        /// <summary>
+        /// Can be enabled, disabled, or null
+        /// </summary>
+        public Status? Status { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -152,18 +158,20 @@ namespace Octokit
     /// Use the status property to enable or disable secret scanning validity checks for this repository
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class SecretScanningValidityChecks
+    public class SecretScanningValidityChecksRequest
     {
-        public SecretScanningValidityChecks()
+        public SecretScanningValidityChecksRequest()
         { }
 
-        public SecretScanningValidityChecks(string status)
+        public SecretScanningValidityChecksRequest(Status? status)
         {
             this.Status = status;
         }
 
-
-        public string Status { get; protected set; }
+        /// <summary>
+        /// Can be enabled, disabled, or null
+        /// </summary>
+        public Status? Status { get; set; }
 
         internal string DebuggerDisplay
         {
@@ -173,5 +181,4 @@ namespace Octokit
             }
         }
     }
-   
 }
