@@ -10,7 +10,6 @@ public class Context : FrostingContext
     public string Target { get; set; }
     public new string Configuration { get; set; }
     public bool FormatCode { get; set; }
-    public string ForceVersion { get; set; }
     public BuildVersion Version { get; set; }
 
     public DirectoryPath Artifacts { get; set; }
