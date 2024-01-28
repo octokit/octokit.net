@@ -1,4 +1,5 @@
 ﻿using System;
+using Octokit;
 using Octokit.Internal;
 using Xunit;
 
@@ -52,16 +53,16 @@ namespace Octokit.Tests.Models
     }
   ]
 }";
-          
+
           var serializer = new SimpleJsonSerializer();
 
           var payload = serializer.Deserialize<ListArtifactsResponse>(json);
 
           Assert.NotNull(payload);
-          
+
           Assert.Equal(2, payload.TotalCount);
           Assert.Equal(2, payload.Artifacts.Count);
-          
+
           Assert.Equal(11, payload.Artifacts[0].Id);
           Assert.Equal("MDg6QXJ0aWZhY3QxMQ==", payload.Artifacts[0].NodeId);
           Assert.Equal("Rails", payload.Artifacts[0].Name);
