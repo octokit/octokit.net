@@ -7,21 +7,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Artifact
     {
-        public Artifact() { }
+        public Artifact()
+        {
+        }
 
-        public Artifact(
-            long id,
-            string nodeId,
-            string name,
-            int sizeInBytes,
-            string url,
-            string archiveDownloadUrl,
-            bool expired,
-            DateTime createdAt,
-            DateTime expiresAt,
-            DateTime updatedAt,
-            ArtifactWorkflowRun workflowRun
-        )
+        public Artifact(long id, string nodeId, string name, int sizeInBytes, string url, string archiveDownloadUrl, bool expired, DateTime createdAt, DateTime expiresAt, DateTime updatedAt, ArtifactWorkflowRun workflowRun)
         {
             Id = id;
             NodeId = nodeId;
@@ -91,7 +81,7 @@ namespace Octokit
         /// </summary>
         public ArtifactWorkflowRun WorkflowRun { get; private set; }
 
-        internal string DebuggerDisplay =>
-            string.Format(CultureInfo.InvariantCulture, "Id: {0}", Id);
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0}", Id);
     }
 }
+

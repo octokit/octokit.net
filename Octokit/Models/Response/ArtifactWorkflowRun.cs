@@ -6,15 +6,11 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class ArtifactWorkflowRun
     {
-        public ArtifactWorkflowRun() { }
+        public ArtifactWorkflowRun()
+        {
+        }
 
-        public ArtifactWorkflowRun(
-            long id,
-            long repositoryId,
-            long headRepositoryId,
-            string headBranch,
-            string headSha
-        )
+        public ArtifactWorkflowRun(long id, long repositoryId, long headRepositoryId, string headBranch, string headSha)
         {
             Id = id;
             RepositoryId = repositoryId;
@@ -48,7 +44,7 @@ namespace Octokit
         /// </summary>
         public string HeadSha { get; private set; }
 
-        internal string DebuggerDisplay =>
-            string.Format(CultureInfo.InvariantCulture, "Id: {0}", Id);
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Id: {0}", Id);
     }
 }
+

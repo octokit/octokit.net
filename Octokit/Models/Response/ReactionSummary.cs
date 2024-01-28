@@ -9,7 +9,7 @@ namespace Octokit
     {
         public ReactionSummary() { }
 
-        public ReactionSummary(int totalCount, int plus1, int minus1, int laugh, int confused, int heart, int hooray, string url)
+        public ReactionSummary(int totalCount, int plus1, int minus1, int laugh, int confused, int heart, int hooray, int eyes, int rocket, string url)
         {
             TotalCount = totalCount;
             Plus1 = plus1;
@@ -19,6 +19,8 @@ namespace Octokit
             Heart = heart;
             Hooray = hooray;
             Url = url;
+            Eyes = eyes;
+            Rocket = rocket;
         }
 
         public int TotalCount { get; private set; }
@@ -30,6 +32,8 @@ namespace Octokit
         public int Confused { get; private set; }
         public int Heart { get; private set; }
         public int Hooray { get; private set; }
+        public int Eyes { get; private set; }
+        public int Rocket { get; private set; }
         public string Url { get; private set; }
 
         internal string DebuggerDisplay
@@ -38,14 +42,16 @@ namespace Octokit
             {
                 return string.Format(
                     CultureInfo.InvariantCulture,
-                    "TotalCount: {0} +1: {1} -1: {2} Laugh: {3} Confused: {4} Heart: {5} Hooray: {6}",
+                    "TotalCount: {0} +1: {1} -1: {2} Laugh: {3} Confused: {4} Heart: {5} Hooray: {6} Eyes: {7} Rocket: {8}",
                     TotalCount,
                     Plus1,
                     Minus1,
                     Laugh,
                     Confused,
                     Heart,
-                    Hooray);
+                    Hooray, 
+					Eyes,
+					Rocket);
             }
         }
     }
