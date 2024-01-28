@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using Octokit;
 
+namespace Octokit
+{
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
 public class ListArtifactsResponse
 {
@@ -27,4 +28,5 @@ public class ListArtifactsResponse
     public IReadOnlyList<Artifact> Artifacts { get; private set; } = new List<Artifact>();
 
     internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Artifacts: {0}", TotalCount);
+}
 }
