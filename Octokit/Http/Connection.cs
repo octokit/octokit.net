@@ -596,7 +596,8 @@ namespace Octokit
                 Method = HttpMethod.Delete,
                 Body = data,
                 BaseAddress = BaseAddress,
-                Endpoint = uri
+                Endpoint = uri,
+                ContentType = "application/json"
             };
             var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
