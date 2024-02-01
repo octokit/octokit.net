@@ -5542,7 +5542,7 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repository">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A Uri Instance</returns>
         public static Uri ListArtifacts(string owner, string repository)
         {
             return "repos/{0}/{1}/actions/artifacts".FormatUri(owner, repository);
@@ -5554,7 +5554,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repository">The name of the repository</param>
         /// <param name="artifactId">The id of the artifact</param>
-        /// <returns></returns>
+        /// <returns>A Uri Instance</returns>
         public static Uri Artifact(string owner, string repository, long artifactId)
         {
             return "repos/{0}/{1}/actions/artifacts/{2}".FormatUri(owner, repository, artifactId);
@@ -5567,7 +5567,7 @@ namespace Octokit
         /// <param name="repository">The name of the repository</param>
         /// <param name="artifactId">The id of the artifact</param>
         /// <param name="archiveFormat">The archive format e.g. zip</param>
-        /// <returns></returns>
+        /// <returns>A Uri Instance</returns>
         public static Uri DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat)
         {
             return "repos/{0}/{1}/actions/artifacts/{2}/{3}".FormatUri(owner, repository, artifactId, archiveFormat);
@@ -5579,7 +5579,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repository">The name of the repository</param>
         /// <param name="runId">The id of the workflow run</param>
-        /// <returns></returns>
+        /// <returns>A Uri Instance</returns>
         public static Uri ListWorkflowArtifacts(string owner, string repository, long runId)
         {
             return "repos/{0}/{1}/actions/runs/{2}/artifacts".FormatUri(owner, repository, runId);
@@ -5591,7 +5591,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repository">The name of the repository</param>
         /// <param name="branch">The name of the branch to rename</param>
-        /// <returns></returns>
+        /// <returns>A Uri Instance</returns>
         public static Uri RepositoryBranchRename(string owner, string repository, string branch)
         {
             return "repos/{0}/{1}/branches/{2}/rename".FormatUri(owner, repository, branch);
@@ -5601,7 +5601,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> to get or set an organization OIDC subject claim.
         /// </summary>
         /// <param name="organization">The organization name</param>
-        /// <returns></returns>
+        /// <returns>A Uri Instance</returns>
         public static Uri ActionsOrganizationOidcSubjectClaim(string organization)
         {
             return "orgs/{0}/actions/oidc/customization/sub".FormatUri(organization);
@@ -5612,10 +5612,56 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The account owner of the repository</param>
         /// <param name="repository">The name of the repository</param>
-        /// <returns></returns>
+        /// <returns>A Uri Instance</returns>
         public static Uri ActionsRepositoryOidcSubjectClaim(string owner, string repository)
         {
             return "repos/{0}/{1}/actions/oidc/customization/sub".FormatUri(owner, repository);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to create an autolink
+        /// </summary>
+        /// <param name="owner">The account owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri AutolinksCreate(string owner, string repo)
+        {
+            return "repos/{0}/{1}/autolinks".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to delete an autolink
+        /// </summary>
+        /// <param name="owner">The account owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="autolinkId">The unique identifier of the autolink</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri AutolinksDelete(string owner, string repo, int autolinkId)
+        {
+            return "repos/{0}/{1}/autolinks/{2}".FormatUri(owner, repo, autolinkId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to get an autolink
+        /// </summary>
+        /// <param name="owner">The account owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <param name="autolinkId">The unique identifier of the autolink</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri AutolinksGet(string owner, string repo, int autolinkId)
+        {
+            return "repos/{0}/{1}/autolinks/{2}".FormatUri(owner, repo, autolinkId);
+        }
+
+        /// <summary>
+        ///  Returns the <see cref="Uri"/> to get a list of autolinks configured for the given repository
+        /// </summary>
+        /// <param name="owner">The account owner of the repository</param>
+        /// <param name="repo">The name of the repository</param>
+        /// <returns>A Uri Instance</returns>
+        public static Uri AutolinksGetAll(string owner, string repo)
+        {
+            return "repos/{0}/{1}/autolinks".FormatUri(owner, repo);
         }
     }
 }
