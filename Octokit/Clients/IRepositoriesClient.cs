@@ -29,6 +29,14 @@ namespace Octokit
         IRepositoryActionsClient Actions { get; }
 
         /// <summary>
+        /// Client for managing Autolinks in a repository.
+        /// </summary>
+        /// <remarks>
+        ///  See the <a href="https://docs.github.com/en/rest/repos/autolinks">Repository Autolinks API documentation</a> for more information.
+        /// </remarks>
+        IAutolinksClient Autolinks { get; }
+
+        /// <summary>
         /// Client for managing branches in a repository.
         /// </summary>
         /// <remarks>
