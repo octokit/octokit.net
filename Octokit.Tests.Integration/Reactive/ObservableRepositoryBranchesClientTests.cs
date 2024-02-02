@@ -191,6 +191,7 @@ namespace Octokit.Tests.Integration.Reactive
                         new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
                         new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
                         new BranchProtectionPushRestrictionsUpdate(),
+                        true,
                         false,
                         true,
                         true,
@@ -211,6 +212,7 @@ namespace Octokit.Tests.Integration.Reactive
                     Assert.Empty(protection.Restrictions.Teams);
                     Assert.Empty(protection.Restrictions.Users);
 
+                    Assert.True(protection.RequiredSignatures.Enabled);
                     Assert.False(protection.EnforceAdmins.Enabled);
                     Assert.True(protection.RequiredLinearHistory.Enabled);
                     Assert.True(protection.AllowForcePushes.Enabled);
@@ -230,6 +232,7 @@ namespace Octokit.Tests.Integration.Reactive
                         new BranchProtectionRequiredStatusChecksUpdate(false, new[] { "new" }),
                         new BranchProtectionRequiredReviewsUpdate(new BranchProtectionRequiredReviewsDismissalRestrictionsUpdate(false), false, false, 2),
                         new BranchProtectionPushRestrictionsUpdate(),
+                        true,
                         false,
                         true,
                         true,
@@ -250,6 +253,7 @@ namespace Octokit.Tests.Integration.Reactive
                     Assert.Empty(protection.Restrictions.Teams);
                     Assert.Empty(protection.Restrictions.Users);
 
+                    Assert.True(protection.RequiredSignatures.Enabled);
                     Assert.False(protection.EnforceAdmins.Enabled);
                     Assert.True(protection.RequiredLinearHistory.Enabled);
                     Assert.True(protection.AllowForcePushes.Enabled);
