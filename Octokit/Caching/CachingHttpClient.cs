@@ -40,12 +40,12 @@ namespace Octokit.Caching
                     return cachedResponse;
                 }
 
-                TrySetCachedResponse(request, conditionalResponse);
+                _ = TrySetCachedResponse(request, conditionalResponse);
                 return conditionalResponse;
             }
 
             var response = await _httpClient.Send(request, cancellationToken);
-            TrySetCachedResponse(request, response);
+            _ = TrySetCachedResponse(request, response);
             return response;
         }
 
@@ -65,6 +65,10 @@ namespace Octokit.Caching
         {
             try
             {
+                if(!response.IsSuccessStatusCode())
+                {
+                    return;
+                }
                 await _responseCache.SetAsync(request, CachedResponse.V1.Create(response));
             }
             catch (Exception)
