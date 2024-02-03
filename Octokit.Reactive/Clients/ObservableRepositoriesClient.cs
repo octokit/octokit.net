@@ -5,9 +5,9 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
-using System.Threading.Tasks;
 using Octokit.Reactive.Clients;
 using Octokit.Reactive.Internal;
+
 
 namespace Octokit.Reactive
 {
@@ -42,6 +42,7 @@ namespace Octokit.Reactive
             Traffic = new ObservableRepositoryTrafficClient(client);
             Project = new ObservableProjectsClient(client);
             Actions = new ObservableRepositoryActionsClient(client);
+            Autolinks = new ObservableAutolinksClient(client);
         }
 
         /// <summary>
@@ -823,6 +824,14 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/en/rest/reference/actions">Actions API documentation</a> for more details
         /// </remarks>
         public IObservableRepositoryActionsClient Actions { get; private set; }
+
+        /// <summary>
+        /// A client for GitHub's Repository Autolinks API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/repos/autolinks">API documentation</a> for more information.
+        /// </remarks>
+        public IObservableAutolinksClient Autolinks { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repository Branches API.

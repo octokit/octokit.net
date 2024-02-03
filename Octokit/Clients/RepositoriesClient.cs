@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using Octokit.Clients;
 
 namespace Octokit
 {
@@ -42,6 +43,8 @@ namespace Octokit
             Traffic = new RepositoryTrafficClient(apiConnection);
             Project = new ProjectsClient(apiConnection);
             Actions = new RepositoryActionsClient(apiConnection);
+            Autolinks = new AutolinksClient(apiConnection);
+            
         }
 
         /// <summary>
@@ -1153,5 +1156,13 @@ namespace Octokit
         /// Refer to the API documentation for more information: https://developer.github.com/v3/repos/projects/
         /// </remarks>
         public IProjectsClient Project { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Repository Autolinks API
+        /// </summary>
+        /// <remarks>
+        /// Refer to the API documentation for more information: https://docs.github.com/en/rest/repos/autolinks
+        /// </remarks>
+        public IAutolinksClient Autolinks { get; private set; }
     }
 }

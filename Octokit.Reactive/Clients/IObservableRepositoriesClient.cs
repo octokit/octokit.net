@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
-using System.Threading.Tasks;
+
 
 namespace Octokit.Reactive
 {
@@ -522,6 +521,14 @@ namespace Octokit.Reactive
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         IObservable<Repository> Edit(long repositoryId, RepositoryUpdate update);
+
+        /// <summary>
+        /// A client for GitHub's Repository Autolinks API
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/repos/autolinks">API documentation</a> for more information.
+        /// </remarks>
+        IObservableAutolinksClient Autolinks { get; }
 
         /// <summary>
         /// A client for GitHub's Repo Collaborators.

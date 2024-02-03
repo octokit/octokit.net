@@ -12,6 +12,7 @@ public class Lifetime : FrostingLifetime<Context>
     {
         context.Target = context.Argument("target", "Default");
         context.Configuration = context.Argument("configuration", "Release");
+        context.ForceVersion = context.Argument<string>("forceVersion", "0.0.0");
         context.FormatCode = context.Argument("formatCode", false);
 
         context.Artifacts = "./packaging/";
@@ -46,7 +47,7 @@ public class Lifetime : FrostingLifetime<Context>
         ToolInstaller.DotNetToolInstall(context, "coverlet.console", "1.7.2", "coverlet");
 
         // Calculate semantic version.
-        context.Version = BuildVersion.Calculate(context);
+        context.Version = context.ForceVersion != "0.0.0" ? new BuildVersion(context.ForceVersion, null, null) : BuildVersion.Calculate(context);
         context.Version.Prefix = context.Argument<string>("version", context.Version.Prefix);
         context.Version.Suffix = context.Argument<string>("suffix", context.Version.Suffix);
 
