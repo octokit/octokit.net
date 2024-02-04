@@ -618,6 +618,15 @@ namespace Octokit
             var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
+        
+        public async Task<HttpStatusCode> Delete(Uri uri, object data, string accepts, string contentType)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
+
+            var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, contentType, CancellationToken.None).ConfigureAwait(false);
+            return response.HttpResponse.StatusCode;
+        }
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request.
