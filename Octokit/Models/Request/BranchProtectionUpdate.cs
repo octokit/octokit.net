@@ -112,6 +112,7 @@ namespace Octokit
         /// <param name="requiredStatusChecks">Specifies the requested status check settings. Pass null to disable status checks</param>
         /// <param name="requiredPullRequestReviews">Specifies if reviews are required to merge the pull request. Pass null to disable required reviews</param>
         /// <param name="restrictions">Specifies the requested push access restrictions (applies only to Organization owned repositories). Pass null to disable push access restrictions</param>
+        /// <param name="requiredSignatures">Specifies whether commits to a branch are required to be signed by gpg keys</param>
         /// <param name="enforceAdmins">Specifies whether the protections applied to this branch also apply to repository admins</param>
         /// <param name="requiredLinearHistory">Enforces a linear commit Git history</param>
         /// <param name="allowForcePushes">Permits force pushes to the protected branch</param>
@@ -122,6 +123,7 @@ namespace Octokit
         public BranchProtectionSettingsUpdate(BranchProtectionRequiredStatusChecksUpdate requiredStatusChecks,
                                               BranchProtectionRequiredReviewsUpdate requiredPullRequestReviews,
                                               BranchProtectionPushRestrictionsUpdate restrictions,
+                                              bool requiredSignatures,
                                               bool enforceAdmins,
                                               bool requiredLinearHistory,
                                               bool? allowForcePushes,
@@ -133,6 +135,7 @@ namespace Octokit
             RequiredStatusChecks = requiredStatusChecks;
             RequiredPullRequestReviews = requiredPullRequestReviews;
             Restrictions = restrictions;
+            RequiredSignatures = requiredSignatures;
             EnforceAdmins = enforceAdmins;
             LockBranch = lockBranch;
             RequiredLinearHistory = requiredLinearHistory;
@@ -159,6 +162,11 @@ namespace Octokit
         /// </summary>
         [SerializeNull]
         public BranchProtectionPushRestrictionsUpdate Restrictions { get; protected set; }
+        
+        /// <summary>
+        /// Specifies whether the signed commits are required for this branch
+        /// </summary>
+        public bool RequiredSignatures { get; set; }
 
         /// <summary>
         /// Specifies whether the protections applied to this branch also apply to repository admins
