@@ -620,7 +620,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrDefault(invitationId, nameof(invitationId));
 
-            return ApiConnection.Delete<OrganizationMembershipInvitation>(ApiUrls.CancelOrganizationInvitation(org, invitationId), AcceptHeaders.StableVersionJson);
+            return ApiConnection.Delete(ApiUrls.CancelOrganizationInvitation(org, invitationId));
         }
 
         /// <summary>
