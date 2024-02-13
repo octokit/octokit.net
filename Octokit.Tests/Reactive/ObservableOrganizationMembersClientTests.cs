@@ -434,5 +434,29 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null).ToTask());
             }
         }
+
+        public class TheCancelOrganizationInvitationMethod
+        {
+            [Fact]
+            public void CancelInvitationFromClientOrganizationMember()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                client.CancelOrganizationInvitation("org", 1);
+
+                gitHubClient.Organization.Member.Received().CancelOrganizationInvitation("org", 1);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation(null, 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CancelOrganizationInvitation("", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation("org", 0).ToTask());
+            }
+        }
     }
 }
