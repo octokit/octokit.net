@@ -12,5 +12,7 @@ namespace Octokit
         Completed,
         [Parameter(Value = "waiting")]
         Waiting,
+        [Parameter(Value = "pending")]
+        Pending,
     }
 }

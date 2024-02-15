@@ -605,6 +605,25 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Cancel an organization invitation. In order to cancel an organization invitation, the authenticated user must be an organization owner.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#cancel-an-organization-invitation">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="invitationId">The unique identifier of the invitation</param>
+        /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/invitations/{invitation_id}")]
+        public Task CancelOrganizationInvitation(string org, int invitationId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrDefault(invitationId, nameof(invitationId));
+
+            return ApiConnection.Delete(ApiUrls.CancelOrganizationInvitation(org, invitationId));
+        }
+
+        /// <summary>
         /// Returns all <see cref="OrganizationMembership" />s for the current user.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>

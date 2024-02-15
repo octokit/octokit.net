@@ -944,6 +944,17 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to cancel an organization invitation
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="invitationId">The unique identifier of the invitation</param>
+        /// <returns></returns>
+        public static Uri CancelOrganizationInvitation(string org, int invitationId)
+        {
+            return "orgs/{0}/invitations/{1}".FormatUri(org, invitationId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the outside collaborators of the organization
         /// </summary>
         /// <param name="org">The organization</param>
