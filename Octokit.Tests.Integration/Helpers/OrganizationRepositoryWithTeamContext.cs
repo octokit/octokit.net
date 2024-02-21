@@ -34,6 +34,7 @@ namespace Octokit.Tests.Integration.Helpers
                 true,
                 true,
                 true,
+                true,
                 false,
                 true);
 
@@ -51,6 +52,8 @@ namespace Octokit.Tests.Integration.Helpers
                 new BranchProtectionRequiredStatusChecksUpdate(true, new[] { "build", "test" }),
                 new BranchProtectionRequiredReviewsUpdate(true, true, 3),
                 null,
+                true,
+                true,
                 true,
                 true,
                 true,

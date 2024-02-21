@@ -628,5 +628,29 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null));
             }
         }
+
+        public class TheCancelOrganizationInvitationMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.CancelOrganizationInvitation("org", 1);
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations/1"));
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation(null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CancelOrganizationInvitation("", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation("org", 0));
+            }
+        }
     }
 }
