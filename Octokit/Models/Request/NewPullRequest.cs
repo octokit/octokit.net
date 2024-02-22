@@ -32,7 +32,7 @@ namespace Octokit
         /// <param name="issueId">The number of an existing issue to convert into a pull request.</param>
         /// <param name="head">The branch (or git ref where your changes are implemented. In other words, the source branch/ref</param>
         /// <param name="baseRef">The base (or git ref) reference you want your changes pulled into. In other words, the target branch/ref</param>
-        public NewPullRequest(int issueId, string head, string baseRef)
+        public NewPullRequest(long issueId, string head, string baseRef)
         {
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
             Ensure.ArgumentNotNullOrEmptyString(baseRef, nameof(baseRef));
@@ -50,7 +50,7 @@ namespace Octokit
         /// <summary>
         /// The number of an existing issue to convert into a pull request (required if <see cref="Title"/> not provided).
         /// </summary>
-        public int? IssueId { get; private set; }
+        public long? IssueId { get; private set; }
 
         /// <summary>
         /// The branch (or git ref) you want your changes pulled into (required).
