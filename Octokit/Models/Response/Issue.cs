@@ -45,7 +45,7 @@ namespace Octokit
         /// <summary>
         /// The internal Id for this issue (not the issue number)
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
