@@ -311,6 +311,21 @@ namespace Octokit
         Task<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest);
 
         /// <summary>
+        /// Create an organization invitation for a user
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#create-an-organization-invitation">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="invitationRequest">An <see cref="OrganizationInvitationRequest"/> instance containing the
+        /// details of the organization invitation</param>
+        /// <returns></returns>
+        Task<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest);
+
+        /// <summary>
         /// Remove a user's membership with an organization.
         /// </summary>
         /// <remarks>
