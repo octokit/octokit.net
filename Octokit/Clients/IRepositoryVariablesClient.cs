@@ -35,18 +35,18 @@ namespace Octokit
         /// <returns>A <see cref="RepositoryVariablesCollection"/> instance for the list of repository variables.</returns>
         Task<RepositoryVariablesCollection> GetAll(string owner, string repoName);
 
-        /// <summary>
-        /// Get a variable from a repository.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://docs.github.com/en/rest/actions/variables?apiVersion=2022-11-28#get-a-repository-variable">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="owner">The owner of the repository</param>
-        /// <param name="repoName">The name of the repository</param>
-        /// <param name="variableName">The name of the variable</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        /// <returns>A <see cref="RepositoryVariable"/> instance for the repository secret.</returns>
-        Task<RepositoryVariable> Get(string owner, string repoName, string variableName);
+		/// <summary>
+		/// Get a variable from a repository.
+		/// </summary>
+		/// <remarks>
+		/// See the <a href="https://docs.github.com/en/rest/actions/variables?apiVersion=2022-11-28#get-a-repository-variable">API documentation</a> for more information.
+		/// </remarks>
+		/// <param name="owner">The owner of the repository</param>
+		/// <param name="repoName">The name of the repository</param>
+		/// <param name="variableName">The name of the variable</param>
+		/// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+		/// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable.</returns>
+		Task<RepositoryVariable> Get(string owner, string repoName, string variableName);
 
         /// <summary>
         /// Create a variable in a repository.
