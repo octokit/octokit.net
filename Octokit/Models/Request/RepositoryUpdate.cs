@@ -1,4 +1,5 @@
 ﻿using Octokit.Internal;
+using Octokit.Models.Response;
 using System;
 using System.Diagnostics;
 
@@ -132,6 +133,8 @@ namespace Octokit
         /// Optional. Gets or sets whether to enable discussions for the repository. The default is null (do not update). The default when created is false.
         /// </summary>
         public bool? HasDiscussions { get; set; }
+
+        public SecurityAndAnalysisRequest SecurityAndAnalysis { get; set; }
 
         internal string DebuggerDisplay => new SimpleJsonSerializer().Serialize(this);
     }
