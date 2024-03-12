@@ -361,6 +361,33 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", "username", null).ToTask());
             }
         }
+        
+        public class TheCreateOrganizationInvitationMethod
+        {
+            [Fact]
+            public void CreateOrganizationInvitationFromClientOrganizationMember()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                var organizationInvitationRequest = new OrganizationInvitationRequest(1);
+                client.CreateOrganizationInvitation("org", organizationInvitationRequest);
+
+                gitHubClient.Organization.Member.Received().CreateOrganizationInvitation("org", organizationInvitationRequest);
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+                
+                var organizationInvitationRequest = new OrganizationInvitationRequest(1);
+                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation(null, organizationInvitationRequest).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrganizationInvitation("", organizationInvitationRequest).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation("org", null).ToTask());
+            }
+        }
 
         public class TheDeleteOrganizationMembershipMethod
         {

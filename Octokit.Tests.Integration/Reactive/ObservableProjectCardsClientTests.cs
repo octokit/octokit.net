@@ -441,7 +441,7 @@ public class ObservableProjectCardsClientTests
         return result;
     }
 
-    private static async Task<ProjectCard> CreateIssueCardHelper(IObservableGitHubClient githubClient, int issueId, int columnId)
+    private static async Task<ProjectCard> CreateIssueCardHelper(IObservableGitHubClient githubClient, long issueId, int columnId)
     {
         var newCard = new NewProjectCard(issueId, ProjectCardContentType.Issue);
         var result = await githubClient.Repository.Project.Card.Create(columnId, newCard);

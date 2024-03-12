@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
+using NSubstitute.Core.DependencyInjection;
 using Octokit.Internal;
 using Xunit;
 
@@ -559,6 +560,33 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", null, orgMembershipUpdate));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.AddOrUpdateOrganizationMembership("org", "", orgMembershipUpdate));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", "username", null));
+            }
+        }
+
+        public class TheCreateOrganizationInvitationMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var organizationInvitationRequest = new OrganizationInvitationRequest("email");
+
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.CreateOrganizationInvitation("org", organizationInvitationRequest);
+                
+                connection.Received().Post<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var organizationInvitationRequest = new OrganizationInvitationRequest("email");
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation(null, organizationInvitationRequest));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrganizationInvitation("", organizationInvitationRequest));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation("org", null));
             }
         }
 
