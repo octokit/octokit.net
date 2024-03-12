@@ -361,6 +361,33 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.AddOrUpdateOrganizationMembership("org", "username", null).ToTask());
             }
         }
+        
+        public class TheCreateOrganizationInvitationMethod
+        {
+            [Fact]
+            public void CreateOrganizationInvitationFromClientOrganizationMember()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                var organizationInvitationRequest = new OrganizationInvitationRequest(1);
+                client.CreateOrganizationInvitation("org", organizationInvitationRequest);
+
+                gitHubClient.Organization.Member.Received().CreateOrganizationInvitation("org", organizationInvitationRequest);
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+                
+                var organizationInvitationRequest = new OrganizationInvitationRequest(1);
+                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation(null, organizationInvitationRequest).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrganizationInvitation("", organizationInvitationRequest).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation("org", null).ToTask());
+            }
+        }
 
         public class TheDeleteOrganizationMembershipMethod
         {
@@ -432,6 +459,30 @@ namespace Octokit.Tests.Reactive
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null, ApiOptions.None).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("", ApiOptions.None).ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null).ToTask());
+            }
+        }
+
+        public class TheCancelOrganizationInvitationMethod
+        {
+            [Fact]
+            public void CancelInvitationFromClientOrganizationMember()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableOrganizationMembersClient(gitHubClient);
+
+                client.CancelOrganizationInvitation("org", 1);
+
+                gitHubClient.Organization.Member.Received().CancelOrganizationInvitation("org", 1);
+            }
+
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var client = new ObservableOrganizationMembersClient(Substitute.For<IGitHubClient>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation(null, 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CancelOrganizationInvitation("", 1).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation("org", 0).ToTask());
             }
         }
     }

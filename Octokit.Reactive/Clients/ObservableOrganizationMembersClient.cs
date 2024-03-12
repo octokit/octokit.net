@@ -418,6 +418,27 @@ namespace Octokit.Reactive
 
             return _client.AddOrUpdateOrganizationMembership(org, user, addOrUpdateRequest).ToObservable();
         }
+        
+        /// <summary>
+        /// Create an organization invitation for a user
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#create-an-organization-invitation">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="invitationRequest">An <see cref="OrganizationInvitationRequest"/> instance containing the
+        /// details of the organization invitation</param>
+        /// <returns></returns>
+        public IObservable<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(invitationRequest, nameof(invitationRequest));
+
+            return _client.CreateOrganizationInvitation(org, invitationRequest).ToObservable();
+        }
 
         /// <summary>
         /// Remove a user's membership with an organization.
@@ -505,6 +526,25 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<OrganizationMembershipInvitation>(ApiUrls.OrganizationFailedInvitations(org), null, options);
+        }
+
+        /// <summary>
+        /// Cancel an organization invitation. In order to cancel an organization invitation, the authenticated user must be an organization owner.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/en/rest/orgs/members#cancel-an-organization-invitation">API Documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="invitationId">The unique identifier of the invitation</param>
+        /// <returns></returns>
+        [ManualRoute("DELETE", "/orgs/{org}/invitations/{invitation_id}")]
+        public IObservable<Unit> CancelOrganizationInvitation(string org, int invitationId)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNullOrDefault(invitationId, nameof(invitationId));
+
+            return _client.CancelOrganizationInvitation(org, invitationId).ToObservable();
         }
 
         /// <summary>

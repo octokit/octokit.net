@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Coverlet" Version="3.0.4" />
+    <PackageReference Include="Cake.Coverlet" Version="4.0.1" />
     <PackageReference Include="Cake.Frosting" Version="4.0.0" />
   </ItemGroup>
 

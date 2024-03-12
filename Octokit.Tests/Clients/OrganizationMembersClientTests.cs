@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using NSubstitute;
+using NSubstitute.Core.DependencyInjection;
 using Octokit.Internal;
 using Xunit;
 
@@ -562,6 +563,33 @@ namespace Octokit.Tests.Clients
             }
         }
 
+        public class TheCreateOrganizationInvitationMethod
+        {
+            [Fact]
+            public void PostsToTheCorrectUrl()
+            {
+                var organizationInvitationRequest = new OrganizationInvitationRequest("email");
+
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.CreateOrganizationInvitation("org", organizationInvitationRequest);
+                
+                connection.Received().Post<OrganizationMembershipInvitation>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations"), Arg.Any<object>());
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var organizationInvitationRequest = new OrganizationInvitationRequest("email");
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+                
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation(null, organizationInvitationRequest));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrganizationInvitation("", organizationInvitationRequest));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrganizationInvitation("org", null));
+            }
+        }
+
         public class TheDeleteOrganizationMembershipMethod
         {
             [Fact]
@@ -626,6 +654,30 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations(null, ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAllPendingInvitations("", ApiOptions.None));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAllPendingInvitations("org", null));
+            }
+        }
+
+        public class TheCancelOrganizationInvitationMethod
+        {
+            [Fact]
+            public void PostsToCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationMembersClient(connection);
+
+                client.CancelOrganizationInvitation("org", 1);
+
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/org/invitations/1"));
+            }
+
+            [Fact]
+            public async Task EnsureNonNullArguments()
+            {
+                var client = new OrganizationMembersClient(Substitute.For<IApiConnection>());
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation(null, 1));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CancelOrganizationInvitation("", 1));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CancelOrganizationInvitation("org", 0));
             }
         }
     }
