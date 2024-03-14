@@ -198,6 +198,28 @@ namespace Octokit.Internal
             var response = await _http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
             // Need to determine time on client computer as soon as possible.
             var receivedTime = DateTimeOffset.Now;
+
+            if (response.StatusCode == HttpStatusCode.Forbidden
+                && response.Headers.Contains(ResponseHeaders.RateLimitRemaining)
+                && response.Headers.GetValues(ResponseHeaders.RateLimitRemaining).FirstOrDefault() == "0")
+            {
+                var nowInEpochSecondsUtc = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                var resetTimeInEpochSecondsUtc = long.Parse(response.Headers.GetValues(ResponseHeaders.RateLimitReset).First());
+
+                var timeToWait = resetTimeInEpochSecondsUtc > nowInEpochSecondsUtc 
+                    ? TimeSpan.FromSeconds(resetTimeInEpochSecondsUtc - nowInEpochSecondsUtc)
+                    : TimeSpan.Zero;
+
+                // Could rate limit refreshes be up to an hour in the future?
+                // Should we conditionally retry only if it's a short period in the future
+                if (timeToWait < TimeSpan.FromSeconds(30))
+                {
+                    await Task.Delay(timeToWait, cancellationToken);
+
+                    return await SendAsync(clonedRequest, cancellationToken);
+                }
+            }
+            
             // Since Properties are stored as objects, serialize to HTTP round-tripping string (Format: r)
             // Resolution is limited to one-second, matching the resolution of the HTTP Date header
             request.Properties[ApiInfoParser.ReceivedTimeHeaderName] = 
@@ -251,7 +273,7 @@ namespace Octokit.Internal
 
             return response;
         }
-
+        
         public static async Task<HttpRequestMessage> CloneHttpRequestMessageAsync(HttpRequestMessage oldRequest)
         {
             var newRequest = new HttpRequestMessage(oldRequest.Method, oldRequest.RequestUri);
