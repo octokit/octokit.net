@@ -81,6 +81,7 @@ namespace Octokit.Internal
                 AcceptHeaders.RawContentMediaType,
                 "application/zip" ,
                 "application/x-gzip" ,
+                "zip" , // Not a standard MIME type but see issue #2898
                 "application/octet-stream"};
 
             var content = responseMessage.Content;
