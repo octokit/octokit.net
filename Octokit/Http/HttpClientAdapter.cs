@@ -87,7 +87,7 @@ namespace Octokit.Internal
             var content = responseMessage.Content;
             if (content != null)
             {
-                contentType = GetContentMediaType(content);
+                contentType = GetContentMediaType(content) ?? GetNonValidatedContentType(content);
 
                 if (contentType != null && (contentType.StartsWith("image/") || binaryContentTypes
                         .Any(item => item.Equals(contentType, StringComparison.OrdinalIgnoreCase))))
@@ -173,6 +173,22 @@ namespace Octokit.Internal
             {
                 return httpContent.Headers.ContentType.MediaType;
             }
+            return null;
+        }
+
+        static string GetNonValidatedContentType(HttpContent httpContent)
+        {
+            const string ContentTypeHeader = "Content-Type";
+        
+            if (httpContent.Headers != null)
+            {
+                var hasContentTypeHeader = httpContent.Headers.TryGetValues(ContentTypeHeader, out var contentTypes);
+                if (hasContentTypeHeader)
+                {
+                    return contentTypes.FirstOrDefault();
+                }
+            }
+        
             return null;
         }
 
