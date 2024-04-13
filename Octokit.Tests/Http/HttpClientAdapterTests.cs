@@ -196,7 +196,7 @@ namespace Octokit.Tests.Http
 
                 var response = await tester.BuildResponseTester(responseMessage);
 
-                Assert.Equal("zip", response.ContentType);
+                Assert.Equal("application/zip", response.ContentType);
             }
         }
 

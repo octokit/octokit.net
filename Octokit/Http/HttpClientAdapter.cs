@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,7 +81,6 @@ namespace Octokit.Internal
                 AcceptHeaders.RawContentMediaType,
                 "application/zip" ,
                 "application/x-gzip" ,
-                "zip" , // Not a standard MIME type but see issue #2898
                 "application/octet-stream"};
 
             var content = responseMessage.Content;
