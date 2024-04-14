@@ -22,7 +22,7 @@ public class RepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName);
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Single(collaborators);
             }
         }
 
@@ -41,7 +41,7 @@ public class RepositoryCollaboratorClientTests
                                                          new RepositoryCollaboratorListRequest() { Permission = CollaboratorPermission.Admin });
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Single(collaborators);
             }
         }
 
@@ -58,7 +58,7 @@ public class RepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.Repository.Id);
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Single(collaborators);
             }
         }
 
@@ -81,7 +81,7 @@ public class RepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options);
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Single(collaborators);
             }
         }
 
@@ -104,7 +104,7 @@ public class RepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.Repository.Id, options);
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Single(collaborators);
             }
         }
 
@@ -128,7 +128,7 @@ public class RepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options);
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(0, collaborators.Count);
+                Assert.Empty(collaborators);
             }
         }
 
@@ -152,7 +152,7 @@ public class RepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.Repository.Id, options);
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(0, collaborators.Count);
+                Assert.Empty(collaborators);
             }
         }
 
@@ -183,8 +183,8 @@ public class RepositoryCollaboratorClientTests
 
                 var secondPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, skipStartOptions);
 
-                Assert.Equal(1, firstPage.Count);
-                Assert.Equal(0, secondPage.Count);
+                Assert.Single(firstPage);
+                Assert.Empty(secondPage);
             }
         }
 
@@ -215,8 +215,8 @@ public class RepositoryCollaboratorClientTests
 
                 var secondPage = await fixture.GetAll(context.Repository.Id, skipStartOptions);
 
-                Assert.Equal(1, firstPage.Count);
-                Assert.Equal(0, secondPage.Count);
+                Assert.Single(firstPage);
+                Assert.Empty(secondPage);
             }
         }
     }

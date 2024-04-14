@@ -50,7 +50,7 @@ public class EnterpriseLdapClientTests : IDisposable
         // Check response message indicates LDAP sync was queued
         Assert.NotNull(response);
         Assert.NotNull(response.Status);
-        Assert.True(response.Status == "queued");
+        Assert.Equal("queued", response.Status);
     }
 
     [GitHubEnterpriseTest]
@@ -79,7 +79,7 @@ public class EnterpriseLdapClientTests : IDisposable
         // Check response message indicates LDAP sync was queued
         Assert.NotNull(response);
         Assert.NotNull(response.Status);
-        Assert.True(response.Status == "queued");
+        Assert.Equal("queued", response.Status);
     }
 
     public void Dispose()

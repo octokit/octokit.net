@@ -28,7 +28,7 @@ namespace Octokit.Tests.Exceptions
             var apiError = serializer.Deserialize<ApiError>(json);
 
             Assert.Equal("Validation Failed", apiError.Message);
-            Assert.Equal(1, apiError.Errors.Count);
+            Assert.Single(apiError.Errors);
             Assert.Equal("Issue", apiError.Errors[0].Resource);
             Assert.Equal("title", apiError.Errors[0].Field);
             Assert.Equal("missing_field", apiError.Errors[0].Code);

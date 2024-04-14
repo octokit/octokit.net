@@ -51,7 +51,7 @@ public class ObservableTeamsClientTests
 
                 var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options).ToList();
 
-                Assert.Equal(1, teams.Count);
+                Assert.Single(teams);
                 Assert.Equal(team1.Id, teams[0].Id);
             }
         }
@@ -73,7 +73,7 @@ public class ObservableTeamsClientTests
 
                 var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options).ToList();
 
-                Assert.Equal(1, teams.Count);
+                Assert.Single(teams);
                 Assert.Equal(team2.Id, teams[0].Id);
             }
         }
@@ -323,7 +323,7 @@ public class ObservableTeamsClientTests
                 var observable = _client.GetAllPendingInvitations(teamContext.TeamId, options);
                 var pendingInvitations = await observable.ToList();
                 Assert.NotEmpty(pendingInvitations);
-                Assert.Equal(1, pendingInvitations.Count);
+                Assert.Single(pendingInvitations);
             }
         }
 
@@ -344,7 +344,7 @@ public class ObservableTeamsClientTests
                 var firstObservable = _client.GetAllPendingInvitations(teamContext.TeamId, firstPageOptions);
                 var firstPagePendingInvitations = await firstObservable.ToList();
                 Assert.NotEmpty(firstPagePendingInvitations);
-                Assert.Equal(1, firstPagePendingInvitations.Count);
+                Assert.Single(firstPagePendingInvitations);
 
                 var secondPageOptions = new ApiOptions
                 {
@@ -355,7 +355,7 @@ public class ObservableTeamsClientTests
                 var secondObservable = _client.GetAllPendingInvitations(teamContext.TeamId, secondPageOptions);
                 var secondPagePendingInvitations = await secondObservable.ToList();
                 Assert.NotEmpty(secondPagePendingInvitations);
-                Assert.Equal(1, secondPagePendingInvitations.Count);
+                Assert.Single(secondPagePendingInvitations);
 
                 Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
             }
@@ -618,7 +618,7 @@ public class ObservableTeamsClientTests
 
                 var addedRepo = await github.Organization.Team.GetAllRepositories(teamContext.TeamId).ToList();
 
-                Assert.Equal(0, addedRepo.Count);
+                Assert.Empty(addedRepo);
             }
         }
     }

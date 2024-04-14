@@ -4,7 +4,8 @@ using Octokit;
 using Octokit.Internal;
 using Xunit;
 
-public class PullRequestCommitTests {
+public class PullRequestCommitTests
+{
     // the following JSON is taken from the documentation available at https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 
     const string jsonPayload = @"
@@ -91,7 +92,8 @@ public class PullRequestCommitTests {
 ";
 
     [Fact]
-    public void AuthorAndCommitterDeserializedCorrectly() {
+    public void AuthorAndCommitterDeserializedCorrectly()
+    {
         var serializer = new SimpleJsonSerializer();
         var commits = serializer.Deserialize<List<PullRequestCommit>>(jsonPayload);
 

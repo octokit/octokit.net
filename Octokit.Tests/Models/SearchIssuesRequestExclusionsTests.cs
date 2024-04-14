@@ -34,7 +34,7 @@ public class SearchIssuesRequestExclusionsTests
                 property.Value(request, "blah");
 
                 // Ensure the specified parameter now exists
-                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
+                Assert.Equal(1, request.MergedQualifiers().Count(x => x.Contains(property.Key)));
             }
         }
 

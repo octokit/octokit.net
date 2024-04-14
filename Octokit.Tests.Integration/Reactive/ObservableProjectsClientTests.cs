@@ -61,7 +61,7 @@ public class ObservableProjectsClientTests
 
             var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, new ProjectRequest(ItemStateFilter.Closed)).ToList();
 
-            Assert.Equal(1, projects.Count);
+            Assert.Single(projects);
             Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
         }
 
@@ -76,7 +76,7 @@ public class ObservableProjectsClientTests
 
             var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, new ProjectRequest(ItemStateFilter.Closed)).ToList();
 
-            Assert.Equal(1, projects.Count);
+            Assert.Single(projects);
             Assert.True(projects.FirstOrDefault(x => x.Name == project2.Name).Id == project2.Id);
         }
 
@@ -94,7 +94,7 @@ public class ObservableProjectsClientTests
 
             var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options).ToList();
 
-            Assert.Equal(1, projects.Count);
+            Assert.Single(projects);
             Assert.Equal(project1.Id, projects[0].Id);
         }
 
@@ -112,7 +112,7 @@ public class ObservableProjectsClientTests
 
             var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, options).ToList();
 
-            Assert.Equal(1, projects.Count);
+            Assert.Single(projects);
             Assert.Equal(project1.Id, projects[0].Id);
         }
 
@@ -131,7 +131,7 @@ public class ObservableProjectsClientTests
 
             var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options).ToList();
 
-            Assert.Equal(1, projects.Count);
+            Assert.Single(projects);
             Assert.Equal(project2.Id, projects[0].Id);
         }
 
@@ -150,7 +150,7 @@ public class ObservableProjectsClientTests
 
             var projects = await _github.Repository.Project.GetAllForRepository(_context.RepositoryId, options).ToList();
 
-            Assert.Equal(1, projects.Count);
+            Assert.Single(projects);
             Assert.Equal(project2.Id, projects[0].Id);
         }
 

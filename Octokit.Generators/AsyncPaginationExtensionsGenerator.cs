@@ -63,10 +63,12 @@ namespace Octokit.AsyncPaginationExtension
       var enumOptions = new EnumerationOptions { RecurseSubdirectories = true };
       var paginatedCallRegex = new Regex(@".*Task<IReadOnlyList<(?<returnType>\w+)>>\s*(?<name>\w+)(?<template><.*>)?\((?<arg>.*?)(, )?ApiOptions \w*\);");
 
-      foreach (var file in Directory.EnumerateFiles(root, "I*.cs", enumOptions)) {
+            foreach (var file in Directory.EnumerateFiles(root, "I*.cs", enumOptions))
+            {
           var type = Path.GetFileNameWithoutExtension(file);
 
-          foreach (var line in File.ReadAllLines(file)) {
+                foreach (var line in File.ReadAllLines(file))
+                {
               var match = paginatedCallRegex.Match(line);
 
               if (!match.Success) { continue; }
@@ -101,11 +103,13 @@ namespace Octokit.AsyncPaginationExtension
           : $"options => t.{name}{templateStr}({string.Join(' ', splitArgs.Where((_, i) => i % 2 == 1))}, options)";
 
       var docArgs = string.Join(", ", splitArgs.Where((_, i) => i % 2 == 0)).Replace('<', '{').Replace('>', '}');
-      if (docArgs.Length != 0) {
+            if (docArgs.Length != 0)
+            {
           docArgs += ", ";
       }
 
-      if (arg.Length != 0) {
+            if (arg.Length != 0)
+            {
           arg += ", ";
       }
 

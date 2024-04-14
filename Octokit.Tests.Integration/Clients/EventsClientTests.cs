@@ -332,7 +332,7 @@ namespace Octokit.Tests.Integration.Clients
                 var pushPayload = pushEvent.Payload as PushEventPayload;
                 Assert.NotNull(pushPayload);
                 Assert.NotNull(pushPayload.Commits);
-                Assert.Equal(1, pushPayload.Commits.Count);
+                Assert.Single(pushPayload.Commits);
                 Assert.Equal("3cdcba0ccbea0e6d13ae94249fbb294d71648321", pushPayload.Commits.FirstOrDefault().Sha);
                 Assert.Equal("3cdcba0ccbea0e6d13ae94249fbb294d71648321", pushPayload.Head);
                 Assert.Equal("refs/heads/release-candidate", pushPayload.Ref);

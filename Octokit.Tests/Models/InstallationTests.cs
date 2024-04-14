@@ -69,9 +69,16 @@ namespace Octokit.Tests.Models
 
       Assert.NotNull(installations);
       Assert.NotEmpty(installations);
-      Assert.Equal(1, installations.Count);
+            Assert.Single(installations);
       Assert.Null(installations.First().SuspendedAt);
       Assert.Null(installations.First().SuspendedBy);
+/* Unmerged change from project 'Octokit.Tests(net462)'
+Before:
+      Assert.Equal(1, installations.Count);
+After:
+      Assert.Single(installations);
+*/
+
 
     }
 
@@ -156,7 +163,7 @@ namespace Octokit.Tests.Models
 
       Assert.NotNull(installations);
       Assert.NotEmpty(installations);
-      Assert.Equal(1, installations.Count);
+            Assert.Single(installations);
       Assert.NotNull(installations.First().SuspendedAt);
       Assert.NotNull(installations.First().SuspendedBy);
 

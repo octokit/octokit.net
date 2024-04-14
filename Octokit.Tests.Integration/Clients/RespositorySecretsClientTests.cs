@@ -34,7 +34,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var key = await github.Repository.Actions.Secrets.GetPublicKey(OWNER, REPO);
 
-                Assert.True(!string.IsNullOrWhiteSpace(key.KeyId));
+                Assert.False(string.IsNullOrWhiteSpace(key.KeyId));
             }
         }
 
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Integration.Clients
                 var secret = await github.Repository.Actions.Secrets.Get(OWNER, REPO, "TEST");
 
                 Assert.NotNull(secret);
-                Assert.True(secret.Name == "TEST");
+                Assert.Equal("TEST", secret.Name);
             }
         }
 

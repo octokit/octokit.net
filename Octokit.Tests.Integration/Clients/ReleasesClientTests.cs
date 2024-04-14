@@ -115,7 +115,7 @@ public class ReleasesClientTests
             var release = await _releaseClient.Get("git-tfs", "git-tfs", 2276624);
 
             Assert.NotNull(release);
-            Assert.Equal(1, release.Assets.Count);
+            Assert.Single(release.Assets);
             Assert.Equal("GitTfs-0.24.1.zip", release.Assets.First().Name);
             Assert.Equal("https://api.github.com/repos/git-tfs/git-tfs/tarball/v0.24.1", release.TarballUrl);
             Assert.Equal("https://api.github.com/repos/git-tfs/git-tfs/zipball/v0.24.1", release.ZipballUrl);
@@ -127,7 +127,7 @@ public class ReleasesClientTests
             var release = await _releaseClient.Get(252774, 2276624);
 
             Assert.NotNull(release);
-            Assert.Equal(1, release.Assets.Count);
+            Assert.Single(release.Assets);
             Assert.Equal("GitTfs-0.24.1.zip", release.Assets.First().Name);
             Assert.Equal("https://api.github.com/repos/git-tfs/git-tfs/tarball/v0.24.1", release.TarballUrl);
             Assert.Equal("https://api.github.com/repos/git-tfs/git-tfs/zipball/v0.24.1", release.ZipballUrl);
@@ -160,7 +160,7 @@ public class ReleasesClientTests
 
             var releases = await _releaseClient.GetAll(_context.RepositoryOwner, _context.RepositoryName);
 
-            Assert.True(releases.Count == 1);
+            Assert.Equal(1, releases.Count);
             Assert.False(releases.First().PublishedAt.HasValue);
         }
 
@@ -173,7 +173,7 @@ public class ReleasesClientTests
 
             var releases = await _releaseClient.GetAll(_context.Repository.Id);
 
-            Assert.True(releases.Count == 1);
+            Assert.Equal(1, releases.Count);
             Assert.False(releases.First().PublishedAt.HasValue);
         }
 
@@ -521,7 +521,7 @@ public class ReleasesClientTests
 
             var assets = await _releaseClient.GetAllAssets(_context.RepositoryOwner, _context.RepositoryName, release.Id);
 
-            Assert.Equal(1, assets.Count);
+            Assert.Single(assets);
             var asset = assets[0];
             Assert.Equal(result.Id, asset.Id);
             Assert.NotNull(asset.Url);
@@ -544,7 +544,7 @@ public class ReleasesClientTests
 
             var assets = await _releaseClient.GetAllAssets(_context.Repository.Id, release.Id);
 
-            Assert.Equal(1, assets.Count);
+            Assert.Single(assets);
             var asset = assets[0];
             Assert.Equal(result.Id, asset.Id);
             Assert.NotNull(asset.Url);
@@ -716,7 +716,7 @@ public class ReleasesClientTests
 
             var assets = await _releaseClient.GetAllAssets(owner, name, releaseId, options);
 
-            Assert.Equal(1, assets.Count);
+            Assert.Single(assets);
         }
 
         [IntegrationTest]
@@ -731,7 +731,7 @@ public class ReleasesClientTests
 
             var assets = await _releaseClient.GetAllAssets(repositoryId, releaseId, options);
 
-            Assert.Equal(1, assets.Count);
+            Assert.Single(assets);
         }
 
         [IntegrationTest]
