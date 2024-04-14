@@ -72,14 +72,6 @@ namespace Octokit.Tests.Models
             Assert.Single(installations);
       Assert.Null(installations.First().SuspendedAt);
       Assert.Null(installations.First().SuspendedBy);
-/* Unmerged change from project 'Octokit.Tests(net462)'
-Before:
-      Assert.Equal(1, installations.Count);
-After:
-      Assert.Single(installations);
-*/
-
-
     }
 
     [Fact]
