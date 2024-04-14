@@ -279,7 +279,7 @@ namespace Octokit
         /// <param name="id">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
         [ManualRoute("GET", "/notifications/threads/{thread_id}")]
-        public Task<Notification> Get(int id)
+        public Task<Notification> Get(long id)
         {
             return ApiConnection.Get<Notification>(ApiUrls.Notification(id));
         }
@@ -290,7 +290,7 @@ namespace Octokit
         /// <param name="id">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
         [ManualRoute("PATCH", "/notifications/threads/{thread_id}")]
-        public Task MarkAsRead(int id)
+        public Task MarkAsRead(long id)
         {
             return ApiConnection.Patch(ApiUrls.Notification(id));
         }
@@ -301,7 +301,7 @@ namespace Octokit
         /// <param name="id">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
         [ManualRoute("GET", "/notifications/threads/{thread_id}/subscription")]
-        public Task<ThreadSubscription> GetThreadSubscription(int id)
+        public Task<ThreadSubscription> GetThreadSubscription(long id)
         {
             return ApiConnection.Get<ThreadSubscription>(ApiUrls.NotificationSubscription(id));
         }
@@ -313,7 +313,7 @@ namespace Octokit
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
         [ManualRoute("PUT", "/notifications/threads/{thread_id}/subscription")]
-        public Task<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription)
+        public Task<ThreadSubscription> SetThreadSubscription(long id, NewThreadSubscription threadSubscription)
         {
             Ensure.ArgumentNotNull(threadSubscription, nameof(threadSubscription));
 
@@ -326,7 +326,7 @@ namespace Octokit
         /// <param name="id">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
         [ManualRoute("DELETE", "/notifications/threads/{thread_id}/subscription")]
-        public Task DeleteThreadSubscription(int id)
+        public Task DeleteThreadSubscription(long id)
         {
             return ApiConnection.Delete(ApiUrls.NotificationSubscription(id));
         }

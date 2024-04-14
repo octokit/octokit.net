@@ -225,7 +225,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The Id of the project</param>
         [ManualRoute("GET", "/projects/{project_id}")]
-        public Task<Project> Get(int id)
+        public Task<Project> Get(long id)
         {
             return ApiConnection.Get<Project>(ApiUrls.Project(id), null);
         }
@@ -275,7 +275,7 @@ namespace Octokit
         /// <param name="id">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
         [ManualRoute("PATCH", "/project/{project_id}")]
-        public Task<Project> Update(int id, ProjectUpdate projectUpdate)
+        public Task<Project> Update(long id, ProjectUpdate projectUpdate)
         {
             Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
 
@@ -290,7 +290,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The Id of the project</param>
         [ManualRoute("DELETE", "/project/{project_id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             var endpoint = ApiUrls.Project(id);
 

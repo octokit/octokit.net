@@ -88,7 +88,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
-        public Task<ProjectCard> Get(int id)
+        public Task<ProjectCard> Get(long id)
         {
             return ApiConnection.Get<ProjectCard>(ApiUrls.ProjectCard(id), null);
         }
@@ -118,7 +118,7 @@ namespace Octokit
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
-        public Task<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
+        public Task<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate)
         {
             Ensure.ArgumentNotNull(projectCardUpdate, nameof(projectCardUpdate));
 
@@ -133,7 +133,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         [ManualRoute("DELETE", "/projects/columns/cards/{card_id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             var endpoint = ApiUrls.ProjectCard(id);
 
@@ -157,7 +157,7 @@ namespace Octokit
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
         [ManualRoute("POST", "/projects/columns/cards/{card_id}/moves")]
-        public async Task<bool> Move(int id, ProjectCardMove position)
+        public async Task<bool> Move(long id, ProjectCardMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 

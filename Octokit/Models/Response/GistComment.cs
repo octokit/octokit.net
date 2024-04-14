@@ -9,7 +9,7 @@ namespace Octokit
     {
         public GistComment() { }
 
-        public GistComment(int id, string nodeId, string url, string body, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
+        public GistComment(long id, string nodeId, string url, string body, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt)
         {
             Id = id;
             NodeId = nodeId;
@@ -23,7 +23,7 @@ namespace Octokit
         /// <summary>
         /// The gist comment id.
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id

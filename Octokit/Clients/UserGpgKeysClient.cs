@@ -59,7 +59,7 @@ namespace Octokit
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
         [ManualRoute("GET", "/user/gpg_keys/{gpg_key_id}")]
-        public Task<GpgKey> Get(int id)
+        public Task<GpgKey> Get(long id)
         {
             return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(id));
         }
@@ -89,7 +89,7 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         [ManualRoute("DELETE", "/user/gpg_keys/{gpg_key_id}")]
-        public Task Delete(int id)
+        public Task Delete(long id)
         {
             return ApiConnection.Delete(ApiUrls.GpgKeys(id));
         }

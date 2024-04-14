@@ -9,7 +9,7 @@ namespace Octokit
     {
         public ReleaseAsset() { }
 
-        public ReleaseAsset(string url, int id, string nodeId, string name, string label, string state, string contentType, int size, int downloadCount, DateTimeOffset createdAt, DateTimeOffset updatedAt, string browserDownloadUrl, Author uploader)
+        public ReleaseAsset(string url, long id, string nodeId, string name, string label, string state, string contentType, int size, int downloadCount, DateTimeOffset createdAt, DateTimeOffset updatedAt, string browserDownloadUrl, Author uploader)
         {
             Url = url;
             Id = id;
@@ -28,7 +28,7 @@ namespace Octokit
 
         public string Url { get; private set; }
 
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id

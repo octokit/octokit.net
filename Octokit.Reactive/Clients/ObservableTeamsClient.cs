@@ -35,7 +35,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier.</param>
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
-        public IObservable<Team> Get(int id)
+        public IObservable<Team> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
-        public IObservable<Team> GetAllChildTeams(int id)
+        public IObservable<Team> GetAllChildTeams(long id)
         {
             return GetAllChildTeams(id, ApiOptions.None);
         }
@@ -110,7 +110,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
-        public IObservable<Team> GetAllChildTeams(int id, ApiOptions options)
+        public IObservable<Team> GetAllChildTeams(long id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -126,7 +126,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
-        public IObservable<User> GetAllMembers(int id)
+        public IObservable<User> GetAllMembers(long id)
         {
             return GetAllMembers(id, ApiOptions.None);
         }
@@ -141,7 +141,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the team's member <see cref="User"/>s.</returns>
-        public IObservable<User> GetAllMembers(int id, ApiOptions options)
+        public IObservable<User> GetAllMembers(long id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -156,7 +156,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
-        public IObservable<User> GetAllMembers(int id, TeamMembersRequest request)
+        public IObservable<User> GetAllMembers(long id, TeamMembersRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -172,7 +172,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
         /// <param name="options">Options to change API behaviour.</param>
-        public IObservable<User> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options)
+        public IObservable<User> GetAllMembers(long id, TeamMembersRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -223,7 +223,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        public IObservable<Team> Update(int id, UpdateTeam team)
+        public IObservable<Team> Update(long id, UpdateTeam team)
         {
             Ensure.ArgumentNotNull(team, nameof(team));
 
@@ -261,7 +261,7 @@ namespace Octokit.Reactive
         /// <param name="id">The unique identifier of the team.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public IObservable<Unit> Delete(int id)
+        public IObservable<Unit> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }
@@ -275,7 +275,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <param name="request">Additional parameters for the request</param>
-        public IObservable<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request)
+        public IObservable<TeamMembershipDetails> AddOrEditMembership(long id, string login, UpdateTeamMembership request)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -292,7 +292,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
-        public IObservable<bool> RemoveMembership(int id, string login)
+        public IObservable<bool> RemoveMembership(long id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
@@ -309,7 +309,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        public IObservable<TeamMembershipDetails> GetMembershipDetails(int id, string login)
+        public IObservable<TeamMembershipDetails> GetMembershipDetails(long id, string login)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
@@ -321,7 +321,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        public IObservable<Repository> GetAllRepositories(int id)
+        public IObservable<Repository> GetAllRepositories(long id)
         {
             return GetAllRepositories(id, ApiOptions.None);
         }
@@ -333,7 +333,7 @@ namespace Octokit.Reactive
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        public IObservable<Repository> GetAllRepositories(int id, ApiOptions options)
+        public IObservable<Repository> GetAllRepositories(long id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -351,7 +351,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
-        public IObservable<bool> AddRepository(int id, string organization, string repoName)
+        public IObservable<bool> AddRepository(long id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -371,7 +371,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
-        public IObservable<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission)
+        public IObservable<bool> AddRepository(long id, string organization, string repoName, RepositoryPermissionRequest permission)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -384,7 +384,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        public IObservable<bool> RemoveRepository(int id, string organization, string repoName)
+        public IObservable<bool> RemoveRepository(long id, string organization, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -402,7 +402,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
-        public IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo)
+        public IObservable<bool> IsRepositoryManagedByTeam(long id, string owner, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
@@ -418,7 +418,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
-        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id)
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(long id)
         {
             Ensure.ArgumentNotNull(id, nameof(id));
 
@@ -435,7 +435,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
-        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id, ApiOptions options)
+        public IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(long id, ApiOptions options)
         {
             Ensure.ArgumentNotNull(id, nameof(id));
             Ensure.ArgumentNotNull(options, nameof(options));

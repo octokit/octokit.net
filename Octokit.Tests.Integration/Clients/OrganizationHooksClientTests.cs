@@ -162,7 +162,7 @@ namespace Octokit.Tests.Integration.Clients
                 }.Union(config).ToDictionary(k => k.Key, v => v.Value);
             }
 
-            string CreateExpectedBaseHookUrl(string org, int id)
+            string CreateExpectedBaseHookUrl(string org, long id)
             {
                 return "https://api.github.com/orgs/" + org + "/hooks/" + id;
             }

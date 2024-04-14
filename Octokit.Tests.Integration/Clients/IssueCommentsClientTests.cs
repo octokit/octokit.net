@@ -16,7 +16,7 @@ public class IssueCommentsClientTests
 
         const string owner = "octokit";
         const string name = "octokit.net";
-        const int id = 12067722;
+        const long id = 12067722;
         const long repositoryId = 7528679;
 
         public TheGetMethod()

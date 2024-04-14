@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Team> Get(int id);
+        IObservable<Team> Get(long id);
 
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
         /// <param name="id">The team identifier</param>
-        IObservable<Team> GetAllChildTeams(int id);
+        IObservable<Team> GetAllChildTeams(long id);
 
         /// <summary>
         /// Returns all child teams of the given team.
@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Team> GetAllChildTeams(int id, ApiOptions options);
+        IObservable<Team> GetAllChildTeams(long id, ApiOptions options);
 
         /// <summary>
         /// Returns all members of the given team. 
@@ -84,7 +84,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <param name="id">The team identifier</param>
-        IObservable<User> GetAllMembers(int id);
+        IObservable<User> GetAllMembers(long id);
 
         /// <summary>
         /// Returns all members of the given team. 
@@ -94,7 +94,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
-        IObservable<User> GetAllMembers(int id, ApiOptions options);
+        IObservable<User> GetAllMembers(long id, ApiOptions options);
 
         /// <summary>
         /// Returns all members with the specified role in the given team of the given role.
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
-        IObservable<User> GetAllMembers(int id, TeamMembersRequest request);
+        IObservable<User> GetAllMembers(long id, TeamMembersRequest request);
 
         /// <summary>
         /// Returns all members with the specified role in the given team of the given role.
@@ -115,7 +115,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
         /// <param name="options">Options to change API behaviour.</param>
-        IObservable<User> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options);
+        IObservable<User> GetAllMembers(long id, TeamMembersRequest request, ApiOptions options);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -147,7 +147,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        IObservable<Team> Update(int id, UpdateTeam team);
+        IObservable<Team> Update(long id, UpdateTeam team);
 
         /// <summary>
         /// To delete a team, the authenticated user must be an organization owner or team maintainer.
@@ -174,7 +174,7 @@ namespace Octokit.Reactive
         /// <param name="id">The unique identifier of the team.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<Unit> Delete(int id);
+        IObservable<Unit> Delete(long id);
 
         /// <summary>
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.
@@ -185,7 +185,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <param name="request">Additional parameters for the request</param>
-        IObservable<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request);
+        IObservable<TeamMembershipDetails> AddOrEditMembership(long id, string login, UpdateTeamMembership request);
 
         /// <summary>
         /// Removes a <see cref="User"/> from a <see cref="Team"/>.
@@ -196,7 +196,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
-        IObservable<bool> RemoveMembership(int id, string login);
+        IObservable<bool> RemoveMembership(long id, string login);
 
         /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
@@ -208,7 +208,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        IObservable<TeamMembershipDetails> GetMembershipDetails(int id, string login);
+        IObservable<TeamMembershipDetails> GetMembershipDetails(long id, string login);
 
         /// <summary>
         /// Returns all team's repositories.
@@ -216,7 +216,7 @@ namespace Octokit.Reactive
         /// <param name="id">Team Id.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        IObservable<Repository> GetAllRepositories(int id);
+        IObservable<Repository> GetAllRepositories(long id);
 
         /// <summary>
         /// Returns all team's repositories.
@@ -225,14 +225,14 @@ namespace Octokit.Reactive
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        IObservable<Repository> GetAllRepositories(int id, ApiOptions options);
+        IObservable<Repository> GetAllRepositories(long id, ApiOptions options);
 
         /// <summary>
         /// Remove a repository from the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<bool> RemoveRepository(int id, string organization, string repoName);
+        IObservable<bool> RemoveRepository(long id, string organization, string repoName);
 
         /// <summary>
         /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
@@ -245,7 +245,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
-        IObservable<bool> AddRepository(int id, string organization, string repoName);
+        IObservable<bool> AddRepository(long id, string organization, string repoName);
 
         /// <summary>
         /// Adds a <see cref="Repository"/> to a <see cref="Team"/>.
@@ -259,7 +259,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#add-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository was added to the team; <see langword="false"/> otherwise.</returns>
-        IObservable<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission);
+        IObservable<bool> AddRepository(long id, string organization, string repoName, RepositoryPermissionRequest permission);
 
         /// <summary>
         /// Gets whether or not the given repository is managed by the given team.
@@ -271,7 +271,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
-        IObservable<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
+        IObservable<bool> IsRepositoryManagedByTeam(long id, string owner, string repo);
 
         /// <summary>
         /// List all pending invitations for the given team.
@@ -282,7 +282,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id);
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(long id);
 
         /// <summary>
         /// List all pending invitations for the given team.
@@ -294,7 +294,7 @@ namespace Octokit.Reactive
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(int id, ApiOptions options);
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(long id, ApiOptions options);
 
         /// <summary>
         /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.

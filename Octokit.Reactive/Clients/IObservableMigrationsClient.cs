@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         IObservable<Migration> Get(
            string org,
-           int id);
+           long id);
 
         /// <summary>
         /// Get the migration archive.
@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <returns>The binary contents of the archive as a byte array.</returns>
         IObservable<byte[]> GetArchive(
             string org,
-            int id);
+            long id);
 
         /// <summary>
         /// Deletes a previous migration archive.
@@ -90,7 +90,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         IObservable<Unit> DeleteArchive(
             string org,
-            int id);
+            long id);
 
         /// <summary>
         /// Unlocks a repository that was locked for migration.
@@ -104,7 +104,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         IObservable<Unit> UnlockRepository(
             string org,
-            int id,
+            long id,
             string repo);
     }
 }

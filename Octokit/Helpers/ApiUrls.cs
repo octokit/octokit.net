@@ -233,7 +233,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> to retrieve a given key.
         /// </summary>
         /// <param name="id">The Key Id to retrieve</param>
-        public static Uri Keys(int id)
+        public static Uri Keys(long id)
         {
             return "user/keys/{0}".FormatUri(id);
         }
@@ -276,7 +276,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns></returns>
-        public static Uri Releases(string owner, string name, int id)
+        public static Uri Releases(string owner, string name, long id)
         {
             return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, id);
         }
@@ -311,7 +311,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns></returns>
-        public static Uri ReleaseAssets(string owner, string name, int id)
+        public static Uri ReleaseAssets(string owner, string name, long id)
         {
             return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, id);
         }
@@ -323,7 +323,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The id of the release asset</param>
         /// <returns></returns>
-        public static Uri Asset(string owner, string name, int id)
+        public static Uri Asset(string owner, string name, long id)
         {
             return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, id);
         }
@@ -354,7 +354,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The Id of the notification.</param>
         /// <returns></returns>
-        public static Uri Notification(int id)
+        public static Uri Notification(long id)
         {
             return "notifications/threads/{0}".FormatUri(id);
         }
@@ -363,7 +363,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the specified notification's subscription status.
         /// </summary>
         /// <param name="id">The Id of the notification.</param>
-        public static Uri NotificationSubscription(int id)
+        public static Uri NotificationSubscription(long id)
         {
             return "notifications/threads/{0}/subscription".FormatUri(id);
         }
@@ -635,7 +635,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueComment(string owner, string name, int id)
+        public static Uri IssueComment(string owner, string name, long id)
         {
             return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, id);
         }
@@ -1937,7 +1937,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static Uri TeamChildTeams(int id)
+        public static Uri TeamChildTeams(long id)
         {
             return "teams/{0}/teams".FormatUri(id);
         }
@@ -1948,7 +1948,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the <see cref="Team"/>.</param>
         /// <returns></returns>
-        public static Uri Teams(int id)
+        public static Uri Teams(long id)
         {
             return "teams/{0}".FormatUri(id);
         }
@@ -1970,7 +1970,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The team id</param>
         /// <param name="login">The user login.</param>
-        public static Uri TeamMember(int id, string login)
+        public static Uri TeamMember(long id, string login)
         {
             return "teams/{0}/memberships/{1}".FormatUri(id, login);
         }
@@ -1979,7 +1979,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for team members list
         /// </summary>
         /// <param name="id">The team id</param>
-        public static Uri TeamMembers(int id)
+        public static Uri TeamMembers(long id)
         {
             return "teams/{0}/members".FormatUri(id);
         }
@@ -1988,7 +1988,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for the repositories
         /// </summary>
         /// <param name="id">The team id</param>
-        public static Uri TeamRepositories(int id)
+        public static Uri TeamRepositories(long id)
         {
             return "teams/{0}/repos".FormatUri(id);
         }
@@ -1999,7 +1999,7 @@ namespace Octokit
         /// <param name="id">The team id</param>
         /// <param name="organization">The organization id</param>
         /// <param name="repoName">The repository name</param>
-        public static Uri TeamRepository(int id, string organization, string repoName)
+        public static Uri TeamRepository(long id, string organization, string repoName)
         {
             return "teams/{0}/repos/{1}/{2}".FormatUri(id, organization, repoName);
         }
@@ -2021,7 +2021,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The team id</param>
         /// <returns></returns>
-        public static Uri TeamPendingInvitations(int id)
+        public static Uri TeamPendingInvitations(long id)
         {
             return "teams/{0}/invitations".FormatUri(id);
         }
@@ -2939,7 +2939,7 @@ namespace Octokit
             return "enterprise/settings/license".FormatUri();
         }
 
-        public static Uri EnterpriseMigrationById(string org, int id)
+        public static Uri EnterpriseMigrationById(string org, long id)
         {
             return "orgs/{0}/migrations/{1}".FormatUri(org, id);
         }
@@ -2949,12 +2949,12 @@ namespace Octokit
             return "orgs/{0}/migrations".FormatUri(org);
         }
 
-        public static Uri EnterpriseMigrationArchive(string org, int id)
+        public static Uri EnterpriseMigrationArchive(string org, long id)
         {
             return "orgs/{0}/migrations/{1}/archive".FormatUri(org, id);
         }
 
-        public static Uri EnterpriseMigrationUnlockRepository(string org, int id, string repo)
+        public static Uri EnterpriseMigrationUnlockRepository(string org, long id, string repo)
         {
             return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, id, repo);
         }
@@ -3086,7 +3086,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release asset</param>
         /// <returns>The <see cref="Uri"/> that returns the assets specified by the asset id.</returns>
-        public static Uri Asset(long repositoryId, int id)
+        public static Uri Asset(long repositoryId, long id)
         {
             return "repositories/{0}/releases/assets/{1}".FormatUri(repositoryId, id);
         }
@@ -3301,7 +3301,7 @@ namespace Octokit
         /// <param name="id">The <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified Id.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-        public static Uri GpgKeys(int id)
+        public static Uri GpgKeys(long id)
         {
             return "user/gpg_keys/{0}".FormatUri(id);
         }
@@ -3323,7 +3323,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         /// <returns>The <see cref="Uri"/> for the specified comment.</returns>
-        public static Uri IssueComment(long repositoryId, int id)
+        public static Uri IssueComment(long repositoryId, long id)
         {
             return "repositories/{0}/issues/comments/{1}".FormatUri(repositoryId, id);
         }
@@ -3622,7 +3622,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.</returns>
-        public static Uri ReleaseAssets(long repositoryId, int id)
+        public static Uri ReleaseAssets(long repositoryId, long id)
         {
             return "repositories/{0}/releases/{1}/assets".FormatUri(repositoryId, id);
         }
@@ -3653,7 +3653,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
-        public static Uri Releases(long repositoryId, int id)
+        public static Uri Releases(long repositoryId, long id)
         {
             return "repositories/{0}/releases/{1}".FormatUri(repositoryId, id);
         }
@@ -4262,7 +4262,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the project</param>
         /// <returns>The <see cref="Uri"/> for repository projects.</returns>
-        public static Uri Project(int id)
+        public static Uri Project(long id)
         {
             return "projects/{0}".FormatUri(id);
         }
@@ -4272,7 +4272,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the columns</param>
         /// <returns>The <see cref="Uri"/> for project columns.</returns>
-        public static Uri ProjectColumn(int id)
+        public static Uri ProjectColumn(long id)
         {
             return "projects/columns/{0}".FormatUri(id);
         }
@@ -4292,7 +4292,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the column to move</param>
         /// <returns>The <see cref="Uri"/> to move a project column.</returns>
-        public static Uri ProjectColumnMove(int id)
+        public static Uri ProjectColumnMove(long id)
         {
             return "projects/columns/{0}/moves".FormatUri(id);
         }
@@ -4302,7 +4302,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the card</param>
         /// <returns>The <see cref="Uri"/> for project cards.</returns>
-        public static Uri ProjectCard(int id)
+        public static Uri ProjectCard(long id)
         {
             return "projects/columns/cards/{0}".FormatUri(id);
         }
@@ -4322,7 +4322,7 @@ namespace Octokit
         /// </summary>
         /// <param name="id">The id of the card to move</param>
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
-        public static Uri ProjectCardMove(int id)
+        public static Uri ProjectCardMove(long id)
         {
             return "projects/columns/cards/{0}/moves".FormatUri(id);
         }

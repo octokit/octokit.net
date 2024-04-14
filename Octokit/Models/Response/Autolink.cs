@@ -13,7 +13,7 @@ namespace Octokit
         public Autolink() 
         { }
 
-        public Autolink(int id, string keyPrefix, string urlTemplate, bool isAlphanumeric)
+        public Autolink(long id, string keyPrefix, string urlTemplate, bool isAlphanumeric)
         {
             this.Id = id;
             this.KeyPrefix = keyPrefix;
@@ -25,7 +25,7 @@ namespace Octokit
         /// <summary>
         /// The unique identifier of the autolink.
         /// </summary>
-        public int Id { get; protected set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// This prefix appended by certain characters will generate a link any time it is found in an issue, pull request, or commit.

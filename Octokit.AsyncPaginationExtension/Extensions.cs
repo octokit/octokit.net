@@ -539,11 +539,11 @@ namespace Octokit.AsyncPaginationExtension
         => pageSize > 0 ? new PaginatedList<Release>(options => t.GetAll(repositoryId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IReleasesClient.GetAllAssets(string, string, int, ApiOptions)"/>
-    public static IPaginatedList<ReleaseAsset> GetAllAssetsAsync(this IReleasesClient t, string owner, string name, int id, int pageSize = DEFAULT_PAGE_SIZE)
+    public static IPaginatedList<ReleaseAsset> GetAllAssetsAsync(this IReleasesClient t, string owner, string name, long id, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<ReleaseAsset>(options => t.GetAllAssets(owner, name, id, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IReleasesClient.GetAllAssets(long, int, ApiOptions)"/>
-    public static IPaginatedList<ReleaseAsset> GetAllAssetsAsync(this IReleasesClient t, long repositoryId, int id, int pageSize = DEFAULT_PAGE_SIZE)
+    public static IPaginatedList<ReleaseAsset> GetAllAssetsAsync(this IReleasesClient t, long repositoryId, long id, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<ReleaseAsset>(options => t.GetAllAssets(repositoryId, id, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IRepoCollaboratorsClient.GetAll(string, string, ApiOptions)"/>
@@ -755,23 +755,23 @@ namespace Octokit.AsyncPaginationExtension
         => pageSize > 0 ? new PaginatedList<Team>(t.GetAllForCurrent, pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="ITeamsClient.GetAllChildTeams(int, ApiOptions)"/>
-    public static IPaginatedList<Team> GetAllChildTeamsAsync(this ITeamsClient t, int id, int pageSize = DEFAULT_PAGE_SIZE)
+    public static IPaginatedList<Team> GetAllChildTeamsAsync(this ITeamsClient t, long id, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Team>(options => t.GetAllChildTeams(id, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="ITeamsClient.GetAllMembers(int, ApiOptions)"/>
-    public static IPaginatedList<User> GetAllMembersAsync(this ITeamsClient t, int id, int pageSize = DEFAULT_PAGE_SIZE)
+    public static IPaginatedList<User> GetAllMembersAsync(this ITeamsClient t, long id, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<User>(options => t.GetAllMembers(id, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="ITeamsClient.GetAllMembers(int, TeamMembersRequest, ApiOptions)"/>
-    public static IPaginatedList<User> GetAllMembersAsync(this ITeamsClient t, int id, TeamMembersRequest request, int pageSize = DEFAULT_PAGE_SIZE)
+    public static IPaginatedList<User> GetAllMembersAsync(this ITeamsClient t, long id, TeamMembersRequest request, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<User>(options => t.GetAllMembers(id, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="ITeamsClient.GetAllRepositories(int, ApiOptions)"/>
-    public static IPaginatedList<Repository> GetAllRepositoriesAsync(this ITeamsClient t, int id, int pageSize = DEFAULT_PAGE_SIZE)
+    public static IPaginatedList<Repository> GetAllRepositoriesAsync(this ITeamsClient t, long id, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Repository>(options => t.GetAllRepositories(id, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="ITeamsClient.GetAllPendingInvitations(int, ApiOptions)"/>
-    public static IPaginatedList<OrganizationMembershipInvitation> GetAllPendingInvitationsAsync(this ITeamsClient t, int id, int pageSize = DEFAULT_PAGE_SIZE)
+    public static IPaginatedList<OrganizationMembershipInvitation> GetAllPendingInvitationsAsync(this ITeamsClient t, long id, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<OrganizationMembershipInvitation>(options => t.GetAllPendingInvitations(id, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
     
     /// <inheritdoc cref="IUserEmailsClient.GetAll(ApiOptions)"/>

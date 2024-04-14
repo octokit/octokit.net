@@ -228,7 +228,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The Id of the project</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        public IObservable<Project> Get(int id)
+        public IObservable<Project> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -272,7 +272,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
-        public IObservable<Project> Update(int id, ProjectUpdate projectUpdate)
+        public IObservable<Project> Update(long id, ProjectUpdate projectUpdate)
         {
             Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
 
@@ -286,7 +286,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The Id of the project</param>
-        public IObservable<bool> Delete(int id)
+        public IObservable<bool> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }

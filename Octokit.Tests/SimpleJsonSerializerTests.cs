@@ -481,7 +481,7 @@ namespace Octokit.Tests
 
         public class Sample
         {
-            public int Id { get; set; }
+            public long Id { get; set; }
             public string FirstName { get; set; }
             public bool IsSomething { get; set; }
             public bool Private { get; set; }

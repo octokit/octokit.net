@@ -63,7 +63,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Migration> Get(
             string org,
-            int id);
+            long id);
 
         /// <summary>
         /// Get the migration archive.
@@ -76,7 +76,7 @@ namespace Octokit
         /// <returns>The binary contents of the archive as a byte array.</returns>
         Task<byte[]> GetArchive(
             string org,
-            int id);
+            long id);
 
         /// <summary>
         /// Deletes a previous migration archive.
@@ -89,7 +89,7 @@ namespace Octokit
         /// <returns></returns>
         Task DeleteArchive(
             string org,
-            int id);
+            long id);
 
         /// <summary>
         /// Unlocks a repository that was locked for migration.
@@ -103,7 +103,7 @@ namespace Octokit
         /// <returns></returns>
         Task UnlockRepository(
             string org,
-            int id,
+            long id,
             string repo);
     }
 }

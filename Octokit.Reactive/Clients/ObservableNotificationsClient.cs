@@ -265,7 +265,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
-        public IObservable<Notification> Get(int id)
+        public IObservable<Notification> Get(long id)
         {
             return _notificationsClient.Get(id).ToObservable();
         }
@@ -275,7 +275,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
-        public IObservable<Unit> MarkAsRead(int id)
+        public IObservable<Unit> MarkAsRead(long id)
         {
             return _notificationsClient.MarkAsRead(id).ToObservable();
         }
@@ -285,7 +285,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
-        public IObservable<ThreadSubscription> GetThreadSubscription(int id)
+        public IObservable<ThreadSubscription> GetThreadSubscription(long id)
         {
             return _notificationsClient.GetThreadSubscription(id).ToObservable();
         }
@@ -296,7 +296,7 @@ namespace Octokit.Reactive
         /// <param name="id">The Id of the thread to update.</param>
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
-        public IObservable<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription)
+        public IObservable<ThreadSubscription> SetThreadSubscription(long id, NewThreadSubscription threadSubscription)
         {
             Ensure.ArgumentNotNull(threadSubscription, nameof(threadSubscription));
 
@@ -308,7 +308,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="id">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
-        public IObservable<Unit> DeleteThreadSubscription(int id)
+        public IObservable<Unit> DeleteThreadSubscription(long id)
         {
             return _notificationsClient.DeleteThreadSubscription(id).ToObservable();
         }

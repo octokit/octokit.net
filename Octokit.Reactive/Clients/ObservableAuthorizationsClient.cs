@@ -56,7 +56,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the <see cref="Authorization"/></param>
         /// <returns>An <see cref="Authorization"/></returns>
-        public IObservable<Authorization> Get(int id)
+        public IObservable<Authorization> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -307,7 +307,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Authorization"/></param>
         /// <param name="authorizationUpdate">The changes to make to the authorization</param>
         /// <returns></returns>
-        public IObservable<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
+        public IObservable<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
@@ -327,7 +327,7 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(int id)
+        public IObservable<Unit> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }
@@ -346,7 +346,7 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(int id, string twoFactorAuthenticationCode)
+        public IObservable<Unit> Delete(long id, string twoFactorAuthenticationCode)
         {
             return _client.Delete(id, twoFactorAuthenticationCode).ToObservable();
         }

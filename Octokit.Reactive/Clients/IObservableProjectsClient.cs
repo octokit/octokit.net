@@ -143,7 +143,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The Id of the project</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Project> Get(int id);
+        IObservable<Project> Get(long id);
 
         /// <summary>
         /// Creates a project for the specified repository.
@@ -173,7 +173,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
-        IObservable<Project> Update(int id, ProjectUpdate projectUpdate);
+        IObservable<Project> Update(long id, ProjectUpdate projectUpdate);
 
         /// <summary>
         /// Deletes a project.
@@ -182,7 +182,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The Id of the project</param>
-        IObservable<bool> Delete(int id);
+        IObservable<bool> Delete(long id);
 
         /// <summary>
         /// A client for GitHub's Project Cards API.

@@ -8,7 +8,7 @@ namespace Octokit
     {
         public SourceInfo() { }
 
-        public SourceInfo(User actor, int id, Issue issue, string url)
+        public SourceInfo(User actor, long id, Issue issue, string url)
         {
             Actor = actor;
             Id = id;
@@ -17,7 +17,7 @@ namespace Octokit
         }
 
         public User Actor { get; private set; }
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public Issue Issue { get; private set; }
         public string Url { get; private set; }
 

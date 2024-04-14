@@ -8,7 +8,7 @@ namespace Octokit
     {
         public DeployKey() { }
 
-        public DeployKey(int id, string key, string url, string title)
+        public DeployKey(long id, string key, string url, string title)
         {
             Id = id;
             Key = key;
@@ -16,7 +16,7 @@ namespace Octokit
             Title = title;
         }
 
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public string Key { get; private set; }
         public string Url { get; private set; }
         public string Title { get; private set; }

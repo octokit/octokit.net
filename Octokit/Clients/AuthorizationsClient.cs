@@ -73,7 +73,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         [ManualRoute("GET", "/authorizations/{id}")]
-        public Task<Authorization> Get(int id)
+        public Task<Authorization> Get(long id)
         {
             return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(id), null);
         }
@@ -426,7 +426,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
         [ManualRoute("PATCH", "/authorizations/{id}")]
-        public Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
+        public Task<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
@@ -450,7 +450,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(int id)
+        public Task Delete(long id)
         {
             return ApiConnection.Delete(ApiUrls.Authorizations(id));
         }
@@ -471,7 +471,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(int id, string twoFactorAuthenticationCode)
+        public Task Delete(long id, string twoFactorAuthenticationCode)
         {
             return ApiConnection.Delete(ApiUrls.Authorizations(id), twoFactorAuthenticationCode);
         }

@@ -12,7 +12,7 @@ namespace Octokit
         {
         }
 
-        public OrganizationMembershipInvitation(int id, string nodeId, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter, int teamCount)
+        public OrganizationMembershipInvitation(long id, string nodeId, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter, int teamCount)
         {
             Id = id;
             NodeId = nodeId;
@@ -24,7 +24,7 @@ namespace Octokit
             TeamCount = teamCount;
         }
 
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id

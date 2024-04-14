@@ -23,7 +23,7 @@ namespace Octokit
         /// <returns>The <see cref="Team"/> with the given identifier.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<Team> Get(int id);
+        Task<Team> Get(long id);
 
         /// <summary>
         /// Returns all <see cref="Team" />s for the current org.
@@ -66,7 +66,7 @@ namespace Octokit
         /// https://developer.github.com/v3/orgs/teams/#list-child-teams
         /// </remarks>
         /// <param name="id">The team identifier</param>
-        Task<IReadOnlyList<Team>> GetAllChildTeams(int id);
+        Task<IReadOnlyList<Team>> GetAllChildTeams(long id);
 
         /// <summary>
         /// Returns all child teams of the given team.
@@ -76,7 +76,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
-        Task<IReadOnlyList<Team>> GetAllChildTeams(int id, ApiOptions options);
+        Task<IReadOnlyList<Team>> GetAllChildTeams(long id, ApiOptions options);
 
         /// <summary>
         /// Returns all members of the given team. 
@@ -85,7 +85,7 @@ namespace Octokit
         /// https://developer.github.com/v3/orgs/teams/#list-team-members
         /// </remarks>
         /// <param name="id">The team identifier</param>
-        Task<IReadOnlyList<User>> GetAllMembers(int id);
+        Task<IReadOnlyList<User>> GetAllMembers(long id);
 
         /// <summary>
         /// Returns all members of the given team. 
@@ -95,7 +95,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
-        Task<IReadOnlyList<User>> GetAllMembers(int id, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAllMembers(long id, ApiOptions options);
 
         /// <summary>
         /// Returns all members with the specified role in the given team of the given role.
@@ -105,7 +105,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
-        Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request);
+        Task<IReadOnlyList<User>> GetAllMembers(long id, TeamMembersRequest request);
 
         /// <summary>
         /// Returns all members with the specified role in the given team of the given role.
@@ -116,7 +116,7 @@ namespace Octokit
         /// <param name="id">The team identifier</param>
         /// <param name="request">The request filter</param>
         /// <param name="options">Options to change API behaviour.</param>
-        Task<IReadOnlyList<User>> GetAllMembers(int id, TeamMembersRequest request, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAllMembers(long id, TeamMembersRequest request, ApiOptions options);
 
         /// <summary>
         /// Returns newly created <see cref="Team" /> for the current org.
@@ -148,7 +148,7 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>Updated <see cref="Team"/></returns>
-        Task<Team> Update(int id, UpdateTeam team);
+        Task<Team> Update(long id, UpdateTeam team);
 
         /// <summary>
         /// To delete a team, the authenticated user must be an organization owner or team maintainer.
@@ -175,7 +175,7 @@ namespace Octokit
         /// <param name="id">The unique identifier of the team.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task Delete(int id);
+        Task Delete(long id);
 
         /// <summary>
         /// Adds a <see cref="User"/> to a <see cref="Team"/>.
@@ -186,7 +186,7 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to add to the team.</param>
         /// <param name="request">Additional parameters for the request</param>
-        Task<TeamMembershipDetails> AddOrEditMembership(int id, string login, UpdateTeamMembership request);
+        Task<TeamMembershipDetails> AddOrEditMembership(long id, string login, UpdateTeamMembership request);
 
         /// <summary>
         /// Removes a <see cref="User"/> from a <see cref="Team"/>.
@@ -197,7 +197,7 @@ namespace Octokit
         /// <param name="id">The team identifier.</param>
         /// <param name="login">The user to remove from the team.</param>
         /// <returns><see langword="true"/> if the user was removed from the team; <see langword="false"/> otherwise.</returns>
-        Task<bool> RemoveMembership(int id, string login);
+        Task<bool> RemoveMembership(long id, string login);
 
         /// <summary>
         /// Gets whether the user with the given <paramref name="login"/> 
@@ -209,7 +209,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team to check.</param>
         /// <param name="login">The user to check.</param>
-        Task<TeamMembershipDetails> GetMembershipDetails(int id, string login);
+        Task<TeamMembershipDetails> GetMembershipDetails(long id, string login);
 
         /// <summary>
         /// Returns all team's repositories.
@@ -217,7 +217,7 @@ namespace Octokit
         /// <param name="id">Team Id to list repos.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        Task<IReadOnlyList<Repository>> GetAllRepositories(int id);
+        Task<IReadOnlyList<Repository>> GetAllRepositories(long id);
 
         /// <summary>
         /// Returns all team's repositories.
@@ -226,14 +226,14 @@ namespace Octokit
         /// <param name="options">Options to change API behaviour.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The team's repositories</returns>
-        Task<IReadOnlyList<Repository>> GetAllRepositories(int id, ApiOptions options);
+        Task<IReadOnlyList<Repository>> GetAllRepositories(long id, ApiOptions options);
 
         /// <summary>
         /// Add a repository to the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task<bool> AddRepository(int id, string organization, string repoName);
+        Task<bool> AddRepository(long id, string organization, string repoName);
 
         /// <summary>
         /// Add a repository to the team
@@ -244,14 +244,14 @@ namespace Octokit
         /// <param name="permission">The permission to grant the team on this repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task<bool> AddRepository(int id, string organization, string repoName, RepositoryPermissionRequest permission);
+        Task<bool> AddRepository(long id, string organization, string repoName, RepositoryPermissionRequest permission);
 
         /// <summary>
         /// Remove a repository from the team
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        Task<bool> RemoveRepository(int id, string organization, string repoName);
+        Task<bool> RemoveRepository(long id, string organization, string repoName);
 
         /// <summary>
         /// Gets whether or not the given repository is managed by the given team.
@@ -263,7 +263,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/orgs/teams/#get-team-repo">API documentation</a> for more information.
         /// </remarks>
         /// <returns><see langword="true"/> if the repository is managed by the given team; <see langword="false"/> otherwise.</returns>
-        Task<bool> IsRepositoryManagedByTeam(int id, string owner, string repo);
+        Task<bool> IsRepositoryManagedByTeam(long id, string owner, string repo);
 
         /// <summary>
         /// List all pending invitations for the given team.
@@ -274,7 +274,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The team identifier</param>
         /// <returns></returns>
-        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id);
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(long id);
 
         /// <summary>
         /// List all pending invitations for the given team.
@@ -286,7 +286,7 @@ namespace Octokit
         /// <param name="id">The team identifier</param>
         /// <param name="options">Options to change API behaviour.</param>
         /// <returns></returns>
-        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(int id, ApiOptions options);
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(long id, ApiOptions options);
 
         /// <summary>
         /// Checks whether a team has admin, push, maintain, triage, or pull permission for a repository.

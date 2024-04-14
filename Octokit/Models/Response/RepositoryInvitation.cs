@@ -12,7 +12,7 @@ namespace Octokit
     {
         public RepositoryInvitation() { }
 
-        public RepositoryInvitation(int id, string nodeId, Repository repository, User invitee, User inviter, InvitationPermissionType permissions, DateTimeOffset createdAt, bool expired, string url, string htmlUrl)
+        public RepositoryInvitation(long id, string nodeId, Repository repository, User invitee, User inviter, InvitationPermissionType permissions, DateTimeOffset createdAt, bool expired, string url, string htmlUrl)
         {
             Id = id;
             NodeId = nodeId;
@@ -29,7 +29,7 @@ namespace Octokit
         /// <summary>
         /// Unique identifier of the repository invitation.
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
