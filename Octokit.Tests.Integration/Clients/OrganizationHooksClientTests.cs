@@ -61,7 +61,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var hooks = await github.Organization.Hook.GetAll(_fixture.org, options);
 
-                Assert.Equal(1, hooks.Count);
+                Assert.Single(hooks);
             }
 
             [IntegrationTest]

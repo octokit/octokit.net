@@ -54,7 +54,7 @@ public class EnterprisePreReceiveHooksClientTests
 
             var preReceiveHooks = await _preReceiveHooksClient.GetAll(options);
 
-            Assert.Equal(1, preReceiveHooks.Count);
+            Assert.Single(preReceiveHooks);
         }
 
         [GitHubEnterpriseTest]
@@ -69,7 +69,7 @@ public class EnterprisePreReceiveHooksClientTests
 
             var preReceiveHooks = await _preReceiveHooksClient.GetAll(options);
 
-            Assert.Equal(1, preReceiveHooks.Count);
+            Assert.Single(preReceiveHooks);
         }
 
         [GitHubEnterpriseTest]

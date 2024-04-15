@@ -58,7 +58,7 @@ public class SearchIssuesRequestTests
                 property.Value(request, "blah");
 
                 // Ensure the specified parameter now exists
-                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
+                Assert.Equal(1, request.MergedQualifiers().Count(x => x.Contains(property.Key)));
             }
         }
 
@@ -84,7 +84,7 @@ public class SearchIssuesRequestTests
                 property.Value(request, DateRange.GreaterThan(new DateTimeOffset(DateTime.Today.AddDays(-7))));
 
                 // Ensure the specified parameter now exists
-                Assert.True(request.MergedQualifiers().Count(x => x.Contains(property.Key)) == 1);
+                Assert.Equal(1, request.MergedQualifiers().Count(x => x.Contains(property.Key)));
             }
         }
 

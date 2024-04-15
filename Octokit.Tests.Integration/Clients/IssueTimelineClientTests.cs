@@ -29,7 +29,7 @@ namespace Octokit.Tests.Integration.Clients
         {
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503);
             Assert.NotEmpty(timelineEventInfos);
-            Assert.NotEqual(0, timelineEventInfos.Count);
+            Assert.NotEmpty(timelineEventInfos);
         }
 
         [IntegrationTest]
@@ -48,7 +48,7 @@ namespace Octokit.Tests.Integration.Clients
 
             timelineEventInfos = await _issueTimelineClient.GetAllForIssue("octokit", "octokit.net", 1503, pageOptions);
             Assert.NotEmpty(timelineEventInfos);
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
         }
 
         [IntegrationTest]
@@ -125,7 +125,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal("A test issue", renamed.Title);
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal("a test issue", timelineEventInfos[0].Rename.From);
             Assert.Equal("A test issue", timelineEventInfos[0].Rename.To);
         }
@@ -140,7 +140,7 @@ namespace Octokit.Tests.Integration.Clients
             var anotherNewIssue = await _issuesClient.Create(_context.Repository.Id, newIssue);
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
@@ -157,7 +157,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.NotNull(closed);
 
             timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.Repository.Id, issue.Number);
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal(EventInfoState.Closed, timelineEventInfos[0].Event);
         }
 
@@ -172,7 +172,7 @@ namespace Octokit.Tests.Integration.Clients
             Assert.Equal("A test issue", renamed.Title);
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.Repository.Id, issue.Number);
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal("a test issue", timelineEventInfos[0].Rename.From);
             Assert.Equal("A test issue", timelineEventInfos[0].Rename.To);
         }
@@ -187,7 +187,7 @@ namespace Octokit.Tests.Integration.Clients
             var anotherNewIssue = await _issuesClient.Create(_context.Repository.Id, newIssue);
 
             var timelineEventInfos = await _issueTimelineClient.GetAllForIssue(_context.Repository.Id, issue.Number);
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 

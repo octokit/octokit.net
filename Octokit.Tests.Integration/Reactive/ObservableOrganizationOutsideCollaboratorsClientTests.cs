@@ -42,7 +42,7 @@ namespace Octokit.Tests.Integration.Reactive
                         .GetAll(Helper.Organization).ToList();
 
                     Assert.NotNull(outsideCollaborators);
-                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Single(outsideCollaborators);
                 }
             }
 
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Integration.Reactive
                         .GetAll(Helper.Organization, options).ToList();
 
                     Assert.NotNull(outsideCollaborators);
-                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Single(outsideCollaborators);
                 }
             }
 
@@ -88,7 +88,7 @@ namespace Octokit.Tests.Integration.Reactive
                         .GetAll(Helper.Organization, options).ToList();
 
                     Assert.NotNull(outsideCollaborators);
-                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Single(outsideCollaborators);
                 }
             }
 
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Integration.Reactive
                         .GetAll(Helper.Organization, OrganizationMembersFilter.All, options).ToList();
 
                     Assert.NotNull(outsideCollaborators);
-                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Single(outsideCollaborators);
                 }
             }
 
@@ -161,8 +161,8 @@ namespace Octokit.Tests.Integration.Reactive
                     var secondPageOfOutsideCollaborators = await _client
                         .GetAll(Helper.Organization, OrganizationMembersFilter.All, secondPageOptions).ToList();
 
-                    Assert.Equal(1, firstPageOfOutsideCollaborators.Count);
-                    Assert.Equal(1, secondPageOfOutsideCollaborators.Count);
+                    Assert.Single(firstPageOfOutsideCollaborators);
+                    Assert.Single(secondPageOfOutsideCollaborators);
                     Assert.NotEqual(firstPageOfOutsideCollaborators[0].Login, secondPageOfOutsideCollaborators[0].Login);
                 }
             }
@@ -180,7 +180,7 @@ namespace Octokit.Tests.Integration.Reactive
                         .GetAll(Helper.Organization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled).ToList();
 
                     Assert.NotNull(outsideCollaborators);
-                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Single(outsideCollaborators);
                     Assert.Equal("octokitnet-test1", outsideCollaborators[0].Login);
                 }
             }
@@ -204,7 +204,7 @@ namespace Octokit.Tests.Integration.Reactive
                         .GetAll(Helper.Organization, OrganizationMembersFilter.TwoFactorAuthenticationDisabled, options).ToList();
 
                     Assert.NotNull(outsideCollaborators);
-                    Assert.Equal(1, outsideCollaborators.Count);
+                    Assert.Single(outsideCollaborators);
                     Assert.Equal("octokitnet-test1", outsideCollaborators[0].Login);
                 }
             }
@@ -262,7 +262,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var outsideCollaborators = await _client
                     .GetAll(Helper.Organization).ToList();
 
-                Assert.Equal(1, outsideCollaborators.Count);
+                Assert.Single(outsideCollaborators);
                 Assert.Equal(_fixtureCollaborator, outsideCollaborators[0].Login);
             }
         }

@@ -56,7 +56,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     public async Task CanRetrieveAllDeployKeys()
     {
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.Equal(0, deployKeys.Count);
+        Assert.Empty(deployKeys);
 
         var deployKey = new NewDeployKey
         {
@@ -67,7 +67,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
         await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, deployKey);
 
         deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.Equal(1, deployKeys.Count);
+        Assert.Single(deployKeys);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
     }
@@ -76,7 +76,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     public async Task CanRetrieveAllDeployKeysWithRepositoryId()
     {
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.Equal(0, deployKeys.Count);
+        Assert.Empty(deployKeys);
 
         var deployKey = new NewDeployKey
         {
@@ -87,7 +87,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
         await _fixture.Create(_context.Repository.Id, deployKey);
 
         deployKeys = await _fixture.GetAll(_context.Repository.Id);
-        Assert.Equal(1, deployKeys.Count);
+        Assert.Single(deployKeys);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
     }
@@ -96,7 +96,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     public async Task ReturnsCorrectCountOfDeployKeysWithoutStart()
     {
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.Equal(0, deployKeys.Count);
+        Assert.Empty(deployKeys);
 
         var list = new List<NewDeployKey>();
         var deployKeysCount = 5;
@@ -130,7 +130,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
     public async Task ReturnsCorrectCountOfDeployKeysWithStart()
     {
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.Equal(0, deployKeys.Count);
+        Assert.Empty(deployKeys);
 
         var list = new List<NewDeployKey>();
         var deployKeysCount = 5;
@@ -158,7 +158,7 @@ public class RepositoryDeployKeysClientTests : IDisposable
 
         deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName, options);
 
-        Assert.Equal(1, deployKeys.Count);
+        Assert.Single(deployKeys);
     }
 
     [IntegrationTest(Skip = "See https://github.com/octokit/octokit.net/issues/1003 for investigating this failing test")]
@@ -287,13 +287,13 @@ public class RepositoryDeployKeysClientTests : IDisposable
         await _fixture.Create(_context.RepositoryOwner, _context.RepositoryName, newDeployKey);
 
         var deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.Equal(1, deployKeys.Count);
+        Assert.Single(deployKeys);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
 
         await _fixture.Delete(_context.RepositoryOwner, _context.RepositoryName, deployKeys[0].Id);
         deployKeys = await _fixture.GetAll(_context.RepositoryOwner, _context.RepositoryName);
-        Assert.Equal(0, deployKeys.Count);
+        Assert.Empty(deployKeys);
     }
 
     [IntegrationTest(Skip = "see https://github.com/octokit/octokit.net/issues/533 for the resolution to this failing test")]
@@ -308,13 +308,13 @@ public class RepositoryDeployKeysClientTests : IDisposable
         await _fixture.Create(_context.Repository.Id, newDeployKey);
 
         var deployKeys = await _fixture.GetAll(_context.Repository.Id);
-        Assert.Equal(1, deployKeys.Count);
+        Assert.Single(deployKeys);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
 
         await _fixture.Delete(_context.Repository.Id, deployKeys[0].Id);
         deployKeys = await _fixture.GetAll(_context.Repository.Id);
-        Assert.Equal(0, deployKeys.Count);
+        Assert.Empty(deployKeys);
     }
 
     public void Dispose()

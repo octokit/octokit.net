@@ -27,7 +27,7 @@ namespace Octokit.Tests.Integration.Reactive
             var observableTimeline = _client.Issue.Timeline.GetAllForIssue("octokit", "octokit.net", 1503);
             var timelineEventInfos = await observableTimeline.ToList();
             Assert.NotEmpty(timelineEventInfos);
-            Assert.NotEqual(0, timelineEventInfos.Count);
+            Assert.NotEmpty(timelineEventInfos);
         }
 
         [IntegrationTest]
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Integration.Reactive
             observableTimeline = _client.Issue.Timeline.GetAllForIssue("octokit", "octokit.net", 1503, pageOptions);
             timelineEventInfos = await observableTimeline.ToList();
             Assert.NotEmpty(timelineEventInfos);
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
         }
 
         [IntegrationTest]
@@ -64,7 +64,7 @@ namespace Octokit.Tests.Integration.Reactive
 
             var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             var timelineEventInfos = await observableTimeline.ToList();
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal("a test issue", timelineEventInfos[0].Rename.From);
             Assert.Equal("A test issue", timelineEventInfos[0].Rename.To);
         }
@@ -82,7 +82,7 @@ namespace Octokit.Tests.Integration.Reactive
 
             var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             var timelineEventInfos = await observableTimeline.ToList();
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
 
@@ -103,7 +103,7 @@ namespace Octokit.Tests.Integration.Reactive
 
             observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
             timelineEventInfos = await observableTimeline.ToList();
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal(EventInfoState.Closed, timelineEventInfos[0].Event);
         }
 
@@ -121,7 +121,7 @@ namespace Octokit.Tests.Integration.Reactive
 
             var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
             var timelineEventInfos = await observableTimeline.ToList();
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal("a test issue", timelineEventInfos[0].Rename.From);
             Assert.Equal("A test issue", timelineEventInfos[0].Rename.To);
         }
@@ -139,7 +139,7 @@ namespace Octokit.Tests.Integration.Reactive
 
             var observableTimeline = _client.Issue.Timeline.GetAllForIssue(_context.Repository.Id, issue.Number);
             var timelineEventInfos = await observableTimeline.ToList();
-            Assert.Equal(1, timelineEventInfos.Count);
+            Assert.Single(timelineEventInfos);
             Assert.Equal(anotherNewIssue.Id, timelineEventInfos[0].Source.Issue.Id);
         }
     }

@@ -44,7 +44,7 @@ namespace Octokit.Tests.Models
             Assert.Equal(1, actual.Id);
             Assert.Equal("https://api.github.com/repos/octocat/example/deployments/1/statuses/42", actual.Url);
             Assert.Equal(DeploymentState.Success, actual.State);
-            Assert.Equal(1, actual.Payload.Count);
+            Assert.Single(actual.Payload);
             Assert.Equal("production", actual.Payload["environment"]);
             Assert.Equal("https://gist.github.com/628b2736d379f", actual.TargetUrl);
             Assert.Equal(DateTimeOffset.Parse("2012-07-20T01:19:13Z"), actual.CreatedAt);

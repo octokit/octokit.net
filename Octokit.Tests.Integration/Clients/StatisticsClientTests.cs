@@ -26,13 +26,13 @@ namespace Octokit.Tests.Integration.Clients
                 var contributors = await _client.Repository.Statistics.GetContributors(repository.Owner, repository.Name);
 
                 Assert.NotNull(contributors);
-                Assert.Equal(1, contributors.Count);
+                Assert.Single(contributors);
 
                 var soleContributor = contributors.First();
                 Assert.NotNull(soleContributor.Author);
                 Assert.True(soleContributor.Author.Login == repository.Owner);
 
-                Assert.Equal(1, soleContributor.Weeks.Count);
+                Assert.Single(soleContributor.Weeks);
                 Assert.Equal(1, soleContributor.Total);
             }
         }
@@ -47,13 +47,13 @@ namespace Octokit.Tests.Integration.Clients
                 var contributors = await _client.Repository.Statistics.GetContributors(context.Repository.Id);
 
                 Assert.NotNull(contributors);
-                Assert.Equal(1, contributors.Count);
+                Assert.Single(contributors);
 
                 var soleContributor = contributors.First();
                 Assert.NotNull(soleContributor.Author);
                 Assert.True(soleContributor.Author.Login == repository.Owner);
 
-                Assert.Equal(1, soleContributor.Weeks.Count);
+                Assert.Single(soleContributor.Weeks);
                 Assert.Equal(1, soleContributor.Total);
             }
         }

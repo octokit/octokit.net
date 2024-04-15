@@ -75,7 +75,7 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         var reactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, options);
 
-        Assert.Equal(1, reactions.Count);
+        Assert.Single(reactions);
         Assert.Equal(reaction.Id, reactions[0].Id);
         Assert.Equal(reaction.Content, reactions[0].Content);
     }
@@ -111,7 +111,7 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         var reactionsInfo = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, options);
 
-        Assert.Equal(1, reactionsInfo.Count);
+        Assert.Single(reactionsInfo);
         Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
         Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
     }
@@ -152,8 +152,8 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
         };
         var secondPage = await _github.Reaction.PullRequestReviewComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, commentFromGitHub.Id, skipStartOptions);
 
-        Assert.Equal(1, firstPage.Count);
-        Assert.Equal(1, secondPage.Count);
+        Assert.Single(firstPage);
+        Assert.Single(secondPage);
         Assert.Equal(firstPage[0].Id, secondPage[0].Id);
         Assert.Equal(firstPage[0].Content, secondPage[0].Content);
     }
@@ -205,7 +205,7 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         var reactions = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id, options);
 
-        Assert.Equal(1, reactions.Count);
+        Assert.Single(reactions);
         Assert.Equal(reaction.Id, reactions[0].Id);
         Assert.Equal(reaction.Content, reactions[0].Content);
     }
@@ -241,7 +241,7 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
 
         var reactionsInfo = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id, options);
 
-        Assert.Equal(1, reactionsInfo.Count);
+        Assert.Single(reactionsInfo);
         Assert.Equal(reactions.Last().Id, reactionsInfo[0].Id);
         Assert.Equal(reactions.Last().Content, reactionsInfo[0].Content);
     }
@@ -282,8 +282,8 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
         };
         var secondPage = await _github.Reaction.PullRequestReviewComment.GetAll(_context.Repository.Id, commentFromGitHub.Id, skipStartOptions);
 
-        Assert.Equal(1, firstPage.Count);
-        Assert.Equal(1, secondPage.Count);
+        Assert.Single(firstPage);
+        Assert.Single(secondPage);
         Assert.Equal(firstPage[0].Id, secondPage[0].Id);
         Assert.Equal(firstPage[0].Content, secondPage[0].Content);
     }

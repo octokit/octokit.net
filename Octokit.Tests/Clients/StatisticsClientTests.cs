@@ -35,7 +35,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await client.GetContributors("owner", "name");
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
             }
 
             [Fact]
@@ -52,7 +52,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await client.GetContributors(1);
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
             }
 
             [Fact]
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await client.GetContributors("owner", "name", cancellationToken);
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
             }
 
             [Fact]
@@ -90,7 +90,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await client.GetContributors(1, cancellationToken);
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
             }
 
             [Fact]
@@ -424,7 +424,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await statisticsClient.GetPunchCard("owner", "name");
 
-                Assert.Equal(1, result.PunchPoints.Count);
+                Assert.Single(result.PunchPoints);
                 Assert.Equal(DayOfWeek.Tuesday, result.PunchPoints[0].DayOfWeek);
                 Assert.Equal(8, result.PunchPoints[0].HourOfTheDay);
                 Assert.Equal(42, result.PunchPoints[0].CommitCount);
@@ -443,7 +443,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await statisticsClient.GetPunchCard(1);
 
-                Assert.Equal(1, result.PunchPoints.Count);
+                Assert.Single(result.PunchPoints);
                 Assert.Equal(DayOfWeek.Tuesday, result.PunchPoints[0].DayOfWeek);
                 Assert.Equal(8, result.PunchPoints[0].HourOfTheDay);
                 Assert.Equal(42, result.PunchPoints[0].CommitCount);
@@ -464,7 +464,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await client.GetPunchCard("owner", "name", cancellationToken);
 
-                Assert.Equal(1, result.PunchPoints.Count);
+                Assert.Single(result.PunchPoints);
                 Assert.Equal(DayOfWeek.Tuesday, result.PunchPoints[0].DayOfWeek);
                 Assert.Equal(8, result.PunchPoints[0].HourOfTheDay);
                 Assert.Equal(42, result.PunchPoints[0].CommitCount);
@@ -485,7 +485,7 @@ namespace Octokit.Tests.Clients
 
                 var result = await client.GetPunchCard(1, cancellationToken);
 
-                Assert.Equal(1, result.PunchPoints.Count);
+                Assert.Single(result.PunchPoints);
                 Assert.Equal(DayOfWeek.Tuesday, result.PunchPoints[0].DayOfWeek);
                 Assert.Equal(8, result.PunchPoints[0].HourOfTheDay);
                 Assert.Equal(42, result.PunchPoints[0].CommitCount);

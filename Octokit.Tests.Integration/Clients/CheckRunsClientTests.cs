@@ -421,7 +421,7 @@ namespace Octokit.Tests.Integration.Clients
                     var annotations = await _githubAppInstallation.Check.Run.GetAllAnnotations(repoContext.RepositoryOwner, repoContext.RepositoryName, created.Id);
 
                     // Check result
-                    Assert.Equal(1, annotations.Count);
+                    Assert.Single(annotations);
                     Assert.Equal("this is a warning", annotations.First().Message);
                     Assert.Equal(CheckAnnotationLevel.Warning, annotations.First().AnnotationLevel);
                 }
@@ -454,7 +454,7 @@ namespace Octokit.Tests.Integration.Clients
                     var annotations = await _githubAppInstallation.Check.Run.GetAllAnnotations(repoContext.RepositoryId, created.Id);
 
                     // Check result
-                    Assert.Equal(1, annotations.Count);
+                    Assert.Single(annotations);
                     Assert.Equal("this is a warning", annotations.First().Message);
                     Assert.Equal(CheckAnnotationLevel.Warning, annotations.First().AnnotationLevel);
                 }

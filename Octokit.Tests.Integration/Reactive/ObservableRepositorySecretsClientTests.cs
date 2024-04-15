@@ -31,7 +31,7 @@ namespace Octokit.Tests.Integration.Reactive.Clients
                 var keyObservable = client.GetPublicKey(OWNER, REPO);
                 var key = await keyObservable;
 
-                Assert.True(!string.IsNullOrWhiteSpace(key.KeyId));
+                Assert.False(string.IsNullOrWhiteSpace(key.KeyId));
             }
         }
 

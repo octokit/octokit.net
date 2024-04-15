@@ -53,7 +53,7 @@ public class ObservableProjectColumnsClientTests
 
             var columns = await _github.Repository.Project.Column.GetAll(project.Id, options).ToList();
 
-            Assert.Equal(1, columns.Count);
+            Assert.Single(columns);
             Assert.Equal(column1.Id, columns[0].Id);
         }
 
@@ -73,7 +73,7 @@ public class ObservableProjectColumnsClientTests
 
             var columns = await _github.Repository.Project.Column.GetAll(project.Id, options).ToList();
 
-            Assert.Equal(1, columns.Count);
+            Assert.Single(columns);
             Assert.Equal(column2.Id, columns[0].Id);
         }
 

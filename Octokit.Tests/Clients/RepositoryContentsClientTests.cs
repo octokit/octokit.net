@@ -147,7 +147,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContents("fake", "repo", "readme.md");
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/readme.md"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]
@@ -162,7 +162,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContents(1, "readme.md");
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contents/readme.md"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]
@@ -177,7 +177,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContents("fake", "repo");
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/contents/"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]
@@ -192,7 +192,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContents(1);
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/contents/"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]
@@ -266,7 +266,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContentsByRef("fake", "repo", "readme.md", GitHubConstants.DefaultBranchName);
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repos/fake/repo/contents/readme.md?ref={GitHubConstants.DefaultBranchName}"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]
@@ -281,7 +281,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContentsByRef(1, "readme.md", GitHubConstants.DefaultBranchName);
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repositories/1/contents/readme.md?ref={GitHubConstants.DefaultBranchName}"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]
@@ -296,7 +296,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContentsByRef("fake", "repo", GitHubConstants.DefaultBranchName);
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repos/fake/repo/contents/?ref={GitHubConstants.DefaultBranchName}"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]
@@ -311,7 +311,7 @@ namespace Octokit.Tests.Clients
                 var contents = await contentsClient.GetAllContentsByRef(1, GitHubConstants.DefaultBranchName);
 
                 connection.Received().GetAll<RepositoryContent>(Arg.Is<Uri>(u => u.ToString() == $"repositories/1/contents/?ref={GitHubConstants.DefaultBranchName}"));
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
             }
 
             [Fact]

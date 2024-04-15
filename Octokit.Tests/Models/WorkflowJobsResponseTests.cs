@@ -128,7 +128,7 @@ namespace Octokit.Tests.Models
             Assert.Equal(1, payload.TotalCount);
             Assert.NotNull(payload.Jobs);
             Assert.NotEmpty(payload.Jobs);
-            Assert.Equal(1, payload.Jobs.Count);
+            Assert.Single(payload.Jobs);
         }
     }
 }

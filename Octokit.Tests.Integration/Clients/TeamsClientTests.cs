@@ -94,7 +94,7 @@ public class TeamsClientTests
 
                 var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options);
 
-                Assert.Equal(1, teams.Count);
+                Assert.Single(teams);
                 Assert.Equal(team1.Id, teams[0].Id);
             }
         }
@@ -116,7 +116,7 @@ public class TeamsClientTests
 
                 var teams = await _github.Organization.Team.GetAllChildTeams(parentTeamContext.TeamId, options);
 
-                Assert.Equal(1, teams.Count);
+                Assert.Single(teams);
                 Assert.Equal(team2.Id, teams[0].Id);
             }
         }
@@ -333,7 +333,7 @@ public class TeamsClientTests
                 var addedRepo = await _github.Organization.Team.GetAllRepositories(team.Id);
 
                 //Check if permission was correctly applied
-                Assert.True(addedRepo.First(x => x.Id == repo.Id).Permissions.Admin == true);
+                Assert.True(addedRepo.First(x => x.Id == repo.Id).Permissions.Admin);
             }
         }
     }
@@ -390,7 +390,7 @@ public class TeamsClientTests
 
                 var pendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId, options);
                 Assert.NotEmpty(pendingInvitations);
-                Assert.Equal(1, pendingInvitations.Count);
+                Assert.Single(pendingInvitations);
             }
         }
 
@@ -411,7 +411,7 @@ public class TeamsClientTests
 
                 var firstPagePendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId, firstPageOptions);
                 Assert.NotEmpty(firstPagePendingInvitations);
-                Assert.Equal(1, firstPagePendingInvitations.Count);
+                Assert.Single(firstPagePendingInvitations);
 
                 var secondPageOptions = new ApiOptions
                 {
@@ -422,7 +422,7 @@ public class TeamsClientTests
 
                 var secondPagePendingInvitations = await _gitHub.Organization.Team.GetAllPendingInvitations(teamContext.TeamId, secondPageOptions);
                 Assert.NotEmpty(secondPagePendingInvitations);
-                Assert.Equal(1, secondPagePendingInvitations.Count);
+                Assert.Single(secondPagePendingInvitations);
 
                 Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
             }
@@ -604,7 +604,7 @@ public class TeamsClientTests
             {
                 var teamRepositories = await github.Organization.Team.GetAllRepositories(teamContext.TeamId);
                 
-                Assert.Equal(0, teamRepositories.Count);
+                Assert.Empty(teamRepositories);
 
                 await github.Organization.Team.AddOrUpdateTeamRepositoryPermissions(
                     Helper.Organization,
@@ -678,7 +678,7 @@ public class TeamsClientTests
 
                 var addedRepo = await github.Organization.Team.GetAllRepositories(teamContext.TeamId);
 
-                Assert.Equal(0, addedRepo.Count);
+                Assert.Empty(addedRepo);
             }
         }
     }

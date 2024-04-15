@@ -42,7 +42,7 @@ namespace Octokit.Tests.Reactive
                 var eventInfos = await client.GetAllForIssue("fake", "repo", 42).ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), Args.EmptyDictionary);
-                Assert.Equal(1, eventInfos.Count);
+                Assert.Single(eventInfos);
             }
 
             [Fact]
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Reactive
                 var eventInfos = await client.GetAllForIssue(1, 42).ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Args.EmptyDictionary);
-                Assert.Equal(1, eventInfos.Count);
+                Assert.Single(eventInfos);
             }
 
             [Fact]
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Reactive
                 var eventInfos = await client.GetAllForIssue("fake", "repo", 42, options).ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
-                Assert.Equal(1, eventInfos.Count);
+                Assert.Single(eventInfos);
             }
 
             [Fact]
@@ -114,7 +114,7 @@ namespace Octokit.Tests.Reactive
                 var eventInfos = await client.GetAllForIssue(1, 42, options).ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
-                Assert.Equal(1, eventInfos.Count);
+                Assert.Single(eventInfos);
             }
 
             [Fact]
@@ -155,7 +155,7 @@ namespace Octokit.Tests.Reactive
                 var issueEvents = await client.GetAllForRepository("fake", "repo").ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), Args.EmptyDictionary);
-                Assert.Equal(1, issueEvents.Count);
+                Assert.Single(issueEvents);
             }
 
             [Fact]
@@ -174,7 +174,7 @@ namespace Octokit.Tests.Reactive
                 var issueEvents = await client.GetAllForRepository(1).ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), Args.EmptyDictionary);
-                Assert.Equal(1, issueEvents.Count);
+                Assert.Single(issueEvents);
             }
 
             [Fact]
@@ -200,7 +200,7 @@ namespace Octokit.Tests.Reactive
                 var issueEvents = await client.GetAllForRepository("fake", "repo", options).ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
-                Assert.Equal(1, issueEvents.Count);
+                Assert.Single(issueEvents);
             }
 
             [Fact]
@@ -226,7 +226,7 @@ namespace Octokit.Tests.Reactive
                 var issueEvents = await client.GetAllForRepository(1, options).ToList();
 
                 connection.Received().Get<List<IssueEvent>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/events"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
-                Assert.Equal(1, issueEvents.Count);
+                Assert.Single(issueEvents);
             }
 
             [Fact]
