@@ -36,7 +36,7 @@ namespace Octokit
     {
         public Reaction() { }
 
-        public Reaction(int id, string nodeId, User user, ReactionType content)
+        public Reaction(long id, string nodeId, User user, ReactionType content)
         {
             Id = id;
             NodeId = nodeId;
@@ -47,7 +47,7 @@ namespace Octokit
         /// <summary>
         /// The Id for this reaction.
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id

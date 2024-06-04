@@ -671,7 +671,7 @@ namespace Octokit
         /// <param name="number">The comment number</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri IssueCommentReaction(string owner, string name, int number, int reaction)
+        public static Uri IssueCommentReaction(string owner, string name, long number, long reaction)
         {
             return "repos/{0}/{1}/issues/comments/{2}/reactions/{3}".FormatUri(owner, name, number, reaction);
         }
@@ -683,7 +683,7 @@ namespace Octokit
         /// <param name="number">The comment number</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri IssueCommentReaction(long repositoryId, int number, int reaction)
+        public static Uri IssueCommentReaction(long repositoryId, long number, long reaction)
         {
             return "repositories/{0}/issues/comments/{1}/reactions/{2}".FormatUri(repositoryId, number, reaction);
         }
@@ -754,7 +754,7 @@ namespace Octokit
         /// <param name="number">The comment number</param>
         /// <param name="reaction">The reaction number</param>
         /// <returns></returns>
-        public static Uri CommitCommentReaction(string owner, string name, int number, int reaction)
+        public static Uri CommitCommentReaction(string owner, string name, long number, long reaction)
         {
             return "repos/{0}/{1}/comments/{2}/reactions/{3}".FormatUri(owner, name, number, reaction);
         }
@@ -766,7 +766,7 @@ namespace Octokit
         /// <param name="number">The comment number</param>
         /// <param name="reaction">The reaction number</param>
         /// <returns></returns>
-        public static Uri CommitCommentReaction(long repositoryId, int number, int reaction)
+        public static Uri CommitCommentReaction(long repositoryId, long number, long reaction)
         {
             return "repositories/{0}/comments/{1}/reactions/{2}".FormatUri(repositoryId, number, reaction);
         }
@@ -1506,7 +1506,7 @@ namespace Octokit
         /// </summary>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
-        public static Uri GistComment(string gistId, int commentId)
+        public static Uri GistComment(string gistId, long commentId)
         {
             return "gists/{0}/comments/{1}".FormatUri(gistId, commentId);
         }
@@ -1820,7 +1820,7 @@ namespace Octokit
         /// <param name="number">The comment number</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri PullRequestReviewCommentReaction(string owner, string name, int number, int reaction)
+        public static Uri PullRequestReviewCommentReaction(string owner, string name, long number, long reaction)
         {
             return "repos/{0}/{1}/pulls/comments/{2}/reactions/{3}".FormatUri(owner, name, number, reaction);
         }
@@ -1832,7 +1832,7 @@ namespace Octokit
         /// <param name="number">The comment number</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri PullRequestReviewCommentReaction(long repositoryId, int number, int reaction)
+        public static Uri PullRequestReviewCommentReaction(long repositoryId, long number, long reaction)
         {
             return "repositories/{0}/pulls/comments/{1}/reactions/{2}".FormatUri(repositoryId, number, reaction);
         }

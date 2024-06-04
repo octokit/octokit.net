@@ -117,7 +117,7 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}")]
-        public Task Delete(string owner, string name, int commentId, int reactionId)
+        public Task Delete(string owner, string name, long commentId, long reactionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -134,7 +134,7 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repositories/{id}/issues/comments/{comment_id}/reactions/{reaction_id}")]
-        public Task Delete(long repositoryId, int commentId, int reactionId)
+        public Task Delete(long repositoryId, long commentId, long reactionId)
         {
             return ApiConnection.Delete(ApiUrls.IssueCommentReaction(repositoryId, commentId, reactionId));
         }

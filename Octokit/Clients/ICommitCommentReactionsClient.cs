@@ -81,7 +81,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, int commentId, int reactionId);
+        Task Delete(string owner, string name, long commentId, long reactionId);
 
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
@@ -91,6 +91,6 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        Task Delete(long repositoryId, int commentId, int reactionId);
+        Task Delete(long repositoryId, long commentId, long reactionId);
     }
 }
