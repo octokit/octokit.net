@@ -635,7 +635,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueComment(string owner, string name, int id)
+        public static Uri IssueComment(string owner, string name, long id)
         {
             return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, id);
         }
@@ -3323,7 +3323,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         /// <returns>The <see cref="Uri"/> for the specified comment.</returns>
-        public static Uri IssueComment(long repositoryId, int id)
+        public static Uri IssueComment(long repositoryId, long id)
         {
             return "repositories/{0}/issues/comments/{1}".FormatUri(repositoryId, id);
         }

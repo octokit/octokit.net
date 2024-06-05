@@ -21,7 +21,7 @@ namespace Octokit
         /// <param name="id">The issue comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<IssueComment> Get(string owner, string name, int id);
+        Task<IssueComment> Get(string owner, string name, long id);
 
         /// <summary>
         /// Gets a single Issue Comment by id.
@@ -31,7 +31,7 @@ namespace Octokit
         /// <param name="id">The issue comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<IssueComment> Get(long repositoryId, int id);
+        Task<IssueComment> Get(long repositoryId, long id);
 
         /// <summary>
         /// Gets Issue Comments for a repository.
@@ -204,7 +204,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        Task<IssueComment> Update(string owner, string name, int id, string commentUpdate);
+        Task<IssueComment> Update(string owner, string name, long id, string commentUpdate);
 
         /// <summary>
         /// Updates a specified Issue Comment.
@@ -213,7 +213,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        Task<IssueComment> Update(long repositoryId, int id, string commentUpdate);
+        Task<IssueComment> Update(long repositoryId, long id, string commentUpdate);
 
         /// <summary>
         /// Deletes the specified Issue Comment
@@ -222,7 +222,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="id">The comment id</param>
-        Task Delete(string owner, string name, int id);
+        Task Delete(string owner, string name, long id);
 
         /// <summary>
         /// Deletes the specified Issue Comment
@@ -230,6 +230,6 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#delete-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The comment id</param>
-        Task Delete(long repositoryId, int id);
+        Task Delete(long repositoryId, long id);
     }
 }
