@@ -18,17 +18,17 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<CommitComment> Get(string owner, string name, int number);
+        Task<CommitComment> Get(string owner, string name, long commentId);
 
         /// <summary>
         /// Gets a single Repository Comment by number.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="number">The comment number</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
         Task<CommitComment> Get(long repositoryId, int number);
@@ -145,15 +145,15 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
-        Task Delete(string owner, string name, int number);
+        /// <param name="commentId">The comment id</param>
+        Task Delete(string owner, string name, long commentId);
 
         /// <summary>
         /// Deletes the specified Commit Comment
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="number">The comment number</param>
         Task Delete(long repositoryId, int number);
     }
 }

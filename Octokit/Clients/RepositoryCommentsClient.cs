@@ -25,22 +25,22 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments/{comment_id}")]
-        public Task<CommitComment> Get(string owner, string name, int number)
+        public Task<CommitComment> Get(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(owner, name, number), null);
+            return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(owner, name, commentId), null);
         }
 
         /// <summary>
         /// Gets a single Repository Comment by number.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="number">The comment number</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         [ManualRoute("GET", "/repositories/{id}/comments/{number}")]
         public Task<CommitComment> Get(long repositoryId, int number)
@@ -244,15 +244,15 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/comments/{comment_id}")]
-        public Task Delete(string owner, string name, int number)
+        public Task Delete(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.CommitComment(owner, name, number));
+            return ApiConnection.Delete(ApiUrls.CommitComment(owner, name, commentId));
         }
 
         /// <summary>

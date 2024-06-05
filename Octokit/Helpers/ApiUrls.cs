@@ -693,11 +693,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri CommitComment(string owner, string name, int number)
+        public static Uri CommitComment(string owner, string name, long commentId)
         {
-            return "repos/{0}/{1}/comments/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/comments/{2}".FormatUri(owner, name, commentId);
         }
 
         /// <summary>
