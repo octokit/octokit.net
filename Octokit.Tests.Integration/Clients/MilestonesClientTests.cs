@@ -199,7 +199,7 @@ public class MilestonesClientTests : IDisposable
         var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new MilestoneRequest { State = ItemStateFilter.Closed });
 
-        Assert.Equal(1, milestones.Count);
+        Assert.Single(milestones);
         Assert.Equal("milestone 3", milestones[0].Title);
     }
 
@@ -216,7 +216,7 @@ public class MilestonesClientTests : IDisposable
         var milestones = await _milestonesClient.GetAllForRepository(_context.Repository.Id,
             new MilestoneRequest { State = ItemStateFilter.Closed });
 
-        Assert.Equal(1, milestones.Count);
+        Assert.Single(milestones);
         Assert.Equal("milestone 3", milestones[0].Title);
     }
 
@@ -281,7 +281,7 @@ public class MilestonesClientTests : IDisposable
 
         var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
 
-        Assert.Equal(1, milestones.Count);
+        Assert.Single(milestones);
     }
 
     [IntegrationTest]
@@ -303,7 +303,7 @@ public class MilestonesClientTests : IDisposable
 
         var milestones = await _milestonesClient.GetAllForRepository(_context.Repository.Id, options);
 
-        Assert.Equal(1, milestones.Count);
+        Assert.Single(milestones);
     }
 
     [IntegrationTest]
@@ -433,7 +433,7 @@ public class MilestonesClientTests : IDisposable
 
         var milestones = await _milestonesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, new MilestoneRequest { State = ItemStateFilter.Closed }, options);
 
-        Assert.Equal(1, milestones.Count);
+        Assert.Single(milestones);
     }
 
     [IntegrationTest]
@@ -457,7 +457,7 @@ public class MilestonesClientTests : IDisposable
 
         var milestones = await _milestonesClient.GetAllForRepository(_context.Repository.Id, new MilestoneRequest { State = ItemStateFilter.Closed }, options);
 
-        Assert.Equal(1, milestones.Count);
+        Assert.Single(milestones);
     }
 
     [IntegrationTest]

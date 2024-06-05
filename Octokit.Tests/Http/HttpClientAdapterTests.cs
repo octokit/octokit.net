@@ -177,6 +177,27 @@ namespace Octokit.Tests.Http
 
                 Assert.Equal("application/json", response.ContentType);
             }
+            
+            // See #2898 for why this is necessary
+            // Non standard MIME Content-Type coming from Blob Storage when downloading artifacts
+            [Fact]
+            public async Task SetsZipContentType()
+            {
+                var memoryStream = new MemoryStream();
+                var streamContent = new StreamContent(memoryStream);
+                streamContent.Headers.TryAddWithoutValidation("Content-Type", "zip");
+                
+                var responseMessage = new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = streamContent
+                };
+                var tester = new HttpClientAdapterTester();
+
+                var response = await tester.BuildResponseTester(responseMessage);
+
+                Assert.Equal("application/zip", response.ContentType);
+            }
         }
 
         sealed class HttpClientAdapterTester : HttpClientAdapter

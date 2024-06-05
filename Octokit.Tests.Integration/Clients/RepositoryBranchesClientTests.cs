@@ -347,14 +347,14 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.True(protection.RequiredStatusChecks.Strict);
                     Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                    Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(protection.RequiredPullRequestReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(protection.RequiredPullRequestReviews.DismissalRestrictions.Users);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
 
-                    Assert.Equal(1, protection.Restrictions.Teams.Count);
-                    Assert.Equal(0, protection.Restrictions.Users.Count);
+                    Assert.Single(protection.Restrictions.Teams);
+                    Assert.Empty(protection.Restrictions.Users);
 
                     Assert.True(protection.EnforceAdmins.Enabled);
                 }
@@ -372,14 +372,14 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.True(protection.RequiredStatusChecks.Strict);
                     Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                    Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(protection.RequiredPullRequestReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(protection.RequiredPullRequestReviews.DismissalRestrictions.Users);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireLastPushApproval);
 
-                    Assert.Equal(1, protection.Restrictions.Teams.Count);
-                    Assert.Equal(0, protection.Restrictions.Users.Count);
+                    Assert.Single(protection.Restrictions.Teams);
+                    Assert.Empty(protection.Restrictions.Users);
 
                     Assert.True(protection.EnforceAdmins.Enabled);
                 }
@@ -403,7 +403,7 @@ namespace Octokit.Tests.Integration.Clients
                     var protection = await _github.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -432,7 +432,7 @@ namespace Octokit.Tests.Integration.Clients
                     var protection = await _github.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -462,7 +462,7 @@ namespace Octokit.Tests.Integration.Clients
                     var protection = await _github.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -492,7 +492,7 @@ namespace Octokit.Tests.Integration.Clients
                     var protection = await _github.Repository.Branch.UpdateBranchProtection(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -612,7 +612,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.NotNull(requiredStatusChecks.Contexts);
                     Assert.Contains("new", requiredStatusChecks.Contexts);
                     Assert.True(requiredStatusChecks.Strict);
-                    Assert.Equal(1, requiredStatusChecks.Contexts.Count);
+                    Assert.Single(requiredStatusChecks.Contexts);
                 }
             }
 
@@ -630,7 +630,7 @@ namespace Octokit.Tests.Integration.Clients
                     Assert.NotNull(requiredStatusChecks.Contexts);
                     Assert.Contains("new", requiredStatusChecks.Contexts);
                     Assert.True(requiredStatusChecks.Strict);
-                    Assert.Equal(1, requiredStatusChecks.Contexts.Count);
+                    Assert.Single(requiredStatusChecks.Contexts);
                 }
             }
         }
@@ -707,7 +707,7 @@ namespace Octokit.Tests.Integration.Clients
                     var update = new List<string>() { "build2" };
                     var requiredStatusChecksContexts = await _github.Repository.Branch.UpdateRequiredStatusChecksContexts(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, update);
 
-                    Assert.Equal(1, requiredStatusChecksContexts.Count);
+                    Assert.Single(requiredStatusChecksContexts);
                 }
             }
 
@@ -721,7 +721,7 @@ namespace Octokit.Tests.Integration.Clients
                     var update = new List<string>() { "build2" };
                     var requiredStatusChecksContexts = await _github.Repository.Branch.UpdateRequiredStatusChecksContexts(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, update);
 
-                    Assert.Equal(1, requiredStatusChecksContexts.Count);
+                    Assert.Single(requiredStatusChecksContexts);
                 }
             }
         }
@@ -835,8 +835,8 @@ namespace Octokit.Tests.Integration.Clients
 
                     var requiredReviews = await _github.Repository.Branch.GetReviewEnforcement(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
 
-                    Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(requiredReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Users);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
                     Assert.True(requiredReviews.RequireLastPushApproval);
@@ -852,8 +852,8 @@ namespace Octokit.Tests.Integration.Clients
 
                     var requiredReviews = await _github.Repository.Branch.GetReviewEnforcement(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
 
-                    Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(requiredReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Users);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
                     Assert.True(requiredReviews.RequireLastPushApproval);
@@ -1165,8 +1165,8 @@ namespace Octokit.Tests.Integration.Clients
 
                     var restrictions = await _github.Repository.Branch.GetProtectedBranchRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
 
-                    Assert.Equal(1, restrictions.Teams.Count);
-                    Assert.Equal(0, restrictions.Users.Count);
+                    Assert.Single(restrictions.Teams);
+                    Assert.Empty(restrictions.Users);
                 }
             }
 
@@ -1179,8 +1179,8 @@ namespace Octokit.Tests.Integration.Clients
 
                     var restrictions = await _github.Repository.Branch.GetProtectedBranchRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
 
-                    Assert.Equal(1, restrictions.Teams.Count);
-                    Assert.Equal(0, restrictions.Users.Count);
+                    Assert.Single(restrictions.Teams);
+                    Assert.Empty(restrictions.Users);
                 }
             }
         }
@@ -1226,7 +1226,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.GetAllProtectedBranchTeamRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
                 }
             }
 
@@ -1240,7 +1240,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.GetAllProtectedBranchTeamRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
                 }
             }
         }
@@ -1291,7 +1291,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.UpdateProtectedBranchTeamRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, newTeam);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
                 }
             }
         }
@@ -1360,7 +1360,7 @@ namespace Octokit.Tests.Integration.Clients
                     var deleted = await _github.Repository.Branch.DeleteProtectedBranchTeamRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, teamToRemove);
 
                     Assert.NotNull(deleted);
-                    Assert.Equal(0, deleted.Count);
+                    Assert.Empty(deleted);
                 }
             }
 
@@ -1375,7 +1375,7 @@ namespace Octokit.Tests.Integration.Clients
                     var deleted = await _github.Repository.Branch.DeleteProtectedBranchTeamRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, teamToRemove);
 
                     Assert.NotNull(deleted);
-                    Assert.Equal(0, deleted.Count);
+                    Assert.Empty(deleted);
                 }
             }
         }
@@ -1392,7 +1392,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.GetAllProtectedBranchUserRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(0, restrictions.Count);
+                    Assert.Empty(restrictions);
                 }
             }
 
@@ -1406,7 +1406,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.GetAllProtectedBranchUserRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(0, restrictions.Count);
+                    Assert.Empty(restrictions);
                 }
             }
         }
@@ -1425,7 +1425,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.UpdateProtectedBranchUserRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, newUser);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
                 }
             }
 
@@ -1441,7 +1441,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.UpdateProtectedBranchUserRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, newUser);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
                 }
             }
         }
@@ -1460,7 +1460,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.AddProtectedBranchUserRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, newUser);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
                 }
             }
 
@@ -1476,7 +1476,7 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.AddProtectedBranchUserRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, newUser);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
                 }
             }
         }
@@ -1494,12 +1494,12 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.AddProtectedBranchUserRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, user);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
 
                     var deleted = await _github.Repository.Branch.DeleteProtectedBranchUserRestrictions(repoContext.RepositoryOwner, repoContext.RepositoryName, repoContext.RepositoryDefaultBranch, user);
 
                     Assert.NotNull(deleted);
-                    Assert.Equal(0, deleted.Count);
+                    Assert.Empty(deleted);
                 }
             }
 
@@ -1514,12 +1514,12 @@ namespace Octokit.Tests.Integration.Clients
                     var restrictions = await _github.Repository.Branch.AddProtectedBranchUserRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, user);
 
                     Assert.NotNull(restrictions);
-                    Assert.Equal(1, restrictions.Count);
+                    Assert.Single(restrictions);
 
                     var deleted = await _github.Repository.Branch.DeleteProtectedBranchUserRestrictions(repoContext.RepositoryId, repoContext.RepositoryDefaultBranch, user);
 
                     Assert.NotNull(deleted);
-                    Assert.Equal(0, deleted.Count);
+                    Assert.Empty(deleted);
                 }
             }
         }

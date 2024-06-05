@@ -76,14 +76,14 @@ namespace Octokit.Tests.Integration.Reactive
                     Assert.True(protection.RequiredStatusChecks.Strict);
                     Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                    Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(protection.RequiredPullRequestReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(protection.RequiredPullRequestReviews.DismissalRestrictions.Users);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
                     Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                    Assert.Equal(1, protection.Restrictions.Teams.Count);
-                    Assert.Equal(0, protection.Restrictions.Users.Count);
+                    Assert.Single(protection.Restrictions.Teams);
+                    Assert.Empty(protection.Restrictions.Users);
 
                     Assert.True(protection.EnforceAdmins.Enabled);
                 }
@@ -100,14 +100,14 @@ namespace Octokit.Tests.Integration.Reactive
                     Assert.True(protection.RequiredStatusChecks.Strict);
                     Assert.Equal(2, protection.RequiredStatusChecks.Contexts.Count);
 
-                    Assert.Equal(1, protection.RequiredPullRequestReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, protection.RequiredPullRequestReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(protection.RequiredPullRequestReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(protection.RequiredPullRequestReviews.DismissalRestrictions.Users);
                     Assert.True(protection.RequiredPullRequestReviews.DismissStaleReviews);
                     Assert.True(protection.RequiredPullRequestReviews.RequireCodeOwnerReviews);
                     Assert.Equal(3, protection.RequiredPullRequestReviews.RequiredApprovingReviewCount);
 
-                    Assert.Equal(1, protection.Restrictions.Teams.Count);
-                    Assert.Equal(0, protection.Restrictions.Users.Count);
+                    Assert.Single(protection.Restrictions.Teams);
+                    Assert.Empty(protection.Restrictions.Users);
 
                     Assert.True(protection.EnforceAdmins.Enabled);
                 }
@@ -140,7 +140,7 @@ namespace Octokit.Tests.Integration.Reactive
                     var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "main", update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -167,7 +167,7 @@ namespace Octokit.Tests.Integration.Reactive
                     var protection = await _client.UpdateBranchProtection(repoId, "main", update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -202,7 +202,7 @@ namespace Octokit.Tests.Integration.Reactive
                     var protection = await _client.UpdateBranchProtection(repoOwner, repoName, "main", update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -243,7 +243,7 @@ namespace Octokit.Tests.Integration.Reactive
                     var protection = await _client.UpdateBranchProtection(repoId, "main", update);
 
                     Assert.False(protection.RequiredStatusChecks.Strict);
-                    Assert.Equal(1, protection.RequiredStatusChecks.Contexts.Count);
+                    Assert.Single(protection.RequiredStatusChecks.Contexts);
 
                     Assert.Null(protection.RequiredPullRequestReviews.DismissalRestrictions);
                     Assert.False(protection.RequiredPullRequestReviews.DismissStaleReviews);
@@ -375,8 +375,8 @@ namespace Octokit.Tests.Integration.Reactive
                     var repoName = context.RepositoryContext.RepositoryName;
                     var requiredReviews = await _client.GetReviewEnforcement(repoOwner, repoName, "main");
 
-                    Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(requiredReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Users);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
                 }
@@ -390,8 +390,8 @@ namespace Octokit.Tests.Integration.Reactive
                     var repoId = context.RepositoryContext.RepositoryId;
                     var requiredReviews = await _client.GetReviewEnforcement(repoId, "main");
 
-                    Assert.Equal(1, requiredReviews.DismissalRestrictions.Teams.Count);
-                    Assert.Equal(0, requiredReviews.DismissalRestrictions.Users.Count);
+                    Assert.Single(requiredReviews.DismissalRestrictions.Teams);
+                    Assert.Empty(requiredReviews.DismissalRestrictions.Users);
                     Assert.True(requiredReviews.DismissStaleReviews);
                     Assert.True(requiredReviews.RequireCodeOwnerReviews);
                 }

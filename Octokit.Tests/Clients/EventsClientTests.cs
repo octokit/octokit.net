@@ -594,7 +594,7 @@ namespace Octokit.Tests.Clients
                 var client = GetTestingEventsClient(jsonObj);
 
                 var activities = await client.GetAll();
-                Assert.Equal(1, activities.Count);
+                Assert.Single(activities);
                 var activity = activities.FirstOrDefault();
                 Assert.Equal(kvp.Value, activity.Payload.GetType());
                 Assert.NotNull(activity.Payload.Repository);
@@ -623,7 +623,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as CommitCommentPayload;
             Assert.Equal(1337, payload.Comment.Id);
@@ -646,7 +646,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as CreateEventPayload;
             Assert.Equal(GitHubConstants.DefaultBranchName, payload.Ref);
@@ -670,7 +670,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as DeleteEventPayload;
             Assert.Equal(GitHubConstants.DefaultBranchName, payload.Ref);
@@ -696,7 +696,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as ForkEventPayload;
             Assert.Equal(1337, payload.Forkee.Id);
@@ -726,7 +726,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as IssueCommentPayload;
             Assert.Equal("created", payload.Action);
@@ -762,7 +762,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as IssueEventPayload;
             Assert.Equal("created", payload.Action);
@@ -792,7 +792,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as PullRequestEventPayload;
             Assert.Equal("assigned", payload.Action);
@@ -826,7 +826,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as PullRequestReviewEventPayload;
             Assert.Equal("submitted", payload.Action);
@@ -861,7 +861,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as PullRequestCommentPayload;
             Assert.Equal("assigned", payload.Action);
@@ -897,14 +897,14 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as PushEventPayload;
             Assert.Equal("head", payload.Head);
             Assert.Equal("ref", payload.Ref);
             Assert.Equal(1337, payload.Size);
             Assert.NotNull(payload.Commits);
-            Assert.Equal(1, payload.Commits.Count);
+            Assert.Single(payload.Commits);
             Assert.Equal("message", payload.Commits.FirstOrDefault().Message);
             Assert.Equal("before", payload.Before);
             Assert.Equal(1337, payload.DistinctSize);
@@ -977,7 +977,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as StatusEventPayload;
             Assert.Equal(214015194, payload.Id);
@@ -987,7 +987,7 @@ namespace Octokit.Tests.Clients
             Assert.Equal("default", payload.Context);
             Assert.Equal("some human readable text", payload.Description);
             Assert.Equal(CommitState.Success, payload.State.Value);
-            Assert.Equal(1, payload.Branches.Count);
+            Assert.Single(payload.Branches);
             Assert.Equal(new DateTimeOffset(2015, 05, 05, 23, 40, 39, TimeSpan.Zero), payload.CreatedAt);
         }
 
@@ -1007,7 +1007,7 @@ namespace Octokit.Tests.Clients
 
             var client = GetTestingEventsClient(jsonObj);
             var activities = await client.GetAll();
-            Assert.Equal(1, activities.Count);
+            Assert.Single(activities);
 
             var payload = activities.FirstOrDefault().Payload as StarredEventPayload;
             Assert.Equal("started", payload.Action);

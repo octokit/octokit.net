@@ -24,7 +24,7 @@ public class ObservableRepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName).ToList();
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Single(collaborators);
             }
         }
 
@@ -47,7 +47,7 @@ public class ObservableRepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(1, collaborators.Count);
+                Assert.Single(collaborators);
             }
         }
 
@@ -71,7 +71,7 @@ public class ObservableRepositoryCollaboratorClientTests
                 var collaborators = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, options).ToList();
 
                 Assert.NotNull(collaborators);
-                Assert.Equal(0, collaborators.Count);
+                Assert.Empty(collaborators);
             }
         }
 
@@ -102,8 +102,8 @@ public class ObservableRepositoryCollaboratorClientTests
 
                 var secondPage = await fixture.GetAll(context.RepositoryOwner, context.RepositoryName, skipStartOptions).ToList();
 
-                Assert.Equal(1, firstPage.Count);
-                Assert.Equal(0, secondPage.Count);
+                Assert.Single(firstPage);
+                Assert.Empty(secondPage);
             }
         }
     }

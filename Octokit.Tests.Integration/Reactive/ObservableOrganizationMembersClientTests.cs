@@ -223,7 +223,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                     var pendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization, options).ToList();
                     Assert.NotEmpty(pendingInvitations);
-                    Assert.Equal(1, pendingInvitations.Count);
+                    Assert.Single(pendingInvitations);
                 }
             }
 
@@ -244,7 +244,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                     var firstPagePendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization, firstPageOptions).ToList();
                     Assert.NotEmpty(firstPagePendingInvitations);
-                    Assert.Equal(1, firstPagePendingInvitations.Count);
+                    Assert.Single(firstPagePendingInvitations);
 
 
                     var secondPageOptions = new ApiOptions
@@ -256,7 +256,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                     var secondPagePendingInvitations = await _client.GetAllPendingInvitations(Helper.Organization, secondPageOptions).ToList();
                     Assert.NotEmpty(secondPagePendingInvitations);
-                    Assert.Equal(1, secondPagePendingInvitations.Count);
+                    Assert.Single(secondPagePendingInvitations);
 
                     Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
                 }

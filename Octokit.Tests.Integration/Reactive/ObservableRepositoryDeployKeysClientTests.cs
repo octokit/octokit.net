@@ -56,7 +56,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         await _client.Create(_owner, _repository.Name, deployKey);
 
         deployKeys = await _client.GetAll(_owner, _repository.Name).ToList();
-        Assert.Equal(1, deployKeys.Count);
+        Assert.Single(deployKeys);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
     }
@@ -90,7 +90,7 @@ public class ObservableRespositoryDeployKeysClientTests : IDisposable
         await _client.Create(_owner, _repository.Name, newDeployKey);
 
         var deployKeys = await _client.GetAll(_owner, _repository.Name).ToList();
-        Assert.Equal(1, deployKeys.Count);
+        Assert.Single(deployKeys);
         Assert.Equal(_key, deployKeys[0].Key);
         Assert.Equal(_keyTitle, deployKeys[0].Title);
 

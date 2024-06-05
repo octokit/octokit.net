@@ -90,7 +90,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var hooks = await github.Repository.Hooks.GetAll(_fixture.RepositoryOwner, _fixture.RepositoryName, options);
 
-                Assert.Equal(1, hooks.Count);
+                Assert.Single(hooks);
             }
 
             [IntegrationTest]
@@ -107,7 +107,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var hooks = await github.Repository.Hooks.GetAll(_fixture.RepositoryId, options);
 
-                Assert.Equal(1, hooks.Count);
+                Assert.Single(hooks);
             }
 
             [IntegrationTest]

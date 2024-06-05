@@ -57,7 +57,7 @@ public class CommitStatusClientTests
             var statuses = await github.Repository.Status.GetAll("rails", "rails",
                                     "94b857899506612956bb542e28e292308accb908", options);
 
-            Assert.Equal(1, statuses.Count);
+            Assert.Single(statuses);
         }
 
         [IntegrationTest]
@@ -75,7 +75,7 @@ public class CommitStatusClientTests
             var statuses = await github.Repository.Status.GetAll("rails", "rails",
                                     "94b857899506612956bb542e28e292308accb908", options);
 
-            Assert.Equal(1, statuses.Count);
+            Assert.Single(statuses);
         }
 
         [IntegrationTest]
@@ -101,8 +101,8 @@ public class CommitStatusClientTests
 
             var secondPage = await github.Repository.Status.GetAll("rails", "rails", "94b857899506612956bb542e28e292308accb908", skipStartOptions);
 
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
+            Assert.Single(firstPage);
+            Assert.Single(secondPage);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
         }
 
@@ -120,7 +120,7 @@ public class CommitStatusClientTests
             var statuses = await github.Repository.Status.GetAll(8514,
                                     "94b857899506612956bb542e28e292308accb908", options);
 
-            Assert.Equal(1, statuses.Count);
+            Assert.Single(statuses);
         }
 
         [IntegrationTest]
@@ -138,7 +138,7 @@ public class CommitStatusClientTests
             var statuses = await github.Repository.Status.GetAll(8514,
                                     "94b857899506612956bb542e28e292308accb908", options);
 
-            Assert.Equal(1, statuses.Count);
+            Assert.Single(statuses);
         }
 
         [IntegrationTest]
@@ -164,8 +164,8 @@ public class CommitStatusClientTests
 
             var secondPage = await github.Repository.Status.GetAll(8514, "94b857899506612956bb542e28e292308accb908", skipStartOptions);
 
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
+            Assert.Single(firstPage);
+            Assert.Single(secondPage);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
         }
     }
@@ -247,7 +247,7 @@ public class CommitStatusClientTests
 
             var statuses = await _github.Repository.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
 
-            Assert.Equal(1, statuses.Count);
+            Assert.Single(statuses);
             Assert.Equal(CommitState.Pending, statuses[0].State);
         }
 
@@ -289,7 +289,7 @@ public class CommitStatusClientTests
 
             var statuses = await _github.Repository.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, commit.Sha);
 
-            Assert.Equal(1, statuses.Count);
+            Assert.Single(statuses);
             Assert.Equal("default", statuses[0].Context);
         }
 

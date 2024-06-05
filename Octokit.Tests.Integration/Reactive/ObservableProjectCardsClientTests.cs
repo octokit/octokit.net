@@ -50,7 +50,7 @@ public class ObservableProjectCardsClientTests
 
             var result = await _github.Repository.Project.Card.GetAll(column.Id, request).ToList();
 
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             Assert.Contains(result, x => x.Id == card2.Id);
         }
 
@@ -66,7 +66,7 @@ public class ObservableProjectCardsClientTests
 
             var result = await _github.Repository.Project.Card.GetAll(column.Id, request).ToList();
 
-            Assert.Equal(1, result.Count);
+            Assert.Single(result);
             Assert.Contains(result, x => x.Id == card1.Id);
         }
 
@@ -104,7 +104,7 @@ public class ObservableProjectCardsClientTests
             var cards = await _github.Repository.Project.Card.GetAll(column.Id, options).ToList();
 
             // NOTE: cards are returned in reverse order
-            Assert.Equal(1, cards.Count);
+            Assert.Single(cards);
             Assert.Equal(card2.Id, cards[0].Id);
         }
 
@@ -126,7 +126,7 @@ public class ObservableProjectCardsClientTests
             var cards = await _github.Repository.Project.Card.GetAll(column.Id, options).ToList();
 
             // NOTE: cards are returned in reverse order
-            Assert.Equal(1, cards.Count);
+            Assert.Single(cards);
             Assert.Equal(card1.Id, cards[0].Id);
         }
 

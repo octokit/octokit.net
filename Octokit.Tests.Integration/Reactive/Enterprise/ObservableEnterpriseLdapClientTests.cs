@@ -54,7 +54,7 @@ namespace Octokit.Tests.Integration
             // Check response message indicates LDAP sync was queued
             Assert.NotNull(response);
             Assert.NotNull(response.Status);
-            Assert.True(response.Status == "queued");
+            Assert.Equal("queued", response.Status);
         }
 
         [GitHubEnterpriseTest]
@@ -85,7 +85,7 @@ namespace Octokit.Tests.Integration
             // Check response message indicates LDAP sync was queued
             Assert.NotNull(response);
             Assert.NotNull(response.Status);
-            Assert.True(response.Status == "queued");
+            Assert.Equal("queued", response.Status);
         }
 
         public void Dispose()

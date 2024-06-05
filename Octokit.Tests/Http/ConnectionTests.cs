@@ -964,7 +964,7 @@ namespace Octokit.Tests.Http
                 // No point checking all of the values as they are tested elsewhere
                 // Just provde that the ApiInfo is populated
                 Assert.Equal(4, result.Links.Count);
-                Assert.Equal(1, result.OauthScopes.Count);
+                Assert.Single(result.OauthScopes);
                 Assert.Equal(4, result.AcceptedOauthScopes.Count);
                 Assert.Equal("5634b0b187fd2e91e3126a75006cc4fa", result.Etag);
                 Assert.Equal(100, result.RateLimit.Limit);

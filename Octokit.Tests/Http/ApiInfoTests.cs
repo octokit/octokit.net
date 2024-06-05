@@ -127,8 +127,8 @@ namespace Octokit.Tests.Http
 
                 Assert.NotNull(clone);
                 Assert.Equal(4, clone.Links.Count);
-                Assert.Equal(1, clone.OauthScopes.Count);
-                Assert.Equal(0, clone.AcceptedOauthScopes.Count);
+                Assert.Single(clone.OauthScopes);
+                Assert.Empty(clone.AcceptedOauthScopes);
                 Assert.Null(clone.Etag);
                 Assert.Equal(100, clone.RateLimit.Limit);
                 Assert.Equal(75, clone.RateLimit.Remaining);
@@ -171,8 +171,8 @@ namespace Octokit.Tests.Http
 
                 Assert.NotNull(clone);
                 Assert.Equal(4, clone.Links.Count);
-                Assert.Equal(1, clone.OauthScopes.Count);
-                Assert.Equal(0, clone.AcceptedOauthScopes.Count);
+                Assert.Single(clone.OauthScopes);
+                Assert.Empty(clone.AcceptedOauthScopes);
                 Assert.Equal("123abc", clone.Etag);
                 Assert.Null(clone.RateLimit);
             }

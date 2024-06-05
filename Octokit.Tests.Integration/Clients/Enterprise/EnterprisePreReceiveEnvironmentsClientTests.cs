@@ -54,7 +54,7 @@ public class EnterprisePreReceiveEnvironmentsClientTests
 
             var preReceiveEnvironments = await _preReceiveEnvironmentsClient.GetAll(options);
 
-            Assert.Equal(1, preReceiveEnvironments.Count);
+            Assert.Single(preReceiveEnvironments);
         }
 
         [GitHubEnterpriseTest]
@@ -69,7 +69,7 @@ public class EnterprisePreReceiveEnvironmentsClientTests
 
             var preReceiveEnvironments = await _preReceiveEnvironmentsClient.GetAll(options);
 
-            Assert.Equal(1, preReceiveEnvironments.Count);
+            Assert.Single(preReceiveEnvironments);
         }
 
         [GitHubEnterpriseTest]
