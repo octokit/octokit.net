@@ -68,5 +68,24 @@ public class CodespacesClientTests
             client.Stop("codespaceName");
             connection.Received().Post<Codespace>(Arg.Is<Uri>(u => u.ToString() == "user/codespaces/codespaceName/stop"));
         }
+
+        [Fact]
+        public void RequestsCorrectGetAvailableMachinesForRepoUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new CodespacesClient(connection);
+            client.GetAvailableMachinesForRepo("owner", "repo");
+            connection.Received().Get<MachinesCollection>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/codespaces/machines"));
+        }
+
+        [Fact]
+        public void RequestsCorrectCreateNewCodespaceUrl()
+        {
+            var connection = Substitute.For<IApiConnection>();
+            var client = new CodespacesClient(connection);
+            NewCodespace newCodespace = new NewCodespace(new Machine());
+            client.Create("owner", "repo", newCodespace);
+            connection.Received().Post<Codespace>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/codespaces"), newCodespace);
+        }
     }
 }

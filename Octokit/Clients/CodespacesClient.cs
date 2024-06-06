@@ -76,5 +76,29 @@ namespace Octokit
         {
             return ApiConnection.Post<Codespace>(ApiUrls.CodespaceStop(codespaceName));
         }
+
+        /// <summary>
+        /// Returns available machines for the specified repository.
+        /// </summary>
+        [ManualRoute("GET", "/repos/{repoOwner}/{repoName}/machines")]
+        public Task<MachinesCollection> GetAvailableMachinesForRepo(string repoOwner, string repoName, string reference = null)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(repoOwner, nameof(repoOwner));
+            Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
+
+            return ApiConnection.Get<MachinesCollection>(ApiUrls.GetAvailableMachinesForRepo(repoOwner, repoName, reference));
+        }
+
+        /// <summary>
+        /// Creates a new codespace for the authenticated user.
+        /// </summary>
+        [ManualRoute("POST", "/repos/{owner}/{repo}/codespaces")]
+        public Task<Codespace> Create(string owner, string repo, NewCodespace newCodespace)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
+            Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
+
+            return ApiConnection.Post<Codespace>(ApiUrls.CreateCodespace(owner, repo), newCodespace);
+        }
     }
 }
