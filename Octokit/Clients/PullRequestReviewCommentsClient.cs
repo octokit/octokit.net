@@ -207,14 +207,14 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/comments/{comment_id}")]
-        public Task<PullRequestReviewComment> GetComment(string owner, string name, int number)
+        public Task<PullRequestReviewComment> GetComment(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number), new Dictionary<string, string>());
+            return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, commentId), new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -222,11 +222,11 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         [ManualRoute("GET", "/repositories/{id}/pulls/comments/{number}")]
-        public Task<PullRequestReviewComment> GetComment(long repositoryId, int number)
+        public Task<PullRequestReviewComment> GetComment(long repositoryId, long commentId)
         {
-            return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, number));
+            return ApiConnection.Get<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, commentId));
         }
 
         /// <summary>
@@ -333,16 +333,16 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/pulls/comments/{comment_id}")]
-        public Task<PullRequestReviewComment> Edit(string owner, string name, int number, PullRequestReviewCommentEdit comment)
+        public Task<PullRequestReviewComment> Edit(string owner, string name, long commentId, PullRequestReviewCommentEdit comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, number), comment);
+            return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(owner, name, commentId), comment);
         }
 
         /// <summary>
@@ -350,14 +350,14 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
         [ManualRoute("PATCH", "/repositories/{id}/pulls/comments/{number}")]
-        public Task<PullRequestReviewComment> Edit(long repositoryId, int number, PullRequestReviewCommentEdit comment)
+        public Task<PullRequestReviewComment> Edit(long repositoryId, long commentId, PullRequestReviewCommentEdit comment)
         {
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, number), comment);
+            return ApiConnection.Patch<PullRequestReviewComment>(ApiUrls.PullRequestReviewComment(repositoryId, commentId), comment);
         }
 
         /// <summary>
@@ -366,14 +366,14 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/pulls/comments/{comment_id}")]
-        public Task Delete(string owner, string name, int number)
+        public Task Delete(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(owner, name, number));
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(owner, name, commentId));
         }
 
         /// <summary>
@@ -381,11 +381,11 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         [ManualRoute("DELETE", "/repositories/{id}/pulls/comments/{number}")]
-        public Task Delete(long repositoryId, int number)
+        public Task Delete(long repositoryId, long commentId)
         {
-            return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(repositoryId, number));
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewComment(repositoryId, commentId));
         }
     }
 }

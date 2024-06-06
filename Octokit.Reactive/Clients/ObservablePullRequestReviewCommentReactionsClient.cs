@@ -30,19 +30,19 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
-        public IObservable<Reaction> GetAll(string owner, string name, int number)
+        /// <param name="commentId">The comment id</param>
+        public IObservable<Reaction> GetAll(string owner, string name, long commentId)
         {
-            return GetAll(owner, name, number, ApiOptions.None);
+            return GetAll(owner, name, commentId, ApiOptions.None);
         }
 
-        public IObservable<Reaction> GetAll(string owner, string name, int number, ApiOptions options)
+        public IObservable<Reaction> GetAll(string owner, string name, long commentId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReactions(owner, name, number), null, options);
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReactions(owner, name, commentId), null, options);
         }
 
         /// <summary>
@@ -50,10 +50,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
-        public IObservable<Reaction> GetAll(long repositoryId, int number)
+        /// <param name="commentId">The comment id</param>
+        public IObservable<Reaction> GetAll(long repositoryId, long commentId)
         {
-            return GetAll(repositoryId, number, ApiOptions.None);
+            return GetAll(repositoryId, commentId, ApiOptions.None);
         }
 
         /// <summary>
@@ -61,13 +61,13 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Reaction> GetAll(long repositoryId, int number, ApiOptions options)
+        public IObservable<Reaction> GetAll(long repositoryId, long commentId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReactions(repositoryId, number), null, options);
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.PullRequestReviewCommentReactions(repositoryId, commentId), null, options);
         }
 
         /// <summary>
@@ -76,15 +76,15 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        public IObservable<Reaction> Create(string owner, string name, int number, NewReaction reaction)
+        public IObservable<Reaction> Create(string owner, string name, long commentId, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return _client.Create(owner, name, number, reaction).ToObservable();
+            return _client.Create(owner, name, commentId, reaction).ToObservable();
         }
 
         /// <summary>
@@ -92,13 +92,13 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
-        public IObservable<Reaction> Create(long repositoryId, int number, NewReaction reaction)
+        public IObservable<Reaction> Create(long repositoryId, long commentId, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return _client.Create(repositoryId, number, reaction).ToObservable();
+            return _client.Create(repositoryId, commentId, reaction).ToObservable();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Octokit.Reactive
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, int commentId, int reactionId)
+        public IObservable<Unit> Delete(string owner, string name, long commentId, long reactionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -127,7 +127,7 @@ namespace Octokit.Reactive
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(long repositoryId, int commentId, int reactionId)
+        public IObservable<Unit> Delete(long repositoryId, long commentId, long reactionId)
         {
             Ensure.ArgumentNotNull(reactionId, nameof(reactionId));
 

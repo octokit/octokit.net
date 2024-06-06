@@ -75,7 +75,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, int issueNumber, int reactionId);
+        Task Delete(string owner, string name, int issueNumber, long reactionId);
 
         /// <summary>
         /// Deletes a reaction for a specified Issue
@@ -85,6 +85,6 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        Task Delete(long repositoryId, int issueNumber, int reactionId);
+        Task Delete(long repositoryId, int issueNumber, long reactionId);
     }
 }

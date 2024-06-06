@@ -118,7 +118,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, int issueNumber, int reactionId)
+        public IObservable<Unit> Delete(string owner, string name, int issueNumber, long reactionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -135,7 +135,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(long repositoryId, int issueNumber, int reactionId)
+        public IObservable<Unit> Delete(long repositoryId, int issueNumber, long reactionId)
         {
             Ensure.ArgumentNotNull(reactionId, nameof(reactionId));
 
