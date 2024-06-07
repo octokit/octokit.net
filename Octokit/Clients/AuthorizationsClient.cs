@@ -66,16 +66,16 @@ namespace Octokit
         /// This method requires authentication.
         /// See the <a href="http://developer.github.com/v3/oauth/#get-a-single-authorization">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the <see cref="Authorization"/> to get</param>
+        /// <param name="authorizationId">The Id of the <see cref="Authorization"/> to get</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make this request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         [ManualRoute("GET", "/authorizations/{id}")]
-        public Task<Authorization> Get(int id)
+        public Task<Authorization> Get(int authorizationId)
         {
-            return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(id), null);
+            return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(authorizationId), null);
         }
 
 
@@ -418,7 +418,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#update-an-existing-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">Id of the <see cref="Authorization"/> to update</param>
+        /// <param name="authorizationId">Id of the <see cref="Authorization"/> to update</param>
         /// <param name="authorizationUpdate">Describes the changes to make to the authorization</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
@@ -426,12 +426,12 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
         [ManualRoute("PATCH", "/authorizations/{id}")]
-        public Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
+        public Task<Authorization> Update(int authorizationId, AuthorizationUpdate authorizationUpdate)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
             return ApiConnection.Patch<Authorization>(
-                ApiUrls.Authorizations(id),
+                ApiUrls.Authorizations(authorizationId),
                 authorizationUpdate);
         }
 
@@ -443,16 +443,16 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide Id of the authorization to delete</param>
+        /// <param name="authorizationId">The system-wide Id of the authorization to delete</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(int id)
+        public Task Delete(int authorizationId)
         {
-            return ApiConnection.Delete(ApiUrls.Authorizations(id));
+            return ApiConnection.Delete(ApiUrls.Authorizations(authorizationId));
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
-        /// <param name="id">The system-wide Id of the authorization to delete</param>
+        /// <param name="authorizationId">The system-wide Id of the authorization to delete</param>
         /// <param name="twoFactorAuthenticationCode">Two factor authorization code</param>
         /// <exception cref="AuthorizationException">
         /// Thrown when the current user does not have permission to make the request.
@@ -471,9 +471,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(int id, string twoFactorAuthenticationCode)
+        public Task Delete(int authorizationId, string twoFactorAuthenticationCode)
         {
-            return ApiConnection.Delete(ApiUrls.Authorizations(id), twoFactorAuthenticationCode);
+            return ApiConnection.Delete(ApiUrls.Authorizations(authorizationId), twoFactorAuthenticationCode);
         }
     }
 }

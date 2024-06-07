@@ -25,14 +25,14 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The issue comment id</param>
+        /// <param name="commentId">The issue comment id</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/comments/{comment_id}")]
-        public Task<IssueComment> Get(string owner, string name, long id)
+        public Task<IssueComment> Get(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, id), null);
+            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(owner, name, commentId), null);
         }
 
         /// <summary>
@@ -40,11 +40,11 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The issue comment id</param>
+        /// <param name="commentId">The issue comment id</param>
         [ManualRoute("GET", "/repositories/{id}/issues/comments/{comment_id}")]
-        public Task<IssueComment> Get(long repositoryId, long id)
+        public Task<IssueComment> Get(long repositoryId, long commentId)
         {
-            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(repositoryId, id), null);
+            return ApiConnection.Get<IssueComment>(ApiUrls.IssueComment(repositoryId, commentId), null);
         }
 
         /// <summary>

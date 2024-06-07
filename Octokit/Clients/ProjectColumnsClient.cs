@@ -52,11 +52,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/columns/#get-a-project-column">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the column</param>
+        /// <param name="columnId">The id of the column</param>
         [ManualRoute("GET", "/projects/columns/{column_id}")]
-        public Task<ProjectColumn> Get(int id)
+        public Task<ProjectColumn> Get(int columnId)
         {
-            return ApiConnection.Get<ProjectColumn>(ApiUrls.ProjectColumn(id), null);
+            return ApiConnection.Get<ProjectColumn>(ApiUrls.ProjectColumn(columnId), null);
         }
 
         /// <summary>
@@ -81,14 +81,14 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/columns/#update-a-project-column">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the column</param>
+        /// <param name="columnId">The id of the column</param>
         /// <param name="projectColumnUpdate">New values to update the column with</param>
         [ManualRoute("PATCH", "/projects/columns/{column_id}")]
-        public Task<ProjectColumn> Update(int id, ProjectColumnUpdate projectColumnUpdate)
+        public Task<ProjectColumn> Update(int columnId, ProjectColumnUpdate projectColumnUpdate)
         {
             Ensure.ArgumentNotNull(projectColumnUpdate, nameof(projectColumnUpdate));
 
-            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(id), projectColumnUpdate);
+            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(columnId), projectColumnUpdate);
         }
 
         /// <summary>
@@ -97,11 +97,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/projects/columns/#delete-a-project-column">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the column</param>
+        /// <param name="columnId">The id of the column</param>
         [ManualRoute("DELETE", "/projects/columns/{column_id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int columnId)
         {
-            var endpoint = ApiUrls.ProjectColumn(id);
+            var endpoint = ApiUrls.ProjectColumn(columnId);
             try
             {
                 var httpStatusCode = await Connection.Delete(endpoint, new object()).ConfigureAwait(false);
@@ -119,14 +119,14 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#move-a-column">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the column</param>
+        /// <param name="columnId">The id of the column</param>
         /// <param name="position">The position to move the column</param>
         [ManualRoute("POST", "/projects/columns/{column_id}/moves")]
-        public async Task<bool> Move(int id, ProjectColumnMove position)
+        public async Task<bool> Move(int columnId, ProjectColumnMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 
-            var endpoint = ApiUrls.ProjectColumnMove(id);
+            var endpoint = ApiUrls.ProjectColumnMove(columnId);
             try
             {
                 var httpStatusCode = await Connection.Post(endpoint, position, null).ConfigureAwait(false);
