@@ -202,13 +202,13 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        public IObservable<PullRequestReviewComment> GetComment(string owner, string name, int number)
+        /// <param name="commentId">The pull request review comment id</param>
+        public IObservable<PullRequestReviewComment> GetComment(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetComment(owner, name, number).ToObservable();
+            return _client.GetComment(owner, name, commentId).ToObservable();
         }
 
         /// <summary>
@@ -216,10 +216,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        public IObservable<PullRequestReviewComment> GetComment(long repositoryId, int number)
+        /// <param name="commentId">The pull request review comment id</param>
+        public IObservable<PullRequestReviewComment> GetComment(long repositoryId, long commentId)
         {
-            return _client.GetComment(repositoryId, number).ToObservable();
+            return _client.GetComment(repositoryId, commentId).ToObservable();
         }
 
         /// <summary>
@@ -290,15 +290,15 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
-        public IObservable<PullRequestReviewComment> Edit(string owner, string name, int number, PullRequestReviewCommentEdit comment)
+        public IObservable<PullRequestReviewComment> Edit(string owner, string name, long commentId, PullRequestReviewCommentEdit comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.Edit(owner, name, number, comment).ToObservable();
+            return _client.Edit(owner, name, commentId, comment).ToObservable();
         }
 
         /// <summary>
@@ -306,13 +306,13 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
-        public IObservable<PullRequestReviewComment> Edit(long repositoryId, int number, PullRequestReviewCommentEdit comment)
+        public IObservable<PullRequestReviewComment> Edit(long repositoryId, long commentId, PullRequestReviewCommentEdit comment)
         {
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.Edit(repositoryId, number, comment).ToObservable();
+            return _client.Edit(repositoryId, commentId, comment).ToObservable();
         }
 
         /// <summary>
@@ -321,13 +321,13 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        public IObservable<Unit> Delete(string owner, string name, int number)
+        /// <param name="commentId">The pull request review comment id</param>
+        public IObservable<Unit> Delete(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Delete(owner, name, number).ToObservable();
+            return _client.Delete(owner, name, commentId).ToObservable();
         }
 
         /// <summary>
@@ -335,10 +335,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        public IObservable<Unit> Delete(long repositoryId, int number)
+        /// <param name="commentId">The pull request review comment id</param>
+        public IObservable<Unit> Delete(long repositoryId, long commentId)
         {
-            return _client.Delete(repositoryId, number).ToObservable();
+            return _client.Delete(repositoryId, commentId).ToObservable();
         }
     }
 }

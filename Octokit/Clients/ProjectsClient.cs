@@ -223,11 +223,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
+        /// <param name="projectId">The Id of the project</param>
         [ManualRoute("GET", "/projects/{project_id}")]
-        public Task<Project> Get(int id)
+        public Task<Project> Get(int projectId)
         {
-            return ApiConnection.Get<Project>(ApiUrls.Project(id), null);
+            return ApiConnection.Get<Project>(ApiUrls.Project(projectId), null);
         }
 
         // NOTE: I think we're missing a Task<Project> CreateForRepository(owner, name, newProject)
@@ -272,14 +272,14 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#update-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
+        /// <param name="projectId">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
         [ManualRoute("PATCH", "/project/{project_id}")]
-        public Task<Project> Update(int id, ProjectUpdate projectUpdate)
+        public Task<Project> Update(int projectId, ProjectUpdate projectUpdate)
         {
             Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
 
-            return ApiConnection.Patch<Project>(ApiUrls.Project(id), projectUpdate);
+            return ApiConnection.Patch<Project>(ApiUrls.Project(projectId), projectUpdate);
         }
 
         /// <summary>
@@ -288,11 +288,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
+        /// <param name="projectId">The Id of the project</param>
         [ManualRoute("DELETE", "/project/{project_id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int projectId)
         {
-            var endpoint = ApiUrls.Project(id);
+            var endpoint = ApiUrls.Project(projectId);
 
             try
             {

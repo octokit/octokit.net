@@ -138,15 +138,15 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/releases/{release_id}")]
-        public Task<Release> Get(string owner, string name, int id)
+        public Task<Release> Get(string owner, string name, int releaseId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var endpoint = ApiUrls.Releases(owner, name, id);
+            var endpoint = ApiUrls.Releases(owner, name, releaseId);
             return ApiConnection.Get<Release>(endpoint);
         }
 
@@ -178,12 +178,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#get-a-single-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repositories/{id}/releases/{id}")]
-        public Task<Release> Get(long repositoryId, int id)
+        public Task<Release> Get(long repositoryId, int releaseId)
         {
-            var endpoint = ApiUrls.Releases(repositoryId, id);
+            var endpoint = ApiUrls.Releases(repositoryId, releaseId);
             return ApiConnection.Get<Release>(endpoint);
         }
 
@@ -286,17 +286,17 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/releases/{release_id}")]
-        public Task<Release> Edit(string owner, string name, int id, ReleaseUpdate data)
+        public Task<Release> Edit(string owner, string name, int releaseId, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var endpoint = ApiUrls.Releases(owner, name, id);
+            var endpoint = ApiUrls.Releases(owner, name, releaseId);
             return ApiConnection.Patch<Release>(endpoint, data);
         }
 
@@ -307,15 +307,15 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#edit-a-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/repositories/{id}/releases/{id}")]
-        public Task<Release> Edit(long repositoryId, int id, ReleaseUpdate data)
+        public Task<Release> Edit(long repositoryId, int releaseId, ReleaseUpdate data)
         {
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var endpoint = ApiUrls.Releases(repositoryId, id);
+            var endpoint = ApiUrls.Releases(repositoryId, releaseId);
             return ApiConnection.Patch<Release>(endpoint, data);
         }
 
@@ -327,15 +327,15 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="id">The id of the release to delete</param>
+        /// <param name="releaseId">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/releases/{release_id}")]
-        public Task Delete(string owner, string name, int id)
+        public Task Delete(string owner, string name, int releaseId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var endpoint = ApiUrls.Releases(owner, name, id);
+            var endpoint = ApiUrls.Releases(owner, name, releaseId);
             return ApiConnection.Delete(endpoint);
         }
 
@@ -346,12 +346,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the release to delete</param>
+        /// <param name="releaseId">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repositories/{id}/releases/{id}")]
-        public Task Delete(long repositoryId, int id)
+        public Task Delete(long repositoryId, int releaseId)
         {
-            var endpoint = ApiUrls.Releases(repositoryId, id);
+            var endpoint = ApiUrls.Releases(repositoryId, releaseId);
             return ApiConnection.Delete(endpoint);
         }
 
@@ -363,15 +363,15 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="id">The id of the <see cref="Release"/>.</param>
+        /// <param name="releaseId">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/releases/{release_id}/assets")]
-        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int id)
+        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int releaseId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllAssets(owner, name, id, ApiOptions.None);
+            return GetAllAssets(owner, name, releaseId, ApiOptions.None);
         }
 
         /// <summary>
@@ -381,12 +381,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the <see cref="Release"/>.</param>
+        /// <param name="releaseId">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repositories/{id}/releases/{id}/assets")]
-        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int id)
+        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int releaseId)
         {
-            return GetAllAssets(repositoryId, id, ApiOptions.None);
+            return GetAllAssets(repositoryId, releaseId, ApiOptions.None);
         }
 
         /// <summary>
@@ -397,17 +397,17 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="id">The id of the <see cref="Release"/>.</param>
+        /// <param name="releaseId">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/releases/{release_id}/assets")]
-        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int id, ApiOptions options)
+        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(string owner, string name, int releaseId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var endpoint = ApiUrls.ReleaseAssets(owner, name, id);
+            var endpoint = ApiUrls.ReleaseAssets(owner, name, releaseId);
             return ApiConnection.GetAll<ReleaseAsset>(endpoint, null, AcceptHeaders.StableVersion, options);
         }
 
@@ -418,15 +418,15 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#list-assets-for-a-release">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the <see cref="Release"/>.</param>
+        /// <param name="releaseId">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repositories/{id}/releases/{id}/assets")]
-        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int id, ApiOptions options)
+        public Task<IReadOnlyList<ReleaseAsset>> GetAllAssets(long repositoryId, int releaseId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var endpoint = ApiUrls.ReleaseAssets(repositoryId, id);
+            var endpoint = ApiUrls.ReleaseAssets(repositoryId, releaseId);
             return ApiConnection.GetAll<ReleaseAsset>(endpoint, null, AcceptHeaders.StableVersion, options);
         }
 
@@ -548,14 +548,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/releases/assets/{asset_id}")]
-        public Task DeleteAsset(string owner, string name, int id)
+        public Task DeleteAsset(string owner, string name, int assetId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var endpoint = ApiUrls.Asset(owner, name, id);
+            var endpoint = ApiUrls.Asset(owner, name, assetId);
             return ApiConnection.Delete(endpoint);
         }
 
@@ -566,11 +566,11 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release-asset">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
         [ManualRoute("DELETE", "/repositories/{id}/releases/assets/{asset_id}")]
-        public Task DeleteAsset(long repositoryId, int id)
+        public Task DeleteAsset(long repositoryId, int assetId)
         {
-            var endpoint = ApiUrls.Asset(repositoryId, id);
+            var endpoint = ApiUrls.Asset(repositoryId, assetId);
             return ApiConnection.Delete(endpoint);
         }
     }

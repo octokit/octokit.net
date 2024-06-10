@@ -121,16 +121,16 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        Task<PullRequestReviewComment> GetComment(string owner, string name, int number);
+        /// <param name="commentId">The pull request review comment id</param>
+        Task<PullRequestReviewComment> GetComment(string owner, string name, long commentId);
 
         /// <summary>
         /// Gets a single pull request review comment by number.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        Task<PullRequestReviewComment> GetComment(long repositoryId, int number);
+        /// <param name="commentId">The pull request review comment id</param>
+        Task<PullRequestReviewComment> GetComment(long repositoryId, long commentId);
 
         /// <summary>
         /// Creates a comment on a pull request review.
@@ -176,18 +176,18 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
-        Task<PullRequestReviewComment> Edit(string owner, string name, int number, PullRequestReviewCommentEdit comment);
+        Task<PullRequestReviewComment> Edit(string owner, string name, long commentId, PullRequestReviewCommentEdit comment);
 
         /// <summary>
         /// Edits a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#edit-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
+        /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
-        Task<PullRequestReviewComment> Edit(long repositoryId, int number, PullRequestReviewCommentEdit comment);
+        Task<PullRequestReviewComment> Edit(long repositoryId, long commentId, PullRequestReviewCommentEdit comment);
 
         /// <summary>
         /// Deletes a comment on a pull request review.
@@ -195,15 +195,15 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        Task Delete(string owner, string name, int number);
+        /// <param name="commentId">The pull request review comment id</param>
+        Task Delete(string owner, string name, long commentId);
 
         /// <summary>
         /// Deletes a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request review comment number</param>
-        Task Delete(long repositoryId, int number);
+        /// <param name="commentId">The pull request review comment id</param>
+        Task Delete(long repositoryId, long commentId);
     }
 }
