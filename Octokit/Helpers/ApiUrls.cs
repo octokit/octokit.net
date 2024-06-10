@@ -922,6 +922,16 @@ namespace Octokit
         {
             return "orgs/{0}/memberships/{1}".FormatUri(org, name);
         }
+        
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the organization's invitations
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationInvitations(string org)
+        {
+            return "orgs/{0}/invitations".FormatUri(org);
+        }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the organizations pending invitations
@@ -941,6 +951,17 @@ namespace Octokit
         public static Uri OrganizationFailedInvitations(string org)
         {
             return "orgs/{0}/failed_invitations".FormatUri(org);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to cancel an organization invitation
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="invitationId">The unique identifier of the invitation</param>
+        /// <returns></returns>
+        public static Uri CancelOrganizationInvitation(string org, int invitationId)
+        {
+            return "orgs/{0}/invitations/{1}".FormatUri(org, invitationId);
         }
 
         /// <summary>

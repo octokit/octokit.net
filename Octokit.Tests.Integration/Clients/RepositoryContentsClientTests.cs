@@ -71,7 +71,7 @@ namespace Octokit.Tests.Integration.Clients
                     .Content
                     .GetAllContents("octokit", "octokit.net", "Octokit.Reactive/ObservableGitHubClient.cs");
 
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
                 Assert.Equal(ContentType.File, contents.First().Type);
                 Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Integration.Clients
                     .Content
                     .GetAllContents(7528679, "Octokit.Reactive/ObservableGitHubClient.cs");
 
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
                 Assert.Equal(ContentType.File, contents.First().Type);
                 Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Integration.Clients
                     .Content
                     .GetAllContentsByRef("octokit", "octokit.net", "Octokit.Reactive/ObservableGitHubClient.cs", "main");
 
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
                 Assert.Equal(ContentType.File, contents.First().Type);
                 Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }
@@ -203,7 +203,7 @@ namespace Octokit.Tests.Integration.Clients
                     .Content
                     .GetAllContentsByRef(7528679, "Octokit.Reactive/ObservableGitHubClient.cs", "main");
 
-                Assert.Equal(1, contents.Count);
+                Assert.Single(contents);
                 Assert.Equal(ContentType.File, contents.First().Type);
                 Assert.Equal("https://github.com/octokit/octokit.net/blob/main/Octokit.Reactive/ObservableGitHubClient.cs", contents.First().HtmlUrl);
             }

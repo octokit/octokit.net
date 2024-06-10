@@ -42,7 +42,7 @@ public class PullRequestReviewsClientTests
 
             var reviews = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648, options);
 
-            Assert.Equal(1, reviews.Count);
+            Assert.Single(reviews);
         }
 
         [IntegrationTest]
@@ -57,7 +57,7 @@ public class PullRequestReviewsClientTests
 
             var reviews = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648, options);
 
-            Assert.Equal(1, reviews.Count);
+            Assert.Single(reviews);
         }
 
         [IntegrationTest]
@@ -81,8 +81,8 @@ public class PullRequestReviewsClientTests
 
             var secondPage = await _github.PullRequest.Review.GetAll("octokit", "octokit.net", 1648, skipStartOptions);
 
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
+            Assert.Single(firstPage);
+            Assert.Single(secondPage);
             Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
         }
     }
@@ -502,7 +502,7 @@ public class PullRequestReviewsClientTests
 
             var comments = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850, options);
 
-            Assert.Equal(1, comments.Count);
+            Assert.Single(comments);
         }
 
         [IntegrationTest]
@@ -517,7 +517,7 @@ public class PullRequestReviewsClientTests
 
             var comments = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850, options);
 
-            Assert.Equal(1, comments.Count);
+            Assert.Single(comments);
         }
 
         [IntegrationTest]
@@ -541,8 +541,8 @@ public class PullRequestReviewsClientTests
 
             var secondPage = await _github.PullRequest.Review.GetAllComments("octokit", "octokit.net", 1648, 54646850, skipStartOptions);
 
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
+            Assert.Single(firstPage);
+            Assert.Single(secondPage);
             Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
         }
     }

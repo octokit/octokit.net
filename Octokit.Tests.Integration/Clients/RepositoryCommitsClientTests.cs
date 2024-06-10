@@ -317,7 +317,7 @@ public class RepositoryCommitsClientTests
             const string head = "7349ecd6685c370ba84eb13f4c39f75f33";
 
             var compareResult = await _fixture.Compare(octokitNetRepositoryId, head, head, new ApiOptions { PageSize = 100 });
-            Assert.Equal(0, compareResult.Commits.Count);
+            Assert.Empty(compareResult.Commits);
         }
     }
 
@@ -344,7 +344,7 @@ public class RepositoryCommitsClientTests
             var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "main", "my-branch");
 
             Assert.Equal(1, result.TotalCommits);
-            Assert.Equal(1, result.Commits.Count);
+            Assert.Single(result.Commits);
             Assert.Equal(1, result.AheadBy);
             Assert.Equal(0, result.BehindBy);
         }
@@ -357,7 +357,7 @@ public class RepositoryCommitsClientTests
             var result = await _fixture.Compare(_context.Repository.Id, "main", "my-branch");
 
             Assert.Equal(1, result.TotalCommits);
-            Assert.Equal(1, result.Commits.Count);
+            Assert.Single(result.Commits);
             Assert.Equal(1, result.AheadBy);
             Assert.Equal(0, result.BehindBy);
         }
@@ -370,7 +370,7 @@ public class RepositoryCommitsClientTests
             var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, "my-branch", "main");
 
             Assert.Equal(0, result.TotalCommits);
-            Assert.Equal(0, result.Commits.Count);
+            Assert.Empty(result.Commits);
             Assert.Equal(0, result.AheadBy);
             Assert.Equal(1, result.BehindBy);
         }
@@ -383,7 +383,7 @@ public class RepositoryCommitsClientTests
             var result = await _fixture.Compare(_context.Repository.Id, "my-branch", "main");
 
             Assert.Equal(0, result.TotalCommits);
-            Assert.Equal(0, result.Commits.Count);
+            Assert.Empty(result.Commits);
             Assert.Equal(0, result.AheadBy);
             Assert.Equal(1, result.BehindBy);
         }
@@ -424,7 +424,7 @@ public class RepositoryCommitsClientTests
 
             var result = await _fixture.Compare(Helper.UserName, _context.RepositoryName, main.Object.Sha, branch.Object.Sha);
 
-            Assert.Equal(1, result.Commits.Count);
+            Assert.Single(result.Commits);
             Assert.Equal(1, result.AheadBy);
             Assert.Equal(0, result.BehindBy);
         }
@@ -439,7 +439,7 @@ public class RepositoryCommitsClientTests
 
             var result = await _fixture.Compare(_context.Repository.Id, main.Object.Sha, branch.Object.Sha);
 
-            Assert.Equal(1, result.Commits.Count);
+            Assert.Single(result.Commits);
             Assert.Equal(1, result.AheadBy);
             Assert.Equal(0, result.BehindBy);
         }

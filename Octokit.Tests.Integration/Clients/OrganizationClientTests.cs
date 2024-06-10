@@ -151,7 +151,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var organizations = await _organizationsClient.GetAllForCurrent(options);
 
-                Assert.Equal(1, organizations.Count);
+                Assert.Single(organizations);
             }
 
             [GitHubEnterpriseTest]

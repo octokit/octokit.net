@@ -69,7 +69,7 @@ namespace Octokit.Tests
                 var apiInfo = ApiInfoParser.ParseResponseHeaders(headers);
 
                 Assert.NotNull(apiInfo);
-                Assert.Equal(0, apiInfo.Links.Count);
+                Assert.Empty(apiInfo.Links);
             }
 
             [Fact]

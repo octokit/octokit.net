@@ -197,7 +197,7 @@ public class IssuesClientTests : IDisposable
 
             var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             Assert.NotNull(retrieved);
-            Assert.True(retrieved.Assignees.Count == 1);
+            Assert.Equal(1, retrieved.Assignees.Count);
             Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
             var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
             Assert.Contains(all, i => i.Number == retrieved.Number);
@@ -208,7 +208,7 @@ public class IssuesClientTests : IDisposable
         {
             var closed = _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, new IssueUpdate { State = ItemState.Closed }).Result;
             Assert.NotNull(closed);
-            Assert.Equal(1, closed.Assignees.Count);
+            Assert.Single(closed.Assignees);
             Assert.Equal(_context.RepositoryOwner, closed.Assignees[0].Login);
         }
     }
@@ -226,7 +226,7 @@ public class IssuesClientTests : IDisposable
 
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
-        Assert.True(retrieved.Assignees.Count == 1);
+        Assert.Equal(1, retrieved.Assignees.Count);
         Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
 
         var update = retrieved.ToUpdate();
@@ -438,7 +438,7 @@ public class IssuesClientTests : IDisposable
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { State = ItemStateFilter.Closed });
 
-        Assert.Equal(1, issues.Count);
+        Assert.Single(issues);
         Assert.Equal("A closed issue", issues[0].Title);
     }
 
@@ -456,7 +456,7 @@ public class IssuesClientTests : IDisposable
         var issues = await _issuesClient.GetAllForRepository(_context.Repository.Id,
             new RepositoryIssueRequest { State = ItemStateFilter.Closed });
 
-        Assert.Equal(1, issues.Count);
+        Assert.Single(issues);
         Assert.Equal("A closed issue", issues[0].Title);
     }
 
@@ -472,7 +472,7 @@ public class IssuesClientTests : IDisposable
         var issues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Milestone = milestone.Number.ToString(CultureInfo.InvariantCulture) });
 
-        Assert.Equal(1, issues.Count);
+        Assert.Single(issues);
         Assert.Equal("A milestone issue", issues[0].Title);
     }
 
@@ -488,7 +488,7 @@ public class IssuesClientTests : IDisposable
         var issues = await _issuesClient.GetAllForRepository(_context.Repository.Id,
             new RepositoryIssueRequest { Milestone = milestone.Number.ToString(CultureInfo.InvariantCulture) });
 
-        Assert.Equal(1, issues.Count);
+        Assert.Single(issues);
         Assert.Equal("A milestone issue", issues[0].Title);
     }
 
@@ -576,7 +576,7 @@ public class IssuesClientTests : IDisposable
 
         var retrieved = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, request, options);
 
-        Assert.Equal(1, retrieved.Count);
+        Assert.Single(retrieved);
         Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
@@ -604,7 +604,7 @@ public class IssuesClientTests : IDisposable
 
         var retrieved = await _issuesClient.GetAllForRepository(_context.Repository.Id, request, options);
 
-        Assert.Equal(1, retrieved.Count);
+        Assert.Single(retrieved);
         Assert.Contains(retrieved, i => i.Number == issue4.Number);
     }
 
@@ -735,13 +735,13 @@ public class IssuesClientTests : IDisposable
         var assignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Assignee = _context.RepositoryOwner });
 
-        Assert.Equal(1, assignedIssues.Count);
+        Assert.Single(assignedIssues);
         Assert.Equal("An assigned issue", assignedIssues[0].Title);
 
         var unassignedIssues = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Assignee = "none" });
 
-        Assert.Equal(1, unassignedIssues.Count);
+        Assert.Single(unassignedIssues);
         Assert.Equal("An unassigned issue", unassignedIssues[0].Title);
     }
 
@@ -763,13 +763,13 @@ public class IssuesClientTests : IDisposable
         var assignedIssues = await _issuesClient.GetAllForRepository(_context.Repository.Id,
             new RepositoryIssueRequest { Assignee = _context.RepositoryOwner });
 
-        Assert.Equal(1, assignedIssues.Count);
+        Assert.Single(assignedIssues);
         Assert.Equal("An assigned issue", assignedIssues[0].Title);
 
         var unassignedIssues = await _issuesClient.GetAllForRepository(_context.Repository.Id,
             new RepositoryIssueRequest { Assignee = "none" });
 
-        Assert.Equal(1, unassignedIssues.Count);
+        Assert.Single(unassignedIssues);
         Assert.Equal("An unassigned issue", unassignedIssues[0].Title);
     }
 
@@ -794,7 +794,7 @@ public class IssuesClientTests : IDisposable
         var issuesCreatedByExternalUser = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Creator = "shiftkey" });
 
-        Assert.Equal(0, issuesCreatedByExternalUser.Count);
+        Assert.Empty(issuesCreatedByExternalUser);
     }
 
     [IntegrationTest]
@@ -818,7 +818,7 @@ public class IssuesClientTests : IDisposable
         var issuesCreatedByExternalUser = await _issuesClient.GetAllForRepository(_context.Repository.Id,
             new RepositoryIssueRequest { Creator = "shiftkey" });
 
-        Assert.Equal(0, issuesCreatedByExternalUser.Count);
+        Assert.Empty(issuesCreatedByExternalUser);
     }
 
     [IntegrationTest]
@@ -837,12 +837,12 @@ public class IssuesClientTests : IDisposable
         var mentionsWithShiftkey = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Mentioned = "shiftkey" });
 
-        Assert.Equal(1, mentionsWithShiftkey.Count);
+        Assert.Single(mentionsWithShiftkey);
 
         var mentionsWithHaacked = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName,
             new RepositoryIssueRequest { Mentioned = "haacked" });
 
-        Assert.Equal(0, mentionsWithHaacked.Count);
+        Assert.Empty(mentionsWithHaacked);
     }
 
     [IntegrationTest]
@@ -861,12 +861,12 @@ public class IssuesClientTests : IDisposable
         var mentionsWithShiftkey = await _issuesClient.GetAllForRepository(_context.Repository.Id,
             new RepositoryIssueRequest { Mentioned = "shiftkey" });
 
-        Assert.Equal(1, mentionsWithShiftkey.Count);
+        Assert.Single(mentionsWithShiftkey);
 
         var mentionsWithHaacked = await _issuesClient.GetAllForRepository(_context.Repository.Id,
             new RepositoryIssueRequest { Mentioned = "haacked" });
 
-        Assert.Equal(0, mentionsWithHaacked.Count);
+        Assert.Empty(mentionsWithHaacked);
     }
 
     [IntegrationTest]
@@ -948,7 +948,7 @@ public class IssuesClientTests : IDisposable
 
         var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
-        Assert.Equal(1, updatedIssue.Labels.Count);
+        Assert.Single(updatedIssue.Labels);
     }
 
     [IntegrationTest]
@@ -968,7 +968,7 @@ public class IssuesClientTests : IDisposable
 
         var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
 
-        Assert.Equal(1, updatedIssue.Labels.Count);
+        Assert.Single(updatedIssue.Labels);
     }
 
     [IntegrationTest]
@@ -1128,7 +1128,7 @@ public class IssuesClientTests : IDisposable
 
         var updatedIssue = await _issuesClient.Update(_context.RepositoryOwner, _context.RepositoryName, issue.Number, issueUpdate);
 
-        Assert.Equal(1, updatedIssue.Assignees.Count);
+        Assert.Single(updatedIssue.Assignees);
         Assert.Equal(_context.RepositoryOwner, updatedIssue.Assignees[0].Login);
     }
 
@@ -1147,7 +1147,7 @@ public class IssuesClientTests : IDisposable
 
         var updatedIssue = await _issuesClient.Update(_context.Repository.Id, issue.Number, issueUpdate);
 
-        Assert.Equal(1, updatedIssue.Assignees.Count);
+        Assert.Single(updatedIssue.Assignees);
         Assert.Equal(_context.RepositoryOwner, updatedIssue.Assignees[0].Login);
     }
 
@@ -1236,7 +1236,7 @@ public class IssuesClientTests : IDisposable
         newIssue.Assignees.Add(_context.RepositoryOwner);
 
         var issue = await _issuesClient.Create(_context.RepositoryOwner, _context.RepositoryName, newIssue);
-        Assert.Equal(1, issue.Assignees.Count);
+        Assert.Single(issue.Assignees);
 
         // update the issue
         var issueUpdate = issue.ToUpdate();
@@ -1258,7 +1258,7 @@ public class IssuesClientTests : IDisposable
         newIssue.Assignees.Add(_context.RepositoryOwner);
 
         var issue = await _issuesClient.Create(_context.Repository.Id, newIssue);
-        Assert.Equal(1, issue.Assignees.Count);
+        Assert.Single(issue.Assignees);
 
         // update the issue
         var issueUpdate = issue.ToUpdate();

@@ -73,7 +73,7 @@ namespace Octokit.Tests.Models
             Assert.Equal(180000, payload.Billable.Ubuntu.TotalMs);
             Assert.Equal(1, payload.Billable.Ubuntu.Jobs);
             Assert.NotNull(payload.Billable.Ubuntu.JobRuns);
-            Assert.Equal(1, payload.Billable.Ubuntu.JobRuns.Count);
+            Assert.Single(payload.Billable.Ubuntu.JobRuns);
             Assert.Equal(240000, payload.Billable.MacOS.TotalMs);
             Assert.Equal(4, payload.Billable.MacOS.Jobs);
             Assert.NotNull(payload.Billable.MacOS.JobRuns);

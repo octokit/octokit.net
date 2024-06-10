@@ -183,5 +183,5 @@ Some things that will increase the chance that your pull request is accepted:
 
 # Additional Resources
 
-* [Octokit Codebase Overview](https://github.com/octokit/octokit.net/blob/master/OVERVIEW.md)
+* [Octokit Codebase Overview](https://github.com/octokit/octokit.net/blob/main/OVERVIEW.md)
 * [General GitHub documentation](http://help.github.com/)

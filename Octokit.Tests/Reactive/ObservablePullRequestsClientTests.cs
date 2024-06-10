@@ -647,7 +647,7 @@ namespace Octokit.Tests.Reactive
 
                 var commits = await client.Commits("fake", "repo", 42).ToList();
 
-                Assert.Equal(1, commits.Count);
+                Assert.Single(commits);
                 Assert.Same(commit, commits[0]);
                 connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null);
             }
@@ -671,7 +671,7 @@ namespace Octokit.Tests.Reactive
 
                 var commits = await client.Commits(1, 42).ToList();
 
-                Assert.Equal(1, commits.Count);
+                Assert.Single(commits);
                 Assert.Same(commit, commits[0]);
                 connection.Received().Get<List<PullRequestCommit>>(new Uri(expectedUrl, UriKind.Relative), null);
             }
@@ -711,7 +711,7 @@ namespace Octokit.Tests.Reactive
 
                 var files = await client.Files("fake", "repo", 42).ToList();
 
-                Assert.Equal(1, files.Count);
+                Assert.Single(files);
                 Assert.Same(file, files[0]);
                 connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), Arg.Any<IDictionary<string, string>>());
             }
@@ -735,7 +735,7 @@ namespace Octokit.Tests.Reactive
 
                 var files = await client.Files(1, 42).ToList();
 
-                Assert.Equal(1, files.Count);
+                Assert.Single(files);
                 Assert.Same(file, files[0]);
                 connection.Received().Get<List<PullRequestFile>>(new Uri(expectedUrl, UriKind.Relative), Arg.Any<IDictionary<string, string>>());
             }

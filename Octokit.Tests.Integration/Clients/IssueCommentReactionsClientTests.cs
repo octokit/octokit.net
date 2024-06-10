@@ -68,7 +68,7 @@ public class IssueCommentReactionsClientTests
 
             var reactions = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, options);
 
-            Assert.Equal(1, reactions.Count);
+            Assert.Single(reactions);
 
             Assert.Equal(reactions[0].Id, issueCommentReaction.Id);
             Assert.Equal(reactions[0].Content, issueCommentReaction.Content);
@@ -103,7 +103,7 @@ public class IssueCommentReactionsClientTests
 
             var reactionsInfo = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, options);
 
-            Assert.Equal(1, reactionsInfo.Count);
+            Assert.Single(reactionsInfo);
 
             Assert.Equal(reactionsInfo[0].Id, reactions.Last().Id);
             Assert.Equal(reactionsInfo[0].Content, reactions.Last().Content);
@@ -143,8 +143,8 @@ public class IssueCommentReactionsClientTests
             };
             var secondPage = await _github.Reaction.IssueComment.GetAll(_context.RepositoryOwner, _context.RepositoryName, issueComment.Id, skipStartOptions);
 
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
+            Assert.Single(firstPage);
+            Assert.Single(secondPage);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             Assert.NotEqual(firstPage[0].Content, secondPage[0].Content);
         }
@@ -194,7 +194,7 @@ public class IssueCommentReactionsClientTests
 
             var reactions = await _github.Reaction.IssueComment.GetAll(_context.Repository.Id, issueComment.Id, options);
 
-            Assert.Equal(1, reactions.Count);
+            Assert.Single(reactions);
 
             Assert.Equal(reactions[0].Id, issueCommentReaction.Id);
             Assert.Equal(reactions[0].Content, issueCommentReaction.Content);
@@ -229,7 +229,7 @@ public class IssueCommentReactionsClientTests
 
             var reactionsInfo = await _github.Reaction.IssueComment.GetAll(_context.Repository.Id, issueComment.Id, options);
 
-            Assert.Equal(1, reactionsInfo.Count);
+            Assert.Single(reactionsInfo);
 
             Assert.Equal(reactionsInfo[0].Id, reactions.Last().Id);
             Assert.Equal(reactionsInfo[0].Content, reactions.Last().Content);
@@ -269,8 +269,8 @@ public class IssueCommentReactionsClientTests
             };
             var secondPage = await _github.Reaction.IssueComment.GetAll(_context.Repository.Id, issueComment.Id, skipStartOptions);
 
-            Assert.Equal(1, firstPage.Count);
-            Assert.Equal(1, secondPage.Count);
+            Assert.Single(firstPage);
+            Assert.Single(secondPage);
             Assert.NotEqual(firstPage[0].Id, secondPage[0].Id);
             Assert.NotEqual(firstPage[0].Content, secondPage[0].Content);
         }

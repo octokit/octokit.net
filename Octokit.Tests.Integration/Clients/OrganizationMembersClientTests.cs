@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Octokit.Tests.Helpers;
 using Octokit.Tests.Integration.Helpers;
 using Xunit;
 
@@ -37,7 +39,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var members = await _gitHub.Organization.Member.GetAll(_organizationFixture, options);
 
-                Assert.Equal(1, members.Count);
+                Assert.Single(members);
             }
 
             [OrganizationTest]
@@ -52,7 +54,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var members = await _gitHub.Organization.Member.GetAll(_organizationFixture, options);
 
-                Assert.Equal(1, members.Count);
+                Assert.Single(members);
             }
 
             [OrganizationTest]
@@ -76,8 +78,8 @@ namespace Octokit.Tests.Integration.Clients
 
                 var secondPage = await _gitHub.Organization.Member.GetAll(_organizationFixture, skipStartOptions);
 
-                Assert.Equal(1, firstPage.Count);
-                Assert.Equal(1, secondPage.Count);
+                Assert.Single(firstPage);
+                Assert.Single(secondPage);
                 Assert.NotEqual(firstPage.First().Id, secondPage.First().Id);
             }
 
@@ -172,6 +174,95 @@ namespace Octokit.Tests.Integration.Clients
             }
         }
 
+        public class TheCreateOrganizationInvitationMethod
+        {
+            readonly IGitHubClient _gitHub;
+
+            public TheCreateOrganizationInvitationMethod()
+            {
+                _gitHub = Helper.GetAuthenticatedClient();
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsOrganizationMembershipInvitationViaUserId()
+            {
+                var user = await _gitHub.User.Get("alfhenrik-test-2");
+                
+                var organizationInvitationRequest = new OrganizationInvitationRequest(user.Id);
+                var organizationMembershipInvitation = await _gitHub.Organization.Member.CreateOrganizationInvitation(Helper.Organization, organizationInvitationRequest);
+                
+                Assert.Equal("alfhenrik-test-2", organizationMembershipInvitation.Login);
+                Assert.Equal(OrganizationMembershipRole.DirectMember, organizationMembershipInvitation.Role.Value);
+                Assert.Equal(Helper.UserName, organizationMembershipInvitation.Inviter.Login);
+                
+                await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
+            }
+            
+            [OrganizationTest]
+            public async Task ReturnsOrganizationMembershipInvitationViaUserEmail()
+            {
+                var email = RandomEmailGenerator.GenerateRandomEmail();
+                
+                var organizationInvitationRequest = new OrganizationInvitationRequest(email);
+                var organizationMembershipInvitation = await _gitHub.Organization.Member.CreateOrganizationInvitation(Helper.Organization, organizationInvitationRequest);
+                
+                Assert.Equal(email, organizationMembershipInvitation.Email);
+                Assert.Equal(OrganizationMembershipRole.DirectMember, organizationMembershipInvitation.Role.Value);
+                Assert.Equal(Helper.UserName, organizationMembershipInvitation.Inviter.Login);
+
+                await _gitHub.Organization.Member.CancelOrganizationInvitation(Helper.Organization, organizationMembershipInvitation.Id);
+            }
+
+            [OrganizationTest]
+            public async Task ThrowsApiValidationExceptionForCurrentOrganizationMembers()
+            {
+                var user = await _gitHub.User.Get(Helper.UserName);
+                var organizationInvitationRequest = new OrganizationInvitationRequest(user.Id);
+                
+                await Assert.ThrowsAsync<ApiValidationException>(() => _gitHub.Organization.Member.CreateOrganizationInvitation(Helper.Organization, organizationInvitationRequest));
+            }
+
+            [OrganizationTest]
+            public async Task ReturnsOrganizationMembershipInvitationSingleTeam()
+            {
+                var user = await _gitHub.User.Get("alfhenrik-test-2");
+
+                var team1 = await _gitHub.Organization.Team.Create(Helper.Organization, new NewTeam("TestTeam1"));
+                
+                var organizationInvitationRequest = new OrganizationInvitationRequest(user.Id, new int[] {team1.Id});
+                var organizationMembershipInvitation = await _gitHub.Organization.Member.CreateOrganizationInvitation(Helper.Organization, organizationInvitationRequest);
+                
+                Assert.Equal("alfhenrik-test-2", organizationMembershipInvitation.Login);
+                Assert.Equal(OrganizationMembershipRole.DirectMember, organizationMembershipInvitation.Role.Value);
+                Assert.Equal(Helper.UserName, organizationMembershipInvitation.Inviter.Login);
+                Assert.Equal(1, organizationMembershipInvitation.TeamCount);
+                
+                await _gitHub.Organization.Team.Delete(Helper.Organization, team1.Slug);
+                await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
+            }
+            
+            [OrganizationTest]
+            public async Task ReturnsOrganizationMembershipInvitationMultipleTeams()
+            {
+                var user = await _gitHub.User.Get("alfhenrik-test-2");
+
+                var team1 = await _gitHub.Organization.Team.Create(Helper.Organization, new NewTeam("TestTeam1"));
+                var team2 = await _gitHub.Organization.Team.Create(Helper.Organization, new NewTeam("TestTeam2"));
+                
+                var organizationInvitationRequest = new OrganizationInvitationRequest(user.Id, new int[] {team1.Id, team2.Id});
+                var organizationMembershipInvitation = await _gitHub.Organization.Member.CreateOrganizationInvitation(Helper.Organization, organizationInvitationRequest);
+                
+                Assert.Equal("alfhenrik-test-2", organizationMembershipInvitation.Login);
+                Assert.Equal(OrganizationMembershipRole.DirectMember, organizationMembershipInvitation.Role.Value);
+                Assert.Equal(Helper.UserName, organizationMembershipInvitation.Inviter.Login);
+                Assert.Equal(2, organizationMembershipInvitation.TeamCount);
+                
+                await _gitHub.Organization.Team.Delete(Helper.Organization, team1.Slug);
+                await _gitHub.Organization.Team.Delete(Helper.Organization, team2.Slug);
+                await _gitHub.Organization.Member.RemoveOrganizationMembership(Helper.Organization, "alfhenrik-test-2");
+            }
+        }
+
         public class TheRemoveOrganizationMembershipMethod
         {
             readonly IGitHubClient _gitHub;
@@ -237,7 +328,7 @@ namespace Octokit.Tests.Integration.Clients
 
                     var pendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization, options);
                     Assert.NotEmpty(pendingInvitations);
-                    Assert.Equal(1, pendingInvitations.Count);
+                    Assert.Single(pendingInvitations);
                 }
             }
 
@@ -258,7 +349,7 @@ namespace Octokit.Tests.Integration.Clients
 
                     var firstPagePendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization, firstPageOptions);
                     Assert.NotEmpty(firstPagePendingInvitations);
-                    Assert.Equal(1, firstPagePendingInvitations.Count);
+                    Assert.Single(firstPagePendingInvitations);
 
                     var secondPageOptions = new ApiOptions
                     {
@@ -269,7 +360,7 @@ namespace Octokit.Tests.Integration.Clients
 
                     var secondPagePendingInvitations = await _gitHub.Organization.Member.GetAllPendingInvitations(Helper.Organization, secondPageOptions);
                     Assert.NotEmpty(secondPagePendingInvitations);
-                    Assert.Equal(1, secondPagePendingInvitations.Count);
+                    Assert.Single(secondPagePendingInvitations);
 
                     Assert.NotEqual(firstPagePendingInvitations[0].Login, secondPagePendingInvitations[0].Login);
                 }
@@ -321,7 +412,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var memberships = await _gitHub.Organization.Member.GetAllOrganizationMembershipsForCurrent(options);
 
-                Assert.Equal(1, memberships.Count);
+                Assert.Single(memberships);
             }
 
         }

@@ -260,7 +260,7 @@ namespace Octokit
         public IOrganizationsClient Organization { get; private set; }
 
         /// <summary>
-        /// Access GitHub's Pacakges API.
+        /// Access GitHub's Packages API.
         /// </summary>
         /// <remarks>
         /// Refer to the API documentation for more information: https://docs.github.com/rest/packages
