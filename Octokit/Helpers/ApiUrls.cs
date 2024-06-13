@@ -922,7 +922,7 @@ namespace Octokit
         {
             return "orgs/{0}/memberships/{1}".FormatUri(org, name);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> for the organization's invitations
         /// </summary>
@@ -2569,6 +2569,30 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for getting Dependency-Diffs between two revisions.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="base">The base revision</param>
+        /// <param name="head">The head revision</param>
+        /// <returns>The <see cref="System.Uri"/> for getting Dependency-Diffs between two revisions for the given repository.</returns>
+        public static Uri DependencyReview(string owner, string name, string @base, string head)
+        {
+            return "repos/{0}/{1}/dependency-graph/compare/{2}...{3}".FormatUri(owner, name, @base, head);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a Dependency Snapshot for the given repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for submitting a Dependency Snapshot for the given repository.</returns>
+        public static Uri DependencySubmission(string owner, string name)
+        {
+            return "repos/{0}/{1}/dependency-graph/snapshots".FormatUri(owner, name);
+        }
+
+        /// <summary>
         /// Returns the <see cref="System.Uri"/> for the Deployments API for the given repository.
         /// </summary>
         /// <param name="owner">Owner of the repository</param>
@@ -3242,6 +3266,28 @@ namespace Octokit
         public static Uri CreateTag(long repositoryId)
         {
             return "repositories/{0}/git/tags".FormatUri(repositoryId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for getting Dependency-Diffs between two revisions.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="base">The base revision</param>
+        /// <param name="head">The head revision</param>
+        /// <returns>The <see cref="System.Uri"/> for getting Dependency-Diffs between two revisions for the given repository.</returns>
+        public static Uri DependencyReview(long repositoryId, string @base, string head)
+        {
+            return "repositories/{0}/dependency-graph/compare/{1}...{2}".FormatUri(repositoryId, @base, head);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a Dependency Snapshot for the given repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for submitting a Dependency Snapshot for the given repository.</returns>
+        public static Uri DependencySubmission(long repositoryId)
+        {
+            return "repositories/{0}/dependency-graph/snapshots".FormatUri(repositoryId);
         }
 
         /// <summary>
@@ -5502,7 +5548,7 @@ namespace Octokit
         {
             return "orgs/{0}/actions/runner-groups/{1}/repositories".FormatUri(org, runnerGroupId);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that handles adding or removing of copilot licenses for an organisation
         /// </summary>
@@ -5512,7 +5558,7 @@ namespace Octokit
         {
             return $"orgs/{org}/copilot/billing/selected_users".FormatUri(org);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that handles reading copilot billing settings for an organization
         /// </summary>
@@ -5522,7 +5568,7 @@ namespace Octokit
         {
             return $"orgs/{org}/copilot/billing".FormatUri(org);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that allows for searching across all licenses for an organisation
         /// </summary>
@@ -5532,7 +5578,7 @@ namespace Octokit
         {
             return $"orgs/{org}/copilot/billing/seats".FormatUri(org);
         }
-        
+
         public static Uri Codespaces()
         {
             return _currentUserAllCodespaces;
