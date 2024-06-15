@@ -80,7 +80,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Properties = new List<OrganizationCustomPropertyUpdate>
                     {
-                        new() { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
+                        new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
                     }
                 };
                 await client.CreateOrUpdate("org", properties);
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Properties = new List<OrganizationCustomPropertyUpdate>
                     {
-                        new() { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
+                        new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
                     }
                 };
 
