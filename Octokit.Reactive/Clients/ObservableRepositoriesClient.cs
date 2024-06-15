@@ -33,6 +33,7 @@ namespace Octokit.Reactive
             Branch = new ObservableRepositoryBranchesClient(client);
             Comment = new ObservableRepositoryCommentsClient(client);
             Commit = new ObservableRepositoryCommitsClient(client);
+            CustomProperty = new ObservableRepositoryCustomPropertiesClient(client);
             Release = new ObservableReleasesClient(client);
             DeployKeys = new ObservableRepositoryDeployKeysClient(client);
             Content = new ObservableRepositoryContentsClient(client);
@@ -379,6 +380,14 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/comments/">Repository Comments API documentation</a> for more information.
         /// </remarks>
         public IObservableRepositoryCommentsClient Comment { get; private set; }
+
+        /// <summary>
+        /// Client for GitHub's Repository Custom Property Values API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/custom-properties/">Repository Custom Property API documentation</a> for more information.
+        /// </remarks>
+        public IObservableRepositoryCustomPropertiesClient CustomProperty { get; private set; }
 
         /// <summary>
         /// A client for GitHub's Repository Hooks API.
