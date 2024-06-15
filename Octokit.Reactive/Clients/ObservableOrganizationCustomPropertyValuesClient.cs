@@ -40,14 +40,14 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#list-custom-property-values-for-organization-repositories">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="repositoryQuery">Finds repositories in the organization with a query containing one or more search keywords and qualifiers.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, ApiOptions options)
+        public IObservable<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, SearchRepositoriesRequest repositoryQuery)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
-            Ensure.ArgumentNotNull(options, nameof(options));
+            Ensure.ArgumentNotNull(repositoryQuery, nameof(repositoryQuery));
 
-            return _client.GetAll(org, options).ToObservable();
+            return _client.GetAll(org, repositoryQuery).ToObservable();
         }
 
         /// <summary>
