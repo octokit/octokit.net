@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using Octokit.Reactive;
 using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
@@ -52,8 +53,11 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableOrganizationCustomPropertyValuesClient(gitHubClient);
                 var propertyValues = new UpsertOrganizationCustomPropertyValues
                 {
-                    RepositoryNames = new() { "repo" },
-                    Properties = new() { new() { PropertyName = "name", Value = "value" } }
+                    RepositoryNames = new List<string> { "repo" },
+                    Properties = new List<CustomPropertyValueUpdate>
+                    {
+                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                    }
                 };
 
                 await client.CreateOrUpdate("org", propertyValues);
@@ -67,8 +71,11 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableOrganizationCustomPropertyValuesClient(Substitute.For<IGitHubClient>());
                 var propertyValues = new UpsertOrganizationCustomPropertyValues
                 {
-                    RepositoryNames = new() { "repo" },
-                    Properties = new() { new() { PropertyName = "name", Value = "value" } }
+                    RepositoryNames = new List<string> { "repo" },
+                    Properties = new List<CustomPropertyValueUpdate>
+                    {
+                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                    }
                 };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, propertyValues).ToTask());

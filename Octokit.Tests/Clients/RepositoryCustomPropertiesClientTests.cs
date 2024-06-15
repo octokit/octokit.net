@@ -53,7 +53,10 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryCustomPropertiesClient(connection);
                 var propertyValues = new UpsertRepositoryCustomPropertyValues
                 {
-                    Properties = new() { new() { PropertyName = "name", Value = "value" } }
+                    Properties = new List<CustomPropertyValueUpdate>
+                    {
+                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                    }
                 };
 
                 await client.CreateOrUpdate("org", "repo", propertyValues);
@@ -68,7 +71,10 @@ namespace Octokit.Tests.Clients
                 var client = new RepositoryCustomPropertiesClient(Substitute.For<IApiConnection>());
                 var propertyValues = new UpsertRepositoryCustomPropertyValues
                 {
-                    Properties = new() { new() { PropertyName = "name", Value = "value" } }
+                    Properties = new List<CustomPropertyValueUpdate>
+                    {
+                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                    }
                 };
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "repo", propertyValues));
