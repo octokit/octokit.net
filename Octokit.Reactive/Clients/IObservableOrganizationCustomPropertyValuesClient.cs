@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Organization Custom Property Values API.

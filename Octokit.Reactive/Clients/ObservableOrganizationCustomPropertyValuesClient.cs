@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     public class ObservableOrganizationCustomPropertyValuesClient : IObservableOrganizationCustomPropertyValuesClient
     {

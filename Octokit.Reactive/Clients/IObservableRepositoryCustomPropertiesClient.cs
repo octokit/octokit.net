@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Repository Custom Property Values API.
@@ -29,7 +29,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
-        /// <param name="upsertPropertyValues">The custom property values to create or update</param>
-        IObservable<IReadOnlyList<CustomPropertyValue>> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues upsertPropertyValues);
+        /// <param name="propertyValues">The custom property values to create or update</param>
+        IObservable<IReadOnlyList<CustomPropertyValue>> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues);
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     /// <summary>
     /// A client for GitHub's Organization Custom Properties API.
@@ -50,7 +50,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomProperty property);
+        IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomPropertyUpdate property);
 
         /// <summary>
         /// Removes a custom property that is defined for an organization.

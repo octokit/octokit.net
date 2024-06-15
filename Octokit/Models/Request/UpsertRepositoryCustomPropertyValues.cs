@@ -18,7 +18,7 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/repos/custom-properties#create-or-update-custom-property-values-for-a-repository">API documentation</a> for more information.
         /// </remarks>
         [Parameter(Value = "properties")]
-        public IReadOnlyList<CustomPropertyValueUpdate> Properties { get; set; }
+        public List<CustomPropertyValueUpdate> Properties { get; set; }
 
         internal string DebuggerDisplay
         {

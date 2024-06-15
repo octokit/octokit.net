@@ -13,7 +13,7 @@ namespace Octokit
     {
         public UpsertOrganizationCustomProperties() { }
 
-        public UpsertOrganizationCustomProperties(IReadOnlyList<OrganizationCustomPropertyUpdate> properties)
+        public UpsertOrganizationCustomProperties(List<OrganizationCustomPropertyUpdate> properties)
         {
             Properties = properties;
         }
@@ -25,7 +25,7 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#create-or-update-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         [Parameter(Value = "properties")]
-        public IReadOnlyList<OrganizationCustomPropertyUpdate> Properties { get; set; }
+        public List<OrganizationCustomPropertyUpdate> Properties { get; set; }
 
         internal string DebuggerDisplay
         {

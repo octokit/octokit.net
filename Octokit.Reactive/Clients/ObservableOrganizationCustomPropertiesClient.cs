@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 
-namespace Octokit
+namespace Octokit.Reactive
 {
     public class ObservableOrganizationCustomPropertiesClient : IObservableOrganizationCustomPropertiesClient
     {
@@ -75,7 +75,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomProperty property)
+        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomPropertyUpdate property)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));

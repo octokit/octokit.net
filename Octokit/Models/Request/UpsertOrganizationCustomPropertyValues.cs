@@ -13,7 +13,7 @@ namespace Octokit
     {
         public UpsertOrganizationCustomPropertyValues() { }
 
-        public UpsertOrganizationCustomPropertyValues(IReadOnlyList<string> repositoryNames, IReadOnlyList<CustomPropertyValueUpdate> properties)
+        public UpsertOrganizationCustomPropertyValues(List<string> repositoryNames, List<CustomPropertyValueUpdate> properties)
         {
             RepositoryNames = repositoryNames;
             Properties = properties;
@@ -26,7 +26,7 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#create-or-update-custom-property-values-for-organization-repositories">API documentation</a> for more information.
         /// </remarks>
         [Parameter(Value = "repository_names")]
-        public IReadOnlyList<string> RepositoryNames { get; set; }
+        public List<string> RepositoryNames { get; set; }
 
         /// <summary>
         /// List of organization custom properties
@@ -35,7 +35,7 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#create-or-update-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         [Parameter(Value = "properties")]
-        public IReadOnlyList<CustomPropertyValueUpdate> Properties { get; set; }
+        public List<CustomPropertyValueUpdate> Properties { get; set; }
 
         internal string DebuggerDisplay
         {

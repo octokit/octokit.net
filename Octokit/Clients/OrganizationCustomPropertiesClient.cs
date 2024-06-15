@@ -80,7 +80,7 @@ namespace Octokit
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
         [ManualRoute("PUT", "orgs/{org}/properties/schemas/{custom_property_name}")]
-        public Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomProperty property)
+        public Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomPropertyUpdate property)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
