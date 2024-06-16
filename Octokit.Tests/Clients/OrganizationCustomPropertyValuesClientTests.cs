@@ -28,7 +28,26 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("org");
 
                 connection.Received()
-                    .Get<IReadOnlyList<OrganizationCustomPropertyValues>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/values"));
+                    .GetAll<OrganizationCustomPropertyValues>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/values"), Arg.Any<IDictionary<string, string>>());
+            }
+
+            [Fact]
+            public void RequestsTheCorrectUrlWithApiOptions()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new OrganizationCustomPropertyValuesClient(connection);
+
+                var options = new ApiOptions
+                {
+                    PageCount = 1,
+                    StartPage = 1,
+                    PageSize = 1
+                };
+
+                client.GetAll("org", options);
+
+                connection.Received()
+                    .GetAll<OrganizationCustomPropertyValues>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/values"), options);
             }
 
             [Fact]
@@ -37,7 +56,11 @@ namespace Octokit.Tests.Clients
                 var client = new OrganizationCustomPropertyValuesClient(Substitute.For<IApiConnection>());
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll(null, new OrganizationCustomPropertyValuesRequest()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.GetAll("org", repositoryQuery: null));
+
                 await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll(""));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.GetAll("", new OrganizationCustomPropertyValuesRequest()));
             }
         }
 
@@ -60,7 +83,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateOrUpdate("org", propertyValues);
 
                 connection.Received()
-                    .Patch<IReadOnlyList<CustomPropertyValue>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/values"), propertyValues);
+                    .Patch(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/values"), propertyValues);
             }
 
             [Fact]

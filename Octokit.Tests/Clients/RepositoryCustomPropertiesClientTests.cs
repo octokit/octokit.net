@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("org", "repo");
 
                 connection.Received()
-                    .Get<RepositorySecretsCollection>(Arg.Is<Uri>(u => u.ToString() == "repos/org/repo/properties/values"));
+                    .Get<IReadOnlyList<CustomPropertyValue>>(Arg.Is<Uri>(u => u.ToString() == "repos/org/repo/properties/values"), null);
             }
 
             [Fact]
@@ -62,7 +62,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateOrUpdate("org", "repo", propertyValues);
 
                 connection.Received()
-                    .Patch<IReadOnlyList<CustomPropertyValue>>(Arg.Is<Uri>(u => u.ToString() == "repos/org/repo/properties/values"), propertyValues);
+                    .Patch(Arg.Is<Uri>(u => u.ToString() == "repos/org/repo/properties/values"), propertyValues);
             }
 
             [Fact]

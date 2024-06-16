@@ -46,7 +46,7 @@ namespace Octokit.Tests.Integration.Clients
             public async Task UpsertCustomProperty()
             {
                 var github = Helper.GetAuthenticatedClient();
-                var upsertValue = GetCustomPropertyUpdateForCreate("UPSERT_TEST", "value");
+                var upsertValue = GetCustomPropertyUpdateForCreate("value");
 
                 var customProperty = await github.Organization.CustomProperty.CreateOrUpdate(Helper.Organization, "UPSERT_TEST", upsertValue);
 
@@ -66,7 +66,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var propertyName = "DELETE_TEST";
 
-                var upsertValue = GetCustomPropertyUpdateForCreate(propertyName, "value");
+                var upsertValue = GetCustomPropertyUpdateForCreate("value");
 
                 await github.Organization.CustomProperty.CreateOrUpdate(Helper.Organization, propertyName, upsertValue);
                 await github.Organization.CustomProperty.Delete(Helper.Organization, propertyName);
@@ -89,6 +89,11 @@ namespace Octokit.Tests.Integration.Clients
         private static OrganizationCustomPropertyUpdate GetCustomPropertyUpdateForCreate(string propertyName, string value)
         {
             return new OrganizationCustomPropertyUpdate { PropertyName = propertyName, DefaultValue = value, ValueType = CustomPropertyValueType.String };
+        }
+
+        private static UpsertOrganizationCustomProperty GetCustomPropertyUpdateForUpdate(string value)
+        {
+            return new UpsertOrganizationCustomProperty { DefaultValue = value, ValueType = CustomPropertyValueType.String };
         }
 #endif
 

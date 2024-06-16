@@ -39,7 +39,7 @@ namespace Octokit
         /// <summary>
         /// The type of the value for the property
         /// </summary>
-        public StringEnum<CustomPropertyValueType>? ValueType { get; set; }
+        public StringEnum<CustomPropertyValueType> ValueType { get; set; }
 
         /// <summary>
         /// Whether the property is required

@@ -28,7 +28,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAll("org");
 
                 connection.Received()
-                    .Get<IReadOnlyList<OrganizationCustomProperty>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schemas"));
+                    .Get<IReadOnlyList<OrganizationCustomProperty>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schema"), null);
             }
 
             [Fact]
@@ -49,10 +49,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationCustomPropertiesClient(connection);
 
-                await client.Get("org", "custom_property_name");
+                await client.Get("org", "property");
 
                 connection.Received()
-                    .Get<OrganizationSecret>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schemas/custom_property_name"));
+                    .Get<OrganizationCustomProperty>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schema/property"));
             }
 
             [Fact]
@@ -60,10 +60,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new OrganizationCustomPropertiesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "custom_property_name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "property"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("org", null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "custom_property_name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "property"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("org", ""));
             }
         }
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Clients
                 await client.CreateOrUpdate("org", properties);
 
                 connection.Received()
-                    .Patch<IReadOnlyList<OrganizationCustomProperty>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schemas"), properties);
+                    .Patch<IReadOnlyList<OrganizationCustomProperty>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schema"), properties);
             }
 
             [Fact]
@@ -117,12 +117,12 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationCustomPropertiesClient(connection);
-                var update = new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
 
-                await client.CreateOrUpdate("org", "custom_property_name", update);
+                await client.CreateOrUpdate("org", "property", update);
 
                 connection.Received()
-                    .Put<OrganizationCustomProperty>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schemas/custom_property_name"), update);
+                    .Put<OrganizationCustomProperty>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schema/property"), update);
             }
 
             [Fact]
@@ -130,14 +130,14 @@ namespace Octokit.Tests.Clients
             {
                 var client = new OrganizationCustomPropertiesClient(Substitute.For<IApiConnection>());
 
-                var update = new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "custom_property_name", update));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "property", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", null, update));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "custom_property_name", null));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "custom_property_name", new OrganizationCustomPropertyUpdate()));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "property", null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "property", new UpsertOrganizationCustomProperty()));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrUpdate("", "custom_property_name", update));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrUpdate("", "property", update));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrUpdate("owner", "", update));
             }
         }
@@ -150,10 +150,10 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationCustomPropertiesClient(connection);
 
-                await client.Delete("org", "custom_property_name");
+                await client.Delete("org", "property");
 
                 connection.Received()
-                    .Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schemas/custom_property_name"));
+                    .Delete(Arg.Is<Uri>(u => u.ToString() == "orgs/org/properties/schema/property"));
             }
 
             [Fact]
@@ -161,10 +161,10 @@ namespace Octokit.Tests.Clients
             {
                 var client = new OrganizationCustomPropertiesClient(Substitute.For<IApiConnection>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "custom_property_name"));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "property"));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null));
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "custom_property_name"));
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "property"));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", ""));
             }
         }

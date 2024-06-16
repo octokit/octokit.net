@@ -22,14 +22,14 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#get-all-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        [ManualRoute("GET", "orgs/{org}/properties/schemas")]
+        [ManualRoute("GET", "orgs/{org}/properties/schema")]
         public Task<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var url = ApiUrls.OrganizationCustomProperties(org);
 
-            return ApiConnection.GetAll<OrganizationCustomProperty>(url);
+            return ApiConnection.Get<IReadOnlyList<OrganizationCustomProperty>>(url, null);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        [ManualRoute("GET", "orgs/{org}/properties/schemas/{custom_property_name}")]
+        [ManualRoute("GET", "orgs/{org}/properties/schema/{propertyName}")]
         public Task<OrganizationCustomProperty> Get(string org, string propertyName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
@@ -59,11 +59,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="properties">The custom properties to create or update</param>
-        [ManualRoute("PATCH", "orgs/{org}/properties/schemas")]
+        [ManualRoute("PATCH", "orgs/{org}/properties/schema")]
         public Task<IReadOnlyList<OrganizationCustomProperty>> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(properties, nameof(properties));
+            Ensure.ArgumentNotNullOrEmptyEnumerable(properties.Properties, nameof(properties.Properties));
 
             var url = ApiUrls.OrganizationCustomProperties(org);
 
@@ -79,12 +80,13 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        [ManualRoute("PUT", "orgs/{org}/properties/schemas/{custom_property_name}")]
-        public Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomPropertyUpdate property)
+        [ManualRoute("PUT", "orgs/{org}/properties/schema/{propertyName}")]
+        public Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
             Ensure.ArgumentNotNull(property, nameof(property));
+            Ensure.ArgumentNotNullOrDefault(property.ValueType, nameof(property.ValueType));
 
             var url = ApiUrls.OrganizationCustomProperty(org, propertyName);
 
@@ -99,7 +101,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        [ManualRoute("DELETE", "orgs/{org}/properties/schemas/{custom_property_name}")]
+        [ManualRoute("DELETE", "orgs/{org}/properties/schema/{propertyName}")]
         public Task Delete(string org, string propertyName)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));

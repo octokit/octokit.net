@@ -56,6 +56,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNull(propertyValues, nameof(propertyValues));
+            Ensure.ArgumentNotNullOrEmptyEnumerable(propertyValues.Properties, nameof(propertyValues.Properties));
 
             return _client.CreateOrUpdate(owner, repoName, propertyValues).ToObservable();
         }

@@ -37,7 +37,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryCustomPropertyValues(owner, repoName);
 
-            return ApiConnection.GetAll<CustomPropertyValue>(url);
+            return ApiConnection.Get<IReadOnlyList<CustomPropertyValue>>(url, null);
         }
 
         /// <summary>
@@ -56,6 +56,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNull(propertyValues, nameof(propertyValues));
+            Ensure.ArgumentNotNullOrEmptyEnumerable(propertyValues.Properties, nameof(propertyValues.Properties));
 
             var url = ApiUrls.RepositoryCustomPropertyValues(owner, repoName);
 

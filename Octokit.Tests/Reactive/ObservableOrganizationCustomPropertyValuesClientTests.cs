@@ -23,12 +23,12 @@ namespace Octokit.Tests.Reactive
         public class GetAllMethod
         {
             [Fact]
-            public async Task RequestsTheCorrectUrl()
+            public void RequestsTheCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationCustomPropertyValuesClient(gitHubClient);
 
-                await client.GetAll("org");
+                client.GetAll("org");
 
                 gitHubClient.Received().Organization.CustomProperty.Values.GetAll("org");
             }

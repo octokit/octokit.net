@@ -50,7 +50,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomPropertyUpdate property);
+        Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property);
 
         /// <summary>
         /// Removes a custom property that is defined for an organization.

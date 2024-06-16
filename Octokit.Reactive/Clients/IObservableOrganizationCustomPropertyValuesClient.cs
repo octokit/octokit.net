@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="repositoryQuery">Finds repositories in the organization with a query containing one or more search keywords and qualifiers.</param>
-        IObservable<OrganizationCustomPropertyValues> GetAll(string org, SearchRepositoriesRequest repositoryQuery);
+        IObservable<OrganizationCustomPropertyValues> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery);
 
         /// <summary>
         /// Create new or update existing custom property values for repositories an organization.

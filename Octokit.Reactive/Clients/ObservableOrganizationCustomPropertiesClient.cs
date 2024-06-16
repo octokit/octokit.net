@@ -14,10 +14,10 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, nameof(client));
 
+            Values = new ObservableOrganizationCustomPropertyValuesClient(client);
+
             _client = client.Organization.CustomProperty;
             _connection = client.Connection;
-
-            Values = new ObservableOrganizationCustomPropertyValuesClient(client);
         }
 
         /// <summary>
@@ -62,6 +62,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(properties, nameof(properties));
+            Ensure.ArgumentNotNullOrEmptyEnumerable(properties.Properties, nameof(properties.Properties));
 
             return _client.CreateOrUpdate(org, properties).ToObservable().SelectMany(p => p);
         }
@@ -75,11 +76,12 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, OrganizationCustomPropertyUpdate property)
+        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
             Ensure.ArgumentNotNull(property, nameof(property));
+            Ensure.ArgumentNotNullOrDefault(property.ValueType, nameof(property.ValueType));
 
             return _client.CreateOrUpdate(org, propertyName, property).ToObservable();
         }

@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return GetAll(org, ApiOptions.None);
+            return GetAll(org, new OrganizationCustomPropertyValuesRequest());
         }
 
         /// <summary>
@@ -61,12 +61,14 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="repositoryQuery">Finds repositories in the organization with a query containing one or more search keywords and qualifiers.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<OrganizationCustomPropertyValues> GetAll(string org, SearchRepositoriesRequest repositoryQuery)
+        public IObservable<OrganizationCustomPropertyValues> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(repositoryQuery, nameof(repositoryQuery));
 
-            return _client.GetAll(org, repositoryQuery).ToObservable().SelectMany(p => p);
+            var url = ApiUrls.OrganizationCustomPropertyValues(org);
+
+            return _connection.GetAndFlattenAllPages<OrganizationCustomPropertyValues>(url, repositoryQuery.Parameters);
         }
 
         /// <summary>
@@ -85,6 +87,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(propertyValues, nameof(propertyValues));
             Ensure.ArgumentNotNullOrEmptyEnumerable(propertyValues.Properties, nameof(propertyValues.Properties));
+            Ensure.ArgumentNotNullOrEmptyEnumerable(propertyValues.RepositoryNames, nameof(propertyValues.RepositoryNames));
 
             return _client.CreateOrUpdate(org, propertyValues).ToObservable();
         }

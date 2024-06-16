@@ -23,12 +23,12 @@ namespace Octokit.Tests.Reactive
         public class GetAllMethod
         {
             [Fact]
-            public async Task RequestsTheCorrectUrl()
+            public void RequestsTheCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationCustomPropertiesClient(gitHubClient);
 
-                await client.GetAll("org");
+                client.GetAll("org");
 
                 gitHubClient.Received().Organization.CustomProperty.GetAll("org");
             }
@@ -51,9 +51,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationCustomPropertiesClient(gitHubClient);
 
-                await client.Get("org", "custom_property_name");
+                await client.Get("org", "property");
 
-                gitHubClient.Received().Organization.CustomProperty.Get("org", "custom_property_name");
+                gitHubClient.Received().Organization.CustomProperty.Get("org", "property");
             }
 
             [Fact]
@@ -61,10 +61,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationCustomPropertiesClient(Substitute.For<IGitHubClient>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "custom_property_name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get(null, "property").ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Get("org", null).ToTask());
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "custom_property_name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Get("", "property").ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Get("org", "").ToTask());
             }
         }
@@ -72,7 +72,7 @@ namespace Octokit.Tests.Reactive
         public class BatchCreateOrUpdateMethod
         {
             [Fact]
-            public async Task PostsTheCorrectUrl()
+            public void PostsTheCorrectUrl()
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationCustomPropertiesClient(gitHubClient);
@@ -83,7 +83,8 @@ namespace Octokit.Tests.Reactive
                         new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
                     }
                 };
-                await client.CreateOrUpdate("org", properties);
+
+                client.CreateOrUpdate("org", properties);
 
                 gitHubClient.Received().Organization.CustomProperty.CreateOrUpdate("org", properties);
             }
@@ -92,7 +93,6 @@ namespace Octokit.Tests.Reactive
             public async Task EnsuresNonNullArguments()
             {
                 var client = new ObservableOrganizationCustomPropertiesClient(Substitute.For<IGitHubClient>());
-
                 var properties = new UpsertOrganizationCustomProperties
                 {
                     Properties = new List<OrganizationCustomPropertyUpdate>
@@ -116,11 +116,11 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationCustomPropertiesClient(gitHubClient);
-                var update = new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
 
-                await client.CreateOrUpdate("org", "custom_property_name", update);
+                await client.CreateOrUpdate("org", "property", update);
 
-                gitHubClient.Received().Organization.CustomProperty.CreateOrUpdate("org", "custom_property_name", update);
+                gitHubClient.Received().Organization.CustomProperty.CreateOrUpdate("org", "property", update);
             }
 
             [Fact]
@@ -128,14 +128,14 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationCustomPropertiesClient(Substitute.For<IGitHubClient>());
 
-                var update = new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "custom_property_name", update).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "property", update).ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", null, update).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "custom_property_name", null).ToTask());
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "custom_property_name", new OrganizationCustomPropertyUpdate()).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "property", null).ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", "property", new UpsertOrganizationCustomProperty()).ToTask());
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrUpdate("", "custom_property_name", update).ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrUpdate("", "property", update).ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CreateOrUpdate("owner", "", update).ToTask());
             }
         }
@@ -148,9 +148,9 @@ namespace Octokit.Tests.Reactive
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationCustomPropertiesClient(gitHubClient);
 
-                await client.Delete("org", "custom_property_name");
+                await client.Delete("org", "property");
 
-                gitHubClient.Received().Organization.CustomProperty.Delete("org", "custom_property_name");
+                gitHubClient.Received().Organization.CustomProperty.Delete("org", "property");
             }
 
             [Fact]
@@ -158,10 +158,10 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationCustomPropertiesClient(Substitute.For<IGitHubClient>());
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "custom_property_name").ToTask());
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete(null, "property").ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.Delete("owner", null).ToTask());
 
-                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "custom_property_name").ToTask());
+                await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("", "property").ToTask());
                 await Assert.ThrowsAsync<ArgumentException>(() => client.Delete("owner", "").ToTask());
             }
         }
