@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -19,7 +18,17 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#list-custom-property-values-for-organization-repositories">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        IObservable<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org);
+        IObservable<OrganizationCustomPropertyValues> GetAll(string org);
+
+        /// <summary>
+        /// Get all custom property values for repositories an organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#list-custom-property-values-for-organization-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<OrganizationCustomPropertyValues> GetAll(string org, ApiOptions options);
 
         /// <summary>
         /// Get all custom property values for repositories an organization.
@@ -29,7 +38,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="repositoryQuery">Finds repositories in the organization with a query containing one or more search keywords and qualifiers.</param>
-        IObservable<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, SearchRepositoriesRequest repositoryQuery);
+        IObservable<OrganizationCustomPropertyValues> GetAll(string org, SearchRepositoriesRequest repositoryQuery);
 
         /// <summary>
         /// Create new or update existing custom property values for repositories an organization.

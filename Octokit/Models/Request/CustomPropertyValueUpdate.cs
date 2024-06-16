@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Octokit
 {
@@ -37,5 +38,7 @@ namespace Octokit
         /// The values assigned to the property
         /// </summary>
         public IReadOnlyList<string> Values { get; set; }
+
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "PropertyName: {0}", PropertyName);
     }
 }

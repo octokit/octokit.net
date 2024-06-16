@@ -19,6 +19,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="repoName">The name of the repository.</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 15/06/2024)")]
         Task<IReadOnlyList<CustomPropertyValue>> GetAll(string owner, string repoName);
 
         /// <summary>
@@ -30,6 +31,6 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
         /// <param name="propertyValues">The custom property values to create or update</param>
-        Task<IReadOnlyList<CustomPropertyValue>> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues);
+        Task CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues);
     }
 }

@@ -51,7 +51,7 @@ namespace Octokit
         /// <param name="propertyValues">The custom property values to create or update</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/properties/values")]
-        public Task<IReadOnlyList<CustomPropertyValue>> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues)
+        public Task CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -59,7 +59,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryCustomPropertyValues(owner, repoName);
 
-            return ApiConnection.Patch<IReadOnlyList<CustomPropertyValue>>(url, propertyValues);
+            return ApiConnection.Patch(url, propertyValues);
         }
     }
 }

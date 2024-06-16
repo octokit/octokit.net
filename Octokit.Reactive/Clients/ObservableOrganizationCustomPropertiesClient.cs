@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -27,11 +27,11 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#get-all-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        public IObservable<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org)
+        public IObservable<OrganizationCustomProperty> GetAll(string org)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _client.GetAll(org).ToObservable();
+            return _client.GetAll(org).ToObservable().SelectMany(p => p);
         }
 
         /// <summary>
@@ -58,12 +58,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="properties">The custom properties to create or update</param>
-        public IObservable<IReadOnlyList<OrganizationCustomProperty>> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties)
+        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(properties, nameof(properties));
 
-            return _client.CreateOrUpdate(org, properties).ToObservable();
+            return _client.CreateOrUpdate(org, properties).ToObservable().SelectMany(p => p);
         }
 
         /// <summary>

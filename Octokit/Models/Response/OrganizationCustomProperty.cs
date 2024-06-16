@@ -31,6 +31,18 @@ namespace Octokit
             ValuesEditableBy = valuesEditableBy;
         }
 
+        public OrganizationCustomProperty(string propertyName, CustomPropertyValueType valueType, bool required, string defaultValue, IReadOnlyList<string> defaultValues, string description, IReadOnlyList<string> allowedValues, CustomPropertyValuesEditableBy? valuesEditableBy)
+        {
+            PropertyName = propertyName;
+            ValueType = valueType;
+            Required = required;
+            DefaultValue = defaultValue;
+            DefaultValues = defaultValues;
+            Description = description;
+            AllowedValues = allowedValues;
+            ValuesEditableBy = valuesEditableBy;
+        }
+
         /// <summary>
         /// The name of the property
         /// </summary>
@@ -65,7 +77,7 @@ namespace Octokit
         /// An ordered list of the allowed values of the property.
         /// The property can have up to 200 allowed values.
         /// </summary>
-        public IEnumerable<string> AllowedValues { get; private set; }
+        public IReadOnlyList<string> AllowedValues { get; private set; }
 
         /// <summary>
         /// Who can edit the values of the property

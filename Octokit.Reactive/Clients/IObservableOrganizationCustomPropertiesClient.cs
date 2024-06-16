@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -19,7 +18,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#get-all-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        IObservable<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org);
+        IObservable<OrganizationCustomProperty> GetAll(string org);
 
         /// <summary>
         /// Get a single custom property by name.
@@ -39,7 +38,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="properties">The custom properties to create or update</param>
-        IObservable<IReadOnlyList<OrganizationCustomProperty>> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties);
+        IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties);
 
         /// <summary>
         /// Create new or update existing custom property for an organization.

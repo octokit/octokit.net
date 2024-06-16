@@ -18,6 +18,7 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#get-all-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
+        [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 15/06/2024)")]
         Task<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org);
 
         /// <summary>

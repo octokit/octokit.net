@@ -27,9 +27,27 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
+            return GetAll(org, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Get all custom property values for repositories an organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#list-custom-property-values-for-organization-repositories">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="org">The name of the organization</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        [ManualRoute("GET", "orgs/{org}/properties/values")]
+        public Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
             var url = ApiUrls.OrganizationCustomPropertyValues(org);
 
-            return ApiConnection.GetAll<OrganizationCustomPropertyValues>(url);
+            return ApiConnection.GetAll<OrganizationCustomPropertyValues>(url, options);
         }
 
         /// <summary>
@@ -72,7 +90,7 @@ namespace Octokit
 
             var url = ApiUrls.OrganizationCustomPropertyValues(org);
 
-            return ApiConnection.Patch<object>(url, propertyValues, "application/vnd.github+json");
+            return ApiConnection.Patch(url, propertyValues);
         }
     }
 }

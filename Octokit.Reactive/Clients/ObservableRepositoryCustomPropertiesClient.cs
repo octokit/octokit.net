@@ -1,6 +1,7 @@
-using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using System;
+using System.Reactive;
+using System.Reactive.Linq;
 
 namespace Octokit.Reactive
 {
@@ -32,12 +33,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="repoName">The name of the repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<IReadOnlyList<CustomPropertyValue>> GetAll(string owner, string repoName)
+        public IObservable<CustomPropertyValue> GetAll(string owner, string repoName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return _client.GetAll(owner, repoName).ToObservable();
+            return _client.GetAll(owner, repoName).ToObservable().SelectMany(p => p);
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace Octokit.Reactive
         /// <param name="repoName">The name of the repository</param>
         /// <param name="propertyValues">The custom property values to create or update</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<IReadOnlyList<CustomPropertyValue>> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues)
+        public IObservable<Unit> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
