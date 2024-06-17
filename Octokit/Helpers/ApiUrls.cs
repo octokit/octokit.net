@@ -79,6 +79,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the custom properties for the specified organization in
+        /// response to a GET request. A PATCH to this URL updates the custom properties for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationCustomProperties(string organization)
+        {
+            return "orgs/{0}/properties/schema".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a custom property for the specified organization in
+        /// response to a GET request. A PUT to this URL updates the custom property for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="property">The name of the property</param>
+        /// <returns></returns>
+        public static Uri OrganizationCustomProperty(string organization, string property)
+        {
+            return "orgs/{0}/properties/schema/{1}".FormatUri(organization, property);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a custom property values for repositories in the
+        /// specified organization in response to a GET request. A PATCH to this URL updates the custom property
+        /// values for specified repositories in the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationCustomPropertyValues(string organization)
+        {
+            return "orgs/{0}/properties/values".FormatUri(organization);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the secrets for the specified organization in
         /// response to a GET request.
         /// </summary>
@@ -4616,6 +4651,17 @@ namespace Octokit
         public static Uri CheckSuitePreferences(string owner, string repo)
         {
             return "repos/{0}/{1}/check-suites/preferences".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository custom property values for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositoryCustomPropertyValues(string owner, string repo)
+        {
+            return "repos/{0}/{1}/properties/values".FormatUri(owner, repo);
         }
 
         /// <summary>

@@ -54,6 +54,14 @@ namespace Octokit
         IRepositoryCommentsClient Comment { get; }
 
         /// <summary>
+        /// Client for managing custom property values on a repository.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/repos/custom-properties">Repository Custom Properties API documentation</a> for more information.
+        /// </remarks>
+        IRepositoryCustomPropertiesClient CustomProperty { get; }
+
+        /// <summary>
         /// Client for managing deploy keys in a repository.
         /// </summary>
         /// <remarks>
