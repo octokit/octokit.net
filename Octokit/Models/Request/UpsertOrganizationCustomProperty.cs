@@ -17,6 +17,20 @@ namespace Octokit
             ValueType = valueType;
         }
 
+        public UpsertOrganizationCustomProperty(CustomPropertyValueType valueType, string defaultValue)
+        {
+            ValueType = valueType;
+            Required = true;
+            DefaultValue = defaultValue;
+        }
+
+        public UpsertOrganizationCustomProperty(CustomPropertyValueType valueType, IReadOnlyList<string> defaultValue)
+        {
+            ValueType = valueType;
+            Required = true;
+            DefaultValue = defaultValue;
+        }
+
         /// <summary>
         /// The type of the value for the property
         /// </summary>
@@ -30,12 +44,7 @@ namespace Octokit
         /// <summary>
         /// Default value of the property
         /// </summary>
-        public string DefaultValue { get; set; }
-
-        /// <summary>
-        /// Default values of the property
-        /// </summary>
-        public IReadOnlyList<string> DefaultValues { get; set; }
+        public object DefaultValue { get; private set; }
 
         /// <summary>
         /// Short description of the property

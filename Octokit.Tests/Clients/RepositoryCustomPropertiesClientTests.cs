@@ -55,7 +55,7 @@ namespace Octokit.Tests.Clients
                 {
                     Properties = new List<CustomPropertyValueUpdate>
                     {
-                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                        new CustomPropertyValueUpdate("name", "value")
                     }
                 };
 
@@ -73,7 +73,7 @@ namespace Octokit.Tests.Clients
                 {
                     Properties = new List<CustomPropertyValueUpdate>
                     {
-                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                        new CustomPropertyValueUpdate("name", "value")
                     }
                 };
 

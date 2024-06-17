@@ -44,7 +44,7 @@ namespace Octokit.Tests.Integration.Clients
                     RepositoryNames = new List<string> { "repo" },
                     Properties = new List<CustomPropertyValueUpdate>
                     {
-                        new CustomPropertyValueUpdate { PropertyName = "UPSERT_TEST", Value = "value" }
+                        new CustomPropertyValueUpdate("UPSERT_TEST", "value")
                     }
                 };
 

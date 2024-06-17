@@ -80,7 +80,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Properties = new List<OrganizationCustomPropertyUpdate>
                     {
-                        new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
+                        new OrganizationCustomPropertyUpdate("name", CustomPropertyValueType.String, "default")
                     }
                 };
 
@@ -97,7 +97,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Properties = new List<OrganizationCustomPropertyUpdate>
                     {
-                        new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
+                        new OrganizationCustomPropertyUpdate("name", CustomPropertyValueType.String, "default")
                     }
                 };
 
@@ -116,7 +116,7 @@ namespace Octokit.Tests.Reactive
             {
                 var gitHubClient = Substitute.For<IGitHubClient>();
                 var client = new ObservableOrganizationCustomPropertiesClient(gitHubClient);
-                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty(CustomPropertyValueType.String, "value");
 
                 await client.CreateOrUpdate("org", "property", update);
 
@@ -128,7 +128,7 @@ namespace Octokit.Tests.Reactive
             {
                 var client = new ObservableOrganizationCustomPropertiesClient(Substitute.For<IGitHubClient>());
 
-                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty(CustomPropertyValueType.String, "value");
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "property", update).ToTask());
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", null, update).ToTask());

@@ -76,7 +76,7 @@ namespace Octokit.Tests.Clients
                     RepositoryNames = new List<string> { "repo" },
                     Properties = new List<CustomPropertyValueUpdate>
                     {
-                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                        new CustomPropertyValueUpdate("name", "value")
                     }
                 };
 
@@ -95,7 +95,7 @@ namespace Octokit.Tests.Clients
                     RepositoryNames = new List<string> { "repo" },
                     Properties = new List<CustomPropertyValueUpdate>
                     {
-                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                        new CustomPropertyValueUpdate("name", "value")
                     }
                 };
 

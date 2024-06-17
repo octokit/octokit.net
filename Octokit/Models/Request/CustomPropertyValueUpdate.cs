@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -21,7 +22,7 @@ namespace Octokit
         public CustomPropertyValueUpdate(string propertyName, IReadOnlyList<string> value)
         {
             PropertyName = propertyName;
-            Values = value;
+            Value = value;
         }
 
         /// <summary>
@@ -32,12 +33,9 @@ namespace Octokit
         /// <summary>
         /// The value assigned to the property
         /// </summary>
-        public string Value { get; set; }
-
-        /// <summary>
-        /// The values assigned to the property
-        /// </summary>
-        public IReadOnlyList<string> Values { get; set; }
+        [SerializeNull]
+        [Parameter(Key = "value")]
+        public object Value { get; private set; }
 
         internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "PropertyName: {0}", PropertyName);
     }

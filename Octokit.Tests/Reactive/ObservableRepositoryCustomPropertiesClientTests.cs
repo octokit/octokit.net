@@ -57,7 +57,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Properties = new List<CustomPropertyValueUpdate>
                     {
-                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                        new CustomPropertyValueUpdate("name", "value")
                     }
                 };
 
@@ -74,7 +74,7 @@ namespace Octokit.Tests.Reactive
                 {
                     Properties = new List<CustomPropertyValueUpdate>
                     {
-                        new CustomPropertyValueUpdate { PropertyName = "name", Value = "value" }
+                        new CustomPropertyValueUpdate("name", "value")
                     }
                 };
 

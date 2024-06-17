@@ -9,26 +9,20 @@ namespace Octokit
     {
         public OrganizationCustomPropertyUpdate() { }
 
-        public OrganizationCustomPropertyUpdate(string propertyName, CustomPropertyValueType valueType, bool required, IReadOnlyList<string> defaultValue, string description, IReadOnlyList<string> allowedValues, CustomPropertyValuesEditableBy? valuesEditableBy)
+        public OrganizationCustomPropertyUpdate(string propertyName, CustomPropertyValueType valueType, string defaultValue)
         {
             PropertyName = propertyName;
             ValueType = valueType;
-            Required = required;
-            DefaultValues = defaultValue;
-            Description = description;
-            AllowedValues = allowedValues;
-            ValuesEditableBy = valuesEditableBy;
+            Required = true;
+            DefaultValue = defaultValue;
         }
 
-        public OrganizationCustomPropertyUpdate(string propertyName, CustomPropertyValueType valueType, bool required, string defaultValue, string description, IReadOnlyList<string> allowedValues, CustomPropertyValuesEditableBy? valuesEditableBy)
+        public OrganizationCustomPropertyUpdate(string propertyName, CustomPropertyValueType valueType, IReadOnlyList<string> defaultValue)
         {
             PropertyName = propertyName;
             ValueType = valueType;
-            Required = required;
+            Required = true;
             DefaultValue = defaultValue;
-            Description = description;
-            AllowedValues = allowedValues;
-            ValuesEditableBy = valuesEditableBy;
         }
 
         /// <summary>
@@ -49,12 +43,7 @@ namespace Octokit
         /// <summary>
         /// Default value of the property
         /// </summary>
-        public string DefaultValue { get; set; }
-
-        /// <summary>
-        /// Default values of the property
-        /// </summary>
-        public IReadOnlyList<string> DefaultValues { get; set; }
+        public object DefaultValue { get; private set; }
 
         /// <summary>
         /// Short description of the property

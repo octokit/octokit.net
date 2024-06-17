@@ -79,7 +79,7 @@ namespace Octokit.Tests.Clients
                 {
                     Properties = new List<OrganizationCustomPropertyUpdate>
                     {
-                        new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
+                        new OrganizationCustomPropertyUpdate("name", CustomPropertyValueType.String, "default")
                     }
                 };
 
@@ -98,7 +98,7 @@ namespace Octokit.Tests.Clients
                 {
                     Properties = new List<OrganizationCustomPropertyUpdate>
                     {
-                        new OrganizationCustomPropertyUpdate { PropertyName = "name", DefaultValue = "value", ValueType = CustomPropertyValueType.String }
+                        new OrganizationCustomPropertyUpdate("name", CustomPropertyValueType.String, "default")
                     }
                 };
 
@@ -117,7 +117,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new OrganizationCustomPropertiesClient(connection);
-                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty(CustomPropertyValueType.String, "value");
 
                 await client.CreateOrUpdate("org", "property", update);
 
@@ -130,7 +130,7 @@ namespace Octokit.Tests.Clients
             {
                 var client = new OrganizationCustomPropertiesClient(Substitute.For<IApiConnection>());
 
-                var update = new UpsertOrganizationCustomProperty { DefaultValue = "value", ValueType = CustomPropertyValueType.String };
+                var update = new UpsertOrganizationCustomProperty(CustomPropertyValueType.String, "value");
 
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate(null, "property", update));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateOrUpdate("owner", null, update));

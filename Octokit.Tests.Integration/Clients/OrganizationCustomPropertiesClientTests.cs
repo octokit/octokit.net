@@ -88,12 +88,12 @@ namespace Octokit.Tests.Integration.Clients
 
         private static OrganizationCustomPropertyUpdate GetCustomPropertyUpdateForCreate(string propertyName, string value)
         {
-            return new OrganizationCustomPropertyUpdate { PropertyName = propertyName, DefaultValue = value, ValueType = CustomPropertyValueType.String };
+            return new OrganizationCustomPropertyUpdate(propertyName, CustomPropertyValueType.String, value);
         }
 
         private static UpsertOrganizationCustomProperty GetCustomPropertyUpdateForUpdate(string value)
         {
-            return new UpsertOrganizationCustomProperty { DefaultValue = value, ValueType = CustomPropertyValueType.String };
+            return new UpsertOrganizationCustomProperty(CustomPropertyValueType.String, value);
         }
 #endif
 
