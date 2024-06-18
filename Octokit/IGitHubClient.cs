@@ -217,10 +217,15 @@ namespace Octokit
         IEmojisClient Emojis { get; }
 
         ICodespacesClient Codespaces { get; }
-        
+
         /// <summary>
         /// Access to the GitHub Copilot for Business API
         /// </summary>
         ICopilotClient Copilot { get; }
+
+        /// <summary>
+        /// Access GitHub's Dependency Graph API
+        /// </summary>
+        IDependencyGraphClient DependencyGraph { get; }
     }
 }

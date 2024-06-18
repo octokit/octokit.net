@@ -9,7 +9,7 @@ namespace Octokit
     {
         public CommitComment() { }
 
-        public CommitComment(int id, string nodeId, string url, string htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt, ReactionSummary reactions)
+        public CommitComment(long id, string nodeId, string url, string htmlUrl, string body, string path, int position, int? line, string commitId, User user, DateTimeOffset createdAt, DateTimeOffset? updatedAt, ReactionSummary reactions)
         {
             Id = id;
             NodeId = nodeId;
@@ -29,7 +29,7 @@ namespace Octokit
         /// <summary>
         /// The issue comment Id.
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id

@@ -41,6 +41,11 @@ namespace Octokit
         IOrganizationActionsClient Actions { get; }
 
         /// <summary>
+        /// Returns a client to manage organization custom properties.
+        /// </summary>
+        IOrganizationCustomPropertiesClient CustomProperty { get; }
+
+        /// <summary>
         /// Returns the specified <see cref="Organization"/>.
         /// </summary>
         /// <param name="org">login of the organization to get</param>

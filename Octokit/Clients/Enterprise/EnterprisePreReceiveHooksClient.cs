@@ -53,13 +53,13 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://docs.github.com/enterprise-server/rest/reference/enterprise-admin#get-a-pre-receive-hook">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="hookId">The id of the pre-receive hook</param>
-        /// <exception cref="NotFoundException">Thrown when the specified <paramref name="hookId"/> does not exist.</exception>
+        /// <param name="preReceiveHookId">The id of the pre-receive hook</param>
+        /// <exception cref="NotFoundException">Thrown when the specified <paramref name="preReceiveHookId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/admin/pre-receive-hooks/{pre_receive_hook_id}")]
-        public Task<PreReceiveHook> Get(long hookId)
+        public Task<PreReceiveHook> Get(long preReceiveHookId)
         {
-            var endpoint = ApiUrls.AdminPreReceiveHooks(hookId);
+            var endpoint = ApiUrls.AdminPreReceiveHooks(preReceiveHookId);
             return ApiConnection.Get<PreReceiveHook>(endpoint, null, AcceptHeaders.StableVersionJson);
         }
 
@@ -86,16 +86,16 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://docs.github.com/enterprise-server/rest/reference/enterprise-admin#update-a-pre-receive-hook">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="hookId">The id of the pre-receive hook</param>
+        /// <param name="preReceiveHookId">The id of the pre-receive hook</param>
         /// <param name="updatePreReceiveHook">A description of the pre-receive hook to edit</param>
-        /// <exception cref="NotFoundException">Thrown when the specified <paramref name="hookId"/> does not exist.</exception>
+        /// <exception cref="NotFoundException">Thrown when the specified <paramref name="preReceiveHookId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/admin/pre-receive-hooks/{pre_receive_hook_id}")]
-        public Task<PreReceiveHook> Edit(long hookId, UpdatePreReceiveHook updatePreReceiveHook)
+        public Task<PreReceiveHook> Edit(long preReceiveHookId, UpdatePreReceiveHook updatePreReceiveHook)
         {
             Ensure.ArgumentNotNull(updatePreReceiveHook, nameof(updatePreReceiveHook));
 
-            var endpoint = ApiUrls.AdminPreReceiveHooks(hookId);
+            var endpoint = ApiUrls.AdminPreReceiveHooks(preReceiveHookId);
             return ApiConnection.Patch<PreReceiveHook>(endpoint, updatePreReceiveHook, AcceptHeaders.StableVersionJson);
         }
 
@@ -105,13 +105,13 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://docs.github.com/enterprise-server/rest/reference/enterprise-admin#delete-a-pre-receive-hook">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="hookId">The id of the pre-receive hook</param>
-        /// <exception cref="NotFoundException">Thrown when the specified <paramref name="hookId"/> does not exist.</exception>
+        /// <param name="preReceiveHookId">The id of the pre-receive hook</param>
+        /// <exception cref="NotFoundException">Thrown when the specified <paramref name="preReceiveHookId"/> does not exist.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/admin/pre-receive-hooks/{pre_receive_hook_id}")]
-        public Task Delete(long hookId)
+        public Task Delete(long preReceiveHookId)
         {
-            var endpoint = ApiUrls.AdminPreReceiveHooks(hookId);
+            var endpoint = ApiUrls.AdminPreReceiveHooks(preReceiveHookId);
             return ApiConnection.Delete(endpoint, new object(), AcceptHeaders.StableVersionJson);
         }
     }

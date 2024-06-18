@@ -206,7 +206,7 @@ public class RepositoryCommentsClientTests
             var numberToCreate = 2;
             using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
             {
-                var commentIds = new List<int>();
+                var commentIds = new List<long>();
 
                 // Create multiple test commits
                 for (int count = 1; count <= numberToCreate; count++)
@@ -381,7 +381,7 @@ public class RepositoryCommentsClientTests
             var numberToCreate = 2;
             using (var context = await _github.CreateRepositoryContextWithAutoInit(Helper.MakeNameWithTimestamp("CommitCommentsReactionTests")))
             {
-                var commentIds = new List<int>();
+                var commentIds = new List<long>();
 
                 // Create a single test commit
                 var commit = await HelperCreateCommit(context.RepositoryOwner, context.RepositoryName);
@@ -746,7 +746,7 @@ public class RepositoryCommentsClientTests
         return await client.Git.Commit.Create(owner, repo, newCommit);
     }
 
-    async static Task<int> HelperCreateCommitCommentWithReactions(string owner, string repo, string sha)
+    async static Task<long> HelperCreateCommitCommentWithReactions(string owner, string repo, string sha)
     {
         var github = Helper.GetAuthenticatedClient();
 

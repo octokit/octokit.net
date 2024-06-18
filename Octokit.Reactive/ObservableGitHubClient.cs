@@ -59,6 +59,7 @@ namespace Octokit.Reactive
             Actions = new ObservableActionsClient(gitHubClient);
             Codespaces = new ObservableCodespacesClient(gitHubClient);
             Copilot = new ObservableCopilotClient(gitHubClient);
+            DependencyGraph = new ObservableDependencyGraphClient(gitHubClient);
         }
 
         public IConnection Connection
@@ -108,7 +109,8 @@ namespace Octokit.Reactive
         public IObservableActionsClient Actions { get; private set; }
         public IObservableCodespacesClient Codespaces { get; private set; }
         public IObservableCopilotClient Copilot { get; set; }
-        
+        public IObservableDependencyGraphClient DependencyGraph { get; }
+
         /// <summary>
         /// Gets the latest API Info - this will be null if no API calls have been made
         /// </summary>
