@@ -276,48 +276,48 @@ namespace Octokit
         /// <summary>
         /// Retrives a single <see cref="Notification"/> by Id.
         /// </summary>
-        /// <param name="id">The Id of the notification to retrieve.</param>
+        /// <param name="threadId">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
         [ManualRoute("GET", "/notifications/threads/{thread_id}")]
-        public Task<Notification> Get(int id)
+        public Task<Notification> Get(int threadId)
         {
-            return ApiConnection.Get<Notification>(ApiUrls.Notification(id));
+            return ApiConnection.Get<Notification>(ApiUrls.Notification(threadId));
         }
 
         /// <summary>
         /// Marks a single notification as read.
         /// </summary>
-        /// <param name="id">The id of the notification.</param>
+        /// <param name="threadId">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
         [ManualRoute("PATCH", "/notifications/threads/{thread_id}")]
-        public Task MarkAsRead(int id)
+        public Task MarkAsRead(int threadId)
         {
-            return ApiConnection.Patch(ApiUrls.Notification(id));
+            return ApiConnection.Patch(ApiUrls.Notification(threadId));
         }
 
         /// <summary>
         /// Retrives a <see cref="ThreadSubscription"/> for the provided thread id.
         /// </summary>
-        /// <param name="id">The Id of the thread to retrieve subscription status.</param>
+        /// <param name="threadId">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
         [ManualRoute("GET", "/notifications/threads/{thread_id}/subscription")]
-        public Task<ThreadSubscription> GetThreadSubscription(int id)
+        public Task<ThreadSubscription> GetThreadSubscription(int threadId)
         {
-            return ApiConnection.Get<ThreadSubscription>(ApiUrls.NotificationSubscription(id));
+            return ApiConnection.Get<ThreadSubscription>(ApiUrls.NotificationSubscription(threadId));
         }
 
         /// <summary>
         /// Sets the authenticated user's subscription settings for a given thread.
         /// </summary>
-        /// <param name="id">The Id of the thread to update.</param>
+        /// <param name="threadId">The Id of the thread to update.</param>
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
         [ManualRoute("PUT", "/notifications/threads/{thread_id}/subscription")]
-        public Task<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription)
+        public Task<ThreadSubscription> SetThreadSubscription(int threadId, NewThreadSubscription threadSubscription)
         {
             Ensure.ArgumentNotNull(threadSubscription, nameof(threadSubscription));
 
-            return ApiConnection.Put<ThreadSubscription>(ApiUrls.NotificationSubscription(id), threadSubscription);
+            return ApiConnection.Put<ThreadSubscription>(ApiUrls.NotificationSubscription(threadId), threadSubscription);
         }
 
         /// <summary>

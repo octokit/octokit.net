@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int issueNumber, int reactionId);
+        IObservable<Unit> Delete(string owner, string name, int issueNumber, long reactionId);
 
         /// <summary>
         /// Deletes a reaction for a specified Issue
@@ -85,6 +85,6 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(long repositoryId, int issueNumber, int reactionId);
+        IObservable<Unit> Delete(long repositoryId, int issueNumber, long reactionId);
     }
 }

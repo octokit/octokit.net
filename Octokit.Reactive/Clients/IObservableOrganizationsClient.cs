@@ -32,6 +32,11 @@ namespace Octokit.Reactive
         IObservableOrganizationActionsClient Actions { get; }
 
         /// <summary>
+        /// Returns a client to manage organization custom properties.
+        /// </summary>
+        IObservableOrganizationCustomPropertiesClient CustomProperty { get; }
+
+        /// <summary>
         /// Returns the specified organization.
         /// </summary>
         /// <param name="org">The login of the specified organization,</param>

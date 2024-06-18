@@ -357,7 +357,7 @@ namespace Octokit
         public string IssuesUrl { get; private set; }
 
         /// <summary>
-        /// example: http://api.github.com/repos/octocat/Hello-World/keys{/key_id}
+        /// example: http://api.github.com/repos/octocat/Hello-World/keys{/keyId}
         /// </summary>
         public string KeysUrl { get; private set; }
 
