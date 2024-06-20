@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Octokit;
 using Octokit.Tests.Helpers;
 using Xunit;
@@ -40,6 +40,14 @@ public class SearchRepositoryRequestTests
             var request = new SearchRepositoriesRequest() { License = RepoSearchLicense.Apache_2_0 };
             var result = request.MergedQualifiers();
             Assert.Contains(result, x => string.Equals(x, "license:apache-2.0"));
+        }
+
+        [Fact]
+        public void CustomPropertiesPrependsProps()
+        {
+            var request = new SearchRepositoriesRequest() { CustomProperties = new Dictionary<string, string> { { "name", "value" } } };
+            var result = request.MergedQualifiers();
+            Assert.Contains(result, x => string.Equals(x, "props.name:value"));
         }
     }
 }

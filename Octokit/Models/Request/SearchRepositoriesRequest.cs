@@ -10,7 +10,7 @@ namespace Octokit
 {
     /// <summary>
     /// Searching Repositories
-    /// http://developer.github.com/v3/search/#search-repositories
+    /// https://docs.github.com/rest/search/search#search-repositories
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class SearchRepositoriesRequest : BaseSearchRequest
@@ -33,7 +33,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// For https://help.github.com/articles/searching-repositories#sorting
+        /// For https://docs.github.com/search-github/getting-started-with-searching-on-github/sorting-search-results
         /// Optional Sort field. One of stars, forks, or updated. If not provided, results are sorted by best match.
         /// </summary>
         public RepoSearchSort? SortField { get; set; }
@@ -46,9 +46,9 @@ namespace Octokit
         private IEnumerable<InQualifier> _inQualifier;
 
         /// <summary>
-        /// The in qualifier limits what fields are searched. With this qualifier you can restrict the search to just the repository name, description, README, or any combination of these. 
+        /// The in qualifier limits what fields are searched. With this qualifier you can restrict the search to just the repository name, description, README, or any combination of these.
         /// Without the qualifier, only the name and description are searched.
-        /// https://help.github.com/articles/searching-repositories#search-in
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-repository-name-description-or-contents-of-the-readme-file
         /// </summary>
         public IEnumerable<InQualifier> In
         {
@@ -65,73 +65,82 @@ namespace Octokit
 
         /// <summary>
         /// Filters repositories based on the number of forks, and/or whether forked repositories should be included in the results at all.
-        /// https://help.github.com/articles/searching-repositories#forks
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-number-of-forks
         /// </summary>
         public Range Forks { get; set; }
 
         /// <summary>
         /// Filters repositories based whether forked repositories should be included in the results at all.
         /// Defaults to ExcludeForks
-        /// https://help.github.com/articles/searching-repositories#forks
+        /// https://docs.github.com/search-github/searching-on-github/searching-in-forks
         /// </summary>
         public ForkQualifier? Fork { get; set; }
 
         /// <summary>
         /// The size qualifier finds repository's that match a certain size (in kilobytes).
-        /// https://help.github.com/articles/searching-repositories#size
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-repository-size
         /// </summary>
         public Range Size { get; set; }
 
         /// <summary>
         /// Searches repositories based on the language they’re written in.
-        /// https://help.github.com/articles/searching-repositories#languages
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-language
         /// </summary>
         public Language? Language { get; set; }
 
         /// <summary>
         /// Searches repositories based on the number of stars.
-        /// https://help.github.com/articles/searching-repositories#stars
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-number-of-stars
         /// </summary>
         public Range Stars { get; set; }
 
         /// <summary>
         /// Limits searches to a specific user or repository.
-        /// https://help.github.com/articles/searching-repositories#users-organizations-and-repositories
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-within-a-users-or-organizations-repositories
         /// </summary>
         public string User { get; set; }
 
         /// <summary>
         /// Filters repositories based on times of creation.
-        /// https://help.github.com/articles/searching-repositories#created-and-last-updated
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-when-a-repository-was-created-or-last-updated
         /// </summary>
         public DateRange Created { get; set; }
 
         /// <summary>
         /// Filters repositories based on when they were last updated.
-        /// https://help.github.com/articles/searching-repositories#created-and-last-updated
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-when-a-repository-was-created-or-last-updated
         /// </summary>
         public DateRange Updated { get; set; }
 
         /// <summary>
         /// Filters repositories based on license
-        /// https://help.github.com/articles/searching-repositories#search-by-license
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-license
         /// </summary>
         public RepoSearchLicense? License { get; set; }
 
         /// <summary>
         /// Filters whether archived repositories should be included (true) or not (false).
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-based-on-whether-a-repository-is-archived
         /// </summary>
         public bool? Archived { get; set; }
 
         /// <summary>
         /// Filters on whether repositories are tagged with the given topic.
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-topic
         /// </summary>
         public string Topic { get; set; }
 
         /// <summary>
         /// Filters on the number of topics that a repository is associated with.
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-number-of-topics
         /// </summary>
         public Range Topics { get; set; }
+
+        /// <summary>
+        /// Filters on repositories based on custom properties.
+        /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-based-on-repository-custom-property
+        /// </summary>
+        public IDictionary<string, string> CustomProperties { get; set; }
 
         public override IReadOnlyList<string> MergedQualifiers()
         {
@@ -200,6 +209,13 @@ namespace Octokit
             {
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "license:{0}", License.ToParameter()));
             }
+            if (CustomProperties != null)
+            {
+                foreach (var customProperty in CustomProperties)
+                {
+                    parameters.Add(string.Format(CultureInfo.InvariantCulture, "props.{0}:{1}", customProperty.Key, customProperty.Value));
+                }
+            }
 
             return parameters;
         }
@@ -214,8 +230,8 @@ namespace Octokit
     }
 
     /// <summary>
-    /// https://help.github.com/articles/searching-repositories#search-in
-    /// The in qualifier limits what fields are searched. With this qualifier you can restrict the search to just the 
+    /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-repository-name-description-or-contents-of-the-readme-file
+    /// The in qualifier limits what fields are searched. With this qualifier you can restrict the search to just the
     /// repository name, description, README, or any combination of these.
     /// </summary>
     public enum InQualifier
@@ -225,6 +241,9 @@ namespace Octokit
 
         [Parameter(Value = "description")]
         Description,
+
+        [Parameter(Value = "topics")]
+        Topics,
 
         [Parameter(Value = "readme")]
         Readme
@@ -256,7 +275,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Matches repositories with regards to the size <param name="size"/> 
+        /// Matches repositories with regards to the size <param name="size"/>
         /// We will use the <param name="op"/> to see what operator will be applied to the size qualifier
         /// </summary>
         public Range(int size, SearchQualifierOperator op)
@@ -323,7 +342,7 @@ namespace Octokit
 
     /// <summary>
     /// helper class in generating the date range values for the date qualifier e.g.
-    /// https://help.github.com/articles/searching-repositories#created-and-last-updated
+    /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-when-a-repository-was-created-or-last-updated
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class DateRange
@@ -532,7 +551,7 @@ namespace Octokit
 
     /// <summary>
     /// Languages that can be searched on in GitHub
-    /// https://help.github.com/articles/searching-repositories#languages
+    /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-language
     /// </summary>
     public enum Language
     {
@@ -897,7 +916,7 @@ namespace Octokit
 
     /// <summary>
     /// Licenses than can be searched on GitHub
-    /// https://help.github.com/articles/searching-repositories#search-by-license
+    /// https://docs.github.com/search-github/searching-on-github/searching-for-repositories#search-by-license
     /// </summary>
     public enum RepoSearchLicense
     {
@@ -989,7 +1008,8 @@ namespace Octokit
 
     /// <summary>
     /// sorting repositories by any of below
-    /// https://help.github.com/articles/searching-repositories#sorting
+    /// https://docs.github.com/rest/search/search?#search-repositories
+    /// https://docs.github.com/search-github/getting-started-with-searching-on-github/sorting-search-results
     /// </summary>
     public enum RepoSearchSort
     {
@@ -1004,6 +1024,11 @@ namespace Octokit
         [Parameter(Value = "forks")]
         Forks,
         /// <summary>
+        /// search by number of help-wanted-issues
+        /// </summary>
+        [Parameter(Value = "help-wanted-issues")]
+        HelpWantedIssues,
+        /// <summary>
         /// search by last updated
         /// </summary>
         [Parameter(Value = "updated")]
@@ -1011,7 +1036,7 @@ namespace Octokit
     }
 
     /// <summary>
-    /// https://help.github.com/articles/searching-repositories#forks
+    /// https://docs.github.com/search-github/searching-on-github/searching-in-forks
     /// Specifying whether forked repositories should be included in results or not.
     /// </summary>
     public enum ForkQualifier
