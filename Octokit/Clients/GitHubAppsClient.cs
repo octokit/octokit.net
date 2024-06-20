@@ -198,6 +198,7 @@ namespace Octokit
         /// https://docs.github.com/apps/sharing-github-apps/registering-a-github-app-from-a-manifest
         /// </summary>
         /// <remarks>https://docs.github.com/rest/apps/apps#create-a-github-app-from-a-manifest</remarks>
+        /// <param name="code">Temporary code in a code parameter.</param>
         [ManualRoute("POST", "/app-manifests/{code}/conversions")]
         public Task<GitHubAppFromManifest> CreateAppFromManifest(string code)
         {

@@ -112,5 +112,13 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="user">The name of the user</param>
         Task<Installation> GetUserInstallationForCurrent(string user);
+
+        /// <summary>
+        /// Creates a GitHub app by completing the handshake necessary when implementing the GitHub App Manifest flow.
+        /// https://docs.github.com/apps/sharing-github-apps/registering-a-github-app-from-a-manifest
+        /// </summary>
+        /// <remarks>https://docs.github.com/rest/apps/apps#create-a-github-app-from-a-manifest</remarks>
+        /// <param name="code">Temporary code in a code parameter.</param>
+        Task<GitHubAppFromManifest> CreateAppFromManifest(string code);
     }
 }
