@@ -404,6 +404,15 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> to complete the handshake necessary when implementing the GitHub App Manifest flow.
+        /// </summary>
+        /// <param name="code">Temporary code in a code parameter.</param>
+        public static Uri AppManifestConversions(string code)
+        {
+            return "app-manifests/{0}/conversions".FormatUri(code);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for creating a new installation token.
         /// </summary>
         /// <param name="installationId">The Id of the GitHub App installation.</param>
