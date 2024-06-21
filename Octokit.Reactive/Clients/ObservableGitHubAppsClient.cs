@@ -182,7 +182,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://docs.github.com/rest/apps/apps#create-a-github-app-from-a-manifest</remarks>
         /// <param name="code">Temporary code in a code parameter.</param>
-        [ManualRoute("POST", "/app-manifests/{code}/conversions")]
         public IObservable<GitHubAppFromManifest> CreateAppFromManifest(string code)
         {
             Ensure.ArgumentNotNullOrEmptyString(code, nameof(code));
