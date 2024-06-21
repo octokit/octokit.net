@@ -27,7 +27,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForOrg("fake", PackageType.RubyGems);
 
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")), Args.ApiOptions);
             }
 
             [Fact]
@@ -39,7 +39,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForOrg("fake", PackageType.RubyGems, PackageVisibility.Public);
 
                 var calls = connection.ReceivedCalls();
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")), Args.ApiOptions);
             }
 
             [Fact]
@@ -141,7 +141,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForActiveUser(PackageType.RubyGems);
 
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")), Args.ApiOptions);
             }
 
             [Fact]
@@ -153,7 +153,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForActiveUser(PackageType.RubyGems, PackageVisibility.Public);
 
                 var calls = connection.ReceivedCalls();
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "user/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")), Args.ApiOptions);
             }
         }
 
@@ -236,7 +236,7 @@ namespace Octokit.Tests.Clients
 
                 await client.GetAllForUser("fake", PackageType.RubyGems);
 
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")), Args.ApiOptions);
             }
 
             [Fact]
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Clients
                 await client.GetAllForUser("fake", PackageType.RubyGems, PackageVisibility.Public);
 
                 var calls = connection.ReceivedCalls();
-                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                connection.Received().GetAll<Package>(Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"), Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")), Args.ApiOptions);
             }
 
             [Fact]
