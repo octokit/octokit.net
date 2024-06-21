@@ -738,6 +738,29 @@ namespace Octokit.Tests.Clients
 
                 Assert.Contains("topics:<=2", request.MergedQualifiers());
             }
+
+            [Fact]
+            public void TestingTheCustomPropertiesQualifier()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.CustomProperties = new Dictionary<string, string> { { "custom", "value" } };
+
+                Assert.Contains("props.custom:value", request.MergedQualifiers());
+            }
+
+            [Fact]
+            public void TestingMultipleCustomPropertiesQualifiers()
+            {
+                var request = new SearchRepositoriesRequest("github");
+                request.CustomProperties = new Dictionary<string, string> {
+                    { "custom_one", "value_one" },
+                    { "custom_two", "value_two" }
+                };
+
+                var merged = request.MergedQualifiers();
+                Assert.Contains("props.custom_one:value_one", merged);
+                Assert.Contains("props.custom_two:value_two", merged);
+            }
         }
 
         public class TheSearchIssuesMethod
