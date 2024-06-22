@@ -5596,6 +5596,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the machine availability for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="repo">The name of the repository.</param>
+        /// <param name="reference">The reference to check the machine availability for.</param>
+        public static Uri GetAvailableMachinesForRepo(string owner, string repo, string reference)
+        {
+            if (reference is null)
+            {
+                return "repos/{0}/{1}/codespaces/machines".FormatUri(owner, repo);
+            }
+
+            return "repos/{0}/{1}/actions/runners/availability?ref={3}".FormatUri(owner, repo, reference);
+        }
+        
+        /// <summary>
         /// Returns the <see cref="Uri"/> that handles adding or removing of copilot licenses for an organisation
         /// </summary>
         /// <param name="org">The name of the organization</param>
@@ -5648,6 +5664,11 @@ namespace Octokit
         public static Uri CodespaceStop(string codespaceName)
         {
             return "user/codespaces/{0}/stop".FormatUri(codespaceName);
+        }
+
+        public static Uri CreateCodespace(string owner, string repo)
+        {
+            return "repos/{0}/{1}/codespaces".FormatUri(owner, repo);
         }
 
         /// <summary>

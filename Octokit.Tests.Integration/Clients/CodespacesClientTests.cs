@@ -56,4 +56,19 @@ public class CodespacesClientTests
         var retrieved = await _fixture.Stop(codespaceName);
         Assert.NotNull(retrieved);
     }
+
+    [IntegrationTest]
+    public async Task CanGetAvailableMachinesForRepo()
+    {
+        var retrieved = await _fixture.GetAvailableMachinesForRepo(Helper.UserName, Helper.RepositoryWithCodespaces);
+        Assert.NotNull(retrieved);
+    }
+
+    [IntegrationTest]
+    public async Task CanCreateCodespace()
+    {
+        MachinesCollection machinesCollection = (await _fixture.GetAvailableMachinesForRepo(Helper.UserName, Helper.RepositoryWithCodespaces));
+        var retrieved = await _fixture.Create(Helper.UserName, Helper.RepositoryWithCodespaces, new NewCodespace(machinesCollection.Machines.First()));
+        Assert.NotNull(retrieved);
+    }
 }

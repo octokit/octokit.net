@@ -16,5 +16,7 @@ namespace Octokit.Reactive
         IObservable<Codespace> Get(string codespaceName);
         IObservable<Codespace> Start(string codespaceName);
         IObservable<Codespace> Stop(string codespaceName);
+        IObservable<MachinesCollection> GetAvailableMachinesForRepo(string repoOwner, string repoName, string reference = null);
+        IObservable<Codespace> Create(string owner, string repo, NewCodespace newCodespace);
     }
 }

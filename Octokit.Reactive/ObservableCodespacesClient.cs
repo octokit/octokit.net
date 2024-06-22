@@ -25,6 +25,13 @@ namespace Octokit.Reactive
             return _client.GetAll().ToObservable();
         }
 
+        public IObservable<MachinesCollection> GetAvailableMachinesForRepo(string repoOwner, string repoName, string reference = null)
+        {
+            Ensure.ArgumentNotNull(repoOwner, nameof(repoOwner));
+            Ensure.ArgumentNotNull(repoName, nameof(repoName));
+            return _client.GetAvailableMachinesForRepo(repoOwner, repoName, reference).ToObservable();
+        }
+
         public IObservable<CodespacesCollection> GetForRepository(string owner, string repo)
         {
             Ensure.ArgumentNotNull(owner, nameof(owner));
@@ -42,6 +49,14 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(codespaceName, nameof(codespaceName));
             return _client.Stop(codespaceName).ToObservable();
+        }
+
+        public IObservable<Codespace> Create(string owner, string repo, NewCodespace newCodespace)
+        {
+            Ensure.ArgumentNotNull(owner, nameof(owner));
+            Ensure.ArgumentNotNull(repo, nameof(repo));
+            Ensure.ArgumentNotNull(newCodespace, nameof(newCodespace));
+            return _client.Create(owner, repo, newCodespace).ToObservable();
         }
     }
 }
