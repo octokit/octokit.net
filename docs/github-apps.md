@@ -103,6 +103,11 @@ Octokit.net aims to have no external dependencies, therefore we do not currently
 In order to create the token, you can create it manually using the following snippet.
 
 ``` csharp
+// Have these using statements in your file
+// using System.IdentityModel.Tokens.Jwt
+// using System.Security.Claims
+// using System.Security.Cryptography
+
 var rsaPrivateKey = "-----BEGIN R..."; // The RSA private key content itself, read from e.g. a file
 var appId = 1; // The GitHub App Id
 
