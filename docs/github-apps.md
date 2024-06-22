@@ -131,7 +131,7 @@ var jwt = new JwtSecurityToken(
 var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 ```
 
-Alternatively, one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ( [GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt) ) which you can use as per the following example.
+Alternatively, one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ([GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt)) which you can use as per the following example.
 
 ``` csharp
 // Use GitHubJwt library to create the GitHubApp Jwt Token using our private certificate PEM file
