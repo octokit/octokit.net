@@ -15,8 +15,41 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType);
+
+        /// <summary>
+        /// List all packages for an organisations, readable by the current user
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-an-organization">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="org">Required: Organisation Name</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType, ApiOptions options);
+
+        /// <summary>
+        /// List all packages for an organisations, readable by the current user
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-an-organization">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="org">Required: Organisation Name</param>
+        /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility = null);
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility);
+
+        /// <summary>
+        /// List all packages for an organisations, readable by the current user
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-an-organization">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="org">Required: Organisation Name</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
 
         /// <summary>
         /// Get a specific package for an Organization.
@@ -58,8 +91,38 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
+        IObservable<Package> GetAllForActiveUser(PackageType packageType);
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Package> GetAllForActiveUser(PackageType packageType, ApiOptions options);
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility = null);
+        IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility);
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
 
         /// <summary>
         /// Gets a specific package for a package owned by the authenticated user.
@@ -99,8 +162,41 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
+        IObservable<Package> GetAllForUser(string username, PackageType packageType);
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="username">Required: Username</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Package> GetAllForUser(string username, PackageType packageType, ApiOptions options);
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="username">Required: Username</param>
+        /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility = null);
+        IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility);
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="username">Required: Username</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
 
         /// <summary>
         /// Gets a specific package metadata for a public package owned by a user.
