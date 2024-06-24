@@ -100,7 +100,43 @@ That concludes the walkthrough!
 ### A Note on JWT Tokens
 Octokit.net aims to have no external dependencies, therefore we do not currently have the ability to generate/sign JWT tokens for you, and instead expect that you will pass in the appropriately signed JWT token required to authenticate the `GitHubApp`.
 
-Luckily one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ( [GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt) ) which you can use as per the following example.
+In order to create the token, you can create it manually using the following snippet.
+
+``` csharp
+// Have these using statements in your file
+// using System.IdentityModel.Tokens.Jwt
+// using System.Security.Claims
+// using System.Security.Cryptography
+
+var rsaPrivateKey = "-----BEGIN R..."; // The RSA private key content itself, read from e.g. a file
+var appId = 1; // The GitHub App Id
+
+using var rsa = RSA.Create();
+rsa.ImportFromPem(rsaPrivateKey);
+var signingCredentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256)
+{
+    CryptoProviderFactory = new CryptoProviderFactory
+    {
+        CacheSignatureProviders = false
+    }
+};
+
+var now = DateTime.UtcNow;
+var expiresAt = now + TokenLifetime;
+var jwt = new JwtSecurityToken(
+    notBefore: now,
+    expires: now + TimeSpan.FromMinutes(10),
+    signingCredentials: signingCredentials,
+    claims: new[]
+    {
+        new Claim("iat", new DateTimeOffset(now).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer),
+        new Claim("iss", appId.ToString(), ClaimValueTypes.Integer),
+    }
+);
+var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+```
+
+Alternatively, one of our contributors [@adriangodong](https://github.com/adriangodong) has created a library `GitHubJwt` ([GitHub](https://github.com/adriangodong/githubjwt) | [NuGet](https://www.nuget.org/packages/githubjwt)) which you can use as per the following example.
 
 ``` csharp
 // Use GitHubJwt library to create the GitHubApp Jwt Token using our private certificate PEM file
