@@ -311,7 +311,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="releaseId">The id of the release</param>
         /// <returns></returns>
-        public static Uri Releases(string owner, string name, int releaseId)
+        public static Uri Releases(string owner, string name, long releaseId)
         {
             return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, releaseId);
         }
@@ -346,7 +346,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="releaseId">The id of the release</param>
         /// <returns></returns>
-        public static Uri ReleaseAssets(string owner, string name, int releaseId)
+        public static Uri ReleaseAssets(string owner, string name, long releaseId)
         {
             return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, releaseId);
         }
@@ -3712,7 +3712,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="releaseId">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.</returns>
-        public static Uri ReleaseAssets(long repositoryId, int releaseId)
+        public static Uri ReleaseAssets(long repositoryId, long releaseId)
         {
             return "repositories/{0}/releases/{1}/assets".FormatUri(repositoryId, releaseId);
         }
@@ -3743,7 +3743,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="releaseId">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
-        public static Uri Releases(long repositoryId, int releaseId)
+        public static Uri Releases(long repositoryId, long releaseId)
         {
             return "repositories/{0}/releases/{1}".FormatUri(repositoryId, releaseId);
         }
