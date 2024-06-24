@@ -256,6 +256,14 @@ namespace Octokit.Reactive
         IObservableRepositoryCommentsClient Comment { get; }
 
         /// <summary>
+        /// Client for GitHub's Repository Custom Property Values API.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/repos/custom-properties/">Repository Custom Property API documentation</a> for more information.
+        /// </remarks>
+        IObservableRepositoryCustomPropertiesClient CustomProperty { get; }
+
+        /// <summary>
         /// A client for GitHub's Repository Hooks API.
         /// </summary>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/">Hooks API documentation</a> for more information.</remarks>

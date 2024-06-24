@@ -23,6 +23,7 @@ namespace Octokit.Reactive
             Hook = new ObservableOrganizationHooksClient(client);
             OutsideCollaborator = new ObservableOrganizationOutsideCollaboratorsClient(client);
             Actions = new ObservableOrganizationActionsClient(client);
+            CustomProperty = new ObservableOrganizationCustomPropertiesClient(client);
 
             _client = client.Organization;
             _connection = client.Connection;
@@ -53,6 +54,11 @@ namespace Octokit.Reactive
         /// Returns a client to manage organization actions.
         /// </summary>
         public IObservableOrganizationActionsClient Actions { get; private set; }
+
+        /// <summary>
+        /// Returns a client to manage organization custom properties.
+        /// </summary>
+        public IObservableOrganizationCustomPropertiesClient CustomProperty { get; private set; }
 
         /// <summary>
         /// Returns the specified organization.

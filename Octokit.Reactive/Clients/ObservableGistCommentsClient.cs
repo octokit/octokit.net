@@ -25,7 +25,7 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Get(string gistId, int commentId)
+        public IObservable<GistComment> Get(string gistId, long commentId)
         {
             return _client.Get(gistId, commentId).ToObservable();
         }
@@ -80,7 +80,7 @@ namespace Octokit.Reactive
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Update(string gistId, int commentId, string comment)
+        public IObservable<GistComment> Update(string gistId, long commentId, string comment)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
@@ -94,7 +94,7 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{Unit}.</returns>
-        public IObservable<Unit> Delete(string gistId, int commentId)
+        public IObservable<Unit> Delete(string gistId, long commentId)
         {
             return _client.Delete(gistId, commentId).ToObservable();
         }

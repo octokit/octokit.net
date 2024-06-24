@@ -86,11 +86,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project-card">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the card</param>
+        /// <param name="cardId">The id of the card</param>
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
-        public Task<ProjectCard> Get(int id)
+        public Task<ProjectCard> Get(int cardId)
         {
-            return ApiConnection.Get<ProjectCard>(ApiUrls.ProjectCard(id), null);
+            return ApiConnection.Get<ProjectCard>(ApiUrls.ProjectCard(cardId), null);
         }
 
         /// <summary>
@@ -115,14 +115,14 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#update-a-project-card">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the card</param>
+        /// <param name="cardId">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
         [ManualRoute("GET", "/projects/columns/cards/{card_id}")]
-        public Task<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
+        public Task<ProjectCard> Update(int cardId, ProjectCardUpdate projectCardUpdate)
         {
             Ensure.ArgumentNotNull(projectCardUpdate, nameof(projectCardUpdate));
 
-            return ApiConnection.Patch<ProjectCard>(ApiUrls.ProjectCard(id), projectCardUpdate);
+            return ApiConnection.Patch<ProjectCard>(ApiUrls.ProjectCard(cardId), projectCardUpdate);
         }
 
         /// <summary>
@@ -131,11 +131,11 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the card</param>
+        /// <param name="cardId">The id of the card</param>
         [ManualRoute("DELETE", "/projects/columns/cards/{card_id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int cardId)
         {
-            var endpoint = ApiUrls.ProjectCard(id);
+            var endpoint = ApiUrls.ProjectCard(cardId);
 
             try
             {
@@ -154,14 +154,14 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#move-a-project-card">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The id of the card</param>
+        /// <param name="cardId">The id of the card</param>
         /// <param name="position">The position to move the card</param>
         [ManualRoute("POST", "/projects/columns/cards/{card_id}/moves")]
-        public async Task<bool> Move(int id, ProjectCardMove position)
+        public async Task<bool> Move(int cardId, ProjectCardMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 
-            var endpoint = ApiUrls.ProjectCardMove(id);
+            var endpoint = ApiUrls.ProjectCardMove(cardId);
             try
             {
                 var httpStatusCode = await Connection.Post(endpoint, position, null).ConfigureAwait(false);

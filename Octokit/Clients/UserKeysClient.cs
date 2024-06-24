@@ -85,12 +85,12 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#get-a-single-public-key
         /// </remarks>
-        /// <param name="id">The Id of the SSH key</param>
+        /// <param name="keyId">The Id of the SSH key</param>
         /// <returns></returns>
         [ManualRoute("GET", "/user/keys/{key_id}")]
-        public Task<PublicKey> Get(int id)
+        public Task<PublicKey> Get(int keyId)
         {
-            return ApiConnection.Get<PublicKey>(ApiUrls.Keys(id));
+            return ApiConnection.Get<PublicKey>(ApiUrls.Keys(keyId));
         }
 
         /// <summary>
@@ -115,12 +115,12 @@ namespace Octokit
         /// <remarks>
         /// https://developer.github.com/v3/users/keys/#delete-a-public-key
         /// </remarks>
-        /// <param name="id">The id of the key to delete</param>
+        /// <param name="keyId">The id of the key to delete</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/user/keys/{key_id}")]
-        public Task Delete(int id)
+        public Task Delete(int keyId)
         {
-            return ApiConnection.Delete(ApiUrls.Keys(id));
+            return ApiConnection.Delete(ApiUrls.Keys(keyId));
         }
     }
 }

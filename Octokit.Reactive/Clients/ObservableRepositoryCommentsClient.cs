@@ -29,25 +29,25 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
-        public IObservable<CommitComment> Get(string owner, string name, int number)
+        public IObservable<CommitComment> Get(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, number).ToObservable();
+            return _client.Get(owner, name, commentId).ToObservable();
         }
 
         /// <summary>
         /// Gets a single Repository Comment by number.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
-        public IObservable<CommitComment> Get(long repositoryId, int number)
+        public IObservable<CommitComment> Get(long repositoryId, long commentId)
         {
-            return _client.Get(repositoryId, number).ToObservable();
+            return _client.Get(repositoryId, commentId).ToObservable();
         }
 
         /// <summary>
@@ -203,30 +203,30 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
-        public IObservable<CommitComment> Update(string owner, string name, int number, string commentUpdate)
+        public IObservable<CommitComment> Update(string owner, string name, long commentId, string commentUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
-            return _client.Update(owner, name, number, commentUpdate).ToObservable();
+            return _client.Update(owner, name, commentId, commentUpdate).ToObservable();
         }
 
         /// <summary>
         /// Updates a specified Commit Comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
-        public IObservable<CommitComment> Update(long repositoryId, int number, string commentUpdate)
+        public IObservable<CommitComment> Update(long repositoryId, long commentId, string commentUpdate)
         {
             Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
-            return _client.Update(repositoryId, number, commentUpdate).ToObservable();
+            return _client.Update(repositoryId, commentId, commentUpdate).ToObservable();
         }
 
         /// <summary>
@@ -234,25 +234,25 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
-        public IObservable<Unit> Delete(string owner, string name, int number)
+        public IObservable<Unit> Delete(string owner, string name, long commentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Delete(owner, name, number).ToObservable();
+            return _client.Delete(owner, name, commentId).ToObservable();
         }
 
         /// <summary>
         /// Deletes the specified Commit Comment
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
-        public IObservable<Unit> Delete(long repositoryId, int number)
+        public IObservable<Unit> Delete(long repositoryId, long commentId)
         {
-            return _client.Delete(repositoryId, number).ToObservable();
+            return _client.Delete(repositoryId, commentId).ToObservable();
         }
     }
 }

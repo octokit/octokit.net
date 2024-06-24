@@ -18,20 +18,20 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<CommitComment> Get(string owner, string name, int number);
+        IObservable<CommitComment> Get(string owner, string name, long commentId);
 
         /// <summary>
         /// Gets a single Repository Comment by number.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<CommitComment> Get(long repositoryId, int number);
+        IObservable<CommitComment> Get(long repositoryId, long commentId);
 
         /// <summary>
         /// Gets Commit Comments for a repository.
@@ -126,18 +126,18 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        IObservable<CommitComment> Update(string owner, string name, int number, string commentUpdate);
+        IObservable<CommitComment> Update(string owner, string name, long commentId, string commentUpdate);
 
         /// <summary>
         /// Updates a specified Commit Comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        IObservable<CommitComment> Update(long repositoryId, int number, string commentUpdate);
+        IObservable<CommitComment> Update(long repositoryId, long commentId, string commentUpdate);
 
         /// <summary>
         /// Deletes the specified Commit Comment
@@ -145,15 +145,15 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment id</param>
-        IObservable<Unit> Delete(string owner, string name, int number);
+        /// <param name="commentId">The comment id</param>
+        IObservable<Unit> Delete(string owner, string name, long commentId);
 
         /// <summary>
         /// Deletes the specified Commit Comment
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment id</param>
-        IObservable<Unit> Delete(long repositoryId, int number);
+        /// <param name="commentId">The comment id</param>
+        IObservable<Unit> Delete(long repositoryId, long commentId);
     }
 }
