@@ -268,7 +268,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> to retrieve a given key.
         /// </summary>
         /// <param name="keyId">The Key Id to retrieve</param>
-        public static Uri Keys(int keyId)
+        public static Uri Keys(long keyId)
         {
             return "user/keys/{0}".FormatUri(keyId);
         }
@@ -1003,7 +1003,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
-        public static Uri CancelOrganizationInvitation(string org, int invitationId)
+        public static Uri CancelOrganizationInvitation(string org, long invitationId)
         {
             return "orgs/{0}/invitations/{1}".FormatUri(org, invitationId);
         }
@@ -1981,7 +1981,7 @@ namespace Octokit
         /// </summary>
         /// <param name="parentTeamId">The id of the parent team</param>
         /// <returns></returns>
-        public static Uri TeamChildTeams(int parentTeamId)
+        public static Uri TeamChildTeams(long parentTeamId)
         {
             return "teams/{0}/teams".FormatUri(parentTeamId);
         }
@@ -1992,7 +1992,7 @@ namespace Octokit
         /// </summary>
         /// <param name="teamId">The id of the <see cref="Team"/>.</param>
         /// <returns></returns>
-        public static Uri Teams(int teamId)
+        public static Uri Teams(long teamId)
         {
             return "teams/{0}".FormatUri(teamId);
         }
@@ -2002,11 +2002,11 @@ namespace Octokit
         /// use for updating, or deleteing a <see cref="Team"/>.
         /// </summary>
         /// <param name="org"></param>
-        /// <param name="teamSlug"></param>
+        /// <param name="teamId"></param>
         /// <returns></returns>
-        public static Uri TeamsByOrganizationAndSlug(string org, string teamSlug)
+        public static Uri TeamsByOrganizationAndSlug(string org, string teamId)
         {
-            return "orgs/{0}/teams/{1}".FormatUri(org, teamSlug);
+            return "orgs/{0}/teams/{1}".FormatUri(org, teamId);
         }
 
         /// <summary>
@@ -2014,7 +2014,7 @@ namespace Octokit
         /// </summary>
         /// <param name="teamId">The team id</param>
         /// <param name="login">The user login.</param>
-        public static Uri TeamMember(int teamId, string login)
+        public static Uri TeamMember(long teamId, string login)
         {
             return "teams/{0}/memberships/{1}".FormatUri(teamId, login);
         }
@@ -2023,7 +2023,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for team members list
         /// </summary>
         /// <param name="teamId">The team id</param>
-        public static Uri TeamMembers(int teamId)
+        public static Uri TeamMembers(long teamId)
         {
             return "teams/{0}/members".FormatUri(teamId);
         }
@@ -2032,7 +2032,7 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for the repositories
         /// </summary>
         /// <param name="teamId">The team id</param>
-        public static Uri TeamRepositories(int teamId)
+        public static Uri TeamRepositories(long teamId)
         {
             return "teams/{0}/repos".FormatUri(teamId);
         }
@@ -2043,7 +2043,7 @@ namespace Octokit
         /// <param name="teamId">The team id</param>
         /// <param name="organization">The organization id</param>
         /// <param name="repoName">The repository name</param>
-        public static Uri TeamRepository(int teamId, string organization, string repoName)
+        public static Uri TeamRepository(long teamId, string organization, string repoName)
         {
             return "teams/{0}/repos/{1}/{2}".FormatUri(teamId, organization, repoName);
         }
@@ -2052,12 +2052,12 @@ namespace Octokit
         /// returns the <see cref="Uri"/> for a team repository
         /// </summary>
         /// <param name="org">The organization name. The name is not case sensitive.</param>
-        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="teamId">The slug of the team name.</param>
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
-        public static Uri TeamPermissionsForARepository(string org, string teamSlug, string owner, string repo)
+        public static Uri TeamPermissionsForARepository(string org, string teamId, string owner, string repo)
         {
-            return "/orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamSlug, owner, repo);
+            return "/orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamId, owner, repo);
         }
 
         /// <summary>
@@ -2065,7 +2065,7 @@ namespace Octokit
         /// </summary>
         /// <param name="teamId">The team id</param>
         /// <returns></returns>
-        public static Uri TeamPendingInvitations(int teamId)
+        public static Uri TeamPendingInvitations(long teamId)
         {
             return "teams/{0}/invitations".FormatUri(teamId);
         }
@@ -2665,7 +2665,7 @@ namespace Octokit
         /// <param name="name">Name of the repository</param>
         /// <param name="deploymentId">Id of the deployment</param>
         /// <returns></returns>
-        public static Uri DeploymentStatuses(string owner, string name, int deploymentId)
+        public static Uri DeploymentStatuses(string owner, string name, long deploymentId)
         {
             return "repos/{0}/{1}/deployments/{2}/statuses".FormatUri(owner, name, deploymentId);
         }
@@ -2982,12 +2982,12 @@ namespace Octokit
             return EnterpriseAdminStats("all");
         }
 
-        public static Uri EnterpriseLdapTeamMapping(int teamId)
+        public static Uri EnterpriseLdapTeamMapping(long teamId)
         {
             return "admin/ldap/teams/{0}/mapping".FormatUri(teamId);
         }
 
-        public static Uri EnterpriseLdapTeamSync(int teamId)
+        public static Uri EnterpriseLdapTeamSync(long teamId)
         {
             return "admin/ldap/teams/{0}/sync".FormatUri(teamId);
         }
@@ -3007,7 +3007,7 @@ namespace Octokit
             return "enterprise/settings/license".FormatUri();
         }
 
-        public static Uri EnterpriseMigrationById(string org, int migrationId)
+        public static Uri EnterpriseMigrationById(string org, long migrationId)
         {
             return "orgs/{0}/migrations/{1}".FormatUri(org, migrationId);
         }
@@ -3017,12 +3017,12 @@ namespace Octokit
             return "orgs/{0}/migrations".FormatUri(org);
         }
 
-        public static Uri EnterpriseMigrationArchive(string org, int migrationId)
+        public static Uri EnterpriseMigrationArchive(string org, long migrationId)
         {
             return "orgs/{0}/migrations/{1}/archive".FormatUri(org, migrationId);
         }
 
-        public static Uri EnterpriseMigrationUnlockRepository(string org, int migrationId, string repo)
+        public static Uri EnterpriseMigrationUnlockRepository(string org, long migrationId, string repo)
         {
             return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, migrationId, repo);
         }
@@ -3360,7 +3360,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="deploymentId">Id of the deployment</param>
         /// <returns>The <see cref="Uri"/> for the Deployment Statuses API for the given deployment.</returns>
-        public static Uri DeploymentStatuses(long repositoryId, int deploymentId)
+        public static Uri DeploymentStatuses(long repositoryId, long deploymentId)
         {
             return "repositories/{0}/deployments/{1}/statuses".FormatUri(repositoryId, deploymentId);
         }
@@ -3391,7 +3391,7 @@ namespace Octokit
         /// <param name="gpgKeyId">The GPG Key Id.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-        public static Uri GpgKeys(int gpgKeyId)
+        public static Uri GpgKeys(long gpgKeyId)
         {
             return "user/gpg_keys/{0}".FormatUri(gpgKeyId);
         }
@@ -4185,7 +4185,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <returns>The <see cref="Uri"/> for repository invitations.</returns>
-        public static Uri RepositoryInvitations(long repositoryId, int invitationId)
+        public static Uri RepositoryInvitations(long repositoryId, long invitationId)
         {
             return "repositories/{0}/invitations/{1}".FormatUri(repositoryId, invitationId);
         }
@@ -4204,7 +4204,7 @@ namespace Octokit
         /// </summary>
         /// <param name="invitationId">The id of the invitation</param>
         /// <returns>The <see cref="Uri"/> for invitations for the current user.</returns>
-        public static Uri UserInvitations(int invitationId)
+        public static Uri UserInvitations(long invitationId)
         {
             return "user/repository_invitations/{0}".FormatUri(invitationId);
         }
@@ -4392,7 +4392,7 @@ namespace Octokit
         /// </summary>
         /// <param name="cardId">The id of the card</param>
         /// <returns>The <see cref="Uri"/> for project cards.</returns>
-        public static Uri ProjectCard(int cardId)
+        public static Uri ProjectCard(long cardId)
         {
             return "projects/columns/cards/{0}".FormatUri(cardId);
         }
@@ -4412,7 +4412,7 @@ namespace Octokit
         /// </summary>
         /// <param name="cardId">The id of the card to move</param>
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
-        public static Uri ProjectCardMove(int cardId)
+        public static Uri ProjectCardMove(long cardId)
         {
             return "projects/columns/cards/{0}/moves".FormatUri(cardId);
         }

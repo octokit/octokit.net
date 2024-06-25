@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration.Helpers
         }
 
         private readonly IConnection _connection;
-        internal int GpgKeyId { get; set; }
+        internal long GpgKeyId { get; set; }
         internal string KeyId { get; set; }
         internal string PublicKeyData { get; set; }
 

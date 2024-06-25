@@ -197,7 +197,7 @@ public class IssuesClientTests : IDisposable
 
             var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
             Assert.NotNull(retrieved);
-            Assert.Equal(1, retrieved.Assignees.Count);
+            Assert.Single(retrieved.Assignees);
             Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
             var all = await _issuesClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName);
             Assert.Contains(all, i => i.Number == retrieved.Number);
@@ -226,7 +226,7 @@ public class IssuesClientTests : IDisposable
 
         var retrieved = await _issuesClient.Get(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
         Assert.NotNull(retrieved);
-        Assert.Equal(1, retrieved.Assignees.Count);
+        Assert.Single(retrieved.Assignees);
         Assert.True(retrieved.Assignees[0].Login == _context.RepositoryOwner);
 
         var update = retrieved.ToUpdate();

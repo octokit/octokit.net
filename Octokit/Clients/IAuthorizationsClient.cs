@@ -61,7 +61,7 @@ namespace Octokit
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
-        Task<Authorization> Get(int id);
+        Task<Authorization> Get(long id);
 
         /// <summary>
         /// Creates a new personal token for the authenticated user.
@@ -151,7 +151,7 @@ namespace Octokit
             string twoFactorAuthenticationCode);
 
         /// <summary>
-        /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already 
+        /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already
         /// exist for the user; otherwise, returns the user’s existing authorization for that application.
         /// </summary>
         /// <remarks>
@@ -175,7 +175,7 @@ namespace Octokit
             NewAuthorization newAuthorization);
 
         /// <summary>
-        /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already 
+        /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already
         /// exist for the user; otherwise, returns the user’s existing authorization for that application.
         /// </summary>
         /// <remarks>
@@ -241,7 +241,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/oauth/#update-an-existing-authorization">API 
+        /// See the <a href="http://developer.github.com/v3/oauth/#update-an-existing-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
         /// <param name="id">Id of the <see cref="Authorization"/> to update</param>
@@ -251,14 +251,14 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
-        Task<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate);
+        Task<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate);
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
+        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
         /// <param name="id">The system-wide Id of the authorization to delete</param>
@@ -267,14 +267,14 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        Task Delete(int id);
+        Task Delete(long id);
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
+        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
         /// <param name="id">The system-wide Id of the authorization to delete</param>
@@ -284,6 +284,6 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        Task Delete(int id, string twoFactorAuthenticationCode);
+        Task Delete(long id, string twoFactorAuthenticationCode);
     }
 }

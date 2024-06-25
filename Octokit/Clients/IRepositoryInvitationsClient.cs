@@ -17,20 +17,20 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="invitationId">The id of the invitation</param>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>        
-        Task<bool> Accept(int invitationId);
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
+        Task<bool> Accept(long invitationId);
 
         /// <summary>
         /// Decline a repository invitation.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Decline(int invitationId);
+        Task<bool> Decline(long invitationId);
 
         /// <summary>
         /// Deletes a repository invitation.
@@ -41,14 +41,14 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Delete(long repositoryId, int invitationId);
+        Task<bool> Delete(long repositoryId, long invitationId);
 
         /// <summary>
         /// Gets all invitations for the current user.
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent();
@@ -69,7 +69,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId);
@@ -79,7 +79,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
@@ -95,6 +95,6 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <param name="permissions">The permission for the collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions);
+        Task<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions);
     }
 }

@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        public IObservable<ProjectCard> Get(int id)
+        public IObservable<ProjectCard> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
-        public IObservable<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate)
+        public IObservable<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate)
         {
             Ensure.ArgumentNotNull(projectCardUpdate, nameof(projectCardUpdate));
 
@@ -133,7 +133,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        public IObservable<bool> Delete(int id)
+        public IObservable<bool> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }
@@ -143,10 +143,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#move-a-project-card">API documentation</a> for more information.
-        /// </remarks>        
+        /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        public IObservable<bool> Move(int id, ProjectCardMove position)
+        public IObservable<bool> Move(long id, ProjectCardMove position)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 

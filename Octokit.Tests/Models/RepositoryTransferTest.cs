@@ -7,8 +7,8 @@ namespace Octokit.Tests.Models
     {
         public static readonly string emptyName = "";
         public static readonly string nonemptyName = "name";
-        public static readonly int[] emptyTeamId = new int[] { };
-        public static readonly int[] nonemptyTeamId = new int[] { 1, 2, 3 };
+        public static readonly long[] emptyTeamId = new long[] { };
+        public static readonly long[] nonemptyTeamId = new long[] { 1, 2, 3 };
 
         public class TheSingleArgumentConstructor
         {
@@ -77,7 +77,7 @@ namespace Octokit.Tests.Models
             [Fact]
             public void StoresGivenTeamId()
             {
-                int[] testTeamId = nonemptyTeamId;
+                long[] testTeamId = nonemptyTeamId;
                 RepositoryTransfer repositoryTransfer = new RepositoryTransfer(nonemptyName, testTeamId);
                 Assert.Equal(repositoryTransfer.TeamIds, testTeamId);
             }
