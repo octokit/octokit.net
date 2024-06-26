@@ -73,7 +73,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         [ManualRoute("GET", "/authorizations/{id}")]
-        public Task<Authorization> Get(int authorizationId)
+        public Task<Authorization> Get(long authorizationId)
         {
             return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(authorizationId), null);
         }
@@ -426,7 +426,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
         [ManualRoute("PATCH", "/authorizations/{id}")]
-        public Task<Authorization> Update(int authorizationId, AuthorizationUpdate authorizationUpdate)
+        public Task<Authorization> Update(long authorizationId, AuthorizationUpdate authorizationUpdate)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
@@ -450,7 +450,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(int authorizationId)
+        public Task Delete(long authorizationId)
         {
             return ApiConnection.Delete(ApiUrls.Authorizations(authorizationId));
         }
@@ -471,7 +471,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(int authorizationId, string twoFactorAuthenticationCode)
+        public Task Delete(long authorizationId, string twoFactorAuthenticationCode)
         {
             return ApiConnection.Delete(ApiUrls.Authorizations(authorizationId), twoFactorAuthenticationCode);
         }

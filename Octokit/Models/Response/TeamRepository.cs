@@ -13,7 +13,7 @@ namespace Octokit
     {
         public TeamRepository() { }
 
-        public TeamRepository(int id,
+        public TeamRepository(long id,
             string nodeId,
             string name,
             string fullName,
@@ -198,7 +198,7 @@ namespace Octokit
         /// <summary>
         /// Unique identifier of the repository
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
@@ -400,7 +400,7 @@ namespace Octokit
 
         /// <summary>
         /// example: git @github.com:octocat/Hello-World.git
-        /// 
+        ///
         /// </summary>
         public string SshUrl { get; private set; }
 

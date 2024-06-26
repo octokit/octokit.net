@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
         /// <returns>The <see cref="Team"/> object.</returns>
-        IObservable<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping);
+        IObservable<Team> UpdateTeamMapping(long teamId, NewLdapMapping newLdapMapping);
 
         /// <summary>
         /// Queue an LDAP Sync job for a team on a GitHub Enterprise appliance (must be Site Admin user).
@@ -53,6 +53,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
-        IObservable<LdapSyncResponse> QueueSyncTeamMapping(int teamId);
+        IObservable<LdapSyncResponse> QueueSyncTeamMapping(long teamId);
     }
 }

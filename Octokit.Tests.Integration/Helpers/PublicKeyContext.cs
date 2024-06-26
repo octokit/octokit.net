@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration.Helpers
         }
 
         private readonly IConnection _connection;
-        internal int KeyId { get; private set; }
+        internal long KeyId { get; private set; }
         internal string KeyTitle { get; private set; }
         internal string KeyData { get; private set; }
 

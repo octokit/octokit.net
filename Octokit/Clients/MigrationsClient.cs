@@ -85,7 +85,7 @@ namespace Octokit
         /// <param name="id">Migration Id of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}")]
-        public async Task<Migration> Get(string org, int id)
+        public async Task<Migration> Get(string org, long id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -104,7 +104,7 @@ namespace Octokit
         /// <param name="id">The Id of the migration.</param>
         /// <returns>The binary contents of the archive as a byte array.</returns>
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}/archive")]
-        public async Task<byte[]> GetArchive(string org, int id)
+        public async Task<byte[]> GetArchive(string org, long id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -124,7 +124,7 @@ namespace Octokit
         /// <param name="id">The Id of the migration.</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/migrations/{id}/archive")]
-        public Task DeleteArchive(string org, int id)
+        public Task DeleteArchive(string org, long id)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -144,7 +144,7 @@ namespace Octokit
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}/repos/{name}/lock")]
-        public Task UnlockRepository(string org, int id, string repo)
+        public Task UnlockRepository(string org, long id, string repo)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));

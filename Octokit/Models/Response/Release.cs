@@ -11,7 +11,7 @@ namespace Octokit
     {
         public Release() { }
 
-        public Release(string url, string htmlUrl, string assetsUrl, string uploadUrl, int id, string nodeId, string tagName, string targetCommitish, string name, string body, bool draft, bool prerelease, DateTimeOffset createdAt, DateTimeOffset? publishedAt, Author author, string tarballUrl, string zipballUrl, IReadOnlyList<ReleaseAsset> assets)
+        public Release(string url, string htmlUrl, string assetsUrl, string uploadUrl, long id, string nodeId, string tagName, string targetCommitish, string name, string body, bool draft, bool prerelease, DateTimeOffset createdAt, DateTimeOffset? publishedAt, Author author, string tarballUrl, string zipballUrl, IReadOnlyList<ReleaseAsset> assets)
         {
             Url = url;
             HtmlUrl = htmlUrl;
@@ -47,7 +47,7 @@ namespace Octokit
 
         public string UploadUrl { get; private set; }
 
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
