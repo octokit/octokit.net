@@ -11,6 +11,11 @@ namespace Octokit
     public interface IMetaClient
     {
         /// <summary>
+        /// Returns a client to get public keys for validating request signatures.
+        /// </summary>
+        IPublicKeysClient PublicKeys { get; }
+
+        /// <summary>
         /// Retrieves information about GitHub.com, the service or a GitHub Enterprise installation.
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>

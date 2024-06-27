@@ -18,7 +18,13 @@ namespace Octokit
         public MetaClient(IApiConnection apiConnection)
             : base(apiConnection)
         {
+            PublicKeys = new PublicKeysClient(apiConnection);
         }
+
+        /// <summary>
+        /// Returns a client to manage get public keys for validating request signatures.
+        /// </summary>
+        public IPublicKeysClient PublicKeys { get; private set; }
 
         /// <summary>
         /// Retrieves information about GitHub.com, the service or a GitHub Enterprise installation.
