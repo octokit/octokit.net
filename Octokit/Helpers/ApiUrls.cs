@@ -4834,6 +4834,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns meta in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to meta.</returns>
+        public static Uri PublicKeys(PublicKeyType keysType)
+        {
+            return "meta/public_keys/{0}".FormatUri(keysType.ToParameter());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all organization credentials in
         /// response to a GET request.
         /// </summary>
