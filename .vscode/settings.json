@@ -13,8 +13,7 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "[csharp]": {
-    "editor.tabSize": 4,
-    "files.insertFinalNewline": false,
+    "editor.tabSize": 4
   },
   "explorer.fileNesting.patterns": {
     "*.cs": "I${capture}.cs",
