@@ -8,9 +8,13 @@
   },
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": true,
-  "files.insertFinalNewline": false,
+  "files.insertFinalNewline": true,
   "editor.detectIndentation": false,
-  "editor.tabSize": 4,
+  "editor.tabSize": 2,
+  "[csharp]": {
+    "editor.tabSize": 4,
+    "files.insertFinalNewline": false,
+  },
   "editor.insertSpaces": true,
   "explorer.fileNesting.patterns": {
     "*.cs": "I${capture}.cs",
