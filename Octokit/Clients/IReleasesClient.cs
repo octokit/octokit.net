@@ -330,8 +330,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="releaseAssetId">The id of the <see cref="ReleaseAsset"/>.</param>
-        Task DeleteAsset(string owner, string name, int releaseAssetId);
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
+        Task DeleteAsset(string owner, string name, int assetId);
 
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
@@ -340,7 +340,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release-asset">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="releaseAssetId">The id of the <see cref="ReleaseAsset"/>.</param>
-        Task DeleteAsset(long repositoryId, int releaseAssetId);
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
+        Task DeleteAsset(long repositoryId, int assetId);
     }
 }
