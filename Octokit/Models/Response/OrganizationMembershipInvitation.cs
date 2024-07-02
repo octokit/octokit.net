@@ -12,7 +12,7 @@ namespace Octokit
         {
         }
 
-        public OrganizationMembershipInvitation(int id, string nodeId, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter)
+        public OrganizationMembershipInvitation(long id, string nodeId, string login, string email, OrganizationMembershipRole role, DateTimeOffset createdAt, User inviter, int teamCount)
         {
             Id = id;
             NodeId = nodeId;
@@ -21,9 +21,10 @@ namespace Octokit
             Role = role;
             CreatedAt = createdAt;
             Inviter = inviter;
+            TeamCount = teamCount;
         }
 
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
@@ -35,6 +36,7 @@ namespace Octokit
         public StringEnum<OrganizationMembershipRole> Role { get; private set; }
         public DateTimeOffset CreatedAt { get; private set; }
         public User Inviter { get; private set; }
+        public int TeamCount { get; private set; }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
             Justification = "Used by DebuggerDisplayAttribute")]

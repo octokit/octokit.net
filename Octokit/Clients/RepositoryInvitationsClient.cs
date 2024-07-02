@@ -21,7 +21,7 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/user/repository_invitations/{invitation_id}")]
-        public async Task<bool> Accept(int invitationId)
+        public async Task<bool> Accept(long invitationId)
         {
             var endpoint = ApiUrls.UserInvitations(invitationId);
 
@@ -45,7 +45,7 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/user/repository_invitations/{invitation_id}")]
-        public async Task<bool> Decline(int invitationId)
+        public async Task<bool> Decline(long invitationId)
         {
             var endpoint = ApiUrls.UserInvitations(invitationId);
 
@@ -70,7 +70,7 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/:owner/:repo/invitations/{invitation_id}")]
-        public async Task<bool> Delete(long repositoryId, int invitationId)
+        public async Task<bool> Delete(long repositoryId, long invitationId)
         {
             var endpoint = ApiUrls.RepositoryInvitations(repositoryId, invitationId);
 
@@ -154,7 +154,7 @@ namespace Octokit
         /// <param name="permissions">The permission for the collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/repositories/{id}/invitations/{invitation_id}")]
-        public Task<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
+        public Task<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions)
         {
             Ensure.ArgumentNotNull(permissions, nameof(permissions));
 

@@ -168,7 +168,7 @@ public class DeploymentStatusClientTests : IDisposable
 
         var deploymentStatuses = await _deploymentsClient.Status.GetAll(_context.RepositoryOwner, _context.RepositoryName, _deployment.Id, options);
 
-        Assert.Equal(1, deploymentStatuses.Count);
+        Assert.Single(deploymentStatuses);
     }
 
     [IntegrationTest]
@@ -190,7 +190,7 @@ public class DeploymentStatusClientTests : IDisposable
 
         var deploymentStatuses = await _deploymentsClient.Status.GetAll(_context.Repository.Id, _deployment.Id, options);
 
-        Assert.Equal(1, deploymentStatuses.Count);
+        Assert.Single(deploymentStatuses);
     }
 
     [IntegrationTest]

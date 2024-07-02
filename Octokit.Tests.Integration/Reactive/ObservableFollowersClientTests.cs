@@ -38,7 +38,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var followers = await _followersClient.GetAllForCurrent(options).ToList();
 
-                Assert.Equal(1, followers.Count);
+                Assert.Single(followers);
             }
 
             [IntegrationTest]
@@ -53,7 +53,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var followers = await _followersClient.GetAllForCurrent(options).ToList();
 
-                Assert.Equal(1, followers.Count);
+                Assert.Single(followers);
             }
 
             [IntegrationTest]
@@ -188,7 +188,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var following = await _followersClient.GetAllFollowingForCurrent(options).ToList();
 
-                Assert.Equal(1, following.Count);
+                Assert.Single(following);
             }
 
             [IntegrationTest]
@@ -203,7 +203,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var following = await _followersClient.GetAllFollowingForCurrent(options).ToList();
 
-                Assert.Equal(1, following.Count);
+                Assert.Single(following);
             }
 
             [IntegrationTest]

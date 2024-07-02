@@ -56,7 +56,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the <see cref="Authorization"/></param>
         /// <returns>An <see cref="Authorization"/></returns>
-        public IObservable<Authorization> Get(int id)
+        public IObservable<Authorization> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -177,7 +177,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// This method will create a new authorization for the specified OAuth application, only if an authorization 
+        /// This method will create a new authorization for the specified OAuth application, only if an authorization
         /// for that application doesn’t already exist for the user. It returns the user’s token for the application
         /// if one exists. Otherwise, it creates one.
         /// </summary>
@@ -188,7 +188,7 @@ namespace Octokit.Reactive
         /// <param name="clientId">Client Id for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
-        /// <exception cref="AuthorizationException">Thrown when the user does not have permission to make 
+        /// <exception cref="AuthorizationException">Thrown when the user does not have permission to make
         /// this request. Check </exception>
         /// <exception cref="TwoFactorRequiredException">Thrown when the current account has two-factor
         /// authentication enabled.</exception>
@@ -207,19 +207,19 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// This method will create a new authorization for the specified OAuth application, only if an authorization 
+        /// This method will create a new authorization for the specified OAuth application, only if an authorization
         /// for that application doesn’t already exist for the user. It returns the user’s token for the application
         /// if one exists. Otherwise, it creates one.
         /// </summary>
         /// <remarks>
-        /// See <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API 
+        /// See <a href="http://developer.github.com/v3/oauth/#get-or-create-an-authorization-for-a-specific-app">API
         /// documentation</a> for more details.
         /// </remarks>
         /// <param name="clientId">Client Id for the OAuth application that is requesting the token</param>
         /// <param name="clientSecret">The client secret</param>
         /// <param name="newAuthorization">Defines the scopes and metadata for the token</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code provided by the user</param>
-        /// <exception cref="AuthorizationException">Thrown when the user does not have permission to make 
+        /// <exception cref="AuthorizationException">Thrown when the user does not have permission to make
         /// this request. Check </exception>
         /// <exception cref="TwoFactorChallengeFailedException">Thrown when the two-factor code is not
         /// valid.</exception>
@@ -307,7 +307,7 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Authorization"/></param>
         /// <param name="authorizationUpdate">The changes to make to the authorization</param>
         /// <returns></returns>
-        public IObservable<Authorization> Update(int id, AuthorizationUpdate authorizationUpdate)
+        public IObservable<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
@@ -319,7 +319,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
+        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
         /// <param name="id">The system-wide Id of the authorization to delete</param>
@@ -327,7 +327,7 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(int id)
+        public IObservable<Unit> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }
@@ -337,7 +337,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
-        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API 
+        /// See the <a href="http://developer.github.com/v3/oauth/#delete-an-authorization">API
         /// documentation</a> for more details.
         /// </remarks>
         /// <param name="id">The system-wide Id of the authorization to delete</param>
@@ -346,7 +346,7 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(int id, string twoFactorAuthenticationCode)
+        public IObservable<Unit> Delete(long id, string twoFactorAuthenticationCode)
         {
             return _client.Delete(id, twoFactorAuthenticationCode).ToObservable();
         }

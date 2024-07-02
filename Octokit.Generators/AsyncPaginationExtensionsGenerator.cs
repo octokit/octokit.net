@@ -26,8 +26,8 @@ namespace Octokit.Generators
   class AsyncPaginationExtensionsGenerator
   {
 
-  private const string HEADER = (
-@"using System;
+    private const string HEADER = (
+  @"using System;
 using System.Collections.Generic;
 
 namespace Octokit.AsyncPaginationExtension
@@ -44,8 +44,8 @@ namespace Octokit.AsyncPaginationExtension
     private const int DEFAULT_PAGE_SIZE = 30;
   ");
 
-  private const string FOOTER = (
-@"
+    private const string FOOTER = (
+  @"
   }
 }");
 
@@ -63,15 +63,17 @@ namespace Octokit.AsyncPaginationExtension
       var enumOptions = new EnumerationOptions { RecurseSubdirectories = true };
       var paginatedCallRegex = new Regex(@".*Task<IReadOnlyList<(?<returnType>\w+)>>\s*(?<name>\w+)(?<template><.*>)?\((?<arg>.*?)(, )?ApiOptions \w*\);");
 
-      foreach (var file in Directory.EnumerateFiles(root, "I*.cs", enumOptions)) {
-          var type = Path.GetFileNameWithoutExtension(file);
+      foreach (var file in Directory.EnumerateFiles(root, "I*.cs", enumOptions))
+      {
+        var type = Path.GetFileNameWithoutExtension(file);
 
-          foreach (var line in File.ReadAllLines(file)) {
-              var match = paginatedCallRegex.Match(line);
+        foreach (var line in File.ReadAllLines(file))
+        {
+          var match = paginatedCallRegex.Match(line);
 
-              if (!match.Success) { continue; }
-              sb.Append(BuildBodyFromTemplate(match, type));
-          }
+          if (!match.Success) { continue; }
+          sb.Append(BuildBodyFromTemplate(match, type));
+        }
       }
 
       sb.Append(FOOTER);
@@ -101,12 +103,14 @@ namespace Octokit.AsyncPaginationExtension
           : $"options => t.{name}{templateStr}({string.Join(' ', splitArgs.Where((_, i) => i % 2 == 1))}, options)";
 
       var docArgs = string.Join(", ", splitArgs.Where((_, i) => i % 2 == 0)).Replace('<', '{').Replace('>', '}');
-      if (docArgs.Length != 0) {
-          docArgs += ", ";
+      if (docArgs.Length != 0)
+      {
+        docArgs += ", ";
       }
 
-      if (arg.Length != 0) {
-          arg += ", ";
+      if (arg.Length != 0)
+      {
+        arg += ", ";
       }
 
       return ($@"

@@ -37,7 +37,7 @@ public class IssuesEventsClientTests : IDisposable
         Assert.NotNull(closed);
         issueEventInfo = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number);
 
-        Assert.Equal(1, issueEventInfo.Count);
+        Assert.Single(issueEventInfo);
         Assert.Equal(EventInfoState.Closed, issueEventInfo[0].Event);
     }
 
@@ -54,7 +54,7 @@ public class IssuesEventsClientTests : IDisposable
         Assert.NotNull(closed);
         issueEventInfo = await _issuesEventsClient.GetAllForIssue(_context.Repository.Id, issue.Number);
 
-        Assert.Equal(1, issueEventInfo.Count);
+        Assert.Single(issueEventInfo);
         Assert.Equal(EventInfoState.Closed, issueEventInfo[0].Event);
     }
 
@@ -116,7 +116,7 @@ public class IssuesEventsClientTests : IDisposable
 
         var eventInfos = await _issuesEventsClient.GetAllForIssue(_context.RepositoryOwner, _context.RepositoryName, issue.Number, options);
 
-        Assert.Equal(1, eventInfos.Count);
+        Assert.Single(eventInfos);
     }
 
     [IntegrationTest]
@@ -137,7 +137,7 @@ public class IssuesEventsClientTests : IDisposable
 
         var eventInfos = await _issuesEventsClient.GetAllForIssue(_context.Repository.Id, issue.Number, options);
 
-        Assert.Equal(1, eventInfos.Count);
+        Assert.Single(eventInfos);
     }
 
     [IntegrationTest]
@@ -312,7 +312,7 @@ public class IssuesEventsClientTests : IDisposable
 
         var eventInfos = await _issuesEventsClient.GetAllForRepository(_context.RepositoryOwner, _context.RepositoryName, options);
 
-        Assert.Equal(1, eventInfos.Count);
+        Assert.Single(eventInfos);
     }
 
     [IntegrationTest]
@@ -333,7 +333,7 @@ public class IssuesEventsClientTests : IDisposable
 
         var eventInfos = await _issuesEventsClient.GetAllForRepository(_context.Repository.Id, options);
 
-        Assert.Equal(1, eventInfos.Count);
+        Assert.Single(eventInfos);
     }
 
     [IntegrationTest]

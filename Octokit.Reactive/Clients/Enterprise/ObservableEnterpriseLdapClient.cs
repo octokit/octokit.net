@@ -58,7 +58,7 @@ namespace Octokit.Reactive
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
         /// <returns>The <see cref="Team"/> object.</returns>
-        public IObservable<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
+        public IObservable<Team> UpdateTeamMapping(long teamId, NewLdapMapping newLdapMapping)
         {
             return _client.UpdateTeamMapping(teamId, newLdapMapping).ToObservable();
         }
@@ -71,7 +71,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
-        public IObservable<LdapSyncResponse> QueueSyncTeamMapping(int teamId)
+        public IObservable<LdapSyncResponse> QueueSyncTeamMapping(long teamId)
         {
             return _client.QueueSyncTeamMapping(teamId).ToObservable();
         }

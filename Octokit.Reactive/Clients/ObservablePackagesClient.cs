@@ -28,16 +28,69 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
-        /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility = null)
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
+            return GetAllForOrg(org, packageType, (PackageVisibility?)null);
+        }
+
+        /// <summary>
+        /// List all packages for an organisations, readable by the current user
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-an-organization">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="org">Required: Organisation Name</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return GetAllForOrg(org, packageType, null, options);
+        }
+
+        /// <summary>
+        /// List all packages for an organisations, readable by the current user
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-an-organization">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="org">Required: Organisation Name</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+
+            return GetAllForOrg(org, packageType, packageVisibility, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// List all packages for an organisations, readable by the current user
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-an-organization">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="org">Required: Organisation Name</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));            
+            Ensure.ArgumentNotNull(options, nameof(options));
+
             var route = ApiUrls.PackagesOrg(org);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return _connection.GetAndFlattenAllPages<Package>(route, parameters);
+            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options);
         }
 
         /// <summary>
@@ -101,13 +154,62 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
-        /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        public IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility = null)
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType)
         {
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            
+            return GetAllForActiveUser(packageType, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return GetAllForActiveUser(packageType, null, options);
+        }
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility)
+        {
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+
+            return GetAllForActiveUser(packageType, packageVisibility, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        {
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
             var route = ApiUrls.PackagesActiveUser();
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return _connection.GetAndFlattenAllPages<Package>(route, parameters);
+            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options);
         }
 
         /// <summary>
@@ -166,16 +268,69 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
-        /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        public IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility = null)
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
+            return GetAllForUser(username, packageType, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="username">Required: Username</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return GetAllForUser(username, packageType, null, options);
+        }
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="username">Required: Username</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+
+            return GetAllForUser(username, packageType, packageVisibility, ApiOptions.None);
+        }
+
+        /// <summary>
+        /// Lists packages owned by the authenticated user within the user's namespace
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
+        /// </remarks>
+        /// <param name="username">Required: Username</param>
+        /// <param name="packageType">Required: The type of package</param>
+        /// <param name="packageVisibility">Optional: The visibility of the package</param>
+        /// <param name="options">Options for changing the API response</param>
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
+            Ensure.ArgumentNotNull(packageType, nameof(packageType));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
             var route = ApiUrls.PackagesUser(username);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return _connection.GetAndFlattenAllPages<Package>(route, parameters);
+            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options);
         }
 
         /// <summary>

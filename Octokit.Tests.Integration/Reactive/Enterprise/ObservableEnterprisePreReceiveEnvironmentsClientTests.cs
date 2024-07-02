@@ -56,7 +56,7 @@ public class ObservableEnterprisePreReceiveEnvironmentsClientTests
 
             var preReceiveEnvironments = await _preReceiveEnvironmentsClient.GetAll(options).ToList();
 
-            Assert.Equal(1, preReceiveEnvironments.Count);
+            Assert.Single(preReceiveEnvironments);
         }
 
         [GitHubEnterpriseTest]
@@ -71,7 +71,7 @@ public class ObservableEnterprisePreReceiveEnvironmentsClientTests
 
             var preReceiveEnvironments = await _preReceiveEnvironmentsClient.GetAll(options).ToList();
 
-            Assert.Equal(1, preReceiveEnvironments.Count);
+            Assert.Single(preReceiveEnvironments);
         }
 
         [GitHubEnterpriseTest]

@@ -8,7 +8,7 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class Codespace
     {
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public string Name { get; private set; }
         public User Owner { get; private set; }
         public User BillableOwner { get; private set; }
@@ -24,7 +24,7 @@ namespace Octokit
         public string StartUrl { get; private set; }
         public string StopUrl { get; private set; }
 
-        public Codespace(int id, string name, User owner, User billableOwner, Repository repository, Machine machine, DateTime createdAt, DateTime updatedAt, DateTime lastUsedAt, StringEnum<CodespaceState> state, string url, string machinesUrl, string webUrl, string startUrl, string stopUrl)
+        public Codespace(long id, string name, User owner, User billableOwner, Repository repository, Machine machine, DateTime createdAt, DateTime updatedAt, DateTime lastUsedAt, StringEnum<CodespaceState> state, string url, string machinesUrl, string webUrl, string startUrl, string stopUrl)
         {
             Id = id;
             Name = name;

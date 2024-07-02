@@ -45,7 +45,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll("octokit", "octokit.net", options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll(7528679, options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll("octokit", "octokit.net", options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]
@@ -95,7 +95,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll(7528679, options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]
@@ -173,7 +173,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll("octokit", "octokit.net", repositoryForksListRequest, options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]
@@ -191,7 +191,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll(7528679, repositoryForksListRequest, options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]
@@ -210,7 +210,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll("octokit", "octokit.net", repositoryForksListRequest, options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]
@@ -229,7 +229,7 @@ namespace Octokit.Tests.Integration.Clients
 
                 var forks = await github.Repository.Forks.GetAll(7528679, repositoryForksListRequest, options);
 
-                Assert.Equal(1, forks.Count);
+                Assert.Single(forks);
             }
 
             [IntegrationTest]

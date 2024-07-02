@@ -287,5 +287,37 @@ namespace Octokit.Tests.Clients
                 gitHubClient.GitHubApps.Received().GetUserInstallationForCurrent("ducks");
             }
         }
+
+        public class TheCreateAppFromManifestMethod
+        {
+            [Fact]
+            public void EnsuresNonNullArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGitHubAppsClient(gitHubClient);
+
+                Assert.Throws<ArgumentNullException>(() => client.CreateAppFromManifest(null));
+            }
+
+            [Fact]
+            public void EnsuresNonEmptyArguments()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGitHubAppsClient(gitHubClient);
+
+                Assert.Throws<ArgumentException>(() => client.CreateAppFromManifest(""));
+            }
+
+            [Fact]
+            public void GetsFromCorrectUrl()
+            {
+                var gitHubClient = Substitute.For<IGitHubClient>();
+                var client = new ObservableGitHubAppsClient(gitHubClient);
+
+                client.CreateAppFromManifest("abc123");
+
+                gitHubClient.GitHubApps.Received().CreateAppFromManifest("abc123");
+            }
+        }
     }
 }

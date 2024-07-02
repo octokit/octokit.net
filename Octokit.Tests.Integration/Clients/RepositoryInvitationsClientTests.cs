@@ -30,7 +30,7 @@ public class RepositoryInvitationsClientTests
 
                 var invitations = await github.Repository.Invitation.GetAllForRepository(context.Repository.Id);
 
-                Assert.Equal(1, invitations.Count);
+                Assert.Single(invitations);
                 Assert.Equal(invitations[0].CreatedAt, response.CreatedAt);
                 Assert.Equal(invitations[0].Id, response.Id);
                 Assert.Equal(invitations[0].Invitee.Login, response.Invitee.Login);
@@ -72,7 +72,7 @@ public class RepositoryInvitationsClientTests
 
                 var invitations = await github.Repository.Invitation.GetAllForRepository(context.Repository.Id, options);
 
-                Assert.Equal(1, invitations.Count);
+                Assert.Single(invitations);
             }
         }
 
@@ -102,7 +102,7 @@ public class RepositoryInvitationsClientTests
 
                 var invitations = await github.Repository.Invitation.GetAllForRepository(context.Repository.Id, options);
 
-                Assert.Equal(1, invitations.Count);
+                Assert.Single(invitations);
             }
         }
 
@@ -215,7 +215,7 @@ public class RepositoryInvitationsClientTests
 
 
                 var invitations = await github.Repository.Invitation.GetAllForCurrent(startOptions);
-                Assert.Equal(1, invitations.Count);
+                Assert.Single(invitations);
             }
             finally
             {
@@ -262,7 +262,7 @@ public class RepositoryInvitationsClientTests
 
 
                 var invitations = await github.Repository.Invitation.GetAllForCurrent(startOptions);
-                Assert.Equal(1, invitations.Count);
+                Assert.Single(invitations);
             }
             finally
             {

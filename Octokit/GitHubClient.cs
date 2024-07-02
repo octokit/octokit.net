@@ -122,6 +122,7 @@ namespace Octokit
             Actions = new ActionsClient(apiConnection);
             Codespaces = new CodespacesClient(apiConnection);
             Copilot = new CopilotClient(apiConnection);
+            DependencyGraph = new DependencyGraphClient(apiConnection);
         }
 
         /// <summary>
@@ -260,7 +261,7 @@ namespace Octokit
         public IOrganizationsClient Organization { get; private set; }
 
         /// <summary>
-        /// Access GitHub's Pacakges API.
+        /// Access GitHub's Packages API.
         /// </summary>
         /// <remarks>
         /// Refer to the API documentation for more information: https://docs.github.com/rest/packages
@@ -396,11 +397,16 @@ namespace Octokit
         public IActionsClient Actions { get; private set; }
 
         public ICodespacesClient Codespaces { get; private set; }
-        
+
         /// <summary>
         /// Access GitHub's Copilot for Business API
         /// </summary>
         public ICopilotClient Copilot { get; private set; }
+
+        /// <summary>
+        /// Access GitHub's Dependency Graph API
+        /// </summary>
+        public IDependencyGraphClient DependencyGraph { get; private set; }
 
         static Uri FixUpBaseUri(Uri uri)
         {

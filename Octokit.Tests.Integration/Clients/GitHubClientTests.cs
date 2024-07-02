@@ -26,7 +26,7 @@ public class GitHubClientTests
 
                 var result = github.GetLastApiInfo();
 
-                Assert.True(result.Links.Count == 0);
+                Assert.Empty(result.Links);
                 Assert.True(result.AcceptedOauthScopes.Count > -1);
                 Assert.True(result.OauthScopes.Count > -1);
                 Assert.False(string.IsNullOrEmpty(result.Etag));
@@ -67,8 +67,8 @@ public class GitHubClientTests
 
             var result = github.GetLastApiInfo();
 
-            Assert.True(result.Links.Count == 0);
-            Assert.True(result.AcceptedOauthScopes.Count == 0);
+            Assert.Single(result.Links);
+            Assert.Single(result.AcceptedOauthScopes);
             Assert.True(result.OauthScopes.Count > 0);
             Assert.False(string.IsNullOrEmpty(result.Etag));
             Assert.True(result.RateLimit.Limit > 0);

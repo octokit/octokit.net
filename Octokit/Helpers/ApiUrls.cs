@@ -79,6 +79,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns all of the custom properties for the specified organization in
+        /// response to a GET request. A PATCH to this URL updates the custom properties for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationCustomProperties(string organization)
+        {
+            return "orgs/{0}/properties/schema".FormatUri(organization);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a custom property for the specified organization in
+        /// response to a GET request. A PUT to this URL updates the custom property for the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="property">The name of the property</param>
+        /// <returns></returns>
+        public static Uri OrganizationCustomProperty(string organization, string property)
+        {
+            return "orgs/{0}/properties/schema/{1}".FormatUri(organization, property);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that returns a custom property values for repositories in the
+        /// specified organization in response to a GET request. A PATCH to this URL updates the custom property
+        /// values for specified repositories in the organization.
+        /// </summary>
+        /// <param name="organization">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationCustomPropertyValues(string organization)
+        {
+            return "orgs/{0}/properties/values".FormatUri(organization);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the secrets for the specified organization in
         /// response to a GET request.
         /// </summary>
@@ -232,10 +267,10 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> to retrieve a given key.
         /// </summary>
-        /// <param name="id">The Key Id to retrieve</param>
-        public static Uri Keys(int id)
+        /// <param name="keyId">The Key Id to retrieve</param>
+        public static Uri Keys(long keyId)
         {
-            return "user/keys/{0}".FormatUri(id);
+            return "user/keys/{0}".FormatUri(keyId);
         }
 
         /// <summary>
@@ -274,11 +309,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <returns></returns>
-        public static Uri Releases(string owner, string name, int id)
+        public static Uri Releases(string owner, string name, long releaseId)
         {
-            return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, id);
+            return "repos/{0}/{1}/releases/{2}".FormatUri(owner, name, releaseId);
         }
 
         /// <summary>
@@ -309,11 +344,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <returns></returns>
-        public static Uri ReleaseAssets(string owner, string name, int id)
+        public static Uri ReleaseAssets(string owner, string name, long releaseId)
         {
-            return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, id);
+            return "repos/{0}/{1}/releases/{2}/assets".FormatUri(owner, name, releaseId);
         }
 
         /// <summary>
@@ -321,11 +356,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The id of the release asset</param>
+        /// <param name="releaseAssetId">The id of the release asset</param>
         /// <returns></returns>
-        public static Uri Asset(string owner, string name, int id)
+        public static Uri Asset(string owner, string name, int releaseAssetId)
         {
-            return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, id);
+            return "repos/{0}/{1}/releases/assets/{2}".FormatUri(owner, name, releaseAssetId);
         }
 
         /// <summary>
@@ -352,20 +387,29 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified notification.
         /// </summary>
-        /// <param name="id">The Id of the notification.</param>
+        /// <param name="notificationId">The Id of the notification.</param>
         /// <returns></returns>
-        public static Uri Notification(int id)
+        public static Uri Notification(int notificationId)
         {
-            return "notifications/threads/{0}".FormatUri(id);
+            return "notifications/threads/{0}".FormatUri(notificationId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified notification's subscription status.
         /// </summary>
-        /// <param name="id">The Id of the notification.</param>
-        public static Uri NotificationSubscription(int id)
+        /// <param name="notificationId">The Id of the notification.</param>
+        public static Uri NotificationSubscription(int notificationId)
         {
-            return "notifications/threads/{0}/subscription".FormatUri(id);
+            return "notifications/threads/{0}/subscription".FormatUri(notificationId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> to complete the handshake necessary when implementing the GitHub App Manifest flow.
+        /// </summary>
+        /// <param name="code">Temporary code in a code parameter.</param>
+        public static Uri AppManifestConversions(string code)
+        {
+            return "app-manifests/{0}/conversions".FormatUri(code);
         }
 
         /// <summary>
@@ -515,11 +559,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri Issue(string owner, string name, int number)
+        public static Uri Issue(string owner, string name, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
@@ -527,11 +571,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueLock(string owner, string name, int number)
+        public static Uri IssueLock(string owner, string name, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}/lock".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}/lock".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
@@ -539,22 +583,22 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueReactions(string owner, string name, int number)
+        public static Uri IssueReactions(string owner, string name, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}/reactions".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}/reactions".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueReactions(long repositoryId, int number)
+        public static Uri IssueReactions(long repositoryId, int issueNumber)
         {
-            return "repositories/{0}/issues/{1}/reactions".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/{1}/reactions".FormatUri(repositoryId, issueNumber);
         }
 
         /// <summary>
@@ -562,24 +606,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
-        /// <param name="reaction">The reactionid for the issue</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <param name="reactionId">The reactionid for the issue</param>
         /// <returns></returns>
-        public static Uri IssueReaction(string owner, string name, int number, int reaction)
+        public static Uri IssueReaction(string owner, string name, int issueNumber, long reactionId)
         {
-            return "repos/{0}/{1}/issues/{2}/reactions/{3}".FormatUri(owner, name, number, reaction);
+            return "repos/{0}/{1}/issues/{2}/reactions/{3}".FormatUri(owner, name, issueNumber, reactionId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
-        /// <param name="reaction">The reactionid for the issue</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <param name="reactionId">The reactionid for the issue</param>
         /// <returns></returns>
-        public static Uri IssueReaction(long repositoryId, int number, int reaction)
+        public static Uri IssueReaction(long repositoryId, int issueNumber, long reactionId)
         {
-            return "repositories/{0}/issues/{1}/reactions/{2}".FormatUri(repositoryId, number, reaction);
+            return "repositories/{0}/issues/{1}/reactions/{2}".FormatUri(repositoryId, issueNumber, reactionId);
         }
 
         /// <summary>
@@ -587,22 +631,22 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueTimeline(string owner, string repo, int number)
+        public static Uri IssueTimeline(string owner, string repo, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}/timeline".FormatUri(owner, repo, number);
+            return "repos/{0}/{1}/issues/{2}/timeline".FormatUri(owner, repo, issueNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the timeline of a specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueTimeline(long repositoryId, int number)
+        public static Uri IssueTimeline(long repositoryId, int issueNumber)
         {
-            return "repositories/{0}/issues/{1}/timeline".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/{1}/timeline".FormatUri(repositoryId, issueNumber);
         }
 
         /// <summary>
@@ -621,11 +665,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueComments(string owner, string name, int number)
+        public static Uri IssueComments(string owner, string name, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}/comments".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}/comments".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
@@ -633,11 +677,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueComment(string owner, string name, int id)
+        public static Uri IssueComment(string owner, string name, long commentId)
         {
-            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, id);
+            return "repos/{0}/{1}/issues/comments/{2}".FormatUri(owner, name, commentId);
         }
 
         /// <summary>
@@ -645,22 +689,22 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueCommentReactions(string owner, string name, int number)
+        public static Uri IssueCommentReactions(string owner, string name, long commentId)
         {
-            return "repos/{0}/{1}/issues/comments/{2}/reactions".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/comments/{2}/reactions".FormatUri(owner, name, commentId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified issue comment.
         /// </summary>
         /// <param name="repositoryId">The owner of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri IssueCommentReactions(long repositoryId, int number)
+        public static Uri IssueCommentReactions(long repositoryId, long commentId)
         {
-            return "repositories/{0}/issues/comments/{1}/reactions".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/comments/{1}/reactions".FormatUri(repositoryId, commentId);
         }
 
         /// <summary>
@@ -668,24 +712,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri IssueCommentReaction(string owner, string name, int number, int reaction)
+        public static Uri IssueCommentReaction(string owner, string name, long commentId, long reaction)
         {
-            return "repos/{0}/{1}/issues/comments/{2}/reactions/{3}".FormatUri(owner, name, number, reaction);
+            return "repos/{0}/{1}/issues/comments/{2}/reactions/{3}".FormatUri(owner, name, commentId, reaction);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified issue comment.
         /// </summary>
         /// <param name="repositoryId">The owner of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri IssueCommentReaction(long repositoryId, int number, int reaction)
+        public static Uri IssueCommentReaction(long repositoryId, long commentId, long reaction)
         {
-            return "repositories/{0}/issues/comments/{1}/reactions/{2}".FormatUri(repositoryId, number, reaction);
+            return "repositories/{0}/issues/comments/{1}/reactions/{2}".FormatUri(repositoryId, commentId, reaction);
         }
 
         /// <summary>
@@ -693,11 +737,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri CommitComment(string owner, string name, int number)
+        public static Uri CommitComment(string owner, string name, long commentId)
         {
-            return "repos/{0}/{1}/comments/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/comments/{2}".FormatUri(owner, name, commentId);
         }
 
         /// <summary>
@@ -728,22 +772,22 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri CommitCommentReactions(string owner, string name, int number)
+        public static Uri CommitCommentReactions(string owner, string name, long commentId)
         {
-            return "repos/{0}/{1}/comments/{2}/reactions".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/comments/{2}/reactions".FormatUri(owner, name, commentId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified commit comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri CommitCommentReactions(long repositoryId, int number)
+        public static Uri CommitCommentReactions(long repositoryId, long commentId)
         {
-            return "repositories/{0}/comments/{1}/reactions".FormatUri(repositoryId, number);
+            return "repositories/{0}/comments/{1}/reactions".FormatUri(repositoryId, commentId);
         }
 
         /// <summary>
@@ -751,24 +795,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reaction number</param>
         /// <returns></returns>
-        public static Uri CommitCommentReaction(string owner, string name, int number, int reaction)
+        public static Uri CommitCommentReaction(string owner, string name, long commentId, long reaction)
         {
-            return "repos/{0}/{1}/comments/{2}/reactions/{3}".FormatUri(owner, name, number, reaction);
+            return "repos/{0}/{1}/comments/{2}/reactions/{3}".FormatUri(owner, name, commentId, reaction);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified commit comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reaction number</param>
         /// <returns></returns>
-        public static Uri CommitCommentReaction(long repositoryId, int number, int reaction)
+        public static Uri CommitCommentReaction(long repositoryId, long commentId, long reaction)
         {
-            return "repositories/{0}/comments/{1}/reactions/{2}".FormatUri(repositoryId, number, reaction);
+            return "repositories/{0}/comments/{1}/reactions/{2}".FormatUri(repositoryId, commentId, reaction);
         }
 
         /// <summary>
@@ -800,11 +844,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueAssignees(string owner, string name, int number)
+        public static Uri IssueAssignees(string owner, string name, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}/assignees".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}/assignees".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
@@ -924,6 +968,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the organization's invitations
+        /// </summary>
+        /// <param name="org">The name of the organization</param>
+        /// <returns></returns>
+        public static Uri OrganizationInvitations(string org)
+        {
+            return "orgs/{0}/invitations".FormatUri(org);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the organizations pending invitations
         /// </summary>
         /// <param name="org">The name of the organization</param>
@@ -949,7 +1003,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
-        public static Uri CancelOrganizationInvitation(string org, int invitationId)
+        public static Uri CancelOrganizationInvitation(string org, long invitationId)
         {
             return "orgs/{0}/invitations/{1}".FormatUri(org, invitationId);
         }
@@ -996,11 +1050,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssuesEvents(string owner, string name, int number)
+        public static Uri IssuesEvents(string owner, string name, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}/events".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}/events".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
@@ -1019,11 +1073,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="id">The event id</param>
+        /// <param name="eventId">The event id</param>
         /// <returns></returns>
-        public static Uri IssuesEvent(string owner, string name, long id)
+        public static Uri IssuesEvent(string owner, string name, long eventId)
         {
-            return "repos/{0}/{1}/issues/events/{2}".FormatUri(owner, name, id);
+            return "repos/{0}/{1}/issues/events/{2}".FormatUri(owner, name, eventId);
         }
 
         /// <summary>
@@ -1031,11 +1085,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
-        public static Uri Milestone(string owner, string name, int number)
+        public static Uri Milestone(string owner, string name, int milestoneNumber)
         {
-            return "repos/{0}/{1}/milestones/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/milestones/{2}".FormatUri(owner, name, milestoneNumber);
         }
 
         /// <summary>
@@ -1077,12 +1131,12 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label</param>
         /// <returns></returns>
-        public static Uri IssueLabel(string owner, string name, int number, string labelName)
+        public static Uri IssueLabel(string owner, string name, int issueNumber, string labelName)
         {
-            return "repos/{0}/{1}/issues/{2}/labels/{3}".FormatUri(owner, name, number, labelName);
+            return "repos/{0}/{1}/issues/{2}/labels/{3}".FormatUri(owner, name, issueNumber, labelName);
         }
 
         /// <summary>
@@ -1090,11 +1144,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns></returns>
-        public static Uri IssueLabels(string owner, string name, int number)
+        public static Uri IssueLabels(string owner, string name, int issueNumber)
         {
-            return "repos/{0}/{1}/issues/{2}/labels".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/issues/{2}/labels".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
@@ -1102,11 +1156,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
-        public static Uri MilestoneLabels(string owner, string name, int number)
+        public static Uri MilestoneLabels(string owner, string name, int milestoneNumber)
         {
-            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/milestones/{2}/labels".FormatUri(owner, name, milestoneNumber);
         }
 
         /// <summary>
@@ -1365,19 +1419,19 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified gist.
         /// </summary>
-        /// <param name="id">The id of the gist</param>
-        public static Uri Gist(string id)
+        /// <param name="gistId">The id of the gist</param>
+        public static Uri Gist(string gistId)
         {
-            return "gists/{0}".FormatUri(id);
+            return "gists/{0}".FormatUri(gistId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the forks for the specified gist.
         /// </summary>
-        /// <param name="id">The id of the gist</param>
-        public static Uri ForkGist(string id)
+        /// <param name="gistId">The id of the gist</param>
+        public static Uri ForkGist(string gistId)
         {
-            return "gists/{0}/forks".FormatUri(id);
+            return "gists/{0}/forks".FormatUri(gistId);
         }
 
         /// <summary>
@@ -1408,10 +1462,10 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> to star a given gist.
         /// </summary>
-        /// <param name="id">The id of the gist</param>
-        public static Uri StarGist(string id)
+        /// <param name="gistId">The id of the gist</param>
+        public static Uri StarGist(string gistId)
         {
-            return "gists/{0}/star".FormatUri(id);
+            return "gists/{0}/star".FormatUri(gistId);
         }
 
         /// <summary>
@@ -1426,10 +1480,10 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for the commits for the specified gist.
         /// </summary>
-        /// <param name="id">The id of the gist</param>
-        public static Uri GistCommits(string id)
+        /// <param name="gistId">The id of the gist</param>
+        public static Uri GistCommits(string gistId)
         {
-            return "gists/{0}/commits".FormatUri(id);
+            return "gists/{0}/commits".FormatUri(gistId);
         }
 
         /// <summary>
@@ -1437,11 +1491,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns></returns>
-        public static Uri PullRequest(string owner, string name, int number)
+        public static Uri PullRequest(string owner, string name, int pullRequestNumber)
         {
-            return "repos/{0}/{1}/pulls/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/{2}".FormatUri(owner, name, pullRequestNumber);
         }
 
         /// <summary>
@@ -1460,11 +1514,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the pull request merge state.</returns>
-        public static Uri MergePullRequest(string owner, string name, int number)
+        public static Uri MergePullRequest(string owner, string name, int pullRequestNumber)
         {
-            return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/{2}/merge".FormatUri(owner, name, pullRequestNumber);
         }
 
         /// <summary>
@@ -1472,11 +1526,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the commits on a pull request.</returns>
-        public static Uri PullRequestCommits(string owner, string name, int number)
+        public static Uri PullRequestCommits(string owner, string name, int pullRequestNumber)
         {
-            return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/{2}/commits".FormatUri(owner, name, pullRequestNumber);
         }
 
         /// <summary>
@@ -1484,11 +1538,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the files on a pull request.</returns>
-        public static Uri PullRequestFiles(string owner, string name, int number)
+        public static Uri PullRequestFiles(string owner, string name, int pullRequestNumber)
         {
-            return "repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/{2}/files".FormatUri(owner, name, pullRequestNumber);
         }
 
         /// <summary>
@@ -1496,7 +1550,7 @@ namespace Octokit
         /// </summary>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
-        public static Uri GistComment(string gistId, int commentId)
+        public static Uri GistComment(string gistId, long commentId)
         {
             return "gists/{0}/comments/{1}".FormatUri(gistId, commentId);
         }
@@ -1647,11 +1701,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReviewComments(string owner, string name, int number)
+        public static Uri PullRequestReviewComments(string owner, string name, int pullRequestNumber)
         {
-            return "repos/{0}/{1}/pulls/{2}/comments".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/{2}/comments".FormatUri(owner, name, pullRequestNumber);
         }
 
         /// <summary>
@@ -1659,11 +1713,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReviews(string owner, string name, int number)
+        public static Uri PullRequestReviews(string owner, string name, int pullRequestNumber)
         {
-            return "repos/{0}/{1}/pulls/{2}/reviews".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/{2}/reviews".FormatUri(owner, name, pullRequestNumber);
         }
 
         /// <summary>
@@ -1671,11 +1725,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReviewComment(string owner, string name, int number)
+        public static Uri PullRequestReviewComment(string owner, string name, long commentId)
         {
-            return "repos/{0}/{1}/pulls/comments/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/comments/{2}".FormatUri(owner, name, commentId);
         }
 
         /// <summary>
@@ -1683,24 +1737,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReview(string owner, string name, int number, long reviewId)
+        public static Uri PullRequestReview(string owner, string name, int pullRequestNumber, long reviewId)
         {
-            return "repos/{0}/{1}/pulls/{2}/reviews/{3}".FormatUri(owner, name, number, reviewId);
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}".FormatUri(owner, name, pullRequestNumber, reviewId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for dismissing a specified pull request review
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReviewDismissal(long repositoryId, int number, long reviewId)
+        public static Uri PullRequestReviewDismissal(long repositoryId, int pullRequestNumber, long reviewId)
         {
-            return "repositories/{0}/pulls/{1}/reviews/{2}/dismissals".FormatUri(repositoryId, number, reviewId);
+            return "repositories/{0}/pulls/{1}/reviews/{2}/dismissals".FormatUri(repositoryId, pullRequestNumber, reviewId);
         }
 
         /// <summary>
@@ -1708,24 +1762,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReviewDismissal(string owner, string name, int number, long reviewId)
+        public static Uri PullRequestReviewDismissal(string owner, string name, int pullRequestNumber, long reviewId)
         {
-            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/dismissals".FormatUri(owner, name, number, reviewId);
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/dismissals".FormatUri(owner, name, pullRequestNumber, reviewId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for submitting a pull request review
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/> that </returns>
-        public static Uri PullRequestReviewSubmit(long repositoryId, int number, long reviewId)
+        public static Uri PullRequestReviewSubmit(long repositoryId, int pullRequestNumber, long reviewId)
         {
-            return "repositories/{0}/pulls/{1}/reviews/{2}/events".FormatUri(repositoryId, number, reviewId);
+            return "repositories/{0}/pulls/{1}/reviews/{2}/events".FormatUri(repositoryId, pullRequestNumber, reviewId);
         }
 
         /// <summary>
@@ -1733,24 +1787,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReviewSubmit(string owner, string name, int number, long reviewId)
+        public static Uri PullRequestReviewSubmit(string owner, string name, int pullRequestNumber, long reviewId)
         {
-            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/events".FormatUri(owner, name, number, reviewId);
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/events".FormatUri(owner, name, pullRequestNumber, reviewId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for submitting a pull request review
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/> that </returns>
-        public static Uri PullRequestReviewComments(long repositoryId, int number, long reviewId)
+        public static Uri PullRequestReviewComments(long repositoryId, int pullRequestNumber, long reviewId)
         {
-            return "repositories/{0}/pulls/{1}/reviews/{2}/comments".FormatUri(repositoryId, number, reviewId);
+            return "repositories/{0}/pulls/{1}/reviews/{2}/comments".FormatUri(repositoryId, pullRequestNumber, reviewId);
         }
 
         /// <summary>
@@ -1758,24 +1812,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReviewComments(string owner, string name, int number, long reviewId)
+        public static Uri PullRequestReviewComments(string owner, string name, int pullRequestNumber, long reviewId)
         {
-            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/comments".FormatUri(owner, name, number, reviewId);
+            return "repos/{0}/{1}/pulls/{2}/reviews/{3}/comments".FormatUri(owner, name, pullRequestNumber, reviewId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for a specified pull request review.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <returns>The <see cref="Uri"/></returns>
-        public static Uri PullRequestReview(long repositoryId, int number, long reviewId)
+        public static Uri PullRequestReview(long repositoryId, int pullRequestNumber, long reviewId)
         {
-            return "repositories/{0}/pulls/{1}/reviews/{2}".FormatUri(repositoryId, number, reviewId);
+            return "repositories/{0}/pulls/{1}/reviews/{2}".FormatUri(repositoryId, pullRequestNumber, reviewId);
         }
 
         /// <summary>
@@ -1783,22 +1837,22 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri PullRequestReviewCommentReactions(string owner, string name, int number)
+        public static Uri PullRequestReviewCommentReactions(string owner, string name, long commentId)
         {
-            return "repos/{0}/{1}/pulls/comments/{2}/reactions".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/pulls/comments/{2}/reactions".FormatUri(owner, name, commentId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reactions of a specified pull request review comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        public static Uri PullRequestReviewCommentReactions(long repositoryId, int number)
+        public static Uri PullRequestReviewCommentReactions(long repositoryId, long commentId)
         {
-            return "repositories/{0}/pulls/comments/{1}/reactions".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/comments/{1}/reactions".FormatUri(repositoryId, commentId);
         }
 
 
@@ -1807,24 +1861,24 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri PullRequestReviewCommentReaction(string owner, string name, int number, int reaction)
+        public static Uri PullRequestReviewCommentReaction(string owner, string name, long commentId, long reaction)
         {
-            return "repos/{0}/{1}/pulls/comments/{2}/reactions/{3}".FormatUri(owner, name, number, reaction);
+            return "repos/{0}/{1}/pulls/comments/{2}/reactions/{3}".FormatUri(owner, name, commentId, reaction);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified pull request review comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reactionid for the comment</param>
         /// <returns></returns>
-        public static Uri PullRequestReviewCommentReaction(long repositoryId, int number, int reaction)
+        public static Uri PullRequestReviewCommentReaction(long repositoryId, long commentId, long reaction)
         {
-            return "repositories/{0}/pulls/comments/{1}/reactions/{2}".FormatUri(repositoryId, number, reaction);
+            return "repositories/{0}/pulls/comments/{1}/reactions/{2}".FormatUri(repositoryId, commentId, reaction);
         }
 
         /// <summary>
@@ -1925,22 +1979,22 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for child teams
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="parentTeamId">The id of the parent team</param>
         /// <returns></returns>
-        public static Uri TeamChildTeams(int id)
+        public static Uri TeamChildTeams(long parentTeamId)
         {
-            return "teams/{0}/teams".FormatUri(id);
+            return "teams/{0}/teams".FormatUri(parentTeamId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for teams
         /// use for getting, updating, or deleting a <see cref="Team"/>.
         /// </summary>
-        /// <param name="id">The id of the <see cref="Team"/>.</param>
+        /// <param name="teamId">The id of the <see cref="Team"/>.</param>
         /// <returns></returns>
-        public static Uri Teams(int id)
+        public static Uri Teams(long teamId)
         {
-            return "teams/{0}".FormatUri(id);
+            return "teams/{0}".FormatUri(teamId);
         }
 
         /// <summary>
@@ -1948,72 +2002,72 @@ namespace Octokit
         /// use for updating, or deleteing a <see cref="Team"/>.
         /// </summary>
         /// <param name="org"></param>
-        /// <param name="teamSlug"></param>
+        /// <param name="teamId"></param>
         /// <returns></returns>
-        public static Uri TeamsByOrganizationAndSlug(string org, string teamSlug)
+        public static Uri TeamsByOrganizationAndSlug(string org, string teamId)
         {
-            return "orgs/{0}/teams/{1}".FormatUri(org, teamSlug);
+            return "orgs/{0}/teams/{1}".FormatUri(org, teamId);
         }
 
         /// <summary>
         /// returns the <see cref="Uri"/> for team member
         /// </summary>
-        /// <param name="id">The team id</param>
+        /// <param name="teamId">The team id</param>
         /// <param name="login">The user login.</param>
-        public static Uri TeamMember(int id, string login)
+        public static Uri TeamMember(long teamId, string login)
         {
-            return "teams/{0}/memberships/{1}".FormatUri(id, login);
+            return "teams/{0}/memberships/{1}".FormatUri(teamId, login);
         }
 
         /// <summary>
         /// returns the <see cref="Uri"/> for team members list
         /// </summary>
-        /// <param name="id">The team id</param>
-        public static Uri TeamMembers(int id)
+        /// <param name="teamId">The team id</param>
+        public static Uri TeamMembers(long teamId)
         {
-            return "teams/{0}/members".FormatUri(id);
+            return "teams/{0}/members".FormatUri(teamId);
         }
 
         /// <summary>
         /// returns the <see cref="Uri"/> for the repositories
         /// </summary>
-        /// <param name="id">The team id</param>
-        public static Uri TeamRepositories(int id)
+        /// <param name="teamId">The team id</param>
+        public static Uri TeamRepositories(long teamId)
         {
-            return "teams/{0}/repos".FormatUri(id);
+            return "teams/{0}/repos".FormatUri(teamId);
         }
 
         /// <summary>
         /// returns the <see cref="Uri"/> for a team repository
         /// </summary>
-        /// <param name="id">The team id</param>
+        /// <param name="teamId">The team id</param>
         /// <param name="organization">The organization id</param>
         /// <param name="repoName">The repository name</param>
-        public static Uri TeamRepository(int id, string organization, string repoName)
+        public static Uri TeamRepository(long teamId, string organization, string repoName)
         {
-            return "teams/{0}/repos/{1}/{2}".FormatUri(id, organization, repoName);
+            return "teams/{0}/repos/{1}/{2}".FormatUri(teamId, organization, repoName);
         }
 
         /// <summary>
         /// returns the <see cref="Uri"/> for a team repository
         /// </summary>
         /// <param name="org">The organization name. The name is not case sensitive.</param>
-        /// <param name="teamSlug">The slug of the team name.</param>
+        /// <param name="teamId">The slug of the team name.</param>
         /// <param name="owner">The account owner of the repository. The name is not case sensitive.</param>
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
-        public static Uri TeamPermissionsForARepository(string org, string teamSlug, string owner, string repo)
+        public static Uri TeamPermissionsForARepository(string org, string teamId, string owner, string repo)
         {
-            return "/orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamSlug, owner, repo);
+            return "/orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamId, owner, repo);
         }
 
         /// <summary>
         /// returns the <see cref="Uri"/> for the teams pending invitations
         /// </summary>
-        /// <param name="id">The team id</param>
+        /// <param name="teamId">The team id</param>
         /// <returns></returns>
-        public static Uri TeamPendingInvitations(int id)
+        public static Uri TeamPendingInvitations(long teamId)
         {
-            return "teams/{0}/invitations".FormatUri(id);
+            return "teams/{0}/invitations".FormatUri(teamId);
         }
 
         /// <summary>
@@ -2529,11 +2583,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The id of the deploy key of the repository</param>
+        /// <param name="deployKeyId">The id of the deploy key of the repository</param>
         /// <returns></returns>
-        public static Uri RepositoryDeployKey(string owner, string name, int number)
+        public static Uri RepositoryDeployKey(string owner, string name, int deployKeyId)
         {
-            return "repos/{0}/{1}/keys/{2}".FormatUri(owner, name, number);
+            return "repos/{0}/{1}/keys/{2}".FormatUri(owner, name, deployKeyId);
         }
 
         /// <summary>
@@ -2556,6 +2610,30 @@ namespace Octokit
         public static Uri RepositoryVulnerabilityAlerts(string owner, string name)
         {
             return "repos/{0}/{1}/vulnerability-alerts".FormatUri(owner, name);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for getting Dependency-Diffs between two revisions.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="base">The base revision</param>
+        /// <param name="head">The head revision</param>
+        /// <returns>The <see cref="System.Uri"/> for getting Dependency-Diffs between two revisions for the given repository.</returns>
+        public static Uri DependencyReview(string owner, string name, string @base, string head)
+        {
+            return "repos/{0}/{1}/dependency-graph/compare/{2}...{3}".FormatUri(owner, name, @base, head);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a Dependency Snapshot for the given repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for submitting a Dependency Snapshot for the given repository.</returns>
+        public static Uri DependencySubmission(string owner, string name)
+        {
+            return "repos/{0}/{1}/dependency-graph/snapshots".FormatUri(owner, name);
         }
 
         /// <summary>
@@ -2587,7 +2665,7 @@ namespace Octokit
         /// <param name="name">Name of the repository</param>
         /// <param name="deploymentId">Id of the deployment</param>
         /// <returns></returns>
-        public static Uri DeploymentStatuses(string owner, string name, int deploymentId)
+        public static Uri DeploymentStatuses(string owner, string name, long deploymentId)
         {
             return "repos/{0}/{1}/deployments/{2}/statuses".FormatUri(owner, name, deploymentId);
         }
@@ -2904,12 +2982,12 @@ namespace Octokit
             return EnterpriseAdminStats("all");
         }
 
-        public static Uri EnterpriseLdapTeamMapping(int teamId)
+        public static Uri EnterpriseLdapTeamMapping(long teamId)
         {
             return "admin/ldap/teams/{0}/mapping".FormatUri(teamId);
         }
 
-        public static Uri EnterpriseLdapTeamSync(int teamId)
+        public static Uri EnterpriseLdapTeamSync(long teamId)
         {
             return "admin/ldap/teams/{0}/sync".FormatUri(teamId);
         }
@@ -2929,9 +3007,9 @@ namespace Octokit
             return "enterprise/settings/license".FormatUri();
         }
 
-        public static Uri EnterpriseMigrationById(string org, int id)
+        public static Uri EnterpriseMigrationById(string org, long migrationId)
         {
-            return "orgs/{0}/migrations/{1}".FormatUri(org, id);
+            return "orgs/{0}/migrations/{1}".FormatUri(org, migrationId);
         }
 
         public static Uri EnterpriseMigrations(string org)
@@ -2939,14 +3017,14 @@ namespace Octokit
             return "orgs/{0}/migrations".FormatUri(org);
         }
 
-        public static Uri EnterpriseMigrationArchive(string org, int id)
+        public static Uri EnterpriseMigrationArchive(string org, long migrationId)
         {
-            return "orgs/{0}/migrations/{1}/archive".FormatUri(org, id);
+            return "orgs/{0}/migrations/{1}/archive".FormatUri(org, migrationId);
         }
 
-        public static Uri EnterpriseMigrationUnlockRepository(string org, int id, string repo)
+        public static Uri EnterpriseMigrationUnlockRepository(string org, long migrationId, string repo)
         {
-            return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, id, repo);
+            return "orgs/{0}/migrations/{1}/repos/{2}/lock".FormatUri(org, migrationId, repo);
         }
 
         public static Uri EnterpriseManagementConsoleMaintenance(string managementConsolePassword, Uri baseAddress)
@@ -3074,11 +3152,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the assets specified by the asset id.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the release asset</param>
+        /// <param name="releaseAssetId">The id of the release asset</param>
         /// <returns>The <see cref="Uri"/> that returns the assets specified by the asset id.</returns>
-        public static Uri Asset(long repositoryId, int id)
+        public static Uri Asset(long repositoryId, int releaseAssetId)
         {
-            return "repositories/{0}/releases/assets/{1}".FormatUri(repositoryId, id);
+            return "repositories/{0}/releases/assets/{1}".FormatUri(repositoryId, releaseAssetId);
         }
 
         /// <summary>
@@ -3154,11 +3232,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns>The <see cref="Uri"/> for the specified comment.</returns>
-        public static Uri CommitComment(long repositoryId, int number)
+        public static Uri CommitComment(long repositoryId, long commentId)
         {
-            return "repositories/{0}/comments/{1}".FormatUri(repositoryId, number);
+            return "repositories/{0}/comments/{1}".FormatUri(repositoryId, commentId);
         }
 
         /// <summary>
@@ -3235,6 +3313,28 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for getting Dependency-Diffs between two revisions.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="base">The base revision</param>
+        /// <param name="head">The head revision</param>
+        /// <returns>The <see cref="System.Uri"/> for getting Dependency-Diffs between two revisions for the given repository.</returns>
+        public static Uri DependencyReview(long repositoryId, string @base, string head)
+        {
+            return "repositories/{0}/dependency-graph/compare/{1}...{2}".FormatUri(repositoryId, @base, head);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for submitting a Dependency Snapshot for the given repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository</param>
+        /// <returns>The <see cref="System.Uri"/> for submitting a Dependency Snapshot for the given repository.</returns>
+        public static Uri DependencySubmission(long repositoryId)
+        {
+            return "repositories/{0}/dependency-graph/snapshots".FormatUri(repositoryId);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the Deployments API for the given repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
@@ -3260,7 +3360,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="deploymentId">Id of the deployment</param>
         /// <returns>The <see cref="Uri"/> for the Deployment Statuses API for the given deployment.</returns>
-        public static Uri DeploymentStatuses(long repositoryId, int deploymentId)
+        public static Uri DeploymentStatuses(long repositoryId, long deploymentId)
         {
             return "repositories/{0}/deployments/{1}/statuses".FormatUri(repositoryId, deploymentId);
         }
@@ -3288,34 +3388,34 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified Id.
         /// </summary>
-        /// <param name="id">The <see cref="Uri"/> that returns the GPG Key for the authenticated user for the specified Id.</param>
+        /// <param name="gpgKeyId">The GPG Key Id.</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-        public static Uri GpgKeys(int id)
+        public static Uri GpgKeys(long gpgKeyId)
         {
-            return "user/gpg_keys/{0}".FormatUri(id);
+            return "user/gpg_keys/{0}".FormatUri(gpgKeyId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the specified issue.</returns>
-        public static Uri Issue(long repositoryId, int number)
+        public static Uri Issue(long repositoryId, int issueNumber)
         {
-            return "repositories/{0}/issues/{1}".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/{1}".FormatUri(repositoryId, issueNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The comment id</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns>The <see cref="Uri"/> for the specified comment.</returns>
-        public static Uri IssueComment(long repositoryId, int id)
+        public static Uri IssueComment(long repositoryId, long commentId)
         {
-            return "repositories/{0}/issues/comments/{1}".FormatUri(repositoryId, id);
+            return "repositories/{0}/issues/comments/{1}".FormatUri(repositoryId, commentId);
         }
 
         /// <summary>
@@ -3332,45 +3432,45 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for the comments of a specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the comments of a specified issue.</returns>
-        public static Uri IssueComments(long repositoryId, int number)
+        public static Uri IssueComments(long repositoryId, int issueNumber)
         {
-            return "repositories/{0}/issues/{1}/comments".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/{1}/comments".FormatUri(repositoryId, issueNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the named label for the specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label</param>
         /// <returns>The <see cref="Uri"/> that returns the named label for the specified issue.</returns>
-        public static Uri IssueLabel(long repositoryId, int number, string labelName)
+        public static Uri IssueLabel(long repositoryId, int issueNumber, string labelName)
         {
-            return "repositories/{0}/issues/{1}/labels/{2}".FormatUri(repositoryId, number, labelName);
+            return "repositories/{0}/issues/{1}/labels/{2}".FormatUri(repositoryId, issueNumber, labelName);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for the specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns>The <see cref="Uri"/> that returns all of the labels for the specified issue.</returns>
-        public static Uri IssueLabels(long repositoryId, int number)
+        public static Uri IssueLabels(long repositoryId, int issueNumber)
         {
-            return "repositories/{0}/issues/{1}/labels".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/{1}/labels".FormatUri(repositoryId, issueNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified issue to be locked/unlocked.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns>The <see cref="Uri"/> for the specified issue to be locked/unlocked.</returns>
-        public static Uri IssueLock(long repositoryId, int number)
+        public static Uri IssueLock(long repositoryId, int issueNumber)
         {
-            return "repositories/{0}/issues/{1}/lock".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/{1}/lock".FormatUri(repositoryId, issueNumber);
         }
 
         /// <summary>
@@ -3387,22 +3487,22 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The event id</param>
+        /// <param name="eventId">The event id</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event and issue info for the specified event.</returns>
-        public static Uri IssuesEvent(long repositoryId, long id)
+        public static Uri IssuesEvent(long repositoryId, long eventId)
         {
-            return "repositories/{0}/issues/events/{1}".FormatUri(repositoryId, id);
+            return "repositories/{0}/issues/events/{1}".FormatUri(repositoryId, eventId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <returns>The <see cref="Uri"/> that returns the issue/pull request event info for the specified issue.</returns>
-        public static Uri IssuesEvents(long repositoryId, int number)
+        public static Uri IssuesEvents(long repositoryId, int issueNumber)
         {
-            return "repositories/{0}/issues/{1}/events".FormatUri(repositoryId, number);
+            return "repositories/{0}/issues/{1}/events".FormatUri(repositoryId, issueNumber);
         }
 
         /// <summary>
@@ -3450,33 +3550,33 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the pull request merge state.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the pull request merge state.</returns>
-        public static Uri MergePullRequest(long repositoryId, int number)
+        public static Uri MergePullRequest(long repositoryId, int pullRequestNumber)
         {
-            return "repositories/{0}/pulls/{1}/merge".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}/merge".FormatUri(repositoryId, pullRequestNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the specified milestone.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <returns>The <see cref="Uri"/> that returns the specified milestone.</returns>
-        public static Uri Milestone(long repositoryId, int number)
+        public static Uri Milestone(long repositoryId, int milestoneNumber)
         {
-            return "repositories/{0}/milestones/{1}".FormatUri(repositoryId, number);
+            return "repositories/{0}/milestones/{1}".FormatUri(repositoryId, milestoneNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns all of the labels for all issues in the specified milestone.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <returns>The <see cref="Uri"/> that returns all of the labels for all issues in the specified milestone.</returns>
-        public static Uri MilestoneLabels(long repositoryId, int number)
+        public static Uri MilestoneLabels(long repositoryId, int milestoneNumber)
         {
-            return "repositories/{0}/milestones/{1}/labels".FormatUri(repositoryId, number);
+            return "repositories/{0}/milestones/{1}/labels".FormatUri(repositoryId, milestoneNumber);
         }
 
         /// <summary>
@@ -3503,66 +3603,66 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the specified pull request.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the specified pull request.</returns>
-        public static Uri PullRequest(long repositoryId, int number)
+        public static Uri PullRequest(long repositoryId, int pullRequestNumber)
         {
-            return "repositories/{0}/pulls/{1}".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}".FormatUri(repositoryId, pullRequestNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the commits on a pull request.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the commits on a pull request.</returns>
-        public static Uri PullRequestCommits(long repositoryId, int number)
+        public static Uri PullRequestCommits(long repositoryId, int pullRequestNumber)
         {
-            return "repositories/{0}/pulls/{1}/commits".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}/commits".FormatUri(repositoryId, pullRequestNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> that returns the files on a pull request.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that returns the files on a pull request.</returns>
-        public static Uri PullRequestFiles(long repositoryId, int number)
+        public static Uri PullRequestFiles(long repositoryId, int pullRequestNumber)
         {
-            return "repositories/{0}/pulls/{1}/files".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}/files".FormatUri(repositoryId, pullRequestNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the specified pull request review comment.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The comment number</param>
+        /// <param name="commentId">The comment id</param>
         /// <returns>The <see cref="Uri"/> that </returns>
-        public static Uri PullRequestReviewComment(long repositoryId, int number)
+        public static Uri PullRequestReviewComment(long repositoryId, long commentId)
         {
-            return "repositories/{0}/pulls/comments/{1}".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/comments/{1}".FormatUri(repositoryId, commentId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the comments of a specified pull request review.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that </returns>
-        public static Uri PullRequestReviewComments(long repositoryId, int number)
+        public static Uri PullRequestReviewComments(long repositoryId, int pullRequestNumber)
         {
-            return "repositories/{0}/pulls/{1}/comments".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}/comments".FormatUri(repositoryId, pullRequestNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for the reviews of a specified pull request
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> that </returns>
-        public static Uri PullRequestReviews(long repositoryId, int number)
+        public static Uri PullRequestReviews(long repositoryId, int pullRequestNumber)
         {
-            return "repositories/{0}/pulls/{1}/reviews".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}/reviews".FormatUri(repositoryId, pullRequestNumber);
         }
 
         /// <summary>
@@ -3610,11 +3710,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns all the assets for the specified release for the specified repository.</returns>
-        public static Uri ReleaseAssets(long repositoryId, int id)
+        public static Uri ReleaseAssets(long repositoryId, long releaseId)
         {
-            return "repositories/{0}/releases/{1}/assets".FormatUri(repositoryId, id);
+            return "repositories/{0}/releases/{1}/assets".FormatUri(repositoryId, releaseId);
         }
 
         /// <summary>
@@ -3641,11 +3741,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns a single release for the specified repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the release</param>
+        /// <param name="releaseId">The id of the release</param>
         /// <returns>The <see cref="Uri"/> that returns a single release for the specified repository</returns>
-        public static Uri Releases(long repositoryId, int id)
+        public static Uri Releases(long repositoryId, long releaseId)
         {
-            return "repositories/{0}/releases/{1}".FormatUri(repositoryId, id);
+            return "repositories/{0}/releases/{1}".FormatUri(repositoryId, releaseId);
         }
 
         /// <summary>
@@ -3796,11 +3896,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> for a deploy key for a repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The id of the deploy key of the repository</param>
+        /// <param name="deployKeyId">The id of the deploy key of the repository</param>
         /// <returns>The <see cref="Uri"/> for a deploy key for a repository</returns>
-        public static Uri RepositoryDeployKey(long repositoryId, int number)
+        public static Uri RepositoryDeployKey(long repositoryId, int deployKeyId)
         {
-            return "repositories/{0}/keys/{1}".FormatUri(repositoryId, number);
+            return "repositories/{0}/keys/{1}".FormatUri(repositoryId, deployKeyId);
         }
 
         /// <summary>
@@ -4062,11 +4162,11 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for deleting a reaction.
         /// </summary>
-        /// <param name="number">The reaction number</param>
+        /// <param name="reactionId">The reaction number</param>
         /// <returns>The <see cref="Uri"/> that lists the watched repositories for the authenticated user.</returns>
-        public static Uri Reactions(int number)
+        public static Uri Reactions(int reactionId)
         {
-            return "reactions/{0}".FormatUri(number);
+            return "reactions/{0}".FormatUri(reactionId);
         }
 
         /// <summary>
@@ -4085,7 +4185,7 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <returns>The <see cref="Uri"/> for repository invitations.</returns>
-        public static Uri RepositoryInvitations(long repositoryId, int invitationId)
+        public static Uri RepositoryInvitations(long repositoryId, long invitationId)
         {
             return "repositories/{0}/invitations/{1}".FormatUri(repositoryId, invitationId);
         }
@@ -4104,7 +4204,7 @@ namespace Octokit
         /// </summary>
         /// <param name="invitationId">The id of the invitation</param>
         /// <returns>The <see cref="Uri"/> for invitations for the current user.</returns>
-        public static Uri UserInvitations(int invitationId)
+        public static Uri UserInvitations(long invitationId)
         {
             return "user/repository_invitations/{0}".FormatUri(invitationId);
         }
@@ -4198,22 +4298,22 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
-        public static Uri PullRequestReviewRequests(string owner, string repo, int number)
+        public static Uri PullRequestReviewRequests(string owner, string repo, int pullRequestNumber)
         {
-            return "repos/{0}/{1}/pulls/{2}/requested_reviewers".FormatUri(owner, repo, number);
+            return "repos/{0}/{1}/pulls/{2}/requested_reviewers".FormatUri(owner, repo, pullRequestNumber);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for pull request review requests.
         /// </summary>
         /// <param name="repositoryId">The id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <returns>The <see cref="Uri"/> for pull request review requests.</returns>
-        public static Uri PullRequestReviewRequests(long repositoryId, int number)
+        public static Uri PullRequestReviewRequests(long repositoryId, int pullRequestNumber)
         {
-            return "repositories/{0}/pulls/{1}/requested_reviewers".FormatUri(repositoryId, number);
+            return "repositories/{0}/pulls/{1}/requested_reviewers".FormatUri(repositoryId, pullRequestNumber);
         }
 
         /// <summary>
@@ -4250,21 +4350,21 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> for a project.
         /// </summary>
-        /// <param name="id">The id of the project</param>
+        /// <param name="projectId">The id of the project</param>
         /// <returns>The <see cref="Uri"/> for repository projects.</returns>
-        public static Uri Project(int id)
+        public static Uri Project(int projectId)
         {
-            return "projects/{0}".FormatUri(id);
+            return "projects/{0}".FormatUri(projectId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for project columns.
         /// </summary>
-        /// <param name="id">The id of the columns</param>
+        /// <param name="columnId">The id of the columns</param>
         /// <returns>The <see cref="Uri"/> for project columns.</returns>
-        public static Uri ProjectColumn(int id)
+        public static Uri ProjectColumn(int columnId)
         {
-            return "projects/columns/{0}".FormatUri(id);
+            return "projects/columns/{0}".FormatUri(columnId);
         }
 
         /// <summary>
@@ -4280,21 +4380,21 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> to move a project column.
         /// </summary>
-        /// <param name="id">The id of the column to move</param>
+        /// <param name="columnId">The id of the column to move</param>
         /// <returns>The <see cref="Uri"/> to move a project column.</returns>
-        public static Uri ProjectColumnMove(int id)
+        public static Uri ProjectColumnMove(int columnId)
         {
-            return "projects/columns/{0}/moves".FormatUri(id);
+            return "projects/columns/{0}/moves".FormatUri(columnId);
         }
 
         /// <summary>
         /// Returns the <see cref="Uri"/> for project cards.
         /// </summary>
-        /// <param name="id">The id of the card</param>
+        /// <param name="cardId">The id of the card</param>
         /// <returns>The <see cref="Uri"/> for project cards.</returns>
-        public static Uri ProjectCard(int id)
+        public static Uri ProjectCard(long cardId)
         {
-            return "projects/columns/cards/{0}".FormatUri(id);
+            return "projects/columns/cards/{0}".FormatUri(cardId);
         }
 
         /// <summary>
@@ -4310,11 +4410,11 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> to move a project card.
         /// </summary>
-        /// <param name="id">The id of the card to move</param>
+        /// <param name="cardId">The id of the card to move</param>
         /// <returns>The <see cref="Uri"/> to move a project card.</returns>
-        public static Uri ProjectCardMove(int id)
+        public static Uri ProjectCardMove(long cardId)
         {
-            return "projects/columns/cards/{0}/moves".FormatUri(id);
+            return "projects/columns/cards/{0}/moves".FormatUri(cardId);
         }
 
         /// <summary>
@@ -4342,11 +4442,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the specified check run.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The check run Id</param>
+        /// <param name="checkRunId">The check run Id</param>
         /// <returns>The <see cref="Uri"/> that returns the specified check run.</returns>
-        public static Uri CheckRun(long repositoryId, long id)
+        public static Uri CheckRun(long repositoryId, long checkRunId)
         {
-            return "repositories/{0}/check-runs/{1}".FormatUri(repositoryId, id);
+            return "repositories/{0}/check-runs/{1}".FormatUri(repositoryId, checkRunId);
         }
 
         /// <summary>
@@ -4354,11 +4454,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
-        /// <param name="id">The check run Id</param>
+        /// <param name="checkRunId">The check run Id</param>
         /// <returns>The <see cref="Uri"/> that returns the specified check run.</returns>
-        public static Uri CheckRun(string owner, string repo, long id)
+        public static Uri CheckRun(string owner, string repo, long checkRunId)
         {
-            return "repos/{0}/{1}/check-runs/{2}".FormatUri(owner, repo, id);
+            return "repos/{0}/{1}/check-runs/{2}".FormatUri(owner, repo, checkRunId);
         }
 
         /// <summary>
@@ -4455,11 +4555,11 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns the specified check suite.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The check run Id</param>
+        /// <param name="checkRunId">The check run Id</param>
         /// <returns>The <see cref="Uri"/> that returns the specified check suite.</returns>
-        public static Uri CheckSuite(long repositoryId, long id)
+        public static Uri CheckSuite(long repositoryId, long checkRunId)
         {
-            return "repositories/{0}/check-suites/{1}".FormatUri(repositoryId, id);
+            return "repositories/{0}/check-suites/{1}".FormatUri(repositoryId, checkRunId);
         }
 
         /// <summary>
@@ -4467,11 +4567,11 @@ namespace Octokit
         /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
-        /// <param name="id">The check run Id</param>
+        /// <param name="checkRunId">The check run Id</param>
         /// <returns>The <see cref="Uri"/> that returns the specified check suite.</returns>
-        public static Uri CheckSuite(string owner, string repo, long id)
+        public static Uri CheckSuite(string owner, string repo, long checkRunId)
         {
-            return "repos/{0}/{1}/check-suites/{2}".FormatUri(owner, repo, id);
+            return "repos/{0}/{1}/check-suites/{2}".FormatUri(owner, repo, checkRunId);
         }
 
         /// <summary>
@@ -4560,6 +4660,17 @@ namespace Octokit
         public static Uri CheckSuitePreferences(string owner, string repo)
         {
             return "repos/{0}/{1}/check-suites/preferences".FormatUri(owner, repo);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the repository custom property values for the repository
+        /// </summary>
+        /// <param name="owner">The owner of the repo</param>
+        /// <param name="repo">The name of the repo</param>
+        /// <returns>The <see cref="Uri"/> that handles the repository secrets for the repository</returns>
+        public static Uri RepositoryCustomPropertyValues(string owner, string repo)
+        {
+            return "repos/{0}/{1}/properties/values".FormatUri(owner, repo);
         }
 
         /// <summary>
@@ -5492,7 +5603,7 @@ namespace Octokit
         {
             return "orgs/{0}/actions/runner-groups/{1}/repositories".FormatUri(org, runnerGroupId);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that handles adding or removing of copilot licenses for an organisation
         /// </summary>
@@ -5502,7 +5613,7 @@ namespace Octokit
         {
             return $"orgs/{org}/copilot/billing/selected_users".FormatUri(org);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that handles reading copilot billing settings for an organization
         /// </summary>
@@ -5512,7 +5623,7 @@ namespace Octokit
         {
             return $"orgs/{org}/copilot/billing".FormatUri(org);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that allows for searching across all licenses for an organisation
         /// </summary>
@@ -5522,7 +5633,7 @@ namespace Octokit
         {
             return $"orgs/{org}/copilot/billing/seats".FormatUri(org);
         }
-        
+
         public static Uri Codespaces()
         {
             return _currentUserAllCodespaces;

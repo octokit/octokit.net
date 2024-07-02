@@ -27,7 +27,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var keyObservable = clients.GetPublicKey(Helper.Organization);
                 var key = await keyObservable;
 
-                Assert.True(!string.IsNullOrWhiteSpace(key.KeyId));
+                Assert.False(string.IsNullOrWhiteSpace(key.KeyId));
             }
         }
 
@@ -61,7 +61,7 @@ namespace Octokit.Tests.Integration.Reactive
                 var secret = await secretObservable;
 
                 Assert.NotNull(secret);
-                Assert.True(secret.Name == "TEST");
+                Assert.Equal("TEST", secret.Name);
             }
         }
 

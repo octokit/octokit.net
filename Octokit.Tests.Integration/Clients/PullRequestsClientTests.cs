@@ -104,7 +104,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.True(pullRequests[0].Id > 0);
     }
@@ -119,7 +119,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(result.Draft, pullRequests[0].Draft);
         Assert.True(pullRequests[0].Id > 0);
@@ -135,7 +135,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -149,7 +149,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(result.Draft, pullRequests[0].Draft);
         Assert.True(pullRequests[0].Id > 0);
@@ -171,10 +171,10 @@ public class PullRequestsClientTests : IDisposable
         // Retrieve the Pull Requests
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
-        Assert.Equal(1, pullRequests[0].Assignees.Count);
+        Assert.Single(pullRequests[0].Assignees);
         Assert.Contains(pullRequests[0].Assignees, x => x.Login == Helper.UserName);
     }
 
@@ -194,10 +194,10 @@ public class PullRequestsClientTests : IDisposable
         // Retrieve the Pull Requests
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
-        Assert.Equal(1, pullRequests[0].Assignees.Count);
+        Assert.Single(pullRequests[0].Assignees);
         Assert.Contains(pullRequests[0].Assignees, x => x.Login == Helper.UserName);
     }
 
@@ -217,10 +217,10 @@ public class PullRequestsClientTests : IDisposable
         // Retrieve the Pull Requests
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
-        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.Single(pullRequests[0].Labels);
         Assert.Contains(pullRequests[0].Labels, x => x.Name == labelName);
     }
 
@@ -240,10 +240,10 @@ public class PullRequestsClientTests : IDisposable
         // Retrieve the Pull Requests
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
         Assert.Equal(Helper.UserName, pullRequests[0].Assignee.Login);
-        Assert.Equal(1, pullRequests[0].Labels.Count);
+        Assert.Single(pullRequests[0].Labels);
         Assert.Contains(pullRequests[0].Labels, x => x.Name == labelName);
     }
 
@@ -263,7 +263,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -283,7 +283,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -306,7 +306,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -329,7 +329,7 @@ public class PullRequestsClientTests : IDisposable
 
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -404,7 +404,7 @@ public class PullRequestsClientTests : IDisposable
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -419,7 +419,7 @@ public class PullRequestsClientTests : IDisposable
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id, openPullRequests);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -440,7 +440,7 @@ public class PullRequestsClientTests : IDisposable
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -461,7 +461,7 @@ public class PullRequestsClientTests : IDisposable
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id, openPullRequests, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -485,7 +485,7 @@ public class PullRequestsClientTests : IDisposable
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, openPullRequests, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -509,7 +509,7 @@ public class PullRequestsClientTests : IDisposable
         var openPullRequests = new PullRequestRequest { State = ItemStateFilter.Open };
         var pullRequests = await _fixture.GetAllForRepository(_context.Repository.Id, openPullRequests, options);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
         Assert.Equal(result.Title, pullRequests[0].Title);
     }
 
@@ -686,7 +686,7 @@ public class PullRequestsClientTests : IDisposable
         var closedPullRequests = new PullRequestRequest { State = ItemStateFilter.Closed };
         var pullRequests = await _fixture.GetAllForRepository(Helper.UserName, _context.RepositoryName, closedPullRequests);
 
-        Assert.Equal(1, pullRequests.Count);
+        Assert.Single(pullRequests);
     }
 
     [IntegrationTest]

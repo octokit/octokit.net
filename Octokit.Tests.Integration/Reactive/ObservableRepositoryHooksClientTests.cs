@@ -67,7 +67,7 @@ namespace Octokit.Tests.Integration.Reactive
 
                 var hooks = await client.GetAll(_fixture.RepositoryOwner, _fixture.RepositoryName, options).ToList();
 
-                Assert.Equal(1, hooks.Count);
+                Assert.Single(hooks);
             }
 
             [IntegrationTest]

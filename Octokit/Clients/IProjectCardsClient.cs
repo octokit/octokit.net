@@ -60,7 +60,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<ProjectCard> Get(int id);
+        Task<ProjectCard> Get(long id);
 
         /// <summary>
         /// Creates a card.
@@ -80,7 +80,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
-        Task<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate);
+        Task<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate);
 
         /// <summary>
         /// Deletes a card.
@@ -89,7 +89,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        Task<bool> Delete(int id);
+        Task<bool> Delete(long id);
 
         /// <summary>
         /// Moves a card.
@@ -99,6 +99,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        Task<bool> Move(int id, ProjectCardMove position);
+        Task<bool> Move(long id, ProjectCardMove position);
     }
 }

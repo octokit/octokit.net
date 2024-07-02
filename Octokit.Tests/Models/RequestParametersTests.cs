@@ -29,7 +29,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
                 Assert.DoesNotContain("foo", result.Keys);
                 Assert.Equal("123", result["bar"]);
             }
@@ -41,7 +41,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
                 Assert.Equal("yuck", result["nom"]);
             }
 
@@ -52,7 +52,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
                 Assert.Equal("bland", result["nom"]);
             }
 
@@ -63,7 +63,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
                 Assert.Equal("noms", result["nom"]);
             }
 
@@ -78,7 +78,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
                 Assert.Equal("2013-01-23T16:30:00Z", result["when"]);
             }
 
@@ -89,7 +89,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(0, result.Count);
+                Assert.Empty(result);
             }
 
             [Fact]
@@ -99,7 +99,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
                 Assert.Equal("one,two", result["strings"]);
             }
 
@@ -110,7 +110,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(0, result.Count);
+                Assert.Empty(result);
             }
 
             [Fact]
@@ -120,7 +120,7 @@ namespace Octokit.Tests.Models
 
                 var result = model.ToParametersDictionary();
 
-                Assert.Equal(1, result.Count);
+                Assert.Single(result);
                 Assert.Equal("verbose", result["prop"]);
             }
 

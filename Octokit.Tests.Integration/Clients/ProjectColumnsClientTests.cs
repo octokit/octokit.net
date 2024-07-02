@@ -51,7 +51,7 @@ public class ProjectColumnsClientTests
 
             var columns = await _github.Repository.Project.Column.GetAll(project.Id, options);
 
-            Assert.Equal(1, columns.Count);
+            Assert.Single(columns);
             Assert.Equal(column1.Id, columns[0].Id);
         }
 
@@ -71,7 +71,7 @@ public class ProjectColumnsClientTests
 
             var columns = await _github.Repository.Project.Column.GetAll(project.Id, options);
 
-            Assert.Equal(1, columns.Count);
+            Assert.Single(columns);
             Assert.Equal(column2.Id, columns[0].Id);
         }
 

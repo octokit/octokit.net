@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<Milestone> Get(string owner, string name, int number);
+        IObservable<Milestone> Get(string owner, string name, int milestoneNumber);
 
         /// <summary>
         /// Gets a single Milestone by number.
@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<Milestone> Get(long repositoryId, int number);
+        IObservable<Milestone> Get(long repositoryId, int milestoneNumber);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -154,11 +154,11 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The Milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        IObservable<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate);
+        IObservable<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate);
 
         /// <summary>
         /// Updates a milestone for the specified repository. Any user with pull access to a repository can create a
@@ -166,11 +166,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The Milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        IObservable<Milestone> Update(long repositoryId, int number, MilestoneUpdate milestoneUpdate);
+        IObservable<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate);
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -179,9 +179,9 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int number);
+        IObservable<Unit> Delete(string owner, string name, int milestoneNumber);
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -189,8 +189,8 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(long repositoryId, int number);
+        IObservable<Unit> Delete(long repositoryId, int milestoneNumber);
     }
 }

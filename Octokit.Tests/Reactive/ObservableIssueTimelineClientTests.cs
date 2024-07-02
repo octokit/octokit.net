@@ -46,7 +46,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>());
-                Assert.Equal(1, timelineEvents.Count);
+                Assert.Single(timelineEvents);
             }
 
             [Fact]
@@ -67,7 +67,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"));
-                Assert.Equal(1, timelineEvents.Count);
+                Assert.Single(timelineEvents);
             }
 
             [Fact]
@@ -87,7 +87,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
                     Arg.Any<Dictionary<string, string>>());
-                Assert.Equal(1, timelineEvents.Count);
+                Assert.Single(timelineEvents);
             }
 
             [Fact]
@@ -107,7 +107,7 @@ namespace Octokit.Tests.Reactive
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"));
-                Assert.Equal(1, timelineEvents.Count);
+                Assert.Single(timelineEvents);
             }
 
             [Fact]

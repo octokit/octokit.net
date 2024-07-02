@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit", "Octokit\Octokit.csproj", "{104E8324-C2B9-43BE-8040-36B736A64D45}"
 EndProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{64FD6CD6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit.AsyncPaginationExtension", "Octokit.AsyncPaginationExtension\Octokit.AsyncPaginationExtension.csproj", "{0E8013E0-0CCF-4433-9E01-51AC288824C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit.Generators", "Octokit.Generators\Octokit.Generators.csproj", "{6A577AD0-2319-4FFC-8EF2-3CCDD31B0CD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Octokit.Generators", "Octokit.Generators\Octokit.Generators.csproj", "{6A577AD0-2319-4FFC-8EF2-3CCDD31B0CD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

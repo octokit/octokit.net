@@ -512,6 +512,28 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Create an organization invitation for a user
+        /// </summary>
+        /// <remarks>
+        /// This method requires authentication.
+        /// The authenticated user must be an organization owner.
+        /// See the <a href="https://developer.github.com/v3/orgs/members/#create-an-organization-invitation">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="invitationRequest">An <see cref="OrganizationInvitationRequest"/> instance containing the
+        /// details of the organization invitation</param>
+        /// <returns></returns>
+        [ManualRoute("POST", "/orgs/{org}/invitations")]
+        public Task<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
+            Ensure.ArgumentNotNull(invitationRequest, nameof(invitationRequest));
+
+            return ApiConnection.Post<OrganizationMembershipInvitation>(ApiUrls.OrganizationInvitations(org), invitationRequest);
+        }
+
+        /// <summary>
         /// Remove a user's membership with an organization.
         /// </summary>
         /// <remarks>
@@ -615,7 +637,7 @@ namespace Octokit
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/invitations/{invitation_id}")]
-        public Task CancelOrganizationInvitation(string org, int invitationId)
+        public Task CancelOrganizationInvitation(string org, long invitationId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrDefault(invitationId, nameof(invitationId));

@@ -44,5 +44,6 @@ namespace Octokit.Reactive
         IObservableActionsClient Actions { get; }
         IObservableCodespacesClient Codespaces { get; }
         IObservableCopilotClient Copilot { get; }
+        IObservableDependencyGraphClient DependencyGraph { get; }
     }
 }

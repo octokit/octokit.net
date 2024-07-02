@@ -20,8 +20,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number);
+        /// <param name="issueNumber">The number of the issue</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int issueNumber);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -30,8 +30,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number);
+        /// <param name="issueNumber">The number of the issue</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int issueNumber);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -41,9 +41,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int number, ApiOptions options);
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -52,9 +52,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int number, ApiOptions options);
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -104,8 +104,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the milestone</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number);
+        /// <param name="milestoneNumber">The number of the milestone</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int milestoneNumber);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -114,8 +114,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the milestone</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number);
+        /// <param name="milestoneNumber">The number of the milestone</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int milestoneNumber);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -125,9 +125,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the milestone</param>
+        /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int number, ApiOptions options);
+        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int milestoneNumber, ApiOptions options);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -136,9 +136,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the milestone</param>
+        /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int number, ApiOptions options);
+        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int milestoneNumber, ApiOptions options);
 
         /// <summary>
         /// Gets a single Label by name.
@@ -238,9 +238,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, int number, string[] labels);
+        Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, int issueNumber, string[] labels);
 
         /// <summary>
         /// Adds a label to an issue
@@ -249,9 +249,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, int number, string[] labels);
+        Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, int issueNumber, string[] labels);
 
         /// <summary>
         /// Removes a label from an issue
@@ -261,9 +261,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, int number, string labelName);
+        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, int issueNumber, string labelName);
 
         /// <summary>
         /// Removes a label from an issue
@@ -272,9 +272,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, int number, string labelName);
+        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, int issueNumber, string labelName);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -284,9 +284,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, int number, string[] labels);
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, int issueNumber, string[] labels);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -295,9 +295,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, int number, string[] labels);
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, int issueNumber, string[] labels);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -307,8 +307,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        Task RemoveAllFromIssue(string owner, string name, int number);
+        /// <param name="issueNumber">The number of the issue</param>
+        Task RemoveAllFromIssue(string owner, string name, int issueNumber);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -317,7 +317,7 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        Task RemoveAllFromIssue(long repositoryId, int number);
+        /// <param name="issueNumber">The number of the issue</param>
+        Task RemoveAllFromIssue(long repositoryId, int issueNumber);
     }
 }

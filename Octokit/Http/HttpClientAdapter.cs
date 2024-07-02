@@ -168,10 +168,18 @@ namespace Octokit.Internal
 
         static string GetContentMediaType(HttpContent httpContent)
         {
-            if (httpContent.Headers != null && httpContent.Headers.ContentType != null)
+            if (httpContent.Headers?.ContentType != null)
             {
                 return httpContent.Headers.ContentType.MediaType;
             }
+
+            // Issue #2898 - Bad "zip" Content-Type coming from Blob Storage for artifacts
+            if (httpContent.Headers?.TryGetValues("Content-Type", out var contentTypeValues) == true
+                && contentTypeValues.FirstOrDefault() == "zip")
+            {
+                return "application/zip";
+            }
+            
             return null;
         }
 

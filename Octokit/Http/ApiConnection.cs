@@ -464,6 +464,20 @@ namespace Octokit
         /// Updates the API resource at the specified URI.
         /// </summary>
         /// <param name="uri">URI of the API resource to patch</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Patch(Uri uri, object data)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+
+            return Connection.Patch(uri, data);
+        }
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to patch</param>
         /// <param name="accepts">Accept header to use for the API request</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         public Task Patch(Uri uri, string accepts)
@@ -472,6 +486,22 @@ namespace Octokit
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             return Connection.Patch(uri, accepts);
+        }
+
+        /// <summary>
+        /// Updates the API resource at the specified URI.
+        /// </summary>
+        /// <param name="uri">URI of the API resource to patch</param>
+        /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="accepts">Accept header to use for the API request</param>
+        /// <returns>A <see cref="Task"/> for the request's execution.</returns>
+        public Task Patch(Uri uri, object data, string accepts)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
+
+            return Connection.Patch(uri, data, accepts);
         }
 
         /// <summary>

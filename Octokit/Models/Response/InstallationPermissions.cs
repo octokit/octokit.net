@@ -24,6 +24,7 @@ namespace Octokit
             InstallationReadWritePermissionLevel? pages,
             InstallationReadWritePermissionLevel? pullRequests,
             InstallationReadWritePermissionLevel? repositoryAnnouncementBanners,
+            InstallationReadWritePermissionLevel? repositoryCustomProperties,
             InstallationReadWritePermissionLevel? repositoryHooks,
             InstallationReadWriteAdminPermissionLevel? repositoryProjects,
             InstallationReadWritePermissionLevel? secretScanningAlerts,
@@ -35,6 +36,8 @@ namespace Octokit
             InstallationWritePermissionLevel? workflows,
             InstallationReadWritePermissionLevel? members,
             InstallationReadWritePermissionLevel? organizationAdministration,
+            InstallationReadWritePermissionLevel? organizationCopilotSeatManagement,
+            InstallationReadWriteAdminPermissionLevel? organizationCustomProperties,
             InstallationReadWritePermissionLevel? organizationCustomRoles,
             InstallationReadWritePermissionLevel? organizationAnnouncementBanners,
             InstallationReadWritePermissionLevel? organizationHooks,
@@ -59,6 +62,7 @@ namespace Octokit
             Pages = pages;
             PullRequests = pullRequests;
             RepositoryAnnouncementBanners = repositoryAnnouncementBanners;
+            RepositoryCustomProperties = repositoryCustomProperties;
             RepositoryHooks = repositoryHooks;
             RepositoryProjects = repositoryProjects;
             SecretScanningAlerts = secretScanningAlerts;
@@ -70,6 +74,8 @@ namespace Octokit
             Workflows = workflows;
             Members = members;
             OrganizationAdministration = organizationAdministration;
+            OrganizationCopilotSeatManagement = organizationCopilotSeatManagement;
+            OrganizationCustomProperties = organizationCustomProperties;
             OrganizationCustomRoles = organizationCustomRoles;
             OrganizationAnnouncementBanners = organizationAnnouncementBanners;
             OrganizationHooks = organizationHooks;
@@ -143,6 +149,11 @@ namespace Octokit
         public StringEnum<InstallationReadWritePermissionLevel>? RepositoryAnnouncementBanners { get; private set; }
 
         /// <summary>
+        /// The level of permission to grant the access token to view and set values for a repository's custom properties, when allowed by the property.
+        /// </summary>
+        public StringEnum<InstallationReadWritePermissionLevel>? RepositoryCustomProperties { get; private set; }
+
+        /// <summary>
         /// The level of permission to grant the access token to manage the post-receive hooks for a repository.
         /// </summary>
         public StringEnum<InstallationReadWritePermissionLevel>? RepositoryHooks { get; private set; }
@@ -196,6 +207,16 @@ namespace Octokit
         /// The level of permission to grant the access token to manage access to an organization.
         /// </summary>
         public StringEnum<InstallationReadWritePermissionLevel>? OrganizationAdministration { get; private set; }
+
+        /// <summary>
+        /// The level of permission to grant the access token to manage access Copilot Business seats and settings.
+        /// </summary>
+        public StringEnum<InstallationReadWritePermissionLevel>? OrganizationCopilotSeatManagement { get; private set; }
+
+        /// <summary>
+        /// The level of permission to grant the access token to view custom properties, write repository values, and administer definitions.
+        /// </summary>
+        public StringEnum<InstallationReadWriteAdminPermissionLevel>? OrganizationCustomProperties { get; private set; }
 
         /// <summary>
         /// The level of permission to grant the access token for custom roles management. This property is in beta and is subject to change.

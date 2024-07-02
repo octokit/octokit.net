@@ -21,7 +21,7 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Milestone> Get(string owner, string name, int number);
+        Task<Milestone> Get(string owner, string name, int milestoneNumber);
 
         /// <summary>
         /// Gets a single Milestone by number.
@@ -32,7 +32,7 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Milestone> Get(long repositoryId, int number);
+        Task<Milestone> Get(long repositoryId, int milestoneNumber);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -154,11 +154,11 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The Milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        Task<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate);
+        Task<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate);
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -166,11 +166,11 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The Milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        Task<Milestone> Update(long repositoryId, int number, MilestoneUpdate milestoneUpdate);
+        Task<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate);
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -179,9 +179,9 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, int number);
+        Task Delete(string owner, string name, int milestoneNumber);
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -189,8 +189,8 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
-        Task Delete(long repositoryId, int number);
+        Task Delete(long repositoryId, int milestoneNumber);
     }
 }
