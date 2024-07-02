@@ -51,20 +51,20 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
-        IObservable<Issue> AddAssignees(string owner, string name, int number, AssigneesUpdate assignees);
+        IObservable<Issue> AddAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees);
 
         /// <summary>
         /// Remove assignees from a specified Issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of assignees to remove </param>
         /// <returns></returns>
-        IObservable<Issue> RemoveAssignees(string owner, string name, int number, AssigneesUpdate assignees);
+        IObservable<Issue> RemoveAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees);
 
         /// <summary>
         /// Checks to see if a user is an assignee for a repository.

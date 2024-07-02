@@ -142,9 +142,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
+        /// <param name="projectId">The Id of the project</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Project> Get(int id);
+        Task<Project> Get(int projectId);
 
         /// <summary>
         /// Creates a project for this repository.
@@ -172,9 +172,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#update-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
+        /// <param name="projectId">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
-        Task<Project> Update(int id, ProjectUpdate projectUpdate);
+        Task<Project> Update(int projectId, ProjectUpdate projectUpdate);
 
         /// <summary>
         /// Deletes a project.
@@ -182,8 +182,8 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
-        Task<bool> Delete(int id);
+        /// <param name="projectId">The Id of the project</param>
+        Task<bool> Delete(int projectId);
 
         /// <summary>
         /// A client for GitHub's Project Cards API.

@@ -323,12 +323,12 @@ namespace Octokit
         /// <summary>
         /// Deletes the authenticated user's subscription to a given thread.
         /// </summary>
-        /// <param name="id">The Id of the thread to delete subscription from.</param>
+        /// <param name="threadId">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
         [ManualRoute("DELETE", "/notifications/threads/{thread_id}/subscription")]
-        public Task DeleteThreadSubscription(int id)
+        public Task DeleteThreadSubscription(int threadId)
         {
-            return ApiConnection.Delete(ApiUrls.NotificationSubscription(id));
+            return ApiConnection.Delete(ApiUrls.NotificationSubscription(threadId));
         }
     }
 }

@@ -160,38 +160,38 @@ namespace Octokit
         /// <summary>
         /// Retrives a single <see cref="Notification"/> by Id.
         /// </summary>
-        /// <param name="id">The Id of the notification to retrieve.</param>
+        /// <param name="notificationId">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Notification> Get(int id);
+        Task<Notification> Get(int notificationId);
 
         /// <summary>
         /// Marks a single notification as read.
         /// </summary>
-        /// <param name="id">The id of the notification.</param>
+        /// <param name="notificationId">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
-        Task MarkAsRead(int id);
+        Task MarkAsRead(int notificationId);
 
         /// <summary>
         /// Retrives a <see cref="ThreadSubscription"/> for the provided thread id.
         /// </summary>
-        /// <param name="id">The Id of the thread to retrieve subscription status.</param>
+        /// <param name="threadId">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
-        Task<ThreadSubscription> GetThreadSubscription(int id);
+        Task<ThreadSubscription> GetThreadSubscription(int threadId);
 
         /// <summary>
         /// Sets the authenticated user's subscription settings for a given thread.
         /// </summary>
-        /// <param name="id">The Id of the thread to update.</param>
+        /// <param name="threadId">The Id of the thread to update.</param>
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
-        Task<ThreadSubscription> SetThreadSubscription(int id, NewThreadSubscription threadSubscription);
+        Task<ThreadSubscription> SetThreadSubscription(int threadId, NewThreadSubscription threadSubscription);
 
         /// <summary>
         /// Deletes the authenticated user's subscription to a given thread.
         /// </summary>
-        /// <param name="id">The Id of the thread to delete subscription from.</param>
+        /// <param name="threadId">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
-        Task DeleteThreadSubscription(int id);
+        Task DeleteThreadSubscription(int threadId);
     }
 }

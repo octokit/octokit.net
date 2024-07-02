@@ -14,7 +14,7 @@ namespace Octokit
         {
         }
 
-        public ApplicationAuthorization(int id, string url, Application application, string tokenLastEight, string hashedToken, string fingerprint, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes, string token)
+        public ApplicationAuthorization(long id, string url, Application application, string tokenLastEight, string hashedToken, string fingerprint, string note, string noteUrl, DateTimeOffset createdAt, DateTimeOffset updateAt, string[] scopes, string token)
             : base(id, url, application, tokenLastEight, hashedToken, fingerprint, note, noteUrl, createdAt, updateAt, scopes)
         {
             Token = token;
