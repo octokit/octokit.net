@@ -32,13 +32,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <param name="number">The id of the deploy key.</param>
-        public IObservable<DeployKey> Get(string owner, string name, int number)
+        /// <param name="deployKeyId">The id of the deploy key.</param>
+        public IObservable<DeployKey> Get(string owner, string name, int deployKeyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, number).ToObservable();
+            return _client.Get(owner, name, deployKeyId).ToObservable();
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/#get"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        /// <param name="number">The id of the deploy key.</param>
-        public IObservable<DeployKey> Get(long repositoryId, int number)
+        /// <param name="deployKeyId">The id of the deploy key.</param>
+        public IObservable<DeployKey> Get(long repositoryId, int deployKeyId)
         {
-            return _client.Get(repositoryId, number).ToObservable();
+            return _client.Get(repositoryId, deployKeyId).ToObservable();
         }
 
         /// <summary>
@@ -170,13 +170,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <param name="number">The id of the deploy key to delete.</param>
-        public IObservable<Unit> Delete(string owner, string name, int number)
+        /// <param name="deployKeyId">The id of the deploy key to delete.</param>
+        public IObservable<Unit> Delete(string owner, string name, int deployKeyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Delete(owner, name, number).ToObservable();
+            return _client.Delete(owner, name, deployKeyId).ToObservable();
         }
 
         /// <summary>
@@ -186,10 +186,10 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/#delete"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        /// <param name="number">The id of the deploy key to delete.</param>
-        public IObservable<Unit> Delete(long repositoryId, int number)
+        /// <param name="deployKeyId">The id of the deploy key to delete.</param>
+        public IObservable<Unit> Delete(long repositoryId, int deployKeyId)
         {
-            return _client.Delete(repositoryId, number).ToObservable();
+            return _client.Delete(repositoryId, deployKeyId).ToObservable();
         }
     }
 }

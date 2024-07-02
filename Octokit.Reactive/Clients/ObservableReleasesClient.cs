@@ -489,13 +489,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
-        /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        public IObservable<Unit> DeleteAsset(string owner, string name, int id)
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
+        public IObservable<Unit> DeleteAsset(string owner, string name, int assetId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.DeleteAsset(owner, name, id).ToObservable();
+            return _client.DeleteAsset(owner, name, assetId).ToObservable();
         }
 
         /// <summary>
@@ -505,10 +505,10 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/repos/releases/#delete-a-release-asset">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="id">The id of the <see cref="ReleaseAsset"/>.</param>
-        public IObservable<Unit> DeleteAsset(long repositoryId, int id)
+        /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
+        public IObservable<Unit> DeleteAsset(long repositoryId, int assetId)
         {
-            return _client.DeleteAsset(repositoryId, id).ToObservable();
+            return _client.DeleteAsset(repositoryId, assetId).ToObservable();
         }
     }
 }

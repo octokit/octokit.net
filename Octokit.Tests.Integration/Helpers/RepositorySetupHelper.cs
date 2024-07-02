@@ -69,7 +69,7 @@ namespace Octokit.Tests.Integration.Helpers
             return createdPullRequest;
         }
 
-        public static async Task<PullRequestReview> CreatePullRequestReview(this IGitHubClient client, Repository repository, int number, string body, PullRequestReviewEvent? @event = null, string commitId = null, List<DraftPullRequestReviewComment> comments = null)
+        public static async Task<PullRequestReview> CreatePullRequestReview(this IGitHubClient client, Repository repository, int pullRequestNumber, string body, PullRequestReviewEvent? @event = null, string commitId = null, List<DraftPullRequestReviewComment> comments = null)
         {
             var review = new PullRequestReviewCreate()
             {
@@ -79,7 +79,7 @@ namespace Octokit.Tests.Integration.Helpers
                 Comments = comments
             };
 
-            var createdReview = await client.PullRequest.Review.Create(repository.Owner.Login, repository.Name, number, review);
+            var createdReview = await client.PullRequest.Review.Create(repository.Owner.Login, repository.Name, pullRequestNumber, review);
 
             return createdReview;
         }
