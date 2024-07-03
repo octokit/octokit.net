@@ -10,7 +10,7 @@ namespace Octokit
     {
         public PunchCardPoint() { }
 
-        public PunchCardPoint(IList<int> punchPoint)
+        public PunchCardPoint(IList<long> punchPoint)
         {
             Ensure.ArgumentNotNull(punchPoint, nameof(punchPoint));
             if (punchPoint.Count != 3)
@@ -18,7 +18,7 @@ namespace Octokit
                 throw new ArgumentException("Daily punch card must only contain three data points.");
             }
             DayOfWeek = (DayOfWeek)punchPoint[0];
-            HourOfTheDay = punchPoint[1];
+            HourOfTheDay = (int)punchPoint[1];
             CommitCount = punchPoint[2];
         }
 
@@ -31,7 +31,7 @@ namespace Octokit
 
         public StringEnum<DayOfWeek> DayOfWeek { get; private set; }
         public int HourOfTheDay { get; private set; }
-        public int CommitCount { get; private set; }
+        public long CommitCount { get; private set; }
 
         internal string DebuggerDisplay
         {
