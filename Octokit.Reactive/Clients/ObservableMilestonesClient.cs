@@ -31,12 +31,12 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
-        public IObservable<Milestone> Get(string owner, string name, int number)
+        public IObservable<Milestone> Get(string owner, string name, int milestoneNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, number).ToObservable();
+            return _client.Get(owner, name, milestoneNumber).ToObservable();
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/milestones/#get-a-single-milestone
         /// </remarks>
         /// <returns></returns>
-        public IObservable<Milestone> Get(long repositoryId, int number)
+        public IObservable<Milestone> Get(long repositoryId, int milestoneNumber)
         {
-            return _client.Get(repositoryId, number).ToObservable();
+            return _client.Get(repositoryId, milestoneNumber).ToObservable();
         }
 
         /// <summary>
@@ -232,17 +232,17 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The Milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        public IObservable<Milestone> Update(string owner, string name, int number, MilestoneUpdate milestoneUpdate)
+        public IObservable<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
 
-            return _client.Update(owner, name, number, milestoneUpdate).ToObservable();
+            return _client.Update(owner, name, milestoneNumber, milestoneUpdate).ToObservable();
         }
 
         /// <summary>
@@ -251,15 +251,15 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#update-a-milestone</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The Milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        public IObservable<Milestone> Update(long repositoryId, int number, MilestoneUpdate milestoneUpdate)
+        public IObservable<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate)
         {
             Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
 
-            return _client.Update(repositoryId, number, milestoneUpdate).ToObservable();
+            return _client.Update(repositoryId, milestoneNumber, milestoneUpdate).ToObservable();
         }
 
         /// <summary>
@@ -269,14 +269,14 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, int number)
+        public IObservable<Unit> Delete(string owner, string name, int milestoneNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Delete(owner, name, number).ToObservable();
+            return _client.Delete(owner, name, milestoneNumber).ToObservable();
         }
 
         /// <summary>
@@ -285,11 +285,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/milestones/#delete-a-milestone</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The milestone number</param>
+        /// <param name="milestoneNumber">The Milestone number</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(long repositoryId, int number)
+        public IObservable<Unit> Delete(long repositoryId, int milestoneNumber)
         {
-            return _client.Delete(repositoryId, number).ToObservable();
+            return _client.Delete(repositoryId, milestoneNumber).ToObservable();
         }
     }
 }

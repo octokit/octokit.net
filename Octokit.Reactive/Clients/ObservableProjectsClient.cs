@@ -270,13 +270,13 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#update-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
+        /// <param name="projectId">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
-        public IObservable<Project> Update(int id, ProjectUpdate projectUpdate)
+        public IObservable<Project> Update(int projectId, ProjectUpdate projectUpdate)
         {
             Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
 
-            return _client.Update(id, projectUpdate).ToObservable();
+            return _client.Update(projectId, projectUpdate).ToObservable();
         }
 
         /// <summary>
@@ -285,10 +285,10 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project">API documentation</a> for more information.
         /// </remarks>
-        /// <param name="id">The Id of the project</param>
-        public IObservable<bool> Delete(int id)
+        /// <param name="projectId">The Id of the project</param>
+        public IObservable<bool> Delete(int projectId)
         {
-            return _client.Delete(id).ToObservable();
+            return _client.Delete(projectId).ToObservable();
         }
 
         /// <summary>

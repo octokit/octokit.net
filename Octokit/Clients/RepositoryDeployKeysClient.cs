@@ -29,14 +29,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <param name="number">The id of the deploy key.</param>
+        /// <param name="deployKeyId">The id of the deploy key.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/keys/{number}")]
-        public Task<DeployKey> Get(string owner, string name, int number)
+        public Task<DeployKey> Get(string owner, string name, int deployKeyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(owner, name, number));
+            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(owner, name, deployKeyId));
         }
 
         /// <summary>
@@ -46,11 +46,11 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/keys/#get"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        /// <param name="number">The id of the deploy key.</param>
+        /// <param name="deployKeyId">The id of the deploy key.</param>
         [ManualRoute("GET", "/repositories/{id}/keys/{number}")]
-        public Task<DeployKey> Get(long repositoryId, int number)
+        public Task<DeployKey> Get(long repositoryId, int deployKeyId)
         {
-            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(repositoryId, number));
+            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(repositoryId, deployKeyId));
         }
 
         /// <summary>
@@ -173,14 +173,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <param name="number">The id of the deploy key to delete.</param>
+        /// <param name="deployKeyId">The id of the deploy key to delete.</param>
         [ManualRoute("DELETE", "/repositories/{id}/keys/{number}")]
-        public Task Delete(string owner, string name, int number)
+        public Task Delete(string owner, string name, int deployKeyId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(owner, name, number));
+            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(owner, name, deployKeyId));
         }
 
         /// <summary>
@@ -190,11 +190,11 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/keys/#delete"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        /// <param name="number">The id of the deploy key to delete.</param>
+        /// <param name="deployKeyId">The id of the deploy key to delete.</param>
         [ManualRoute("DELETE", "/repositories/{id}/keys/{number}")]
-        public Task Delete(long repositoryId, int number)
+        public Task Delete(long repositoryId, int deployKeyId)
         {
-            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(repositoryId, number));
+            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(repositoryId, deployKeyId));
         }
     }
 }

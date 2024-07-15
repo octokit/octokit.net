@@ -17,8 +17,8 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue id</param>
-        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number);
+        /// <param name="issueNumber">The issue number</param>
+        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int issueNumber);
 
         /// <summary>
         /// Get all reactions for a specified Issue
@@ -26,26 +26,26 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue id</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int number, ApiOptions options);
+        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int issueNumber, ApiOptions options);
 
         /// <summary>
         /// Get all reactions for a specified Issue
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue id</param>
-        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number);
+        /// <param name="issueNumber">The issue number</param>
+        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int issueNumber);
 
         /// <summary>
         /// Get all reactions for a specified Issue
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue id</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int number, ApiOptions options);
+        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int issueNumber, ApiOptions options);
 
         /// <summary>
         /// Creates a reaction for a specified Issue
@@ -53,18 +53,18 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue id</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
-        Task<Reaction> Create(string owner, string name, int number, NewReaction reaction);
+        Task<Reaction> Create(string owner, string name, int issueNumber, NewReaction reaction);
 
         /// <summary>
         /// Creates a reaction for a specified Issue
         /// </summary>
         /// <remarks>https://developer.github.com/v3/reactions/#create-reaction-for-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue id</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
-        Task<Reaction> Create(long repositoryId, int number, NewReaction reaction);
+        Task<Reaction> Create(long repositoryId, int issueNumber, NewReaction reaction);
 
         /// <summary>
         /// Deletes a reaction for a specified Issue

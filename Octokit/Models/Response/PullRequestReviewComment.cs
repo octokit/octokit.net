@@ -15,7 +15,7 @@ namespace Octokit
             Id = id;
         }
 
-        public PullRequestReviewComment(string url, long id, string nodeId, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, ReactionSummary reactions, int? inReplyToId, int? pullRequestReviewId, AuthorAssociation authorAssociation)
+        public PullRequestReviewComment(string url, long id, string nodeId, string diffHunk, string path, int? position, int? originalPosition, string commitId, string originalCommitId, User user, string body, DateTimeOffset createdAt, DateTimeOffset updatedAt, string htmlUrl, string pullRequestUrl, ReactionSummary reactions, long? inReplyToId, long? pullRequestReviewId, AuthorAssociation authorAssociation)
         {
             PullRequestReviewId = pullRequestReviewId;
             Url = url;
@@ -121,12 +121,12 @@ namespace Octokit
         /// <summary>
         /// The Id of the comment this comment replys to.
         /// </summary>
-        public int? InReplyToId { get; private set; }
+        public long? InReplyToId { get; private set; }
 
         /// <summary>
         /// The Id of the pull request this comment belongs to.
         /// </summary>
-        public int? PullRequestReviewId { get; private set; }
+        public long? PullRequestReviewId { get; private set; }
 
         /// <summary>
         /// The comment author association with repository.

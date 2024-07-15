@@ -33,13 +33,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        public IObservable<Label> GetAllForIssue(string owner, string name, int number)
+        /// <param name="issueNumber">The issue number</param>
+        public IObservable<Label> GetAllForIssue(string owner, string name, int issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForIssue(owner, name, number, ApiOptions.None);
+            return GetAllForIssue(owner, name, issueNumber, ApiOptions.None);
         }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        public IObservable<Label> GetAllForIssue(long repositoryId, int number)
+        /// <param name="issueNumber">The issue number</param>
+        public IObservable<Label> GetAllForIssue(long repositoryId, int issueNumber)
         {
-            return GetAllForIssue(repositoryId, number, ApiOptions.None);
+            return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
         }
 
         /// <summary>
@@ -63,15 +63,15 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Label> GetAllForIssue(string owner, string name, int number, ApiOptions options)
+        public IObservable<Label> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, name, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(owner, name, issueNumber), options);
         }
 
         /// <summary>
@@ -81,13 +81,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-labels-on-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Label> GetAllForIssue(long repositoryId, int number, ApiOptions options)
+        public IObservable<Label> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(repositoryId, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.IssueLabels(repositoryId, issueNumber), options);
         }
 
         /// <summary>
@@ -159,13 +159,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the milestone</param>
-        public IObservable<Label> GetAllForMilestone(string owner, string name, int number)
+        /// <param name="milestoneNumber">The number of the milestone</param>
+        public IObservable<Label> GetAllForMilestone(string owner, string name, int milestoneNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForMilestone(owner, name, number, ApiOptions.None);
+            return GetAllForMilestone(owner, name, milestoneNumber, ApiOptions.None);
         }
 
         /// <summary>
@@ -175,10 +175,10 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the milestone</param>
-        public IObservable<Label> GetAllForMilestone(long repositoryId, int number)
+        /// <param name="milestoneNumber">The number of the milestone</param>
+        public IObservable<Label> GetAllForMilestone(long repositoryId, int milestoneNumber)
         {
-            return GetAllForMilestone(repositoryId, number, ApiOptions.None);
+            return GetAllForMilestone(repositoryId, milestoneNumber, ApiOptions.None);
         }
 
         /// <summary>
@@ -189,15 +189,15 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the milestone</param>
+        /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Label> GetAllForMilestone(string owner, string name, int number, ApiOptions options)
+        public IObservable<Label> GetAllForMilestone(string owner, string name, int milestoneNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, name, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(owner, name, milestoneNumber), options);
         }
 
         /// <summary>
@@ -207,13 +207,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the milestone</param>
+        /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Label> GetAllForMilestone(long repositoryId, int number, ApiOptions options)
+        public IObservable<Label> GetAllForMilestone(long repositoryId, int milestoneNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(repositoryId, number), options);
+            return _connection.GetAndFlattenAllPages<Label>(ApiUrls.MilestoneLabels(repositoryId, milestoneNumber), options);
         }
 
         /// <summary>
@@ -360,15 +360,15 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        public IObservable<Label> AddToIssue(string owner, string name, int number, string[] labels)
+        public IObservable<Label> AddToIssue(string owner, string name, int issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return _client.AddToIssue(owner, name, number, labels)
+            return _client.AddToIssue(owner, name, issueNumber, labels)
                 .ToObservable()
                 .SelectMany(x => x); // HACK: POST is not compatible with GetAndFlattenPages
         }
@@ -380,13 +380,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#add-labels-to-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        public IObservable<Label> AddToIssue(long repositoryId, int number, string[] labels)
+        public IObservable<Label> AddToIssue(long repositoryId, int issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return _client.AddToIssue(repositoryId, number, labels)
+            return _client.AddToIssue(repositoryId, issueNumber, labels)
                 .ToObservable()
                 .SelectMany(x => x); // HACK: POST is not compatible with GetAndFlattenPages
         }
@@ -399,15 +399,15 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        public IObservable<Label> RemoveFromIssue(string owner, string name, int number, string labelName)
+        public IObservable<Label> RemoveFromIssue(string owner, string name, int issueNumber, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return _client.RemoveFromIssue(owner, name, number, labelName)
+            return _client.RemoveFromIssue(owner, name, issueNumber, labelName)
                 .ToObservable()
                 .SelectMany(x => x); // HACK: DELETE is not compatible with GetAndFlattenPages
         }
@@ -419,13 +419,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        public IObservable<Label> RemoveFromIssue(long repositoryId, int number, string labelName)
+        public IObservable<Label> RemoveFromIssue(long repositoryId, int issueNumber, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return _client.RemoveFromIssue(repositoryId, number, labelName)
+            return _client.RemoveFromIssue(repositoryId, issueNumber, labelName)
                 .ToObservable()
                 .SelectMany(x => x); // HACK: DELETE is not compatible with GetAndFlattenPages
         }
@@ -438,15 +438,15 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        public IObservable<Label> ReplaceAllForIssue(string owner, string name, int number, string[] labels)
+        public IObservable<Label> ReplaceAllForIssue(string owner, string name, int issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return _client.ReplaceAllForIssue(owner, name, number, labels)
+            return _client.ReplaceAllForIssue(owner, name, issueNumber, labels)
                 .ToObservable()
                 .SelectMany(x => x);  // HACK: PUT is not compatible with GetAndFlattenPages
         }
@@ -458,13 +458,13 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        public IObservable<Label> ReplaceAllForIssue(long repositoryId, int number, string[] labels)
+        public IObservable<Label> ReplaceAllForIssue(long repositoryId, int issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
-            return _client.ReplaceAllForIssue(repositoryId, number, labels)
+            return _client.ReplaceAllForIssue(repositoryId, issueNumber, labels)
                 .ToObservable()
                 .SelectMany(x => x);  // HACK: PUT is not compatible with GetAndFlattenPages
         }
@@ -477,13 +477,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        public IObservable<Unit> RemoveAllFromIssue(string owner, string name, int number)
+        /// <param name="issueNumber">The issue number</param>
+        public IObservable<Unit> RemoveAllFromIssue(string owner, string name, int issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.RemoveAllFromIssue(owner, name, number).ToObservable();
+            return _client.RemoveAllFromIssue(owner, name, issueNumber).ToObservable();
         }
 
         /// <summary>
@@ -493,10 +493,10 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The number of the issue</param>
-        public IObservable<Unit> RemoveAllFromIssue(long repositoryId, int number)
+        /// <param name="issueNumber">The issue number</param>
+        public IObservable<Unit> RemoveAllFromIssue(long repositoryId, int issueNumber)
         {
-            return _client.RemoveAllFromIssue(repositoryId, number).ToObservable();
+            return _client.RemoveAllFromIssue(repositoryId, issueNumber).ToObservable();
         }
     }
 }

@@ -408,9 +408,9 @@ public class PullRequestReviewCommentReactionsClientTests : IDisposable
         return createdCommit;
     }
 
-    async Task<PullRequestReviewComment> CreateComment(string body, int position, string commitId, int number)
+    async Task<PullRequestReviewComment> CreateComment(string body, int position, string commitId, int pullRequestNumber)
     {
-        return await CreateComment(body, position, _context.RepositoryName, commitId, number);
+        return await CreateComment(body, position, _context.RepositoryName, commitId, pullRequestNumber);
     }
 
     async Task<PullRequestReviewComment> CreateComment(string body, int position, string repoName, string pullRequestCommitId, int pullRequestNumber)
