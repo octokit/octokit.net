@@ -20,9 +20,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <param name="number">The id of the deploy key.</param>
+        /// <param name="deployKeyId">The id of the deploy key.</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<DeployKey> Get(string owner, string name, int number);
+        IObservable<DeployKey> Get(string owner, string name, int deployKeyId);
 
         /// <summary>
         /// Get a single deploy key by number for a repository.
@@ -31,9 +31,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/#get"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        /// <param name="number">The id of the deploy key.</param>
+        /// <param name="deployKeyId">The id of the deploy key.</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<DeployKey> Get(long repositoryId, int number);
+        IObservable<DeployKey> Get(long repositoryId, int deployKeyId);
 
         /// <summary>
         /// Get all deploy keys for a repository.
@@ -104,8 +104,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        /// <param name="number">The id of the deploy key to delete.</param>
-        IObservable<Unit> Delete(string owner, string name, int number);
+        /// <param name="deployKeyId">The id of the deploy key to delete.</param>
+        IObservable<Unit> Delete(string owner, string name, int deployKeyId);
 
         /// <summary>
         /// Deletes a deploy key from a repository.
@@ -114,7 +114,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/#delete"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        /// <param name="number">The id of the deploy key to delete.</param>
-        IObservable<Unit> Delete(long repositoryId, int number);
+        /// <param name="deployKeyId">The id of the deploy key to delete.</param>
+        IObservable<Unit> Delete(long repositoryId, int deployKeyId);
     }
 }

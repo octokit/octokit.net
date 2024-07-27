@@ -45,7 +45,7 @@ namespace Octokit
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<GpgKey> Get(int id);
+        Task<GpgKey> Get(long id);
 
         /// <summary>
         /// Creates a new <see cref="GpgKey"/> for the authenticated user.
@@ -66,6 +66,6 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        Task Delete(int id);
+        Task Delete(long id);
     }
 }

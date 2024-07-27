@@ -160,7 +160,7 @@ public class ReleasesClientTests
 
             var releases = await _releaseClient.GetAll(_context.RepositoryOwner, _context.RepositoryName);
 
-            Assert.Equal(1, releases.Count);
+            Assert.Single(releases);
             Assert.False(releases.First().PublishedAt.HasValue);
         }
 
@@ -173,7 +173,7 @@ public class ReleasesClientTests
 
             var releases = await _releaseClient.GetAll(_context.Repository.Id);
 
-            Assert.Equal(1, releases.Count);
+            Assert.Single(releases);
             Assert.False(releases.First().PublishedAt.HasValue);
         }
 

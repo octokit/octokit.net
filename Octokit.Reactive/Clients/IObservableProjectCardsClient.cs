@@ -59,7 +59,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<ProjectCard> Get(int id);
+        IObservable<ProjectCard> Get(long id);
 
         /// <summary>
         /// Creates a card.
@@ -79,7 +79,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
-        IObservable<ProjectCard> Update(int id, ProjectCardUpdate projectCardUpdate);
+        IObservable<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate);
 
         /// <summary>
         /// Deletes a card.
@@ -88,7 +88,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        IObservable<bool> Delete(int id);
+        IObservable<bool> Delete(long id);
 
         /// <summary>
         /// Moves a card.
@@ -98,6 +98,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        IObservable<bool> Move(int id, ProjectCardMove position);
+        IObservable<bool> Move(long id, ProjectCardMove position);
     }
 }

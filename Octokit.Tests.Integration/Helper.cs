@@ -100,13 +100,13 @@ namespace Octokit.Tests.Integration
         static Helper()
         {
             // Force reading of environment variables.
-            // This wasn't happening if UserName/Organization were 
+            // This wasn't happening if UserName/Organization were
             // retrieved before Credentials.
             Debug.WriteIf(Credentials == null, "No credentials specified.");
         }
 
         public static string UserName { get; private set; }
-        
+
         public static string Organization { get; private set; }
 
         public static bool HasNoOrganization => Organization == null;
@@ -214,7 +214,7 @@ namespace Octokit.Tests.Integration
                 DeleteKey(connection, key.Id);
         }
 
-        public static void DeleteKey(IConnection connection, int keyId)
+        public static void DeleteKey(IConnection connection, long keyId)
         {
             try
             {
@@ -230,7 +230,7 @@ namespace Octokit.Tests.Integration
                 DeleteGpgKey(connection, key.Id);
         }
 
-        public static void DeleteGpgKey(IConnection connection, int keyId)
+        public static void DeleteGpgKey(IConnection connection, long keyId)
         {
             try
             {
@@ -328,7 +328,7 @@ namespace Octokit.Tests.Integration
             };
         }
 
-        public static void DeleteInvitations(IConnection connection, List<string> invitees, int teamId)
+        public static void DeleteInvitations(IConnection connection, List<string> invitees)
         {
             try
             {
@@ -340,7 +340,7 @@ namespace Octokit.Tests.Integration
             catch { }
         }
 
-        public static string InviteMemberToTeam(IConnection connection, int teamId, string login)
+        public static string InviteMemberToTeam(IConnection connection, long teamId, string login)
         {
             try
             {

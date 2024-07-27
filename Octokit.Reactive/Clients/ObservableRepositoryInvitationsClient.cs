@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
         /// <param name="invitationId">The id of the invitation.</param>
-        public IObservable<bool> Accept(int invitationId)
+        public IObservable<bool> Accept(long invitationId)
         {
             return _client.Accept(invitationId).ToObservable();
         }
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
         /// <param name="invitationId">The id of the invitation.</param>
-        public IObservable<bool> Decline(int invitationId)
+        public IObservable<bool> Decline(long invitationId)
         {
             return _client.Decline(invitationId).ToObservable();
         }
@@ -51,7 +51,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>
-        public IObservable<bool> Delete(long repositoryId, int invitationId)
+        public IObservable<bool> Delete(long repositoryId, long invitationId)
         {
             return _client.Delete(repositoryId, invitationId).ToObservable();
         }
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitatio.n</param>
         /// <param name="permissions">The permission to set.</param>
-        public IObservable<RepositoryInvitation> Edit(long repositoryId, int invitationId, InvitationUpdate permissions)
+        public IObservable<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions)
         {
             Ensure.ArgumentNotNull(permissions, nameof(permissions));
 

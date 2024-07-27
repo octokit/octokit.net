@@ -10,7 +10,7 @@ namespace Octokit
     {
         public RepositoryContributor() { }
 
-        public RepositoryContributor(string login, int id, string nodeId, string avatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin, int contributions)
+        public RepositoryContributor(string login, long id, string nodeId, string avatarUrl, string url, string htmlUrl, string followersUrl, string followingUrl, string gistsUrl, string type, string starredUrl, string subscriptionsUrl, string organizationsUrl, string reposUrl, string eventsUrl, string receivedEventsUrl, bool siteAdmin, int contributions)
             : base(login, id, nodeId, avatarUrl, url, htmlUrl, followersUrl, followingUrl, gistsUrl, type, starredUrl, subscriptionsUrl, organizationsUrl, reposUrl, eventsUrl, receivedEventsUrl, siteAdmin)
         {
             Contributions = contributions;

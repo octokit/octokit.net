@@ -16,7 +16,7 @@ namespace Octokit.Tests.Integration.Helpers
         }
 
         private readonly IConnection _connection;
-        internal int TeamId { get; private set; }
+        internal long TeamId { get; private set; }
         internal string TeamName { get; private set; }
 
         internal Team Team { get; private set; }
@@ -30,7 +30,7 @@ namespace Octokit.Tests.Integration.Helpers
         public void Dispose()
         {
             if (Invitations.Any())
-                Helper.DeleteInvitations(_connection, Invitations, TeamId);
+                Helper.DeleteInvitations(_connection, Invitations);
 
             Helper.DeleteTeam(_connection, Team);
         }

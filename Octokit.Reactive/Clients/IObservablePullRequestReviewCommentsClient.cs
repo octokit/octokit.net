@@ -17,16 +17,16 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
-        IObservable<PullRequestReviewComment> GetAll(string owner, string name, int number);
+        /// <param name="pullRequestNumber">The pull request number</param>
+        IObservable<PullRequestReviewComment> GetAll(string owner, string name, int pullRequestNumber);
 
         /// <summary>
         /// Gets review comments for a specified pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
-        IObservable<PullRequestReviewComment> GetAll(long repositoryId, int number);
+        /// <param name="pullRequestNumber">The pull request number</param>
+        IObservable<PullRequestReviewComment> GetAll(long repositoryId, int pullRequestNumber);
 
         /// <summary>
         /// Gets review comments for a specified pull request.
@@ -34,18 +34,18 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<PullRequestReviewComment> GetAll(string owner, string name, int number, ApiOptions options);
+        IObservable<PullRequestReviewComment> GetAll(string owner, string name, int pullRequestNumber, ApiOptions options);
 
         /// <summary>
         /// Gets review comments for a specified pull request.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<PullRequestReviewComment> GetAll(long repositoryId, int number, ApiOptions options);
+        IObservable<PullRequestReviewComment> GetAll(long repositoryId, int pullRequestNumber, ApiOptions options);
 
         /// <summary>
         /// Gets a list of the pull request review comments in a specified repository.
@@ -138,18 +138,18 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The Pull Request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        IObservable<PullRequestReviewComment> Create(string owner, string name, int number, PullRequestReviewCommentCreate comment);
+        IObservable<PullRequestReviewComment> Create(string owner, string name, int pullRequestNumber, PullRequestReviewCommentCreate comment);
 
         /// <summary>
         /// Creates a comment on a pull request review.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The Pull Request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        IObservable<PullRequestReviewComment> Create(long repositoryId, int number, PullRequestReviewCommentCreate comment);
+        IObservable<PullRequestReviewComment> Create(long repositoryId, int pullRequestNumber, PullRequestReviewCommentCreate comment);
 
         /// <summary>
         /// Creates a comment on a pull request review as a reply to another comment.
@@ -157,18 +157,18 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        IObservable<PullRequestReviewComment> CreateReply(string owner, string name, int number, PullRequestReviewCommentReplyCreate comment);
+        IObservable<PullRequestReviewComment> CreateReply(string owner, string name, int pullRequestNumber, PullRequestReviewCommentReplyCreate comment);
 
         /// <summary>
         /// Creates a comment on a pull request review as a reply to another comment.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#create-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The pull request number</param>
+        /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        IObservable<PullRequestReviewComment> CreateReply(long repositoryId, int number, PullRequestReviewCommentReplyCreate comment);
+        IObservable<PullRequestReviewComment> CreateReply(long repositoryId, int pullRequestNumber, PullRequestReviewCommentReplyCreate comment);
 
         /// <summary>
         /// Edits a comment on a pull request review.

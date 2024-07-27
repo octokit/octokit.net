@@ -318,7 +318,7 @@ namespace Octokit.Reactive
         /// details of the organization invitation</param>
         /// <returns></returns>
         IObservable<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest);
-        
+
         /// <summary>
         /// Remove a user's membership with an organization.
         /// </summary>
@@ -389,7 +389,7 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
-        IObservable<Unit> CancelOrganizationInvitation(string org, int invitationId);
+        IObservable<Unit> CancelOrganizationInvitation(string org, long invitationId);
 
         /// <summary>
         /// Returns all <see cref="OrganizationMembership" />s for the current user.

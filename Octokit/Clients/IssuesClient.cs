@@ -71,14 +71,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}")]
-        public Task<Issue> Get(string owner, string name, int number)
+        public Task<Issue> Get(string owner, string name, int issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, number), null);
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(owner, name, issueNumber), null);
         }
 
         /// <summary>
@@ -88,11 +88,11 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#get-a-single-issue
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}")]
-        public Task<Issue> Get(long repositoryId, int number)
+        public Task<Issue> Get(long repositoryId, int issueNumber)
         {
-            return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, number), null);
+            return ApiConnection.Get<Issue>(ApiUrls.Issue(repositoryId, issueNumber), null);
         }
 
         /// <summary>
@@ -469,17 +469,17 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/issues/#edit-an-issue</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/issues/{issue_number}")]
-        public Task<Issue> Update(string owner, string name, int number, IssueUpdate issueUpdate)
+        public Task<Issue> Update(string owner, string name, int issueNumber, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(issueUpdate, nameof(issueUpdate));
 
-            return ApiConnection.Patch<Issue>(ApiUrls.Issue(owner, name, number), issueUpdate);
+            return ApiConnection.Patch<Issue>(ApiUrls.Issue(owner, name, issueNumber), issueUpdate);
         }
 
         /// <summary>
@@ -488,15 +488,15 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/issues/#edit-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
         [ManualRoute("PATCH", "/repositories/{id}/issues/{number}")]
-        public Task<Issue> Update(long repositoryId, int number, IssueUpdate issueUpdate)
+        public Task<Issue> Update(long repositoryId, int issueNumber, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNull(issueUpdate, nameof(issueUpdate));
 
-            return ApiConnection.Patch<Issue>(ApiUrls.Issue(repositoryId, number), issueUpdate);
-        }        
+            return ApiConnection.Patch<Issue>(ApiUrls.Issue(repositoryId, issueNumber), issueUpdate);
+        }
     }
 }

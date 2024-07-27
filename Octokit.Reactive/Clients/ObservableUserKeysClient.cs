@@ -89,7 +89,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The Id of the SSH key</param>
         /// <returns>View extended details for a single public key.</returns>
-        public IObservable<PublicKey> Get(int id)
+        public IObservable<PublicKey> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -117,7 +117,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the key to delete</param>
         /// <returns>Removes a public key.</returns>
-        public IObservable<Unit> Delete(int id)
+        public IObservable<Unit> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }

@@ -40,7 +40,7 @@ namespace Octokit
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
         /// <returns>The <see cref="Team"/> object.</returns>
-        Task<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping);
+        Task<Team> UpdateTeamMapping(long teamId, NewLdapMapping newLdapMapping);
 
         /// <summary>
         /// Queue an LDAP Sync job for a team on a GitHub Enterprise appliance (must be Site Admin user).
@@ -50,6 +50,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
-        Task<LdapSyncResponse> QueueSyncTeamMapping(int teamId);
+        Task<LdapSyncResponse> QueueSyncTeamMapping(long teamId);
     }
 }

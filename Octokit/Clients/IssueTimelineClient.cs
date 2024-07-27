@@ -23,14 +23,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int number)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            return GetAllForIssue(owner, repo, number, ApiOptions.None);
+            return GetAllForIssue(owner, repo, issueNumber, ApiOptions.None);
         }
 
         /// <summary>
@@ -41,16 +41,16 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API repsonse</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int number, ApiOptions options)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, number), null, options);
+            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(owner, repo, issueNumber), null, options);
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Octokit
         /// https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int number)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int issueNumber)
         {
-            return GetAllForIssue(repositoryId, number, ApiOptions.None);
+            return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
         }
 
         /// <summary>
@@ -74,14 +74,14 @@ namespace Octokit
         /// https://developer.github.com/v3/issues/timeline/#list-events-for-an-issue
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        /// <param name="number">The issue number</param>
+        /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int number, ApiOptions options)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, number), null, options);
+            return ApiConnection.GetAll<TimelineEventInfo>(ApiUrls.IssueTimeline(repositoryId, issueNumber), null, options);
         }
     }
 }

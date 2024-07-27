@@ -16,7 +16,7 @@ public class IssueCommentsClientTests
 
         const string owner = "octokit";
         const string name = "octokit.net";
-        const int id = 12067722;
+        const long id = 12067722;
         const long repositoryId = 7528679;
 
         public TheGetMethod()
@@ -260,7 +260,7 @@ public class IssueCommentsClientTests
 
         const string owner = "octokit";
         const string name = "octokit.net";
-        const int number = 1115;
+        const int issueNumber = 1115;
         const long repositoryId = 7528679;
 
         public TheGetAllForIssueMethod()
@@ -273,7 +273,7 @@ public class IssueCommentsClientTests
         [IntegrationTest]
         public async Task ReturnsIssueComments()
         {
-            var issueComments = await _issueCommentsClient.GetAllForIssue(owner, name, number);
+            var issueComments = await _issueCommentsClient.GetAllForIssue(owner, name, issueNumber);
 
             Assert.NotEmpty(issueComments);
         }
@@ -281,7 +281,7 @@ public class IssueCommentsClientTests
         [IntegrationTest]
         public async Task ReturnsIssueCommentsWithRepositoryId()
         {
-            var issueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, number);
+            var issueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, issueNumber);
 
             Assert.NotEmpty(issueComments);
         }
@@ -295,7 +295,7 @@ public class IssueCommentsClientTests
                 PageCount = 1
             };
 
-            var issueComments = await _issueCommentsClient.GetAllForIssue(owner, name, number, options);
+            var issueComments = await _issueCommentsClient.GetAllForIssue(owner, name, issueNumber, options);
 
             Assert.Equal(5, issueComments.Count);
         }
@@ -309,7 +309,7 @@ public class IssueCommentsClientTests
                 PageCount = 1
             };
 
-            var issueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, number, options);
+            var issueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, issueNumber, options);
 
             Assert.Equal(5, issueComments.Count);
         }
@@ -324,7 +324,7 @@ public class IssueCommentsClientTests
                 StartPage = 2
             };
 
-            var issueComments = await _issueCommentsClient.GetAllForIssue(owner, name, number, options);
+            var issueComments = await _issueCommentsClient.GetAllForIssue(owner, name, issueNumber, options);
 
             Assert.Equal(5, issueComments.Count);
         }
@@ -339,7 +339,7 @@ public class IssueCommentsClientTests
                 StartPage = 2
             };
 
-            var issueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, number, options);
+            var issueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, issueNumber, options);
 
             Assert.Equal(5, issueComments.Count);
         }
@@ -353,7 +353,7 @@ public class IssueCommentsClientTests
                 PageCount = 1
             };
 
-            var firstPageIssueComments = await _issueCommentsClient.GetAllForIssue(owner, name, number, startOptions);
+            var firstPageIssueComments = await _issueCommentsClient.GetAllForIssue(owner, name, issueNumber, startOptions);
 
             var skipStartOptions = new ApiOptions
             {
@@ -362,7 +362,7 @@ public class IssueCommentsClientTests
                 StartPage = 2
             };
 
-            var secondPageIssueComments = await _issueCommentsClient.GetAllForIssue(owner, name, number, skipStartOptions);
+            var secondPageIssueComments = await _issueCommentsClient.GetAllForIssue(owner, name, issueNumber, skipStartOptions);
 
             Assert.NotEqual(firstPageIssueComments[0].Id, secondPageIssueComments[0].Id);
             Assert.NotEqual(firstPageIssueComments[1].Id, secondPageIssueComments[1].Id);
@@ -380,7 +380,7 @@ public class IssueCommentsClientTests
                 PageCount = 1
             };
 
-            var firstPageIssueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, number, startOptions);
+            var firstPageIssueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, issueNumber, startOptions);
 
             var skipStartOptions = new ApiOptions
             {
@@ -389,7 +389,7 @@ public class IssueCommentsClientTests
                 StartPage = 2
             };
 
-            var secondPageIssueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, number, skipStartOptions);
+            var secondPageIssueComments = await _issueCommentsClient.GetAllForIssue(repositoryId, issueNumber, skipStartOptions);
 
             Assert.NotEqual(firstPageIssueComments[0].Id, secondPageIssueComments[0].Id);
             Assert.NotEqual(firstPageIssueComments[1].Id, secondPageIssueComments[1].Id);
@@ -594,11 +594,11 @@ public class IssueCommentsClientTests
         return issue.Number;
     }
 
-    async static Task<long> HelperCreateIssueCommentWithReactions(string owner, string repo, int number)
+    async static Task<long> HelperCreateIssueCommentWithReactions(string owner, string repo, int issueNumber)
     {
         var github = Helper.GetAuthenticatedClient();
 
-        var issueComment = await github.Issue.Comment.Create(owner, repo, number, "A test issue comment");
+        var issueComment = await github.Issue.Comment.Create(owner, repo, issueNumber, "A test issue comment");
         Assert.NotNull(issueComment);
 
         foreach (ReactionType reactionType in Enum.GetValues(typeof(ReactionType)))

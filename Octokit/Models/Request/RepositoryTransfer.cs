@@ -28,7 +28,7 @@ namespace Octokit
         /// </summary>
         /// <param name="newOwner">The new owner of the repository after the transfer.</param>
         /// <param name="teamIds">A list of team Ids to add to the repository after the transfer (only applies to transferring to an Organization).</param>
-        public RepositoryTransfer(string newOwner, IReadOnlyList<int> teamIds)
+        public RepositoryTransfer(string newOwner, IReadOnlyList<long> teamIds)
             : this(newOwner)
         {
             Ensure.ArgumentNotNullOrEmptyEnumerable(teamIds, nameof(teamIds));
@@ -44,13 +44,13 @@ namespace Octokit
         /// <summary>
         /// A list of team Ids to add to the repository after the transfer (only applies to transferring to an Organization).
         /// </summary>
-        public IReadOnlyList<int> TeamIds { get; set; }
+        public IReadOnlyList<long> TeamIds { get; set; }
 
         internal string DebuggerDisplay
         {
             get
             {
-                string teamIdsStr = string.Join(", ", TeamIds ?? new int[0]);
+                string teamIdsStr = string.Join(", ", TeamIds ?? new long[0]);
                 return string.Format(CultureInfo.InvariantCulture, "NewOwner: {0}, TeamIds: [{1}]", NewOwner, teamIdsStr);
             }
         }

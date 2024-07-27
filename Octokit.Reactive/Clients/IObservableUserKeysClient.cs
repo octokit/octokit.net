@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// <param name="id">The Id of the SSH key</param>
         /// <returns>View extended details for a single public key.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<PublicKey> Get(int id);
+        IObservable<PublicKey> Get(long id);
 
         /// <summary>
         /// Create a public key <see cref="NewPublicKey"/>.
@@ -83,6 +83,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the key to delete</param>
         /// <returns>Removes a public key.</returns>
-        IObservable<Unit> Delete(int id);
+        IObservable<Unit> Delete(long id);
     }
 }

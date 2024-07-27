@@ -12,7 +12,7 @@ namespace Octokit
         public PreReceiveHook()
         { }
 
-        public PreReceiveHook(int id, string name, StringEnum<PreReceiveHookEnforcement> enforcement, string script, Repository scriptRepository, PreReceiveEnvironment environment, bool allowDownstreamConfiguration)
+        public PreReceiveHook(long id, string name, StringEnum<PreReceiveHookEnforcement> enforcement, string script, Repository scriptRepository, PreReceiveEnvironment environment, bool allowDownstreamConfiguration)
         {
             Id = id;
             Name = name;
@@ -26,7 +26,7 @@ namespace Octokit
         /// <summary>
         /// The identifier for the pre-receive hook.
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// The name of the hook.

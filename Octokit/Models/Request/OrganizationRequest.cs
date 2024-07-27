@@ -13,7 +13,7 @@ namespace Octokit
         /// Initializes a new instance of the <see cref="OrganizationRequest"/> class.
         /// </summary>
         /// <param name="since">The integer Id of the last Organization that you've seen.</param>
-        public OrganizationRequest(int since)
+        public OrganizationRequest(long since)
         {
             Ensure.ArgumentNotNull(since, nameof(since));
 

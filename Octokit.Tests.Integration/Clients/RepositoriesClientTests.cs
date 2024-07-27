@@ -2193,7 +2193,7 @@ public class RepositoriesClientTests
                 NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
                 using (var teamContext = await github.CreateTeamContext(Helper.Organization, team))
                 {
-                    var transferTeamIds = new int[] { teamContext.TeamId };
+                    var transferTeamIds = new long[] { teamContext.TeamId };
                     var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
                     await github.Repository.Transfer(
                         repositoryContext.RepositoryOwner, repositoryContext.RepositoryName, transfer);
@@ -2222,7 +2222,7 @@ public class RepositoriesClientTests
                 NewTeam team = new NewTeam(Helper.MakeNameWithTimestamp("transfer-team"));
                 using (var teamContext = await github.CreateTeamContext(Helper.Organization, team))
                 {
-                    var transferTeamIds = new int[] { teamContext.TeamId };
+                    var transferTeamIds = new long[] { teamContext.TeamId };
                     var transfer = new RepositoryTransfer(newOwner, transferTeamIds);
                     await github.Repository.Transfer(repositoryContext.RepositoryId, transfer);
                     var transferred = await github.Repository.Get(repositoryContext.RepositoryId);

@@ -28,7 +28,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
-        public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId)
+        public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, long deploymentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -46,7 +46,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         [ManualRoute("GET", "/repositories/{id}/deployments/{deployment_id}/statuses")]
-        public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, int deploymentId)
+        public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, long deploymentId)
         {
             return GetAll(repositoryId, deploymentId, ApiOptions.None);
         }
@@ -63,7 +63,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
-        public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, int deploymentId, ApiOptions options)
+        public Task<IReadOnlyList<DeploymentStatus>> GetAll(string owner, string name, long deploymentId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -83,7 +83,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/deployments/{deployment_id}/statuses")]
-        public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, int deploymentId, ApiOptions options)
+        public Task<IReadOnlyList<DeploymentStatus>> GetAll(long repositoryId, long deploymentId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -102,7 +102,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses")]
-        public Task<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
+        public Task<DeploymentStatus> Create(string owner, string name, long deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -122,7 +122,7 @@ namespace Octokit
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
         [ManualRoute("POST", "/repositories/{id}/deployments/{deployment_id}/statuses")]
-        public Task<DeploymentStatus> Create(long repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
+        public Task<DeploymentStatus> Create(long repositoryId, long deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 

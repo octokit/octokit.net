@@ -13,10 +13,11 @@ namespace Octokit
     {
         public GitHubApp() { }
 
-        public GitHubApp(long id, string slug, string name, User owner, string description, string externalUrl, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, InstallationPermissions permissions, IReadOnlyList<string> events)
+        public GitHubApp(long id, string slug, string nodeId, string name, User owner, string description, string externalUrl, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt, InstallationPermissions permissions, IReadOnlyList<string> events)
         {
             Id = id;
             Slug = slug;
+            NodeId = nodeId;
             Name = name;
             Owner = owner;
             Description = description;
@@ -31,57 +32,62 @@ namespace Octokit
         /// <summary>
         /// The Id of the GitHub App.
         /// </summary>
-        public long Id { get; private set; }
+        public long Id { get; protected set; }
 
         /// <summary>
         /// The url-friendly version of the GitHub App name.
         /// </summary>
-        public string Slug { get; private set; }
+        public string Slug { get; protected set; }
+
+        /// <summary>
+        /// GraphQL Node Id
+        /// </summary>
+        public string NodeId { get; protected set; }
 
         /// <summary>
         /// The Name of the GitHub App.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
 
         /// <summary>
         /// The Owner of the GitHub App.
         /// </summary>
-        public User Owner { get; private set; }
+        public User Owner { get; protected set; }
 
         /// <summary>
         /// The Description of the GitHub App.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; protected set; }
 
         /// <summary>
         /// The URL to the GitHub App's external website.
         /// </summary>
-        public string ExternalUrl { get; private set; }
+        public string ExternalUrl { get; protected set; }
 
         /// <summary>
         /// The URL to view the GitHub App on GitHub.
         /// </summary>
-        public string HtmlUrl { get; private set; }
+        public string HtmlUrl { get; protected set; }
 
         /// <summary>
         /// Date the GitHub App was created.
         /// </summary>
-        public DateTimeOffset CreatedAt { get; private set; }
+        public DateTimeOffset CreatedAt { get; protected set; }
 
         /// <summary>
         /// Date the GitHub App was last updated.
         /// </summary>
-        public DateTimeOffset UpdatedAt { get; private set; }
+        public DateTimeOffset UpdatedAt { get; protected set; }
 
         /// <summary>
         /// The Permissions granted to the Installation
         /// </summary>
-        public InstallationPermissions Permissions { get; private set; }
+        public InstallationPermissions Permissions { get; protected set; }
 
         /// <summary>
         /// The Events subscribed to by the Installation
         /// </summary>
-        public IReadOnlyList<string> Events { get; private set; }
+        public IReadOnlyList<string> Events { get; protected set; }
 
         internal string DebuggerDisplay
         {

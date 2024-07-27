@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
-        public IObservable<GpgKey> Get(int id)
+        public IObservable<GpgKey> Get(long id)
         {
             return _client.Get(id).ToObservable();
         }
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<Unit> Delete(int id)
+        public IObservable<Unit> Delete(long id)
         {
             return _client.Delete(id).ToObservable();
         }

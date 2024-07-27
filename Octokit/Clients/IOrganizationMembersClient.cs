@@ -395,7 +395,7 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
-        Task CancelOrganizationInvitation(string org, int invitationId);
+        Task CancelOrganizationInvitation(string org, long invitationId);
 
         /// <summary>
         /// Returns all <see cref="OrganizationMembership" />s for the current user.

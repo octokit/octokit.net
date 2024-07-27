@@ -61,7 +61,7 @@ namespace Octokit.Tests
 
                 client.UpdateTeamMapping(1, new NewLdapMapping(_distinguishedName));
                 github.Enterprise.Ldap.Received(1).UpdateTeamMapping(
-                    Arg.Is<int>(a => a == 1),
+                    Arg.Is<long>(a => a == 1),
                     Arg.Is<NewLdapMapping>(a =>
                         a.LdapDistinguishedName == _distinguishedName));
             }
@@ -77,7 +77,7 @@ namespace Octokit.Tests
 
                 client.QueueSyncTeamMapping(1);
                 github.Enterprise.Ldap.Received(1).QueueSyncTeamMapping(
-                    Arg.Is<int>(a => a == 1));
+                    Arg.Is<long>(a => a == 1));
             }
         }
     }

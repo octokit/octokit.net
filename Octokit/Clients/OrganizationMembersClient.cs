@@ -637,7 +637,7 @@ namespace Octokit
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/invitations/{invitation_id}")]
-        public Task CancelOrganizationInvitation(string org, int invitationId)
+        public Task CancelOrganizationInvitation(string org, long invitationId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrDefault(invitationId, nameof(invitationId));

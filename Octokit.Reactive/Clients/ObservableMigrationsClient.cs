@@ -74,7 +74,7 @@ namespace Octokit.Reactive
         /// <param name="org">The organization which is migrating.</param>
         /// <param name="id">Migrations Id of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        public IObservable<Migration> Get(string org, int id)
+        public IObservable<Migration> Get(string org, long id)
         {
             return _client.Get(org, id).ToObservable();
         }
@@ -88,7 +88,7 @@ namespace Octokit.Reactive
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns>The binary contents of the archive as a byte array.</returns>
-        public IObservable<byte[]> GetArchive(string org, int id)
+        public IObservable<byte[]> GetArchive(string org, long id)
         {
             return _client.GetArchive(org, id).ToObservable();
         }
@@ -102,7 +102,7 @@ namespace Octokit.Reactive
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns></returns>
-        public IObservable<Unit> DeleteArchive(string org, int id)
+        public IObservable<Unit> DeleteArchive(string org, long id)
         {
             return _client.DeleteArchive(org, id).ToObservable();
         }
@@ -117,7 +117,7 @@ namespace Octokit.Reactive
         /// <param name="id">The Id of the migration.</param>
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
-        public IObservable<Unit> UnlockRepository(string org, int id, string repo)
+        public IObservable<Unit> UnlockRepository(string org, long id, string repo)
         {
             return _client.UnlockRepository(org, id, repo).ToObservable();
         }

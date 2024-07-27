@@ -418,7 +418,7 @@ namespace Octokit.Reactive
 
             return _client.AddOrUpdateOrganizationMembership(org, user, addOrUpdateRequest).ToObservable();
         }
-        
+
         /// <summary>
         /// Create an organization invitation for a user
         /// </summary>
@@ -539,7 +539,7 @@ namespace Octokit.Reactive
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/invitations/{invitation_id}")]
-        public IObservable<Unit> CancelOrganizationInvitation(string org, int invitationId)
+        public IObservable<Unit> CancelOrganizationInvitation(string org, long invitationId)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrDefault(invitationId, nameof(invitationId));

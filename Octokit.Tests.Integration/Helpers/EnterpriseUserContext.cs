@@ -18,7 +18,7 @@ namespace Octokit.Tests.Integration.Helpers
         }
 
         private readonly IConnection _connection;
-        internal int UserId { get; private set; }
+        internal long UserId { get; private set; }
         internal string UserLogin { get; private set; }
         internal string UserEmail { get; private set; }
 

@@ -69,7 +69,7 @@ namespace Octokit
         /// <param name="newLdapMapping">The <see cref="NewLdapMapping"/></param>
         /// <returns>The <see cref="Team"/> object.</returns>
         [ManualRoute("PATCH", "/admin/ldap/teams/{team_id}/mapping")]
-        public Task<Team> UpdateTeamMapping(int teamId, NewLdapMapping newLdapMapping)
+        public Task<Team> UpdateTeamMapping(long teamId, NewLdapMapping newLdapMapping)
         {
             Ensure.ArgumentNotNull(teamId, nameof(teamId));
             Ensure.ArgumentNotNull(newLdapMapping, nameof(newLdapMapping));
@@ -88,7 +88,7 @@ namespace Octokit
         /// <param name="teamId">The teamId to update LDAP mapping</param>
         /// <returns>The <see cref="LdapSyncResponse"/> of the queue request.</returns>
         [ManualRoute("POST", "/admin/ldap/teams/{team_id}/sync")]
-        public async Task<LdapSyncResponse> QueueSyncTeamMapping(int teamId)
+        public async Task<LdapSyncResponse> QueueSyncTeamMapping(long teamId)
         {
             Ensure.ArgumentNotNull(teamId, nameof(teamId));
 

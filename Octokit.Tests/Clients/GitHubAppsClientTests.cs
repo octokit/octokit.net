@@ -273,5 +273,37 @@ namespace Octokit.Tests.Clients
                 connection.Received().Get<Installation>(Arg.Is<Uri>(u => u.ToString() == "users/ducks/installation"), null);
             }
         }
+
+        public class TheCreateAppFromManifestMethod
+        {
+            [Fact]
+            public async Task EnsuresNonNullArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateAppFromManifest(null));
+            }
+
+            [Fact]
+            public async Task EnsuresNonEmptyArguments()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateAppFromManifest(""));
+            }
+
+            [Fact]
+            public void PostsFromCorrectUrl()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new GitHubAppsClient(connection);
+
+                client.CreateAppFromManifest("abc123");
+
+                connection.Received().Post<GitHubAppFromManifest>(Arg.Is<Uri>(u => u.ToString() == "app-manifests/abc123/conversions"));
+            }
+        }
     }
 }

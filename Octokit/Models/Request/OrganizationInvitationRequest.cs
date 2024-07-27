@@ -10,60 +10,60 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class OrganizationInvitationRequest
     {
-        public OrganizationInvitationRequest(int inviteeId)
+        public OrganizationInvitationRequest(long inviteeId)
         {
             InviteeId = inviteeId;
         }
-        
+
         public OrganizationInvitationRequest(string email)
         {
             Email = email;
         }
-        
-        public OrganizationInvitationRequest(int inviteeId, OrganizationMembershipRole role)
+
+        public OrganizationInvitationRequest(long inviteeId, OrganizationMembershipRole role)
         {
             InviteeId = inviteeId;
             Role = role;
         }
-        
+
         public OrganizationInvitationRequest(string email, OrganizationMembershipRole role)
         {
             Email = email;
             Role = role;
         }
-        
-        public OrganizationInvitationRequest(int inviteeId, int[] teamIds)
+
+        public OrganizationInvitationRequest(long inviteeId, long[] teamIds)
         {
             InviteeId = inviteeId;
             TeamIds = teamIds;
         }
-        
-        public OrganizationInvitationRequest(string email, int[] teamIds)
+
+        public OrganizationInvitationRequest(string email, long[] teamIds)
         {
             Email = email;
             TeamIds = teamIds;
         }
-        
-        public OrganizationInvitationRequest(int inviteeId, OrganizationMembershipRole role, int[] teamIds)
+
+        public OrganizationInvitationRequest(long inviteeId, OrganizationMembershipRole role, long[] teamIds)
         {
             InviteeId = inviteeId;
             Role = role;
             TeamIds = teamIds;
         }
-        
-        public OrganizationInvitationRequest(string email, OrganizationMembershipRole role, int[] teamIds)
+
+        public OrganizationInvitationRequest(string email, OrganizationMembershipRole role, long[] teamIds)
         {
             Email = email;
             Role = role;
             TeamIds = teamIds;
         }
-        
+
         /// <summary>
         /// The user ID of the person being invited. Required if Email is not specified.
         /// </summary>
         [Parameter(Key = "invitee_id")]
-        public int? InviteeId { get; set; }
-        
+        public long? InviteeId { get; set; }
+
         /// <summary>
         /// The email address of the person being invited. Required if InviteeId is not specified.
         /// </summary>
@@ -75,12 +75,12 @@ namespace Octokit
         /// </summary>
         [Parameter(Key = "role")]
         public OrganizationMembershipRole Role { get; set; } = OrganizationMembershipRole.DirectMember;
-        
+
         /// <summary>
         /// The IDs for the team(s) to invite new members to
         /// </summary>
         [Parameter(Key = "team_ids")]
-        public int[] TeamIds { get; set; }
+        public long[] TeamIds { get; set; }
 
         internal string DebuggerDisplay => $"InviteeId: {InviteeId}; Email: {Email}; Role: {Role}; Team IDs: {(TeamIds != null ? string.Join(", ", TeamIds) : "")}";
     }

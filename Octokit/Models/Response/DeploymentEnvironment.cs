@@ -14,7 +14,7 @@ namespace Octokit.Models.Response
     {
         public DeploymentEnvironment() { }
 
-        public DeploymentEnvironment(int id, string nodeID, string name, string url, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        public DeploymentEnvironment(long id, string nodeID, string name, string url, string htmlUrl, DateTimeOffset createdAt, DateTimeOffset updatedAt)
         {
             Id = id;
             NodeId = nodeID;
@@ -28,7 +28,7 @@ namespace Octokit.Models.Response
         /// <summary>
         /// Id of this deployment environment
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id

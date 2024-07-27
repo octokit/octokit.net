@@ -277,7 +277,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] { 35, 42 };
+                var teamId = new long[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
 
                 await client.Transfer("owner", "name", transfer);
@@ -293,7 +293,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] { 35, 42 };
+                var teamId = new long[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
                 var repositoryId = 1;
 
@@ -310,7 +310,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] { 35, 42 };
+                var teamId = new long[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
 
                 await client.Transfer("owner", "name", transfer);
@@ -326,7 +326,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] { 35, 42 };
+                var teamId = new long[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
                 var repositoryId = 1;
 
@@ -343,7 +343,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] { 35, 42 };
+                var teamId = new long[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
 
                 await client.Transfer("owner", "name", transfer);
@@ -359,7 +359,7 @@ namespace Octokit.Tests.Clients
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new RepositoriesClient(connection);
-                var teamId = new int[2] { 35, 42 };
+                var teamId = new long[2] { 35, 42 };
                 var transfer = new RepositoryTransfer("newOwner", teamId);
                 var repositoryId = 1;
 

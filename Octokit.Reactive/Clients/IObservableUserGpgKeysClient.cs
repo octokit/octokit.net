@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<GpgKey> Get(int id);
+        IObservable<GpgKey> Get(long id);
 
         /// <summary>
         /// Creates a new <see cref="GpgKey"/> for the authenticated user.
@@ -66,6 +66,6 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        IObservable<Unit> Delete(int id);
+        IObservable<Unit> Delete(long id);
     }
 }

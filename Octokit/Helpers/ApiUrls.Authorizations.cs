@@ -18,7 +18,7 @@ namespace Octokit
         /// Returns the <see cref="Uri"/> that returns all authorizations for a given user
         /// </summary>
         /// <param name="id">The user Id to search for</param>
-        public static Uri Authorizations(int id)
+        public static Uri Authorizations(long id)
         {
             return "authorizations/{0}".FormatUri(id);
         }

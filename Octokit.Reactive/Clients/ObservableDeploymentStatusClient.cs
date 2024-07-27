@@ -34,7 +34,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        public IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId)
+        public IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -51,7 +51,7 @@ namespace Octokit.Reactive.Clients
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        public IObservable<DeploymentStatus> GetAll(long repositoryId, int deploymentId)
+        public IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId)
         {
             return GetAll(repositoryId, deploymentId, ApiOptions.None);
         }
@@ -67,7 +67,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<DeploymentStatus> GetAll(string owner, string name, int deploymentId, ApiOptions options)
+        public IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -87,7 +87,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<DeploymentStatus> GetAll(long repositoryId, int deploymentId, ApiOptions options)
+        public IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -106,7 +106,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        public IObservable<DeploymentStatus> Create(string owner, string name, int deploymentId, NewDeploymentStatus newDeploymentStatus)
+        public IObservable<DeploymentStatus> Create(string owner, string name, long deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -125,7 +125,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        public IObservable<DeploymentStatus> Create(long repositoryId, int deploymentId, NewDeploymentStatus newDeploymentStatus)
+        public IObservable<DeploymentStatus> Create(long repositoryId, long deploymentId, NewDeploymentStatus newDeploymentStatus)
         {
             Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 

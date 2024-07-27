@@ -13,7 +13,7 @@ namespace Octokit
     {
         public Deployment() { }
 
-        public Deployment(int id, string nodeId, string sha, string @ref, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl, string repositoryUrl, string environment, string originalEnvironment, bool transientEnvironment, bool productionEnvironment, string task)
+        public Deployment(long id, string nodeId, string sha, string @ref, string url, User creator, IReadOnlyDictionary<string, string> payload, DateTimeOffset createdAt, DateTimeOffset updatedAt, string description, string statusesUrl, string repositoryUrl, string environment, string originalEnvironment, bool transientEnvironment, bool productionEnvironment, string task)
         {
             Id = id;
             NodeId = nodeId;
@@ -37,7 +37,7 @@ namespace Octokit
         /// <summary>
         /// Id of this deployment.
         /// </summary>
-        public int Id { get; private set; }
+        public long Id { get; private set; }
 
         /// <summary>
         /// GraphQL Node Id
