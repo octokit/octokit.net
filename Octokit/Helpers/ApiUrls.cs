@@ -5045,6 +5045,28 @@ namespace Octokit
         /// <summary>
         /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
         /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDispatchWorkflow(long repositoryId, long workflowId)
+        {
+            return "repositories/{0}/actions/workflows/{1}/dispatches".FormatUri(repositoryId, workflowId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDispatchWorkflow(long repositoryId, string workflowFileName)
+        {
+            return "repositories/{0}/actions/workflows/{1}/dispatches".FormatUri(repositoryId, workflowFileName.UriEncode());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
         /// <param name="owner">The owner of repo</param>
         /// <param name="repo">The name of repo</param>
         /// <param name="workflowFileName">The workflow file name.</param>
