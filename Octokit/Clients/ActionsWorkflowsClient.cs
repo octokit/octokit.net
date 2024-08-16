@@ -63,6 +63,41 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Manually triggers a GitHub Actions workflow run in a repository by file name.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
+        [ManualRoute("POST", "/repositories/{id}/actions/workflows/{workflow_id}/dispatches")]
+        public Task CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
+            Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
+
+            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(repositoryId, workflowFileName), createDispatch);
+        }
+
+        /// <summary>
+        /// Manually triggers a GitHub Actions workflow run in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
+        [ManualRoute("POST", "/repositories/{id}/actions/workflows/{workflow_id}/dispatches")]
+        public Task CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch)
+        {
+            Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
+
+            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(repositoryId, workflowId), createDispatch);
+        }
+
+        /// <summary>
         /// Disables a specific workflow in a repository by file name.
         /// </summary>
         /// <remarks>
