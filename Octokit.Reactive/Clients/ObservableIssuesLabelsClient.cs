@@ -34,7 +34,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Label> GetAllForIssue(string owner, string name, int issueNumber)
+        public IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -50,7 +50,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Label> GetAllForIssue(long repositoryId, int issueNumber)
+        public IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber)
         {
             return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
         }
@@ -65,7 +65,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Label> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options)
+        public IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -83,7 +83,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Label> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options)
+        public IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -362,7 +362,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        public IObservable<Label> AddToIssue(string owner, string name, int issueNumber, string[] labels)
+        public IObservable<Label> AddToIssue(string owner, string name, long issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -382,7 +382,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        public IObservable<Label> AddToIssue(long repositoryId, int issueNumber, string[] labels)
+        public IObservable<Label> AddToIssue(long repositoryId, long issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
@@ -401,7 +401,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        public IObservable<Label> RemoveFromIssue(string owner, string name, int issueNumber, string labelName)
+        public IObservable<Label> RemoveFromIssue(string owner, string name, long issueNumber, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -421,7 +421,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        public IObservable<Label> RemoveFromIssue(long repositoryId, int issueNumber, string labelName)
+        public IObservable<Label> RemoveFromIssue(long repositoryId, long issueNumber, string labelName)
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
@@ -440,7 +440,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        public IObservable<Label> ReplaceAllForIssue(string owner, string name, int issueNumber, string[] labels)
+        public IObservable<Label> ReplaceAllForIssue(string owner, string name, long issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -460,7 +460,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        public IObservable<Label> ReplaceAllForIssue(long repositoryId, int issueNumber, string[] labels)
+        public IObservable<Label> ReplaceAllForIssue(long repositoryId, long issueNumber, string[] labels)
         {
             Ensure.ArgumentNotNull(labels, nameof(labels));
 
@@ -478,7 +478,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Unit> RemoveAllFromIssue(string owner, string name, int issueNumber)
+        public IObservable<Unit> RemoveAllFromIssue(string owner, string name, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -494,7 +494,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Unit> RemoveAllFromIssue(long repositoryId, int issueNumber)
+        public IObservable<Unit> RemoveAllFromIssue(long repositoryId, long issueNumber)
         {
             return _client.RemoveAllFromIssue(repositoryId, issueNumber).ToObservable();
         }

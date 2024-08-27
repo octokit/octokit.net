@@ -25,7 +25,7 @@ namespace Octokit
         /// <param name="repo">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int issueNumber)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
@@ -44,7 +44,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API repsonse</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, int issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
@@ -62,7 +62,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int issueNumber)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, long issueNumber)
         {
             return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
         }
@@ -77,7 +77,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/timeline")]
-        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

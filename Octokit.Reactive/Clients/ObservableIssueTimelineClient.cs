@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<TimelineEventInfo> GetAllForIssue(string owner, string repo, int issueNumber)
+        public IObservable<TimelineEventInfo> GetAllForIssue(string owner, string repo, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
@@ -47,7 +47,7 @@ namespace Octokit.Reactive
         /// <param name="repo">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<TimelineEventInfo> GetAllForIssue(string owner, string repo, int issueNumber, ApiOptions options)
+        public IObservable<TimelineEventInfo> GetAllForIssue(string owner, string repo, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, int issueNumber)
+        public IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, long issueNumber)
         {
             return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
         }
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options)
+        public IObservable<TimelineEventInfo> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

@@ -108,7 +108,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber);
+        IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -116,7 +116,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber);
+        IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -126,7 +126,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options);
+        IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -135,7 +135,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options);
+        IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -145,7 +145,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
-        IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber, IssueCommentRequest request);
+        IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber, IssueCommentRequest request);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -154,7 +154,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
-        IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber, IssueCommentRequest request);
+        IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber, IssueCommentRequest request);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -165,7 +165,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber, IssueCommentRequest request, ApiOptions options);
+        IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber, IssueCommentRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -175,7 +175,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber, IssueCommentRequest request, ApiOptions options);
+        IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber, IssueCommentRequest request, ApiOptions options);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.
@@ -185,7 +185,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="newComment">The text of the new comment</param>
-        IObservable<IssueComment> Create(string owner, string name, int issueNumber, string newComment);
+        IObservable<IssueComment> Create(string owner, string name, long issueNumber, string newComment);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.
@@ -194,7 +194,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="newComment">The text of the new comment</param>
-        IObservable<IssueComment> Create(long repositoryId, int issueNumber, string newComment);
+        IObservable<IssueComment> Create(long repositoryId, long issueNumber, string newComment);
 
         /// <summary>
         /// Updates a specified Issue Comment.

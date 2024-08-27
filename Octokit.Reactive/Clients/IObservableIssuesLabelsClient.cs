@@ -21,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Label> GetAllForIssue(string owner, string name, int issueNumber);
+        IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -31,7 +31,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Label> GetAllForIssue(long repositoryId, int issueNumber);
+        IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options);
+        IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -54,7 +54,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options);
+        IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -240,7 +240,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        IObservable<Label> AddToIssue(string owner, string name, int issueNumber, string[] labels);
+        IObservable<Label> AddToIssue(string owner, string name, long issueNumber, string[] labels);
 
         /// <summary>
         /// Adds a label to an issue
@@ -251,7 +251,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        IObservable<Label> AddToIssue(long repositoryId, int issueNumber, string[] labels);
+        IObservable<Label> AddToIssue(long repositoryId, long issueNumber, string[] labels);
 
         /// <summary>
         /// Removes a label from an issue
@@ -263,7 +263,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        IObservable<Label> RemoveFromIssue(string owner, string name, int issueNumber, string labelName);
+        IObservable<Label> RemoveFromIssue(string owner, string name, long issueNumber, string labelName);
 
         /// <summary>
         /// Removes a label from an issue
@@ -274,7 +274,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        IObservable<Label> RemoveFromIssue(long repositoryId, int issueNumber, string labelName);
+        IObservable<Label> RemoveFromIssue(long repositoryId, long issueNumber, string labelName);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -286,7 +286,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        IObservable<Label> ReplaceAllForIssue(string owner, string name, int issueNumber, string[] labels);
+        IObservable<Label> ReplaceAllForIssue(string owner, string name, long issueNumber, string[] labels);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -297,7 +297,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        IObservable<Label> ReplaceAllForIssue(long repositoryId, int issueNumber, string[] labels);
+        IObservable<Label> ReplaceAllForIssue(long repositoryId, long issueNumber, string[] labels);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -308,7 +308,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Unit> RemoveAllFromIssue(string owner, string name, int issueNumber);
+        IObservable<Unit> RemoveAllFromIssue(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -318,6 +318,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Unit> RemoveAllFromIssue(long repositoryId, int issueNumber);
+        IObservable<Unit> RemoveAllFromIssue(long repositoryId, long issueNumber);
     }
 }

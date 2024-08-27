@@ -77,7 +77,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Issue> Get(string owner, string name, int issueNumber)
+        public IObservable<Issue> Get(string owner, string name, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -93,7 +93,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Issue> Get(long repositoryId, int issueNumber)
+        public IObservable<Issue> Get(long repositoryId, long issueNumber)
         {
             return _client.Get(repositoryId, issueNumber).ToObservable();
         }
@@ -454,7 +454,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public IObservable<Issue> Update(string owner, string name, int issueNumber, IssueUpdate issueUpdate)
+        public IObservable<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -472,7 +472,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public IObservable<Issue> Update(long repositoryId, int issueNumber, IssueUpdate issueUpdate)
+        public IObservable<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate)
         {
             Ensure.ArgumentNotNull(issueUpdate, nameof(issueUpdate));
 
