@@ -117,7 +117,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
+        IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
 
         /// <summary>
         /// List organization access to a self-hosted runner group in an enterprise
@@ -128,7 +128,7 @@ namespace Octokit.Reactive
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Organization> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
+        IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -138,7 +138,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
+        IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -149,7 +149,7 @@ namespace Octokit.Reactive
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Repository> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
+        IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
 
     }
 }

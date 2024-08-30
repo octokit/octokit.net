@@ -203,7 +203,7 @@ namespace Octokit
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations")]
-        public Task<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId)
+        public Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId)
         {
             return ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, ApiOptions.None);
         }
@@ -218,11 +218,16 @@ namespace Octokit
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations")]
-        public Task<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options)
+        public async Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.ActionsListEnterpriseRunnerGroupOrganizations(enterprise, runnerGroupId), options);
+            var results = await ApiConnection.GetAll<OrganizationsResponse>(ApiUrls.ActionsListEnterpriseRunnerGroupOrganizations(enterprise, runnerGroupId), options).ConfigureAwait(false);
+
+            return new OrganizationsResponse(
+              results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+              results.SelectMany(x => x.Organizations).ToList()
+            );
         }
 
         /// <summary>
@@ -234,7 +239,7 @@ namespace Octokit
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories")]
-        public Task<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId)
+        public Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId)
         {
             return ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, ApiOptions.None);
         }
@@ -249,11 +254,16 @@ namespace Octokit
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories")]
-        public Task<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options)
+        public async Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.ActionsListOrganizationRunnerGroupRepositories(org, runnerGroupId), options);
+            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.ActionsListOrganizationRunnerGroupRepositories(org, runnerGroupId), options).ConfigureAwait(false);
+
+            return new RepositoriesResponse(
+              results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
+              results.SelectMany(x => x.Repositories).ToList()
+            );
         }
   }
 }
