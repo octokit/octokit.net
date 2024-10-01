@@ -60,7 +60,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<Issue> Get(string owner, string name, int issueNumber);
+        IObservable<Issue> Get(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Gets a single Issue by number.
@@ -72,7 +72,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<Issue> Get(long repositoryId, int issueNumber);
+        IObservable<Issue> Get(long repositoryId, long issueNumber);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
@@ -309,7 +309,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        IObservable<Issue> Update(string owner, string name, int issueNumber, IssueUpdate issueUpdate);
+        IObservable<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -320,6 +320,6 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        IObservable<Issue> Update(long repositoryId, int issueNumber, IssueUpdate issueUpdate);
+        IObservable<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate);
     }
 }

@@ -24,7 +24,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/issues/{issue_number}/lock")]
-        public Task Lock(string owner, string name, int issueNumber, LockReason? lockReason = null)
+        public Task Lock(string owner, string name, long issueNumber, LockReason? lockReason = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -40,7 +40,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
         [ManualRoute("PUT", "/repositories/{id}/issues/{number}/lock")]
-        public Task Lock(long repositoryId, int issueNumber, LockReason? lockReason = null)
+        public Task Lock(long repositoryId, long issueNumber, LockReason? lockReason = null)
         {
             return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, issueNumber), lockReason.HasValue ? new { LockReaons = lockReason } : new object());
         }
@@ -53,7 +53,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/lock")]
-        public Task Unlock(string owner, string name, int issueNumber)
+        public Task Unlock(string owner, string name, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -68,7 +68,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("DELETE", "/repositories/{id}/issues/{number}/lock")]
-        public Task Unlock(long repositoryId, int issueNumber)
+        public Task Unlock(long repositoryId, long issueNumber)
         {
             return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, issueNumber));
         }

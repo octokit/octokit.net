@@ -172,7 +172,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber)
+        public IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -186,7 +186,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber)
+        public IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber)
         {
             return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
         }
@@ -199,7 +199,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options)
+        public IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -215,7 +215,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options)
+        public IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -230,7 +230,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
-        public IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber, IssueCommentRequest request)
+        public IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber, IssueCommentRequest request)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -246,7 +246,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
-        public IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber, IssueCommentRequest request)
+        public IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber, IssueCommentRequest request)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
@@ -262,7 +262,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueComment> GetAllForIssue(string owner, string name, int issueNumber, IssueCommentRequest request, ApiOptions options)
+        public IObservable<IssueComment> GetAllForIssue(string owner, string name, long issueNumber, IssueCommentRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -281,7 +281,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueComment> GetAllForIssue(long repositoryId, int issueNumber, IssueCommentRequest request, ApiOptions options)
+        public IObservable<IssueComment> GetAllForIssue(long repositoryId, long issueNumber, IssueCommentRequest request, ApiOptions options)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -297,7 +297,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="newComment">The text of the new comment</param>
-        public IObservable<IssueComment> Create(string owner, string name, int issueNumber, string newComment)
+        public IObservable<IssueComment> Create(string owner, string name, long issueNumber, string newComment)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -313,7 +313,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="newComment">The text of the new comment</param>
-        public IObservable<IssueComment> Create(long repositoryId, int issueNumber, string newComment)
+        public IObservable<IssueComment> Create(long repositoryId, long issueNumber, string newComment)
         {
             Ensure.ArgumentNotNull(newComment, nameof(newComment));
 
