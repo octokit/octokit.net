@@ -26,7 +26,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        public IObservable<Unit> Lock(string owner, string name, int issueNumber, LockReason? lockReason = null)
+        public IObservable<Unit> Lock(string owner, string name, long issueNumber, LockReason? lockReason = null)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -41,7 +41,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        public IObservable<Unit> Lock(long repositoryId, int issueNumber, LockReason? lockReason = null)
+        public IObservable<Unit> Lock(long repositoryId, long issueNumber, LockReason? lockReason = null)
         {
             return _client.Lock(repositoryId, issueNumber, lockReason).ToObservable();
         }
@@ -53,7 +53,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Unit> Unlock(string owner, string name, int issueNumber)
+        public IObservable<Unit> Unlock(string owner, string name, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -67,7 +67,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Unit> Unlock(long repositoryId, int issueNumber)
+        public IObservable<Unit> Unlock(long repositoryId, long issueNumber)
         {
             return _client.Unlock(repositoryId, issueNumber).ToObservable();
         }

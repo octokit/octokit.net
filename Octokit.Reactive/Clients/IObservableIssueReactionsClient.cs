@@ -18,7 +18,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Reaction> GetAll(string owner, string name, int issueNumber);
+        IObservable<Reaction> GetAll(string owner, string name, long issueNumber);
 
         /// <summary>
         /// List reactions for a specified Issue.
@@ -28,7 +28,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Reaction> GetAll(string owner, string name, int issueNumber, ApiOptions options);
+        IObservable<Reaction> GetAll(string owner, string name, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// List reactions for a specified Issue.
@@ -36,7 +36,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Reaction> GetAll(long repositoryId, int issueNumber);
+        IObservable<Reaction> GetAll(long repositoryId, long issueNumber);
 
         /// <summary>
         /// List reactions for a specified Issue.
@@ -45,7 +45,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Reaction> GetAll(long repositoryId, int issueNumber, ApiOptions options);
+        IObservable<Reaction> GetAll(long repositoryId, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Creates a reaction for a specified Issue.
@@ -55,7 +55,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create </param>
-        IObservable<Reaction> Create(string owner, string name, int issueNumber, NewReaction reaction);
+        IObservable<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction);
 
         /// <summary>
         /// Creates a reaction for a specified Issue.
@@ -64,7 +64,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create </param>
-        IObservable<Reaction> Create(long repositoryId, int issueNumber, NewReaction reaction);
+        IObservable<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction);
 
         /// <summary>
         /// Deletes a reaction for a specified Issue
@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int issueNumber, long reactionId);
+        IObservable<Unit> Delete(string owner, string name, long issueNumber, long reactionId);
 
         /// <summary>
         /// Deletes a reaction for a specified Issue
@@ -85,6 +85,6 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(long repositoryId, int issueNumber, long reactionId);
+        IObservable<Unit> Delete(long repositoryId, long issueNumber, long reactionId);
     }
 }
