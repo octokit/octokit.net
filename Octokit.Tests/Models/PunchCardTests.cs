@@ -33,10 +33,10 @@ public class PunchCardTests
         [Fact]
         public void CanQueryCommitsForDayAndHour()
         {
-            IList<int> point1 = new[] { 1, 0, 3 };
-            IList<int> point2 = new[] { 1, 1, 4 };
-            IList<int> point3 = new[] { 1, 2, 0 };
-            IEnumerable<IList<int>> points = new List<IList<int>> { point1, point2, point3 };
+            IList<long> point1 = new long[] { 1, 0, 3 };
+            IList<long> point2 = new long[] { 1, 1, 4 };
+            IList<long> point3 = new long[] { 1, 2, 0 };
+            IEnumerable<IList<long>> points = new List<IList<long>> { point1, point2, point3 };
 
             var punchCard = new PunchCard(points);
 
@@ -54,10 +54,10 @@ public class PunchCardTests
         [Fact]
         public void SetsPunchPointsAsReadOnlyDictionary()
         {
-            IList<int> point1 = new[] { 1, 0, 3 };
-            IList<int> point2 = new[] { 1, 1, 4 };
-            IList<int> point3 = new[] { 1, 2, 0 };
-            IEnumerable<IList<int>> points = new List<IList<int>> { point1, point2, point3 };
+            IList<long> point1 = new long[] { 1, 0, 3 };
+            IList<long> point2 = new long[] { 1, 1, 4 };
+            IList<long> point3 = new long[] { 1, 2, 0 };
+            IEnumerable<IList<long>> points = new List<IList<long>> { point1, point2, point3 };
 
             var punchCard = new PunchCard(points);
 
