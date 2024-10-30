@@ -792,15 +792,18 @@ namespace Octokit
             return null;
         }
 
-        static string ParseString(char[] json, ref int index, ref bool success)
+        internal static string ParseString(char[] json, ref int index, ref bool success)
         {
-            StringBuilder s = new StringBuilder(BUILDER_CAPACITY);
+            // Avoid allocating this StringBuilder unless a backslash is encountered in the json
+            StringBuilder s = null;
             char c;
 
             EatWhitespace(json, ref index);
 
             // "
             c = json[index++];
+
+            int startIndex = index;
             bool complete = false;
             while (!complete)
             {
@@ -815,6 +818,13 @@ namespace Octokit
                 }
                 else if (c == '\\')
                 {
+                    if (s == null)
+                    {
+                        s = new StringBuilder(BUILDER_CAPACITY);
+                        for (int i = startIndex; i < index - 1; i++)
+                            s.Append(json[i]);
+                    }
+
                     if (index == json.Length)
                         break;
                     c = json[index++];
@@ -875,14 +885,21 @@ namespace Octokit
                     }
                 }
                 else
-                    s.Append(c);
+                {
+                    if (s != null)
+                        s.Append(c);
+                }
             }
             if (!complete)
             {
                 success = false;
                 return null;
             }
-            return s.ToString();
+
+            if (s != null)
+                return s.ToString();
+
+            return new string(json, startIndex, index - startIndex - 1);
         }
 
         private static string ConvertFromUtf32(int utf32)
