@@ -55,7 +55,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
-        Task<Issue> AddAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees);
+        Task<Issue> AddAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees);
 
         /// <summary>
         /// Remove assignees from a specified Issue.
@@ -65,7 +65,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of assignees to remove</param>
         /// <returns></returns>
-        Task<Issue> RemoveAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees);
+        Task<Issue> RemoveAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees);
 
         /// <summary>
         /// Checks to see if a user is an assignee for a repository.

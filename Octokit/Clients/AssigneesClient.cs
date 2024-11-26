@@ -109,7 +109,7 @@ namespace Octokit
         /// <param name="assignees">List of names of assignees to add</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/issues/{issue_number}/assignees")]
-        public Task<Issue> AddAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees)
+        public Task<Issue> AddAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -127,7 +127,7 @@ namespace Octokit
         /// <param name="assignees">List of assignees to remove</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/assignees")]
-        public Task<Issue> RemoveAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees)
+        public Task<Issue> RemoveAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));

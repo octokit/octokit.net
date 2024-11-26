@@ -94,7 +94,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
-        public IObservable<Issue> AddAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees)
+        public IObservable<Issue> AddAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -111,7 +111,7 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of assignees to remove </param>
         /// <returns></returns>
-        public IObservable<Issue> RemoveAssignees(string owner, string name, int issueNumber, AssigneesUpdate assignees)
+        public IObservable<Issue> RemoveAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
