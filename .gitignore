@@ -106,3 +106,6 @@ coverage-results/*
 
 # Rider
 **/.idea/*
+
+# macOS
+.DS_Store
