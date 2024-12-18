@@ -580,6 +580,8 @@ namespace Octokit
 
             return Connection.Delete(uri, data);
         }
+        
+        
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
@@ -595,6 +597,23 @@ namespace Octokit
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             return Connection.Delete(uri, data, accepts);
+        }
+
+        /// <summary>
+        /// Performs an asynchronous HTTP DELETE request that expects an empty response.
+        /// </summary>
+        /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="contentType">Specifies body request media type</param>
+        /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
+        public Task Delete(Uri uri, object data, string accepts, string contentType)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(data, nameof(data));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
+
+            return Connection.Delete(uri, data, accepts,contentType);
         }
 
         /// <summary>
