@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, int issueNumber)
+        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, long issueNumber)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, int issueNumber)
+        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, long issueNumber)
         {
             return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
         }
@@ -63,7 +63,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -81,7 +81,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

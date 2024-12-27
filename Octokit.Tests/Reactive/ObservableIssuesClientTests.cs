@@ -722,7 +722,7 @@ public class ObservableIssuesClientTests
         }
     }
 
-    static Issue CreateIssue(int issueNumber)
+    static Issue CreateIssue(long issueNumber)
     {
         var serializer = new SimpleJsonSerializer();
         return serializer.Deserialize<Issue>(@"{""number"": """ + issueNumber + @"""}");

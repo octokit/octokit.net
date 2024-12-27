@@ -260,7 +260,7 @@ public class IssueCommentsClientTests
 
         const string owner = "octokit";
         const string name = "octokit.net";
-        const int issueNumber = 1115;
+        const long issueNumber = 1115;
         const long repositoryId = 7528679;
 
         public TheGetAllForIssueMethod()
@@ -594,7 +594,7 @@ public class IssueCommentsClientTests
         return issue.Number;
     }
 
-    async static Task<long> HelperCreateIssueCommentWithReactions(string owner, string repo, int issueNumber)
+    async static Task<long> HelperCreateIssueCommentWithReactions(string owner, string repo, long issueNumber)
     {
         var github = Helper.GetAuthenticatedClient();
 

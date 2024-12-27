@@ -21,7 +21,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int issueNumber);
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -31,7 +31,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int issueNumber);
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, long issueNumber);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -43,7 +43,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options);
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -54,7 +54,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options);
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -240,7 +240,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, int issueNumber, string[] labels);
+        Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, long issueNumber, string[] labels);
 
         /// <summary>
         /// Adds a label to an issue
@@ -251,7 +251,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, int issueNumber, string[] labels);
+        Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, long issueNumber, string[] labels);
 
         /// <summary>
         /// Removes a label from an issue
@@ -263,7 +263,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, int issueNumber, string labelName);
+        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, long issueNumber, string labelName);
 
         /// <summary>
         /// Removes a label from an issue
@@ -274,7 +274,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, int issueNumber, string labelName);
+        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, long issueNumber, string labelName);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -286,7 +286,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, int issueNumber, string[] labels);
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, long issueNumber, string[] labels);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -297,7 +297,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, int issueNumber, string[] labels);
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, long issueNumber, string[] labels);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -308,7 +308,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task RemoveAllFromIssue(string owner, string name, int issueNumber);
+        Task RemoveAllFromIssue(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -318,6 +318,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task RemoveAllFromIssue(long repositoryId, int issueNumber);
+        Task RemoveAllFromIssue(long repositoryId, long issueNumber);
     }
 }
