@@ -18,8 +18,15 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(client, nameof(client));
 
+            PublicKeys = new ObservablePublicKeysClient(client);
+
             _client = client.Meta;
         }
+
+        /// <summary>
+        /// Returns a client to manage get public keys for validating request signatures.
+        /// </summary>
+        public IObservablePublicKeysClient PublicKeys { get; private set; }
 
         /// <summary>
         /// Retrieves information about GitHub.com, the service or a GitHub Enterprise installation.
