@@ -217,7 +217,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerGroupOrganizationsForEnterprise("fake", 1);
 
-                connection.Received().GetAll<Organization>(
+                connection.Received().GetAll<OrganizationsResponse>(
                   Arg.Is<Uri>(u => u.ToString() == "enterprises/fake/actions/runner-groups/1/organizations"), Args.ApiOptions);
             }
 
@@ -248,7 +248,7 @@ namespace Octokit.Tests.Clients
 
                 await client.ListAllRunnerGroupRepositoriesForOrganization("fake", 1, ApiOptions.None);
 
-                connection.Received().GetAll<Repository>(
+                connection.Received().GetAll<RepositoriesResponse>(
                   Arg.Is<Uri>(u => u.ToString() == "orgs/fake/actions/runner-groups/1/repositories"), Args.ApiOptions);
             }
 
