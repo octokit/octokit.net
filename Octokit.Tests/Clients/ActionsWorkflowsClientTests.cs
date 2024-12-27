@@ -32,7 +32,7 @@ namespace Octokit.Tests.Clients
         public class TheCreateDispatchMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrlByWorkflowId()
+            public async Task RequestsCorrectUrlByWorkflowIdRepoSlug()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsWorkflowsClient(connection);
@@ -47,7 +47,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByWorkflowFileName()
+            public async Task RequestsCorrectUrlByWorkflowFileNameRepoSlug()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new ActionsWorkflowsClient(connection);
@@ -58,6 +58,36 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Post<object>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yaml/dispatches"),
+                    createDispatch);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlByWorkflowIdRepoId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowsClient(connection);
+
+                var createDispatch = new CreateWorkflowDispatch("ref");
+
+                await client.CreateDispatch(321, 123, createDispatch);
+
+                connection.Received().Post<object>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/321/actions/workflows/123/dispatches"),
+                    createDispatch);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlByWorkflowFileNameRepoId()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new ActionsWorkflowsClient(connection);
+
+                var createDispatch = new CreateWorkflowDispatch("ref");
+
+                await client.CreateDispatch(321, "main.yaml", createDispatch);
+
+                connection.Received().Post<object>(
+                    Arg.Is<Uri>(u => u.ToString() == "repositories/321/actions/workflows/main.yaml/dispatches"),
                     createDispatch);
             }
 
@@ -77,6 +107,9 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateDispatch("fake", null, "main.yaml", createDispatch));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateDispatch("fake", "repo", null, createDispatch));
                 await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateDispatch("fake", "repo", "main.yaml", null));
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateDispatch(4321, 123, null));
+                await Assert.ThrowsAsync<ArgumentNullException>(() => client.CreateDispatch(4321, null, createDispatch));
             }
 
             [Fact]
@@ -93,6 +126,8 @@ namespace Octokit.Tests.Clients
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CreateDispatch("", "repo", "main.yaml", createDispatch));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CreateDispatch("fake", "", "main.yaml", createDispatch));
                 await Assert.ThrowsAsync<ArgumentException>(() => client.CreateDispatch("fake", "repo", "", createDispatch));
+
+                await Assert.ThrowsAsync<ArgumentException>(() => client.CreateDispatch(4321, "", createDispatch));
             }
         }
 

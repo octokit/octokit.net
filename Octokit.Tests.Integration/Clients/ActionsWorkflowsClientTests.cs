@@ -105,14 +105,17 @@ jobs:
         {
             var owner = context.Repository.Owner.Login;
             var name = context.Repository.Name;
+            var repoId = context.Repository.Id;
             var workflowFileName = await CreateWorkflow(github, context);
             var reference = "main";
 
             await fixture.CreateDispatch(owner, name, workflowFileName, new CreateWorkflowDispatch(reference));
+            await fixture.CreateDispatch(repoId, workflowFileName, new CreateWorkflowDispatch(reference));
 
             var workflowId = await GetWorkflowId(github, context, workflowFileName);
 
             await fixture.CreateDispatch(owner, name, workflowId, new CreateWorkflowDispatch(reference));
+            await fixture.CreateDispatch(repoId, workflowId, new CreateWorkflowDispatch(reference));
         }
     }
 

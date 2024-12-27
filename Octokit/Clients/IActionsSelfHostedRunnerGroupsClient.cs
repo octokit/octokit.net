@@ -119,7 +119,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        Task<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
+        Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
 
         /// <summary>
         /// List organization access to a self-hosted runner group in an enterprise
@@ -130,7 +130,7 @@ namespace Octokit
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Organization>> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
+        Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -140,7 +140,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        Task<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
+        Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -151,6 +151,6 @@ namespace Octokit
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Repository>> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
+        Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
     }
 }
