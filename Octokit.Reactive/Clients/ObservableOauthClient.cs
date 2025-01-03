@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -23,24 +24,24 @@ namespace Octokit.Reactive
             return _client.Oauth.GetGitHubLoginUrl(request);
         }
 
-        public IObservable<OauthToken> CreateAccessToken(OauthTokenRequest request)
+        public IObservable<OauthToken> CreateAccessToken(OauthTokenRequest request, CancellationToken cancellationToken = default)
         {
-            return _client.Oauth.CreateAccessToken(request).ToObservable();
+            return _client.Oauth.CreateAccessToken(request, cancellationToken).ToObservable();
         }
 
-        public IObservable<OauthDeviceFlowResponse> InitiateDeviceFlow(OauthDeviceFlowRequest request)
+        public IObservable<OauthDeviceFlowResponse> InitiateDeviceFlow(OauthDeviceFlowRequest request, CancellationToken cancellationToken = default)
         {
-            return _client.Oauth.InitiateDeviceFlow(request).ToObservable();
+            return _client.Oauth.InitiateDeviceFlow(request, cancellationToken).ToObservable();
         }
 
-        public IObservable<OauthToken> CreateAccessTokenForDeviceFlow(string clientId, OauthDeviceFlowResponse deviceFlowResponse)
+        public IObservable<OauthToken> CreateAccessTokenForDeviceFlow(string clientId, OauthDeviceFlowResponse deviceFlowResponse, CancellationToken cancellationToken = default)
         {
-            return _client.Oauth.CreateAccessTokenForDeviceFlow(clientId, deviceFlowResponse).ToObservable();
+            return _client.Oauth.CreateAccessTokenForDeviceFlow(clientId, deviceFlowResponse, cancellationToken).ToObservable();
         }
 
-        public IObservable<OauthToken> CreateAccessTokenFromRenewalToken(OauthTokenRenewalRequest request)
+        public IObservable<OauthToken> CreateAccessTokenFromRenewalToken(OauthTokenRenewalRequest request, CancellationToken cancellationToken = default)
         {
-            return _client.Oauth.CreateAccessTokenFromRenewalToken(request)
+            return _client.Oauth.CreateAccessTokenFromRenewalToken(request, cancellationToken)
                 .ToObservable();
         }
     }
