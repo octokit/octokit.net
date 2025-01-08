@@ -33,7 +33,7 @@ namespace Octokit.Tests.Reactive
         public class TheCreateDispatchMethod
         {
             [Fact]
-            public async Task RequestsCorrectUrlByWorkflowId()
+            public async Task RequestsCorrectUrlByWorkflowIdRepoSlug()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowsClient(connection);
@@ -46,7 +46,7 @@ namespace Octokit.Tests.Reactive
             }
 
             [Fact]
-            public async Task RequestsCorrectUrlByWorkflowFileName()
+            public async Task RequestsCorrectUrlByWorkflowFileNameRepoSlug()
             {
                 var connection = Substitute.For<IGitHubClient>();
                 var client = new ObservableActionsWorkflowsClient(connection);
@@ -56,6 +56,31 @@ namespace Octokit.Tests.Reactive
                 client.CreateDispatch("fake", "repo", "main.yaml", createDispatch);
 
                 connection.Received().Actions.Workflows.CreateDispatch("fake", "repo", "main.yaml", createDispatch);
+            }
+            [Fact]
+            public async Task RequestsCorrectUrlByWorkflowIdRepoId()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowsClient(connection);
+
+                var createDispatch = new CreateWorkflowDispatch("ref");
+
+                client.CreateDispatch(1234, 123, createDispatch);
+
+                connection.Received().Actions.Workflows.CreateDispatch(1234, 123, createDispatch);
+            }
+
+            [Fact]
+            public async Task RequestsCorrectUrlByWorkflowFileNameRepoId()
+            {
+                var connection = Substitute.For<IGitHubClient>();
+                var client = new ObservableActionsWorkflowsClient(connection);
+
+                var createDispatch = new CreateWorkflowDispatch("ref");
+
+                client.CreateDispatch(1234, "main.yaml", createDispatch);
+
+                connection.Received().Actions.Workflows.CreateDispatch(1234, "main.yaml", createDispatch);
             }
 
             [Fact]
@@ -74,6 +99,9 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentNullException>(() => client.CreateDispatch("fake", null, "main.yaml", createDispatch));
                 Assert.Throws<ArgumentNullException>(() => client.CreateDispatch("fake", "repo", null, createDispatch));
                 Assert.Throws<ArgumentNullException>(() => client.CreateDispatch("fake", "repo", "main.yaml", null));
+
+                Assert.Throws<ArgumentNullException>(() => client.CreateDispatch(4321, 123, null));
+                Assert.Throws<ArgumentNullException>(() => client.CreateDispatch(4321, null, createDispatch));
             }
 
             [Fact]
@@ -90,6 +118,8 @@ namespace Octokit.Tests.Reactive
                 Assert.Throws<ArgumentException>(() => client.CreateDispatch("", "repo", "main.yaml", createDispatch));
                 Assert.Throws<ArgumentException>(() => client.CreateDispatch("fake", "", "main.yaml", createDispatch));
                 Assert.Throws<ArgumentException>(() => client.CreateDispatch("fake", "repo", "", createDispatch));
+
+                Assert.Throws<ArgumentException>(() => client.CreateDispatch(4321, "", createDispatch));
             }
         }
 
