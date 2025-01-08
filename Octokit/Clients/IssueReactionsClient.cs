@@ -24,7 +24,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int issueNumber)
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber)
         {
             return GetAll(owner, name, issueNumber, ApiOptions.None);
         }
@@ -38,7 +38,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, int issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -54,7 +54,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int issueNumber)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber)
         {
             return GetAll(repositoryId, issueNumber, ApiOptions.None);
         }
@@ -67,7 +67,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, int issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber, ApiOptions options)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -83,7 +83,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
-        public Task<Reaction> Create(string owner, string name, int issueNumber, NewReaction reaction)
+        public Task<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -100,7 +100,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
         [ManualRoute("POST", "/repositories/{id}/issues/{number}/reactions")]
-        public Task<Reaction> Create(long repositoryId, int issueNumber, NewReaction reaction)
+        public Task<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
@@ -117,7 +117,7 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}")]
-        public Task Delete(string owner, string name, int issueNumber, long reactionId)
+        public Task Delete(string owner, string name, long issueNumber, long reactionId)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -134,7 +134,7 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repositories/{id}/issues/{issue_number}/reactions/{reaction_id}")]
-        public Task Delete(long repositoryId, int issueNumber, long reactionId)
+        public Task Delete(long repositoryId, long issueNumber, long reactionId)
         {
             return ApiConnection.Delete(ApiUrls.IssueReaction(repositoryId, issueNumber, reactionId));
         }

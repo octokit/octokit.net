@@ -21,7 +21,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, int issueNumber);
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -31,7 +31,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, int issueNumber);
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -43,7 +43,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options);
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -54,7 +54,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options);
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets all events for the repository.

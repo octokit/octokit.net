@@ -15,7 +15,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        Task Lock(string owner, string name, int issueNumber, LockReason? lockReason = null);
+        Task Lock(string owner, string name, long issueNumber, LockReason? lockReason = null);
 
         /// <summary>
         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue or pull request's conversation.
@@ -24,7 +24,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        Task Lock(long repositoryId, int issueNumber, LockReason? lockReason = null);
+        Task Lock(long repositoryId, long issueNumber, LockReason? lockReason = null);
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue or pull request's conversation.
@@ -33,7 +33,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task Unlock(string owner, string name, int issueNumber);
+        Task Unlock(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue or pull request's conversation.
@@ -41,7 +41,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task Unlock(long repositoryId, int issueNumber);
+        Task Unlock(long repositoryId, long issueNumber);
 
     }
 }
