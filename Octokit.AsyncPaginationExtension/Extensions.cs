@@ -43,20 +43,20 @@ namespace Octokit.AsyncPaginationExtension
     public static IPaginatedList<IssueComment> GetAllForRepositoryAsync(this IIssueCommentsClient t, long repositoryId, IssueCommentRequest request, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<IssueComment>(options => t.GetAllForRepository(repositoryId, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(string, string, int, ApiOptions)"/>
-    public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, string owner, string name, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+        /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(string, string, long, ApiOptions)"/>
+        public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, string owner, string name, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<IssueComment>(options => t.GetAllForIssue(owner, name, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(long, int, ApiOptions)"/>
-    public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, long repositoryId, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+        /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(long, long, ApiOptions)"/>
+        public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, long repositoryId, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<IssueComment>(options => t.GetAllForIssue(repositoryId, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(string, string, int, IssueCommentRequest, ApiOptions)"/>
-    public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, string owner, string name, int issueNumber, IssueCommentRequest request, int pageSize = DEFAULT_PAGE_SIZE)
+        /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(string, string, long, IssueCommentRequest, ApiOptions)"/>
+        public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, string owner, string name, long issueNumber, IssueCommentRequest request, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<IssueComment>(options => t.GetAllForIssue(owner, name, issueNumber, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(long, int, IssueCommentRequest, ApiOptions)"/>
-    public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, long repositoryId, int issueNumber, IssueCommentRequest request, int pageSize = DEFAULT_PAGE_SIZE)
+        /// <inheritdoc cref="IIssueCommentsClient.GetAllForIssue(long, long, IssueCommentRequest, ApiOptions)"/>
+        public static IPaginatedList<IssueComment> GetAllForIssueAsync(this IIssueCommentsClient t, long repositoryId, long issueNumber, IssueCommentRequest request, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<IssueComment>(options => t.GetAllForIssue(repositoryId, issueNumber, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
     /// <inheritdoc cref="IRepositoryPagesClient.GetAll(string, string, ApiOptions)"/>
@@ -107,24 +107,24 @@ namespace Octokit.AsyncPaginationExtension
     public static IPaginatedList<Notification> GetAllForRepositoryAsync(this INotificationsClient t, long repositoryId, NotificationsRequest request, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Notification>(options => t.GetAllForRepository(repositoryId, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueTimelineClient.GetAllForIssue(string, string, int, ApiOptions)"/>
-    public static IPaginatedList<TimelineEventInfo> GetAllForIssueAsync(this IIssueTimelineClient t, string owner, string repo, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssueTimelineClient.GetAllForIssue(string, string, long, ApiOptions)"/>
+    public static IPaginatedList<TimelineEventInfo> GetAllForIssueAsync(this IIssueTimelineClient t, string owner, string repo, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<TimelineEventInfo>(options => t.GetAllForIssue(owner, repo, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueTimelineClient.GetAllForIssue(long, int, ApiOptions)"/>
-    public static IPaginatedList<TimelineEventInfo> GetAllForIssueAsync(this IIssueTimelineClient t, long repositoryId, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssueTimelineClient.GetAllForIssue(long, long, ApiOptions)"/>
+    public static IPaginatedList<TimelineEventInfo> GetAllForIssueAsync(this IIssueTimelineClient t, long repositoryId, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<TimelineEventInfo>(options => t.GetAllForIssue(repositoryId, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
     /// <inheritdoc cref="IMiscellaneousClient.GetAllLicenses(ApiOptions)"/>
     public static IPaginatedList<LicenseMetadata> GetAllLicensesAsync(this IMiscellaneousClient t, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<LicenseMetadata>(t.GetAllLicenses, pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueReactionsClient.GetAll(string, string, int, ApiOptions)"/>
-    public static IPaginatedList<Reaction> GetAllAsync(this IIssueReactionsClient t, string owner, string name, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssueReactionsClient.GetAll(string, string, long, ApiOptions)"/>
+    public static IPaginatedList<Reaction> GetAllAsync(this IIssueReactionsClient t, string owner, string name, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Reaction>(options => t.GetAll(owner, name, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssueReactionsClient.GetAll(long, int, ApiOptions)"/>
-    public static IPaginatedList<Reaction> GetAllAsync(this IIssueReactionsClient t, long repositoryId, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssueReactionsClient.GetAll(long, long, ApiOptions)"/>
+    public static IPaginatedList<Reaction> GetAllAsync(this IIssueReactionsClient t, long repositoryId, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Reaction>(options => t.GetAll(repositoryId, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
     /// <inheritdoc cref="IRepositoryDeployKeysClient.GetAll(string, string, ApiOptions)"/>
@@ -395,12 +395,12 @@ namespace Octokit.AsyncPaginationExtension
     public static IPaginatedList<CheckRunAnnotation> GetAllAnnotationsAsync(this ICheckRunsClient t, long repositoryId, long checkRunId, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<CheckRunAnnotation>(options => t.GetAllAnnotations(repositoryId, checkRunId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssuesLabelsClient.GetAllForIssue(string, string, int, ApiOptions)"/>
-    public static IPaginatedList<Label> GetAllForIssueAsync(this IIssuesLabelsClient t, string owner, string name, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssuesLabelsClient.GetAllForIssue(string, string, long, ApiOptions)"/>
+    public static IPaginatedList<Label> GetAllForIssueAsync(this IIssuesLabelsClient t, string owner, string name, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Label>(options => t.GetAllForIssue(owner, name, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssuesLabelsClient.GetAllForIssue(long, int, ApiOptions)"/>
-    public static IPaginatedList<Label> GetAllForIssueAsync(this IIssuesLabelsClient t, long repositoryId, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssuesLabelsClient.GetAllForIssue(long, long, ApiOptions)"/>
+    public static IPaginatedList<Label> GetAllForIssueAsync(this IIssuesLabelsClient t, long repositoryId, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Label>(options => t.GetAllForIssue(repositoryId, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
     /// <inheritdoc cref="IIssuesLabelsClient.GetAllForRepository(string, string, ApiOptions)"/>
@@ -551,12 +551,12 @@ namespace Octokit.AsyncPaginationExtension
     public static IPaginatedList<Reaction> GetAllAsync(this IPullRequestReviewCommentReactionsClient t, long repositoryId, long commentId, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Reaction>(options => t.GetAll(repositoryId, commentId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssuesEventsClient.GetAllForIssue(string, string, int, ApiOptions)"/>
-    public static IPaginatedList<IssueEvent> GetAllForIssueAsync(this IIssuesEventsClient t, string owner, string name, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssuesEventsClient.GetAllForIssue(string, string, long, ApiOptions)"/>
+    public static IPaginatedList<IssueEvent> GetAllForIssueAsync(this IIssuesEventsClient t, string owner, string name, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<IssueEvent>(options => t.GetAllForIssue(owner, name, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IIssuesEventsClient.GetAllForIssue(long, int, ApiOptions)"/>
-    public static IPaginatedList<IssueEvent> GetAllForIssueAsync(this IIssuesEventsClient t, long repositoryId, int issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
+    /// <inheritdoc cref="IIssuesEventsClient.GetAllForIssue(long, long, ApiOptions)"/>
+    public static IPaginatedList<IssueEvent> GetAllForIssueAsync(this IIssuesEventsClient t, long repositoryId, long issueNumber, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<IssueEvent>(options => t.GetAllForIssue(repositoryId, issueNumber, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
     /// <inheritdoc cref="IIssuesEventsClient.GetAllForRepository(string, string, ApiOptions)"/>

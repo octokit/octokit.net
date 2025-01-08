@@ -108,7 +108,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int issueNumber);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, long issueNumber);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -116,7 +116,7 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/comments/#list-comments-on-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int issueNumber);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, long issueNumber);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -126,7 +126,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int issueNumber, ApiOptions options);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -135,7 +135,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int issueNumber, ApiOptions options);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -145,7 +145,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int issueNumber, IssueCommentRequest request);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, long issueNumber, IssueCommentRequest request);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -154,7 +154,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int issueNumber, IssueCommentRequest request);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, long issueNumber, IssueCommentRequest request);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -165,7 +165,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, int issueNumber, IssueCommentRequest request, ApiOptions options);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(string owner, string name, long issueNumber, IssueCommentRequest request, ApiOptions options);
 
         /// <summary>
         /// Gets Issue Comments for a specified Issue.
@@ -175,7 +175,7 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="request">The sorting <see cref="IssueCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, int issueNumber, IssueCommentRequest request, ApiOptions options);
+        Task<IReadOnlyList<IssueComment>> GetAllForIssue(long repositoryId, long issueNumber, IssueCommentRequest request, ApiOptions options);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.
@@ -185,7 +185,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="newComment">The new comment to add to the issue</param>
-        Task<IssueComment> Create(string owner, string name, int issueNumber, string newComment);
+        Task<IssueComment> Create(string owner, string name, long issueNumber, string newComment);
 
         /// <summary>
         /// Creates a new Issue Comment for a specified Issue.
@@ -194,7 +194,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="newComment">The new comment to add to the issue</param>
-        Task<IssueComment> Create(long repositoryId, int issueNumber, string newComment);
+        Task<IssueComment> Create(long repositoryId, long issueNumber, string newComment);
 
         /// <summary>
         /// Updates a specified Issue Comment.
