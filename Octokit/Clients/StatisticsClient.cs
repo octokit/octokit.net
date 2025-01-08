@@ -265,7 +265,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(ApiUrls.StatsPunchCard(owner, name), cancellationToken).ConfigureAwait(false);
+            var punchCardData = await ApiConnection.GetQueuedOperation<long[]>(ApiUrls.StatsPunchCard(owner, name), cancellationToken).ConfigureAwait(false);
             return new PunchCard(punchCardData);
         }
 
@@ -277,7 +277,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/stats/punch_card")]
         public async Task<PunchCard> GetPunchCard(long repositoryId, CancellationToken cancellationToken)
         {
-            var punchCardData = await ApiConnection.GetQueuedOperation<int[]>(ApiUrls.StatsPunchCard(repositoryId), cancellationToken).ConfigureAwait(false);
+            var punchCardData = await ApiConnection.GetQueuedOperation<long[]>(ApiUrls.StatsPunchCard(repositoryId), cancellationToken).ConfigureAwait(false);
             return new PunchCard(punchCardData);
         }
     }

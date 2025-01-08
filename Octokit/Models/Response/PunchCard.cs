@@ -19,6 +19,13 @@ namespace Octokit
             punchCardData.Select(point => new PunchCardPoint(point)).ToList());
         }
 
+        public PunchCard(IEnumerable<IList<long>> punchCardData)
+        {
+            Ensure.ArgumentNotNull(punchCardData, nameof(punchCardData));
+            PunchPoints = new ReadOnlyCollection<PunchCardPoint>(
+            punchCardData.Select(point => new PunchCardPoint(point)).ToList());
+        }
+
         public PunchCard(IEnumerable<PunchCardPoint> punchPoints)
         {
             PunchPoints = punchPoints?.ToList();
@@ -36,7 +43,7 @@ namespace Octokit
         /// <param name="dayOfWeek">The day of the week to query</param>
         /// <param name="hourOfDay">The hour in 24 hour time. 0-23.</param>
         /// <returns>The total number of commits made.</returns>
-        public int GetCommitCountFor(DayOfWeek dayOfWeek, int hourOfDay)
+        public long GetCommitCountFor(DayOfWeek dayOfWeek, int hourOfDay)
         {
             var punchPoint = PunchPoints.SingleOrDefault(point => point.DayOfWeek == dayOfWeek && point.HourOfTheDay == hourOfDay);
             return punchPoint == null ? 0 : punchPoint.CommitCount;
