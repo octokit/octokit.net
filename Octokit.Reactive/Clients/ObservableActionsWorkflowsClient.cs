@@ -23,7 +23,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Manually triggers a GitHub Actions workflow run in a repository by Id.
+        /// Manually triggers a GitHub Actions workflow run in a repository by slug.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
@@ -43,7 +43,7 @@ namespace Octokit.Reactive
         }
 
         /// <summary>
-        /// Manually triggers a GitHub Actions workflow run in a repository by Id.
+        /// Manually triggers a GitHub Actions workflow run in a repository by slug.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
@@ -59,6 +59,39 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
             return _client.CreateDispatch(owner, name, workflowId, createDispatch).ToObservable();
+        }
+
+        /// <summary>
+        /// Manually triggers a GitHub Actions workflow run in a repository by slug.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
+        public IObservable<Unit> CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
+            Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
+
+            return _client.CreateDispatch(repositoryId, workflowFileName, createDispatch).ToObservable();
+        }
+
+        /// <summary>
+        /// Manually triggers a GitHub Actions workflow run in a repository by Id.
+        /// </summary>
+        /// <remarks>
+        /// https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+        /// </remarks>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
+        public IObservable<Unit> CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch)
+        {
+            Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
+
+            return _client.CreateDispatch(repositoryId, workflowId, createDispatch).ToObservable();
         }
 
         /// <summary>

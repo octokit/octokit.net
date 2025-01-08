@@ -4834,6 +4834,16 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that returns meta in
+        /// response to a GET request.
+        /// </summary>
+        /// <returns>The <see cref="Uri"/> to meta.</returns>
+        public static Uri PublicKeys(PublicKeyType keysType)
+        {
+            return "meta/public_keys/{0}".FormatUri(keysType.ToParameter());
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> that returns all organization credentials in
         /// response to a GET request.
         /// </summary>
@@ -5040,6 +5050,28 @@ namespace Octokit
         public static Uri ActionsDispatchWorkflow(string owner, string repo, string workflowFileName)
         {
             return "repos/{0}/{1}/actions/workflows/{2}/dispatches".FormatUri(owner, repo, workflowFileName.UriEncode());
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowId">The Id of the workflow.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDispatchWorkflow(long repositoryId, long workflowId)
+        {
+            return "repositories/{0}/actions/workflows/{1}/dispatches".FormatUri(repositoryId, workflowId);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> that disables an Actions workflow for a repository.
+        /// </summary>
+        /// <param name="repositoryId">The Id of the repository.</param>
+        /// <param name="workflowFileName">The workflow file name.</param>
+        /// <returns>The <see cref="Uri"/> that gets an Actions workflow for a repository.</returns>
+        public static Uri ActionsDispatchWorkflow(long repositoryId, string workflowFileName)
+        {
+            return "repositories/{0}/actions/workflows/{1}/dispatches".FormatUri(repositoryId, workflowFileName.UriEncode());
         }
 
         /// <summary>
@@ -5605,6 +5637,22 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> that handles the machine availability for a repository.
+        /// </summary>
+        /// <param name="owner">The owner of the repository.</param>
+        /// <param name="repo">The name of the repository.</param>
+        /// <param name="reference">The reference to check the machine availability for.</param>
+        public static Uri GetAvailableMachinesForRepo(string owner, string repo, string reference)
+        {
+            if (reference is null)
+            {
+                return "repos/{0}/{1}/codespaces/machines".FormatUri(owner, repo);
+            }
+
+            return "repos/{0}/{1}/actions/runners/availability?ref={3}".FormatUri(owner, repo, reference);
+        }
+        
+        /// <summary>
         /// Returns the <see cref="Uri"/> that handles adding or removing of copilot licenses for an organisation
         /// </summary>
         /// <param name="org">The name of the organization</param>
@@ -5657,6 +5705,11 @@ namespace Octokit
         public static Uri CodespaceStop(string codespaceName)
         {
             return "user/codespaces/{0}/stop".FormatUri(codespaceName);
+        }
+
+        public static Uri CreateCodespace(string owner, string repo)
+        {
+            return "repos/{0}/{1}/codespaces".FormatUri(owner, repo);
         }
 
         /// <summary>

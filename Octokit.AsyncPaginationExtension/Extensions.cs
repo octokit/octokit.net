@@ -235,14 +235,6 @@ namespace Octokit.AsyncPaginationExtension
     public static IPaginatedList<Collaborator> GetAllAsync(this IRepoCollaboratorsClient t, long repositoryId, RepositoryCollaboratorListRequest request, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<Collaborator>(options => t.GetAll(repositoryId, request, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
 
-    /// <inheritdoc cref="IActionsSelfHostedRunnerGroupsClient.ListAllRunnerGroupOrganizationsForEnterprise(string, long, ApiOptions)"/>
-    public static IPaginatedList<Organization> ListAllRunnerGroupOrganizationsForEnterpriseAsync(this IActionsSelfHostedRunnerGroupsClient t, string enterprise, long runnerGroupId, int pageSize = DEFAULT_PAGE_SIZE)
-        => pageSize > 0 ? new PaginatedList<Organization>(options => t.ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
-
-    /// <inheritdoc cref="IActionsSelfHostedRunnerGroupsClient.ListAllRunnerGroupRepositoriesForOrganization(string, long, ApiOptions)"/>
-    public static IPaginatedList<Repository> ListAllRunnerGroupRepositoriesForOrganizationAsync(this IActionsSelfHostedRunnerGroupsClient t, string org, long runnerGroupId, int pageSize = DEFAULT_PAGE_SIZE)
-        => pageSize > 0 ? new PaginatedList<Repository>(options => t.ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
-
     /// <inheritdoc cref="IProjectColumnsClient.GetAll(int, ApiOptions)"/>
     public static IPaginatedList<ProjectColumn> GetAllAsync(this IProjectColumnsClient t, int projectId, int pageSize = DEFAULT_PAGE_SIZE)
         => pageSize > 0 ? new PaginatedList<ProjectColumn>(options => t.GetAll(projectId, options), pageSize) : throw new ArgumentOutOfRangeException(nameof(pageSize), pageSize, "The page size must be positive.");
