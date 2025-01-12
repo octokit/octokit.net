@@ -357,6 +357,8 @@ namespace Octokit
         /// <param name="accepts">Specifies accept response media type</param>
         Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts);
 
+        Task<HttpStatusCode> Delete(Uri uri, object data, string accepts, string contentType);
+
         /// <summary>
         /// Base address for the connection.
         /// </summary>

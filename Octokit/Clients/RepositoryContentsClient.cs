@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -523,7 +524,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(request, nameof(request));
 
             var deleteUrl = ApiUrls.RepositoryContent(repositoryId, path);
-            return ApiConnection.Delete(deleteUrl, request);
+            return ApiConnection.Delete(deleteUrl, request, "", "application/json");  // TODO MediaTypeNames.Application.Json);
         }
     }
 }

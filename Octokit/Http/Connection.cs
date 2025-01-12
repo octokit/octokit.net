@@ -628,7 +628,8 @@ namespace Octokit
                 Method = HttpMethod.Delete,
                 Body = data,
                 BaseAddress = BaseAddress,
-                Endpoint = uri
+                Endpoint = uri,
+                ContentType = "application/json"
             };
             var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
@@ -647,6 +648,15 @@ namespace Octokit
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
             var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None).ConfigureAwait(false);
+            return response.HttpResponse.StatusCode;
+        }
+        
+        public async Task<HttpStatusCode> Delete(Uri uri, object data, string accepts, string contentType)
+        {
+            Ensure.ArgumentNotNull(uri, nameof(uri));
+            Ensure.ArgumentNotNull(accepts, nameof(accepts));
+
+            var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, contentType, CancellationToken.None).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
