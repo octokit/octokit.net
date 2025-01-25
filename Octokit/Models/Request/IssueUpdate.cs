@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using Octokit.Internal;
@@ -12,6 +11,9 @@ namespace Octokit
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     public class IssueUpdate
     {
+        private ICollection<string> _labels;
+        private ICollection<string> _assignees;
+
         /// <summary>
         /// Title of the issue (required)
         /// </summary>
@@ -28,7 +30,7 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the multiple assignees for new issues.  The assignees are silently dropped otherwise.
         /// </remarks>
-        public ICollection<string> Assignees { get; private set; }
+        public ICollection<string> Assignees => _assignees ??= [];
 
         /// <summary>
         /// Milestone to associate this issue with.
@@ -46,7 +48,7 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set labels for new issues. Labels are silently dropped otherwise.
         /// </remarks>
-        public ICollection<string> Labels { get; private set; }
+        public ICollection<string> Labels => _labels ??= [];
 
         /// <summary>
         /// Whether the issue is open or closed.
@@ -58,13 +60,7 @@ namespace Octokit
         /// </summary>
         public ItemStateReason? StateReason { get; set; }
 
-        internal string DebuggerDisplay
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "Title: {0}", Title);
-            }
-        }
+        internal string DebuggerDisplay => string.Format(CultureInfo.InvariantCulture, "Title: {0}", Title);
 
         /// <summary>
         /// Adds the specified assignees to the issue.
@@ -72,12 +68,6 @@ namespace Octokit
         /// <param name="name">The login of the assignee.</param>
         public void AddAssignee(string name)
         {
-            // lazily create the assignees array
-            if (Assignees == null)
-            {
-                Assignees = new List<string>();
-            }
-
             Assignees.Add(name);
         }
 
@@ -86,15 +76,7 @@ namespace Octokit
         /// </summary>
         public void ClearAssignees()
         {
-            // lazily create the assignees array
-            if (Assignees == null)
-            {
-                Assignees = new List<string>();
-            }
-            else
-            {
-                Assignees.Clear();
-            }
+            Assignees.Clear();
         }
 
         /// <summary>
@@ -103,15 +85,7 @@ namespace Octokit
         /// <param name="name">The login of the assignee to remove</param>
         public void RemoveAssignee(string name)
         {
-            // lazily create the assignees array
-            if (Assignees == null)
-            {
-                Assignees = new List<string>();
-            }
-            else
-            {
-                Assignees.Remove(name);
-            }
+            Assignees.Remove(name);
         }
 
         /// <summary>
@@ -120,12 +94,6 @@ namespace Octokit
         /// <param name="name">The name of the label.</param>
         public void AddLabel(string name)
         {
-            // lazily create the label array
-            if (Labels == null)
-            {
-                Labels = new List<string>();
-            }
-
             Labels.Add(name);
         }
 
@@ -134,15 +102,7 @@ namespace Octokit
         /// </summary>
         public void ClearLabels()
         {
-            // lazily create the label array
-            if (Labels == null)
-            {
-                Labels = new List<string>();
-            }
-            else
-            {
-                Labels.Clear();
-            }
+            Labels.Clear();
         }
 
         /// <summary>
@@ -151,15 +111,7 @@ namespace Octokit
         /// <param name="name">The name of the label to remove</param>
         public void RemoveLabel(string name)
         {
-            // lazily create the label array
-            if (Labels == null)
-            {
-                Labels = new List<string>();
-            }
-            else
-            {
-                Labels.Remove(name);
-            }
+            Labels.Remove(name);
         }
     }
 }
