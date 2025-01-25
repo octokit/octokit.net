@@ -30,7 +30,7 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set the multiple assignees for new issues.  The assignees are silently dropped otherwise.
         /// </remarks>
-        public ICollection<string> Assignees => _assignees ??= [];
+        public ICollection<string> Assignees => _assignees ??= new List<string>();
 
         /// <summary>
         /// Milestone to associate this issue with.
@@ -48,7 +48,7 @@ namespace Octokit
         /// <remarks>
         /// Only users with push access can set labels for new issues. Labels are silently dropped otherwise.
         /// </remarks>
-        public ICollection<string> Labels => _labels ??= [];
+        public ICollection<string> Labels => _labels ??= new List<string>();
 
         /// <summary>
         /// Whether the issue is open or closed.
