@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Linq;
+using Xunit;
 
 namespace Octokit.Tests.Models
 {
@@ -7,19 +8,25 @@ namespace Octokit.Tests.Models
         [Fact]
         public void Can_Initialise_With_Label()
         {
-            _ = new IssueUpdate
+            var issueUpdate = new IssueUpdate
             {
                 Labels = { "Foo" }
             };
+            
+            Assert.Single(issueUpdate.Labels);
+            Assert.Equal("Foo", issueUpdate.Labels.First());
         }
     
         [Fact]
         public void Can_Initialise_With_Assignee()
         {
-            _ = new IssueUpdate
+            var issueUpdate = new IssueUpdate
             {
                 Assignees = { "Foo" }
             };
+            
+            Assert.Single(issueUpdate.Assignees);
+            Assert.Equal("Foo", issueUpdate.Assignees.First());
         }
     }
 }
