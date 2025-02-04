@@ -27,6 +27,12 @@ namespace Octokit
 	/// 			is attributed to placeholder identities called mannequins.
 	/// </summary>
 	[Parameter(Value = "Mannequin")]
-	Mannequin
+	Mannequin,
+
+        /// <summary>
+        /// Enterprise account
+        /// </summary>
+        [Parameter( Value = "Enterprise" )]
+        Enterprise,
     }
 }

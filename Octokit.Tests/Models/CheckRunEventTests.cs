@@ -495,7 +495,18 @@ namespace Octokit.Tests.Models
 
             var serializer = new SimpleJsonSerializer();
 
-            Assert.ThrowsAny<System.ArgumentException>( () => serializer.Deserialize<CheckRunEventPayload>( json ) );
+            var payload = serializer.Deserialize<CheckRunEventPayload>(json);
+
+            Assert.Equal("rerequested", payload.Action);
+            Assert.Equal("d6fde92930d4715a2b49857d24b940956b26d2d3", payload.CheckRun.HeadSha);
+            Assert.Equal(4, payload.CheckRun.Id);
+            Assert.Equal(CheckStatus.Completed, payload.CheckRun.Status);
+            Assert.Equal(CheckConclusion.Neutral, payload.CheckRun.Conclusion);
+            Assert.Equal("dosomeaction", payload.RequestedAction.Identifier);
+            Assert.Equal(5, payload.CheckRun.CheckSuite.Id);
+            Assert.Equal(CheckStatus.Completed, payload.CheckRun.CheckSuite.Status.Value);
+            Assert.Equal(CheckConclusion.Neutral, payload.CheckRun.CheckSuite.Conclusion);
+            Assert.Equal(AccountType.Enterprise, payload.CheckRun.App.Owner.Type);
         }
     }
 }
