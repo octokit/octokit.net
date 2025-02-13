@@ -2057,7 +2057,7 @@ namespace Octokit
         /// <param name="repo">The name of the repository. The name is not case sensitive.</param>
         public static Uri TeamPermissionsForARepository(string org, string teamId, string owner, string repo)
         {
-            return "/orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamId, owner, repo);
+            return "orgs/{0}/teams/{1}/repos/{2}/{3}".FormatUri(org, teamId, owner, repo);
         }
 
         /// <summary>

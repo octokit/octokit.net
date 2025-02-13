@@ -494,7 +494,7 @@ namespace Octokit.Tests.Clients
 
                 await client.CheckTeamPermissionsForARepository("org", "teamSlug", "owner", "repo");
 
-                var expected = "/orgs/org/teams/teamSlug/repos/owner/repo";
+                var expected = "orgs/org/teams/teamSlug/repos/owner/repo";
 
                 connection.Received().Get<TeamRepository>(Arg.Is<Uri>(u => u.ToString() == expected));
             }
@@ -508,13 +508,13 @@ namespace Octokit.Tests.Clients
                 var connection = Substitute.For<IApiConnection>();
                 var client = new TeamsClient(connection);
 
-                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
                     client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader(null, "teamSlug", "owner", "repo"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
                     client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", null, "owner", "repo"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
                     client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", "teamSlug", null, "repo"));
-                await Assert.ThrowsAsync<ArgumentNullException>(() => 
+                await Assert.ThrowsAsync<ArgumentNullException>(() =>
                     client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", "teamSlug", "owner", null));
             }
 
@@ -526,7 +526,7 @@ namespace Octokit.Tests.Clients
 
                 await client.CheckTeamPermissionsForARepositoryWithCustomAcceptHeader("org", "teamSlug", "owner", "repo");
 
-                var expected = "/orgs/org/teams/teamSlug/repos/owner/repo";
+                var expected = "orgs/org/teams/teamSlug/repos/owner/repo";
 
                 connection.Received().Get<TeamRepository>(
                     Arg.Is<Uri>(u => u.ToString() == expected),
@@ -569,7 +569,7 @@ namespace Octokit.Tests.Clients
 
                 await client.AddOrUpdateTeamRepositoryPermissions("org", "teamSlug", "owner", "repo", permission);
 
-                var expected = "/orgs/org/teams/teamSlug/repos/owner/repo";
+                var expected = "orgs/org/teams/teamSlug/repos/owner/repo";
 
                 connection.Received().Put(
                     Arg.Is<Uri>(u => u.ToString() == expected),
@@ -613,12 +613,12 @@ namespace Octokit.Tests.Clients
 
                 await client.RemoveRepositoryFromATeam("org", "teamSlug", "owner", "repo");
 
-                var expected = "/orgs/org/teams/teamSlug/repos/owner/repo";
+                var expected = "orgs/org/teams/teamSlug/repos/owner/repo";
 
                 connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == expected));
             }
         }
-        
+
         public class TheGetByNameMethod
         {
             [Fact]
