@@ -209,7 +209,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets useage of a specific workflow in a repository by file name. Anyone with read access to the repository can use this endpoint.
+        /// Gets usage of a specific workflow in a repository by file name. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
@@ -228,7 +228,7 @@ namespace Octokit
         }
 
         /// <summary>
-        /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// Gets usage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage

@@ -123,7 +123,7 @@ namespace Octokit.Reactive
         IObservable<Workflow> Get(string owner, string name, long workflowId);
 
         /// <summary>
-        /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// Gets usage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
@@ -134,7 +134,7 @@ namespace Octokit.Reactive
         IObservable<WorkflowUsage> GetUsage(string owner, string name, string workflowFileName);
 
         /// <summary>
-        /// Gets useage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
+        /// Gets usage of a specific workflow in a repository by Id. Anyone with read access to the repository can use this endpoint.
         /// </summary>
         /// <remarks>
         /// https://developer.github.com/v3/actions/workflows/#get-workflow-usage
