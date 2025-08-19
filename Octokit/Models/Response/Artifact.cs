@@ -11,7 +11,7 @@ namespace Octokit
         {
         }
 
-        public Artifact(long id, string nodeId, string name, int sizeInBytes, string url, string archiveDownloadUrl, bool expired, DateTime createdAt, DateTime expiresAt, DateTime updatedAt, ArtifactWorkflowRun workflowRun)
+        public Artifact(long id, string nodeId, string name, long sizeInBytes, string url, string archiveDownloadUrl, bool expired, DateTime createdAt, DateTime expiresAt, DateTime updatedAt, ArtifactWorkflowRun workflowRun)
         {
             Id = id;
             NodeId = nodeId;
@@ -44,7 +44,7 @@ namespace Octokit
         /// <summary>
         /// The size of the artifact in bytes
         /// </summary>
-        public int SizeInBytes { get; private set; }
+        public long SizeInBytes { get; private set; }
 
         /// <summary>
         /// The url for retrieving the artifact information
