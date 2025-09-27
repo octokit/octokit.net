@@ -1,0 +1,1 @@
+dotnet add package OctoNotes.Generator.ReleaseNotesSource.GitHub --version 0.1.171
