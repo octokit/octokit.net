@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Octokit;
 using Octokit.Tests.Integration;
@@ -142,6 +142,26 @@ public class TreeClientTests : IDisposable
 
         Assert.NotNull(result);
         Assert.Single(result.Tree);
+    }
+
+    [IntegrationTest]
+    public async Task CanDeleteACreatedTreeWithRepositoryId()
+    {
+        var newTree = new NewTree();
+        newTree.Tree.Add(new NewTreeItem
+        {
+            Type = TreeType.Blob,
+            Path = "README.md",
+            Sha = null,
+            Mode = FileMode.File
+        });
+
+        var tree = await _fixture.Create(_context.Repository.Id, newTree);
+
+        var result = await _fixture.Get(_context.Repository.Id, tree.Sha);
+
+        Assert.NotNull(result);
+        Assert.Empty(result.Tree);
     }
 
     public void Dispose()
