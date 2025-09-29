@@ -1,6 +1,7 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using Octokit.Internal;
 
 namespace Octokit
 {
@@ -16,9 +17,9 @@ namespace Octokit
         public string Path { get; set; }
 
         /// <summary>
-        /// String of the file mode - one of 100644 for file (blob), 
-        /// 100755 for executable (blob), 040000 for subdirectory (tree), 
-        /// 160000 for submodule (commit) or 
+        /// String of the file mode - one of 100644 for file (blob),
+        /// 100755 for executable (blob), 040000 for subdirectory (tree),
+        /// 160000 for submodule (commit) or
         /// 120000 for a blob that specifies the path of a symlink
         /// </summary>
         public string Mode { get; set; }
@@ -31,11 +32,12 @@ namespace Octokit
 
         /// <summary>
         /// The SHA for this Tree item.
+        /// If both this and Content is null it will delete the item.
         /// </summary>
-        public string Sha { get; set; }
+        [SerializeNull] public string Sha { get; set; }
 
         /// <summary>
-        /// Gets or sets the content you want this file to have. GitHub will write this blob out and use that SHA 
+        /// Gets or sets the content you want this file to have. GitHub will write this blob out and use that SHA
         /// for this entry. Use either this, or tree.sha.
         /// </summary>
         /// <value>
