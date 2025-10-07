@@ -1,0 +1,2 @@
+git clone git@github.com:octokit/Octokit.net.git Octokit
+cd Octokit
