@@ -9,7 +9,7 @@ namespace Octokit
     {
         public ReleaseAsset() { }
 
-        public ReleaseAsset(string url, int id, string nodeId, string name, string label, string state, string contentType, int size, int downloadCount, DateTimeOffset createdAt, DateTimeOffset updatedAt, string browserDownloadUrl, Author uploader)
+        public ReleaseAsset(string url, int id, string nodeId, string name, string label, string state, string contentType, int size, string digest, int downloadCount, DateTimeOffset createdAt, DateTimeOffset updatedAt, string browserDownloadUrl, Author uploader)
         {
             Url = url;
             Id = id;
@@ -19,6 +19,7 @@ namespace Octokit
             State = state;
             ContentType = contentType;
             Size = size;
+            Digest = digest;
             DownloadCount = downloadCount;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
@@ -44,6 +45,8 @@ namespace Octokit
         public string ContentType { get; private set; }
 
         public int Size { get; private set; }
+
+        public string Digest { get; private set; }
 
         public int DownloadCount { get; private set; }
 
