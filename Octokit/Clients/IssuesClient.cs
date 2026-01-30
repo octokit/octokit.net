@@ -24,6 +24,7 @@ namespace Octokit
             Comment = new IssueCommentsClient(apiConnection);
             Timeline = new IssueTimelineClient(apiConnection);
             LockUnlock = new LockUnlockClient(apiConnection);
+            SubIssues = new SubIssuesClient(apiConnection);
         }
 
         /// <summary>
@@ -62,6 +63,8 @@ namespace Octokit
         /// Client for locking and unlocking a conversation on a Issue or Pull request
         /// </summary>
         public ILockUnlockClient LockUnlock { get; private set; }
+
+        public ISubIssuesClient SubIssues { get; private set; }
 
         /// <summary>
         /// Gets a single Issue by number.
