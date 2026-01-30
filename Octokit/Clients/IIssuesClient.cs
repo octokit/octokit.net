@@ -43,6 +43,8 @@ namespace Octokit
 
         ILockUnlockClient LockUnlock { get; }
 
+        ISubIssuesClient SubIssues { get; }
+
         /// <summary>
         /// Gets a single Issue by number.
         /// </summary>

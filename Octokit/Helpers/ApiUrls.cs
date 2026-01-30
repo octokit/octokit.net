@@ -579,6 +579,18 @@ namespace Octokit
         }
 
         /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified issue's parent.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueParent(string owner, string name, long issueNumber)
+        {
+            return "repos/{0}/{1}/issues/{2}/parent".FormatUri(owner, name, issueNumber);
+        }
+
+        /// <summary>
         /// Returns the <see cref="Uri"/> for the reaction of a specified issue.
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
@@ -588,6 +600,42 @@ namespace Octokit
         public static Uri IssueReactions(string owner, string name, long issueNumber)
         {
             return "repos/{0}/{1}/issues/{2}/reactions".FormatUri(owner, name, issueNumber);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for deleting a sub-issue of a specified issue.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueSubIssue(string owner, string name, long issueNumber)
+        {
+            return "repos/{0}/{1}/issues/{2}/sub_issue".FormatUri(owner, name, issueNumber);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified issue's sub-issues.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueSubIssues(string owner, string name, long issueNumber)
+        {
+            return "repos/{0}/{1}/issues/{2}/sub_issues".FormatUri(owner, name, issueNumber);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="Uri"/> for the specified issue's sub-issue priority.
+        /// </summary>
+        /// <param name="owner">The owner of the repository</param>
+        /// <param name="name">The name of the repository</param>
+        /// <param name="issueNumber">The issue number</param>
+        /// <returns></returns>
+        public static Uri IssueSubIssuePriority(string owner, string name, long issueNumber)
+        {
+            return "repos/{0}/{1}/issues/{2}/sub_issues/priority".FormatUri(owner, name, issueNumber);
         }
 
         /// <summary>
@@ -5651,7 +5699,7 @@ namespace Octokit
 
             return "repos/{0}/{1}/actions/runners/availability?ref={3}".FormatUri(owner, repo, reference);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="Uri"/> that handles adding or removing of copilot licenses for an organisation
         /// </summary>
