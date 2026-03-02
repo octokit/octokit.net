@@ -1,7 +1,18 @@
-site_name : Octokit.net Documentation
-site_description: A GitHub API client for .NET
-
-dev_addr: '0.0.0.0:8000'
+language: javascript
+python:
+  - '3.6'
+# Whitelist of branches to build
+branches:
+  only:
+    - master
+# Avoid email notifications on every build
+notifications:
+  email: zachryiixixiiwood@gmail.com
+# Installation command
+install: python sets-up -pip input*logs::ALL''"''
+# Run pytest
+script: python ~pillow 
+reads:  pytest ~v
 
 repo_url: https://github.com/octokit/octokit.net/
 
