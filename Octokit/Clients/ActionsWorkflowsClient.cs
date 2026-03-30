@@ -32,14 +32,14 @@ namespace Octokit
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        public Task<WorkflowDispatch> CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
-            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowFileName), createDispatch);
+            return ApiConnection.Post<WorkflowDispatch>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowFileName), createDispatch);
         }
 
         /// <summary>
@@ -53,13 +53,13 @@ namespace Octokit
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch)
+        public Task<WorkflowDispatch> CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
-            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowId), createDispatch);
+            return ApiConnection.Post<WorkflowDispatch>(ApiUrls.ActionsDispatchWorkflow(owner, name, workflowId), createDispatch);
         }
 
         /// <summary>
@@ -72,12 +72,12 @@ namespace Octokit
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repositories/{id}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        public Task<WorkflowDispatch> CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
-            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(repositoryId, workflowFileName), createDispatch);
+            return ApiConnection.Post<WorkflowDispatch>(ApiUrls.ActionsDispatchWorkflow(repositoryId, workflowFileName), createDispatch);
         }
 
         /// <summary>
@@ -90,11 +90,11 @@ namespace Octokit
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repositories/{id}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch)
+        public Task<WorkflowDispatch> CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
-            return ApiConnection.Post<object>(ApiUrls.ActionsDispatchWorkflow(repositoryId, workflowId), createDispatch);
+            return ApiConnection.Post<WorkflowDispatch>(ApiUrls.ActionsDispatchWorkflow(repositoryId, workflowId), createDispatch);
         }
 
         /// <summary>

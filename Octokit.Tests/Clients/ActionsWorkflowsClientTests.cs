@@ -41,7 +41,7 @@ namespace Octokit.Tests.Clients
 
                 await client.CreateDispatch("fake", "repo", 123, createDispatch);
 
-                connection.Received().Post<object>(
+                connection.Received().Post<WorkflowDispatch>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/123/dispatches"),
                     createDispatch);
             }
@@ -56,7 +56,7 @@ namespace Octokit.Tests.Clients
 
                 await client.CreateDispatch("fake", "repo", "main.yaml", createDispatch);
 
-                connection.Received().Post<object>(
+                connection.Received().Post<WorkflowDispatch>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/workflows/main.yaml/dispatches"),
                     createDispatch);
             }
@@ -71,7 +71,7 @@ namespace Octokit.Tests.Clients
 
                 await client.CreateDispatch(321, 123, createDispatch);
 
-                connection.Received().Post<object>(
+                connection.Received().Post<WorkflowDispatch>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/321/actions/workflows/123/dispatches"),
                     createDispatch);
             }
@@ -86,7 +86,7 @@ namespace Octokit.Tests.Clients
 
                 await client.CreateDispatch(321, "main.yaml", createDispatch);
 
-                connection.Received().Post<object>(
+                connection.Received().Post<WorkflowDispatch>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/321/actions/workflows/main.yaml/dispatches"),
                     createDispatch);
             }

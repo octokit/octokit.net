@@ -32,7 +32,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        public IObservable<Unit> CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        public IObservable<WorkflowDispatch> CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -52,7 +52,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        public IObservable<Unit> CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch)
+        public IObservable<WorkflowDispatch> CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -70,7 +70,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        public IObservable<Unit> CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        public IObservable<WorkflowDispatch> CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
@@ -87,7 +87,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        public IObservable<Unit> CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch)
+        public IObservable<WorkflowDispatch> CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch)
         {
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 

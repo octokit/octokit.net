@@ -30,6 +30,11 @@ namespace Octokit
         /// </summary>
         public IDictionary<string, object> Inputs { get; set; }
 
+        /// <summary>
+        /// Indicates that the details of the workflow run should be returned in the response.
+        /// </summary>
+        public bool ReturnRunDetails => true;
+
         internal string DebuggerDisplay
         {
             get

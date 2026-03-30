@@ -20,7 +20,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        Task CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch);
+        Task<WorkflowDispatch> CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch);
 
         /// <summary>
         /// Manually triggers a GitHub Actions workflow run in a repository by slug.
@@ -32,7 +32,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        Task CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch);
+        Task<WorkflowDispatch> CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch);
 
         /// <summary>
         /// Manually triggers a GitHub Actions workflow run in a repository by Id.
@@ -43,7 +43,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        Task CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch);
+        Task<WorkflowDispatch> CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch);
 
         /// <summary>
         /// Manually triggers a GitHub Actions workflow run in a repository by Id.
@@ -54,7 +54,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
-        Task CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch);
+        Task<WorkflowDispatch> CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch);
 
         /// <summary>
         /// Disables a specific workflow in a repository by Id.
