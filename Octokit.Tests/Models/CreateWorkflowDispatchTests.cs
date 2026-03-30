@@ -31,7 +31,7 @@ namespace Octokit.Tests.Models
 
             var payload = serializer.Serialize(item);
 
-            Assert.Equal(@"{""ref"":""main""}", payload);
+            Assert.Equal(@"{""ref"":""main"",""return_run_details"":true}", payload);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Octokit.Tests.Models
 
             var payload = serializer.Serialize(item);
 
-            Assert.Equal(@"{""ref"":""main"",""inputs"":{""foo"":1,""bar"":""qux""}}", payload);
+            Assert.Equal(@"{""ref"":""main"",""inputs"":{""foo"":1,""bar"":""qux""},""return_run_details"":true}", payload);
         }
     }
 }
