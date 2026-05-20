@@ -96,6 +96,15 @@ namespace Octokit
         /// </value>
         public Committer Committer { get; set; }
 
+        /// <summary>
+        /// Gets or sets the PGP signature of the commit.
+        /// If provided, the commit will be created with this signature.
+        /// </summary>
+        /// <value>
+        /// The signature.
+        /// </value>
+        public string Signature { get; set; }
+
         internal string DebuggerDisplay
         {
             get
