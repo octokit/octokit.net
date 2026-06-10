@@ -27,15 +27,15 @@ namespace Octokit
         /// an access token using this method.
         /// </remarks>
         /// <param name="request"></param>
-        /// <param name="concellationToken"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<OauthToken> CreateAccessToken(OauthTokenRequest request, CancellationToken concellationToken = default);
+        Task<OauthToken> CreateAccessToken(OauthTokenRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Makes a request to initiate the device flow authentication.
         /// </summary>
         /// <remarks>
-        /// Returns a user verification code and verification URL that the you will use to prompt the user to authenticate.
+        /// Returns a user verification code and verification URL that you will use to prompt the user to authenticate.
         /// This request also returns a device verification code that you must use to receive an access token to check the status of user authentication.
         /// </remarks>
         /// <param name="request"></param>
@@ -49,18 +49,18 @@ namespace Octokit
         /// <remarks>
         /// Will poll the access token endpoint, until the device and user codes expire or the user has successfully authorized the app with a valid user code.
         /// </remarks>
-        /// <param name="clientId">The client Id you received from GitHub when you registered the application.</param>
+        /// <param name="clientId">The client ID you received from GitHub when you registered the application.</param>
         /// <param name="deviceFlowResponse">The response you received from <see cref="InitiateDeviceFlow(OauthDeviceFlowRequest, CancellationToken)"/></param>
-        /// <param name="concellationToken"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<OauthToken> CreateAccessTokenForDeviceFlow(string clientId, OauthDeviceFlowResponse deviceFlowResponse, CancellationToken concellationToken = default);
+        Task<OauthToken> CreateAccessTokenForDeviceFlow(string clientId, OauthDeviceFlowResponse deviceFlowResponse, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Makes a request to get an access token using the refresh token returned in <see cref="CreateAccessToken(OauthTokenRequest, CancellationToken)"/>.
         /// </summary>
         /// <param name="request">Token renewal request.</param>
-        /// <param name="concellationToken"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns><see cref="OauthToken"/> with the new token set.</returns>
-        Task<OauthToken> CreateAccessTokenFromRenewalToken(OauthTokenRenewalRequest request, CancellationToken concellationToken = default);
+        Task<OauthToken> CreateAccessTokenFromRenewalToken(OauthTokenRenewalRequest request, CancellationToken cancellationToken = default);
     }
 }
