@@ -22,14 +22,13 @@ namespace Octokit.Tests.Http
                 var getUri = new Uri("anything", UriKind.Relative);
                 IApiResponse<object> response = new ApiResponse<object>(CreateResponse(HttpStatusCode.OK));
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Args.Uri, null).Returns(Task.FromResult(response));
+                connection.Get<object>(Args.Uri, null, null, Arg.Any<CancellationToken>()).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri);
 
                 Assert.Same(response.Body, data);
-                var calls = connection.ReceivedCalls();
-                connection.Received().Get<object>(getUri, null, null);
+                connection.Received().Get<object>(getUri, null, null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -39,13 +38,13 @@ namespace Octokit.Tests.Http
                 const string accepts = "custom/accepts";
                 IApiResponse<object> response = new ApiResponse<object>(CreateResponse(HttpStatusCode.OK));
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Args.Uri, null, Args.String).Returns(Task.FromResult(response));
+                connection.Get<object>(Args.Uri, null, Args.String, Arg.Any<CancellationToken>()).Returns(Task.FromResult(response));
                 var apiConnection = new ApiConnection(connection);
 
                 var data = await apiConnection.Get<object>(getUri, null, accepts);
 
                 Assert.Same(response.Body, data);
-                connection.Received().Get<object>(getUri, null, accepts);
+                connection.Received().Get<object>(getUri, null, accepts, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -429,6 +428,79 @@ namespace Octokit.Tests.Http
             public void EnsuresNonNullArguments()
             {
                 Assert.Throws<ArgumentNullException>(() => new ApiConnection(null));
+            }
+        }
+
+        public class TheCancellationTokenForwarding
+        {
+            [Fact]
+            public async Task GetPassesCancellationTokenToConnection()
+            {
+                var cts = new CancellationTokenSource();
+                IApiResponse<object> response = new ApiResponse<object>(CreateResponse(HttpStatusCode.OK));
+                var connection = Substitute.For<IConnection>();
+                connection.Get<object>(Args.Uri, Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), cts.Token).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.Get<object>(new Uri("anything", UriKind.Relative), null, "application/json", cts.Token);
+
+                connection.Received().Get<object>(Arg.Any<Uri>(), Arg.Any<IDictionary<string, string>>(), "application/json", cts.Token);
+            }
+
+            [Fact]
+            public async Task GetAllPassesCancellationTokenToConnection()
+            {
+                var cts = new CancellationTokenSource();
+                IApiResponse<List<object>> response = new ApiResponse<List<object>>(CreateResponse(HttpStatusCode.OK), new List<object>());
+                var connection = Substitute.For<IConnection>();
+                connection.Get<List<object>>(Args.Uri, Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), cts.Token, Arg.Any<Func<object, object>>()).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.GetAll<object>(new Uri("anything", UriKind.Relative), null, null, ApiOptions.None, cts.Token);
+
+                connection.Received().Get<List<object>>(Arg.Any<Uri>(), Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), cts.Token, Arg.Any<Func<object, object>>());
+            }
+
+            [Fact]
+            public async Task PutPassesCancellationTokenToConnection()
+            {
+                var cts = new CancellationTokenSource();
+                IApiResponse<object> response = new ApiResponse<object>(CreateResponse(HttpStatusCode.OK));
+                var connection = Substitute.For<IConnection>();
+                connection.Put<object>(Args.Uri, Args.Object, cts.Token).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.Put<object>(new Uri("anything", UriKind.Relative), new object(), cts.Token);
+
+                connection.Received().Put<object>(Arg.Any<Uri>(), Arg.Any<object>(), cts.Token);
+            }
+
+            [Fact]
+            public async Task PatchPassesCancellationTokenToConnection()
+            {
+                var cts = new CancellationTokenSource();
+                IApiResponse<object> response = new ApiResponse<object>(CreateResponse(HttpStatusCode.OK));
+                var connection = Substitute.For<IConnection>();
+                connection.Patch<object>(Args.Uri, Args.Object, cts.Token).Returns(Task.FromResult(response));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.Patch<object>(new Uri("anything", UriKind.Relative), new object(), cts.Token);
+
+                connection.Received().Patch<object>(Arg.Any<Uri>(), Arg.Any<object>(), cts.Token);
+            }
+
+            [Fact]
+            public async Task DeletePassesCancellationTokenToConnection()
+            {
+                var cts = new CancellationTokenSource();
+                var statusCode = HttpStatusCode.NoContent;
+                var connection = Substitute.For<IConnection>();
+                connection.Delete(Args.Uri, Arg.Any<object>(), Arg.Any<string>(), cts.Token).Returns(Task.FromResult(statusCode));
+                var apiConnection = new ApiConnection(connection);
+
+                await apiConnection.Delete(new Uri("anything", UriKind.Relative), new object(), "accepts", cts.Token);
+
+                connection.Received().Delete(Arg.Any<Uri>(), Arg.Any<object>(), Arg.Any<string>(), cts.Token);
             }
         }
     }

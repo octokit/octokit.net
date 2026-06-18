@@ -211,8 +211,9 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public Task<IApiResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters)
+        public Task<IApiResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -221,7 +222,7 @@ namespace Octokit
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
                 Endpoint = uri.ApplyParameters(parameters)
-            });
+            }, cancellationToken);
         }
 
         /// <summary>
@@ -229,9 +230,10 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         /// <remarks>The <see cref="IResponse.Body"/> property will be <c>null</c> if the <paramref name="uri"/> points to a directory instead of a file</remarks>
-        public Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters)
+        public Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -240,11 +242,11 @@ namespace Octokit
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
                 Endpoint = uri.ApplyParameters(parameters)
-            });
+            }, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, TimeSpan timeout)
+        public Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -254,11 +256,11 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri.ApplyParameters(parameters),
                 Timeout = timeout
-            });
+            }, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<IApiResponse<Stream>> GetRawStream(Uri uri, IDictionary<string, string> parameters)
+        public Task<IApiResponse<Stream>> GetRawStream(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -267,24 +269,24 @@ namespace Octokit
                 Method = HttpMethod.Get,
                 BaseAddress = BaseAddress,
                 Endpoint = uri.ApplyParameters(parameters)
-            });
+            }, cancellationToken);
         }
 
-        public Task<IApiResponse<T>> Patch<T>(Uri uri, object body)
+        public Task<IApiResponse<T>> Patch<T>(Uri uri, object body, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            return SendData<T>(uri, HttpVerb.Patch, body, null, null, CancellationToken.None);
+            return SendData<T>(uri, HttpVerb.Patch, body, null, null, cancellationToken);
         }
 
-        public Task<IApiResponse<T>> Patch<T>(Uri uri, object body, string accepts)
+        public Task<IApiResponse<T>> Patch<T>(Uri uri, object body, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, CancellationToken.None);
+            return SendData<T>(uri, HttpVerb.Patch, body, accepts, null, cancellationToken);
         }
 
         /// <summary>
@@ -381,30 +383,30 @@ namespace Octokit
             return SendData<T>(uri, HttpMethod.Post, body, accepts, contentType, cancellationToken, baseAddress: baseAddress);
         }
 
-        public Task<IApiResponse<T>> Put<T>(Uri uri, object body)
+        public Task<IApiResponse<T>> Put<T>(Uri uri, object body, CancellationToken cancellationToken = default)
         {
-            return SendData<T>(uri, HttpMethod.Put, body, null, null, CancellationToken.None);
+            return SendData<T>(uri, HttpMethod.Put, body, null, null, cancellationToken);
         }
 
-        public Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode)
+        public Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             return SendData<T>(uri,
                 HttpMethod.Put,
                 body,
                 null,
                 null,
-                CancellationToken.None,
+                cancellationToken,
                 twoFactorAuthenticationCode);
         }
 
-        public Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, string accepts)
+        public Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, string accepts, CancellationToken cancellationToken = default)
         {
             return SendData<T>(uri,
                 HttpMethod.Put,
                 body,
                 accepts,
                 null,
-                CancellationToken.None,
+                cancellationToken,
                 twoFactorAuthenticationCode);
         }
 
@@ -483,8 +485,9 @@ namespace Octokit
         /// Performs an asynchronous HTTP PATCH request.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public async Task<HttpStatusCode> Patch(Uri uri)
+        public async Task<HttpStatusCode> Patch(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -494,7 +497,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
+            var response = await Run<object>(request, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -503,13 +506,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public async Task<HttpStatusCode> Patch(Uri uri, object body)
+        public async Task<HttpStatusCode> Patch(Uri uri, object body, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            var response = await SendData<object>(uri, new HttpMethod("PATCH"), body, null, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, new HttpMethod("PATCH"), body, null, null, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -518,13 +522,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public async Task<HttpStatusCode> Patch(Uri uri, string accepts)
+        public async Task<HttpStatusCode> Patch(Uri uri, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            var response = await SendData<object>(uri, new HttpMethod("PATCH"), null, accepts, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, new HttpMethod("PATCH"), null, accepts, null, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -534,14 +539,15 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        public async Task<HttpStatusCode> Patch(Uri uri, object body, string accepts)
+        public async Task<HttpStatusCode> Patch(Uri uri, object body, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            var response = await SendData<object>(uri, new HttpMethod("PATCH"), body, accepts, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, new HttpMethod("PATCH"), body, accepts, null, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -549,8 +555,9 @@ namespace Octokit
         /// Performs an asynchronous HTTP PUT request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Put(Uri uri)
+        public async Task<HttpStatusCode> Put(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -560,7 +567,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
+            var response = await Run<object>(request, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -569,13 +576,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Put(Uri uri, object body)
+        public async Task<HttpStatusCode> Put(Uri uri, object body, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(body, nameof(body));
 
-            var response = await SendData<object>(uri, HttpMethod.Put, body, null, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Put, body, null, null, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -583,8 +591,9 @@ namespace Octokit
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Delete(Uri uri)
+        public async Task<HttpStatusCode> Delete(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
@@ -594,7 +603,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
+            var response = await Run<object>(request, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -603,12 +612,13 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Delete(Uri uri, string twoFactorAuthenticationCode)
+        public async Task<HttpStatusCode> Delete(Uri uri, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await SendData<object>(uri, HttpMethod.Delete, null, null, null, CancellationToken.None, twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Delete, null, null, null, cancellationToken, twoFactorAuthenticationCode).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -617,8 +627,9 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Delete(Uri uri, object data)
+        public async Task<HttpStatusCode> Delete(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
@@ -630,7 +641,7 @@ namespace Octokit
                 BaseAddress = BaseAddress,
                 Endpoint = uri
             };
-            var response = await Run<object>(request, CancellationToken.None).ConfigureAwait(false);
+            var response = await Run<object>(request, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -640,13 +651,14 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<HttpStatusCode> Delete(Uri uri, object data, string accepts)
+        public async Task<HttpStatusCode> Delete(Uri uri, object data, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None).ConfigureAwait(false);
+            var response = await SendData<object>(uri, HttpMethod.Delete, data, accepts, null, cancellationToken).ConfigureAwait(false);
             return response.HttpResponse.StatusCode;
         }
 
@@ -656,12 +668,13 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
-        public Task<IApiResponse<T>> Delete<T>(Uri uri, object data)
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        public Task<IApiResponse<T>> Delete<T>(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            return SendData<T>(uri, HttpMethod.Delete, data, null, null, CancellationToken.None);
+            return SendData<T>(uri, HttpMethod.Delete, data, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -672,12 +685,13 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
-        public Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts)
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        public Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            return SendData<T>(uri, HttpMethod.Delete, data, accepts, null, CancellationToken.None);
+            return SendData<T>(uri, HttpMethod.Delete, data, accepts, null, cancellationToken);
         }
 
         /// <summary>
@@ -735,17 +749,17 @@ namespace Octokit
             }
         }
 
-        async Task<IApiResponse<string>> GetHtml(IRequest request)
+        async Task<IApiResponse<string>> GetHtml(IRequest request, CancellationToken cancellationToken = default)
         {
             request.Headers.Add("Accept", AcceptHeaders.StableVersionHtml);
-            var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
+            var response = await RunRequest(request, cancellationToken).ConfigureAwait(false);
             return new ApiResponse<string>(response, response.Body as string);
         }
 
-        async Task<IApiResponse<byte[]>> GetRaw(IRequest request)
+        async Task<IApiResponse<byte[]>> GetRaw(IRequest request, CancellationToken cancellationToken = default)
         {
             request.Headers.Add("Accept", AcceptHeaders.RawContentMediaType);
-            var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
+            var response = await RunRequest(request, cancellationToken).ConfigureAwait(false);
 
             if (response.Body is Stream stream)
             {
@@ -754,12 +768,12 @@ namespace Octokit
 
             return new ApiResponse<byte[]>(response, response.Body as byte[]);
         }
-        
-        async Task<IApiResponse<Stream>> GetRawStream(IRequest request)
+
+        async Task<IApiResponse<Stream>> GetRawStream(IRequest request, CancellationToken cancellationToken = default)
         {
             request.Headers.Add("Accept", AcceptHeaders.RawContentMediaType);
-            var response = await RunRequest(request, CancellationToken.None).ConfigureAwait(false);
-            
+            var response = await RunRequest(request, cancellationToken).ConfigureAwait(false);
+
             return new ApiResponse<Stream>(response, response.Body as Stream);
         }
 
