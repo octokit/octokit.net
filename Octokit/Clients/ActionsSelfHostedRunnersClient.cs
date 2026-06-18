@@ -29,9 +29,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runners")]
-        public Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise)
+        public Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnersForEnterprise(enterprise, ApiOptions.None);
+            return ListAllRunnersForEnterprise(enterprise, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -43,12 +43,12 @@ namespace Octokit
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runners")]
-        public async Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options)
+        public async Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForEnterprise(enterprise), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForEnterprise(enterprise), options, cancellationToken).ConfigureAwait(false);
 
             return new RunnerResponse(
               results.Count > 0 ? results[0].TotalCount : 0,
@@ -64,9 +64,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The organization.</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runners")]
-        public Task<RunnerResponse> ListAllRunnersForOrganization(string organization)
+        public Task<RunnerResponse> ListAllRunnersForOrganization(string organization, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnersForOrganization(organization, ApiOptions.None);
+            return ListAllRunnersForOrganization(organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -78,11 +78,11 @@ namespace Octokit
         /// <param name="organization">The organization.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runners")]
-        public async Task<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options)
+        public async Task<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForOrganization(organization), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForOrganization(organization), options, cancellationToken).ConfigureAwait(false);
 
             return new RunnerResponse(
               results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -100,9 +100,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners")]
-        public Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name)
+        public Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnersForRepository(owner, name, ApiOptions.None);
+            return ListAllRunnersForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -115,12 +115,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners")]
-        public async Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options)
+        public async Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForRepository(owner, name), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<RunnerResponse>(ApiUrls.ActionsListSelfHostedRunnersForRepository(owner, name), options, cancellationToken).ConfigureAwait(false);
 
             return new RunnerResponse(
               results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -136,9 +136,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runners/downloads")]
-        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise)
+        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerApplicationsForEnterprise(enterprise, ApiOptions.None);
+            return ListAllRunnerApplicationsForEnterprise(enterprise, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -150,11 +150,11 @@ namespace Octokit
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runners/downloads")]
-        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options)
+        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
-            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise), options).ConfigureAwait(false);
+            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise), options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,9 +165,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The organization.</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runners/downloads")]
-        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization)
+        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerApplicationsForOrganization(organization, ApiOptions.None);
+            return ListAllRunnerApplicationsForOrganization(organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -179,11 +179,11 @@ namespace Octokit
         /// <param name="organization">The organization.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runners/downloads")]
-        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options)
+        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization), options).ConfigureAwait(false);
+            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization), options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Octokit
         /// <param name="owner">The owner.</param>
         /// <param name="repo">The repo.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners/downloads")]
-        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string repo)
+        public Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string repo, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerApplicationsForRepository(owner, repo, ApiOptions.None);
+            return ListAllRunnerApplicationsForRepository(owner, repo, ApiOptions.None, cancellationToken);
         }
 
 
@@ -211,12 +211,12 @@ namespace Octokit
         /// <param name="repo">The repo.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runners/downloads")]
-        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string repo, ApiOptions options)
+        public async Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string repo, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, repo), options).ConfigureAwait(false);
+            return await ApiConnection.GetAll<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, repo), options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,11 +228,11 @@ namespace Octokit
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="runnerId">The runner id.</param>
         [ManualRoute("DELETE", "/enterprises/{enterprise}/actions/runners/{runner_id}")]
-        public Task DeleteEnterpriseRunner(string enterprise, long runnerId)
+        public Task DeleteEnterpriseRunner(string enterprise, long runnerId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
-            return ApiConnection.Delete(ApiUrls.ActionsDeleteEnterpriseRunner(enterprise, runnerId));
+            return ApiConnection.Delete(ApiUrls.ActionsDeleteEnterpriseRunner(enterprise, runnerId), cancellationToken);
         }
 
         /// <summary>
@@ -244,11 +244,11 @@ namespace Octokit
         /// <param name="organization">The organization.</param>
         /// <param name="runnerId">The runner id.</param>
         [ManualRoute("DELETE", "/orgs/{org}/actions/runners/{runner_id}")]
-        public Task DeleteOrganizationRunner(string organization, long runnerId)
+        public Task DeleteOrganizationRunner(string organization, long runnerId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return ApiConnection.Delete(ApiUrls.ActionsDeleteOrganizationRunner(organization, runnerId));
+            return ApiConnection.Delete(ApiUrls.ActionsDeleteOrganizationRunner(organization, runnerId), cancellationToken);
         }
 
         /// <summary>
@@ -261,12 +261,12 @@ namespace Octokit
         /// <param name="repo">The repo.</param>
         /// <param name="runnerId">The runner id.</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/runners/{runner_id}")]
-        public Task DeleteRepositoryRunner(string owner, string repo, long runnerId)
+        public Task DeleteRepositoryRunner(string owner, string repo, long runnerId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            return ApiConnection.Delete(ApiUrls.ActionsDeleteRepositoryRunner(owner, repo, runnerId));
+            return ApiConnection.Delete(ApiUrls.ActionsDeleteRepositoryRunner(owner, repo, runnerId), cancellationToken);
         }
 
         /// <summary>
@@ -276,20 +276,7 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
-        [ManualRoute("POST", "/enterprises/{enterprise}/actions/runners/registration-token")]
-        public Task<AccessToken> CreateEnterpriseRegistrationToken(string enterprise)
-        {
-            return CreateEnterpriseRegistrationToken(enterprise, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Create a self-hosted runner registration token for an enterprise
-        /// </summary>
-        /// <remarks>
-        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-enterprise
-        /// </remarks>
-        /// <param name="enterprise">The enterprise.</param>
-        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("POST", "/enterprises/{enterprise}/actions/runners/registration-token")]
         public Task<AccessToken> CreateEnterpriseRegistrationToken(string enterprise, CancellationToken cancellationToken = default)
         {
@@ -305,22 +292,9 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-organization
         /// </remarks>
         /// <param name="organization">The organization.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("POST", "/orgs/{org}/actions/runners/registration-token")]
-        public Task<AccessToken> CreateOrganizationRegistrationToken(string organization)
-        {
-            return CreateOrganizationRegistrationToken(organization, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Create a self-hosted runner registration token for an organization
-        /// </summary>
-        /// <remarks>
-        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-an-organization
-        /// </remarks>
-        /// <param name="organization">The organization.</param>
-        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
-        [ManualRoute("POST", "/orgs/{org}/actions/runners/registration-token")]
-        public Task<AccessToken> CreateOrganizationRegistrationToken(string organization, CancellationToken cancellationToken)
+        public Task<AccessToken> CreateOrganizationRegistrationToken(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
@@ -334,24 +308,11 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-a-repository
         /// </remarks>
         /// <param name="owner">The owner.</param>
-        /// <param name="repo">The repo.</param>
-        [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runners/registration-token")]
-        public Task<AccessToken> CreateRepositoryRegistrationToken(string owner, string repo)
-        {
-            return CreateRepositoryRegistrationToken(owner, repo, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// Create a self-hosted runner registration token for a repository
-        /// </summary>
-        /// <remarks>
-        /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-self-hosted-runner-registration-token-for-a-repository
-        /// </remarks>
         /// <param name="owner">The owner.</param>
         /// <param name="repo">The repo.</param>
-        /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runners/registration-token")]
-        public Task<AccessToken> CreateRepositoryRegistrationToken(string owner, string repo, CancellationToken cancellationToken)
+        public Task<AccessToken> CreateRepositoryRegistrationToken(string owner, string repo, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));

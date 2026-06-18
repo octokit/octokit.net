@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -28,9 +29,9 @@ namespace Octokit
         /// <returns>All the public <see cref="Feed"/>s for the particular user.</returns>
         [ManualRoute("GET", "/feeds")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        public Task<Feed> GetFeeds()
+        public Task<Feed> GetFeeds(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Feed>(ApiUrls.Feeds());
+            return ApiConnection.Get<Feed>(ApiUrls.Feeds(), cancellationToken);
         }
     }
 }

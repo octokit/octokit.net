@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -505,7 +506,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -529,7 +530,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), Args.Object, Args.String)
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), Args.Object, Args.String, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -553,7 +554,7 @@ namespace Octokit.Tests.Clients
                 var response = Task.FromResult(status);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Delete(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"))
+                connection.Delete(Arg.Is<Uri>(u => u.ToString() == "user/starred/yes/no"), Arg.Any<CancellationToken>())
                     .Returns(response);
 
                 var apiConnection = Substitute.For<IApiConnection>();

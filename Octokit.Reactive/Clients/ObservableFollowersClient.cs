@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -29,9 +30,9 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
-        public IObservable<User> GetAllForCurrent()
+        public IObservable<User> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -42,11 +43,11 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
-        public IObservable<User> GetAllForCurrent(ApiOptions options)
+        public IObservable<User> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(), options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(), options, cancellationToken);
         }
 
         /// <summary>
@@ -57,11 +58,11 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
-        public IObservable<User> GetAll(string login)
+        public IObservable<User> GetAll(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return GetAll(login, ApiOptions.None);
+            return GetAll(login, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -73,12 +74,12 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
-        public IObservable<User> GetAll(string login, ApiOptions options)
+        public IObservable<User> GetAll(string login, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(login), options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Followers(login), options, cancellationToken);
         }
 
         /// <summary>
@@ -88,9 +89,9 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
-        public IObservable<User> GetAllFollowingForCurrent()
+        public IObservable<User> GetAllFollowingForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllFollowingForCurrent(ApiOptions.None);
+            return GetAllFollowingForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -101,11 +102,11 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
-        public IObservable<User> GetAllFollowingForCurrent(ApiOptions options)
+        public IObservable<User> GetAllFollowingForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(), options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(), options, cancellationToken);
         }
 
         /// <summary>
@@ -116,11 +117,11 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        public IObservable<User> GetAllFollowing(string login)
+        public IObservable<User> GetAllFollowing(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return GetAllFollowing(login, ApiOptions.None);
+            return GetAllFollowing(login, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -132,12 +133,12 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IObservable{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        public IObservable<User> GetAllFollowing(string login, ApiOptions options)
+        public IObservable<User> GetAllFollowing(string login, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(login), options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Following(login), options, cancellationToken);
         }
 
         /// <summary>
@@ -148,11 +149,11 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
-        public IObservable<bool> IsFollowingForCurrent(string following)
+        public IObservable<bool> IsFollowingForCurrent(string following, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
-            return _client.IsFollowingForCurrent(following).ToObservable();
+            return _client.IsFollowingForCurrent(following, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -164,12 +165,12 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
-        public IObservable<bool> IsFollowing(string login, string following)
+        public IObservable<bool> IsFollowing(string login, string following, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
-            return _client.IsFollowing(login, following).ToObservable();
+            return _client.IsFollowing(login, following, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -180,11 +181,11 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#follow-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
-        public IObservable<bool> Follow(string login)
+        public IObservable<bool> Follow(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return _client.Follow(login).ToObservable();
+            return _client.Follow(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -195,11 +196,11 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/users/followers/#unfollow-a-user">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<Unit> Unfollow(string login)
+        public IObservable<Unit> Unfollow(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return _client.Unfollow(login).ToObservable();
+            return _client.Unfollow(login, cancellationToken).ToObservable();
         }
     }
 }

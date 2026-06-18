@@ -1,5 +1,5 @@
-﻿
-using System;
+﻿using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -22,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="base">The base revision</param>
         /// <param name="head">The head revision</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-         IObservable<DependencyDiff> GetAll(string owner, string name, string @base, string head);
+         IObservable<DependencyDiff> GetAll(string owner, string name, string @base, string head, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="DependencyDiff"/>s for the specified repository.
@@ -33,7 +33,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="base">The base revision</param>
         /// <param name="head">The head revision</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-         IObservable<DependencyDiff> GetAll(long repositoryId, string @base, string head);
+         IObservable<DependencyDiff> GetAll(long repositoryId, string @base, string head, CancellationToken cancellationToken = default);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
@@ -31,7 +32,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -51,7 +52,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(options);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -67,7 +68,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForCurrent(notificationsRequest);
 
                 connection.Received().Get<List<Notification>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -93,7 +94,7 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<IDictionary<string, string>>(d => 
                         d.Count == 4
                         && d["all"] == "true" && d["participating"] == "false"
-                        && d["page"] == "1" && d["per_page"] == "1"));
+                        && d["page"] == "1" && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -118,7 +119,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("banana", "split");
 
-                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -131,7 +132,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1);
 
-                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<Notification>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -151,7 +152,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("banana", "split", options);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -171,7 +172,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, options);
 
-                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -187,7 +188,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository("banana", "split", notificationsRequest);
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
-                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"));
+                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -203,7 +204,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(1, notificationsRequest);
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
-                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"));
+                    d => d.Count == 2 && d["all"] == "true" && d["participating"] == "false"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -227,7 +228,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
                     d => d.Count == 4 && d["all"] == "true" && d["participating"] == "false"
-                         && d["page"] == "1" && d["per_page"] == "1"));
+                         && d["page"] == "1" && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -251,7 +252,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Notification>>(endpoint, Arg.Is<Dictionary<string, string>>(
                     d => d.Count == 4 && d["all"] == "true" && d["participating"] == "false"
-                         && d["page"] == "1" && d["per_page"] == "1"));
+                         && d["page"] == "1" && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -394,7 +395,7 @@ namespace Octokit.Tests.Reactive
 
                 client.Get(1);
 
-                connection.Received().Get<Notification>(endpoint, null, null);
+                connection.Received().Get<Notification>(endpoint, null, null, Arg.Any<CancellationToken>());
             }
         }
 
@@ -426,7 +427,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetThreadSubscription(1);
 
-                connection.Received().Get<ThreadSubscription>(endpoint, null, null);
+                connection.Received().Get<ThreadSubscription>(endpoint, null, null, Arg.Any<CancellationToken>());
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 
+using System.Threading;
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -14,21 +15,21 @@ namespace Octokit.Reactive
         /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
-        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent();
+        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
-        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options);
+        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId);
+        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List repositories accessible to the user for an installation (requires GitHubApp User-To-Server Auth).
@@ -36,6 +37,6 @@ namespace Octokit.Reactive
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options);
+        IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

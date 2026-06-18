@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -16,7 +17,8 @@ namespace Octokit.Reactive
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
-        IObservable<Authorization> GetAll();
+        IObservable<Authorization> GetAll(CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Get all <see cref="Authorization"/>s for the authenticated user. This method requires basic auth.
@@ -29,7 +31,8 @@ namespace Octokit.Reactive
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
-        IObservable<Authorization> GetAll(ApiOptions options);
+        IObservable<Authorization> GetAll(ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Get a specific <see cref="Authorization"/> for the authenticated user. This method requires basic auth.
@@ -42,7 +45,8 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="Authorization"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
-        IObservable<Authorization> Get(long  id);
+        IObservable<Authorization> Get(long  id, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new personal token for the authenticated user.
@@ -60,7 +64,8 @@ namespace Octokit.Reactive
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization);
+        IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new personal token for the authenticated user.
@@ -79,7 +84,8 @@ namespace Octokit.Reactive
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization, string twoFactorAuthenticationCode);
+        IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application
@@ -103,7 +109,7 @@ namespace Octokit.Reactive
         IObservable<ApplicationAuthorization> Create(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization);
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application
@@ -129,7 +135,7 @@ namespace Octokit.Reactive
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode);
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This method will create a new authorization for the specified OAuth application, only if an authorization
@@ -151,7 +157,7 @@ namespace Octokit.Reactive
         IObservable<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization);
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This method will create a new authorization for the specified OAuth application, only if an authorization
@@ -175,7 +181,7 @@ namespace Octokit.Reactive
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode);
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks the validity of an OAuth token without running afoul of normal rate limits for failed login attempts.
@@ -187,7 +193,8 @@ namespace Octokit.Reactive
         /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
-        IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken);
+        IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Resets a valid OAuth token for an OAuth application without end user involvement.
@@ -199,7 +206,8 @@ namespace Octokit.Reactive
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to reset</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
-        IObservable<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken);
+        IObservable<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Revokes a single OAuth token for an OAuth application.
@@ -211,7 +219,8 @@ namespace Octokit.Reactive
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to revoke</param>
         /// <returns></returns>
-        IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken);
+        IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Update the <see cref="Authorization"/> specified by the id.
@@ -219,7 +228,8 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Authorization"/></param>
         /// <param name="authorizationUpdate">The changes to make to the authorization</param>
         /// <returns></returns>
-        IObservable<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate);
+        IObservable<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
@@ -234,7 +244,8 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(long id);
+        IObservable<Unit> Delete(long id, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
@@ -250,6 +261,7 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(long id, string twoFactorAuthenticationCode);
+        IObservable<Unit> Delete(long id, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
+
     }
 }

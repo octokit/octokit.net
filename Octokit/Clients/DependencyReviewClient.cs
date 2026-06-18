@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -34,14 +35,14 @@ namespace Octokit
         /// <param name="head">The head revision</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/dependency-graph/compare/{base}...{head}")]
-        public Task<IReadOnlyList<DependencyDiff>> GetAll(string owner, string name, string @base, string head)
+        public Task<IReadOnlyList<DependencyDiff>> GetAll(string owner, string name, string @base, string head, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(owner, name, @base, head));
+            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(owner, name, @base, head), cancellationToken);
         }
 
         /// <summary>
@@ -55,12 +56,12 @@ namespace Octokit
         /// <param name="head">The head revision</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repositories/{id}/dependency-graph/compare/{base}...{head}")]
-        public Task<IReadOnlyList<DependencyDiff>> GetAll(long repositoryId, string @base, string head)
+        public Task<IReadOnlyList<DependencyDiff>> GetAll(long repositoryId, string @base, string head, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(repositoryId, @base, head));
+            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(repositoryId, @base, head), cancellationToken);
         }
     }
 }

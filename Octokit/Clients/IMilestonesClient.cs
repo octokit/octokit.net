@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -21,7 +22,8 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Milestone> Get(string owner, string name, int milestoneNumber);
+        Task<Milestone> Get(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a single Milestone by number.
@@ -32,7 +34,8 @@ namespace Octokit
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Milestone> Get(long repositoryId, int milestoneNumber);
+        Task<Milestone> Get(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -43,7 +46,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -53,7 +56,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -65,7 +68,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -76,7 +79,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -88,7 +91,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -99,7 +102,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -112,7 +115,7 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -124,7 +127,7 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options);
+        Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -135,7 +138,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        Task<Milestone> Create(string owner, string name, NewMilestone newMilestone);
+        Task<Milestone> Create(string owner, string name, NewMilestone newMilestone, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -145,7 +149,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        Task<Milestone> Create(long repositoryId, NewMilestone newMilestone);
+        Task<Milestone> Create(long repositoryId, NewMilestone newMilestone, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -158,7 +163,8 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        Task<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate);
+        Task<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -170,7 +176,8 @@ namespace Octokit
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        Task<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate);
+        Task<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -181,7 +188,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, int milestoneNumber);
+        Task Delete(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -191,6 +199,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
-        Task Delete(long repositoryId, int milestoneNumber);
+        Task Delete(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default);
+
     }
 }

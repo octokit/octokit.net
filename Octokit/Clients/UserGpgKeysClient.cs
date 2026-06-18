@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -29,9 +30,9 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
         [ManualRoute("GET", "/user/gpg_keys")]
-        public Task<IReadOnlyList<GpgKey>> GetAllForCurrent()
+        public Task<IReadOnlyList<GpgKey>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -43,11 +44,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
         [ManualRoute("GET", "/user/gpg_keys")]
-        public Task<IReadOnlyList<GpgKey>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<GpgKey>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), options);
+            return ApiConnection.GetAll<GpgKey>(ApiUrls.GpgKeys(), options, cancellationToken);
         }
 
         /// <summary>
@@ -59,9 +60,9 @@ namespace Octokit
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
         [ManualRoute("GET", "/user/gpg_keys/{gpg_key_id}")]
-        public Task<GpgKey> Get(long gpgKeyId)
+        public Task<GpgKey> Get(long gpgKeyId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(gpgKeyId));
+            return ApiConnection.Get<GpgKey>(ApiUrls.GpgKeys(gpgKeyId), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -73,11 +74,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>The newly created <see cref="GpgKey"/>.</returns>
         [ManualRoute("POST", "/user/gpg_keys")]
-        public Task<GpgKey> Create(NewGpgKey newGpgKey)
+        public Task<GpgKey> Create(NewGpgKey newGpgKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newGpgKey, nameof(newGpgKey));
 
-            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey);
+            return ApiConnection.Post<GpgKey>(ApiUrls.GpgKeys(), newGpgKey, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -89,9 +90,9 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         [ManualRoute("DELETE", "/user/gpg_keys/{gpg_key_id}")]
-        public Task Delete(long gpgKeyId)
+        public Task Delete(long gpgKeyId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.GpgKeys(gpgKeyId));
+            return ApiConnection.Delete(ApiUrls.GpgKeys(gpgKeyId), cancellationToken: cancellationToken);
         }
     }
 }

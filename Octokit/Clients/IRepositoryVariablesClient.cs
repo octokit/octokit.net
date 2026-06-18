@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,9 +20,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariablesCollection"/> instance for the list of repository variables.</returns>
-        Task<RepositoryVariablesCollection> GetAllOrganization(string owner, string repoName);
+        Task<RepositoryVariablesCollection> GetAllOrganization(string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the variables for a repository.
@@ -31,9 +33,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariablesCollection"/> instance for the list of repository variables.</returns>
-        Task<RepositoryVariablesCollection> GetAll(string owner, string repoName);
+        Task<RepositoryVariablesCollection> GetAll(string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a variable from a repository.
@@ -44,9 +47,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
         /// <param name="variableName">The name of the variable</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository secret.</returns>
-        Task<RepositoryVariable> Get(string owner, string repoName, string variableName);
+        Task<RepositoryVariable> Get(string owner, string repoName, string variableName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a variable in a repository.
@@ -57,9 +61,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
         /// <param name="newVariable">The variable to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was created.</returns>
-        Task<RepositoryVariable> Create(string owner, string repoName, Variable newVariable);
+        Task<RepositoryVariable> Create(string owner, string repoName, Variable newVariable, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a variable in a repository.
@@ -70,9 +75,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
         /// <param name="variable">The variable to update</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was updated.</returns>
-        Task<RepositoryVariable> Update(string owner, string repoName, Variable variable);
+        Task<RepositoryVariable> Update(string owner, string repoName, Variable variable, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a variable in a repository.
@@ -83,7 +89,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
         /// <param name="variableName">The name of the variable</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(string owner, string repoName, string variableName);
+        Task Delete(string owner, string repoName, string variableName, CancellationToken cancellationToken = default);
     }
 }

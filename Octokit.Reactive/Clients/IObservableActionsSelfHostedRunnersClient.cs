@@ -19,7 +19,7 @@ namespace Octokit.Reactive
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-self-hosted-runners-for-an-enterprise
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
-    IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise);
+    IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a list of all self-hosted runners for an enterprise.
@@ -29,7 +29,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="options">Options to change the API response.</param>
-    IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options);
+    IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a list of all self-hosted runners for an organization.
@@ -38,7 +38,7 @@ namespace Octokit.Reactive
     /// https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
     /// </remarks>
     /// <param name="organization">The organization.</param>
-    IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization);
+    IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a list of all self-hosted runners for an organization.
@@ -48,7 +48,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="options">Options to change the API response.</param>
-    IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options);
+    IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a list of all self-hosted runners for a repository.
@@ -58,7 +58,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name);
+    IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a list of all self-hosted runners for a repository.
@@ -69,7 +69,7 @@ namespace Octokit.Reactive
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="options">Options to change the API response.</param>
-    IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options);
+    IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an enterprise
@@ -78,7 +78,7 @@ namespace Octokit.Reactive
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-enterprise
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
-    IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise);
+    IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an enterprise
@@ -88,7 +88,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="options">Options to change the API response.</param>
-    IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options);
+    IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an organization
@@ -97,7 +97,7 @@ namespace Octokit.Reactive
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-organization
     /// </remarks>
     /// <param name="organization">The organization.</param>
-    IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization);
+    IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an organization
@@ -107,7 +107,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="options">Options to change the API response.</param>
-    IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options);
+    IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for a repository
@@ -117,7 +117,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name);
+    IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for a repository
@@ -128,7 +128,7 @@ namespace Octokit.Reactive
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="options">Options to change the API response.</param>
-    IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options);
+    IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a self-hosted runner from an enterprise.
@@ -138,7 +138,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="runnerId">The runner ID.</param>
-    IObservable<Unit> DeleteEnterpriseRunner(string enterprise, long runnerId);
+    IObservable<Unit> DeleteEnterpriseRunner(string enterprise, long runnerId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a self-hosted runner from an organization.
@@ -148,7 +148,7 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="runnerId">The runner ID.</param>
-    IObservable<Unit> DeleteOrganizationRunner(string organization, long runnerId);
+    IObservable<Unit> DeleteOrganizationRunner(string organization, long runnerId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a self-hosted runner from a repository.
@@ -159,7 +159,7 @@ namespace Octokit.Reactive
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="runnerId">The runner ID.</param>
-    IObservable<Unit> DeleteRepositoryRunner(string owner, string name, long runnerId);
+    IObservable<Unit> DeleteRepositoryRunner(string owner, string name, long runnerId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Create a registration token for an enterprise.

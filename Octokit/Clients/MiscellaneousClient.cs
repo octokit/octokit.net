@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -43,9 +44,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyList{Emoji}"/> of emoji and their URI.</returns>
         [ManualRoute("GET", "/emojis")]
-        public async Task<IReadOnlyList<Emoji>> GetAllEmojis()
+        public async Task<IReadOnlyList<Emoji>> GetAllEmojis(CancellationToken cancellationToken = default)
         {
-            var result = await ApiConnection.Get<IDictionary<string, string>>(ApiUrls.Emojis());
+            var result = await ApiConnection.Get<IDictionary<string, string>>(ApiUrls.Emojis(), cancellationToken: cancellationToken);
 
             return result.Select(x => new Emoji(x.Key, x.Value)).ToList();
         }
@@ -58,9 +59,9 @@ namespace Octokit
         /// <returns>The rendered Markdown.</returns>
         [ManualRoute("POST", "/markdown/raw")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderRawMarkdown instead.")]
-        public Task<string> RenderRawMarkdown(string markdown)
+        public Task<string> RenderRawMarkdown(string markdown, CancellationToken cancellationToken = default)
         {
-            return _markdownClient.RenderRawMarkdown(markdown);
+            return _markdownClient.RenderRawMarkdown(markdown, cancellationToken);
         }
 
         /// <summary>
@@ -71,9 +72,9 @@ namespace Octokit
         /// <returns>The rendered Markdown.</returns>
         [ManualRoute("POST", "/markdown")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use MarkdownClient.RenderArbitraryMarkdown instead.")]
-        public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
+        public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown, CancellationToken cancellationToken = default)
         {
-            return _markdownClient.RenderArbitraryMarkdown(markdown);
+            return _markdownClient.RenderArbitraryMarkdown(markdown, cancellationToken);
         }
 
         /// <summary>
@@ -82,9 +83,9 @@ namespace Octokit
         /// <returns>A list of template names</returns>
         [ManualRoute("GET", "/gitignore/templates")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetAllGitIgnoreTemplates instead.")]
-        public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
+        public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates(CancellationToken cancellationToken = default)
         {
-            return _gitIgnoreClient.GetAllGitIgnoreTemplates();
+            return _gitIgnoreClient.GetAllGitIgnoreTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -94,11 +95,11 @@ namespace Octokit
         /// <returns>A template and its source</returns>
         [ManualRoute("GET", "/gitignore/templates/{name}")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use GitIgnoreClient.GetGitIgnoreTemplate instead.")]
-        public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
+        public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
 
-            return _gitIgnoreClient.GetGitIgnoreTemplate(templateName);
+            return _gitIgnoreClient.GetGitIgnoreTemplate(templateName, cancellationToken);
         }
 
         /// <summary>
@@ -108,9 +109,9 @@ namespace Octokit
         /// <returns>A list of licenses available on the site</returns>
         [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetAllLicenses instead.")]
         [ManualRoute("GET", "/licenses")]
-        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
+        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(CancellationToken cancellationToken = default)
         {
-            return _licensesClient.GetAllLicenses();
+            return _licensesClient.GetAllLicenses(cancellationToken);
         }
 
         /// <summary>
@@ -121,11 +122,11 @@ namespace Octokit
         /// <returns>A list of licenses available on the site</returns>
         [ManualRoute("GET", "/licenses")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetAllLicenses instead.")]
-        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options)
+        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return _licensesClient.GetAllLicenses(options);
+            return _licensesClient.GetAllLicenses(options, cancellationToken);
         }
 
         /// <summary>
@@ -135,9 +136,9 @@ namespace Octokit
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
         [ManualRoute("GET", "/licenses/{key}")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use LicensesClient.GetLicense instead.")]
-        public Task<License> GetLicense(string key)
+        public Task<License> GetLicense(string key, CancellationToken cancellationToken = default)
         {
-            return _licensesClient.GetLicense(key);
+            return _licensesClient.GetLicense(key, cancellationToken);
         }
 
         /// <summary>
@@ -147,9 +148,9 @@ namespace Octokit
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
         [ManualRoute("GET", "/rate_limit")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use RateLimitClient.GetRateLimits instead.")]
-        public Task<MiscellaneousRateLimit> GetRateLimits()
+        public Task<MiscellaneousRateLimit> GetRateLimits(CancellationToken cancellationToken = default)
         {
-            return _rateLimitClient.GetRateLimits();
+            return _rateLimitClient.GetRateLimits(cancellationToken);
         }
 
         /// <summary>
@@ -159,9 +160,9 @@ namespace Octokit
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
         [ManualRoute("GET", "/meta")]
         [Obsolete("This client is being deprecated and will be removed in the future. Use MetaClient.GetMetadata instead.")]
-        public Task<Meta> GetMetadata()
+        public Task<Meta> GetMetadata(CancellationToken cancellationToken = default)
         {
-            return _metaClient.GetMetadata();
+            return _metaClient.GetMetadata(cancellationToken);
         }
     }
 }

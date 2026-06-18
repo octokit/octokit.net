@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -18,14 +19,14 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name);
+        Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves all of the watchers for the passed repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId);
+        Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves all of the watchers for the passed repository.
@@ -34,7 +35,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves all of the watchers for the passed repository.
@@ -42,7 +43,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user.
@@ -52,7 +53,7 @@ namespace Octokit
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<Repository>> GetAllForCurrent();
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves all of the watched <see cref="Repository"/>(ies) for the current user.
@@ -63,7 +64,7 @@ namespace Octokit
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
         /// </returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options);
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user.
@@ -73,7 +74,7 @@ namespace Octokit
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
         /// </returns>
-        Task<IReadOnlyList<Repository>> GetAllForUser(string user);
+        Task<IReadOnlyList<Repository>> GetAllForUser(string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves all of the <see cref="Repository"/>(ies) watched by the specified user.
@@ -84,7 +85,7 @@ namespace Octokit
         /// <returns>
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
         /// </returns>
-        Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options);
+        Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check if a repository is watched by the current authenticated user.
@@ -92,14 +93,16 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<bool> CheckWatched(string owner, string name);
+        Task<bool> CheckWatched(string owner, string name, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Check if a repository is watched by the current authenticated user.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        Task<bool> CheckWatched(long repositoryId);
+        Task<bool> CheckWatched(long repositoryId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Watches a repository for the authenticated user.
@@ -107,14 +110,16 @@ namespace Octokit
         /// <param name="owner">The owner of the repository to star</param>
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription);
+        Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Watches a repository for the authenticated user.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
-        Task<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription);
+        Task<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Unwatches a repository for the authenticated user.
@@ -123,7 +128,8 @@ namespace Octokit
         /// <param name="name">The name of the repository to unstar</param>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unwatch",
             Justification = "Unwatch is consistent with the GitHub website")]
-        Task<bool> UnwatchRepo(string owner, string name);
+        Task<bool> UnwatchRepo(string owner, string name, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Unwatches a repository for the authenticated user.
@@ -131,6 +137,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unwatch",
             Justification = "Unwatch is consistent with the GitHub website")]
-        Task<bool> UnwatchRepo(long repositoryId);
+        Task<bool> UnwatchRepo(long repositoryId, CancellationToken cancellationToken = default);
+
     }
 }

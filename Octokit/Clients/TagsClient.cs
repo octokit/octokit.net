@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -29,13 +30,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/tags/{sha}")]
-        public Task<GitTag> Get(string owner, string name, string reference)
+        public Task<GitTag> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference));
+            return ApiConnection.Get<GitTag>(ApiUrls.Tag(owner, name, reference), cancellationToken);
         }
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
         [ManualRoute("GET", "/repositories/{id}/git/tags/{sha}")]
-        public Task<GitTag> Get(long repositoryId, string reference)
+        public Task<GitTag> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<GitTag>(ApiUrls.Tag(repositoryId, reference));
+            return ApiConnection.Get<GitTag>(ApiUrls.Tag(repositoryId, reference), cancellationToken);
         }
 
         /// <summary>
@@ -64,13 +65,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/git/tags")]
-        public Task<GitTag> Create(string owner, string name, NewTag tag)
+        public Task<GitTag> Create(string owner, string name, NewTag tag, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(tag, nameof(tag));
 
-            return ApiConnection.Post<GitTag>(ApiUrls.CreateTag(owner, name), tag);
+            return ApiConnection.Post<GitTag>(ApiUrls.CreateTag(owner, name), tag, cancellationToken);
         }
 
         /// <summary>
@@ -82,11 +83,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
         [ManualRoute("POST", "/repositories/{id}/git/tags")]
-        public Task<GitTag> Create(long repositoryId, NewTag tag)
+        public Task<GitTag> Create(long repositoryId, NewTag tag, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(tag, nameof(tag));
 
-            return ApiConnection.Post<GitTag>(ApiUrls.CreateTag(repositoryId), tag);
+            return ApiConnection.Post<GitTag>(ApiUrls.CreateTag(repositoryId), tag, cancellationToken);
         }
     }
 }

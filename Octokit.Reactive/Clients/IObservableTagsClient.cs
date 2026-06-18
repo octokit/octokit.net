@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -20,9 +21,10 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The sha reference of the tag</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<GitTag> Get(string owner, string name, string reference);
+        IObservable<GitTag> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a tag for a given repository by sha reference
@@ -32,9 +34,10 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The sha reference of the tag</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<GitTag> Get(long repositoryId, string reference);
+        IObservable<GitTag> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a tag for a given repository
@@ -45,7 +48,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
-        IObservable<GitTag> Create(string owner, string name, NewTag tag);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitTag> Create(string owner, string name, NewTag tag, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a tag for a given repository
@@ -55,6 +59,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
-        IObservable<GitTag> Create(long repositoryId, NewTag tag);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitTag> Create(long repositoryId, NewTag tag, CancellationToken cancellationToken = default);
     }
 }

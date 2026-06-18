@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using System.Threading;
 namespace Octokit
 {
     /// <summary>
@@ -20,7 +21,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Blob> Get(string owner, string name, string reference);
+        Task<Blob> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single Blob by SHA.
@@ -31,7 +32,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Blob> Get(long repositoryId, string reference);
+        Task<Blob> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new Blob
@@ -42,7 +43,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        Task<BlobReference> Create(string owner, string name, NewBlob newBlob);
+        Task<BlobReference> Create(string owner, string name, NewBlob newBlob, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new Blob
@@ -52,6 +53,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        Task<BlobReference> Create(long repositoryId, NewBlob newBlob);
+        Task<BlobReference> Create(long repositoryId, NewBlob newBlob, CancellationToken cancellationToken = default);
     }
 }

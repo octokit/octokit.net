@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Octokit
 {
@@ -33,9 +34,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [ManualRoute("GET", "/authorizations")]
-        public Task<IReadOnlyList<Authorization>> GetAll()
+        public Task<IReadOnlyList<Authorization>> GetAll(CancellationToken cancellationToken = default)
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [ManualRoute("GET", "/authorizations")]
-        public Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options)
+        public Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -73,7 +74,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         [ManualRoute("GET", "/authorizations/{id}")]
-        public Task<Authorization> Get(long authorizationId)
+        public Task<Authorization> Get(long authorizationId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<Authorization>(ApiUrls.Authorizations(authorizationId), null);
         }
@@ -96,7 +97,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
         [ManualRoute("POST", "/authorizations")]
-        public Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
+        public Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
@@ -110,7 +111,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.Authorizations();
 
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace Octokit
         [ManualRoute("POST", "/authorizations")]
         public Task<ApplicationAuthorization> Create(
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode)
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
@@ -147,7 +148,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.Authorizations();
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, twoFactorAuthenticationCode);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, twoFactorAuthenticationCode, cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace Octokit
         public Task<ApplicationAuthorization> Create(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization)
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
@@ -191,7 +192,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.Authorizations();
 
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, cancellationToken);
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Octokit
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode)
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
@@ -237,7 +238,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.Authorizations();
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, null, twoFactorAuthenticationCode);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, null, null, twoFactorAuthenticationCode, cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +264,7 @@ namespace Octokit
         public Task<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization)
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
@@ -279,7 +280,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.AuthorizationsForClient(clientId);
-            return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Put<ApplicationAuthorization>(endpoint, requestData, cancellationToken);
         }
 
         /// <summary>
@@ -307,7 +308,7 @@ namespace Octokit
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode)
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
@@ -346,7 +347,7 @@ namespace Octokit
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
         [ManualRoute("POST", "/applications/{client_id}/token")]
-        public Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
+        public Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
@@ -357,7 +358,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId);
-            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Post<ApplicationAuthorization>(endpoint, requestData, cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +372,7 @@ namespace Octokit
         /// <param name="accessToken">The OAuth token to reset</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
         [ManualRoute("PATCH", "/applications/{client_id}/token")]
-        public Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
+        public Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
@@ -382,7 +383,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId);
-            return ApiConnection.Patch<ApplicationAuthorization>(endpoint, requestData);
+            return ApiConnection.Patch<ApplicationAuthorization>(endpoint, requestData, cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +397,7 @@ namespace Octokit
         /// <param name="accessToken">The OAuth token to revoke</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/applications/{client_id}/token")]
-        public Task RevokeApplicationAuthentication(string clientId, string accessToken)
+        public Task RevokeApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(accessToken, nameof(accessToken));
@@ -407,7 +408,7 @@ namespace Octokit
             };
 
             var endpoint = ApiUrls.ApplicationAuthorization(clientId);
-            return ApiConnection.Delete(endpoint, requestData);
+            return ApiConnection.Delete(endpoint, requestData, cancellationToken);
         }
 
         /// <summary>
@@ -426,13 +427,12 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
         [ManualRoute("PATCH", "/authorizations/{id}")]
-        public Task<Authorization> Update(long authorizationId, AuthorizationUpdate authorizationUpdate)
+        public Task<Authorization> Update(long authorizationId, AuthorizationUpdate authorizationUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
             return ApiConnection.Patch<Authorization>(
-                ApiUrls.Authorizations(authorizationId),
-                authorizationUpdate);
+                ApiUrls.Authorizations(authorizationId), authorizationUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(long authorizationId)
+        public Task Delete(long authorizationId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Delete(ApiUrls.Authorizations(authorizationId));
         }
@@ -471,7 +471,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
         [ManualRoute("DELETE", "/authorizations/{id}")]
-        public Task Delete(long authorizationId, string twoFactorAuthenticationCode)
+        public Task Delete(long authorizationId, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Delete(ApiUrls.Authorizations(authorizationId), twoFactorAuthenticationCode);
         }

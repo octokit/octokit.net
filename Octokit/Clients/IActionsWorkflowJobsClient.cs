@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -19,7 +20,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
-        Task Rerun(string owner, string name, long jobId);
+        Task Rerun(string owner, string name, long jobId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific job in a workflow run.
@@ -30,7 +31,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The unique identifier of the job.</param>
-        Task<WorkflowJob> Get(string owner, string name, long jobId);
+        Task<WorkflowJob> Get(string owner, string name, long jobId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the plain text log file for a workflow job.
@@ -41,7 +42,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
-        Task<string> GetLogs(string owner, string name, long jobId);
+        Task<string> GetLogs(string owner, string name, long jobId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run.
@@ -52,7 +53,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task<WorkflowJobsResponse> List(string owner, string name, long runId);
+        Task<WorkflowJobsResponse> List(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run.
@@ -64,7 +65,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
-        Task<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest);
+        Task<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run.
@@ -77,7 +78,7 @@ namespace Octokit
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, ApiOptions options);
+        Task<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run attempt.
@@ -89,7 +90,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        Task<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber);
+        Task<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run attempt.
@@ -102,6 +103,6 @@ namespace Octokit
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, ApiOptions options);
+        Task<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

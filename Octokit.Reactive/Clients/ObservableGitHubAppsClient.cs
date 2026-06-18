@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -38,18 +39,18 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-github-app</remarks>
         /// <param name="slug">The URL-friendly name of your GitHub App. You can find this on the settings page for your GitHub App.</param>
-        public IObservable<GitHubApp> Get(string slug)
+        public IObservable<GitHubApp> Get(string slug, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(slug, nameof(slug));
 
-            return _client.Get(slug).ToObservable();
+            return _client.Get(slug, cancellationToken).ToObservable();
         }
 
         /// <summary>
         /// Returns the GitHub App associated with the authentication credentials used (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-the-authenticated-github-app</remarks>
-        public IObservable<GitHubApp> GetCurrent()
+        public IObservable<GitHubApp> GetCurrent(CancellationToken cancellationToken = default)
         {
             return _client.GetCurrent().ToObservable();
         }
@@ -58,7 +59,7 @@ namespace Octokit.Reactive
         /// List installations of the authenticated GitHub App (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
-        public IObservable<Installation> GetAllInstallationsForCurrent()
+        public IObservable<Installation> GetAllInstallationsForCurrent(CancellationToken cancellationToken = default)
         {
             return GetAllInstallationsForCurrent(ApiOptions.None);
         }
@@ -68,11 +69,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
-        public IObservable<Installation> GetAllInstallationsForCurrent(ApiOptions options)
+        public IObservable<Installation> GetAllInstallationsForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, options);
+            return _connection.GetAndFlattenAllPages<Installation>(ApiUrls.Installations(), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         [Obsolete("This method will be removed in a future release.  Please use GetInstallationForCurrent() instead")]
-        public IObservable<Installation> GetInstallation(long installationId)
+        public IObservable<Installation> GetInstallation(long installationId, CancellationToken cancellationToken = default)
         {
             return GetInstallationForCurrent(installationId);
         }
@@ -91,16 +92,16 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
-        public IObservable<Installation> GetInstallationForCurrent(long installationId)
+        public IObservable<Installation> GetInstallationForCurrent(long installationId, CancellationToken cancellationToken = default)
         {
-            return _client.GetInstallationForCurrent(installationId).ToObservable();
+            return _client.GetInstallationForCurrent(installationId, cancellationToken).ToObservable();
         }
 
         /// <summary>
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser()
+        public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(CancellationToken cancellationToken = default)
         {
             return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations());
         }
@@ -109,7 +110,7 @@ namespace Octokit.Reactive
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options)
+        public IObservable<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options, CancellationToken cancellationToken = default)
         {
             return _connection.GetAndFlattenAllPages<InstallationsResponse>(ApiUrls.UserInstallations(), options);
         }
@@ -123,9 +124,9 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/apps/available-endpoints/
         /// </remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
-        public IObservable<AccessToken> CreateInstallationToken(long installationId)
+        public IObservable<AccessToken> CreateInstallationToken(long installationId, CancellationToken cancellationToken = default)
         {
-            return _client.CreateInstallationToken(installationId).ToObservable();
+            return _client.CreateInstallationToken(installationId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -133,11 +134,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
         /// <param name="organization">The name of the organization</param>
-        public IObservable<Installation> GetOrganizationInstallationForCurrent(string organization)
+        public IObservable<Installation> GetOrganizationInstallationForCurrent(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return _client.GetOrganizationInstallationForCurrent(organization).ToObservable();
+            return _client.GetOrganizationInstallationForCurrent(organization, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -146,12 +147,12 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        public IObservable<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
+        public IObservable<Installation> GetRepositoryInstallationForCurrent(string owner, string repo, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            return _client.GetRepositoryInstallationForCurrent(owner, repo).ToObservable();
+            return _client.GetRepositoryInstallationForCurrent(owner, repo, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -159,9 +160,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
+        public IObservable<Installation> GetRepositoryInstallationForCurrent(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.GetRepositoryInstallationForCurrent(repositoryId).ToObservable();
+            return _client.GetRepositoryInstallationForCurrent(repositoryId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -169,11 +170,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="user">The name of the user</param>
-        public IObservable<Installation> GetUserInstallationForCurrent(string user)
+        public IObservable<Installation> GetUserInstallationForCurrent(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return _client.GetUserInstallationForCurrent(user).ToObservable();
+            return _client.GetUserInstallationForCurrent(user, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -182,11 +183,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://docs.github.com/rest/apps/apps#create-a-github-app-from-a-manifest</remarks>
         /// <param name="code">Temporary code in a code parameter.</param>
-        public IObservable<GitHubAppFromManifest> CreateAppFromManifest(string code)
+        public IObservable<GitHubAppFromManifest> CreateAppFromManifest(string code, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(code, nameof(code));
 
-            return _client.CreateAppFromManifest(code).ToObservable();
+            return _client.CreateAppFromManifest(code, cancellationToken).ToObservable();
         }
     }
 }

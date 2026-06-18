@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -32,7 +33,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazers("fight", "club");
 
-                connection.Received().Get<List<User>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<User>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -46,7 +47,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazers(1);
 
-                connection.Received().Get<List<User>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<User>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -67,7 +68,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazers("fight", "club", options);
 
-                connection.Received().Get<List<User>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<User>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -88,7 +89,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazers(1, options);
 
-                connection.Received().Get<List<User>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<User>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -102,7 +103,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps("fight", "club");
 
-                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, AcceptHeaders.StarJson);
+                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, AcceptHeaders.StarJson, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -116,7 +117,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps(1);
 
-                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, AcceptHeaders.StarJson);
+                connection.Received().Get<List<UserStar>>(endpoint, Args.EmptyDictionary, AcceptHeaders.StarJson, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -137,7 +138,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps("fight", "club", options);
 
-                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), AcceptHeaders.StarJson);
+                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), AcceptHeaders.StarJson, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -158,7 +159,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllStargazersWithTimestamps(1, options);
 
-                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), AcceptHeaders.StarJson);
+                connection.Received().Get<List<UserStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2), AcceptHeaders.StarJson, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -204,7 +205,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent();
 
-                connection.Received().Get<List<Repository>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<Repository>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -225,7 +226,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(options);
 
-                connection.Received().Get<List<Repository>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"));
+                connection.Received().Get<List<Repository>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -241,7 +242,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrent(request);
 
-                connection.Received().Get<List<Repository>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"));
+                connection.Received().Get<List<Repository>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -265,7 +266,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForCurrent(request, options);
 
                 connection.Received().Get<List<Repository>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -279,7 +280,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrentWithTimestamps();
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<RepositoryStar>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -301,7 +302,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForCurrentWithTimestamps(options);
 
                 connection.Received().Get<List<RepositoryStar>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -317,7 +318,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCurrentWithTimestamps(request);
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"));
+                connection.Received().Get<List<RepositoryStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -341,7 +342,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForCurrentWithTimestamps(request, options);
 
                 connection.Received().Get<List<RepositoryStar>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -374,7 +375,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUser("banana");
 
-                connection.Received().Get<List<Repository>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<Repository>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -396,7 +397,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForUser("banana", options);
 
                 connection.Received().Get<List<Repository>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -412,7 +413,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUser("banana", starredRequest);
 
-                connection.Received().Get<List<Repository>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"));
+                connection.Received().Get<List<Repository>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -436,7 +437,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForUser("banana", starredRequest, options);
 
                 connection.Received().Get<List<Repository>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -450,7 +451,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUserWithTimestamps("banana");
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, Args.EmptyDictionary);
+                connection.Received().Get<List<RepositoryStar>>(endpoint, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -472,7 +473,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForUserWithTimestamps("banana", options);
 
                 connection.Received().Get<List<RepositoryStar>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -488,7 +489,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUserWithTimestamps("banana", starredRequest);
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"));
+                connection.Received().Get<List<RepositoryStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["direction"] == "asc"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -511,7 +512,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForUserWithTimestamps("banana", starredRequest, options);
 
-                connection.Received().Get<List<RepositoryStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"));
+                connection.Received().Get<List<RepositoryStar>>(endpoint, Arg.Is<IDictionary<string, string>>(d => d.Count == 4 && d["direction"] == "asc" && d["direction"] == "asc" && d["per_page"] == "1" && d["page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

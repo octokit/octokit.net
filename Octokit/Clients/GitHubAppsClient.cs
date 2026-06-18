@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -34,7 +35,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-github-app</remarks>
         /// <param name="slug">The URL-friendly name of your GitHub App. You can find this on the settings page for your GitHub App.</param>
         [ManualRoute("GET", "/apps/{slug}")]
-        public Task<GitHubApp> Get(string slug)
+        public Task<GitHubApp> Get(string slug, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(slug, nameof(slug));
 
@@ -46,7 +47,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-the-authenticated-github-app</remarks>
         [ManualRoute("GET", "/app")]
-        public Task<GitHubApp> GetCurrent()
+        public Task<GitHubApp> GetCurrent(CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<GitHubApp>(ApiUrls.App(), null);
         }
@@ -56,9 +57,9 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
         [ManualRoute("GET", "/app/installations")]
-        public Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent()
+        public Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllInstallationsForCurrent(ApiOptions.None);
+            return GetAllInstallationsForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
         [ManualRoute("GET", "/app/installations")]
-        public Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -80,9 +81,9 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         [Obsolete("This method will be removed in a future release.  Please use GetInstallationForCurrent() instead")]
-        public Task<Installation> GetInstallation(long installationId)
+        public Task<Installation> GetInstallation(long installationId, CancellationToken cancellationToken = default)
         {
-            return GetInstallationForCurrent(installationId);
+            return GetInstallationForCurrent(installationId, cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         [ManualRoute("GET", "/app/installations/{installation_id}")]
-        public Task<Installation> GetInstallationForCurrent(long installationId)
+        public Task<Installation> GetInstallationForCurrent(long installationId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<Installation>(ApiUrls.Installation(installationId), null);
         }
@@ -101,7 +102,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         [ManualRoute("GET", "/user/installations")]
-        public async Task<InstallationsResponse> GetAllInstallationsForCurrentUser()
+        public async Task<InstallationsResponse> GetAllInstallationsForCurrentUser(CancellationToken cancellationToken = default)
         {
             var results = await ApiConnection.GetAll<InstallationsResponse>(ApiUrls.UserInstallations()).ConfigureAwait(false);
 
@@ -115,7 +116,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
         [ManualRoute("GET", "/user/installations")]
-        public async Task<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options)
+        public async Task<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -136,9 +137,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         [ManualRoute("GET", "/app/installations/{installation_id}/access_tokens")]
-        public Task<AccessToken> CreateInstallationToken(long installationId)
+        public Task<AccessToken> CreateInstallationToken(long installationId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty);
+            return ApiConnection.Post<AccessToken>(ApiUrls.AccessTokens(installationId), string.Empty, cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +148,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
         /// <param name="organization">The name of the organization</param>
         [ManualRoute("GET", "/orgs/{org}/installation")]
-        public Task<Installation> GetOrganizationInstallationForCurrent(string organization)
+        public Task<Installation> GetOrganizationInstallationForCurrent(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
@@ -161,7 +162,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/installation")]
-        public Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo)
+        public Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
@@ -175,7 +176,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/installation")]
-        public Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId)
+        public Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<Installation>(ApiUrls.RepoInstallation(repositoryId), null);
         }
@@ -186,7 +187,7 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="user">The name of the user</param>
         [ManualRoute("GET", "/users/{username}/installation")]
-        public Task<Installation> GetUserInstallationForCurrent(string user)
+        public Task<Installation> GetUserInstallationForCurrent(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
@@ -200,7 +201,7 @@ namespace Octokit
         /// <remarks>https://docs.github.com/rest/apps/apps#create-a-github-app-from-a-manifest</remarks>
         /// <param name="code">Temporary code in a code parameter.</param>
         [ManualRoute("POST", "/app-manifests/{code}/conversions")]
-        public Task<GitHubAppFromManifest> CreateAppFromManifest(string code)
+        public Task<GitHubAppFromManifest> CreateAppFromManifest(string code, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(code, nameof(code));
 

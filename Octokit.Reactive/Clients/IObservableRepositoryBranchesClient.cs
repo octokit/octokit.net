@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 namespace Octokit.Reactive
 {
 	/// <summary>
@@ -19,7 +20,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<Branch> GetAll(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Branch> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -28,7 +30,8 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        IObservable<Branch> GetAll(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Branch> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -39,7 +42,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Branch> GetAll(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Branch> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -49,7 +53,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Branch> GetAll(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Branch> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified branch.
@@ -60,8 +65,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Branch> Get(string owner, string name, string branch);
+        IObservable<Branch> Get(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified branch.
@@ -71,8 +77,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Branch> Get(long repositoryId, string branch);
+        IObservable<Branch> Get(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the branch protection settings for the specified branch
@@ -83,7 +90,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the branch protection settings for the specified branch
@@ -93,7 +101,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update the branch protection settings for the specified branch
@@ -105,7 +114,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        IObservable<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update the branch protection settings for the specified branch
@@ -116,7 +126,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        IObservable<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the branch protection settings for the specified branch
@@ -127,7 +138,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> DeleteBranchProtection(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> DeleteBranchProtection(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the branch protection settings for the specified branch
@@ -137,7 +149,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> DeleteBranchProtection(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> DeleteBranchProtection(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks for the specified branch
@@ -148,7 +161,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks for the specified branch
@@ -158,7 +172,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace required status checks for the specified branch
@@ -170,7 +185,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
-        IObservable<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace required status checks for the specified branch
@@ -181,7 +197,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
-        IObservable<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required status checks for the specified branch
@@ -192,7 +209,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> DeleteRequiredStatusChecks(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> DeleteRequiredStatusChecks(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required status checks for the specified branch
@@ -202,7 +220,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> DeleteRequiredStatusChecks(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> DeleteRequiredStatusChecks(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks contexts for the specified branch
@@ -213,7 +232,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<string> GetAllRequiredStatusChecksContexts(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> GetAllRequiredStatusChecksContexts(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks contexts for the specified branch
@@ -223,7 +243,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<string> GetAllRequiredStatusChecksContexts(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> GetAllRequiredStatusChecksContexts(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace the required status checks contexts for the specified branch
@@ -235,7 +256,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
-        IObservable<string> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace the required status checks contexts for the specified branch
@@ -246,7 +268,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
-        IObservable<string> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add the required status checks context for the specified branch
@@ -258,7 +281,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
-        IObservable<string> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add the required status checks contexts for the specified branch
@@ -269,7 +293,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
-        IObservable<string> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the required status checks context for the specified branch
@@ -281,7 +306,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
-        IObservable<string> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the required status checks contexts for the specified branch
@@ -292,7 +318,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
-        IObservable<string> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get required pull request review enforcement of protected branch
@@ -303,7 +330,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get required pull request review enforcement of protected branch
@@ -313,7 +341,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update required pull request review enforcement of protected branch
@@ -325,7 +354,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
-        IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update required pull request review enforcement of protected branch
@@ -336,7 +366,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
-        IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required pull request review enforcement of protected branch
@@ -347,7 +378,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> RemoveReviewEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> RemoveReviewEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required pull request review enforcement of protected branch
@@ -357,7 +389,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> RemoveReviewEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> RemoveReviewEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get admin enforcement of protected branch
@@ -368,7 +401,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get admin enforcement of protected branch
@@ -378,7 +412,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add admin enforcement to protected branch
@@ -389,7 +424,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add admin enforcement to protected branch
@@ -399,7 +435,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove admin enforcement on protected branch
@@ -410,7 +447,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> RemoveAdminEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> RemoveAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove admin enforcement on protected branch
@@ -420,7 +458,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> RemoveAdminEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> RemoveAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the restrictions for the specified branch (applies only to Organization owned repositories)
@@ -431,7 +470,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the restrictions for the specified branch (applies only to Organization owned repositories)
@@ -441,7 +481,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove restrictions for the specified branch (applies only to Organization owned repositories)
@@ -452,7 +493,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove restrictions for the specified branch (applies only to Organization owned repositories)
@@ -462,7 +504,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -473,7 +516,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<Team> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -483,7 +527,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<Team> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -495,7 +540,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<Team> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -506,7 +552,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<Team> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -518,7 +565,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<Team> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -529,7 +577,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        IObservable<Team> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -541,7 +590,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        IObservable<Team> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -552,7 +602,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        IObservable<Team> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Team> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -563,7 +614,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<User> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -573,7 +625,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        IObservable<User> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -585,7 +638,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        IObservable<User> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -596,7 +650,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        IObservable<User> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -608,7 +663,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        IObservable<User> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -619,7 +675,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        IObservable<User> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -631,7 +688,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        IObservable<User> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -642,7 +700,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        IObservable<User> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Renames a branch in a repository
@@ -654,6 +713,7 @@ namespace Octokit.Reactive
         /// <param name="repository">The name of the repository</param>
         /// <param name="branch">The name of the branch to rename</param>
         /// <param name="newName">The new name of the branch</param>
-        IObservable<Branch> RenameBranch(string owner, string repository, string branch, string newName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Branch> RenameBranch(string owner, string repository, string branch, string newName, CancellationToken cancellationToken = default);
     }
 }

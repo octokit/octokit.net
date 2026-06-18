@@ -49,13 +49,14 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">Type of the API resource to get.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<T> Get<T>(Uri uri)
+        public Task<T> Get<T>(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return Get<T>(uri, null);
+            return Get<T>(uri, null, cancellationToken);
         }
 
         /// <summary>
@@ -64,13 +65,14 @@ namespace Octokit
         /// <typeparam name="T">Type of the API resource to get.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters)
+        public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await Connection.Get<T>(uri, parameters, null).ConfigureAwait(false);
+            var response = await Connection.Get<T>(uri, parameters, null, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -81,14 +83,15 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
+        public async Task<T> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            var response = await Connection.Get<T>(uri, parameters, accepts).ConfigureAwait(false);
+            var response = await Connection.Get<T>(uri, parameters, accepts, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -115,13 +118,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The API resource's HTML content.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<string> GetHtml(Uri uri, IDictionary<string, string> parameters)
+        public async Task<string> GetHtml(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await Connection.GetHtml(uri, parameters).ConfigureAwait(false);
+            var response = await Connection.GetHtml(uri, parameters, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -130,22 +134,23 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The API resource's raw content or <c>null</c> if the <paramref name="uri"/> points to a directory.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<byte[]> GetRaw(Uri uri, IDictionary<string, string> parameters)
+        public async Task<byte[]> GetRaw(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await Connection.GetRaw(uri, parameters).ConfigureAwait(false);
+            var response = await Connection.GetRaw(uri, parameters, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
-        
+
         /// <inheritdoc/>
-        public async Task<Stream> GetRawStream(Uri uri, IDictionary<string, string> parameters)
+        public async Task<Stream> GetRawStream(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await Connection.GetRawStream(uri, parameters).ConfigureAwait(false);
+            var response = await Connection.GetRawStream(uri, parameters, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -154,11 +159,12 @@ namespace Octokit
         /// </summary>
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, CancellationToken cancellationToken = default)
         {
-            return GetAll<T>(uri, ApiOptions.None);
+            return GetAll<T>(uri, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -167,11 +173,12 @@ namespace Octokit
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, ApiOptions options)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return GetAll<T>(uri, null, null, options);
+            return GetAll<T>(uri, null, null, options, cancellationToken);
         }
 
         /// <summary>
@@ -180,11 +187,12 @@ namespace Octokit
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
-            return GetAll<T>(uri, parameters, null, ApiOptions.None);
+            return GetAll<T>(uri, parameters, null, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -193,11 +201,12 @@ namespace Octokit
         /// <typeparam name="T">Type of the API resource in the list.</typeparam>
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, string accepts)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, string accepts, CancellationToken cancellationToken = default)
         {
-            return GetAll<T>(uri, null, accepts, ApiOptions.None);
+            return GetAll<T>(uri, null, accepts, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -207,11 +216,12 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, ApiOptions options)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return GetAll<T>(uri, parameters, null, options);
+            return GetAll<T>(uri, parameters, null, options, cancellationToken);
         }
 
         /// <summary>
@@ -221,33 +231,34 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to get</param>
         /// <param name="parameters">Parameters to add to the API request</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="IReadOnlyList{T}"/> of the API resources in the list.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts).ConfigureAwait(false), uri);
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, cancellationToken).ConfigureAwait(false), uri);
         }
 
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             parameters = Pagination.Setup(parameters, options);
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options).ConfigureAwait(false), uri);
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options, cancellationToken: cancellationToken).ConfigureAwait(false), uri);
         }
 
-        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options, Func<object, object> preprocessResponseBody)
+        public Task<IReadOnlyList<T>> GetAll<T>(Uri uri, IDictionary<string, string> parameters, string accepts, ApiOptions options, Func<object, object> preprocessResponseBody, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             parameters = Pagination.Setup(parameters, options);
 
-            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options, preprocessResponseBody).ConfigureAwait(false), uri);
+            return _pagination.GetAllPages(async () => await GetPage<T>(uri, parameters, accepts, options, preprocessResponseBody, cancellationToken).ConfigureAwait(false), uri);
         }
 
         /// <summary>
@@ -368,12 +379,13 @@ namespace Octokit
         /// Creates or replaces the API resource at the specified URI
         /// </summary>
         /// <param name="uri">URI of the API resource to put</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Put(Uri uri)
+        public Task Put(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return Connection.Put(uri);
+            return Connection.Put(uri, cancellationToken);
         }
 
         /// <summary>
@@ -381,13 +393,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to put</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Put(Uri uri, object data)
+        public Task Put(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            return Connection.Put(uri, data);
+            return Connection.Put(uri, data, cancellationToken);
         }
 
         /// <summary>
@@ -396,14 +409,15 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to create or replace</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Put<T>(Uri uri, object data)
+        public async Task<T> Put<T>(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var response = await Connection.Put<T>(uri, data).ConfigureAwait(false);
+            var response = await Connection.Put<T>(uri, data, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -415,15 +429,16 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to create or replace</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode)
+        public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
-            var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode).ConfigureAwait(false);
+            var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -436,14 +451,15 @@ namespace Octokit
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <param name="twoFactorAuthenticationCode">The two-factor authentication code in response to the current user's previous challenge</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The created API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode, string accepts)
+        public async Task<T> Put<T>(Uri uri, object data, string twoFactorAuthenticationCode, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode, accepts).ConfigureAwait(false);
+            var response = await Connection.Put<T>(uri, data, twoFactorAuthenticationCode, accepts, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -452,12 +468,13 @@ namespace Octokit
         /// Updates the API resource at the specified URI.
         /// </summary>
         /// <param name="uri">URI of the API resource to patch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Patch(Uri uri)
+        public Task Patch(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return Connection.Patch(uri);
+            return Connection.Patch(uri, cancellationToken);
         }
 
         /// <summary>
@@ -465,13 +482,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to patch</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Patch(Uri uri, object data)
+        public Task Patch(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            return Connection.Patch(uri, data);
+            return Connection.Patch(uri, data, cancellationToken);
         }
 
         /// <summary>
@@ -479,13 +497,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to patch</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Patch(Uri uri, string accepts)
+        public Task Patch(Uri uri, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            return Connection.Patch(uri, accepts);
+            return Connection.Patch(uri, accepts, cancellationToken);
         }
 
         /// <summary>
@@ -494,14 +513,15 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to patch</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Patch(Uri uri, object data, string accepts)
+        public Task Patch(Uri uri, object data, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            return Connection.Patch(uri, data, accepts);
+            return Connection.Patch(uri, data, accepts, cancellationToken);
         }
 
         /// <summary>
@@ -510,14 +530,15 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI of the API resource to update</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The updated API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Patch<T>(Uri uri, object data)
+        public async Task<T> Patch<T>(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var response = await Connection.Patch<T>(uri, data).ConfigureAwait(false);
+            var response = await Connection.Patch<T>(uri, data, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -529,15 +550,16 @@ namespace Octokit
         /// <param name="uri">URI of the API resource to update</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
         /// <param name="accepts">Accept header to use for the API request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The updated API resource.</returns>
         /// <exception cref="ApiException">Thrown when an API error occurs.</exception>
-        public async Task<T> Patch<T>(Uri uri, object data, string accepts)
+        public async Task<T> Patch<T>(Uri uri, object data, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            var response = await Connection.Patch<T>(uri, data, accepts).ConfigureAwait(false);
+            var response = await Connection.Patch<T>(uri, data, accepts, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -546,12 +568,13 @@ namespace Octokit
         /// Deletes the API object at the specified URI.
         /// </summary>
         /// <param name="uri">URI of the API resource to delete</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Delete(Uri uri)
+        public Task Delete(Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return Connection.Delete(uri);
+            return Connection.Delete(uri, cancellationToken);
         }
 
         /// <summary>
@@ -559,12 +582,13 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to delete</param>
         /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Delete(Uri uri, string twoFactorAuthenticationCode)
+        public Task Delete(Uri uri, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            return Connection.Delete(uri, twoFactorAuthenticationCode);
+            return Connection.Delete(uri, twoFactorAuthenticationCode, cancellationToken);
         }
 
         /// <summary>
@@ -572,13 +596,14 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI of the API resource to delete</param>
         /// <param name="data">Object that describes the API resource; this will be serialized and used as the request's body</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        public Task Delete(Uri uri, object data)
+        public Task Delete(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            return Connection.Delete(uri, data);
+            return Connection.Delete(uri, data, cancellationToken);
         }
 
         /// <summary>
@@ -587,14 +612,15 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public Task Delete(Uri uri, object data, string accepts)
+        public Task Delete(Uri uri, object data, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            return Connection.Delete(uri, data, accepts);
+            return Connection.Delete(uri, data, accepts, cancellationToken);
         }
 
         /// <summary>
@@ -603,12 +629,13 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
-        public async Task<T> Delete<T>(Uri uri, object data)
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        public async Task<T> Delete<T>(Uri uri, object data, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
 
-            var response = await Connection.Delete<T>(uri, data).ConfigureAwait(false);
+            var response = await Connection.Delete<T>(uri, data, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -620,13 +647,14 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        public async Task<T> Delete<T>(Uri uri, string accepts)
+        public async Task<T> Delete<T>(Uri uri, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            var response = await Connection.Delete<T>(uri, null, accepts).ConfigureAwait(false);
+            var response = await Connection.Delete<T>(uri, null, accepts, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -639,13 +667,14 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
-        public async Task<T> Delete<T>(Uri uri, object data, string accepts)
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        public async Task<T> Delete<T>(Uri uri, object data, string accepts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
             Ensure.ArgumentNotNull(data, nameof(data));
             Ensure.ArgumentNotNull(accepts, nameof(accepts));
 
-            var response = await Connection.Delete<T>(uri, data, accepts).ConfigureAwait(false);
+            var response = await Connection.Delete<T>(uri, data, accepts, cancellationToken).ConfigureAwait(false);
 
             return response.Body;
         }
@@ -688,14 +717,15 @@ namespace Octokit
             Uri uri,
             IDictionary<string, string> parameters,
             string accepts,
+            CancellationToken cancellationToken = default,
             Func<object, object> preprocessResponseBody = null)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
-            var response = await Connection.Get<List<T>>(uri, parameters, accepts, CancellationToken.None, preprocessResponseBody).ConfigureAwait(false);
+            var response = await Connection.Get<List<T>>(uri, parameters, accepts, cancellationToken, preprocessResponseBody).ConfigureAwait(false);
             return new ReadOnlyPagedCollection<T>(
                 response,
-                nextPageUri => Connection.Get<List<T>>(nextPageUri, parameters, accepts, CancellationToken.None, preprocessResponseBody));
+                nextPageUri => Connection.Get<List<T>>(nextPageUri, parameters, accepts, cancellationToken, preprocessResponseBody));
         }
 
         async Task<IReadOnlyPagedCollection<TU>> GetPage<TU>(
@@ -703,13 +733,14 @@ namespace Octokit
             IDictionary<string, string> parameters,
             string accepts,
             ApiOptions options,
-            Func<object, object> preprocessResponseBody = null)
+            Func<object, object> preprocessResponseBody = null,
+            CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(uri, nameof(uri));
 
             var connection = Connection;
 
-            var response = await connection.Get<List<TU>>(uri, parameters, accepts, CancellationToken.None, preprocessResponseBody).ConfigureAwait(false);
+            var response = await connection.Get<List<TU>>(uri, parameters, accepts, cancellationToken, preprocessResponseBody).ConfigureAwait(false);
             return new ReadOnlyPagedCollection<TU>(
                 response,
                 nextPageUri =>
@@ -719,7 +750,7 @@ namespace Octokit
                         options);
 
                     return shouldContinue
-                        ? connection.Get<List<TU>>(nextPageUri, parameters, accepts, CancellationToken.None, preprocessResponseBody)
+                        ? connection.Get<List<TU>>(nextPageUri, parameters, accepts, cancellationToken, preprocessResponseBody)
                         : null;
                 });
         }

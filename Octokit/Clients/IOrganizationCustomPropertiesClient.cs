@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,7 +20,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 15/06/2024)")]
-        Task<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org);
+        Task<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a single custom property by name.
@@ -29,7 +30,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        Task<OrganizationCustomProperty> Get(string org, string propertyName);
+        Task<OrganizationCustomProperty> Get(string org, string propertyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create new or update existing custom properties for an organization.
@@ -39,7 +40,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="properties">The custom properties to create or update</param>
-        Task<IReadOnlyList<OrganizationCustomProperty>> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties);
+        Task<IReadOnlyList<OrganizationCustomProperty>> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create new or update existing custom property for an organization.
@@ -50,7 +51,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property);
+        Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a custom property that is defined for an organization.
@@ -60,7 +61,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        Task Delete(string org, string propertyName);
+        Task Delete(string org, string propertyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// A client for GitHub's Organization Custom Property Values API.

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,7 +20,8 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#list-projects-cards">API documentation</a> for more information.
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all cards.
@@ -29,7 +31,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all cards.
@@ -39,7 +42,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all cards.
@@ -50,7 +54,8 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         /// <param name="request">Used to filter the list of project cards returned</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<ProjectCard>> GetAll(int columnId, ProjectCardRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single card.
@@ -59,8 +64,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#get-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<ProjectCard> Get(long id);
+        Task<ProjectCard> Get(long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a card.
@@ -70,7 +76,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="newProjectCard">The card to create</param>
-        Task<ProjectCard> Create(int columnId, NewProjectCard newProjectCard);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<ProjectCard> Create(int columnId, NewProjectCard newProjectCard, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a card.
@@ -80,7 +87,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="projectCardUpdate">New values to update the card with</param>
-        Task<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<ProjectCard> Update(long id, ProjectCardUpdate projectCardUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a card.
@@ -89,7 +97,8 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project-card">API documentation</a> for more information.
         /// </remarks>
         /// <param name="id">The id of the card</param>
-        Task<bool> Delete(long id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> Delete(long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Moves a card.
@@ -99,6 +108,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the card</param>
         /// <param name="position">The position to move the card</param>
-        Task<bool> Move(long id, ProjectCardMove position);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> Move(long id, ProjectCardMove position, CancellationToken cancellationToken = default);
     }
 }

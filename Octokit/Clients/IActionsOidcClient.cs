@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 
+using System.Threading;
 namespace Octokit
 {
 	/// <summary>
@@ -18,7 +19,7 @@ namespace Octokit
 		/// https://docs.github.com/en/rest/actions/oidc?apiVersion=2022-11-28#get-the-customization-template-for-an-oidc-subject-claim-for-an-organization
 		/// </remarks>
 		/// <param name="organization">The organization name.</param>
-		Task<OrganizationOidcSubjectClaim> GetOrganizationOidcSubjectClaim(string organization);
+		Task<OrganizationOidcSubjectClaim> GetOrganizationOidcSubjectClaim(string organization, CancellationToken cancellationToken = default);
 
 
 		/// <summary>
@@ -29,7 +30,7 @@ namespace Octokit
 		/// </remarks>
 		/// <param name="organization">The organization name.</param>
 		/// <param name="oidcSubjectClaim">The OIDC subject claim to set for the organization.</param>
-		Task SetOrganizationOidcSubjectClaim(string organization, OrganizationOidcSubjectClaimRequest oidcSubjectClaim);
+		Task SetOrganizationOidcSubjectClaim(string organization, OrganizationOidcSubjectClaimRequest oidcSubjectClaim, CancellationToken cancellationToken = default);
 
 		/// <summary>
 		/// Get the customization template for an OIDC subject claim for a repository.
@@ -40,7 +41,7 @@ namespace Octokit
 		/// <param name="owner">The account owner of the repository.</param>
 		/// <param name="repository">The name of the repository.</param>
 		/// <returns></returns>
-		Task<RepositoryOidcSubjectClaim> GetRepositoryOidcSubjectClaim(string owner, string repository);
+		Task<RepositoryOidcSubjectClaim> GetRepositoryOidcSubjectClaim(string owner, string repository, CancellationToken cancellationToken = default);
 
 		/// <summary>
 		/// 
@@ -52,6 +53,6 @@ namespace Octokit
 		/// <param name="repository">The name of the repository.</param>
 		/// <param name="oidcSubjectClaim">The OIDC subject claim to set for the repository.</param>
 		/// <returns></returns>
-		Task SetRepositoryOidcSubjectClaim(string owner, string repository, RepositoryOidcSubjectClaimRequest oidcSubjectClaim);
+		Task SetRepositoryOidcSubjectClaim(string owner, string repository, RepositoryOidcSubjectClaimRequest oidcSubjectClaim, CancellationToken cancellationToken = default);
 	}
 }

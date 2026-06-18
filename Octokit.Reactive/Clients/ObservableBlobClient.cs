@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -29,13 +30,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        public IObservable<Blob> Get(string owner, string name, string reference)
+        public IObservable<Blob> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.Get(owner, name, reference).ToObservable();
+            return _client.Get(owner, name, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -46,11 +47,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
-        public IObservable<Blob> Get(long repositoryId, string reference)
+        public IObservable<Blob> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.Get(repositoryId, reference).ToObservable();
+            return _client.Get(repositoryId, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -62,13 +63,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        public IObservable<BlobReference> Create(string owner, string name, NewBlob newBlob)
+        public IObservable<BlobReference> Create(string owner, string name, NewBlob newBlob, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newBlob, nameof(newBlob));
 
-            return _client.Create(owner, name, newBlob).ToObservable();
+            return _client.Create(owner, name, newBlob, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -79,11 +80,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newBlob">The new Blob</param>
-        public IObservable<BlobReference> Create(long repositoryId, NewBlob newBlob)
+        public IObservable<BlobReference> Create(long repositoryId, NewBlob newBlob, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newBlob, nameof(newBlob));
 
-            return _client.Create(repositoryId, newBlob).ToObservable();
+            return _client.Create(repositoryId, newBlob, cancellationToken).ToObservable();
         }
     }
 }

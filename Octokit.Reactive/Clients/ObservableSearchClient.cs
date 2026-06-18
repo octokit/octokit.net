@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -23,10 +24,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repositories</returns>
-        public IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
+        public IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return _client.SearchRepo(search).ToObservable();
+            return _client.SearchRepo(search, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -35,10 +36,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        public IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search)
+        public IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return _client.SearchUsers(search).ToObservable();
+            return _client.SearchUsers(search, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -47,10 +48,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        public IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search)
+        public IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return _client.SearchIssues(search).ToObservable();
+            return _client.SearchIssues(search, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -59,10 +60,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        public IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search)
+        public IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return _client.SearchCode(search).ToObservable();
+            return _client.SearchCode(search, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -71,10 +72,10 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of labels</returns>
-        public IObservable<SearchLabelsResult> SearchLabels(SearchLabelsRequest search)
+        public IObservable<SearchLabelsResult> SearchLabels(SearchLabelsRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return _client.SearchLabels(search).ToObservable();
+            return _client.SearchLabels(search, cancellationToken).ToObservable();
         }
     }
 }

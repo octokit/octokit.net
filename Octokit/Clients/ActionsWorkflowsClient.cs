@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -32,7 +33,7 @@ namespace Octokit
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        public Task CreateDispatch(string owner, string name, string workflowFileName, CreateWorkflowDispatch createDispatch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -53,7 +54,7 @@ namespace Octokit
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch)
+        public Task CreateDispatch(string owner, string name, long workflowId, CreateWorkflowDispatch createDispatch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -72,7 +73,7 @@ namespace Octokit
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repositories/{id}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch)
+        public Task CreateDispatch(long repositoryId, string workflowFileName, CreateWorkflowDispatch createDispatch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(workflowFileName, nameof(workflowFileName));
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
@@ -90,7 +91,7 @@ namespace Octokit
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="createDispatch">The parameters to use to trigger the workflow run.</param>
         [ManualRoute("POST", "/repositories/{id}/actions/workflows/{workflow_id}/dispatches")]
-        public Task CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch)
+        public Task CreateDispatch(long repositoryId, long workflowId, CreateWorkflowDispatch createDispatch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(createDispatch, nameof(createDispatch));
 
@@ -107,7 +108,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable")]
-        public Task Disable(string owner, string name, string workflowFileName)
+        public Task Disable(string owner, string name, string workflowFileName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -126,7 +127,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable")]
-        public Task Disable(string owner, string name, long workflowId)
+        public Task Disable(string owner, string name, long workflowId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -144,7 +145,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable")]
-        public Task Enable(string owner, string name, string workflowFileName)
+        public Task Enable(string owner, string name, string workflowFileName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -163,7 +164,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable")]
-        public Task Enable(string owner, string name, long workflowId)
+        public Task Enable(string owner, string name, long workflowId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -181,7 +182,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}")]
-        public Task<Workflow> Get(string owner, string name, string workflowFileName)
+        public Task<Workflow> Get(string owner, string name, string workflowFileName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -200,7 +201,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}")]
-        public Task<Workflow> Get(string owner, string name, long workflowId)
+        public Task<Workflow> Get(string owner, string name, long workflowId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -218,7 +219,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing")]
-        public Task<WorkflowUsage> GetUsage(string owner, string name, string workflowFileName)
+        public Task<WorkflowUsage> GetUsage(string owner, string name, string workflowFileName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -237,7 +238,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing")]
-        public Task<WorkflowUsage> GetUsage(string owner, string name, long workflowId)
+        public Task<WorkflowUsage> GetUsage(string owner, string name, long workflowId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -254,12 +255,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows")]
-        public Task<WorkflowsResponse> List(string owner, string name)
+        public Task<WorkflowsResponse> List(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return List(owner, name, ApiOptions.None);
+            return List(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -272,7 +273,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options to change the API response.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows")]
-        public async Task<WorkflowsResponse> List(string owner, string name, ApiOptions options)
+        public async Task<WorkflowsResponse> List(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));

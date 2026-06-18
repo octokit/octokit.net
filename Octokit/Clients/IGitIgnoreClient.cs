@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -16,14 +17,15 @@ namespace Octokit
         /// </summary>
         /// <returns>A list of template names</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates();
+        Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates(CancellationToken cancellationToken = default);
 
 
         /// <summary>
         /// Retrieves the source for a single GitIgnore template
         /// </summary>
         /// <param name="templateName"></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A template and its source</returns>
-        Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName);
+        Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName, CancellationToken cancellationToken = default);
     }
 }

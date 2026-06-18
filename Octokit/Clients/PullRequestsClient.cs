@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -48,12 +49,12 @@ namespace Octokit
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}")]
-        public Task<PullRequest> Get(string owner, string name, int pullRequestNumber)
+        public Task<PullRequest> Get(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<PullRequest>(ApiUrls.PullRequest(owner, name, pullRequestNumber), null);
+            return ApiConnection.Get<PullRequest>(ApiUrls.PullRequest(owner, name, pullRequestNumber), null, cancellationToken);
         }
 
         /// <summary>
@@ -63,9 +64,9 @@ namespace Octokit
         /// http://developer.github.com/v3/pulls/#get-a-single-pull-request
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}")]
-        public Task<PullRequest> Get(long repositoryId, int pullRequestNumber)
+        public Task<PullRequest> Get(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<PullRequest>(ApiUrls.PullRequest(repositoryId, pullRequestNumber), null);
+            return ApiConnection.Get<PullRequest>(ApiUrls.PullRequest(repositoryId, pullRequestNumber), null, cancellationToken);
         }
 
         /// <summary>
@@ -77,12 +78,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, new PullRequestRequest(), ApiOptions.None);
+            return GetAllForRepository(owner, name, new PullRequestRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -93,9 +94,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, new PullRequestRequest(), ApiOptions.None);
+            return GetAllForRepository(repositoryId, new PullRequestRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -108,13 +109,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(owner, name, new PullRequestRequest(), options);
+            return GetAllForRepository(owner, name, new PullRequestRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -126,11 +127,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(repositoryId, new PullRequestRequest(), options);
+            return GetAllForRepository(repositoryId, new PullRequestRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -143,13 +144,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -161,11 +162,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         [ManualRoute("GET", "/repositories/{id}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, PullRequestRequest request)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, PullRequestRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return GetAllForRepository(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -179,14 +180,14 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(string owner, string name, PullRequestRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<PullRequest>(ApiUrls.PullRequests(owner, name), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<PullRequest>(ApiUrls.PullRequests(owner, name), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -199,12 +200,12 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of pull requests returned</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/pulls")]
-        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, PullRequestRequest request, ApiOptions options)
+        public Task<IReadOnlyList<PullRequest>> GetAllForRepository(long repositoryId, PullRequestRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<PullRequest>(ApiUrls.PullRequests(repositoryId), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<PullRequest>(ApiUrls.PullRequests(repositoryId), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -215,13 +216,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/pulls")]
-        public Task<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest)
+        public Task<PullRequest> Create(string owner, string name, NewPullRequest newPullRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newPullRequest, nameof(newPullRequest));
 
-            return ApiConnection.Post<PullRequest>(ApiUrls.PullRequests(owner, name), newPullRequest);
+            return ApiConnection.Post<PullRequest>(ApiUrls.PullRequests(owner, name), newPullRequest, cancellationToken);
         }
 
         /// <summary>
@@ -231,11 +232,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newPullRequest">A <see cref="NewPullRequest"/> instance describing the new PullRequest to create</param>
         [ManualRoute("POST", "/repositories/{id}/pulls")]
-        public Task<PullRequest> Create(long repositoryId, NewPullRequest newPullRequest)
+        public Task<PullRequest> Create(long repositoryId, NewPullRequest newPullRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newPullRequest, nameof(newPullRequest));
 
-            return ApiConnection.Post<PullRequest>(ApiUrls.PullRequests(repositoryId), newPullRequest);
+            return ApiConnection.Post<PullRequest>(ApiUrls.PullRequests(repositoryId), newPullRequest, cancellationToken);
         }
 
         /// <summary>
@@ -248,13 +249,13 @@ namespace Octokit
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/pulls/{pull_number}")]
-        public Task<PullRequest> Update(string owner, string name, int pullRequestNumber, PullRequestUpdate pullRequestUpdate)
+        public Task<PullRequest> Update(string owner, string name, int pullRequestNumber, PullRequestUpdate pullRequestUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(pullRequestUpdate, nameof(pullRequestUpdate));
 
-            return ApiConnection.Patch<PullRequest>(ApiUrls.PullRequest(owner, name, pullRequestNumber), pullRequestUpdate);
+            return ApiConnection.Patch<PullRequest>(ApiUrls.PullRequest(owner, name, pullRequestNumber), pullRequestUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -266,11 +267,11 @@ namespace Octokit
         /// <param name="pullRequestUpdate">An <see cref="PullRequestUpdate"/> instance describing the changes to make to the PullRequest
         /// </param>
         [ManualRoute("PATCH", "/repositories/{id}/pulls/{number}")]
-        public Task<PullRequest> Update(long repositoryId, int pullRequestNumber, PullRequestUpdate pullRequestUpdate)
+        public Task<PullRequest> Update(long repositoryId, int pullRequestNumber, PullRequestUpdate pullRequestUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(pullRequestUpdate, nameof(pullRequestUpdate));
 
-            return ApiConnection.Patch<PullRequest>(ApiUrls.PullRequest(repositoryId, pullRequestNumber), pullRequestUpdate);
+            return ApiConnection.Patch<PullRequest>(ApiUrls.PullRequest(repositoryId, pullRequestNumber), pullRequestUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +283,7 @@ namespace Octokit
         /// <param name="pullRequestNumber">The PullRequest number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/pulls/{pull_number}/merge")]
-        public async Task<PullRequestMerge> Merge(string owner, string name, int pullRequestNumber, MergePullRequest mergePullRequest)
+        public async Task<PullRequestMerge> Merge(string owner, string name, int pullRequestNumber, MergePullRequest mergePullRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -291,7 +292,7 @@ namespace Octokit
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(owner, name, pullRequestNumber);
-                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest).ConfigureAwait(false);
+                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, cancellationToken).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {
@@ -317,14 +318,14 @@ namespace Octokit
         /// <param name="pullRequestNumber">The PullRequest number</param>
         /// <param name="mergePullRequest">A <see cref="MergePullRequest"/> instance describing a pull request merge</param>
         [ManualRoute("PUT", "/repositories/{id}/pulls/{number}/merge")]
-        public async Task<PullRequestMerge> Merge(long repositoryId, int pullRequestNumber, MergePullRequest mergePullRequest)
+        public async Task<PullRequestMerge> Merge(long repositoryId, int pullRequestNumber, MergePullRequest mergePullRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(mergePullRequest, nameof(mergePullRequest));
 
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(repositoryId, pullRequestNumber);
-                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest).ConfigureAwait(false);
+                return await ApiConnection.Put<PullRequestMerge>(endpoint, mergePullRequest, cancellationToken).ConfigureAwait(false);
             }
             catch (ApiException ex)
             {
@@ -350,7 +351,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The PullRequest number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/merge")]
-        public async Task<bool> Merged(string owner, string name, int pullRequestNumber)
+        public async Task<bool> Merged(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -358,7 +359,7 @@ namespace Octokit
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(owner, name, pullRequestNumber);
-                var response = await Connection.Get<object>(endpoint, null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(endpoint, null, null, cancellationToken).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -374,12 +375,12 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The PullRequest number</param>
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/merge")]
-        public async Task<bool> Merged(long repositoryId, int pullRequestNumber)
+        public async Task<bool> Merged(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
             try
             {
                 var endpoint = ApiUrls.MergePullRequest(repositoryId, pullRequestNumber);
-                var response = await Connection.Get<object>(endpoint, null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(endpoint, null, null, cancellationToken).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -396,12 +397,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The PullRequest number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/commits")]
-        public Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int pullRequestNumber)
+        public Task<IReadOnlyList<PullRequestCommit>> Commits(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, pullRequestNumber));
+            return ApiConnection.GetAll<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, pullRequestNumber), cancellationToken);
         }
 
         /// <summary>
@@ -411,9 +412,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The PullRequest number</param>
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/commits")]
-        public Task<IReadOnlyList<PullRequestCommit>> Commits(long repositoryId, int pullRequestNumber)
+        public Task<IReadOnlyList<PullRequestCommit>> Commits(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.GetAll<PullRequestCommit>(ApiUrls.PullRequestCommits(repositoryId, pullRequestNumber));
+            return ApiConnection.GetAll<PullRequestCommit>(ApiUrls.PullRequestCommits(repositoryId, pullRequestNumber), cancellationToken);
         }
 
         /// <summary>
@@ -424,9 +425,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The PullRequest number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/files")]
-        public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int pullRequestNumber)
+        public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return Files(owner, name, pullRequestNumber, ApiOptions.None);
+            return Files(owner, name, pullRequestNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -438,12 +439,12 @@ namespace Octokit
         /// <param name="pullRequestNumber">The PullRequest number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/files")]
-        public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int pullRequestNumber, ApiOptions options)
+        public Task<IReadOnlyList<PullRequestFile>> Files(string owner, string name, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, pullRequestNumber), options);
+            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, pullRequestNumber), options, cancellationToken);
         }
 
         /// <summary>
@@ -453,9 +454,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The PullRequest number</param>
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/files")]
-        public Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int pullRequestNumber)
+        public Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return Files(repositoryId, pullRequestNumber, ApiOptions.None);
+            return Files(repositoryId, pullRequestNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -466,9 +467,9 @@ namespace Octokit
         /// <param name="pullRequestNumber">The PullRequest number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/files")]
-        public Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int pullRequestNumber, ApiOptions options)
+        public Task<IReadOnlyList<PullRequestFile>> Files(long repositoryId, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, pullRequestNumber), options);
+            return ApiConnection.GetAll<PullRequestFile>(ApiUrls.PullRequestFiles(repositoryId, pullRequestNumber), options, cancellationToken);
         }
     }
 }

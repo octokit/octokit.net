@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,8 +20,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
         /// <param name="invitationId">The id of the invitation</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Accept(long invitationId);
+        Task<bool> Accept(long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Decline a repository invitation.
@@ -29,8 +31,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
         /// <param name="invitationId">The id of the invitation</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Decline(long invitationId);
+        Task<bool> Decline(long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a repository invitation.
@@ -40,8 +43,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<bool> Delete(long repositoryId, long invitationId);
+        Task<bool> Delete(long repositoryId, long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -49,9 +53,10 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent();
+        Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -60,9 +65,10 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options);
+        Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the invitations on a repository.
@@ -71,8 +77,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId);
+        Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the invitations on a repository.
@@ -82,8 +89,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a repository invitation.
@@ -94,7 +102,8 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="invitationId">The id of the invitation</param>
         /// <param name="permissions">The permission for the collaborator</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions);
+        Task<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions, CancellationToken cancellationToken = default);
     }
 }

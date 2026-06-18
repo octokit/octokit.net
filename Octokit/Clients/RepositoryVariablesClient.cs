@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -26,14 +27,14 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariablesCollection"/> instance for the list of repository variables.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/organization-variables")]
-        public Task<RepositoryVariablesCollection> GetAllOrganization(string owner, string repoName)
+        public Task<RepositoryVariablesCollection> GetAllOrganization(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var url = ApiUrls.RepositoryOrganizationVariables(owner, repoName);
 
-            return ApiConnection.Get<RepositoryVariablesCollection>(url);
+            return ApiConnection.Get<RepositoryVariablesCollection>(url, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -47,14 +48,14 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariablesCollection"/> instance for the list of repository variables.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/variables")]
-        public Task<RepositoryVariablesCollection> GetAll(string owner, string repoName)
+        public Task<RepositoryVariablesCollection> GetAll(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var url = ApiUrls.RepositoryVariables(owner, repoName);
 
-            return ApiConnection.Get<RepositoryVariablesCollection>(url);
+            return ApiConnection.Get<RepositoryVariablesCollection>(url, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository secret.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/variables/{variableName}")]
-        public Task<RepositoryVariable> Get(string owner, string repoName, string variableName)
+        public Task<RepositoryVariable> Get(string owner, string repoName, string variableName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -77,7 +78,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
 
-            return ApiConnection.Get<RepositoryVariable>(url);
+            return ApiConnection.Get<RepositoryVariable>(url, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was created.</returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/variables")]
-        public async Task<RepositoryVariable> Create(string owner, string repoName, Variable newVariable)
+        public async Task<RepositoryVariable> Create(string owner, string repoName, Variable newVariable, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -102,9 +103,9 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryVariables(owner, repoName);
 
-            await ApiConnection.Post<RepositoryVariable>(url, newVariable);
+            await ApiConnection.Post<RepositoryVariable>(url, newVariable, cancellationToken: cancellationToken);
 
-            return await Get(owner, repoName, newVariable.Name);
+            return await Get(owner, repoName, newVariable.Name, cancellationToken);
         }
 
         /// <summary>
@@ -119,7 +120,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was updated.</returns>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/actions/variables/{variable.Name}")]
-        public async Task<RepositoryVariable> Update(string owner, string repoName, Variable variable)
+        public async Task<RepositoryVariable> Update(string owner, string repoName, Variable variable, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -129,9 +130,9 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryVariable(owner, repoName, variable.Name);
 
-            await ApiConnection.Patch<RepositoryVariable>(url, variable);
+            await ApiConnection.Patch<RepositoryVariable>(url, variable, cancellationToken: cancellationToken);
 
-            return await Get(owner, repoName, variable.Name);
+            return await Get(owner, repoName, variable.Name, cancellationToken);
         }
 
         /// <summary>
@@ -145,7 +146,7 @@ namespace Octokit
         /// <param name="variableName">The name of the variable</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/variables/{variableName}")]
-        public Task Delete(string owner, string repoName, string variableName)
+        public Task Delete(string owner, string repoName, string variableName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -153,7 +154,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryVariable(owner, repoName, variableName);
 
-            return ApiConnection.Delete(url);
+            return ApiConnection.Delete(url, cancellationToken: cancellationToken);
         }
     }
 }

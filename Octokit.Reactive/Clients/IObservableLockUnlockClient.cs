@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -16,7 +17,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        IObservable<Unit> Lock(string owner, string name, long issueNumber, LockReason? lockReason = null);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Lock(string owner, string name, long issueNumber, LockReason? lockReason = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Locks an issue for the specified repository. Issue owners and users with push access can lock an issue.
@@ -25,7 +27,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        IObservable<Unit> Lock(long repositoryId, long issueNumber, LockReason? lockReason = null);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Lock(long repositoryId, long issueNumber, LockReason? lockReason = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
@@ -34,7 +37,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Unit> Unlock(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Unlock(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Unlocks an issue for the specified repository. Issue owners and users with push access can unlock an issue.
@@ -42,6 +46,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Unit> Unlock(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Unlock(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
     }
 }

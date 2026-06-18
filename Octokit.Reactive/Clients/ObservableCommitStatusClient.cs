@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -31,13 +32,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        public IObservable<CommitStatus> GetAll(string owner, string name, string reference)
+        public IObservable<CommitStatus> GetAll(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAll(owner, name, reference, ApiOptions.None);
+            return GetAll(owner, name, reference, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace Octokit.Reactive
         /// <remarks>Only users with pull access can see this.</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        public IObservable<CommitStatus> GetAll(long repositoryId, string reference)
+        public IObservable<CommitStatus> GetAll(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAll(repositoryId, reference, ApiOptions.None);
+            return GetAll(repositoryId, reference, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>        
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<CommitStatus> GetAll(string owner, string name, string reference, ApiOptions options)
+        public IObservable<CommitStatus> GetAll(string owner, string name, string reference, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -81,12 +82,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<CommitStatus> GetAll(long repositoryId, string reference, ApiOptions options)
+        public IObservable<CommitStatus> GetAll(long repositoryId, string reference, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatuses(repositoryId, reference), options);
+            return _connection.GetAndFlattenAllPages<CommitStatus>(ApiUrls.CommitStatuses(repositoryId, reference), options, cancellationToken);
         }
 
         /// <summary>
@@ -97,13 +98,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        public IObservable<CombinedCommitStatus> GetCombined(string owner, string name, string reference)
+        public IObservable<CombinedCommitStatus> GetCombined(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.GetCombined(owner, name, reference).ToObservable();
+            return _client.GetCombined(owner, name, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -113,11 +114,11 @@ namespace Octokit.Reactive
         /// <remarks>Only users with pull access can see this.</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
-        public IObservable<CombinedCommitStatus> GetCombined(long repositoryId, string reference)
+        public IObservable<CombinedCommitStatus> GetCombined(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.GetCombined(repositoryId, reference).ToObservable();
+            return _client.GetCombined(repositoryId, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -127,14 +128,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        public IObservable<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus)
+        public IObservable<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(newCommitStatus, nameof(newCommitStatus));
 
-            return _client.Create(owner, name, reference, newCommitStatus).ToObservable();
+            return _client.Create(owner, name, reference, newCommitStatus, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -143,12 +144,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
-        public IObservable<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus)
+        public IObservable<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(newCommitStatus, nameof(newCommitStatus));
 
-            return _client.Create(repositoryId, reference, newCommitStatus).ToObservable();
+            return _client.Create(repositoryId, reference, newCommitStatus, cancellationToken).ToObservable();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -24,9 +25,9 @@ namespace Octokit
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForCurrent()
+        public Task<IReadOnlyList<Notification>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -35,11 +36,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<Notification>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), options);
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), options, cancellationToken);
         }
 
         /// <summary>
@@ -48,11 +49,11 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request)
+        public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -62,12 +63,12 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Notification>> GetAllForCurrent(NotificationsRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -77,12 +78,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -91,9 +92,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repositories/{id}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -104,13 +105,13 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), options);
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -120,11 +121,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repositories/{id}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), options);
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -135,13 +136,13 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -151,11 +152,11 @@ namespace Octokit
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repositories/{id}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return GetAllForRepository(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -167,14 +168,14 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(owner, name), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -185,12 +186,12 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repositories/{id}/notifications")]
-        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Notification>> GetAllForRepository(long repositoryId, NotificationsRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Notification>(ApiUrls.Notifications(repositoryId), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -198,9 +199,9 @@ namespace Octokit
         /// </summary>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
         [ManualRoute("PUT", "/notifications")]
-        public Task MarkAsRead()
+        public Task MarkAsRead(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Put<object>(ApiUrls.Notifications(), new object());
+            return ApiConnection.Put<object>(ApiUrls.Notifications(), new object(), cancellationToken);
         }
 
         /// <summary>
@@ -209,11 +210,11 @@ namespace Octokit
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
         [ManualRoute("PUT", "/notifications")]
-        public Task MarkAsRead(MarkAsReadRequest markAsReadRequest)
+        public Task MarkAsRead(MarkAsReadRequest markAsReadRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
-            return ApiConnection.Put<object>(ApiUrls.Notifications(), markAsReadRequest);
+            return ApiConnection.Put<object>(ApiUrls.Notifications(), markAsReadRequest, cancellationToken);
         }
 
         /// <summary>
@@ -223,12 +224,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/notifications")]
-        public Task MarkAsReadForRepository(string owner, string name)
+        public Task MarkAsReadForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), new object());
+            return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), new object(), cancellationToken);
         }
 
         /// <summary>
@@ -237,9 +238,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         [ManualRoute("PUT", "/repositories/{id}/notifications")]
-        public Task MarkAsReadForRepository(long repositoryId)
+        public Task MarkAsReadForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Put<object>(ApiUrls.Notifications(repositoryId), new object());
+            return ApiConnection.Put<object>(ApiUrls.Notifications(repositoryId), new object(), cancellationToken);
         }
 
         /// <summary>
@@ -250,13 +251,13 @@ namespace Octokit
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/notifications")]
-        public Task MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest)
+        public Task MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
-            return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), markAsReadRequest);
+            return ApiConnection.Put<object>(ApiUrls.Notifications(owner, name), markAsReadRequest, cancellationToken);
         }
 
         /// <summary>
@@ -266,11 +267,11 @@ namespace Octokit
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
         [ManualRoute("PUT", "/repositories/{id}/notifications")]
-        public Task MarkAsReadForRepository(long repositoryId, MarkAsReadRequest markAsReadRequest)
+        public Task MarkAsReadForRepository(long repositoryId, MarkAsReadRequest markAsReadRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
-            return ApiConnection.Put<object>(ApiUrls.Notifications(repositoryId), markAsReadRequest);
+            return ApiConnection.Put<object>(ApiUrls.Notifications(repositoryId), markAsReadRequest, cancellationToken);
         }
 
         /// <summary>
@@ -279,9 +280,9 @@ namespace Octokit
         /// <param name="threadId">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
         [ManualRoute("GET", "/notifications/threads/{thread_id}")]
-        public Task<Notification> Get(int threadId)
+        public Task<Notification> Get(int threadId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Notification>(ApiUrls.Notification(threadId));
+            return ApiConnection.Get<Notification>(ApiUrls.Notification(threadId), null, cancellationToken);
         }
 
         /// <summary>
@@ -290,9 +291,9 @@ namespace Octokit
         /// <param name="threadId">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
         [ManualRoute("PATCH", "/notifications/threads/{thread_id}")]
-        public Task MarkAsRead(int threadId)
+        public Task MarkAsRead(int threadId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Patch(ApiUrls.Notification(threadId));
+            return ApiConnection.Patch(ApiUrls.Notification(threadId), cancellationToken);
         }
 
         /// <summary>
@@ -301,9 +302,9 @@ namespace Octokit
         /// <param name="threadId">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
         [ManualRoute("GET", "/notifications/threads/{thread_id}/subscription")]
-        public Task<ThreadSubscription> GetThreadSubscription(int threadId)
+        public Task<ThreadSubscription> GetThreadSubscription(int threadId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<ThreadSubscription>(ApiUrls.NotificationSubscription(threadId));
+            return ApiConnection.Get<ThreadSubscription>(ApiUrls.NotificationSubscription(threadId), null, cancellationToken);
         }
 
         /// <summary>
@@ -313,11 +314,11 @@ namespace Octokit
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
         [ManualRoute("PUT", "/notifications/threads/{thread_id}/subscription")]
-        public Task<ThreadSubscription> SetThreadSubscription(int threadId, NewThreadSubscription threadSubscription)
+        public Task<ThreadSubscription> SetThreadSubscription(int threadId, NewThreadSubscription threadSubscription, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(threadSubscription, nameof(threadSubscription));
 
-            return ApiConnection.Put<ThreadSubscription>(ApiUrls.NotificationSubscription(threadId), threadSubscription);
+            return ApiConnection.Put<ThreadSubscription>(ApiUrls.NotificationSubscription(threadId), threadSubscription, cancellationToken);
         }
 
         /// <summary>
@@ -326,9 +327,9 @@ namespace Octokit
         /// <param name="threadId">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
         [ManualRoute("DELETE", "/notifications/threads/{thread_id}/subscription")]
-        public Task DeleteThreadSubscription(int threadId)
+        public Task DeleteThreadSubscription(int threadId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.NotificationSubscription(threadId));
+            return ApiConnection.Delete(ApiUrls.NotificationSubscription(threadId), cancellationToken);
         }
     }
 }

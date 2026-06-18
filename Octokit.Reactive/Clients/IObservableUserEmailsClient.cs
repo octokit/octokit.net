@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -18,9 +19,10 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<EmailAddress> GetAll();
+        IObservable<EmailAddress> GetAll(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all email addresses for the authenticated user.
@@ -29,9 +31,10 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<EmailAddress> GetAll(ApiOptions options);
+        IObservable<EmailAddress> GetAll(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds email addresses for the authenticated user.

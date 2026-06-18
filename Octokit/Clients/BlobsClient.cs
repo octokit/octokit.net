@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -29,7 +30,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/blobs/{file_sha}")]
-        public Task<Blob> Get(string owner, string name, string reference)
+        public Task<Blob> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -47,7 +48,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA of the blob</param>
         [ManualRoute("GET", "/repositories/{id}/git/blobs/{file_sha}")]
-        public Task<Blob> Get(long repositoryId, string reference)
+        public Task<Blob> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -64,7 +65,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/git/blobs")]
-        public Task<BlobReference> Create(string owner, string name, NewBlob newBlob)
+        public Task<BlobReference> Create(string owner, string name, NewBlob newBlob, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -82,11 +83,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newBlob">The new Blob</param>
         [ManualRoute("POST", "/repositories/{id}/git/blobs")]
-        public Task<BlobReference> Create(long repositoryId, NewBlob newBlob)
+        public Task<BlobReference> Create(long repositoryId, NewBlob newBlob, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newBlob, nameof(newBlob));
 
-            return ApiConnection.Post<BlobReference>(ApiUrls.Blobs(repositoryId), newBlob);
+            return ApiConnection.Post<BlobReference>(ApiUrls.Blobs(repositoryId), newBlob, cancellationToken);
         }
     }
 }

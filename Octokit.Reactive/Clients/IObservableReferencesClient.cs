@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -24,7 +25,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Reference> Get(string owner, string name, string reference);
+        IObservable<Reference> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a reference for a given repository by reference name
@@ -37,7 +39,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Reference> Get(long repositoryId, string reference);
+        IObservable<Reference> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all references for a given repository
@@ -48,7 +51,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<Reference> GetAll(string owner, string name);
+        IObservable<Reference> GetAll(string owner, string name, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all references for a given repository
@@ -60,7 +64,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Reference> GetAll(string owner, string name, ApiOptions options);
+        IObservable<Reference> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all references for a given repository
@@ -70,7 +75,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        IObservable<Reference> GetAll(long repositoryId);
+        IObservable<Reference> GetAll(long repositoryId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all references for a given repository
@@ -81,7 +87,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Reference> GetAll(long repositoryId, ApiOptions options);
+        IObservable<Reference> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -93,7 +100,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace);
+        IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -106,7 +114,8 @@ namespace Octokit.Reactive
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options);
+        IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -117,7 +126,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace);
+        IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -129,7 +139,8 @@ namespace Octokit.Reactive
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options);
+        IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a reference for a given repository
@@ -141,7 +152,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        IObservable<Reference> Create(string owner, string name, NewReference reference);
+        IObservable<Reference> Create(string owner, string name, NewReference reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a reference for a given repository
@@ -152,7 +164,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        IObservable<Reference> Create(long repositoryId, NewReference reference);
+        IObservable<Reference> Create(long repositoryId, NewReference reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a reference for a given repository by reference name
@@ -165,7 +178,8 @@ namespace Octokit.Reactive
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
-        IObservable<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate);
+        IObservable<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a reference for a given repository by reference name
@@ -177,7 +191,8 @@ namespace Octokit.Reactive
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
-        IObservable<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate);
+        IObservable<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a reference for a given repository by reference name
@@ -189,7 +204,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, string reference);
+        IObservable<Unit> Delete(string owner, string name, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a reference for a given repository by reference name
@@ -200,6 +216,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(long repositoryId, string reference);
+        IObservable<Unit> Delete(long repositoryId, string reference, CancellationToken cancellationToken = default);
+
     }
 }

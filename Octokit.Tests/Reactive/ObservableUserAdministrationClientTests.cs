@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
@@ -144,7 +145,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received().Get<System.Collections.Generic.List<PublicKey>>(
                     Arg.Is<Uri>(a =>
                         a.ToString() == expectedUri),
-                    null);
+                    null, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
 

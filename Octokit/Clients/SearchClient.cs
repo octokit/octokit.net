@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -26,10 +27,10 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
         [ManualRoute("GET", "/search/repositories")]
-        public Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search)
+        public Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchRepositoryResult>(ApiUrls.SearchRepositories(), search.Parameters);
+            return ApiConnection.Get<SearchRepositoryResult>(ApiUrls.SearchRepositories(), search.Parameters, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -39,10 +40,10 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of users</returns>
         [ManualRoute("GET", "/search/users")]
-        public Task<SearchUsersResult> SearchUsers(SearchUsersRequest search)
+        public Task<SearchUsersResult> SearchUsers(SearchUsersRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchUsersResult>(ApiUrls.SearchUsers(), search.Parameters);
+            return ApiConnection.Get<SearchUsersResult>(ApiUrls.SearchUsers(), search.Parameters, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -52,10 +53,10 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
         [ManualRoute("GET", "/search/issues")]
-        public Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search)
+        public Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchIssuesResult>(ApiUrls.SearchIssues(), search.Parameters);
+            return ApiConnection.Get<SearchIssuesResult>(ApiUrls.SearchIssues(), search.Parameters, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -65,10 +66,10 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of files</returns>
         [ManualRoute("GET", "/search/code")]
-        public Task<SearchCodeResult> SearchCode(SearchCodeRequest search)
+        public Task<SearchCodeResult> SearchCode(SearchCodeRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchCodeResult>(ApiUrls.SearchCode(), search.Parameters);
+            return ApiConnection.Get<SearchCodeResult>(ApiUrls.SearchCode(), search.Parameters, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -78,10 +79,10 @@ namespace Octokit
         /// <param name="search"></param>
         /// <returns>List of labels</returns>
         [ManualRoute("GET", "/search/labels")]
-        public Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search)
+        public Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(search, nameof(search));
-            return ApiConnection.Get<SearchLabelsResult>(ApiUrls.SearchLabels(), search.Parameters);
+            return ApiConnection.Get<SearchLabelsResult>(ApiUrls.SearchLabels(), search.Parameters, cancellationToken: cancellationToken);
         }
     }
 }

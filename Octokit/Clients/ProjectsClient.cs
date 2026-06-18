@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -29,9 +30,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -63,9 +64,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace Octokit
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -97,9 +98,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -127,9 +128,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         [ManualRoute("GET", "/repositories/{id}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return GetAllForRepository(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace Octokit
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Project>> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -158,9 +159,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         [ManualRoute("GET", "/orgs/{org}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization)
+        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, CancellationToken cancellationToken = default)
         {
-            return GetAllForOrganization(organization, ApiOptions.None);
+            return GetAllForOrganization(organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options)
+        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -190,12 +191,12 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         [ManualRoute("GET", "/orgs/{org}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request)
+        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForOrganization(organization, request, ApiOptions.None);
+            return GetAllForOrganization(organization, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace Octokit
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/projects")]
-        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Project>> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -225,7 +226,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         [ManualRoute("GET", "/projects/{project_id}")]
-        public Task<Project> Get(int projectId)
+        public Task<Project> Get(int projectId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<Project>(ApiUrls.Project(projectId), null);
         }
@@ -242,11 +243,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newProject">The new project to create for this repository</param>
         [ManualRoute("POST", "/repositories/{id}/projects")]
-        public Task<Project> CreateForRepository(long repositoryId, NewProject newProject)
+        public Task<Project> CreateForRepository(long repositoryId, NewProject newProject, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newProject, nameof(newProject));
 
-            return ApiConnection.Post<Project>(ApiUrls.RepositoryProjects(repositoryId), newProject);
+            return ApiConnection.Post<Project>(ApiUrls.RepositoryProjects(repositoryId), newProject, cancellationToken);
         }
 
         /// <summary>
@@ -258,12 +259,12 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="newProject">The new project to create for this repository</param>
         [ManualRoute("POST", "/orgs/{org}/projects")]
-        public Task<Project> CreateForOrganization(string organization, NewProject newProject)
+        public Task<Project> CreateForOrganization(string organization, NewProject newProject, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(newProject, nameof(newProject));
 
-            return ApiConnection.Post<Project>(ApiUrls.OrganizationProjects(organization), newProject);
+            return ApiConnection.Post<Project>(ApiUrls.OrganizationProjects(organization), newProject, cancellationToken);
         }
 
         /// <summary>
@@ -275,11 +276,11 @@ namespace Octokit
         /// <param name="projectId">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
         [ManualRoute("PATCH", "/project/{project_id}")]
-        public Task<Project> Update(int projectId, ProjectUpdate projectUpdate)
+        public Task<Project> Update(int projectId, ProjectUpdate projectUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(projectUpdate, nameof(projectUpdate));
 
-            return ApiConnection.Patch<Project>(ApiUrls.Project(projectId), projectUpdate);
+            return ApiConnection.Patch<Project>(ApiUrls.Project(projectId), projectUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +291,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         [ManualRoute("DELETE", "/project/{project_id}")]
-        public async Task<bool> Delete(int projectId)
+        public async Task<bool> Delete(int projectId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.Project(projectId);
 

@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 using System.Reactive.Linq;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -38,9 +39,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="newUser">The <see cref="NewUser"/> object describing the user to create</param>
         /// <returns>The created <see cref="User"/> object</returns>
-        public IObservable<User> Create(NewUser newUser)
+        public IObservable<User> Create(NewUser newUser, CancellationToken cancellationToken = default)
         {
-            return _client.Create(newUser).ToObservable();
+            return _client.Create(newUser, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -54,9 +55,9 @@ namespace Octokit.Reactive
         /// <param name="login">The username to rename</param>
         /// <param name="userRename">The <see cref="UserRename"/> request, specifying the new login</param>
         /// <returns>A <see cref="UserRenameResponse"/> object indicating the queued task message and Url to the user</returns>
-        public IObservable<UserRenameResponse> Rename(string login, UserRename userRename)
+        public IObservable<UserRenameResponse> Rename(string login, UserRename userRename, CancellationToken cancellationToken = default)
         {
-            return _client.Rename(login, userRename).ToObservable();
+            return _client.Rename(login, userRename, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -69,9 +70,9 @@ namespace Octokit.Reactive
         /// <param name="login">The user to impersonate</param>
         /// <param name="newImpersonationToken">The <see cref="NewImpersonationToken"/> request specifying the required scopes</param>
         /// <returns>An <see cref="Authorization"/> object containing the impersonation token</returns>
-        public IObservable<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken)
+        public IObservable<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken, CancellationToken cancellationToken = default)
         {
-            return _client.CreateImpersonationToken(login, newImpersonationToken).ToObservable();
+            return _client.CreateImpersonationToken(login, newImpersonationToken, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -83,9 +84,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to remove impersonation token from</param>
         /// <returns></returns>
-        public IObservable<Unit> DeleteImpersonationToken(string login)
+        public IObservable<Unit> DeleteImpersonationToken(string login, CancellationToken cancellationToken = default)
         {
-            return _client.DeleteImpersonationToken(login).ToObservable();
+            return _client.DeleteImpersonationToken(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -97,9 +98,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to promote to administrator.</param>
         /// <returns></returns>
-        public IObservable<Unit> Promote(string login)
+        public IObservable<Unit> Promote(string login, CancellationToken cancellationToken = default)
         {
-            return _client.Promote(login).ToObservable();
+            return _client.Promote(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -111,9 +112,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to demote from administrator.</param>
         /// <returns></returns>
-        public IObservable<Unit> Demote(string login)
+        public IObservable<Unit> Demote(string login, CancellationToken cancellationToken = default)
         {
-            return _client.Demote(login).ToObservable();
+            return _client.Demote(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -125,9 +126,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to suspend.</param>
         /// <returns></returns>
-        public IObservable<Unit> Suspend(string login)
+        public IObservable<Unit> Suspend(string login, CancellationToken cancellationToken = default)
         {
-            return _client.Suspend(login).ToObservable();
+            return _client.Suspend(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -139,9 +140,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to unsuspend.</param>
         /// <returns></returns>
-        public IObservable<Unit> Unsuspend(string login)
+        public IObservable<Unit> Unsuspend(string login, CancellationToken cancellationToken = default)
         {
-            return _client.Unsuspend(login).ToObservable();
+            return _client.Unsuspend(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Octokit.Reactive
         /// for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<PublicKey> ListAllPublicKeys()
+        public IObservable<PublicKey> ListAllPublicKeys(CancellationToken cancellationToken = default)
         {
             return _connection.GetAndFlattenAllPages<PublicKey>(ApiUrls.UserAdministrationPublicKeys());
         }
@@ -166,9 +167,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to delete</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string login)
+        public IObservable<Unit> Delete(string login, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(login).ToObservable();
+            return _client.Delete(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -180,9 +181,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
-        public IObservable<Unit> DeletePublicKey(int keyId)
+        public IObservable<Unit> DeletePublicKey(int keyId, CancellationToken cancellationToken = default)
         {
-            return _client.DeletePublicKey(keyId).ToObservable();
+            return _client.DeletePublicKey(keyId, cancellationToken).ToObservable();
         }
     }
 }

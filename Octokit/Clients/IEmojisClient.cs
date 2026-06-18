@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -14,9 +15,10 @@ namespace Octokit
         /// <summary>
         /// Gets all the emojis available to use on GitHub.
         /// </summary>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<Emoji>> GetAllEmojis();
+        Task<IReadOnlyList<Emoji>> GetAllEmojis(CancellationToken cancellationToken = default);
     }
 }

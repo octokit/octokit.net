@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,9 +26,9 @@ namespace Octokit
         /// </summary>
         /// <returns>A list of template names</returns>
         [ManualRoute("GET", "/gitignore/templates")]
-        public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates()
+        public Task<IReadOnlyList<string>> GetAllGitIgnoreTemplates(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.GetAll<string>(ApiUrls.GitIgnoreTemplates());
+            return ApiConnection.GetAll<string>(ApiUrls.GitIgnoreTemplates(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -36,11 +37,11 @@ namespace Octokit
         /// <param name="templateName"></param>
         /// <returns>A template and its source</returns>
         [ManualRoute("GET", "/gitignore/templates/{name}")]
-        public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
+        public Task<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(templateName, nameof(templateName));
 
-            return ApiConnection.Get<GitIgnoreTemplate>(ApiUrls.GitIgnoreTemplates(templateName));
+            return ApiConnection.Get<GitIgnoreTemplate>(ApiUrls.GitIgnoreTemplates(templateName), null, null, cancellationToken);
         }
     }
 }

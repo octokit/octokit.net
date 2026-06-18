@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -30,13 +31,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/statuses")]
-        public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference)
+        public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAll(owner, name, reference, ApiOptions.None);
+            return GetAll(owner, name, reference, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -49,11 +50,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         [ManualRoute("GET", "/repositories/{id}/commits/{ref}/statuses")]
-        public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference)
+        public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return GetAll(repositoryId, reference, ApiOptions.None);
+            return GetAll(repositoryId, reference, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/statuses")]
-        public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference, ApiOptions options)
+        public Task<IReadOnlyList<CommitStatus>> GetAll(string owner, string name, string reference, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -89,12 +90,12 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/commits/{ref}/statuses")]
-        public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference, ApiOptions options)
+        public Task<IReadOnlyList<CommitStatus>> GetAll(long repositoryId, string reference, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatuses(repositoryId, reference), options);
+            return ApiConnection.GetAll<CommitStatus>(ApiUrls.CommitStatuses(repositoryId, reference), options, cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{ref}/status")]
-        public Task<CombinedCommitStatus> GetCombined(string owner, string name, string reference)
+        public Task<CombinedCommitStatus> GetCombined(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -127,7 +128,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         [ManualRoute("GET", "/repositories/{id}/commits/{ref}/status")]
-        public Task<CombinedCommitStatus> GetCombined(long repositoryId, string reference)
+        public Task<CombinedCommitStatus> GetCombined(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -145,7 +146,7 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/statuses/{sha}")]
-        public Task<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus)
+        public Task<CommitStatus> Create(string owner, string name, string reference, NewCommitStatus newCommitStatus, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -165,7 +166,7 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name, or tag name) to list commits for</param>
         /// <param name="newCommitStatus">The commit status to create</param>
         [ManualRoute("POST", "/repositories/{id}/statuses/{sha}")]
-        public Task<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus)
+        public Task<CommitStatus> Create(long repositoryId, string reference, NewCommitStatus newCommitStatus, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(newCommitStatus, nameof(newCommitStatus));

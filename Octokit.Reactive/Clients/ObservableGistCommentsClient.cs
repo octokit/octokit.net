@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -25,9 +26,9 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Get(string gistId, long commentId)
+        public IObservable<GistComment> Get(string gistId, long commentId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(gistId, commentId).ToObservable();
+            return _client.Get(gistId, commentId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -36,11 +37,11 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> GetAllForGist(string gistId)
+        public IObservable<GistComment> GetAllForGist(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
-            return GetAllForGist(gistId, ApiOptions.None);
+            return GetAllForGist(gistId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -50,12 +51,12 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options)
+        public IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId), options);
+            return _connection.GetAndFlattenAllPages<GistComment>(ApiUrls.GistComments(gistId), options, cancellationToken);
         }
 
         /// <summary>
@@ -65,11 +66,11 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="comment">The body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Create(string gistId, string comment)
+        public IObservable<GistComment> Create(string gistId, string comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
-            return _client.Create(gistId, comment).ToObservable();
+            return _client.Create(gistId, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -80,11 +81,11 @@ namespace Octokit.Reactive
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        public IObservable<GistComment> Update(string gistId, long commentId, string comment)
+        public IObservable<GistComment> Update(string gistId, long commentId, string comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
-            return _client.Update(gistId, commentId, comment).ToObservable();
+            return _client.Update(gistId, commentId, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -94,9 +95,9 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{Unit}.</returns>
-        public IObservable<Unit> Delete(string gistId, long commentId)
+        public IObservable<Unit> Delete(string gistId, long commentId, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(gistId, commentId).ToObservable();
+            return _client.Delete(gistId, commentId, cancellationToken).ToObservable();
         }
     }
 }

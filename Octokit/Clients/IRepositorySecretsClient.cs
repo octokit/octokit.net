@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -21,7 +22,7 @@ namespace Octokit
         /// <param name="repoName">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="SecretsPublicKey"/> instance for the repository public key.</returns>
-        Task<SecretsPublicKey> GetPublicKey(string owner, string repoName);
+        Task<SecretsPublicKey> GetPublicKey(string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the secrets for a repository.
@@ -33,7 +34,7 @@ namespace Octokit
         /// <param name="repoName">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecretsCollection"/> instance for the list of repository secrets.</returns>
-        Task<RepositorySecretsCollection> GetAll (string owner, string repoName);
+        Task<RepositorySecretsCollection> GetAll (string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a secret from a repository.
@@ -46,7 +47,7 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret.</returns>
-        Task<RepositorySecret> Get(string owner, string repoName, string secretName);
+        Task<RepositorySecret> Get(string owner, string repoName, string secretName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create or update a secret in a repository.
@@ -60,7 +61,7 @@ namespace Octokit
         /// <param name="upsertSecret">The encrypted value and id of the encryption key</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret that was created or updated.</returns>
-        Task<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret);
+        Task<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a secret in a repository.
@@ -72,6 +73,6 @@ namespace Octokit
         /// <param name="repoName">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(string owner, string repoName, string secretName);
+        Task Delete(string owner, string repoName, string secretName, CancellationToken cancellationToken = default);
     }
 }

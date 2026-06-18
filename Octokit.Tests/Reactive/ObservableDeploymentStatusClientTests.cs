@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -30,7 +31,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll("owner", "repo", 1);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Args.EmptyDictionary);
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -41,7 +42,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(1, 1);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Args.EmptyDictionary);
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -59,7 +60,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll("owner", "repo", 1, options);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -77,7 +78,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(1, 1, options);
 
                 _githubClient.Connection.Received(1)
-                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    .Get<List<DeploymentStatus>>(Arg.Is<Uri>(uri => uri.ToString() == expectedUri), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

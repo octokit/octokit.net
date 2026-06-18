@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -31,7 +32,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/trees/{tree_sha}")]
-        public Task<TreeResponse> Get(string owner, string name, string reference)
+        public Task<TreeResponse> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -49,7 +50,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [ManualRoute("GET", "/repositories/{id}/git/trees/{tree_sha}")]
-        public Task<TreeResponse> Get(long repositoryId, string reference)
+        public Task<TreeResponse> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -66,7 +67,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/trees/{tree_sha}?recursive=1")]
-        public Task<TreeResponse> GetRecursive(string owner, string name, string reference)
+        public Task<TreeResponse> GetRecursive(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -84,7 +85,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [ManualRoute("GET", "/repositories/{id}/git/trees/{tree_sha}?recursive=1")]
-        public Task<TreeResponse> GetRecursive(long repositoryId, string reference)
+        public Task<TreeResponse> GetRecursive(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -101,7 +102,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/git/trees")]
-        public Task<TreeResponse> Create(string owner, string name, NewTree newTree)
+        public Task<TreeResponse> Create(string owner, string name, NewTree newTree, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -124,7 +125,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
         [ManualRoute("POST", "/repos/{id}/git/trees")]
-        public Task<TreeResponse> Create(long repositoryId, NewTree newTree)
+        public Task<TreeResponse> Create(long repositoryId, NewTree newTree, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newTree, nameof(newTree));
 
@@ -133,7 +134,7 @@ namespace Octokit
                 throw new ArgumentException("You have specified items in the tree which do not have a Mode value set.");
             }
 
-            return ApiConnection.Post<TreeResponse>(ApiUrls.Tree(repositoryId), newTree);
+            return ApiConnection.Post<TreeResponse>(ApiUrls.Tree(repositoryId), newTree, cancellationToken);
         }
     }
 }

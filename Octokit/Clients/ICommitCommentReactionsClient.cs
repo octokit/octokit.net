@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -20,7 +21,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        Task<Reaction> Create(string owner, string name, long commentId, NewReaction reaction);
+        Task<Reaction> Create(string owner, string name, long commentId, NewReaction reaction, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a reaction for a specified Commit Comment
@@ -30,7 +31,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
-        Task<Reaction> Create(long repositoryId, long commentId, NewReaction reaction);
+        Task<Reaction> Create(long repositoryId, long commentId, NewReaction reaction, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all reactions for a specified Commit Comment
@@ -40,7 +41,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId);
+        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all reactions for a specified Commit Comment
@@ -51,7 +52,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId, ApiOptions options);
+        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all reactions for a specified Commit Comment
@@ -60,7 +61,7 @@ namespace Octokit
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="commentId">The comment id</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId);
+        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all reactions for a specified Commit Comment
@@ -70,7 +71,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId, ApiOptions options);
+        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
@@ -81,7 +82,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, long commentId, long reactionId);
+        Task Delete(string owner, string name, long commentId, long reactionId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a reaction for a specified Commit Comment
@@ -91,6 +92,6 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        Task Delete(long repositoryId, long commentId, long reactionId);
+        Task Delete(long repositoryId, long commentId, long reactionId, CancellationToken cancellationToken = default);
     }
 }

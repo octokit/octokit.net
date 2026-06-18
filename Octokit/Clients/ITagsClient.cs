@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -20,9 +21,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<GitTag> Get(string owner, string name, string reference);
+        Task<GitTag> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a tag for a given repository by sha reference
@@ -32,9 +34,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the tag</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<GitTag> Get(long repositoryId, string reference);
+        Task<GitTag> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a tag for a given repository
@@ -45,7 +48,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="tag">The tag to create</param>
-        Task<GitTag> Create(string owner, string name, NewTag tag);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<GitTag> Create(string owner, string name, NewTag tag, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a tag for a given repository
@@ -55,6 +59,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag to create</param>
-        Task<GitTag> Create(long repositoryId, NewTag tag);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<GitTag> Create(long repositoryId, NewTag tag, CancellationToken cancellationToken = default);
     }
 }

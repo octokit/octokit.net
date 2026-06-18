@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -29,38 +30,38 @@ namespace Octokit.Reactive
 
 
 		/// <inheritdoc/>
-		public IObservable<OrganizationOidcSubjectClaim> GetOrganizationOidcSubjectClaim(string organization)
+		public IObservable<OrganizationOidcSubjectClaim> GetOrganizationOidcSubjectClaim(string organization, CancellationToken cancellationToken = default)
 		{
 			Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
-			return _client.GetOrganizationOidcSubjectClaim(organization).ToObservable();
+			return _client.GetOrganizationOidcSubjectClaim(organization, cancellationToken).ToObservable();
 		}
 
 		/// <inheritdoc/>
-		public IObservable<Unit> SetOrganizationOidcSubjectClaim(string organization, OrganizationOidcSubjectClaimRequest oidcSubjectClaim)
+		public IObservable<Unit> SetOrganizationOidcSubjectClaim(string organization, OrganizationOidcSubjectClaimRequest oidcSubjectClaim, CancellationToken cancellationToken = default)
 		{
 			Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 			Ensure.ArgumentNotNull(oidcSubjectClaim, nameof(oidcSubjectClaim));
 
-			return _client.SetOrganizationOidcSubjectClaim(organization, oidcSubjectClaim).ToObservable();
+			return _client.SetOrganizationOidcSubjectClaim(organization, oidcSubjectClaim, cancellationToken).ToObservable();
 		}
 
 		/// <inheritdoc/>
-		public IObservable<RepositoryOidcSubjectClaim> GetRepositoryOidcSubjectClaim(string owner, string repository)
+		public IObservable<RepositoryOidcSubjectClaim> GetRepositoryOidcSubjectClaim(string owner, string repository, CancellationToken cancellationToken = default)
 		{
 			Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
 			Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
 
-			return _client.GetRepositoryOidcSubjectClaim(owner, repository).ToObservable();
+			return _client.GetRepositoryOidcSubjectClaim(owner, repository, cancellationToken).ToObservable();
 		}
 
 		/// <inheritdoc/>
-		public IObservable<Unit> SetRepositoryOidcSubjectClaim(string owner, string repository, RepositoryOidcSubjectClaimRequest oidcSubjectClaim)
+		public IObservable<Unit> SetRepositoryOidcSubjectClaim(string owner, string repository, RepositoryOidcSubjectClaimRequest oidcSubjectClaim, CancellationToken cancellationToken = default)
 		{
 			Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
 			Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
 			Ensure.ArgumentNotNull(oidcSubjectClaim, nameof(oidcSubjectClaim));
 
-			return _client.SetRepositoryOidcSubjectClaim(owner, repository, oidcSubjectClaim).ToObservable();
+			return _client.SetRepositoryOidcSubjectClaim(owner, repository, oidcSubjectClaim, cancellationToken).ToObservable();
 		}
 	}
 }

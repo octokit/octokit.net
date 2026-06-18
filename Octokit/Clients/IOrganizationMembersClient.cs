@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -30,8 +31,9 @@ namespace Octokit
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org);
+        Task<IReadOnlyList<User>> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -53,8 +55,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -76,8 +79,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter);
+        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -100,8 +104,9 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -123,8 +128,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role);
+        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -147,32 +153,9 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role, ApiOptions options);
-
-        /// <summary>
-        /// <para>
-        /// List all users who are members of an organization. A member is a user that
-        /// belongs to at least 1 team in the organization.
-        /// </para>
-        /// <para>
-        /// If the authenticated user is also an owner of this organization then both
-        /// concealed and public member will be returned.
-        /// </para>
-        /// <para>
-        /// If the requester is not an owner of the organization the query will be redirected
-        /// to the public members list.
-        /// </para>
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
-        /// for more information.
-        /// </remarks>
-        /// <param name="org">The login for the organization</param>
-        /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
-        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
-        /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role);
+        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersRole role, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -195,17 +178,43 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The users</returns>
-        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// <para>
+        /// List all users who are members of an organization. A member is a user that
+        /// belongs to at least 1 team in the organization.
+        /// </para>
+        /// <para>
+        /// If the authenticated user is also an owner of this organization then both
+        /// concealed and public member will be returned.
+        /// </para>
+        /// <para>
+        /// If the requester is not an owner of the organization the query will be redirected
+        /// to the public members list.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="http://developer.github.com/v3/orgs/members/#members-list">API documentation</a>
+        /// for more information.
+        /// </remarks>
+        /// <param name="org">The login for the organization</param>
+        /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
+        /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        /// <returns>The users</returns>
+        Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<User>> GetAllPublic(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> GetAllPublic(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.
@@ -213,8 +222,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<User>> GetAllPublic(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> GetAllPublic(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.
@@ -225,8 +234,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        Task<bool> CheckMember(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> CheckMember(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check is a user is publicly a member of the organization.
@@ -237,8 +246,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        Task<bool> CheckMemberPublic(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> CheckMemberPublic(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a user from the organization, this will also remove them from all teams
@@ -251,8 +260,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        Task Delete(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Make the authenticated user's organization membership public.
@@ -264,8 +273,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        Task<bool> Publicize(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> Publicize(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Make the authenticated user's organization membership private.
@@ -277,8 +286,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        Task Conceal(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Conceal(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a user's membership with an organization.
@@ -291,11 +300,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        Task<OrganizationMembership> GetOrganizationMembership(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<OrganizationMembership> GetOrganizationMembership(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Add a user to the organization or update the user's role withing the organization.
+        /// Add a user to the organization or update the user's role within the organization.
         /// </summary>
         /// <remarks>
         /// This method requires authentication.
@@ -307,8 +316,8 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <param name="addOrUpdateRequest">An <see cref="OrganizationMembershipUpdate"/> instance describing the
         /// changes to make to the user's organization membership</param>
-        /// <returns></returns>
-        Task<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an organization invitation for a user
@@ -322,8 +331,8 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <param name="invitationRequest">An <see cref="OrganizationInvitationRequest"/> instance containing the
         /// details of the organization invitation</param>
-        /// <returns></returns>
-        Task<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove a user's membership with an organization.
@@ -336,8 +345,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
-        /// <returns></returns>
-        Task RemoveOrganizationMembership(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task RemoveOrganizationMembership(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all pending invitations for the organization.
@@ -347,8 +356,8 @@ namespace Octokit
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all pending invitations for the organization.
@@ -359,8 +368,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options to change API behaviour</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllPendingInvitations(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List failed organization invitations.
@@ -370,8 +379,8 @@ namespace Octokit
         /// for more information.
         /// </remarks>
         /// <param name="org">The login for the organization</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List failed organization invitations.
@@ -382,8 +391,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options to change API behaviour</param>
-        /// <returns></returns>
-        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<OrganizationMembershipInvitation>> GetAllFailedInvitations(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Cancel an organization invitation. In order to cancel an organization invitation, the authenticated user must be an organization owner.
@@ -394,8 +403,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <param name="invitationId">The unique identifier of the invitation</param>
-        /// <returns></returns>
-        Task CancelOrganizationInvitation(string org, long invitationId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task CancelOrganizationInvitation(string org, long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationMembership" />s for the current user.
@@ -404,9 +413,10 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-organization-memberships-for-the-authenticated-user">API Documentation</a>
         /// for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the current user's <see cref="OrganizationMembership"/>s.</returns>
-        Task<IReadOnlyList<OrganizationMembership>> GetAllOrganizationMembershipsForCurrent();
+        Task<IReadOnlyList<OrganizationMembership>> GetAllOrganizationMembershipsForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationMembership" />s for the current user.
@@ -415,10 +425,10 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/en/rest/orgs/members#list-organization-memberships-for-the-authenticated-user">API Documentation</a>
         /// for more information.
         /// </remarks>
-        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <param name="options">Options to change API behaviour</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the current user's <see cref="OrganizationMembership"/>s.</returns>
-        Task<IReadOnlyList<OrganizationMembership>> GetAllOrganizationMembershipsForCurrent(ApiOptions options);
-
+        Task<IReadOnlyList<OrganizationMembership>> GetAllOrganizationMembershipsForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

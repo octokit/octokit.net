@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -31,13 +32,13 @@ namespace Octokit.Reactive
         /// <param name="snapshot">The dependency snapshot to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
-        public IObservable<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot)
+        public IObservable<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(snapshot, nameof(snapshot));
 
-            return _client.Create(owner, name, snapshot).ToObservable();
+            return _client.Create(owner, name, snapshot, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -50,11 +51,11 @@ namespace Octokit.Reactive
         /// <param name="snapshot">The dependency snapshot to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
-        public IObservable<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot)
+        public IObservable<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(snapshot, nameof(snapshot));
 
-            return _client.Create(repositoryId, snapshot).ToObservable();
+            return _client.Create(repositoryId, snapshot, cancellationToken).ToObservable();
         }
     }
 }

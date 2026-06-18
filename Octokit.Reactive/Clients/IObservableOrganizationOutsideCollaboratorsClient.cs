@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -16,7 +17,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns>The users</returns>
-        IObservable<User> GetAll(string org);
+        IObservable<User> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all users who are outside collaborators of an organization. An outside collaborator is a user that
@@ -29,7 +30,7 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
-        IObservable<User> GetAll(string org, ApiOptions options);
+        IObservable<User> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all users who are outside collaborators of an organization. An outside collaborator is a user that
@@ -42,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
-        IObservable<User> GetAll(string org, OrganizationMembersFilter filter);
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all users who are outside collaborators of an organization. An outside collaborator is a user that
@@ -56,7 +57,7 @@ namespace Octokit.Reactive
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
-        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options);
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a user as an outside collaborator from the organization, this will remove them from all repositories
@@ -69,7 +70,7 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login of the user</param>
         /// <returns></returns>
-        IObservable<bool> Delete(string org, string user);
+        IObservable<bool> Delete(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Converts an organization member to an outside collaborator, 
@@ -84,6 +85,6 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<bool> ConvertFromMember(string org, string user);
+        IObservable<bool> ConvertFromMember(string org, string user, CancellationToken cancellationToken = default);
     }
 }

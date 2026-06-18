@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -31,12 +32,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        public IObservable<PullRequestReviewComment> GetAll(string owner, string name, int pullRequestNumber)
+        public IObservable<PullRequestReviewComment> GetAll(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, pullRequestNumber, ApiOptions.None);
+            return GetAll(owner, name, pullRequestNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -45,9 +46,9 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        public IObservable<PullRequestReviewComment> GetAll(long repositoryId, int pullRequestNumber)
+        public IObservable<PullRequestReviewComment> GetAll(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, pullRequestNumber, ApiOptions.None);
+            return GetAll(repositoryId, pullRequestNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -58,13 +59,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReviewComment> GetAll(string owner, string name, int pullRequestNumber, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAll(string owner, string name, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, pullRequestNumber), null, options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, pullRequestNumber), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -74,11 +75,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReviewComment> GetAll(long repositoryId, int pullRequestNumber, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAll(long repositoryId, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, pullRequestNumber), options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(repositoryId, pullRequestNumber), options, cancellationToken);
         }
 
         /// <summary>
@@ -87,12 +88,12 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), ApiOptions.None);
+            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -100,9 +101,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None);
+            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -112,13 +113,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), options);
+            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -127,11 +128,11 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), options);
+            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -141,13 +142,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -156,11 +157,11 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#list-comments-in-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, PullRequestReviewCommentRequest request)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, PullRequestReviewCommentRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return GetAllForRepository(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -171,14 +172,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(string owner, string name, PullRequestReviewCommentRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -188,12 +189,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">The sorting <see cref="PullRequestReviewCommentRequest">parameters</see></param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, PullRequestReviewCommentRequest request, ApiOptions options)
+        public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, PullRequestReviewCommentRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(repositoryId), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(repositoryId), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -203,12 +204,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The pull request review comment id</param>
-        public IObservable<PullRequestReviewComment> GetComment(string owner, string name, long commentId)
+        public IObservable<PullRequestReviewComment> GetComment(string owner, string name, long commentId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetComment(owner, name, commentId).ToObservable();
+            return _client.GetComment(owner, name, commentId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -217,9 +218,9 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#get-a-single-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commentId">The pull request review comment id</param>
-        public IObservable<PullRequestReviewComment> GetComment(long repositoryId, long commentId)
+        public IObservable<PullRequestReviewComment> GetComment(long repositoryId, long commentId, CancellationToken cancellationToken = default)
         {
-            return _client.GetComment(repositoryId, commentId).ToObservable();
+            return _client.GetComment(repositoryId, commentId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -230,13 +231,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        public IObservable<PullRequestReviewComment> Create(string owner, string name, int pullRequestNumber, PullRequestReviewCommentCreate comment)
+        public IObservable<PullRequestReviewComment> Create(string owner, string name, int pullRequestNumber, PullRequestReviewCommentCreate comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.Create(owner, name, pullRequestNumber, comment).ToObservable();
+            return _client.Create(owner, name, pullRequestNumber, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -246,11 +247,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        public IObservable<PullRequestReviewComment> Create(long repositoryId, int pullRequestNumber, PullRequestReviewCommentCreate comment)
+        public IObservable<PullRequestReviewComment> Create(long repositoryId, int pullRequestNumber, PullRequestReviewCommentCreate comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.Create(repositoryId, pullRequestNumber, comment).ToObservable();
+            return _client.Create(repositoryId, pullRequestNumber, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -261,13 +262,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        public IObservable<PullRequestReviewComment> CreateReply(string owner, string name, int pullRequestNumber, PullRequestReviewCommentReplyCreate comment)
+        public IObservable<PullRequestReviewComment> CreateReply(string owner, string name, int pullRequestNumber, PullRequestReviewCommentReplyCreate comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.CreateReply(owner, name, pullRequestNumber, comment).ToObservable();
+            return _client.CreateReply(owner, name, pullRequestNumber, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -277,11 +278,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="comment">The comment</param>
-        public IObservable<PullRequestReviewComment> CreateReply(long repositoryId, int pullRequestNumber, PullRequestReviewCommentReplyCreate comment)
+        public IObservable<PullRequestReviewComment> CreateReply(long repositoryId, int pullRequestNumber, PullRequestReviewCommentReplyCreate comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.CreateReply(repositoryId, pullRequestNumber, comment).ToObservable();
+            return _client.CreateReply(repositoryId, pullRequestNumber, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -292,13 +293,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
-        public IObservable<PullRequestReviewComment> Edit(string owner, string name, long commentId, PullRequestReviewCommentEdit comment)
+        public IObservable<PullRequestReviewComment> Edit(string owner, string name, long commentId, PullRequestReviewCommentEdit comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.Edit(owner, name, commentId, comment).ToObservable();
+            return _client.Edit(owner, name, commentId, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -308,11 +309,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commentId">The pull request review comment id</param>
         /// <param name="comment">The edited comment</param>
-        public IObservable<PullRequestReviewComment> Edit(long repositoryId, long commentId, PullRequestReviewCommentEdit comment)
+        public IObservable<PullRequestReviewComment> Edit(long repositoryId, long commentId, PullRequestReviewCommentEdit comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(comment, nameof(comment));
 
-            return _client.Edit(repositoryId, commentId, comment).ToObservable();
+            return _client.Edit(repositoryId, commentId, comment, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -322,12 +323,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The pull request review comment id</param>
-        public IObservable<Unit> Delete(string owner, string name, long commentId)
+        public IObservable<Unit> Delete(string owner, string name, long commentId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Delete(owner, name, commentId).ToObservable();
+            return _client.Delete(owner, name, commentId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -336,9 +337,9 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/pulls/comments/#delete-a-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commentId">The pull request review comment id</param>
-        public IObservable<Unit> Delete(long repositoryId, long commentId)
+        public IObservable<Unit> Delete(long repositoryId, long commentId, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(repositoryId, commentId).ToObservable();
+            return _client.Delete(repositoryId, commentId, cancellationToken).ToObservable();
         }
     }
 }

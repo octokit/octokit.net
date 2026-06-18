@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -18,9 +19,10 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<User>> GetAllForCurrent();
+        Task<IReadOnlyList<User>> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s followers
@@ -28,9 +30,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
-        /// </remarks>        
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>        
-        Task<IReadOnlyList<User>> GetAllForCurrent(ApiOptions options);
+        /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
+        Task<IReadOnlyList<User>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a user’s followers
@@ -39,8 +42,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
-        Task<IReadOnlyList<User>> GetAll(string login);
+        Task<IReadOnlyList<User>> GetAll(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a user’s followers
@@ -50,8 +54,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-followers-of-a-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
-        Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List who the authenticated user is following
@@ -59,9 +64,10 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<User>> GetAllFollowingForCurrent();
+        Task<IReadOnlyList<User>> GetAllFollowingForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List who the authenticated user is following
@@ -70,8 +76,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
-        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>        
-        Task<IReadOnlyList<User>> GetAllFollowingForCurrent(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
+        Task<IReadOnlyList<User>> GetAllFollowingForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List who a user is following
@@ -80,8 +87,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        Task<IReadOnlyList<User>> GetAllFollowing(string login);
+        Task<IReadOnlyList<User>> GetAllFollowing(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List who a user is following
@@ -91,8 +99,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#list-users-followed-by-another-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
-        Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options);
+        Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check if the authenticated user follows another user
@@ -101,8 +110,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
-        Task<bool> IsFollowingForCurrent(string following);
+        Task<bool> IsFollowingForCurrent(string following, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check if one user follows another user
@@ -112,8 +122,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#check-if-one-user-follows-another">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
-        Task<bool> IsFollowing(string login, string following);
+        Task<bool> IsFollowing(string login, string following, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Follow a user
@@ -122,8 +133,9 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#follow-a-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
-        Task<bool> Follow(string login);
+        Task<bool> Follow(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Unfollow a user
@@ -132,9 +144,10 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="http://developer.github.com/v3/users/followers/#unfollow-a-user">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unfollow",
             Justification = "Unfollow is consistent with the GitHub website")]
-        Task Unfollow(string login);
+        Task Unfollow(string login, CancellationToken cancellationToken = default);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -16,14 +17,16 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficReferrer> GetAllReferrers(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the top 10 referrers over the last 14 days
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-referrers</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        IObservable<RepositoryTrafficReferrer> GetAllReferrers(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficReferrer> GetAllReferrers(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the top 10 popular contents over the last 14 days
@@ -31,14 +34,16 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficPath> GetAllPaths(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the top 10 popular contents over the last 14 days
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/traffic/#list-paths</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
-        IObservable<RepositoryTrafficPath> GetAllPaths(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficPath> GetAllPaths(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the total number of views and breakdown per day or week for the last 14 days
@@ -47,7 +52,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficViewSummary> GetViews(string owner, string name, RepositoryTrafficRequest per, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the total number of views and breakdown per day or week for the last 14 days
@@ -55,7 +61,8 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#views</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficViewSummary> GetViews(long repositoryId, RepositoryTrafficRequest per);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficViewSummary> GetViews(long repositoryId, RepositoryTrafficRequest per, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the total number of clones and breakdown per day or week for the last 14 days
@@ -64,7 +71,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficCloneSummary> GetClones(string owner, string name, RepositoryTrafficRequest per, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the total number of clones and breakdown per day or week for the last 14 days
@@ -72,6 +80,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/traffic/#clones</remarks>
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="per">Breakdown per day or week</param>
-        IObservable<RepositoryTrafficCloneSummary> GetClones(long repositoryId, RepositoryTrafficRequest per);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryTrafficCloneSummary> GetClones(long repositoryId, RepositoryTrafficRequest per, CancellationToken cancellationToken = default);
     }
 }

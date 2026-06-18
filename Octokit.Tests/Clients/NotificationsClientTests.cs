@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -373,7 +374,7 @@ namespace Octokit.Tests.Clients
 
                 client.Get(1);
 
-                connection.Received().Get<Notification>(endpoint);
+                connection.Received().Get<Notification>(endpoint, null, Arg.Any<CancellationToken>());
             }
         }
 
@@ -403,7 +404,7 @@ namespace Octokit.Tests.Clients
 
                 client.GetThreadSubscription(1);
 
-                connection.Received().Get<ThreadSubscription>(endpoint);
+                connection.Received().Get<ThreadSubscription>(endpoint, null, Arg.Any<CancellationToken>());
             }
         }
 

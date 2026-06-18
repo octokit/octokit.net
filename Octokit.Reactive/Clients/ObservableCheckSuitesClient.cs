@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -36,12 +37,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        public IObservable<CheckSuite> Get(string owner, string name, long checkSuiteId)
+        public IObservable<CheckSuite> Get(string owner, string name, long checkSuiteId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, checkSuiteId).ToObservable();
+            return _client.Get(owner, name, checkSuiteId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -52,9 +53,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        public IObservable<CheckSuite> Get(long repositoryId, long checkSuiteId)
+        public IObservable<CheckSuite> Get(long repositoryId, long checkSuiteId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId, checkSuiteId).ToObservable();
+            return _client.Get(repositoryId, checkSuiteId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
-        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference)
+        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -83,7 +84,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
-        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference)
+        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -100,14 +101,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
-        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request)
+        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForReference(owner, name, reference, request, ApiOptions.None);
+            return GetAllForReference(owner, name, reference, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -119,12 +120,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
-        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request)
+        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForReference(repositoryId, reference, request, ApiOptions.None);
+            return GetAllForReference(repositoryId, reference, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options)
+        public IObservable<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -159,7 +160,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options)
+        public IObservable<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -177,13 +178,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
-        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences)
+        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(preferences, nameof(preferences));
 
-            return _client.UpdatePreferences(owner, name, preferences).ToObservable();
+            return _client.UpdatePreferences(owner, name, preferences, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -194,11 +195,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
-        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences)
+        public IObservable<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(preferences, nameof(preferences));
 
-            return _client.UpdatePreferences(repositoryId, preferences).ToObservable();
+            return _client.UpdatePreferences(repositoryId, preferences, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -210,13 +211,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckSuite">Details of the Check Suite to create</param>
-        public IObservable<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite)
+        public IObservable<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
 
-            return _client.Create(owner, name, newCheckSuite).ToObservable();
+            return _client.Create(owner, name, newCheckSuite, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -227,11 +228,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newCheckSuite">Details of the Check Suite to create</param>
-        public IObservable<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite)
+        public IObservable<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newCheckSuite, nameof(newCheckSuite));
 
-            return _client.Create(repositoryId, newCheckSuite).ToObservable();
+            return _client.Create(repositoryId, newCheckSuite, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -243,12 +244,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        public IObservable<bool> Rerequest(string owner, string name, long checkSuiteId)
+        public IObservable<bool> Rerequest(string owner, string name, long checkSuiteId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Rerequest(owner, name, checkSuiteId).ToObservable();
+            return _client.Rerequest(owner, name, checkSuiteId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -259,9 +260,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        public IObservable<bool> Rerequest(long repositoryId, long checkSuiteId)
+        public IObservable<bool> Rerequest(long repositoryId, long checkSuiteId, CancellationToken cancellationToken = default)
         {
-            return _client.Rerequest(repositoryId, checkSuiteId).ToObservable();
+            return _client.Rerequest(repositoryId, checkSuiteId, cancellationToken).ToObservable();
         }
     }
 }

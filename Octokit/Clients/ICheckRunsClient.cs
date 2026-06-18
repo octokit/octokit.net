@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -20,7 +21,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
-        Task<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new check run for a specific commit in a repository
@@ -30,7 +32,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
-        Task<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a check run for a specific commit in a repository
@@ -42,7 +45,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
-        Task<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a check run for a specific commit in a repository
@@ -53,7 +57,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
-        Task<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
@@ -64,7 +69,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
-        Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
@@ -74,7 +80,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
-        Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
@@ -86,7 +93,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
@@ -97,7 +105,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
@@ -110,7 +119,8 @@ namespace Octokit
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a commit ref. The ref can be a SHA, branch name, or a tag name
@@ -122,7 +132,8 @@ namespace Octokit
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a check suite using its Id
@@ -133,7 +144,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a check suite using its Id
@@ -143,7 +155,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a check suite using its Id
@@ -155,7 +168,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a check suite using its Id
@@ -166,7 +180,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a check suite using its Id
@@ -179,7 +194,8 @@ namespace Octokit
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists check runs for a check suite using its Id
@@ -191,7 +207,8 @@ namespace Octokit
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single check run using its Id
@@ -202,7 +219,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
-        Task<CheckRun> Get(string owner, string name, long checkRunId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRun> Get(string owner, string name, long checkRunId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single check run using its Id
@@ -212,7 +230,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
-        Task<CheckRun> Get(long repositoryId, long checkRunId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<CheckRun> Get(long repositoryId, long checkRunId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists annotations for a check run using the check run Id
@@ -223,7 +242,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
-        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists annotations for a check run using the check run Id
@@ -233,8 +253,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId);
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists annotations for a check run using the check run Id
@@ -246,7 +267,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
-        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists annotations for a check run using the check run Id
@@ -257,6 +279,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
-        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<CheckRunAnnotation>> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

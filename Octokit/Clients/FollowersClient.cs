@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -28,9 +29,9 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         [ManualRoute("GET", "/user/followers")]
-        public Task<IReadOnlyList<User>> GetAllForCurrent()
+        public Task<IReadOnlyList<User>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -42,11 +43,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the authenticated user.</returns>
         [ManualRoute("GET", "/user/followers")]
-        public Task<IReadOnlyList<User>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Followers(), options);
+            return ApiConnection.GetAll<User>(ApiUrls.Followers(), options, cancellationToken);
         }
 
         /// <summary>
@@ -58,11 +59,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         [ManualRoute("GET", "/users/{username}/followers")]
-        public Task<IReadOnlyList<User>> GetAll(string login)
+        public Task<IReadOnlyList<User>> GetAll(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return GetAll(login, ApiOptions.None);
+            return GetAll(login, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -75,12 +76,12 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that follow the passed user.</returns>
         [ManualRoute("GET", "/users/{username}/followers")]
-        public Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAll(string login, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Followers(login), options);
+            return ApiConnection.GetAll<User>(ApiUrls.Followers(login), options, cancellationToken);
         }
 
         /// <summary>
@@ -91,9 +92,9 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         [ManualRoute("GET", "/user/following")]
-        public Task<IReadOnlyList<User>> GetAllFollowingForCurrent()
+        public Task<IReadOnlyList<User>> GetAllFollowingForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllFollowingForCurrent(ApiOptions.None);
+            return GetAllFollowingForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -105,11 +106,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the authenticated user follows.</returns>
         [ManualRoute("GET", "/user/following")]
-        public Task<IReadOnlyList<User>> GetAllFollowingForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAllFollowingForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Following(), options);
+            return ApiConnection.GetAll<User>(ApiUrls.Following(), options, cancellationToken);
         }
 
         /// <summary>
@@ -121,11 +122,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         [ManualRoute("GET", "/users/{username}/following")]
-        public Task<IReadOnlyList<User>> GetAllFollowing(string login)
+        public Task<IReadOnlyList<User>> GetAllFollowing(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return GetAllFollowing(login, ApiOptions.None);
+            return GetAllFollowing(login, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -138,12 +139,12 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{User}"/> of <see cref="User"/>s that the passed user follows.</returns>
         [ManualRoute("GET", "/users/{username}/following")]
-        public Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAllFollowing(string login, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.Following(login), options);
+            return ApiConnection.GetAll<User>(ApiUrls.Following(login), options, cancellationToken);
         }
 
         /// <summary>
@@ -155,13 +156,13 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         [ManualRoute("GET", "/user/following/{username}")]
-        public async Task<bool> IsFollowingForCurrent(string following)
+        public async Task<bool> IsFollowingForCurrent(string following, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.IsFollowing(following), null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.IsFollowing(following), null, null, cancellationToken).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -180,14 +181,14 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         [ManualRoute("GET", "/users/{username}/following/{target_user}")]
-        public async Task<bool> IsFollowing(string login, string following)
+        public async Task<bool> IsFollowing(string login, string following, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNullOrEmptyString(following, nameof(following));
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.IsFollowing(login, following), null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.IsFollowing(login, following), null, null, cancellationToken).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -205,14 +206,14 @@ namespace Octokit
         /// </remarks>
         /// <returns>A <c>bool</c> representing the success of the operation.</returns>
         [ManualRoute("PUT", "/user/following/{username}")]
-        public async Task<bool> Follow(string login)
+        public async Task<bool> Follow(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             try
             {
                 var requestData = new { };
-                var response = await Connection.Put<object>(ApiUrls.IsFollowing(login), requestData).ConfigureAwait(false);
+                var response = await Connection.Put<object>(ApiUrls.IsFollowing(login), requestData, cancellationToken).ConfigureAwait(false);
                 if (response.HttpResponse.StatusCode != HttpStatusCode.NoContent)
                 {
                     throw new ApiException("Invalid Status Code returned. Expected a 204", response.HttpResponse.StatusCode);
@@ -234,11 +235,11 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         [ManualRoute("DELETE", "/user/following/{username}")]
-        public Task Unfollow(string login)
+        public Task Unfollow(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return ApiConnection.Delete(ApiUrls.IsFollowing(login));
+            return ApiConnection.Delete(ApiUrls.IsFollowing(login), cancellationToken);
         }
     }
 }

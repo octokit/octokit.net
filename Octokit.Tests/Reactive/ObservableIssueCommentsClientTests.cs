@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -58,7 +59,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/comments", UriKind.Relative),
-                    Arg.Any<IDictionary<string, string>>());
+                    Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -71,7 +72,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repositories/1/issues/comments", UriKind.Relative),
-                    Arg.Any<IDictionary<string, string>>());
+                    Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -100,7 +101,7 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["direction"] == "desc"
                         && d["since"] == "2016-11-23T11:11:11Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -129,7 +130,7 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 5
                         && d["direction"] == "desc"
                         && d["since"] == "2016-11-23T11:11:11Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -167,7 +168,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
-                    Arg.Any<IDictionary<string, string>>());
+                    Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -179,7 +180,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForIssue(1, 3);
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
-                    new Uri("repositories/1/issues/3/comments", UriKind.Relative), Arg.Any<IDictionary<string, string>>());
+                    new Uri("repositories/1/issues/3/comments", UriKind.Relative), Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -198,7 +199,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 3
-                         && d["since"] == "2016-11-23T11:11:11Z"));
+                         && d["since"] == "2016-11-23T11:11:11Z"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -217,7 +218,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repositories/1/issues/3/comments", UriKind.Relative),
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
-                                && d["since"] == "2016-11-23T11:11:11Z"));
+                                && d["since"] == "2016-11-23T11:11:11Z"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -237,7 +238,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repos/fake/repo/issues/3/comments", UriKind.Relative),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 4), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -257,7 +258,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<IssueComment>>(
                     new Uri("repositories/1/issues/3/comments", UriKind.Relative),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 4));
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 4), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

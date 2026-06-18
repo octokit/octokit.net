@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -33,9 +34,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
-        public IObservable<Meta> GetMetadata()
+        public IObservable<Meta> GetMetadata(CancellationToken cancellationToken = default)
         {
-            return _client.GetMetadata().ToObservable();
+            return _client.GetMetadata(cancellationToken).ToObservable();
         }
     }
 }

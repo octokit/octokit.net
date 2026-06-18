@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -18,7 +19,8 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#list-custom-property-values-for-organization-repositories">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all custom property values for repositories an organization.
@@ -28,7 +30,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all custom property values for repositories an organization.
@@ -38,8 +41,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="repositoryQuery">Finds repositories in the organization with a query containing one or more search keywords and qualifiers.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the OrganizationCustomPropertyValuesRequest parameter for pagination")]
-        Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery);
+        Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create new or update existing custom property values for repositories an organization.
@@ -51,6 +55,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyValues">The custom property values to create or update</param>
-        Task CreateOrUpdate(string org, UpsertOrganizationCustomPropertyValues propertyValues);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task CreateOrUpdate(string org, UpsertOrganizationCustomPropertyValues propertyValues, CancellationToken cancellationToken = default);
     }
 }

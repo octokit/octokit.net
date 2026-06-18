@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -21,7 +22,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<Milestone> Get(string owner, string name, int milestoneNumber);
+        IObservable<Milestone> Get(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a single Milestone by number.
@@ -32,7 +34,8 @@ namespace Octokit.Reactive
         /// <returns></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        IObservable<Milestone> Get(long repositoryId, int milestoneNumber);
+        IObservable<Milestone> Get(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -43,7 +46,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(string owner, string name);
+        IObservable<Milestone> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -53,7 +57,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(long repositoryId);
+        IObservable<Milestone> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -65,7 +70,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(string owner, string name, ApiOptions options);
+        IObservable<Milestone> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -76,7 +82,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(long repositoryId, ApiOptions options);
+        IObservable<Milestone> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -88,7 +95,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request);
+        IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -99,7 +107,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(long repositoryId, MilestoneRequest request);
+        IObservable<Milestone> GetAllForRepository(long repositoryId, MilestoneRequest request, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -112,7 +121,8 @@ namespace Octokit.Reactive
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options);
+        IObservable<Milestone> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all open milestones for the repository.
@@ -124,7 +134,8 @@ namespace Octokit.Reactive
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<Milestone> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options);
+        IObservable<Milestone> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create a
@@ -135,7 +146,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        IObservable<Milestone> Create(string owner, string name, NewMilestone newMilestone);
+        IObservable<Milestone> Create(string owner, string name, NewMilestone newMilestone, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a milestone for the specified repository. Any user with pull access to a repository can create a
@@ -145,7 +157,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
-        IObservable<Milestone> Create(long repositoryId, NewMilestone newMilestone);
+        IObservable<Milestone> Create(long repositoryId, NewMilestone newMilestone, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a milestone for the specified repository. Any user with pull access to a repository can create a
@@ -158,7 +171,8 @@ namespace Octokit.Reactive
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        IObservable<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate);
+        IObservable<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a milestone for the specified repository. Any user with pull access to a repository can create a
@@ -170,7 +184,8 @@ namespace Octokit.Reactive
         /// <param name="milestoneUpdate">An <see cref="MilestoneUpdate"/> instance describing the changes to make to the Milestone
         /// </param>
         /// <returns></returns>
-        IObservable<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate);
+        IObservable<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -181,7 +196,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="milestoneNumber">The Milestone number</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string owner, string name, int milestoneNumber);
+        IObservable<Unit> Delete(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a milestone for the specified repository. Any user with pull access to a repository can create an
@@ -191,6 +207,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="milestoneNumber">The Milestone number</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(long repositoryId, int milestoneNumber);
+        IObservable<Unit> Delete(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default);
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -15,7 +16,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
-        IObservable<Package> GetAllForOrg(string org, PackageType packageType);
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all packages for an organisations, readable by the current user
@@ -26,7 +27,7 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Package> GetAllForOrg(string org, PackageType packageType, ApiOptions options);
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all packages for an organisations, readable by the current user
@@ -37,7 +38,7 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility);
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all packages for an organisations, readable by the current user
@@ -49,7 +50,7 @@ namespace Octokit.Reactive
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
+        IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a specific package for an Organization.
@@ -60,7 +61,7 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Package> GetForOrg(string org, PackageType packageType, string packageName);
+        IObservable<Package> GetForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a specific package for an Organization.
@@ -71,7 +72,7 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Unit> DeleteForOrg(string org, PackageType packageType, string packageName);
+        IObservable<Unit> DeleteForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restore a specific package for an Organization.
@@ -82,7 +83,7 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Unit> RestoreForOrg(string org, PackageType packageType, string packageName);
+        IObservable<Unit> RestoreForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -91,7 +92,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
-        IObservable<Package> GetAllForActiveUser(PackageType packageType);
+        IObservable<Package> GetAllForActiveUser(PackageType packageType, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -101,7 +102,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Package> GetAllForActiveUser(PackageType packageType, ApiOptions options);
+        IObservable<Package> GetAllForActiveUser(PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -111,7 +112,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility);
+        IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -122,7 +123,7 @@ namespace Octokit.Reactive
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
+        IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific package for a package owned by the authenticated user.
@@ -132,7 +133,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Package> GetForActiveUser(PackageType packageType, string packageName);
+        IObservable<Package> GetForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a package owned by the authenticated user.
@@ -142,7 +143,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Unit> DeleteForActiveUser(PackageType packageType, string packageName);
+        IObservable<Unit> DeleteForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restores a package owned by the authenticated user.
@@ -152,7 +153,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Unit> RestoreForActiveUser(PackageType packageType, string packageName);
+        IObservable<Unit> RestoreForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -162,7 +163,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
-        IObservable<Package> GetAllForUser(string username, PackageType packageType);
+        IObservable<Package> GetAllForUser(string username, PackageType packageType, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -173,7 +174,7 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Package> GetAllForUser(string username, PackageType packageType, ApiOptions options);
+        IObservable<Package> GetAllForUser(string username, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -184,7 +185,7 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility);
+        IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -196,7 +197,7 @@ namespace Octokit.Reactive
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
+        IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific package metadata for a public package owned by a user.
@@ -207,7 +208,7 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Package> GetForUser(string username, PackageType packageType, string packageName);
+        IObservable<Package> GetForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes an entire package for a user.
@@ -218,7 +219,7 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Unit> DeleteForUser(string username, PackageType packageType, string packageName);
+        IObservable<Unit> DeleteForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restores an entire package for a user.
@@ -229,6 +230,6 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        IObservable<Unit> RestoreForUser(string username, PackageType packageType, string packageName);
+        IObservable<Unit> RestoreForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
     }
 }

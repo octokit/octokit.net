@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace Octokit
         /// <returns>The started migration.</returns>
         Task<Migration> Start(
             string org,
-            StartMigrationRequest migration);
+            StartMigrationRequest migration, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the list of the most recent migrations of the organization.
@@ -36,7 +37,7 @@ namespace Octokit
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
         Task<IReadOnlyList<Migration>> GetAll(
-            string org);
+            string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the list of the most recent migrations of the organization.
@@ -49,7 +50,7 @@ namespace Octokit
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
         Task<IReadOnlyList<Migration>> GetAll(
             string org,
-            ApiOptions options);
+            ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the status of a migration
@@ -63,7 +64,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         Task<Migration> Get(
             string org,
-            long id);
+            long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the migration archive.
@@ -76,7 +77,7 @@ namespace Octokit
         /// <returns>The binary contents of the archive as a byte array.</returns>
         Task<byte[]> GetArchive(
             string org,
-            long id);
+            long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a previous migration archive.
@@ -89,7 +90,7 @@ namespace Octokit
         /// <returns></returns>
         Task DeleteArchive(
             string org,
-            long id);
+            long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Unlocks a repository that was locked for migration.
@@ -104,6 +105,6 @@ namespace Octokit
         Task UnlockRepository(
             string org,
             long id,
-            string repo);
+            string repo, CancellationToken cancellationToken = default);
     }
 }

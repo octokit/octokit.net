@@ -2,6 +2,7 @@
 using System.Reactive.Threading.Tasks;
 using Octokit.Models.Response;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive.Clients
 {
@@ -18,30 +19,30 @@ namespace Octokit.Reactive.Clients
             _connection = client.Connection;
         }
 
-        public IObservable<DeploymentEnvironmentsResponse> GetAll(string owner, string name)
+        public IObservable<DeploymentEnvironmentsResponse> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
-        public IObservable<DeploymentEnvironmentsResponse> GetAll(long repositoryId)
+        public IObservable<DeploymentEnvironmentsResponse> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
-        public IObservable<DeploymentEnvironmentsResponse> GetAll(string owner, string name, ApiOptions options)
+        public IObservable<DeploymentEnvironmentsResponse> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<DeploymentEnvironmentsResponse>(
-                ApiUrls.DeploymentEnvironments(owner, name), options);
+                ApiUrls.DeploymentEnvironments(owner, name), options, cancellationToken);
         }
 
-        public IObservable<DeploymentEnvironmentsResponse> GetAll(long repositoryId, ApiOptions options)
+        public IObservable<DeploymentEnvironmentsResponse> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

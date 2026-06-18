@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Octokit
 {
@@ -58,11 +59,11 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The specified <see cref="Organization"/>.</returns>
         [ManualRoute("GET", "/orgs/{org}")]
-        public Task<Organization> Get(string org)
+        public Task<Organization> Get(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.Get<Organization>(ApiUrls.Organization(org));
+            return ApiConnection.Get<Organization>(ApiUrls.Organization(org), cancellationToken);
         }
 
         /// <summary>
@@ -77,9 +78,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         [ManualRoute("GET", "/user/orgs")]
-        public Task<IReadOnlyList<Organization>> GetAllForCurrent()
+        public Task<IReadOnlyList<Organization>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -89,11 +90,11 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         [ManualRoute("GET", "/user/orgs")]
-        public Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(), options, cancellationToken);
         }
 
         /// <summary>
@@ -107,11 +108,11 @@ namespace Octokit
         /// of, where they haven't marked their membership as private
         /// </returns>
         [ManualRoute("GET", "/users/{username}/orgs")]
-        public Task<IReadOnlyList<Organization>> GetAllForUser(string user)
+        public Task<IReadOnlyList<Organization>> GetAllForUser(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return GetAllForUser(user, ApiOptions.None);
+            return GetAllForUser(user, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -126,12 +127,12 @@ namespace Octokit
         /// of, where they haven't marked their membership as private
         /// </returns>
         [ManualRoute("GET", "/users/{username}/orgs")]
-        public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options)
+        public Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options);
+            return ApiConnection.GetAll<Organization>(ApiUrls.UserOrganizations(user), options, cancellationToken);
         }
 
 
@@ -141,9 +142,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         [ManualRoute("GET", "/organizations")]
-        public Task<IReadOnlyList<Organization>> GetAll()
+        public Task<IReadOnlyList<Organization>> GetAll(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations());
+            return ApiConnection.GetAll<Organization>(ApiUrls.AllOrganizations(), cancellationToken);
         }
 
         /// <summary>
@@ -153,13 +154,13 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         [ManualRoute("GET", "/organizations")]
-        public Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request)
+        public Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllOrganizations(request.Since);
 
-            return ApiConnection.GetAll<Organization>(url);
+            return ApiConnection.GetAll<Organization>(url, cancellationToken);
         }
 
         /// <summary>
@@ -170,14 +171,14 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
         [ManualRoute("PATCH", "/orgs/{org}")]
-        public Task<Organization> Update(string org, OrganizationUpdate updateRequest)
+        public Task<Organization> Update(string org, OrganizationUpdate updateRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(updateRequest, nameof(updateRequest));
 
             var updateUri = new Uri("orgs/" + org, UriKind.Relative);
 
-            return ApiConnection.Patch<Organization>(updateUri, updateRequest);
+            return ApiConnection.Patch<Organization>(updateUri, updateRequest, cancellationToken);
         }
 
         /// <summary>
@@ -186,13 +187,13 @@ namespace Octokit
         /// <param name="org">The organization name.</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
-        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org)
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var url = ApiUrls.AllOrganizationCredentials(org);
 
-            return ApiConnection.GetAll<OrganizationCredential>(url);
+            return ApiConnection.GetAll<OrganizationCredential>(url, cancellationToken);
         }
 
         /// <summary>
@@ -202,14 +203,14 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
-        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, ApiOptions options)
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.AllOrganizationCredentials(org);
 
-            return ApiConnection.GetAll<OrganizationCredential>(url, options);
+            return ApiConnection.GetAll<OrganizationCredential>(url, options, cancellationToken);
         }
 
         /// <summary>
@@ -219,14 +220,14 @@ namespace Octokit
         /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
-        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login)
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             var url = ApiUrls.AllOrganizationCredentials(org, login);
 
-            return ApiConnection.GetAll<OrganizationCredential>(url);
+            return ApiConnection.GetAll<OrganizationCredential>(url, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +238,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
         [ManualRoute("GET", "/orgs/{org}/credential-authorizations")]
-        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, ApiOptions options)
+        public Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
@@ -245,7 +246,7 @@ namespace Octokit
 
             var url = ApiUrls.AllOrganizationCredentials(org, login);
 
-            return ApiConnection.GetAll<OrganizationCredential>(url, options);
+            return ApiConnection.GetAll<OrganizationCredential>(url, options, cancellationToken);
         }
     }
 }

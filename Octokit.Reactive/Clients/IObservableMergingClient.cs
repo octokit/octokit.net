@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -20,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
-        IObservable<Merge> Create(string owner, string name, NewMerge merge);
+        IObservable<Merge> Create(string owner, string name, NewMerge merge, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a merge for a given repository
@@ -30,7 +31,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="merge">The merge to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        IObservable<Merge> Create(long repositoryId, NewMerge merge);
+        IObservable<Merge> Create(long repositoryId, NewMerge merge, CancellationToken cancellationToken = default);
     }
 }

@@ -6,6 +6,7 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -32,7 +33,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("owner", "repo");
 
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary);
+                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -44,7 +45,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(1);
 
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary);
+                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -63,7 +64,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll("owner", "name", options);
 
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"));
+                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -82,7 +83,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAll(1, options);
 
-                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"));
+                gitHubClient.Connection.Received(1).Get<List<Branch>>(expected, Arg.Is<IDictionary<string, string>>(d => d.Count == 2 && d["page"] == "1" && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

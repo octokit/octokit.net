@@ -1,5 +1,6 @@
 ﻿using System;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -26,7 +27,7 @@ namespace Octokit.Reactive
         /// List repositories of the authenticated GitHub App Installation (requires GitHubApp Installation-Token auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
-        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent()
+        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent(CancellationToken cancellationToken = default)
         {
             return GetAllRepositoriesForCurrent(ApiOptions.None);
         }
@@ -36,7 +37,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
-        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options)
+        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.InstallationRepositories(), options);
         }
@@ -46,9 +47,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
+        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, CancellationToken cancellationToken = default)
         {
-            return GetAllRepositoriesForCurrentUser(installationId, ApiOptions.None);
+            return GetAllRepositoriesForCurrentUser(installationId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Octokit.Reactive
         /// <param name="installationId">The Id of the installation</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
-        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
+        public IObservable<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             return _connection.GetAndFlattenAllPages<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), options);
         }

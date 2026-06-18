@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -19,8 +20,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="merge">The merge to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        Task<Merge> Create(string owner, string name, NewMerge merge);
+        Task<Merge> Create(string owner, string name, NewMerge merge, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a merge for a given repository
@@ -30,7 +32,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="merge">The merge to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        Task<Merge> Create(long repositoryId, NewMerge merge);
+        Task<Merge> Create(long repositoryId, NewMerge merge, CancellationToken cancellationToken = default);
     }
 }

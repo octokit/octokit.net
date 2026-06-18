@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
@@ -11,7 +12,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="org">The organizations name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
-        IObservable<OrganizationHook> GetAll(string org);
+        IObservable<OrganizationHook> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the list of hooks defined for a organization
@@ -19,7 +20,7 @@ namespace Octokit.Reactive
         /// <param name="org">The organizations name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
-        IObservable<OrganizationHook> GetAll(string org, ApiOptions options);
+        IObservable<OrganizationHook> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single hook defined for a organization by id
@@ -28,14 +29,14 @@ namespace Octokit.Reactive
         /// <param name="hookId">The organizations hook id</param>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keyworks")]
-        IObservable<OrganizationHook> Get(string org, int hookId);
+        IObservable<OrganizationHook> Get(string org, int hookId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a hook for a organization
         /// </summary>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
-        IObservable<OrganizationHook> Create(string org, NewOrganizationHook hook);
+        IObservable<OrganizationHook> Create(string org, NewOrganizationHook hook, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Edits a hook for a organization
@@ -44,7 +45,7 @@ namespace Octokit.Reactive
         /// <param name="hookId">The organizations hook id</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<OrganizationHook> Edit(string org, int hookId, EditOrganizationHook hook);
+        IObservable<OrganizationHook> Edit(string org, int hookId, EditOrganizationHook hook, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
@@ -52,7 +53,7 @@ namespace Octokit.Reactive
         /// <param name="org">The organizations name</param>
         /// <param name="hookId">The organizations hook id</param>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Ping(string org, int hookId);
+        IObservable<Unit> Ping(string org, int hookId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a hook for a organization
@@ -60,6 +61,6 @@ namespace Octokit.Reactive
         /// <param name="org">The organizations name</param>
         /// <param name="hookId">The organizations hook id</param>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Delete(string org, int hookId);
+        IObservable<Unit> Delete(string org, int hookId, CancellationToken cancellationToken = default);
     }
 }

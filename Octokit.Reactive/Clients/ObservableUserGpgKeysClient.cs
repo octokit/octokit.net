@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
-        public IObservable<GpgKey> GetAllForCurrent()
+        public IObservable<GpgKey> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
             return GetAllForCurrent(ApiOptions.None);
         }
@@ -50,9 +51,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
-        public IObservable<GpgKey> GetAllForCurrent(ApiOptions options)
+        public IObservable<GpgKey> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return _client.GetAllForCurrent(options).ToObservable().SelectMany(k => k);
+            return _client.GetAllForCurrent(options, cancellationToken).ToObservable().SelectMany(k => k);
         }
 
         /// <summary>
@@ -63,9 +64,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
-        public IObservable<GpgKey> Get(long id)
+        public IObservable<GpgKey> Get(long id, CancellationToken cancellationToken = default)
         {
-            return _client.Get(id).ToObservable();
+            return _client.Get(id, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -76,11 +77,11 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns>The newly created <see cref="GpgKey"/>.</returns>
-        public IObservable<GpgKey> Create(NewGpgKey newGpgKey)
+        public IObservable<GpgKey> Create(NewGpgKey newGpgKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newGpgKey, nameof(newGpgKey));
 
-            return _client.Create(newGpgKey).ToObservable();
+            return _client.Create(newGpgKey, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -91,9 +92,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        public IObservable<Unit> Delete(long id)
+        public IObservable<Unit> Delete(long id, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(id).ToObservable();
+            return _client.Delete(id, cancellationToken).ToObservable();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
-        IObservable<GpgKey> GetAllForCurrent();
+        IObservable<GpgKey> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all GPG keys for the authenticated user.
@@ -34,7 +35,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys">API documentation</a> for more information.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyList{GpgKey}"/> of <see cref="GpgKey"/>s for the current user.</returns>
-        IObservable<GpgKey> GetAllForCurrent(ApiOptions options);
+        IObservable<GpgKey> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// View extended details of the <see cref="GpgKey"/> for the specified id.
@@ -45,7 +46,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns>The <see cref="GpgKey"/> for the specified Id.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<GpgKey> Get(long id);
+        IObservable<GpgKey> Get(long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new <see cref="GpgKey"/> for the authenticated user.
@@ -56,7 +57,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns>The newly created <see cref="GpgKey"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gpg")]
-        IObservable<GpgKey> Create(NewGpgKey newGpgKey);
+        IObservable<GpgKey> Create(NewGpgKey newGpgKey, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the GPG key for the specified Id.
@@ -66,6 +67,6 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key">API documentation</a> for more information.
         /// </remarks>
         /// <returns></returns>
-        IObservable<Unit> Delete(long id);
+        IObservable<Unit> Delete(long id, CancellationToken cancellationToken = default);
     }
 }

@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -52,9 +53,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Issue> Get(string owner, string name, long issueNumber);
+        Task<Issue> Get(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single Issue by number.
@@ -64,22 +66,24 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Issue> Get(long repositoryId, long issueNumber);
+        Task<Issue> Get(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
+        /// Gets all open issues assigned to the authenticated user across all the authenticated user's visible
         /// repositories including owned repositories, member repositories, and organization repositories.
         /// </summary>
         /// <remarks>
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        Task<IReadOnlyList<Issue>> GetAllForCurrent();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
+        /// Gets all open issues assigned to the authenticated user across all the authenticated user's visible
         /// repositories including owned repositories, member repositories, and organization repositories.
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
@@ -87,20 +91,22 @@ namespace Octokit
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        Task<IReadOnlyList<Issue>> GetAllForCurrent(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Gets all issues across all the authenticated user’s visible repositories including owned repositories,
+        /// Gets all issues across all the authenticated user's visible repositories including owned repositories,
         /// member repositories, and organization repositories.
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Gets all issues across all the authenticated user’s visible repositories including owned repositories,
+        /// Gets all issues across all the authenticated user's visible repositories including owned repositories,
         /// member repositories, and organization repositories.
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
@@ -108,7 +114,8 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForCurrent(IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across owned and member repositories for the
@@ -118,7 +125,8 @@ namespace Octokit
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across owned and member repositories for the
@@ -129,7 +137,8 @@ namespace Octokit
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues across owned and member repositories for the authenticated user.
@@ -138,7 +147,8 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues across owned and member repositories for the authenticated user.
@@ -148,7 +158,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for a given organization for the authenticated user.
@@ -157,7 +168,8 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for a given organization for the authenticated user.
@@ -167,7 +179,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues for a given organization for the authenticated user.
@@ -177,7 +190,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues for a given organization for the authenticated user.
@@ -188,7 +202,8 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -198,7 +213,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -207,7 +223,8 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -218,7 +235,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -228,7 +246,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -239,7 +258,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -249,7 +269,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -261,7 +282,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -272,7 +294,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Issue>> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -282,7 +305,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        Task<Issue> Create(string owner, string name, NewIssue newIssue);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Issue> Create(string owner, string name, NewIssue newIssue, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -291,7 +315,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        Task<Issue> Create(long repositoryId, NewIssue newIssue);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Issue> Create(long repositoryId, NewIssue newIssue, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates an issue for the specified repository. Any user with pull access to a repository can update an
@@ -301,9 +326,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
-        /// </param>
-        Task<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate);
+        /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates an issue for the specified repository. Any user with pull access to a repository can update an
@@ -312,9 +337,8 @@ namespace Octokit
         /// <remarks>http://developer.github.com/v3/issues/#edit-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
-        /// </param>
-        Task<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate);
-
+        /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate, CancellationToken cancellationToken = default);
     }
 }

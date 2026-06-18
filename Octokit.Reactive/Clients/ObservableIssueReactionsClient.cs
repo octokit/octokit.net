@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
@@ -31,9 +32,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Reaction> GetAll(string owner, string name, long issueNumber)
+        public IObservable<Reaction> GetAll(string owner, string name, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return GetAll(owner, name, issueNumber, ApiOptions.None);
+            return GetAll(owner, name, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Reaction> GetAll(string owner, string name, long issueNumber, ApiOptions options)
+        public IObservable<Reaction> GetAll(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -59,9 +60,9 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Reaction> GetAll(long repositoryId, long issueNumber)
+        public IObservable<Reaction> GetAll(long repositoryId, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, issueNumber, ApiOptions.None);
+            return GetAll(repositoryId, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -71,11 +72,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Reaction> GetAll(long repositoryId, long issueNumber, ApiOptions options)
+        public IObservable<Reaction> GetAll(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(repositoryId, issueNumber), null, options);
+            return _connection.GetAndFlattenAllPages<Reaction>(ApiUrls.IssueReactions(repositoryId, issueNumber), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -86,13 +87,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
-        public IObservable<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction)
+        public IObservable<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return _client.Create(owner, name, issueNumber, reaction).ToObservable();
+            return _client.Create(owner, name, issueNumber, reaction, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -102,11 +103,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create </param>
-        public IObservable<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction)
+        public IObservable<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return _client.Create(repositoryId, issueNumber, reaction).ToObservable();
+            return _client.Create(repositoryId, issueNumber, reaction, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -118,13 +119,13 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, long issueNumber, long reactionId)
+        public IObservable<Unit> Delete(string owner, string name, long issueNumber, long reactionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(reactionId, nameof(reactionId));
 
-            return _client.Delete(owner, name, issueNumber, reactionId).ToObservable();
+            return _client.Delete(owner, name, issueNumber, reactionId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -135,11 +136,11 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(long repositoryId, long issueNumber, long reactionId)
+        public IObservable<Unit> Delete(long repositoryId, long issueNumber, long reactionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(reactionId, nameof(reactionId));
 
-            return _client.Delete(repositoryId, issueNumber, reactionId).ToObservable();
+            return _client.Delete(repositoryId, issueNumber, reactionId, cancellationToken).ToObservable();
         }
     }
 }

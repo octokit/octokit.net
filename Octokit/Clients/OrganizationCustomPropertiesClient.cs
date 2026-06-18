@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -23,13 +24,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         [ManualRoute("GET", "orgs/{org}/properties/schema")]
-        public Task<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org)
+        public Task<IReadOnlyList<OrganizationCustomProperty>> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var url = ApiUrls.OrganizationCustomProperties(org);
 
-            return ApiConnection.Get<IReadOnlyList<OrganizationCustomProperty>>(url, null);
+            return ApiConnection.Get<IReadOnlyList<OrganizationCustomProperty>>(url, null, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -41,14 +42,14 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         [ManualRoute("GET", "orgs/{org}/properties/schema/{propertyName}")]
-        public Task<OrganizationCustomProperty> Get(string org, string propertyName)
+        public Task<OrganizationCustomProperty> Get(string org, string propertyName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
 
             var url = ApiUrls.OrganizationCustomProperty(org, propertyName);
 
-            return ApiConnection.Get<OrganizationCustomProperty>(url);
+            return ApiConnection.Get<OrganizationCustomProperty>(url, cancellationToken);
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="properties">The custom properties to create or update</param>
         [ManualRoute("PATCH", "orgs/{org}/properties/schema")]
-        public Task<IReadOnlyList<OrganizationCustomProperty>> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties)
+        public Task<IReadOnlyList<OrganizationCustomProperty>> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(properties, nameof(properties));
@@ -68,7 +69,7 @@ namespace Octokit
 
             var url = ApiUrls.OrganizationCustomProperties(org);
 
-            return ApiConnection.Patch<IReadOnlyList<OrganizationCustomProperty>>(url, properties);
+            return ApiConnection.Patch<IReadOnlyList<OrganizationCustomProperty>>(url, properties, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Octokit
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
         [ManualRoute("PUT", "orgs/{org}/properties/schema/{propertyName}")]
-        public Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property)
+        public Task<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
@@ -90,7 +91,7 @@ namespace Octokit
 
             var url = ApiUrls.OrganizationCustomProperty(org, propertyName);
 
-            return ApiConnection.Put<OrganizationCustomProperty>(url, property);
+            return ApiConnection.Put<OrganizationCustomProperty>(url, property, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -102,14 +103,14 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         [ManualRoute("DELETE", "orgs/{org}/properties/schema/{propertyName}")]
-        public Task Delete(string org, string propertyName)
+        public Task Delete(string org, string propertyName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
 
             var url = ApiUrls.OrganizationCustomProperty(org, propertyName);
 
-            return ApiConnection.Delete(url);
+            return ApiConnection.Delete(url, cancellationToken: cancellationToken);
         }
 
         /// <summary>

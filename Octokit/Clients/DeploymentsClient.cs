@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -32,12 +33,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/deployments")]
-        public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name)
+        public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -49,9 +50,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/deployments")]
-        public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId)
+        public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -65,13 +66,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/deployments")]
-        public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name), null, options);
+            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(owner, name), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -84,11 +85,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/deployments")]
-        public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(repositoryId), options);
+            return ApiConnection.GetAll<Deployment>(ApiUrls.Deployments(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -102,13 +103,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/deployments")]
-        public Task<Deployment> Create(string owner, string name, NewDeployment newDeployment)
+        public Task<Deployment> Create(string owner, string name, NewDeployment newDeployment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));
 
-            return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name), newDeployment);
+            return ApiConnection.Post<Deployment>(ApiUrls.Deployments(owner, name), newDeployment, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -121,12 +122,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
         [ManualRoute("POST", "/repositories/{id}/deployments")]
-        public Task<Deployment> Create(long repositoryId, NewDeployment newDeployment)
+        public Task<Deployment> Create(long repositoryId, NewDeployment newDeployment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newDeployment, nameof(newDeployment));
 
-            return ApiConnection.Post<Deployment>(ApiUrls.Deployments(repositoryId),
-                                                     newDeployment);
+            return ApiConnection.Post<Deployment>(ApiUrls.Deployments(repositoryId), newDeployment, cancellationToken: cancellationToken);
         }
 
         /// <summary>

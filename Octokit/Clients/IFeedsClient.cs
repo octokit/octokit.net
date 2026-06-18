@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -16,8 +17,9 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/feeds/#list-feeds
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All the public <see cref="Feed"/>s for the particular user.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<Feed> GetFeeds();
+        Task<Feed> GetFeeds(CancellationToken cancellationToken = default);
     }
 }

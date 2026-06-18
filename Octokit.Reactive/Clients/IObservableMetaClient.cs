@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -18,8 +19,9 @@ namespace Octokit.Reactive
         /// <summary>
         /// Retrieves information about GitHub.com, the service or a GitHub Enterprise installation.
         /// </summary>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
-        IObservable<Meta> GetMetadata();
+        IObservable<Meta> GetMetadata(CancellationToken cancellationToken = default);
     }
 }

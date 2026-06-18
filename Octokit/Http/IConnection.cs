@@ -19,17 +19,19 @@ namespace Octokit
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters);
+        Task<IApiResponse<string>> GetHtml(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing raw data.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         /// <remarks>The <see cref="IResponse.Body"/> property will be <c>null</c> if the <paramref name="uri"/> points to a directory instead of a file</remarks>
-        Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters);
+        Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing raw data.
@@ -37,18 +39,20 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
         /// <param name="timeout">The Timeout value</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         /// <remarks>The <see cref="IResponse.Body"/> property will be <c>null</c> if the <paramref name="uri"/> points to a directory instead of a file</remarks>
-        Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, TimeSpan timeout);
+        Task<IApiResponse<byte[]>> GetRaw(Uri uri, IDictionary<string, string> parameters, TimeSpan timeout, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request that expects a <seealso cref="IResponse"/> containing raw data.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="parameters">Querystring parameters for the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         /// <remarks>The <see cref="IResponse.Body"/> property will be <c>null</c> if the <paramref name="uri"/> points to a directory instead of a file</remarks>
-        Task<IApiResponse<Stream>> GetRawStream(Uri uri, IDictionary<string, string> parameters);
+        Task<IApiResponse<Stream>> GetRawStream(Uri uri, IDictionary<string, string> parameters, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request.
@@ -83,7 +87,7 @@ namespace Octokit
         /// <param name="cancellationToken">A token used to cancel the Get request</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken);
+        Task<IApiResponse<T>> Get<T>(Uri uri, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP GET request.
@@ -114,24 +118,27 @@ namespace Octokit
         /// Performs an asynchronous HTTP PATCH request.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<HttpStatusCode> Patch(Uri uri);
+        Task<HttpStatusCode> Patch(Uri uri, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<HttpStatusCode> Patch(Uri uri, object body);
+        Task<HttpStatusCode> Patch(Uri uri, object body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<HttpStatusCode> Patch(Uri uri, string accepts);
+        Task<HttpStatusCode> Patch(Uri uri, string accepts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
@@ -139,8 +146,9 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<HttpStatusCode> Patch(Uri uri, object body, string accepts);
+        Task<HttpStatusCode> Patch(Uri uri, object body, string accepts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
@@ -149,8 +157,9 @@ namespace Octokit
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Patch<T>(Uri uri, object body);
+        Task<IApiResponse<T>> Patch<T>(Uri uri, object body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PATCH request.
@@ -160,8 +169,9 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Patch<T>(Uri uri, object body, string accepts);
+        Task<IApiResponse<T>> Patch<T>(Uri uri, object body, string accepts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP POST request.
@@ -265,8 +275,9 @@ namespace Octokit
         /// <typeparam name="T">The type to map the response to</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Put<T>(Uri uri, object body);
+        Task<IApiResponse<T>> Put<T>(Uri uri, object body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request using the provided two factor authentication code.
@@ -276,8 +287,9 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="twoFactorAuthenticationCode">Two factory authentication code to use</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode);
+        Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request using the provided two factor authentication code.
@@ -288,47 +300,53 @@ namespace Octokit
         /// <param name="body">The object to serialize as the body of the request</param>
         /// <param name="twoFactorAuthenticationCode">Two factory authentication code to use</param>
         /// <param name="accepts">Specifies accepted response media types.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><seealso cref="IResponse"/> representing the received HTTP response</returns>
-        Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, string accepts);
+        Task<IApiResponse<T>> Put<T>(Uri uri, object body, string twoFactorAuthenticationCode, string accepts, CancellationToken cancellationToken = default);
 
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Put(Uri uri);
+        Task<HttpStatusCode> Put(Uri uri, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP PUT request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="body">The object to serialize as the body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Put(Uri uri, object body);
+        Task<HttpStatusCode> Put(Uri uri, object body, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Delete(Uri uri);
+        Task<HttpStatusCode> Delete(Uri uri, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="twoFactorAuthenticationCode">Two Factor Code</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Delete(Uri uri, string twoFactorAuthenticationCode);
+        Task<HttpStatusCode> Delete(Uri uri, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
         /// </summary>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Delete(Uri uri, object data);
+        Task<HttpStatusCode> Delete(Uri uri, object data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request that expects an empty response.
@@ -336,8 +354,9 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The returned <seealso cref="HttpStatusCode"/></returns>
-        Task<HttpStatusCode> Delete(Uri uri, object data, string accepts);
+        Task<HttpStatusCode> Delete(Uri uri, object data, string accepts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request.
@@ -345,7 +364,8 @@ namespace Octokit
         /// <typeparam name="T">The API resource's type.</typeparam>
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
-        Task<IApiResponse<T>> Delete<T>(Uri uri, object data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IApiResponse<T>> Delete<T>(Uri uri, object data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Performs an asynchronous HTTP DELETE request.
@@ -355,7 +375,8 @@ namespace Octokit
         /// <param name="uri">URI endpoint to send request to</param>
         /// <param name="data">The object to serialize as the body of the request</param>
         /// <param name="accepts">Specifies accept response media type</param>
-        Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IApiResponse<T>> Delete<T>(Uri uri, object data, string accepts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Base address for the connection.

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -84,9 +85,10 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#create">API documentation</a> for more information.
         /// </remarks>
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
-        Task<Repository> Create(NewRepository newRepository);
+        Task<Repository> Create(NewRepository newRepository, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new repository in the specified organization.
@@ -96,19 +98,19 @@ namespace Octokit
         /// </remarks>
         /// <param name="organizationLogin">Login of the organization in which to create the repository</param>
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
-        Task<Repository> Create(string organizationLogin, NewRepository newRepository);
+        Task<Repository> Create(string organizationLogin, NewRepository newRepository, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new repository from a template
         /// </summary>
-        /// <param name="templateOwner">The organization or person who will owns the template</param>
+        /// <param name="templateOwner">The organization or person who will own the template</param>
         /// <param name="templateRepo">The name of template repository to work from</param>
-        /// <param name="newRepository"></param>
-        /// <returns></returns>
-        Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository);
-
+        /// <param name="newRepository">Details for the new repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the specified repository.
@@ -119,8 +121,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(string owner, string name);
+        Task Delete(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the specified repository.
@@ -130,8 +133,9 @@ namespace Octokit
         /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        Task Delete(long repositoryId);
+        Task Delete(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Transfers the ownership of the specified repository.
@@ -142,8 +146,9 @@ namespace Octokit
         /// <param name="owner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Repository"/></returns>
-        Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer);
+        Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Transfers the ownership of the specified repository.
@@ -153,8 +158,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <see cref="Repository"/></returns>
-        Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer);
+        Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks if vulnerability alerts are enabled for the specified repository.
@@ -164,8 +170,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
-        Task<bool> AreVulnerabilityAlertsEnabled(string owner, string name);
+        Task<bool> AreVulnerabilityAlertsEnabled(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified repository.
@@ -175,10 +182,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Repository> Get(string owner, string name);
+        Task<Repository> Get(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified repository.
@@ -187,10 +195,11 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#get">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Repository> Get(long repositoryId);
+        Task<Repository> Get(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all public repositories.
@@ -199,13 +208,14 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/#list-all-public-repositories">API documentation</a> for more information.
         /// The default page size on GitHub.com is 30.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
              Justification = "Makes a network request")]
         [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the PublicRepositoryRequest.Since parameter for pagination")]
-        Task<IReadOnlyList<Repository>> GetAllPublic();
+        Task<IReadOnlyList<Repository>> GetAllPublic(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all public repositories since the integer Id of the last Repository that you've seen.
@@ -215,11 +225,12 @@ namespace Octokit
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <param name="request">Search parameters of the last repository seen</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the PublicRepositoryRequest.Since parameter for pagination")]
-        Task<IReadOnlyList<Repository>> GetAllPublic(PublicRepositoryRequest request);
+        Task<IReadOnlyList<Repository>> GetAllPublic(PublicRepositoryRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the current user.
@@ -228,12 +239,13 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
         /// The default page size on GitHub.com is 30.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
              Justification = "Makes a network request")]
-        Task<IReadOnlyList<Repository>> GetAllForCurrent();
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the current user.
@@ -242,10 +254,11 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-your-repositories">API documentation</a> for more information.
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options);
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the current user.
@@ -255,10 +268,11 @@ namespace Octokit
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <param name="request">Search parameters to filter results on</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request);
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the current user.
@@ -268,10 +282,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="request">Search parameters to filter results on</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options);
+        Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the specified user.
@@ -281,9 +296,10 @@ namespace Octokit
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <param name="login">The account name to search for</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllForUser(string login);
+        Task<IReadOnlyList<Repository>> GetAllForUser(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the specified user.
@@ -293,9 +309,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="login">The account name to search for</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllForUser(string login, ApiOptions options);
+        Task<IReadOnlyList<Repository>> GetAllForUser(string login, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the specified organization.
@@ -305,9 +322,10 @@ namespace Octokit
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <param name="organization">The organization name to search for</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllForOrg(string organization);
+        Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all repositories owned by the specified organization.
@@ -317,9 +335,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The organization name to search for</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options);
+        Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// A client for GitHub's Commit Status API.
@@ -365,7 +384,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://docs.github.com/en/rest/deployments/environments/">Environments API documentation</a> for more details
         /// </remarks>
-        IRepositoryDeployEnvironmentsClient Environment { get;  }
+        IRepositoryDeployEnvironmentsClient Environment { get; }
 
         /// <summary>
         /// Client for GitHub's Repository Statistics API.
@@ -409,8 +428,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all contributors for the specified repository. Does not include anonymous contributors.
@@ -419,8 +439,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all contributors for the specified repository. Does not include anonymous contributors.
@@ -431,8 +452,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all contributors for the specified repository. Does not include anonymous contributors.
@@ -442,8 +464,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -454,8 +477,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -465,8 +489,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -478,8 +503,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all contributors for the specified repository. With the option to include anonymous contributors.
@@ -490,8 +516,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
-        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options);
+        Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all languages for the specified repository.
@@ -501,9 +528,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name);
+        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all languages for the specified repository.
@@ -512,9 +540,10 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(long repositoryId);
+        Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -524,8 +553,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name);
+        Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -534,8 +564,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId);
+        Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -546,8 +577,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all teams for the specified repository.
@@ -557,8 +589,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all tags for the specified repository.
@@ -568,8 +601,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All of the repositories tags.</returns>
-        Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name);
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all tags for the specified repository.
@@ -578,8 +612,9 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All of the repositories tags.</returns>
-        Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId);
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all tags for the specified repository.
@@ -590,8 +625,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All of the repositories tags.</returns>
-        Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all tags for the specified repository.
@@ -601,8 +637,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All of the repositories tags.</returns>
-        Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the contents of a repository's license
@@ -612,8 +649,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
-        Task<RepositoryContentLicense> GetLicenseContents(string owner, string name);
+        Task<RepositoryContentLicense> GetLicenseContents(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the contents of a repository's license
@@ -622,8 +660,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
-        Task<RepositoryContentLicense> GetLicenseContents(long repositoryId);
+        Task<RepositoryContentLicense> GetLicenseContents(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
@@ -631,16 +670,18 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="update">New values to update the repository with</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        Task<Repository> Edit(string owner, string name, RepositoryUpdate update);
+        Task<Repository> Edit(string owner, string name, RepositoryUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the specified repository with the values given in <paramref name="update"/>
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="update">New values to update the repository with</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        Task<Repository> Edit(long repositoryId, RepositoryUpdate update);
+        Task<Repository> Edit(long repositoryId, RepositoryUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// A client for GitHub's Repository Pages API.
@@ -683,8 +724,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics associated with the repository.</returns>
-        Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options);
+        Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all topics for the specified owner and repository name.
@@ -694,8 +736,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics associated with the repository.</returns>
-        Task<RepositoryTopics> GetAllTopics(string owner, string name);
+        Task<RepositoryTopics> GetAllTopics(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all topics for the specified repository ID.
@@ -705,8 +748,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics associated with the repository.</returns>
-        Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options);
+        Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all topics for the specified repository ID.
@@ -715,8 +759,9 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics associated with the repository.</returns>
-        Task<RepositoryTopics> GetAllTopics(long repositoryId);
+        Task<RepositoryTopics> GetAllTopics(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces all topics for the specified repository.
@@ -728,8 +773,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics now associated with the repository.</returns>
-        Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics);
+        Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces all topics for the specified repository.
@@ -742,24 +788,27 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics now associated with the repository.</returns>
-        Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics);
+        Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the list of errors in the codeowners file
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>Returns the list of errors in the codeowners files</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/codeowners/errors")]
-        Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name);
+        Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the list of errors in the codeowners file
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>Returns the list of errors in the codeowners files</returns>
         [ManualRoute("GET", "/repositories/{id}/codeowners/errors")]
-        Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId);
+        Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId, CancellationToken cancellationToken = default);
     }
 }

@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -29,9 +30,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs")]
-        public Task<WorkflowRunsResponse> List(string owner, string name)
+        public Task<WorkflowRunsResponse> List(string owner, string name, CancellationToken cancellationToken = default)
         {
-            return List(owner, name, new WorkflowRunsRequest(), ApiOptions.None);
+            return List(owner, name, new WorkflowRunsRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -44,9 +45,9 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs")]
-        public Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest)
+        public Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default)
         {
-            return List(owner, name, workflowRunsRequest, ApiOptions.None);
+            return List(owner, name, workflowRunsRequest, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -60,14 +61,14 @@ namespace Octokit
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs")]
-        public async Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, ApiOptions options)
+        public async Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsWorkflowRuns(owner, name), workflowRunsRequest.ToParametersDictionary(), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsWorkflowRuns(owner, name), workflowRunsRequest.ToParametersDictionary(), options, cancellationToken).ConfigureAwait(false);
 
             return new WorkflowRunsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -84,12 +85,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}")]
-        public Task<WorkflowRun> Get(string owner, string name, long runId)
+        public Task<WorkflowRun> Get(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRun(owner, name, runId), null);
+            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRun(owner, name, runId), null, cancellationToken);
         }
 
         /// <summary>
@@ -102,12 +103,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/runs/{run_id}")]
-        public Task Delete(string owner, string name, long runId)
+        public Task Delete(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.ActionsWorkflowRun(owner, name, runId));
+            return ApiConnection.Delete(ApiUrls.ActionsWorkflowRun(owner, name, runId), cancellationToken);
         }
 
         /// <summary>
@@ -120,12 +121,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/approvals")]
-        public Task<IReadOnlyList<EnvironmentApprovals>> GetReviewHistory(string owner, string name, long runId)
+        public Task<IReadOnlyList<EnvironmentApprovals>> GetReviewHistory(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.GetAll<EnvironmentApprovals>(ApiUrls.ActionsWorkflowRunApprovals(owner, name, runId));
+            return ApiConnection.GetAll<EnvironmentApprovals>(ApiUrls.ActionsWorkflowRunApprovals(owner, name, runId), cancellationToken);
         }
 
         /// <summary>
@@ -138,12 +139,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runs/{run_id}/approve")]
-        public Task Approve(string owner, string name, long runId)
+        public Task Approve(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Post(ApiUrls.ActionsApproveWorkflowRun(owner, name, runId));
+            return ApiConnection.Post(ApiUrls.ActionsApproveWorkflowRun(owner, name, runId), cancellationToken);
         }
 
         /// <summary>
@@ -157,12 +158,12 @@ namespace Octokit
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}")]
-        public Task<WorkflowRun> GetAttempt(string owner, string name, long runId, long attemptNumber)
+        public Task<WorkflowRun> GetAttempt(string owner, string name, long runId, long attemptNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRunAttempt(owner, name, runId, attemptNumber), null);
+            return ApiConnection.Get<WorkflowRun>(ApiUrls.ActionsWorkflowRunAttempt(owner, name, runId, attemptNumber), null, cancellationToken);
         }
 
         /// <summary>
@@ -176,12 +177,12 @@ namespace Octokit
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}")]
-        public async Task<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber)
+        public async Task<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var response = await Connection.GetRaw(ApiUrls.ActionsGetWorkflowRunAttemptLogs(owner, name, runId, attemptNumber), null).ConfigureAwait(false);
+            var response = await Connection.GetRaw(ApiUrls.ActionsGetWorkflowRunAttemptLogs(owner, name, runId, attemptNumber), null, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -195,12 +196,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runs/{run_id}/cancel")]
-        public Task Cancel(string owner, string name, long runId)
+        public Task Cancel(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Post(ApiUrls.ActionsCancelWorkflowRun(owner, name, runId));
+            return ApiConnection.Post(ApiUrls.ActionsCancelWorkflowRun(owner, name, runId), cancellationToken);
         }
 
         /// <summary>
@@ -213,12 +214,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/logs")]
-        public async Task<byte[]> GetLogs(string owner, string name, long runId)
+        public async Task<byte[]> GetLogs(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            var response = await Connection.GetRaw(ApiUrls.ActionsGetWorkflowRunLogs(owner, name, runId), null).ConfigureAwait(false);
+            var response = await Connection.GetRaw(ApiUrls.ActionsGetWorkflowRunLogs(owner, name, runId), null, cancellationToken).ConfigureAwait(false);
             return response.Body;
         }
 
@@ -232,12 +233,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/runs/{run_id}/logs")]
-        public Task DeleteLogs(string owner, string name, long runId)
+        public Task DeleteLogs(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.ActionsGetWorkflowRunLogs(owner, name, runId));
+            return ApiConnection.Delete(ApiUrls.ActionsGetWorkflowRunLogs(owner, name, runId), cancellationToken);
         }
 
         /// <summary>
@@ -251,13 +252,13 @@ namespace Octokit
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="review">The review for the pending deployment.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments")]
-        public Task<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review)
+        public Task<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(review, nameof(review));
 
-            return ApiConnection.Post<Deployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId), review);
+            return ApiConnection.Post<Deployment>(ApiUrls.ActionsWorkflowRunPendingDeployments(owner, name, runId), review, cancellationToken);
         }
 
         /// <summary>
@@ -270,12 +271,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runs/{run_id}/rerun")]
-        public Task Rerun(string owner, string name, long runId)
+        public Task Rerun(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Post(ApiUrls.ActionsRerunWorkflowRun(owner, name, runId));
+            return ApiConnection.Post(ApiUrls.ActionsRerunWorkflowRun(owner, name, runId), cancellationToken);
         }
 
         /// <summary>
@@ -288,12 +289,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs")]
-        public Task RerunFailedJobs(string owner, string name, long runId)
+        public Task RerunFailedJobs(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Post(ApiUrls.ActionsRerunWorkflowRunFailedJobs(owner, name, runId));
+            return ApiConnection.Post(ApiUrls.ActionsRerunWorkflowRunFailedJobs(owner, name, runId), cancellationToken);
         }
 
         /// <summary>
@@ -306,12 +307,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/runs/{run_id}/timing")]
-        public Task<WorkflowRunUsage> GetUsage(string owner, string name, long runId)
+        public Task<WorkflowRunUsage> GetUsage(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<WorkflowRunUsage>(ApiUrls.ActionsGetWorkflowRunUsage(owner, name, runId), null);
+            return ApiConnection.Get<WorkflowRunUsage>(ApiUrls.ActionsGetWorkflowRunUsage(owner, name, runId), null, cancellationToken);
         }
 
         /// <summary>
@@ -324,9 +325,9 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
-        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId)
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, CancellationToken cancellationToken = default)
         {
-            return ListByWorkflow(owner, name, workflowId, new WorkflowRunsRequest(), ApiOptions.None);
+            return ListByWorkflow(owner, name, workflowId, new WorkflowRunsRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -340,9 +341,9 @@ namespace Octokit
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
-        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest)
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default)
         {
-            return ListByWorkflow(owner, name, workflowId, workflowRunsRequest, ApiOptions.None);
+            return ListByWorkflow(owner, name, workflowId, workflowRunsRequest, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -357,14 +358,14 @@ namespace Octokit
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
-        public async Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options)
+        public async Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowId), workflowRunsRequest.ToParametersDictionary(), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowId), workflowRunsRequest.ToParametersDictionary(), options, cancellationToken).ConfigureAwait(false);
 
             return new WorkflowRunsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -381,9 +382,9 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The Id of the workflow.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
-        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName)
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, CancellationToken cancellationToken = default)
         {
-            return ListByWorkflow(owner, name, workflowFileName, new WorkflowRunsRequest(), ApiOptions.None);
+            return ListByWorkflow(owner, name, workflowFileName, new WorkflowRunsRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -397,9 +398,9 @@ namespace Octokit
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
-        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest)
+        public Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default)
         {
-            return ListByWorkflow(owner, name, workflowFileName, workflowRunsRequest, ApiOptions.None);
+            return ListByWorkflow(owner, name, workflowFileName, workflowRunsRequest, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -414,7 +415,7 @@ namespace Octokit
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs")]
-        public async Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options)
+        public async Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -422,7 +423,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(workflowRunsRequest, nameof(workflowRunsRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowFileName), workflowRunsRequest.ToParametersDictionary(), options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<WorkflowRunsResponse>(ApiUrls.ActionsListWorkflowRuns(owner, name, workflowFileName), workflowRunsRequest.ToParametersDictionary(), options, cancellationToken).ConfigureAwait(false);
 
             return new WorkflowRunsResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,

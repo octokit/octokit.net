@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -379,7 +380,7 @@ namespace Octokit.Tests.Clients
 
                 client.Merged("fake", "repo", 42);
 
-                conn.Received().Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null, null);
+                conn.Received().Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/pulls/42/merge"), null, null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -393,7 +394,7 @@ namespace Octokit.Tests.Clients
 
                 client.Merged(1, 42);
 
-                conn.Received().Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42/merge"), null, null);
+                conn.Received().Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/42/merge"), null, null, Arg.Any<CancellationToken>());
             }
 
             [Fact]

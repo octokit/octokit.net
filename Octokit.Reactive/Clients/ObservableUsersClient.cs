@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -25,11 +26,11 @@ namespace Octokit.Reactive
         /// Returns the user specified by the login.
         /// </summary>
         /// <param name="login">The login name for the user</param>
-        public IObservable<User> Get(string login)
+        public IObservable<User> Get(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(login, nameof(login));
 
-            return _client.Get(login).ToObservable();
+            return _client.Get(login, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        public IObservable<User> Current()
+        public IObservable<User> Current(CancellationToken cancellationToken = default)
         {
             return _client.Current().ToObservable();
         }
@@ -48,11 +49,11 @@ namespace Octokit.Reactive
         /// <param name="user">The login for the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        public IObservable<User> Update(UserUpdate user)
+        public IObservable<User> Update(UserUpdate user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(user, nameof(user));
 
-            return _client.Update(user).ToObservable();
+            return _client.Update(user, cancellationToken).ToObservable();
         }
 
         /// <summary>

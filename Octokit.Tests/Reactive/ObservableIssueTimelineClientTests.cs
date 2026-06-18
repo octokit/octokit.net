@@ -7,6 +7,7 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 using static Octokit.Internal.TestSetup;
 
@@ -38,14 +39,14 @@ namespace Octokit.Tests.Reactive
                 IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(
                     CreateResponse(HttpStatusCode.OK),
                     result);
-                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue("fake", "repo", 42).ToList();
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
-                    Arg.Any<Dictionary<string, string>>());
+                    Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 Assert.Single(timelineEvents);
             }
 
@@ -59,14 +60,14 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableIssueTimelineClient(gitHubClient);
 
                 IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(CreateResponse(HttpStatusCode.OK), result);
-                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1))
+                gitHubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue("fake", "repo", 42, new ApiOptions { PageSize = 30 }).ToList();
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/timeline"),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"));
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 Assert.Single(timelineEvents);
             }
 
@@ -79,14 +80,14 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableIssueTimelineClient(githubClient);
 
                 IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(CreateResponse(HttpStatusCode.OK), result);
-                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary)
+                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue(1, 42).ToList();
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
-                    Arg.Any<Dictionary<string, string>>());
+                    Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 Assert.Single(timelineEvents);
             }
 
@@ -99,14 +100,14 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableIssueTimelineClient(githubClient);
 
                 IApiResponse<List<TimelineEventInfo>> response = new ApiResponse<List<TimelineEventInfo>>(CreateResponse(HttpStatusCode.OK), result);
-                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1))
+                githubClient.Connection.Get<List<TimelineEventInfo>>(Args.Uri, Arg.Is<Dictionary<string, string>>(d => d.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult(response));
 
                 var timelineEvents = await client.GetAllForIssue(1, 42, new ApiOptions { PageSize = 30 }).ToList();
 
                 connection.Received().Get<List<TimelineEventInfo>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/timeline"),
-                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"));
+                    Arg.Is<Dictionary<string, string>>(d => d.Count == 1 && d["per_page"] == "30"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 Assert.Single(timelineEvents);
             }
 

@@ -8,6 +8,7 @@ using Octokit;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 using static Octokit.Internal.TestSetup;
 
@@ -97,7 +98,7 @@ public class ObservableIssuesClientTests
             client.GetAllForRepository("fake", "repo");
 
             gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues"),
-                Arg.Any<IDictionary<string, string>>());
+                Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -109,7 +110,7 @@ public class ObservableIssuesClientTests
             client.GetAllForRepository(1);
 
             gitHubClient.Connection.Received().Get<List<Issue>>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues"),
-                Arg.Any<IDictionary<string, string>>());
+                Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -134,7 +135,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "desc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"));
+                && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -159,7 +160,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "desc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"));
+                && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -178,7 +179,7 @@ public class ObservableIssuesClientTests
                 && d["filter"] == "assigned"
                 && d["state"] == "open"
                 && d["sort"] == "created"
-                && d["direction"] == "asc"));
+                && d["direction"] == "asc"), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -197,7 +198,7 @@ public class ObservableIssuesClientTests
                 && d["filter"] == "assigned"
                 && d["state"] == "open"
                 && d["sort"] == "created"
-                && d["direction"] == "asc"));
+                && d["direction"] == "asc"), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -225,7 +226,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "asc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"));
+                && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -253,7 +254,7 @@ public class ObservableIssuesClientTests
                 && d["sort"] == "created"
                 && d["direction"] == "asc"
                 && d["page"] == "1"
-                && d["per_page"] == "1"));
+                && d["per_page"] == "1"), Arg.Any<string>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -298,11 +299,11 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"))
+                    && d["filter"] == "assigned"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
@@ -374,11 +375,11 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"))
+                    && d["filter"] == "assigned"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 
@@ -460,11 +461,11 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"))
+                    && d["filter"] == "assigned"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
 
             var client = new ObservableIssuesClient(gitHubClient);
@@ -534,11 +535,11 @@ public class ObservableIssuesClientTests
                     && d["direction"] == "desc"
                     && d["state"] == "open"
                     && d["sort"] == "created"
-                    && d["filter"] == "assigned"))
+                    && d["filter"] == "assigned"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(firstPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(secondPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(secondPageResponse));
-            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>())
+            gitHubClient.Connection.Get<List<Issue>>(thirdPageUrl, Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult<IApiResponse<List<Issue>>>(lastPageResponse));
             var client = new ObservableIssuesClient(gitHubClient);
 

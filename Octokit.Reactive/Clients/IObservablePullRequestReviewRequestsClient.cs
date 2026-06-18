@@ -1,5 +1,6 @@
 using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -18,7 +19,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        IObservable<RequestedReviews> Get(string owner, string name, int pullRequestNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RequestedReviews> Get(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets review requests for a specified pull request.
@@ -26,7 +28,8 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        IObservable<RequestedReviews> Get(long repositoryId, int pullRequestNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RequestedReviews> Get(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates review requests on a pull request for specified users.
@@ -36,7 +39,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        IObservable<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates review requests on a pull request for specified users.
@@ -45,7 +49,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        IObservable<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes review request for given users on a pull request.
@@ -55,7 +60,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        IObservable<Unit> Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes review request for given users on a pull request.
@@ -64,6 +70,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        IObservable<Unit> Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
     }
 }

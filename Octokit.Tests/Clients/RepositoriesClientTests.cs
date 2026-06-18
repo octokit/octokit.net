@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -384,7 +385,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/vulnerability-alerts"),
-                    null, null).Returns(responseTask);
+                    null, null, Arg.Any<CancellationToken>()).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new RepositoriesClient(apiConnection);
@@ -401,7 +402,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/vulnerability-alerts"),
-                    null, null).Returns(responseTask);
+                    null, null, Arg.Any<CancellationToken>()).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new RepositoriesClient(apiConnection);

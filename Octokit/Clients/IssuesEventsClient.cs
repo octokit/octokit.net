@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Octokit
 {
@@ -25,12 +26,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForIssue(owner, name, issueNumber, ApiOptions.None);
+            return GetAllForIssue(owner, name, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -42,9 +43,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
+            return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -58,13 +59,13 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name, issueNumber), null, options);
+            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name, issueNumber), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -77,11 +78,11 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(repositoryId, issueNumber), null, options);
+            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(repositoryId, issueNumber), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -93,12 +94,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -109,9 +110,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -124,13 +125,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name), null, options);
+            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -142,11 +143,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), null, options);
+            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -159,12 +160,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="eventId">The event id</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events/{event_id}")]
-        public Task<IssueEvent> Get(string owner, string name, long eventId)
+        public Task<IssueEvent> Get(string owner, string name, long eventId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<IssueEvent>(ApiUrls.IssuesEvent(owner, name, eventId), null);
+            return ApiConnection.Get<IssueEvent>(ApiUrls.IssuesEvent(owner, name, eventId), null, cancellationToken);
         }
 
         /// <summary>
@@ -176,9 +177,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="eventId">The event id</param>
         [ManualRoute("GET", "/repositories/{id}/issues/events/{event_id}")]
-        public Task<IssueEvent> Get(long repositoryId, long eventId)
+        public Task<IssueEvent> Get(long repositoryId, long eventId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<IssueEvent>(ApiUrls.IssuesEvent(repositoryId, eventId), null);
+            return ApiConnection.Get<IssueEvent>(ApiUrls.IssuesEvent(repositoryId, eventId), null, cancellationToken);
         }
     }
 }

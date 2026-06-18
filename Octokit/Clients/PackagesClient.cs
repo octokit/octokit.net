@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -28,12 +29,12 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         [ManualRoute("GET", "/orgs/{org}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType)
+        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForOrg(org, packageType, ApiOptions.None);
+            return GetAllForOrg(org, packageType, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -46,13 +47,13 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, ApiOptions options)
+        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForOrg(org, packageType, null, options);
+            return GetAllForOrg(org, packageType, null, options, cancellationToken);
         }
 
         /// <summary>
@@ -65,12 +66,12 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         [ManualRoute("GET", "/orgs/{org}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility)
+        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForOrg(org, packageType, packageVisibility, ApiOptions.None);
+            return GetAllForOrg(org, packageType, packageVisibility, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Octokit
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        public Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -93,7 +94,7 @@ namespace Octokit
             var route = ApiUrls.PackagesOrg(org);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return ApiConnection.GetAll<Package>(route, parameters, options);
+            return ApiConnection.GetAll<Package>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -106,14 +107,14 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("GET", "/orgs/{org}/packages/{package_type}/{package_name}")]
-        public Task<Package> GetForOrg(string org, PackageType packageType, string packageName)
+        public Task<Package> GetForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageOrg(org, packageType, packageName);
 
-            return ApiConnection.Get<Package>(route);
+            return ApiConnection.Get<Package>(route, cancellationToken);
         }
 
         /// <summary>
@@ -126,7 +127,7 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("DELETE", "/orgs/{org}/packages/{package_type}/{package_name}")]
-        public Task DeleteForOrg(string org, PackageType packageType, string packageName)
+        public Task DeleteForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
@@ -134,7 +135,7 @@ namespace Octokit
 
             var route = ApiUrls.PackageOrg(org, packageType, packageName);
 
-            return ApiConnection.Delete(route);
+            return ApiConnection.Delete(route, cancellationToken);
         }
 
         /// <summary>
@@ -147,14 +148,14 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("POST", "/orgs/{org}/packages/{package_type}/{package_name}/restore")]
-        public Task RestoreForOrg(string org, PackageType packageType, string packageName)
+        public Task RestoreForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageRestoreOrg(org, packageType, packageName);
 
-            return ApiConnection.Post(route);
+            return ApiConnection.Post(route, cancellationToken);
         }
         #endregion
 
@@ -167,11 +168,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         [ManualRoute("GET", "/user/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType)
+        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForActiveUser(packageType, (PackageVisibility?)null);
+            return GetAllForActiveUser(packageType, (PackageVisibility?)null, cancellationToken);
         }
 
         /// <summary>
@@ -183,12 +184,12 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/user/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, ApiOptions options)
+        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForActiveUser(packageType, null, options);
+            return GetAllForActiveUser(packageType, null, options, cancellationToken);
         }
 
         /// <summary>
@@ -200,11 +201,11 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         [ManualRoute("GET", "/user/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility)
+        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForActiveUser(packageType, packageVisibility, ApiOptions.None);
+            return GetAllForActiveUser(packageType, packageVisibility, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +218,7 @@ namespace Octokit
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/user/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        public Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -225,7 +226,7 @@ namespace Octokit
             var route = ApiUrls.PackagesActiveUser();
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return ApiConnection.GetAll<Package>(route, parameters, options);
+            return ApiConnection.GetAll<Package>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -237,13 +238,13 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("GET", "/user/packages/{package_type}/{package_name}")]
-        public Task<Package> GetForActiveUser(PackageType packageType, string packageName)
+        public Task<Package> GetForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageActiveUser(packageType, packageName);
 
-            return ApiConnection.Get<Package>(route);
+            return ApiConnection.Get<Package>(route, cancellationToken);
         }
 
         /// <summary>
@@ -255,13 +256,13 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("DELETE", "/user/packages/{package_type}/{package_name}")]
-        public Task DeleteForActiveUser(PackageType packageType, string packageName)
+        public Task DeleteForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageActiveUser(packageType, packageName);
 
-            return ApiConnection.Delete(route);
+            return ApiConnection.Delete(route, cancellationToken);
         }
 
         /// <summary>
@@ -273,13 +274,13 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("POST", "/user/packages/{package_type}/{package_name}/restore")]
-        public Task RestoreForActiveUser(PackageType packageType, string packageName)
+        public Task RestoreForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageRestoreActiveUser(packageType, packageName);
 
-            return ApiConnection.Post(route);
+            return ApiConnection.Post(route, cancellationToken);
         }
         #endregion
 
@@ -293,12 +294,12 @@ namespace Octokit
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         [ManualRoute("GET", "/users/{username}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType)
+        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForUser(username, packageType, ApiOptions.None);
+            return GetAllForUser(username, packageType, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -311,12 +312,12 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/users/{username}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, ApiOptions options)
+        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForUser(username, packageType, null, options);
+            return GetAllForUser(username, packageType, null, options, cancellationToken);
         }
 
         /// <summary>
@@ -329,12 +330,12 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         [ManualRoute("GET", "/users/{username}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility)
+        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForUser(username, packageType, packageVisibility, ApiOptions.None);
+            return GetAllForUser(username, packageType, packageVisibility, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -348,7 +349,7 @@ namespace Octokit
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/users/{username}/packages")]
-        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        public Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -357,7 +358,7 @@ namespace Octokit
             var route = ApiUrls.PackagesUser(username);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return ApiConnection.GetAll<Package>(route, parameters, options);
+            return ApiConnection.GetAll<Package>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -370,14 +371,14 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("GET", "/users/{username}/packages/{package_type}/{package_name}")]
-        public Task<Package> GetForUser(string username, PackageType packageType, string packageName)
+        public Task<Package> GetForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageUser(username, packageType, packageName);
 
-            return ApiConnection.Get<Package>(route);
+            return ApiConnection.Get<Package>(route, cancellationToken);
         }
 
         /// <summary>
@@ -390,14 +391,14 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("DELETE", "/users/{username}/packages/{package_type}/{package_name}")]
-        public Task DeleteForUser(string username, PackageType packageType, string packageName)
+        public Task DeleteForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageUser(username, packageType, packageName);
 
-            return ApiConnection.Delete(route);
+            return ApiConnection.Delete(route, cancellationToken);
         }
 
         /// <summary>
@@ -410,14 +411,14 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
         [ManualRoute("POST", "/users/{username}/packages/{package_type}/{package_name}/restore")]
-        public Task RestoreForUser(string username, PackageType packageType, string packageName)
+        public Task RestoreForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
             var route = ApiUrls.PackageRestoreUser(username, packageType, packageName);
 
-            return ApiConnection.Post(route);
+            return ApiConnection.Post(route, cancellationToken);
         }
         #endregion
     }

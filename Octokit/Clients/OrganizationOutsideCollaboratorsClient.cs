@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -33,11 +34,11 @@ namespace Octokit
         /// <param name="org">The login for the organization</param>
         /// <returns>The users</returns>
         [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string org)
+        public Task<IReadOnlyList<User>> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return GetAll(org, ApiOptions.None);
+            return GetAll(org, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -52,12 +53,12 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
         [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org), null, options);
+            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -72,11 +73,11 @@ namespace Octokit
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
         [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter)
+        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return GetAll(org, filter, ApiOptions.None);
+            return GetAll(org, filter, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -92,12 +93,12 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
         [ManualRoute("GET", "/orgs/{org}/outside_collaborators")]
-        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org, filter), null, options);
+            return ApiConnection.GetAll<User>(ApiUrls.OutsideCollaborators(org, filter), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -112,14 +113,14 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/outside_collaborators/{username}")]
-        public async Task<bool> Delete(string org, string user)
+        public async Task<bool> Delete(string org, string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
-                var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user)).ConfigureAwait(false);
+                var statusCode = await Connection.Delete(ApiUrls.OutsideCollaborator(org, user), cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (statusCode != HttpStatusCode.NoContent
                     && statusCode != (HttpStatusCode)422)
@@ -153,14 +154,14 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
         [ManualRoute("PUT", "/orgs/{org}/outside_collaborators/{username}")]
-        public async Task<bool> ConvertFromMember(string org, string user)
+        public async Task<bool> ConvertFromMember(string org, string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
             try
             {
-                var statusCode = await Connection.Put(ApiUrls.OutsideCollaborator(org, user));
+                var statusCode = await Connection.Put(ApiUrls.OutsideCollaborator(org, user), cancellationToken: cancellationToken);
 
                 if (statusCode != HttpStatusCode.NoContent
                     && statusCode != HttpStatusCode.Forbidden)

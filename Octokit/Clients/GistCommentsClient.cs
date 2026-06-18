@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -27,9 +28,9 @@ namespace Octokit
         /// <param name="commentId">The id of the comment</param>
         /// <returns>Task{GistComment}.</returns>
         [ManualRoute("GET", "/gists/{gist_id}/comments/{comment_id}")]
-        public Task<GistComment> Get(string gistId, long commentId)
+        public Task<GistComment> Get(string gistId, long commentId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<GistComment>(ApiUrls.GistComment(gistId, commentId));
+            return ApiConnection.Get<GistComment>(ApiUrls.GistComment(gistId, commentId), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -39,11 +40,11 @@ namespace Octokit
         /// <param name="gistId">The id of the gist</param>
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
         [ManualRoute("GET", "/gists/{gist_id}/comments")]
-        public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId)
+        public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
-            return GetAllForGist(gistId, ApiOptions.None);
+            return GetAllForGist(gistId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -54,12 +55,12 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>Task{IReadOnlyList{GistComment}}.</returns>
         [ManualRoute("GET", "/gists/{gist_id}/comments")]
-        public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId, ApiOptions options)
+        public Task<IReadOnlyList<GistComment>> GetAllForGist(string gistId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId), options);
+            return ApiConnection.GetAll<GistComment>(ApiUrls.GistComments(gistId), options, cancellationToken);
         }
 
         /// <summary>
@@ -70,11 +71,11 @@ namespace Octokit
         /// <param name="comment">The body of the comment</param>
         /// <returns>Task{GistComment}.</returns>
         [ManualRoute("POST", "/gists/{gist_id}/comments")]
-        public Task<GistComment> Create(string gistId, string comment)
+        public Task<GistComment> Create(string gistId, string comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
-            return ApiConnection.Post<GistComment>(ApiUrls.GistComments(gistId), new BodyWrapper(comment));
+            return ApiConnection.Post<GistComment>(ApiUrls.GistComments(gistId), new BodyWrapper(comment), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -86,11 +87,11 @@ namespace Octokit
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>Task{GistComment}.</returns>
         [ManualRoute("PATCH", "/gists/{gist_id}/comments/{comment_id}")]
-        public Task<GistComment> Update(string gistId, long commentId, string comment)
+        public Task<GistComment> Update(string gistId, long commentId, string comment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(comment, nameof(comment));
 
-            return ApiConnection.Patch<GistComment>(ApiUrls.GistComment(gistId, commentId), new BodyWrapper(comment));
+            return ApiConnection.Patch<GistComment>(ApiUrls.GistComment(gistId, commentId), new BodyWrapper(comment), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -101,9 +102,9 @@ namespace Octokit
         /// <param name="commentId">The id of the comment</param>
         /// <returns>Task.</returns>
         [ManualRoute("DELETE", "/gists/{gist_id}/comments/{comment_id}")]
-        public Task Delete(string gistId, long commentId)
+        public Task Delete(string gistId, long commentId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.GistComment(gistId, commentId));
+            return ApiConnection.Delete(ApiUrls.GistComment(gistId, commentId), cancellationToken: cancellationToken);
         }
     }
 }

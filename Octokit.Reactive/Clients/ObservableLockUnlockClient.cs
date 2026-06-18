@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -26,12 +27,12 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        public IObservable<Unit> Lock(string owner, string name, long issueNumber, LockReason? lockReason = null)
+        public IObservable<Unit> Lock(string owner, string name, long issueNumber, LockReason? lockReason = null, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Lock(owner, name, issueNumber, lockReason).ToObservable();
+            return _client.Lock(owner, name, issueNumber, lockReason, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -41,9 +42,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
-        public IObservable<Unit> Lock(long repositoryId, long issueNumber, LockReason? lockReason = null)
+        public IObservable<Unit> Lock(long repositoryId, long issueNumber, LockReason? lockReason = null, CancellationToken cancellationToken = default)
         {
-            return _client.Lock(repositoryId, issueNumber, lockReason).ToObservable();
+            return _client.Lock(repositoryId, issueNumber, lockReason, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -53,12 +54,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Unit> Unlock(string owner, string name, long issueNumber)
+        public IObservable<Unit> Unlock(string owner, string name, long issueNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Unlock(owner, name, issueNumber).ToObservable();
+            return _client.Unlock(owner, name, issueNumber, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -67,9 +68,9 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/issues/#unlock-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Unit> Unlock(long repositoryId, long issueNumber)
+        public IObservable<Unit> Unlock(long repositoryId, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return _client.Unlock(repositoryId, issueNumber).ToObservable();
+            return _client.Unlock(repositoryId, issueNumber, cancellationToken).ToObservable();
         }
     }
 }

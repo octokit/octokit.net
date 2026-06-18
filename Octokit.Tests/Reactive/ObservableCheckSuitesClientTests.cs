@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Clients
 {
@@ -77,7 +78,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<List<CheckSuitesResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-suites"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -91,7 +92,7 @@ namespace Octokit.Tests.Clients
 
                 connection.Received().Get<List<CheckSuitesResponse>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-suites"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -113,7 +114,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/commits/ref/check-suites"),
                     Arg.Is<Dictionary<string, string>>(x =>
                         x["app_id"] == "123"
-                        && x["check_name"] == "build"));
+                        && x["check_name"] == "build"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -135,7 +136,7 @@ namespace Octokit.Tests.Clients
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/commits/ref/check-suites"),
                     Arg.Is<Dictionary<string, string>>(x =>
                         x["app_id"] == "123"
-                        && x["check_name"] == "build"));
+                        && x["check_name"] == "build"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

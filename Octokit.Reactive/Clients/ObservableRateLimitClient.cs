@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -26,9 +27,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
-        public IObservable<MiscellaneousRateLimit> GetRateLimits()
+        public IObservable<MiscellaneousRateLimit> GetRateLimits(CancellationToken cancellationToken = default)
         {
-            return _client.GetRateLimits().ToObservable();
+            return _client.GetRateLimits(cancellationToken).ToObservable();
         }
     }
 }

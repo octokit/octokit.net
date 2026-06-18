@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -26,9 +27,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
         [ManualRoute("POST", "/markdown/raw")]
-        public Task<string> RenderRawMarkdown(string markdown)
+        public Task<string> RenderRawMarkdown(string markdown, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post<string>(ApiUrls.RawMarkdown(), markdown, "text/html", "text/plain");
+            return ApiConnection.Post<string>(ApiUrls.RawMarkdown(), markdown, "text/html", "text/plain", cancellationToken);
         }
 
         /// <summary>
@@ -38,9 +39,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
         [ManualRoute("POST", "/markdown")]
-        public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown)
+        public Task<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post<string>(ApiUrls.Markdown(), markdown, "text/html", "text/plain");
+            return ApiConnection.Post<string>(ApiUrls.Markdown(), markdown, "text/html", "text/plain", cancellationToken);
         }
     }
 }

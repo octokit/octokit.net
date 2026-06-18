@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -26,9 +27,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MetaPublicKeys"/> containing public keys for validating request signatures.</returns>
-        public IObservable<MetaPublicKeys> Get(PublicKeyType keysType)
+        public IObservable<MetaPublicKeys> Get(PublicKeyType keysType, CancellationToken cancellationToken = default)
         {
-            return _client.Get(keysType).ToObservable();
+            return _client.Get(keysType, cancellationToken).ToObservable();
         }
     }
 }

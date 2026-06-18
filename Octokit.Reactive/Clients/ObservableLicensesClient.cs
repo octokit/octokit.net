@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -26,9 +27,9 @@ namespace Octokit.Reactive
         /// list of all possible OSS licenses.
         /// </summary>
         /// <returns>A list of licenses available on the site</returns>
-        public IObservable<LicenseMetadata> GetAllLicenses()
+        public IObservable<LicenseMetadata> GetAllLicenses(CancellationToken cancellationToken = default)
         {
-            return GetAllLicenses(ApiOptions.None);
+            return GetAllLicenses(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of licenses available on the site</returns>
-        public IObservable<LicenseMetadata> GetAllLicenses(ApiOptions options)
+        public IObservable<LicenseMetadata> GetAllLicenses(ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return _client.GetAllLicenses(options).ToObservable().SelectMany(l => l);
+            return _client.GetAllLicenses(options, cancellationToken).ToObservable().SelectMany(l => l);
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
-        public IObservable<License> GetLicense(string key)
+        public IObservable<License> GetLicense(string key, CancellationToken cancellationToken = default)
         {
-            return _client.GetLicense(key).ToObservable();
+            return _client.GetLicense(key, cancellationToken).ToObservable();
         }
     }
 }

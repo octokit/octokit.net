@@ -1,5 +1,6 @@
 ﻿using System;
 
+using System.Threading;
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -15,6 +16,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
-        IObservable<Emoji> GetAllEmojis();
+        IObservable<Emoji> GetAllEmojis(CancellationToken cancellationToken = default);
     }
 }

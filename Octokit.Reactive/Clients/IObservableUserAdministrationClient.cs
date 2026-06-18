@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -21,7 +22,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="newUser">The <see cref="NewUser"/> object describing the user to create</param>
         /// <returns>The created <see cref="User"/> object</returns>
-        IObservable<User> Create(NewUser newUser);
+        IObservable<User> Create(NewUser newUser, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Rename an existing user (must be Site Admin user).
@@ -34,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="login">The username to rename</param>
         /// <param name="userRename">The <see cref="UserRename"/> request, specifying the new login</param>
         /// <returns>A <see cref="UserRenameResponse"/> object indicating the queued task message and Url to the user</returns>
-        IObservable<UserRenameResponse> Rename(string login, UserRename userRename);
+        IObservable<UserRenameResponse> Rename(string login, UserRename userRename, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an impersonation OAuth token (must be Site Admin user).
@@ -46,7 +47,7 @@ namespace Octokit.Reactive
         /// <param name="login">The user to impersonate</param>
         /// <param name="newImpersonationToken">The <see cref="NewImpersonationToken"/> request specifying the required scopes</param>
         /// <returns>An <see cref="Authorization"/> object containing the impersonation token</returns>
-        IObservable<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken);
+        IObservable<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes an impersonation OAuth token (must be Site Admin user).
@@ -57,7 +58,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to remove impersonation token from</param>
         /// <returns></returns>
-        IObservable<Unit> DeleteImpersonationToken(string login);
+        IObservable<Unit> DeleteImpersonationToken(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Promotes ordinary user to a site administrator (must be Site Admin user).
@@ -68,7 +69,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to promote to administrator.</param>
         /// <returns></returns>
-        IObservable<Unit> Promote(string login);
+        IObservable<Unit> Promote(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Demotes a site administrator to an ordinary user (must be Site Admin user).
@@ -79,7 +80,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to demote from administrator.</param>
         /// <returns></returns>
-        IObservable<Unit> Demote(string login);
+        IObservable<Unit> Demote(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Suspends a user (must be Site Admin user).
@@ -90,7 +91,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to suspend.</param>
         /// <returns></returns>
-        IObservable<Unit> Suspend(string login);
+        IObservable<Unit> Suspend(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Unsuspends a user (must be Site Admin user).
@@ -101,7 +102,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to unsuspend.</param>
         /// <returns></returns>
-        IObservable<Unit> Unsuspend(string login);
+        IObservable<Unit> Unsuspend(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all public keys (must be Site Admin user).
@@ -111,7 +112,7 @@ namespace Octokit.Reactive
         /// for more information.
         /// </remarks>
         /// <returns></returns>
-        IObservable<PublicKey> ListAllPublicKeys();
+        IObservable<PublicKey> ListAllPublicKeys(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a user (must be Site Admin user).
@@ -122,7 +123,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="login">The user to delete</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string login);
+        IObservable<Unit> Delete(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a public key (must be Site Admin user).
@@ -133,6 +134,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
-        IObservable<Unit> DeletePublicKey(int keyId);
+        IObservable<Unit> DeletePublicKey(int keyId, CancellationToken cancellationToken = default);
     }
 }

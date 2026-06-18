@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -21,8 +22,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<DeployKey> Get(string owner, string name, int deployKeyId);
+        Task<DeployKey> Get(string owner, string name, int deployKeyId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a single deploy key by number for a repository.
@@ -32,8 +34,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<DeployKey> Get(long repositoryId, int deployKeyId);
+        Task<DeployKey> Get(long repositoryId, int deployKeyId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all deploy keys for a repository.
@@ -43,7 +46,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all deploy keys for a repository.
@@ -52,7 +56,8 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all deploy keys for a repository.
@@ -63,7 +68,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all deploy keys for a repository.
@@ -73,7 +79,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new deploy key for a repository.
@@ -84,7 +91,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new deploy key for a repository.
@@ -94,7 +102,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        Task<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a deploy key from a repository.
@@ -105,7 +114,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key to delete.</param>
-        Task Delete(string owner, string name, int deployKeyId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(string owner, string name, int deployKeyId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a deploy key from a repository.
@@ -115,6 +125,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key to delete.</param>
-        Task Delete(long repositoryId, int deployKeyId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(long repositoryId, int deployKeyId, CancellationToken cancellationToken = default);
     }
 }

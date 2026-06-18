@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -29,11 +30,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
-        public IObservable<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId)
+        public IObservable<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
-            return _client.GetRunnerGroupForEnterprise(enterprise, runnerGroupId).ToObservable();
+            return _client.GetRunnerGroupForEnterprise(enterprise, runnerGroupId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -44,11 +45,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
-        public IObservable<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId)
+        public IObservable<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _client.GetRunnerGroupForOrganization(org, runnerGroupId).ToObservable();
+            return _client.GetRunnerGroupForOrganization(org, runnerGroupId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -58,9 +59,9 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
-        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise)
+        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupsForEnterprise(enterprise, ApiOptions.None);
+            return ListAllRunnerGroupsForEnterprise(enterprise, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -71,12 +72,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options)
+        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerGroupsForEnterprise(enterprise, options).ToObservable();
+            return _client.ListAllRunnerGroupsForEnterprise(enterprise, options, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -86,9 +87,9 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-organization
         /// </remarks>
         /// <param name="org">The organization name</param>
-        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org)
+        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupsForOrganization(org, ApiOptions.None);
+            return ListAllRunnerGroupsForOrganization(org, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -99,12 +100,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options)
+        public IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerGroupsForOrganization(org, options).ToObservable();
+            return _client.ListAllRunnerGroupsForOrganization(org, options, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -115,9 +116,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="groupId">The runner group ID</param>
-        public IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long groupId)
+        public IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long groupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnersForEnterpriseRunnerGroup(enterprise, groupId, ApiOptions.None);
+            return ListAllRunnersForEnterpriseRunnerGroup(enterprise, groupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -129,11 +130,11 @@ namespace Octokit.Reactive
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="groupId">The runner group ID</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long groupId, ApiOptions options)
+        public IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long groupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnersForEnterpriseRunnerGroup(enterprise, groupId, options).ToObservable();
+            return _client.ListAllRunnersForEnterpriseRunnerGroup(enterprise, groupId, options, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -144,9 +145,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The organization name</param>
         /// <param name="groupId">The runner group ID</param>
-        public IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long groupId)
+        public IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long groupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnersForOrganizationRunnerGroup(organization, groupId, ApiOptions.None);
+            return ListAllRunnersForOrganizationRunnerGroup(organization, groupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -158,12 +159,12 @@ namespace Octokit.Reactive
         /// <param name="organization">The organization name</param>
         /// <param name="groupId">The runner group ID</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long groupId, ApiOptions options)
+        public IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long groupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnersForOrganizationRunnerGroup(organization, groupId, options).ToObservable();
+            return _client.ListAllRunnersForOrganizationRunnerGroup(organization, groupId, options, cancellationToken).ToObservable();
         }
 
 
@@ -175,9 +176,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
-        public IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId)
+        public IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, ApiOptions.None);
+            return ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -189,12 +190,12 @@ namespace Octokit.Reactive
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options)
+        public IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, options).ToObservable();
+            return _client.ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, options, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -205,9 +206,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
-        public IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId)
+        public IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, ApiOptions.None);
+            return ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -219,12 +220,12 @@ namespace Octokit.Reactive
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group ID</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options)
+        public IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, options).ToObservable();
+            return _client.ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, options, cancellationToken).ToObservable();
         }
 
     }

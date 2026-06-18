@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -24,9 +25,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber)
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return GetAll(owner, name, issueNumber, ApiOptions.None);
+            return GetAll(owner, name, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -38,13 +39,13 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(owner, name, issueNumber), null, options);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(owner, name, issueNumber), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -54,9 +55,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, issueNumber, ApiOptions.None);
+            return GetAll(repositoryId, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -67,11 +68,11 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/{number}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber, ApiOptions options)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(repositoryId, issueNumber), null, options);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.IssueReactions(repositoryId, issueNumber), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -83,13 +84,13 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/issues/{issue_number}/reactions")]
-        public Task<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction)
+        public Task<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return ApiConnection.Post<Reaction>(ApiUrls.IssueReactions(owner, name, issueNumber), reaction);
+            return ApiConnection.Post<Reaction>(ApiUrls.IssueReactions(owner, name, issueNumber), reaction, cancellationToken);
         }
 
         /// <summary>
@@ -100,11 +101,11 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
         [ManualRoute("POST", "/repositories/{id}/issues/{number}/reactions")]
-        public Task<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction)
+        public Task<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
-            return ApiConnection.Post<Reaction>(ApiUrls.IssueReactions(repositoryId, issueNumber), reaction);
+            return ApiConnection.Post<Reaction>(ApiUrls.IssueReactions(repositoryId, issueNumber), reaction, cancellationToken);
         }
 
         /// <summary>
@@ -117,12 +118,12 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}")]
-        public Task Delete(string owner, string name, long issueNumber, long reactionId)
+        public Task Delete(string owner, string name, long issueNumber, long reactionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.IssueReaction(owner, name, issueNumber, reactionId));
+            return ApiConnection.Delete(ApiUrls.IssueReaction(owner, name, issueNumber, reactionId), cancellationToken);
         }
 
         /// <summary>
@@ -134,9 +135,9 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repositories/{id}/issues/{issue_number}/reactions/{reaction_id}")]
-        public Task Delete(long repositoryId, long issueNumber, long reactionId)
+        public Task Delete(long repositoryId, long issueNumber, long reactionId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.IssueReaction(repositoryId, issueNumber, reactionId));
+            return ApiConnection.Delete(ApiUrls.IssueReaction(repositoryId, issueNumber, reactionId), cancellationToken);
         }
     }
 }

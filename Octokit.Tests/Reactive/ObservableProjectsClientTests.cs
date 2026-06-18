@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -34,7 +35,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -48,7 +49,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repos/owner/repo/projects"),
-                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")));
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -62,7 +63,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -76,7 +77,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "repositories/1/projects"),
-                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")));
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -127,7 +128,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -141,7 +142,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<Project>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/projects"),
-                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")));
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

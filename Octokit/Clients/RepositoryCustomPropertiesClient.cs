@@ -1,5 +1,6 @@
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -30,14 +31,14 @@ namespace Octokit
         /// <param name="repoName">The name of the repository.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/properties/values")]
-        public Task<IReadOnlyList<CustomPropertyValue>> GetAll(string owner, string repoName)
+        public Task<IReadOnlyList<CustomPropertyValue>> GetAll(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var url = ApiUrls.RepositoryCustomPropertyValues(owner, repoName);
 
-            return ApiConnection.Get<IReadOnlyList<CustomPropertyValue>>(url, null);
+            return ApiConnection.Get<IReadOnlyList<CustomPropertyValue>>(url, null, cancellationToken);
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Octokit
         /// <param name="propertyValues">The custom property values to create or update</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/properties/values")]
-        public Task CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues)
+        public Task CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -60,7 +61,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryCustomPropertyValues(owner, repoName);
 
-            return ApiConnection.Patch(url, propertyValues);
+            return ApiConnection.Patch(url, propertyValues, cancellationToken);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -17,8 +18,9 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<Activity>> GetAll();
+        Task<IReadOnlyList<Activity>> GetAll(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the public events
@@ -27,8 +29,9 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>        
-        Task<IReadOnlyList<Activity>> GetAll(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
+        Task<IReadOnlyList<Activity>> GetAll(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given repository
@@ -38,7 +41,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given repository
@@ -47,7 +51,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given repository
@@ -58,7 +63,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given repository
@@ -68,7 +74,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the issue events for a given repository
@@ -78,7 +85,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the issue events for a given repository
@@ -87,7 +95,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the issue events for a given repository
@@ -98,7 +107,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the issue events for a given repository
@@ -108,7 +118,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given repository network
@@ -118,7 +129,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given repository network
@@ -129,7 +141,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given organization
@@ -138,7 +151,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events-for-an-organization
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events for a given organization
@@ -148,7 +162,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -157,7 +172,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-events-that-a-user-has-received
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        Task<IReadOnlyList<Activity>> GetAllUserReceived(string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -167,7 +183,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -176,7 +193,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that have been received by a given user.
@@ -186,7 +204,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that have been performed by a given user.
@@ -195,7 +214,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-events-performed-by-a-user
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that have been performed by a given user.
@@ -205,7 +225,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the public events that have been performed by a given user.
@@ -214,7 +235,8 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events-performed-by-a-user
         /// </remarks>
         /// <param name="user">The login of the user</param>
-        Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the public events that have been performed by a given user.
@@ -224,7 +246,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that are associated with an organization.
@@ -234,7 +257,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
-        Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the events that are associated with an organization.
@@ -245,6 +269,7 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

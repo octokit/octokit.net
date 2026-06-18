@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -26,9 +27,9 @@ namespace Octokit
         /// </summary>
         /// <returns>A list of licenses available on the site</returns>
         [ManualRoute("GET", "/licenses")]
-        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses()
+        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(CancellationToken cancellationToken = default)
         {
-            return GetAllLicenses(ApiOptions.None);
+            return GetAllLicenses(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -38,11 +39,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of licenses available on the site</returns>
         [ManualRoute("GET", "/licenses")]
-        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options)
+        public Task<IReadOnlyList<LicenseMetadata>> GetAllLicenses(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, "options");
 
-            return ApiConnection.GetAll<LicenseMetadata>(ApiUrls.Licenses(), options);
+            return ApiConnection.GetAll<LicenseMetadata>(ApiUrls.Licenses(), options, cancellationToken);
         }
 
         /// <summary>
@@ -51,9 +52,9 @@ namespace Octokit
         /// <param name="key"></param>
         /// <returns>A <see cref="License" /> that includes the license key, text, and attributes of the license.</returns>
         [ManualRoute("GET", "/licenses/{key}")]
-        public Task<License> GetLicense(string key)
+        public Task<License> GetLicense(string key, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<License>(ApiUrls.Licenses(key));
+            return ApiConnection.Get<License>(ApiUrls.Licenses(key), null, null, cancellationToken);
         }
     }
 }

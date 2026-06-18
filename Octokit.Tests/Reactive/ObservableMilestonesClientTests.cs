@@ -8,6 +8,7 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 using static Octokit.Internal.TestSetup;
 
@@ -250,11 +251,11 @@ namespace Octokit.Tests.Reactive
                     }
                 );
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<Milestone>>(firstPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<Milestone>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<Milestone>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<Milestone>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<Milestone>>>(lastPageResponse));
                 var client = new ObservableMilestonesClient(gitHubClient);
 
@@ -307,17 +308,17 @@ namespace Octokit.Tests.Reactive
                         Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                             && d["direction"] == "desc"
                             && d["state"] == "open"
-                            && d["sort"] == "due_date"))
+                            && d["sort"] == "due_date"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<Milestone>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_date"))
+                        && d["sort"] == "due_date"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<Milestone>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<Milestone>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["state"] == "open"
-                        && d["sort"] == "due_date"))
+                        && d["sort"] == "due_date"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<Milestone>>>(lastPageResponse));
 
                 var client = new ObservableMilestonesClient(gitHubClient);

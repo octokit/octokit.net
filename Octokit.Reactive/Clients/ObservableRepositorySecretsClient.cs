@@ -1,5 +1,6 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
@@ -36,12 +37,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="SecretsPublicKey"/> instance for the repository public key.</returns>
-        public IObservable<SecretsPublicKey> GetPublicKey(string owner, string repoName)
+        public IObservable<SecretsPublicKey> GetPublicKey(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return _client.GetPublicKey(owner, repoName).ToObservable();
+            return _client.GetPublicKey(owner, repoName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -54,12 +55,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        public IObservable<RepositorySecretsCollection> GetAll(string owner, string repoName)
+        public IObservable<RepositorySecretsCollection> GetAll(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return _client.GetAll(owner, repoName).ToObservable();
+            return _client.GetAll(owner, repoName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -73,13 +74,13 @@ namespace Octokit.Reactive
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret.</returns>
-        public IObservable<RepositorySecret> Get(string owner, string repoName, string secretName)
+        public IObservable<RepositorySecret> Get(string owner, string repoName, string secretName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            return _client.Get(owner, repoName, secretName).ToObservable();
+            return _client.Get(owner, repoName, secretName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace Octokit.Reactive
         /// <param name="upsertSecret">The encrypted value and id of the encryption key</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret that was created or updated.</returns>
-        public IObservable<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret)
+        public IObservable<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -103,7 +104,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.KeyId, nameof(upsertSecret.KeyId));
 
-            return _client.CreateOrUpdate(owner, repoName, secretName, upsertSecret).ToObservable();
+            return _client.CreateOrUpdate(owner, repoName, secretName, upsertSecret, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -116,13 +117,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(string owner, string repoName, string secretName)
+        public IObservable<Unit> Delete(string owner, string repoName, string secretName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            return _client.Delete(owner, repoName, secretName).ToObservable();
+            return _client.Delete(owner, repoName, secretName, cancellationToken).ToObservable();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -37,14 +38,14 @@ namespace Octokit
         /// <param name="login">The login name for the user</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "login")]
-        Task<User> Get(string login);
+        Task<User> Get(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        Task<User> Current();
+        Task<User> Current(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
@@ -52,7 +53,7 @@ namespace Octokit
         /// <param name="user">The login for the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        Task<User> Update(UserUpdate user);
+        Task<User> Update(UserUpdate user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// A client for GitHub's User Followers API

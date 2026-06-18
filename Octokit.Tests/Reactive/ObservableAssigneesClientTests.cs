@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -37,7 +38,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(owner, name);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -49,7 +50,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(repositoryId);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUriWithRepositoryId,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -68,7 +69,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(owner, name, options);
 
                 gitHubClient.Connection.Received(2).Get<List<User>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -87,7 +88,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllForRepository(repositoryId, options);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(_expectedUriWithRepositoryId,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

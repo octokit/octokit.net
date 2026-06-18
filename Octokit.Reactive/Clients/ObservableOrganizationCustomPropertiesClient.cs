@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -27,11 +28,11 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#get-all-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        public IObservable<OrganizationCustomProperty> GetAll(string org)
+        public IObservable<OrganizationCustomProperty> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _client.GetAll(org).ToObservable().SelectMany(p => p);
+            return _client.GetAll(org, cancellationToken).ToObservable().SelectMany(p => p);
         }
 
         /// <summary>
@@ -42,12 +43,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        public IObservable<OrganizationCustomProperty> Get(string org, string propertyName)
+        public IObservable<OrganizationCustomProperty> Get(string org, string propertyName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
 
-            return _client.Get(org, propertyName).ToObservable();
+            return _client.Get(org, propertyName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -58,13 +59,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="properties">The custom properties to create or update</param>
-        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties)
+        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(properties, nameof(properties));
             Ensure.ArgumentNotNullOrEmptyEnumerable(properties.Properties, nameof(properties.Properties));
 
-            return _client.CreateOrUpdate(org, properties).ToObservable().SelectMany(p => p);
+            return _client.CreateOrUpdate(org, properties, cancellationToken).ToObservable().SelectMany(p => p);
         }
 
         /// <summary>
@@ -76,14 +77,14 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property)
+        public IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
             Ensure.ArgumentNotNull(property, nameof(property));
             Ensure.ArgumentNotNullOrDefault(property.ValueType, nameof(property.ValueType));
 
-            return _client.CreateOrUpdate(org, propertyName, property).ToObservable();
+            return _client.CreateOrUpdate(org, propertyName, property, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -94,12 +95,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        public IObservable<Unit> Delete(string org, string propertyName)
+        public IObservable<Unit> Delete(string org, string propertyName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(propertyName, nameof(propertyName));
 
-            return _client.Delete(org, propertyName).ToObservable();
+            return _client.Delete(org, propertyName, cancellationToken).ToObservable();
         }
 
         /// <summary>

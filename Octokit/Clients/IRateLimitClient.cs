@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -13,8 +14,9 @@ namespace Octokit
         /// <summary>
         /// Gets API Rate Limits (API service rather than header info).
         /// </summary>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
-        Task<MiscellaneousRateLimit> GetRateLimits();
+        Task<MiscellaneousRateLimit> GetRateLimits(CancellationToken cancellationToken = default);
     }
 }

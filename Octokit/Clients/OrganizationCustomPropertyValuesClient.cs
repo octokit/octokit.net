@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -23,11 +24,11 @@ namespace Octokit
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "orgs/{org}/properties/values")]
-        public Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org)
+        public Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return GetAll(org, new OrganizationCustomPropertyValuesRequest());
+            return GetAll(org, new OrganizationCustomPropertyValuesRequest(), cancellationToken);
         }
 
         /// <summary>
@@ -40,14 +41,14 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "orgs/{org}/properties/values")]
-        public Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, ApiOptions options)
+        public Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.OrganizationCustomPropertyValues(org);
 
-            return ApiConnection.GetAll<OrganizationCustomPropertyValues>(url, options);
+            return ApiConnection.GetAll<OrganizationCustomPropertyValues>(url, options, cancellationToken);
         }
 
         /// <summary>
@@ -60,14 +61,14 @@ namespace Octokit
         /// <param name="repositoryQuery">Finds repositories in the organization with a query containing one or more search keywords and qualifiers.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "orgs/{org}/properties/values")]
-        public Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery)
+        public Task<IReadOnlyList<OrganizationCustomPropertyValues>> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(repositoryQuery, nameof(repositoryQuery));
 
             var url = ApiUrls.OrganizationCustomPropertyValues(org);
 
-            return ApiConnection.GetAll<OrganizationCustomPropertyValues>(url, repositoryQuery.Parameters);
+            return ApiConnection.GetAll<OrganizationCustomPropertyValues>(url, repositoryQuery.Parameters, cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Octokit
         /// <param name="propertyValues">The custom property values to create or update</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "orgs/{org}/properties/values")]
-        public Task CreateOrUpdate(string org, UpsertOrganizationCustomPropertyValues propertyValues)
+        public Task CreateOrUpdate(string org, UpsertOrganizationCustomPropertyValues propertyValues, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(propertyValues, nameof(propertyValues));
@@ -90,7 +91,7 @@ namespace Octokit
 
             var url = ApiUrls.OrganizationCustomPropertyValues(org);
 
-            return ApiConnection.Patch(url, propertyValues);
+            return ApiConnection.Patch(url, propertyValues, cancellationToken);
         }
     }
 }

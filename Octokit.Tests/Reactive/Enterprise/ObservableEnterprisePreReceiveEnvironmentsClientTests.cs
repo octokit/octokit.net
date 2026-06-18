@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -29,7 +30,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<PreReceiveEnvironment>>(
                     new Uri("admin/pre-receive-environments", UriKind.Relative),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -49,7 +50,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<PreReceiveEnvironment>>(
                     new Uri("admin/pre-receive-environments", UriKind.Relative),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

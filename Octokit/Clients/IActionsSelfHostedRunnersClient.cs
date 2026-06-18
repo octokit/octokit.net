@@ -19,7 +19,8 @@ namespace Octokit
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-self-hosted-runners-for-an-enterprise
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
-    Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List self-hosted runners for an enterprise
@@ -29,7 +30,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="options">Options to change the API response.</param>
-    Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List self-hosted runners for an organization
@@ -38,7 +40,8 @@ namespace Octokit
     /// https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
     /// </remarks>
     /// <param name="organization">The organization.</param>
-    Task<RunnerResponse> ListAllRunnersForOrganization(string organization);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<RunnerResponse> ListAllRunnersForOrganization(string organization, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List self-hosted runners for an organization
@@ -48,7 +51,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="options">Options to change the API response.</param>
-    Task<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List self-hosted runners for a repository
@@ -58,7 +62,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List self-hosted runners for a repository
@@ -69,7 +74,8 @@ namespace Octokit
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="options">Options to change the API response.</param>
-    Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an enterprise
@@ -78,7 +84,8 @@ namespace Octokit
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-enterprise
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
-    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an enterprise
@@ -88,7 +95,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="options">Options to change the API response.</param>
-    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an organization
@@ -97,7 +105,8 @@ namespace Octokit
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-organization
     /// </remarks>
     /// <param name="organization">The organization.</param>
-    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for an organization
@@ -107,7 +116,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="options">Options to change the API response.</param>
-    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for a repository
@@ -117,7 +127,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string name);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// List runner applications for a repository
@@ -128,7 +139,8 @@ namespace Octokit
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="options">Options to change the API response.</param>
-    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task<IReadOnlyList<RunnerApplication>> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete a self-hosted runner from an enterprise
@@ -138,7 +150,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="runnerId">The runner ID.</param>
-    Task DeleteEnterpriseRunner(string enterprise, long runnerId);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task DeleteEnterpriseRunner(string enterprise, long runnerId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete a self-hosted runner from an organization
@@ -148,7 +161,8 @@ namespace Octokit
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="runnerId">The runner ID.</param>
-    Task DeleteOrganizationRunner(string organization, long runnerId);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task DeleteOrganizationRunner(string organization, long runnerId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete a self-hosted runner from a repository
@@ -159,7 +173,8 @@ namespace Octokit
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="runnerId">The runner ID.</param>
-    Task DeleteRepositoryRunner(string owner, string name, long runnerId);
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+    Task DeleteRepositoryRunner(string owner, string name, long runnerId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Create a registration token for an enterprise
@@ -168,7 +183,7 @@ namespace Octokit
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-enterprise
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
-    /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
     Task<AccessToken> CreateEnterpriseRegistrationToken(string enterprise, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -178,7 +193,7 @@ namespace Octokit
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#create-a-registration-token-for-an-organization
     /// </remarks>
     /// <param name="organization">The organization.</param>
-    /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
     Task<AccessToken> CreateOrganizationRegistrationToken(string organization, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -189,7 +204,7 @@ namespace Octokit
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    /// <param name="cancellationToken">A token used to cancel this potentially long running request</param>
+    /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
     Task<AccessToken> CreateRepositoryRegistrationToken(string owner, string name, CancellationToken cancellationToken = default);
 
   }

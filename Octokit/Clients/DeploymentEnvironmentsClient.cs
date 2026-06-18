@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace Octokit
 {
@@ -31,12 +32,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/environments")]
-        public Task<DeploymentEnvironmentsResponse> GetAll(string owner, string name)
+        public Task<DeploymentEnvironmentsResponse> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -48,9 +49,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/environments")]
-        public Task<DeploymentEnvironmentsResponse> GetAll(long repositoryId)
+        public Task<DeploymentEnvironmentsResponse> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Paging options</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/environments")]
-        public Task<DeploymentEnvironmentsResponse> GetAll(string owner, string name, ApiOptions options)
+        public Task<DeploymentEnvironmentsResponse> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -94,7 +95,7 @@ namespace Octokit
         /// <param name="repositoryId">Repository ID</param>
         /// <param name="options">Paging options</param>
         [ManualRoute("GET", "/repositories/{id}/environments")]
-        public Task<DeploymentEnvironmentsResponse> GetAll(long repositoryId, ApiOptions options)
+        public Task<DeploymentEnvironmentsResponse> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,14 +27,14 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="SecretsPublicKey"/> instance for the repository public key.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/secrets/public-key")]
-        public Task<SecretsPublicKey> GetPublicKey(string owner, string repoName)
+        public Task<SecretsPublicKey> GetPublicKey(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var url = ApiUrls.RepositorySecretsPublicKey(owner, repoName);
 
-            return ApiConnection.Get<SecretsPublicKey>(url);
+            return ApiConnection.Get<SecretsPublicKey>(url, cancellationToken);
         }
 
         /// <summary>
@@ -47,14 +48,14 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecretsCollection"/> instance for the list of repository secrets.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/secrets")]
-        public Task<RepositorySecretsCollection> GetAll(string owner, string repoName)
+        public Task<RepositorySecretsCollection> GetAll(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
             var url = ApiUrls.RepositorySecrets(owner, repoName);
 
-            return ApiConnection.Get<RepositorySecretsCollection>(url);
+            return ApiConnection.Get<RepositorySecretsCollection>(url, cancellationToken);
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/actions/secrets/{secretName}")]
-        public Task<RepositorySecret> Get(string owner, string repoName, string secretName)
+        public Task<RepositorySecret> Get(string owner, string repoName, string secretName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -77,7 +78,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositorySecret(owner, repoName, secretName);
 
-            return ApiConnection.Get<RepositorySecret>(url);
+            return ApiConnection.Get<RepositorySecret>(url, cancellationToken);
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret that was created or updated.</returns>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/actions/secrets/{secretName}")]
-        public async Task<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret)
+        public async Task<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -104,9 +105,9 @@ namespace Octokit
 
             var url = ApiUrls.RepositorySecret(owner, repoName, secretName);
 
-            await ApiConnection.Put<RepositorySecret>(url, upsertSecret);
+            await ApiConnection.Put<RepositorySecret>(url, upsertSecret, cancellationToken);
 
-            return await Get(owner, repoName, secretName);
+            return await Get(owner, repoName, secretName, cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace Octokit
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/actions/secrets/{secretName}")]
-        public Task Delete(string owner, string repoName, string secretName)
+        public Task Delete(string owner, string repoName, string secretName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -128,7 +129,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositorySecret(owner, repoName, secretName);
 
-            return ApiConnection.Delete(url);
+            return ApiConnection.Delete(url, cancellationToken: cancellationToken);
         }
     }
 }

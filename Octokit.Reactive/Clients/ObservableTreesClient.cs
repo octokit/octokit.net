@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive.Threading.Tasks;
 
 namespace Octokit.Reactive
@@ -29,13 +30,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public IObservable<TreeResponse> Get(string owner, string name, string reference)
+        public IObservable<TreeResponse> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.Get(owner, name, reference).ToObservable();
+            return _client.Get(owner, name, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -46,11 +47,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public IObservable<TreeResponse> Get(long repositoryId, string reference)
+        public IObservable<TreeResponse> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.Get(repositoryId, reference).ToObservable();
+            return _client.Get(repositoryId, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -62,13 +63,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public IObservable<TreeResponse> GetRecursive(string owner, string name, string reference)
+        public IObservable<TreeResponse> GetRecursive(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.GetRecursive(owner, name, reference).ToObservable();
+            return _client.GetRecursive(owner, name, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -79,11 +80,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        public IObservable<TreeResponse> GetRecursive(long repositoryId, string reference)
+        public IObservable<TreeResponse> GetRecursive(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return _client.GetRecursive(repositoryId, reference).ToObservable();
+            return _client.GetRecursive(repositoryId, reference, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -95,13 +96,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        public IObservable<TreeResponse> Create(string owner, string name, NewTree newTree)
+        public IObservable<TreeResponse> Create(string owner, string name, NewTree newTree, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newTree, nameof(newTree));
 
-            return _client.Create(owner, name, newTree).ToObservable();
+            return _client.Create(owner, name, newTree, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -112,11 +113,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        public IObservable<TreeResponse> Create(long repositoryId, NewTree newTree)
+        public IObservable<TreeResponse> Create(long repositoryId, NewTree newTree, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newTree, nameof(newTree));
 
-            return _client.Create(repositoryId, newTree).ToObservable();
+            return _client.Create(repositoryId, newTree, cancellationToken).ToObservable();
         }
     }
 }

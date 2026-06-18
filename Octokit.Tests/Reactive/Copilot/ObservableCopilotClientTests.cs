@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -39,7 +40,7 @@ namespace Octokit.Tests.Reactive
                 client.Licensing.GetAll("test", apiOptions);
                 
                 connection.Received().Get<List<CopilotSeats>>(endpoint,
-                    Arg.Is<IDictionary<string, string>>(d => d.Count > 0));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count > 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
         

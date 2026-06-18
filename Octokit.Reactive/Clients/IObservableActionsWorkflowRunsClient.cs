@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -19,7 +20,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        IObservable<WorkflowRunsResponse> List(string owner, string name);
+        IObservable<WorkflowRunsResponse> List(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all workflow runs for a repository.
@@ -30,7 +31,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
-        IObservable<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest);
+        IObservable<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all workflow runs for a repository.
@@ -42,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
+        IObservable<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific workflow run in a repository. Anyone with read access to the repository can use this endpoint.
@@ -53,7 +54,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<WorkflowRun> Get(string owner, string name, long runId);
+        IObservable<WorkflowRun> Get(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a specific workflow run. Anyone with write access to the repository can use this endpoint.
@@ -64,7 +65,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<Unit> Delete(string owner, string name, long runId);
+        IObservable<Unit> Delete(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the review history for a workflow run.
@@ -75,7 +76,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<EnvironmentApprovals> GetReviewHistory(string owner, string name, long runId);
+        IObservable<EnvironmentApprovals> GetReviewHistory(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Approves a workflow run for a pull request from a public fork of a first time contributor.
@@ -86,7 +87,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<Unit> Approve(string owner, string name, long runId);
+        IObservable<Unit> Approve(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific workflow run attempt. Anyone with read access to the repository can use this endpoint.
@@ -98,7 +99,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        IObservable<WorkflowRun> GetAttempt(string owner, string name, long runId, long attemptNumber);
+        IObservable<WorkflowRun> GetAttempt(string owner, string name, long runId, long attemptNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a byte array containing an archive of log files for a specific workflow run attempt.
@@ -110,7 +111,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        IObservable<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber);
+        IObservable<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Cancels a workflow run using its Id.
@@ -121,7 +122,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<Unit> Cancel(string owner, string name, long runId);
+        IObservable<Unit> Cancel(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a byte array containing an archive of log files for a workflow run.
@@ -132,7 +133,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<byte[]> GetLogs(string owner, string name, long runId);
+        IObservable<byte[]> GetLogs(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes all logs for a workflow run.
@@ -143,7 +144,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<Unit> DeleteLogs(string owner, string name, long runId);
+        IObservable<Unit> DeleteLogs(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Approve or reject pending deployments that are waiting on approval by a required reviewer.
@@ -155,7 +156,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="review">The review for the pending deployment.</param>
-        IObservable<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review);
+        IObservable<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Re-runs a specific workflow run in a repository.
@@ -166,7 +167,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<Unit> Rerun(string owner, string name, long runId);
+        IObservable<Unit> Rerun(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Re-run all of the failed jobs and their dependent jobs in a workflow run using the Id of the workflow run.
@@ -177,7 +178,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<Unit> RerunFailedJobs(string owner, string name, long runId);
+        IObservable<Unit> RerunFailedJobs(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the number of billable minutes and total run time for a specific workflow run.
@@ -188,7 +189,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<WorkflowRunUsage> GetUsage(string owner, string name, long runId);
+        IObservable<WorkflowRunUsage> GetUsage(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -199,7 +200,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
-        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId);
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -210,7 +211,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
-        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName);
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -222,7 +223,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
-        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest);
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -234,7 +235,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
-        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest);
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -247,7 +248,7 @@ namespace Octokit.Reactive
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -260,6 +261,6 @@ namespace Octokit.Reactive
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
+        IObservable<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

@@ -1,57 +1,58 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive.Internal
 {
     public static class ConnectionExtensions
     {
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url)
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, CancellationToken cancellationToken = default)
         {
-            return GetPages(url, null, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, null).ToObservable());
+            return GetPages(url, null, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, null, null, cancellationToken).ToObservable());
         }
 
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, ApiOptions options)
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return connection.GetAndFlattenAllPages<T>(url, null, options);
+            return connection.GetAndFlattenAllPages<T>(url, null, options, cancellationToken);
         }
 
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters)
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
         {
-            return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams).ToObservable());
+            return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams, null, cancellationToken).ToObservable());
         }
 
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, ApiOptions options)
-        {
-            return GetPagesWithOptions(url, parameters, options, (pageUrl, pageParams, o) =>
-            {
-                var passingParameters = Pagination.Setup(parameters, options);
-                return connection.Get<List<T>>(pageUrl, passingParameters).ToObservable();
-            });
-        }
-
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts)
-        {
-            return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams, accepts).ToObservable());
-        }
-
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts, ApiOptions options)
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, ApiOptions options, CancellationToken cancellationToken = default)
         {
             return GetPagesWithOptions(url, parameters, options, (pageUrl, pageParams, o) =>
             {
                 var passingParameters = Pagination.Setup(parameters, options);
-                return connection.Get<List<T>>(pageUrl, passingParameters, accepts).ToObservable();
+                return connection.Get<List<T>>(pageUrl, passingParameters, null, cancellationToken).ToObservable();
             });
         }
 
-        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts, ApiOptions options, Func<object, object> preprocessResponseBody)
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts, CancellationToken cancellationToken = default)
+        {
+            return GetPages(url, parameters, (pageUrl, pageParams) => connection.Get<List<T>>(pageUrl, pageParams, accepts, cancellationToken).ToObservable());
+        }
+
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts, ApiOptions options, CancellationToken cancellationToken = default)
+        {
+            return GetPagesWithOptions(url, parameters, options, (pageUrl, pageParams, o) =>
+            {
+                var passingParameters = Pagination.Setup(parameters, options);
+                return connection.Get<List<T>>(pageUrl, passingParameters, accepts, cancellationToken).ToObservable();
+            });
+        }
+
+        public static IObservable<T> GetAndFlattenAllPages<T>(this IConnection connection, Uri url, IDictionary<string, string> parameters, string accepts, ApiOptions options, Func<object, object> preprocessResponseBody, CancellationToken cancellationToken = default)
         {
             return GetPagesWithOptionsAndCallback(url, parameters, options, preprocessResponseBody, (pageUrl, pageParams, o, preprocess) =>
             {
                 var passingParameters = Pagination.Setup(parameters, options);
-                return connection.Get<List<T>>(pageUrl, passingParameters, accepts).ToObservable();
+                return connection.Get<List<T>>(pageUrl, passingParameters, accepts, cancellationToken, preprocess).ToObservable();
             });
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -414,7 +415,7 @@ public class PullRequestReviewCommentsClientTests
 
             connection.Received().Get<PullRequestReviewComment>(
                 Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/comments/53"),
-                Arg.Any<Dictionary<string, string>>());
+                Arg.Any<Dictionary<string, string>>(), Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -425,7 +426,7 @@ public class PullRequestReviewCommentsClientTests
 
             client.GetComment(1, 53);
 
-            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/comments/53"));
+            connection.Received().Get<PullRequestReviewComment>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/comments/53"), null, Arg.Any<CancellationToken>());
         }
 
         [Fact]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit;
@@ -138,7 +139,7 @@ public class PullRequestReviewsClientTests
             client.Get("owner", "name", 53, 2);
 
             connection.Received().Get<PullRequestReview>(
-                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/53/reviews/2"));
+                Arg.Is<Uri>(u => u.ToString() == "repos/owner/name/pulls/53/reviews/2"), null, null, Arg.Any<CancellationToken>());
         }
 
         [Fact]
@@ -149,7 +150,7 @@ public class PullRequestReviewsClientTests
 
             client.Get(1, 53, 2);
 
-            connection.Received().Get<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/53/reviews/2"));
+            connection.Received().Get<PullRequestReview>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/pulls/53/reviews/2"), null, null, Arg.Any<CancellationToken>());
         }
 
         [Fact]

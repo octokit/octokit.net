@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
@@ -33,12 +34,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key.</param>
-        public IObservable<DeployKey> Get(string owner, string name, int deployKeyId)
+        public IObservable<DeployKey> Get(string owner, string name, int deployKeyId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, deployKeyId).ToObservable();
+            return _client.Get(owner, name, deployKeyId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -49,9 +50,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key.</param>
-        public IObservable<DeployKey> Get(long repositoryId, int deployKeyId)
+        public IObservable<DeployKey> Get(long repositoryId, int deployKeyId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId, deployKeyId).ToObservable();
+            return _client.Get(repositoryId, deployKeyId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -62,12 +63,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        public IObservable<DeployKey> GetAll(string owner, string name)
+        public IObservable<DeployKey> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -77,9 +78,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/keys/#list"> API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
-        public IObservable<DeployKey> GetAll(long repositoryId)
+        public IObservable<DeployKey> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -91,13 +92,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<DeployKey> GetAll(string owner, string name, ApiOptions options)
+        public IObservable<DeployKey> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options);
+            return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -108,11 +109,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<DeployKey> GetAll(long repositoryId, ApiOptions options)
+        public IObservable<DeployKey> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        public IObservable<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey)
+        public IObservable<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -137,7 +138,7 @@ namespace Octokit.Reactive
             if (string.IsNullOrWhiteSpace(newDeployKey.Key))
                 throw new ArgumentException("The new deploy key's key must not be null.");
 
-            return _client.Create(owner, name, newDeployKey).ToObservable();
+            return _client.Create(owner, name, newDeployKey, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
-        public IObservable<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey)
+        public IObservable<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newDeployKey, nameof(newDeployKey));
 
@@ -159,7 +160,7 @@ namespace Octokit.Reactive
             if (string.IsNullOrWhiteSpace(newDeployKey.Key))
                 throw new ArgumentException("The new deploy key's key must not be null.");
 
-            return _client.Create(repositoryId, newDeployKey).ToObservable();
+            return _client.Create(repositoryId, newDeployKey, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -171,12 +172,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key to delete.</param>
-        public IObservable<Unit> Delete(string owner, string name, int deployKeyId)
+        public IObservable<Unit> Delete(string owner, string name, int deployKeyId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Delete(owner, name, deployKeyId).ToObservable();
+            return _client.Delete(owner, name, deployKeyId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -187,9 +188,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key to delete.</param>
-        public IObservable<Unit> Delete(long repositoryId, int deployKeyId)
+        public IObservable<Unit> Delete(long repositoryId, int deployKeyId, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(repositoryId, deployKeyId).ToObservable();
+            return _client.Delete(repositoryId, deployKeyId, cancellationToken).ToObservable();
         }
     }
 }
