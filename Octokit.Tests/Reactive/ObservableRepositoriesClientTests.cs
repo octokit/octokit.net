@@ -639,7 +639,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllLanguages("owner", "repo");
 
-                gitHubClient.Connection.Received(1).GetResponse<List<Tuple<string, long>>>(expected);
+                gitHubClient.Connection.Received(1).Get<List<Tuple<string, long>>>(expected, Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -651,7 +651,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllLanguages(1);
 
-                gitHubClient.Connection.Received(1).GetResponse<List<Tuple<string, long>>>(expected);
+                gitHubClient.Connection.Received(1).Get<List<Tuple<string, long>>>(expected, Arg.Any<IDictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
