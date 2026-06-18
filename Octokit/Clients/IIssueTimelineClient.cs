@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -20,7 +21,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repo">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the various events that have occurred around an issue or pull request.
@@ -32,7 +34,8 @@ namespace Octokit
         /// <param name="repo">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API repsonse</param>
-        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(string owner, string repo, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the various events that have occurred around an issue or pull request.
@@ -42,7 +45,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the various events that have occurred around an issue or pull request.
@@ -53,6 +57,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<TimelineEventInfo>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -20,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
-        IObservable<Unit> Rerun(string owner, string name, long jobId);
+        IObservable<Unit> Rerun(string owner, string name, long jobId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific job in a workflow run.
@@ -31,7 +32,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The unique identifier of the job.</param>
-        IObservable<WorkflowJob> Get(string owner, string name, long jobId);
+        IObservable<WorkflowJob> Get(string owner, string name, long jobId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the plain text log file for a workflow job.
@@ -42,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
-        IObservable<string> GetLogs(string owner, string name, long jobId);
+        IObservable<string> GetLogs(string owner, string name, long jobId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run.
@@ -53,7 +54,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId);
+        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run.
@@ -65,7 +66,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
-        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest);
+        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run.
@@ -78,7 +79,7 @@ namespace Octokit.Reactive
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, ApiOptions options);
+        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run attempt.
@@ -90,7 +91,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber);
+        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists jobs for a specific workflow run attempt.
@@ -103,6 +104,6 @@ namespace Octokit.Reactive
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, ApiOptions options);
+        IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

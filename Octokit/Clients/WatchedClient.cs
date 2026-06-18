@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -28,12 +29,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/subscribers")]
-        public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name)
+        public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllWatchers(owner, name, ApiOptions.None);
+            return GetAllWatchers(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -42,9 +43,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repositories/{id}/subscribers")]
-        public Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId)
+        public Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllWatchers(repositoryId, ApiOptions.None);
+            return GetAllWatchers(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Octokit
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/subscribers")]
-        public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAllWatchers(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -71,7 +72,7 @@ namespace Octokit
         /// <param name="options">Options for changing API's response.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repositories/{id}/subscribers")]
-        public Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<User>> GetAllWatchers(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -86,9 +87,9 @@ namespace Octokit
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
         /// </returns>
         [ManualRoute("GET", "/user/subscribers")]
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent()
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Octokit
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>(ies) watched by the current authenticated user.
         /// </returns>
         [ManualRoute("GET", "/user/subscribers")]
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -116,11 +117,11 @@ namespace Octokit
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
         /// </returns>
         [ManualRoute("GET", "/users/{username}/subscriptions")]
-        public Task<IReadOnlyList<Repository>> GetAllForUser(string user)
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return GetAllForUser(user, ApiOptions.None);
+            return GetAllForUser(user, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +134,7 @@ namespace Octokit
         /// A <see cref="IReadOnlyPagedCollection{Repository}"/>(ies) watched by the specified user.
         /// </returns>
         [ManualRoute("GET", "/users/{username}/subscriptions")]
-        public Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string user, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -148,7 +149,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/subscription")]
-        public async Task<bool> CheckWatched(string owner, string name)
+        public async Task<bool> CheckWatched(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -172,7 +173,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         [ManualRoute("GET", "/repositories/{id}/subscription")]
-        public async Task<bool> CheckWatched(long repositoryId)
+        public async Task<bool> CheckWatched(long repositoryId, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -194,7 +195,7 @@ namespace Octokit
         /// <param name="name">The name of the repository to star</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/subscription")]
-        public Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription)
+        public Task<Subscription> WatchRepo(string owner, string name, NewSubscription newSubscription, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -209,11 +210,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newSubscription">A <see cref="NewSubscription"/> instance describing the new subscription to create</param>
         [ManualRoute("PUT", "/repositories/{id}/subscription")]
-        public Task<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription)
+        public Task<Subscription> WatchRepo(long repositoryId, NewSubscription newSubscription, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newSubscription, nameof(newSubscription));
 
-            return ApiConnection.Put<Subscription>(ApiUrls.Watched(repositoryId), newSubscription);
+            return ApiConnection.Put<Subscription>(ApiUrls.Watched(repositoryId), newSubscription, cancellationToken);
         }
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository to unstar</param>
         /// <param name="name">The name of the repository to unstar</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/subscription")]
-        public async Task<bool> UnwatchRepo(string owner, string name)
+        public async Task<bool> UnwatchRepo(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -245,7 +246,7 @@ namespace Octokit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("DELETE", "/repositories/{id}/subscription")]
-        public async Task<bool> UnwatchRepo(long repositoryId)
+        public async Task<bool> UnwatchRepo(long repositoryId, CancellationToken cancellationToken = default)
         {
             try
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -15,7 +16,7 @@ namespace Octokit.Reactive
         /// <returns>IObservable{GistComment}.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<GistComment> Get(string gistId, long commentId);
+        IObservable<GistComment> Get(string gistId, long commentId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all comments for the gist with the specified id.
@@ -23,7 +24,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/gists/comments/#list-comments-on-a-gist</remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <returns>IObservable{GistComment}.</returns>
-        IObservable<GistComment> GetAllForGist(string gistId);
+        IObservable<GistComment> GetAllForGist(string gistId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all comments for the gist with the specified id.
@@ -32,7 +33,7 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>IObservable{GistComment}.</returns>
-        IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options);
+        IObservable<GistComment> GetAllForGist(string gistId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a comment for the gist with the specified id.
@@ -41,7 +42,7 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="comment">The body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        IObservable<GistComment> Create(string gistId, string comment);
+        IObservable<GistComment> Create(string gistId, string comment, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the comment with the specified gist- and comment id.
@@ -51,7 +52,7 @@ namespace Octokit.Reactive
         /// <param name="commentId">The id of the comment</param>
         /// <param name="comment">The updated body of the comment</param>
         /// <returns>IObservable{GistComment}.</returns>
-        IObservable<GistComment> Update(string gistId, long commentId, string comment);
+        IObservable<GistComment> Update(string gistId, long commentId, string comment, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the comment with the specified gist- and comment id.
@@ -60,6 +61,6 @@ namespace Octokit.Reactive
         /// <param name="gistId">The id of the gist</param>
         /// <param name="commentId">The id of the comment</param>
         /// <returns>IObservable{Unit}.</returns>
-        IObservable<Unit> Delete(string gistId, long commentId);
+        IObservable<Unit> Delete(string gistId, long commentId, CancellationToken cancellationToken = default);
     }
 }

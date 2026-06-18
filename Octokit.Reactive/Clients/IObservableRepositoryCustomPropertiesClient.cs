@@ -1,5 +1,6 @@
 using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -19,7 +20,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="repoName">The name of the repository.</param>
-        IObservable<CustomPropertyValue> GetAll(string owner, string repoName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<CustomPropertyValue> GetAll(string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create new or update existing custom property values for a repository. Using a value of null for a custom property will remove or 'unset' the property value from the repository.
@@ -30,6 +32,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
         /// <param name="propertyValues">The custom property values to create or update</param>
-        IObservable<Unit> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues, CancellationToken cancellationToken = default);
     }
 }

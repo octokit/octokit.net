@@ -2,6 +2,7 @@
 using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -28,7 +29,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
-        public IObservable<Package> GetAllForOrg(string org, PackageType packageType)
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -45,7 +46,7 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, ApiOptions options)
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -63,12 +64,12 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility)
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForOrg(org, packageType, packageVisibility, ApiOptions.None);
+            return GetAllForOrg(org, packageType, packageVisibility, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Octokit.Reactive
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        public IObservable<Package> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));            
@@ -90,7 +91,7 @@ namespace Octokit.Reactive
             var route = ApiUrls.PackagesOrg(org);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options);
+            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -102,13 +103,13 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Package> GetForOrg(string org, PackageType packageType, string packageName)
+        public IObservable<Package> GetForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.GetForOrg(org, packageType, packageName).ToObservable();
+            return _client.GetForOrg(org, packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -120,13 +121,13 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Unit> DeleteForOrg(string org, PackageType packageType, string packageName)
+        public IObservable<Unit> DeleteForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.DeleteForOrg(org, packageType, packageName).ToObservable();
+            return _client.DeleteForOrg(org, packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -138,13 +139,13 @@ namespace Octokit.Reactive
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Unit> RestoreForOrg(string org, PackageType packageType, string packageName)
+        public IObservable<Unit> RestoreForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.RestoreForOrg(org, packageType, packageName).ToObservable();
+            return _client.RestoreForOrg(org, packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -154,11 +155,11 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
-        public IObservable<Package> GetAllForActiveUser(PackageType packageType)
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             
-            return GetAllForActiveUser(packageType, ApiOptions.None);
+            return GetAllForActiveUser(packageType, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Package> GetAllForActiveUser(PackageType packageType, ApiOptions options)
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -185,11 +186,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        public IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility)
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForActiveUser(packageType, packageVisibility, ApiOptions.None);
+            return GetAllForActiveUser(packageType, packageVisibility, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace Octokit.Reactive
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        public IObservable<Package> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -209,7 +210,7 @@ namespace Octokit.Reactive
             var route = ApiUrls.PackagesActiveUser();
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options);
+            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -220,12 +221,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Package> GetForActiveUser(PackageType packageType, string packageName)
+        public IObservable<Package> GetForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.GetForActiveUser(packageType, packageName).ToObservable();
+            return _client.GetForActiveUser(packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -236,12 +237,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Unit> DeleteForActiveUser(PackageType packageType, string packageName)
+        public IObservable<Unit> DeleteForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.DeleteForActiveUser(packageType, packageName).ToObservable();
+            return _client.DeleteForActiveUser(packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -252,12 +253,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Unit> RestoreForActiveUser(PackageType packageType, string packageName)
+        public IObservable<Unit> RestoreForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.RestoreForActiveUser(packageType, packageName).ToObservable();
+            return _client.RestoreForActiveUser(packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -268,12 +269,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
-        public IObservable<Package> GetAllForUser(string username, PackageType packageType)
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForUser(username, packageType, ApiOptions.None);
+            return GetAllForUser(username, packageType, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +286,7 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Package> GetAllForUser(string username, PackageType packageType, ApiOptions options)
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -303,12 +304,12 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        public IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility)
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForUser(username, packageType, packageVisibility, ApiOptions.None);
+            return GetAllForUser(username, packageType, packageVisibility, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +322,7 @@ namespace Octokit.Reactive
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options)
+        public IObservable<Package> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -330,7 +331,7 @@ namespace Octokit.Reactive
             var route = ApiUrls.PackagesUser(username);
             var parameters = ParameterBuilder.AddParameter("package_type", packageType).AddOptionalParameter("visibility", packageVisibility);
 
-            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options);
+            return _connection.GetAndFlattenAllPages<Package>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -342,13 +343,13 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Package> GetForUser(string username, PackageType packageType, string packageName)
+        public IObservable<Package> GetForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.GetForUser(username, packageType, packageName).ToObservable();
+            return _client.GetForUser(username, packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -360,13 +361,13 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Unit> DeleteForUser(string username, PackageType packageType, string packageName)
+        public IObservable<Unit> DeleteForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.DeleteForUser(username, packageType, packageName).ToObservable();
+            return _client.DeleteForUser(username, packageType, packageName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -378,13 +379,13 @@ namespace Octokit.Reactive
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        public IObservable<Unit> RestoreForUser(string username, PackageType packageType, string packageName)
+        public IObservable<Unit> RestoreForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
 
-            return _client.RestoreForUser(username, packageType, packageName).ToObservable();
+            return _client.RestoreForUser(username, packageType, packageName, cancellationToken).ToObservable();
         }
     }
 }

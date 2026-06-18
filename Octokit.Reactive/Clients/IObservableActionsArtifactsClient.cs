@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.IO;
 using System.Reactive;
 
@@ -12,7 +13,7 @@ namespace Octokit.Reactive
     /// </remarks>
     public interface IObservableActionsArtifactsClient
     {
-        IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null);
+        IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Gets the specified artifact
@@ -21,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="repository"></param>
         /// <param name="artifactId"></param>
         /// <returns></returns>
-        IObservable<Artifact> GetArtifact(string owner, string repository, long artifactId);
+        IObservable<Artifact> GetArtifact(string owner, string repository, long artifactId, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Deletes the specified artifact
@@ -30,7 +31,7 @@ namespace Octokit.Reactive
         /// <param name="repository"></param>
         /// <param name="artifactId"></param>
         /// <returns></returns>
-        IObservable<Unit> DeleteArtifact(string owner, string repository, long artifactId);
+        IObservable<Unit> DeleteArtifact(string owner, string repository, long artifactId, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Downloads the specified artifact's contents
@@ -40,7 +41,7 @@ namespace Octokit.Reactive
         /// <param name="artifactId"></param>
         /// <param name="archiveFormat"></param>
         /// <returns></returns>
-        IObservable<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat);
+        IObservable<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Lists the artifacts for a specific workflow run
@@ -49,6 +50,6 @@ namespace Octokit.Reactive
         /// <param name="repository"></param>
         /// <param name="runId"></param>
         /// <returns></returns>
-        IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null);
+        IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null, CancellationToken cancellationToken = default);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -21,7 +22,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<Deployment>> GetAll(string owner, string name);
+        Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -31,7 +32,7 @@ namespace Octokit
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<Deployment>> GetAll(long repositoryId);
+        Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -43,7 +44,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<Deployment>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -54,7 +55,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Deployment>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new deployment for the specified repository.
@@ -66,7 +67,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        Task<Deployment> Create(string owner, string name, NewDeployment newDeployment);
+        Task<Deployment> Create(string owner, string name, NewDeployment newDeployment, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new deployment for the specified repository.
@@ -77,7 +78,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        Task<Deployment> Create(long repositoryId, NewDeployment newDeployment);
+        Task<Deployment> Create(long repositoryId, NewDeployment newDeployment, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Client for managing deployment status.

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -33,12 +34,12 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        public IObservable<Page> Get(string owner, string name)
+        public IObservable<Page> Get(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name).ToObservable();
+            return _client.Get(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -48,9 +49,9 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<Page> Get(long repositoryId)
+        public IObservable<Page> Get(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId).ToObservable();
+            return _client.Get(repositoryId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -61,12 +62,12 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetAll(string owner, string name)
+        public IObservable<PagesBuild> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -76,9 +77,9 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetAll(long repositoryId)
+        public IObservable<PagesBuild> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -90,13 +91,13 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetAll(string owner, string name, ApiOptions options)
+        public IObservable<PagesBuild> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name), options);
+            return _connection.GetAndFlattenAllPages<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetAll(long repositoryId, ApiOptions options)
+        public IObservable<PagesBuild> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -122,12 +123,12 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetLatest(string owner, string name)
+        public IObservable<PagesBuild> GetLatest(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetLatest(owner, name).ToObservable();
+            return _client.GetLatest(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -137,9 +138,9 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> GetLatest(long repositoryId)
+        public IObservable<PagesBuild> GetLatest(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.GetLatest(repositoryId).ToObservable();
+            return _client.GetLatest(repositoryId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -150,12 +151,12 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> RequestPageBuild(string owner, string name)
+        public IObservable<PagesBuild> RequestPageBuild(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.RequestPageBuild(owner, name).ToObservable();
+            return _client.RequestPageBuild(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -165,9 +166,9 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        public IObservable<PagesBuild> RequestPageBuild(long repositoryId)
+        public IObservable<PagesBuild> RequestPageBuild(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.RequestPageBuild(repositoryId).ToObservable();
+            return _client.RequestPageBuild(repositoryId, cancellationToken).ToObservable();
         }
     }
 }

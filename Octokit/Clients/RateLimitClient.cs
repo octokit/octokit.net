@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -27,9 +28,9 @@ namespace Octokit
         /// <returns>An <see cref="MiscellaneousRateLimit"/> of Rate Limits.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [ManualRoute("GET", "/rate_limit")]
-        public Task<MiscellaneousRateLimit> GetRateLimits()
+        public Task<MiscellaneousRateLimit> GetRateLimits(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit());
+            return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit(), null, null, cancellationToken);
         }
     }
 }

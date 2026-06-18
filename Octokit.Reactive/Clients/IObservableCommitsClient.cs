@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -22,7 +23,7 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Commit> Get(string owner, string name, string reference);
+        IObservable<Commit> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a commit for a given repository by sha reference
@@ -34,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="reference">Tha sha reference of the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Commit> Get(long repositoryId, string reference);
+        IObservable<Commit> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a commit for a given repository
@@ -45,7 +46,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
-        IObservable<Commit> Create(string owner, string name, NewCommit commit);
+        IObservable<Commit> Create(string owner, string name, NewCommit commit, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a commit for a given repository
@@ -55,6 +56,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
-        IObservable<Commit> Create(long repositoryId, NewCommit commit);
+        IObservable<Commit> Create(long repositoryId, NewCommit commit, CancellationToken cancellationToken = default);
     }
 }

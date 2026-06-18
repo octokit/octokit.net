@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -13,7 +14,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repositories</returns>
-        IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search);
+        IObservable<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search users
@@ -21,7 +22,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search);
+        IObservable<SearchUsersResult> SearchUsers(SearchUsersRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search issues
@@ -29,7 +30,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search);
+        IObservable<SearchIssuesResult> SearchIssues(SearchIssuesRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search code
@@ -37,7 +38,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search);
+        IObservable<SearchCodeResult> SearchCode(SearchCodeRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search labels
@@ -45,6 +46,6 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of labels</returns>
-        IObservable<SearchLabelsResult> SearchLabels(SearchLabelsRequest search);
+        IObservable<SearchLabelsResult> SearchLabels(SearchLabelsRequest search, CancellationToken cancellationToken = default);
     }
 }

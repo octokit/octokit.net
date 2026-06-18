@@ -30,9 +30,9 @@ namespace Octokit.Reactive
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-self-hosted-runners-for-an-enterprise
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
-    public IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise)
+    public IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, CancellationToken cancellationToken = default)
     {
-      return ListAllRunnersForEnterprise(enterprise, ApiOptions.None);
+      return ListAllRunnersForEnterprise(enterprise, ApiOptions.None, cancellationToken);
     }
 
     /// <summary>
@@ -43,11 +43,11 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="options">Options for changing the API response</param>
-    public IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options)
+    public IObservable<RunnerResponse> ListAllRunnersForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default)
     {
       Ensure.ArgumentNotNull(options, nameof(options));
 
-      return _client.ListAllRunnersForEnterprise(enterprise, options).ToObservable();
+      return _client.ListAllRunnersForEnterprise(enterprise, options, cancellationToken).ToObservable();
     }
 
     /// <summary>
@@ -57,9 +57,9 @@ namespace Octokit.Reactive
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-self-hosted-runners-for-an-organization
     /// </remarks>
     /// <param name="organization">The organization.</param>
-    public IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization)
+    public IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization, CancellationToken cancellationToken = default)
     {
-      return ListAllRunnersForOrganization(organization, ApiOptions.None);
+      return ListAllRunnersForOrganization(organization, ApiOptions.None, cancellationToken);
     }
 
     /// <summary>
@@ -70,12 +70,12 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="options">Options for changing the API response</param>
-    public IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options)
+    public IObservable<RunnerResponse> ListAllRunnersForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
       Ensure.ArgumentNotNull(options, nameof(options));
 
-      return _client.ListAllRunnersForOrganization(organization, options).ToObservable();
+      return _client.ListAllRunnersForOrganization(organization, options, cancellationToken).ToObservable();
     }
 
     /// <summary>
@@ -86,9 +86,9 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    public IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name)
+    public IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name, CancellationToken cancellationToken = default)
     {
-      return ListAllRunnersForRepository(owner, name, ApiOptions.None);
+      return ListAllRunnersForRepository(owner, name, ApiOptions.None, cancellationToken);
     }
 
     /// <summary>
@@ -100,13 +100,13 @@ namespace Octokit.Reactive
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="options">Options for changing the API response</param>
-    public IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options)
+    public IObservable<RunnerResponse> ListAllRunnersForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
       Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
       Ensure.ArgumentNotNull(options, nameof(options));
 
-      return _client.ListAllRunnersForRepository(owner, name, options).ToObservable();
+      return _client.ListAllRunnersForRepository(owner, name, options, cancellationToken).ToObservable();
     }
 
     /// <summary>
@@ -116,9 +116,9 @@ namespace Octokit.Reactive
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-enterprise
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
-    public IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise)
+    public IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, CancellationToken cancellationToken = default)
     {
-      return ListAllRunnerApplicationsForEnterprise(enterprise, ApiOptions.None);
+      return ListAllRunnerApplicationsForEnterprise(enterprise, ApiOptions.None, cancellationToken);
     }
 
     /// <summary>
@@ -129,11 +129,11 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="options">Options for changing the API response</param>
-    public IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options)
+    public IObservable<RunnerApplication> ListAllRunnerApplicationsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default)
     {
       Ensure.ArgumentNotNull(options, nameof(options));
 
-      return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise));
+      return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForEnterprise(enterprise), cancellationToken);
     }
 
     /// <summary>
@@ -143,9 +143,9 @@ namespace Octokit.Reactive
     /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runners?apiVersion=2022-11-28#list-runner-applications-for-an-organization
     /// </remarks>
     /// <param name="organization">The organization.</param>
-    public IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization)
+    public IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, CancellationToken cancellationToken = default)
     {
-      return ListAllRunnerApplicationsForOrganization(organization, ApiOptions.None);
+      return ListAllRunnerApplicationsForOrganization(organization, ApiOptions.None, cancellationToken);
     }
 
     /// <summary>
@@ -156,12 +156,12 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="options">Options for changing the API response</param>
-    public IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options)
+    public IObservable<RunnerApplication> ListAllRunnerApplicationsForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
       Ensure.ArgumentNotNull(options, nameof(options));
 
-      return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization));
+      return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForOrganization(organization), cancellationToken);
     }
 
     /// <summary>
@@ -172,9 +172,9 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
-    public IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name)
+    public IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, CancellationToken cancellationToken = default)
     {
-      return ListAllRunnerApplicationsForRepository(owner, name, ApiOptions.None);
+      return ListAllRunnerApplicationsForRepository(owner, name, ApiOptions.None, cancellationToken);
     }
 
     /// <summary>
@@ -186,13 +186,13 @@ namespace Octokit.Reactive
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="options">Options for changing the API response</param>
-    public IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options)
+    public IObservable<RunnerApplication> ListAllRunnerApplicationsForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
     {
       Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
       Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
       Ensure.ArgumentNotNull(options, nameof(options));
 
-      return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, name));
+      return _connection.GetAndFlattenAllPages<RunnerApplication>(ApiUrls.ActionsListRunnerApplicationsForRepository(owner, name), cancellationToken);
     }
 
     /// <summary>
@@ -203,9 +203,9 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="enterprise">The enterprise.</param>
     /// <param name="runnerId">The runner id.</param>
-    public IObservable<Unit> DeleteEnterpriseRunner(string enterprise, long runnerId)
+    public IObservable<Unit> DeleteEnterpriseRunner(string enterprise, long runnerId, CancellationToken cancellationToken = default)
     {
-      return _client.DeleteEnterpriseRunner(enterprise, runnerId).ToObservable();
+      return _client.DeleteEnterpriseRunner(enterprise, runnerId, cancellationToken).ToObservable();
     }
 
     /// <summary>
@@ -216,9 +216,9 @@ namespace Octokit.Reactive
     /// </remarks>
     /// <param name="organization">The organization.</param>
     /// <param name="runnerId">The runner id.</param>
-    public IObservable<Unit> DeleteOrganizationRunner(string organization, long runnerId)
+    public IObservable<Unit> DeleteOrganizationRunner(string organization, long runnerId, CancellationToken cancellationToken = default)
     {
-      return _client.DeleteOrganizationRunner(organization, runnerId).ToObservable();
+      return _client.DeleteOrganizationRunner(organization, runnerId, cancellationToken).ToObservable();
     }
 
     /// <summary>
@@ -230,9 +230,9 @@ namespace Octokit.Reactive
     /// <param name="owner">The owner of the repository.</param>
     /// <param name="name">The name of the repository.</param>
     /// <param name="runnerId">The runner id.</param>
-    public IObservable<Unit> DeleteRepositoryRunner(string owner, string name, long runnerId)
+    public IObservable<Unit> DeleteRepositoryRunner(string owner, string name, long runnerId, CancellationToken cancellationToken = default)
     {
-      return _client.DeleteRepositoryRunner(owner, name, runnerId).ToObservable();
+      return _client.DeleteRepositoryRunner(owner, name, runnerId, cancellationToken).ToObservable();
     }
 
     /// <summary>

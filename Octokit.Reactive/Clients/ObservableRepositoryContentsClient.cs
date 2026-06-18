@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -32,7 +33,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<Readme> GetReadme(string owner, string name)
+        public IObservable<Readme> GetReadme(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -44,7 +45,7 @@ namespace Octokit.Reactive
         /// Returns the HTML rendered README.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Readme> GetReadme(long repositoryId)
+        public IObservable<Readme> GetReadme(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client.Repository.Content.GetReadme(repositoryId).ToObservable();
         }
@@ -54,7 +55,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<string> GetReadmeHtml(string owner, string name)
+        public IObservable<string> GetReadmeHtml(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -66,7 +67,7 @@ namespace Octokit.Reactive
         /// Returns just the HTML portion of the README without the surrounding HTML document. 
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<string> GetReadmeHtml(long repositoryId)
+        public IObservable<string> GetReadmeHtml(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client.Repository.Content.GetReadmeHtml(repositoryId).ToObservable();
         }
@@ -77,7 +78,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<byte[]> GetArchive(string owner, string name)
+        public IObservable<byte[]> GetArchive(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -90,7 +91,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<byte[]> GetArchive(long repositoryId)
+        public IObservable<byte[]> GetArchive(long repositoryId, CancellationToken cancellationToken = default)
         {
             return GetArchive(repositoryId, ArchiveFormat.Tarball);
         }
@@ -102,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat)
+        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -116,7 +117,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/repos/contents/#get-archive-link</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
-        public IObservable<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat)
+        public IObservable<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, CancellationToken cancellationToken = default)
         {
             return GetArchive(repositoryId, archiveFormat, string.Empty);
         }
@@ -129,7 +130,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
-        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference)
+        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -145,7 +146,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
-        public IObservable<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference)
+        public IObservable<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(reference, nameof(reference));
 
@@ -161,7 +162,7 @@ namespace Octokit.Reactive
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
-        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
+        public IObservable<byte[]> GetArchive(string owner, string name, ArchiveFormat archiveFormat, string reference, TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -179,7 +180,7 @@ namespace Octokit.Reactive
         /// <param name="archiveFormat">The format of the archive. Can be either tarball or zipball</param>
         /// <param name="reference">A valid Git reference.</param>
         /// <param name="timeout"> Time span until timeout </param>
-        public IObservable<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout)
+        public IObservable<byte[]> GetArchive(long repositoryId, ArchiveFormat archiveFormat, string reference, TimeSpan timeout, CancellationToken cancellationToken = default)
         {
             Ensure.GreaterThanZero(timeout, nameof(timeout));
             Ensure.ArgumentNotNull(reference, nameof(reference));
@@ -196,7 +197,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
-        public IObservable<RepositoryContent> GetAllContents(string owner, string name, string path)
+        public IObservable<RepositoryContent> GetAllContents(string owner, string name, string path, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -215,7 +216,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The content path</param>
-        public IObservable<RepositoryContent> GetAllContents(long repositoryId, string path)
+        public IObservable<RepositoryContent> GetAllContents(long repositoryId, string path, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
 
@@ -229,7 +230,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<RepositoryContent> GetAllContents(string owner, string name)
+        public IObservable<RepositoryContent> GetAllContents(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -248,7 +249,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
-        public IObservable<byte[]> GetRawContent(string owner, string name, string path)
+        public IObservable<byte[]> GetRawContent(string owner, string name, string path, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -265,7 +266,7 @@ namespace Octokit.Reactive
         /// Returns the contents of the root directory in a repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<RepositoryContent> GetAllContents(long repositoryId)
+        public IObservable<RepositoryContent> GetAllContents(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client
                 .Connection
@@ -283,7 +284,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         /// <param name="path">The content path</param>
-        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference, string path)
+        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference, string path, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -303,7 +304,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The content path</param>
         /// <param name="reference">The name of the commit/branch/tag.</param>
-        public IObservable<byte[]> GetRawContentByRef(string owner, string name, string path, string reference)
+        public IObservable<byte[]> GetRawContentByRef(string owner, string name, string path, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -327,7 +328,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
         /// <param name="path">The content path</param>
-        public IObservable<RepositoryContent> GetAllContentsByRef(long repositoryId, string reference, string path)
+        public IObservable<RepositoryContent> GetAllContentsByRef(long repositoryId, string reference, string path, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
@@ -341,7 +342,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main)</param>
-        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference)
+        public IObservable<RepositoryContent> GetAllContentsByRef(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -355,7 +356,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The name of the commit/branch/tag. Default: the repository’s default branch (usually main )</param>
-        public IObservable<RepositoryContent> GetAllContentsByRef(long repositoryId, string reference)
+        public IObservable<RepositoryContent> GetAllContentsByRef(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -369,7 +370,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        public IObservable<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request)
+        public IObservable<RepositoryContentChangeSet> CreateFile(string owner, string name, string path, CreateFileRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -385,7 +386,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to create</param>
-        public IObservable<RepositoryContentChangeSet> CreateFile(long repositoryId, string path, CreateFileRequest request)
+        public IObservable<RepositoryContentChangeSet> CreateFile(long repositoryId, string path, CreateFileRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -400,7 +401,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
-        public IObservable<RepositoryContentChangeSet> UpdateFile(string owner, string name, string path, UpdateFileRequest request)
+        public IObservable<RepositoryContentChangeSet> UpdateFile(string owner, string name, string path, UpdateFileRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -416,7 +417,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to update</param>
-        public IObservable<RepositoryContentChangeSet> UpdateFile(long repositoryId, string path, UpdateFileRequest request)
+        public IObservable<RepositoryContentChangeSet> UpdateFile(long repositoryId, string path, UpdateFileRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
             Ensure.ArgumentNotNull(request, nameof(request));
@@ -431,7 +432,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
-        public IObservable<Unit> DeleteFile(string owner, string name, string path, DeleteFileRequest request)
+        public IObservable<Unit> DeleteFile(string owner, string name, string path, DeleteFileRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -447,7 +448,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="path">The path to the file</param>
         /// <param name="request">Information about the file to delete</param>
-        public IObservable<Unit> DeleteFile(long repositoryId, string path, DeleteFileRequest request)
+        public IObservable<Unit> DeleteFile(long repositoryId, string path, DeleteFileRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(path, nameof(path));
             Ensure.ArgumentNotNull(request, nameof(request));

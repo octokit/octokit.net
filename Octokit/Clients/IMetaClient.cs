@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -18,8 +19,9 @@ namespace Octokit
         /// <summary>
         /// Retrieves information about GitHub.com, the service or a GitHub Enterprise installation.
         /// </summary>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
-        Task<Meta> GetMetadata();
+        Task<Meta> GetMetadata(CancellationToken cancellationToken = default);
     }
 }

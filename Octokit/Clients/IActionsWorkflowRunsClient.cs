@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,7 +20,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
-        Task<WorkflowRunsResponse> List(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> List(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all workflow runs for a repository.
@@ -30,7 +32,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
-        Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all workflow runs for a repository.
@@ -42,7 +45,8 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> List(string owner, string name, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific workflow run in a repository. Anyone with read access to the repository can use this endpoint.
@@ -53,7 +57,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task<WorkflowRun> Get(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRun> Get(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a specific workflow run. Anyone with write access to the repository can use this endpoint.
@@ -64,7 +69,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task Delete(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the review history for a workflow run.
@@ -75,9 +81,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 30/03/2022)")]
         [ExcludeFromPaginationNamingConventionTest("Pagination not supported by GitHub API (tested 30/03/2022)")]
-        Task<IReadOnlyList<EnvironmentApprovals>> GetReviewHistory(string owner, string name, long runId);
+        Task<IReadOnlyList<EnvironmentApprovals>> GetReviewHistory(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Approve or reject pending deployments that are waiting on approval by a required reviewer.
@@ -89,7 +96,8 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="review">The review for the pending deployment.</param>
-        Task<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Deployment> ReviewPendingDeployments(string owner, string name, long runId, PendingDeploymentReview review, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Approves a workflow run for a pull request from a public fork of a first time contributor.
@@ -100,7 +108,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task Approve(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Approve(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific workflow run attempt. Anyone with read access to the repository can use this endpoint.
@@ -112,7 +121,8 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        Task<WorkflowRun> GetAttempt(string owner, string name, long runId, long attemptNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRun> GetAttempt(string owner, string name, long runId, long attemptNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a byte array containing an archive of log files for a specific workflow run attempt.
@@ -124,7 +134,8 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        Task<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<byte[]> GetAttemptLogs(string owner, string name, long runId, long attemptNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Cancels a workflow run using its Id.
@@ -135,7 +146,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task Cancel(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Cancel(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a byte array containing an archive of log files for a workflow run.
@@ -146,7 +158,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task<byte[]> GetLogs(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<byte[]> GetLogs(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes all logs for a workflow run.
@@ -157,7 +170,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task DeleteLogs(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task DeleteLogs(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Re-runs your workflow run using its Id.
@@ -168,7 +182,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task Rerun(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Rerun(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Re-run all of the failed jobs and their dependent jobs in a workflow run using the Id of the workflow run.
@@ -179,7 +194,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task RerunFailedJobs(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task RerunFailedJobs(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the number of billable minutes and total run time for a specific workflow run.
@@ -190,7 +206,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        Task<WorkflowRunUsage> GetUsage(string owner, string name, long runId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunUsage> GetUsage(string owner, string name, long runId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -201,7 +218,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
-        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -212,7 +230,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
-        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -224,7 +243,8 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
-        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -236,7 +256,8 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
-        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -249,7 +270,8 @@ namespace Octokit
         /// <param name="workflowId">The Id of the workflow.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, long workflowId, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all workflow runs for a workflow.
@@ -262,6 +284,7 @@ namespace Octokit
         /// <param name="workflowFileName">The workflow file name.</param>
         /// <param name="workflowRunsRequest">Details to filter the request, such as by check suite Id.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<WorkflowRunsResponse> ListByWorkflow(string owner, string name, string workflowFileName, WorkflowRunsRequest workflowRunsRequest, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

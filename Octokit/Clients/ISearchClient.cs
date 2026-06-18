@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -16,7 +17,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of repos</returns>
-        Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search);
+        Task<SearchRepositoryResult> SearchRepo(SearchRepositoriesRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search users
@@ -24,7 +25,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of users</returns>
-        Task<SearchUsersResult> SearchUsers(SearchUsersRequest search);
+        Task<SearchUsersResult> SearchUsers(SearchUsersRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search issues
@@ -32,7 +33,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of issues</returns>
-        Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search);
+        Task<SearchIssuesResult> SearchIssues(SearchIssuesRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search code
@@ -40,7 +41,7 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of files</returns>
-        Task<SearchCodeResult> SearchCode(SearchCodeRequest search);
+        Task<SearchCodeResult> SearchCode(SearchCodeRequest search, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// search labels
@@ -48,6 +49,6 @@ namespace Octokit
         /// </summary>
         /// <param name="search"></param>
         /// <returns>List of labels</returns>
-        Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search);
+        Task<SearchLabelsResult> SearchLabels(SearchLabelsRequest search, CancellationToken cancellationToken = default);
     }
 }

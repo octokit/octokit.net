@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -18,7 +19,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all reactions for a specified Issue
@@ -28,7 +30,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all reactions for a specified Issue
@@ -36,7 +39,8 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/reactions/#list-reactions-for-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all reactions for a specified Issue
@@ -45,7 +49,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a reaction for a specified Issue
@@ -55,7 +60,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
-        Task<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Reaction> Create(string owner, string name, long issueNumber, NewReaction reaction, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a reaction for a specified Issue
@@ -64,7 +70,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reaction">The reaction to create</param>
-        Task<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Reaction> Create(long repositoryId, long issueNumber, NewReaction reaction, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a reaction for a specified Issue
@@ -74,8 +81,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        Task Delete(string owner, string name, long issueNumber, long reactionId);
+        Task Delete(string owner, string name, long issueNumber, long reactionId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a reaction for a specified Issue
@@ -84,7 +92,8 @@ namespace Octokit
         /// <param name="repositoryId">The owner of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="reactionId">The reaction id</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        Task Delete(long repositoryId, long issueNumber, long reactionId);
+        Task Delete(long repositoryId, long issueNumber, long reactionId, CancellationToken cancellationToken = default);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -29,9 +30,9 @@ namespace Octokit
         /// </remarks>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         [ManualRoute("GET", "/user/emails")]
-        public Task<IReadOnlyList<EmailAddress>> GetAll()
+        public Task<IReadOnlyList<EmailAddress>> GetAll(CancellationToken cancellationToken = default)
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -42,11 +43,11 @@ namespace Octokit
         /// </remarks>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         [ManualRoute("GET", "/user/emails")]
-        public Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options)
+        public Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), options);
+            return ApiConnection.GetAll<EmailAddress>(ApiUrls.Emails(), options, cancellationToken);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace Octokit
             if (emailAddresses.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
 
-            return ApiConnection.Post<IReadOnlyList<EmailAddress>>(ApiUrls.Emails(), emailAddresses);
+            return ApiConnection.Post<IReadOnlyList<EmailAddress>>(ApiUrls.Emails(), emailAddresses, default);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Octokit
             if (emailAddresses.Any(string.IsNullOrWhiteSpace))
                 throw new ArgumentException("Cannot contain null, empty or whitespace values", "emailAddresses");
 
-            return ApiConnection.Delete(ApiUrls.Emails(), emailAddresses);
+            return ApiConnection.Delete(ApiUrls.Emails(), emailAddresses, default);
         }
     }
 }

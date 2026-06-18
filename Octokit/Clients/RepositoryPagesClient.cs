@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -28,12 +29,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pages")]
-        public Task<Page> Get(string owner, string name)
+        public Task<Page> Get(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(owner, name));
+            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(owner, name), cancellationToken);
         }
 
         /// <summary>
@@ -44,9 +45,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/pages")]
-        public Task<Page> Get(long repositoryId)
+        public Task<Page> Get(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(repositoryId));
+            return ApiConnection.Get<Page>(ApiUrls.RepositoryPage(repositoryId), cancellationToken);
         }
 
         /// <summary>
@@ -58,12 +59,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pages/builds")]
-        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -74,9 +75,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/pages/builds")]
-        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -89,14 +90,14 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pages/builds")]
-        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryPageBuilds(owner, name);
-            return ApiConnection.GetAll<PagesBuild>(endpoint, options);
+            return ApiConnection.GetAll<PagesBuild>(endpoint, options, cancellationToken);
         }
 
         /// <summary>
@@ -108,12 +109,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/pages/builds")]
-        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryPageBuilds(repositoryId);
-            return ApiConnection.GetAll<PagesBuild>(endpoint, options);
+            return ApiConnection.GetAll<PagesBuild>(endpoint, options, cancellationToken);
         }
 
         /// <summary>
@@ -125,12 +126,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pages/builds/latest")]
-        public Task<PagesBuild> GetLatest(string owner, string name)
+        public Task<PagesBuild> GetLatest(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(owner, name));
+            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(owner, name), cancellationToken);
         }
 
         /// <summary>
@@ -141,9 +142,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/pages/builds/latest")]
-        public Task<PagesBuild> GetLatest(long repositoryId)
+        public Task<PagesBuild> GetLatest(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(repositoryId));
+            return ApiConnection.Get<PagesBuild>(ApiUrls.RepositoryPageBuildsLatest(repositoryId), cancellationToken);
         }
 
         /// <summary>
@@ -155,12 +156,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("POST", "/repos/{owner}/{repo}/pages/builds")]
-        public Task<PagesBuild> RequestPageBuild(string owner, string name)
+        public Task<PagesBuild> RequestPageBuild(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name));
+            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(owner, name), cancellationToken);
         }
 
         /// <summary>
@@ -171,9 +172,9 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
         [ManualRoute("POST", "/repositories/{id}/pages/builds")]
-        public Task<PagesBuild> RequestPageBuild(long repositoryId)
+        public Task<PagesBuild> RequestPageBuild(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId));
+            return ApiConnection.Post<PagesBuild>(ApiUrls.RepositoryPageBuilds(repositoryId), cancellationToken);
         }
     }
 }

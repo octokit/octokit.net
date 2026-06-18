@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -21,7 +22,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -31,7 +33,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -43,7 +46,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all events for the issue.
@@ -54,7 +58,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -64,7 +69,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -73,7 +79,8 @@ namespace Octokit
         /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -84,7 +91,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all events for the repository.
@@ -94,7 +102,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<IssueEvent>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single event
@@ -105,9 +114,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="eventId">The event id</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<IssueEvent> Get(string owner, string name, long eventId);
+        Task<IssueEvent> Get(string owner, string name, long eventId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single event
@@ -117,8 +127,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="eventId">The event id</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<IssueEvent> Get(long repositoryId, long eventId);
+        Task<IssueEvent> Get(long repositoryId, long eventId, CancellationToken cancellationToken = default);
     }
 }

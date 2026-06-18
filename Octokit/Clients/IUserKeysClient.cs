@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="userName">The @ handle of the user.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
-        Task<IReadOnlyList<PublicKey>> GetAll(string userName);
+        Task<IReadOnlyList<PublicKey>> GetAll(string userName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all verified public keys for a user.
@@ -31,7 +32,7 @@ namespace Octokit
         /// <param name="userName">The @ handle of the user.</param>
         /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
-        Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options);
+        Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all public keys for the authenticated user.
@@ -41,7 +42,7 @@ namespace Octokit
         /// </remarks>
         /// <returns>Lists the current user's keys.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<PublicKey>> GetAllForCurrent();
+        Task<IReadOnlyList<PublicKey>> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all public keys for the authenticated user.
@@ -52,7 +53,7 @@ namespace Octokit
         /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the current user's keys.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options);
+        Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Retrieves the <see cref="PublicKey"/> for the specified id.
@@ -63,7 +64,7 @@ namespace Octokit
         /// <param name="id">The Id of the SSH key</param>
         /// <returns>View extended details for a single public key.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<PublicKey> Get(long id);
+        Task<PublicKey> Get(long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a public key <see cref="NewPublicKey"/>.
@@ -73,7 +74,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="newKey">The SSH Key contents</param>
         /// <returns>Creates a public key.</returns>
-        Task<PublicKey> Create(NewPublicKey newKey);
+        Task<PublicKey> Create(NewPublicKey newKey, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a public key.
@@ -83,6 +84,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="id">The id of the key to delete</param>
         /// <returns>Removes a public key.</returns>
-        Task Delete(long id);
+        Task Delete(long id, CancellationToken cancellationToken = default);
     }
 }

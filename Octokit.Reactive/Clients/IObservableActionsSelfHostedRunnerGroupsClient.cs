@@ -1,5 +1,6 @@
 ﻿using System;
 
+using System.Threading;
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -18,7 +19,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
-        IObservable<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId);
+        IObservable<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Get a self-hosted runner group for an organization
@@ -28,7 +30,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
-        IObservable<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId);
+        IObservable<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runner groups for an enterprise
@@ -37,7 +40,8 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
-        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise);
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runner groups for an enterprise
@@ -47,7 +51,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options);
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runner groups for an organization
@@ -56,7 +61,8 @@ namespace Octokit.Reactive
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-organization
         /// </remarks>
         /// <param name="org">The organization name</param>
-        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org);
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runner groups for an organization
@@ -66,7 +72,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options);
+        IObservable<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Gets a list of all self-hosted runners in a group for an enterprise.
         /// </summary>
@@ -75,7 +82,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
-        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId);
+        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a list of all self-hosted runners in a group for an enterprise.
@@ -86,7 +94,8 @@ namespace Octokit.Reactive
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options);
+        IObservable<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a list of all self-hosted runners in a group for an organization.
@@ -96,7 +105,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The organization.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
-        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId);
+        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a list of all self-hosted runners in a group for an organization.
@@ -107,7 +117,8 @@ namespace Octokit.Reactive
         /// <param name="organization">The organization.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
         /// <param name="options">Options to change the API response.</param>
-        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options);
+        IObservable<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List organization access to a self-hosted runner group in an enterprise
@@ -117,7 +128,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
+        IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List organization access to a self-hosted runner group in an enterprise
@@ -128,7 +140,8 @@ namespace Octokit.Reactive
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
+        IObservable<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -138,7 +151,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
+        IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -149,7 +163,8 @@ namespace Octokit.Reactive
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
+        IObservable<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
     }
 }

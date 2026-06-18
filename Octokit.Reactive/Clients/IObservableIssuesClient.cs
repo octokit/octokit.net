@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
+using System.Threading;
+
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -60,7 +62,8 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<Issue> Get(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> Get(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single Issue by number.
@@ -72,7 +75,8 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<Issue> Get(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> Get(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
@@ -82,18 +86,20 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        IObservable<Issue> GetAllForCurrent();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across all the authenticated user’s visible
         /// repositories including owned repositories, member repositories, and organization repositories.
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <remarks>
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        IObservable<Issue> GetAllForCurrent(ApiOptions options);
+        IObservable<Issue> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues across all the authenticated user’s visible repositories including owned repositories,
@@ -103,7 +109,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        IObservable<Issue> GetAllForCurrent(IssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForCurrent(IssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues across all the authenticated user’s visible repositories including owned repositories,
@@ -114,7 +121,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForCurrent(IssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForCurrent(IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across owned and member repositories for the
@@ -124,18 +132,20 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        IObservable<Issue> GetAllForOwnedAndMemberRepositories();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForOwnedAndMemberRepositories(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user across owned and member repositories for the
         /// authenticated user.
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <remarks>
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        IObservable<Issue> GetAllForOwnedAndMemberRepositories(ApiOptions options);
+        IObservable<Issue> GetAllForOwnedAndMemberRepositories(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues across owned and member repositories for the authenticated user.
@@ -144,7 +154,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues across owned and member repositories for the authenticated user.
@@ -154,7 +165,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for a given organization for the authenticated user.
@@ -163,7 +175,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        IObservable<Issue> GetAllForOrganization(string organization);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForOrganization(string organization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for a given organization for the authenticated user.
@@ -173,7 +186,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForOrganization(string organization, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues for a given organization for the authenticated user.
@@ -183,7 +197,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all issues for a given organization for the authenticated user.
@@ -194,7 +209,8 @@ namespace Octokit.Reactive
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -204,7 +220,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<Issue> GetAllForRepository(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -213,7 +230,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Issue> GetAllForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -224,7 +242,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForRepository(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all open issues assigned to the authenticated user for the repository.
@@ -234,7 +253,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForRepository(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -245,7 +265,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -255,7 +276,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -267,7 +289,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets issues for a repository.
@@ -278,7 +301,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -288,7 +312,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        IObservable<Issue> Create(string owner, string name, NewIssue newIssue);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> Create(string owner, string name, NewIssue newIssue, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -297,7 +322,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        IObservable<Issue> Create(long repositoryId, NewIssue newIssue);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Issue> Create(long repositoryId, NewIssue newIssue, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -308,8 +334,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// </param>
-        IObservable<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate);
+        IObservable<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates an issue for the specified repository. Any user with pull access to a repository can create an
@@ -319,7 +346,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// </param>
-        IObservable<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate);
+        IObservable<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate, CancellationToken cancellationToken = default);
     }
 }

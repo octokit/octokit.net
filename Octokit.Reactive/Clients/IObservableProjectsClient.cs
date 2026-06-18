@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -19,7 +20,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<Project> GetAllForRepository(string owner, string name);
+        IObservable<Project> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified repository.
@@ -30,7 +31,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
-        IObservable<Project> GetAllForRepository(string owner, string name, ProjectRequest request);
+        IObservable<Project> GetAllForRepository(string owner, string name, ProjectRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified repository.
@@ -39,7 +40,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/#list-repository-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Project> GetAllForRepository(long repositoryId);
+        IObservable<Project> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified repository.
@@ -49,7 +50,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
-        IObservable<Project> GetAllForRepository(long repositoryId, ProjectRequest request);
+        IObservable<Project> GetAllForRepository(long repositoryId, ProjectRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified repository.
@@ -60,7 +61,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Project> GetAllForRepository(string owner, string name, ApiOptions options);
+        IObservable<Project> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified repository.
@@ -72,7 +73,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Project> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options);
+        IObservable<Project> GetAllForRepository(string owner, string name, ProjectRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified repository.
@@ -82,7 +83,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Project> GetAllForRepository(long repositoryId, ApiOptions options);
+        IObservable<Project> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified repository.
@@ -93,7 +94,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter the list of projects returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Project> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options);
+        IObservable<Project> GetAllForRepository(long repositoryId, ProjectRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified organization.
@@ -102,27 +103,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        IObservable<Project> GetAllForOrganization(string organization);
-
-        /// <summary>
-        /// Get all projects for the specified organization.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="organization">The name of the organization</param>
-        /// <param name="request">Used to filter the list of projects returned</param>
-        IObservable<Project> GetAllForOrganization(string organization, ProjectRequest request);
-
-        /// <summary>
-        /// Get all projects for the specified organization.
-        /// </summary>
-        /// <remarks>
-        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
-        /// </remarks>
-        /// <param name="organization">The name of the organization</param>
-        /// <param name="options">Options for changing the API response</param>
-        IObservable<Project> GetAllForOrganization(string organization, ApiOptions options);
+        IObservable<Project> GetAllForOrganization(string organization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get all projects for the specified organization.
@@ -132,8 +113,28 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter the list of projects returned</param>
+        IObservable<Project> GetAllForOrganization(string organization, ProjectRequest request, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get all projects for the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Project> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options);
+        IObservable<Project> GetAllForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get all projects for the specified organization.
+        /// </summary>
+        /// <remarks>
+        /// See the <a href="https://developer.github.com/v3/projects/#list-organization-projects">API documentation</a> for more information.
+        /// </remarks>
+        /// <param name="organization">The name of the organization</param>
+        /// <param name="request">Used to filter the list of projects returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        IObservable<Project> GetAllForOrganization(string organization, ProjectRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single project for the specified repository.
@@ -143,7 +144,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Project> Get(int projectId);
+        IObservable<Project> Get(int projectId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a project for the specified repository.
@@ -153,7 +154,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newProject">The new project to create for the specified repository</param>
-        IObservable<Project> CreateForRepository(long repositoryId, NewProject newProject);
+        IObservable<Project> CreateForRepository(long repositoryId, NewProject newProject, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a project for the specified organization.
@@ -163,7 +164,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="newProject">The new project to create for the specified repository</param>
-        IObservable<Project> CreateForOrganization(string organization, NewProject newProject);
+        IObservable<Project> CreateForOrganization(string organization, NewProject newProject, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a project for the specified repository.
@@ -173,7 +174,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         /// <param name="projectUpdate">The modified project</param>
-        IObservable<Project> Update(int projectId, ProjectUpdate projectUpdate);
+        IObservable<Project> Update(int projectId, ProjectUpdate projectUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a project.
@@ -182,7 +183,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/projects/#delete-a-project">API documentation</a> for more information.
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
-        IObservable<bool> Delete(int projectId);
+        IObservable<bool> Delete(int projectId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// A client for GitHub's Project Cards API.

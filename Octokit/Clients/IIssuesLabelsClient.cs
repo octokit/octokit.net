@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -21,7 +22,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -31,7 +33,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -43,7 +46,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -54,7 +58,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -64,7 +69,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -73,7 +79,8 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -84,7 +91,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -94,7 +102,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -105,7 +114,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int milestoneNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -115,7 +125,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int milestoneNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -127,7 +138,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int milestoneNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(string owner, string name, int milestoneNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -138,7 +150,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int milestoneNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> GetAllForMilestone(long repositoryId, int milestoneNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single Label by name.
@@ -149,9 +162,10 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        Task<Label> Get(string owner, string name, string labelName);
+        Task<Label> Get(string owner, string name, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single Label by name.
@@ -161,9 +175,10 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
         Justification = "Method makes a network request")]
-        Task<Label> Get(long repositoryId, string labelName);
+        Task<Label> Get(long repositoryId, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a label.
@@ -174,7 +189,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        Task Delete(string owner, string name, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(string owner, string name, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a label.
@@ -184,7 +200,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        Task Delete(long repositoryId, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(long repositoryId, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a label.
@@ -195,7 +212,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
-        Task<Label> Create(string owner, string name, NewLabel newLabel);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Label> Create(string owner, string name, NewLabel newLabel, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a label.
@@ -205,7 +223,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
-        Task<Label> Create(long repositoryId, NewLabel newLabel);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Label> Create(long repositoryId, NewLabel newLabel, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a label.
@@ -217,7 +236,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        Task<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a label.
@@ -228,7 +248,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        Task<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a label to an issue
@@ -240,7 +261,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> AddToIssue(string owner, string name, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a label to an issue
@@ -251,7 +273,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to add</param>
-        Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> AddToIssue(long repositoryId, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a label from an issue
@@ -263,7 +286,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, long issueNumber, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> RemoveFromIssue(string owner, string name, long issueNumber, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a label from an issue
@@ -274,7 +298,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labelName">The name of the label to remove</param>
-        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, long issueNumber, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> RemoveFromIssue(long repositoryId, long issueNumber, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -286,7 +311,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(string owner, string name, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -297,7 +323,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
         /// <param name="labels">The names of the labels to set</param>
-        Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Label>> ReplaceAllForIssue(long repositoryId, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -308,7 +335,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task RemoveAllFromIssue(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task RemoveAllFromIssue(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -318,6 +346,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The number of the issue</param>
-        Task RemoveAllFromIssue(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task RemoveAllFromIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
     }
 }

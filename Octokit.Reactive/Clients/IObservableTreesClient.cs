@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -20,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<TreeResponse> Get(string owner, string name, string reference);
+        IObservable<TreeResponse> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a Tree Response for a given SHA.
@@ -31,7 +32,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<TreeResponse> Get(long repositoryId, string reference);
+        IObservable<TreeResponse> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a Tree Response for a given SHA.
@@ -42,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        IObservable<TreeResponse> GetRecursive(string owner, string name, string reference);
+        IObservable<TreeResponse> GetRecursive(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a Tree Response for a given SHA.
@@ -52,7 +53,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        IObservable<TreeResponse> GetRecursive(long repositoryId, string reference);
+        IObservable<TreeResponse> GetRecursive(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new Tree in the specified repo
@@ -63,7 +64,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        IObservable<TreeResponse> Create(string owner, string name, NewTree newTree);
+        IObservable<TreeResponse> Create(string owner, string name, NewTree newTree, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new Tree in the specified repo
@@ -73,6 +74,6 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        IObservable<TreeResponse> Create(long repositoryId, NewTree newTree);
+        IObservable<TreeResponse> Create(long repositoryId, NewTree newTree, CancellationToken cancellationToken = default);
     }
 }

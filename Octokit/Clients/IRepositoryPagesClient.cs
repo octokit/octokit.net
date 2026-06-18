@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -21,7 +22,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Page> Get(string owner, string name);
+        Task<Page> Get(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the page metadata for a given repository
@@ -31,7 +32,7 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Page> Get(long repositoryId);
+        Task<Page> Get(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -41,7 +42,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name);
+        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -50,7 +51,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId);
+        Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -61,7 +62,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<PagesBuild>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -71,7 +72,7 @@ namespace Octokit
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<PagesBuild>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
@@ -81,7 +82,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        Task<PagesBuild> GetLatest(string owner, string name);
+        Task<PagesBuild> GetLatest(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
@@ -90,7 +91,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        Task<PagesBuild> GetLatest(long repositoryId);
+        Task<PagesBuild> GetLatest(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Requests your site be built from the latest revision on the default branch for a given repository
@@ -100,7 +101,7 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        Task<PagesBuild> RequestPageBuild(string owner, string name);
+        Task<PagesBuild> RequestPageBuild(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Requests your site be built from the latest revision on the default branch for a given repository
@@ -109,6 +110,6 @@ namespace Octokit
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        Task<PagesBuild> RequestPageBuild(long repositoryId);
+        Task<PagesBuild> RequestPageBuild(long repositoryId, CancellationToken cancellationToken = default);
     }
 }

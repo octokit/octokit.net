@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -20,7 +21,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        Task<CheckSuite> Get(string owner, string name, long checkSuiteId);
+        Task<CheckSuite> Get(string owner, string name, long checkSuiteId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a single Check Suite by Id
@@ -30,7 +32,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        Task<CheckSuite> Get(long repositoryId, long checkSuiteId);
+        Task<CheckSuite> Get(long repositoryId, long checkSuiteId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
@@ -41,7 +44,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
-        Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference);
+        Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
@@ -51,7 +55,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
-        Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference);
+        Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
@@ -63,7 +68,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
-        Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request);
+        Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
@@ -74,7 +80,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
-        Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request);
+        Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
@@ -87,7 +94,8 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
         /// <param name="options">Options to change the API response</param>
-        Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options);
+        Task<CheckSuitesResponse> GetAllForReference(string owner, string name, string reference, CheckSuiteRequest request, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Lists Check Suites for a commit reference (SHA, branch name or tag name)
@@ -99,7 +107,8 @@ namespace Octokit
         /// <param name="reference">The reference (SHA, branch name or tag name) to list check suites for</param>
         /// <param name="request">Details to filter the request, such as by App Id or Check Name</param>
         /// <param name="options">Options to change the API response</param>
-        Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options);
+        Task<CheckSuitesResponse> GetAllForReference(long repositoryId, string reference, CheckSuiteRequest request, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates Check Suites preferences on a repository, such as disabling automatic creation when code is pushed
@@ -110,7 +119,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
-        Task<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences);
+        Task<CheckSuitePreferencesResponse> UpdatePreferences(string owner, string name, CheckSuitePreferences preferences, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates Check Suites preferences on a repository, such as disabling automatic creation when code is pushed
@@ -120,7 +130,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="preferences">The check suite preferences</param>
-        Task<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences);
+        Task<CheckSuitePreferencesResponse> UpdatePreferences(long repositoryId, CheckSuitePreferences preferences, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new Check Suite
@@ -131,7 +142,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckSuite">Details of the Check Suite to create</param>
-        Task<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite);
+        Task<CheckSuite> Create(string owner, string name, NewCheckSuite newCheckSuite, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new Check Suite
@@ -141,7 +153,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newCheckSuite">Details of the Check Suite to create</param>
-        Task<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite);
+        Task<CheckSuite> Create(long repositoryId, NewCheckSuite newCheckSuite, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
@@ -152,7 +165,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        Task<bool> Rerequest(string owner, string name, long checkSuiteId);
+        Task<bool> Rerequest(string owner, string name, long checkSuiteId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Triggers GitHub to rerequest an existing check suite, without pushing new code to a repository
@@ -162,6 +176,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        Task<bool> Rerequest(long repositoryId, long checkSuiteId);
+        Task<bool> Rerequest(long repositoryId, long checkSuiteId, CancellationToken cancellationToken = default);
+
     }
 }

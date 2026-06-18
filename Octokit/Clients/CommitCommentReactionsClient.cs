@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -26,7 +27,7 @@ namespace Octokit
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/comments/{comment_id}/reactions")]
-        public Task<Reaction> Create(string owner, string name, long commentId, NewReaction reaction)
+        public Task<Reaction> Create(string owner, string name, long commentId, NewReaction reaction, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -44,7 +45,7 @@ namespace Octokit
         /// <param name="reaction">The reaction to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repositories/{id}/comments/{comment_id}/reactions")]
-        public Task<Reaction> Create(long repositoryId, long commentId, NewReaction reaction)
+        public Task<Reaction> Create(long repositoryId, long commentId, NewReaction reaction, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(reaction, nameof(reaction));
 
@@ -60,9 +61,9 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments/{comment_id}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId)
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId, CancellationToken cancellationToken = default)
         {
-            return GetAll(owner, name, commentId, ApiOptions.None);
+            return GetAll(owner, name, commentId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments/{comment_id}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId, ApiOptions options)
+        public Task<IReadOnlyList<Reaction>> GetAll(string owner, string name, long commentId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -92,9 +93,9 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/comments/{comment_id}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, commentId, ApiOptions.None);
+            return GetAll(repositoryId, commentId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -106,11 +107,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/comments/{comment_id}/reactions")]
-        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId, ApiOptions options)
+        public Task<IReadOnlyList<Reaction>> GetAll(long repositoryId, long commentId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Reaction>(ApiUrls.CommitCommentReactions(repositoryId, commentId), null, options);
+            return ApiConnection.GetAll<Reaction>(ApiUrls.CommitCommentReactions(repositoryId, commentId), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -123,7 +124,7 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}")]
-        public Task Delete(string owner, string name, long commentId, long reactionId)
+        public Task Delete(string owner, string name, long commentId, long reactionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -140,7 +141,7 @@ namespace Octokit
         /// <param name="reactionId">The reaction id</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repositories/{id}/comments/{comment_id}/reactions/{reaction_id}")]
-        public Task Delete(long repositoryId, long commentId, long reactionId)
+        public Task Delete(long repositoryId, long commentId, long reactionId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Delete(ApiUrls.CommitCommentReaction(repositoryId, commentId, reactionId));
         }

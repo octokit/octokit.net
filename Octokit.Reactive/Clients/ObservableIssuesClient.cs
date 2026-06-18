@@ -3,6 +3,8 @@ using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
+using System.Threading;
+
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -77,12 +79,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Issue> Get(string owner, string name, long issueNumber)
+        public IObservable<Issue> Get(string owner, string name, long issueNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, issueNumber).ToObservable();
+            return _client.Get(owner, name, issueNumber, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -93,9 +95,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<Issue> Get(long repositoryId, long issueNumber)
+        public IObservable<Issue> Get(long repositoryId, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId, issueNumber).ToObservable();
+            return _client.Get(repositoryId, issueNumber, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -106,9 +108,9 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        public IObservable<Issue> GetAllForCurrent()
+        public IObservable<Issue> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -120,11 +122,11 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        public IObservable<Issue> GetAllForCurrent(ApiOptions options)
+        public IObservable<Issue> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForCurrent(new IssueRequest(), options);
+            return GetAllForCurrent(new IssueRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -135,11 +137,11 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        public IObservable<Issue> GetAllForCurrent(IssueRequest request)
+        public IObservable<Issue> GetAllForCurrent(IssueRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -151,12 +153,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForCurrent(IssueRequest request, ApiOptions options)
+        public IObservable<Issue> GetAllForCurrent(IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -167,9 +169,9 @@ namespace Octokit.Reactive
         /// Issues are sorted by the create date descending.
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
-        public IObservable<Issue> GetAllForOwnedAndMemberRepositories()
+        public IObservable<Issue> GetAllForOwnedAndMemberRepositories(CancellationToken cancellationToken = default)
         {
-            return GetAllForOwnedAndMemberRepositories(new IssueRequest());
+            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), cancellationToken);
         }
 
         /// <summary>
@@ -181,11 +183,11 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForOwnedAndMemberRepositories(ApiOptions options)
+        public IObservable<Issue> GetAllForOwnedAndMemberRepositories(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), options);
+            return GetAllForOwnedAndMemberRepositories(new IssueRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -195,11 +197,11 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request)
+        public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForOwnedAndMemberRepositories(request, ApiOptions.None);
+            return GetAllForOwnedAndMemberRepositories(request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -210,12 +212,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options)
+        public IObservable<Issue> GetAllForOwnedAndMemberRepositories(IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.IssuesForOwnedAndMember(), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -225,11 +227,11 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
-        public IObservable<Issue> GetAllForOrganization(string organization)
+        public IObservable<Issue> GetAllForOrganization(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return GetAllForOrganization(organization, ApiOptions.None);
+            return GetAllForOrganization(organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -240,12 +242,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForOrganization(string organization, ApiOptions options)
+        public IObservable<Issue> GetAllForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForOrganization(organization, new IssueRequest(), options);
+            return GetAllForOrganization(organization, new IssueRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -256,12 +258,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request)
+        public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForOrganization(organization, request, ApiOptions.None);
+            return GetAllForOrganization(organization, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -273,13 +275,13 @@ namespace Octokit.Reactive
         /// <param name="organization">The name of the organization</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options)
+        public IObservable<Issue> GetAllForOrganization(string organization, IssueRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(organization), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -290,12 +292,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<Issue> GetAllForRepository(string owner, string name)
+        public IObservable<Issue> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -305,9 +307,9 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/#list-issues-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Issue> GetAllForRepository(long repositoryId)
+        public IObservable<Issue> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -319,13 +321,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForRepository(string owner, string name, ApiOptions options)
+        public IObservable<Issue> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(owner, name, new RepositoryIssueRequest(), options);
+            return GetAllForRepository(owner, name, new RepositoryIssueRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -336,11 +338,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForRepository(long repositoryId, ApiOptions options)
+        public IObservable<Issue> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(repositoryId, new RepositoryIssueRequest(), options);
+            return GetAllForRepository(repositoryId, new RepositoryIssueRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -352,13 +354,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request)
+        public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -369,11 +371,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
-        public IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request)
+        public IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return GetAllForRepository(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -386,14 +388,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options)
+        public IObservable<Issue> GetAllForRepository(string owner, string name, RepositoryIssueRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(owner, name), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -405,12 +407,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter and sort the list of issues returned</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options)
+        public IObservable<Issue> GetAllForRepository(long repositoryId, RepositoryIssueRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Issue>(ApiUrls.Issues(repositoryId), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -421,13 +423,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        public IObservable<Issue> Create(string owner, string name, NewIssue newIssue)
+        public IObservable<Issue> Create(string owner, string name, NewIssue newIssue, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newIssue, nameof(newIssue));
 
-            return _client.Create(owner, name, newIssue).ToObservable();
+            return _client.Create(owner, name, newIssue, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -437,11 +439,11 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/issues/#create-an-issue</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newIssue">A <see cref="NewIssue"/> instance describing the new issue to create</param>
-        public IObservable<Issue> Create(long repositoryId, NewIssue newIssue)
+        public IObservable<Issue> Create(long repositoryId, NewIssue newIssue, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newIssue, nameof(newIssue));
 
-            return _client.Create(repositoryId, newIssue).ToObservable();
+            return _client.Create(repositoryId, newIssue, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -454,13 +456,13 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public IObservable<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate)
+        public IObservable<Issue> Update(string owner, string name, long issueNumber, IssueUpdate issueUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(issueUpdate, nameof(issueUpdate));
 
-            return _client.Update(owner, name, issueNumber, issueUpdate).ToObservable();
+            return _client.Update(owner, name, issueNumber, issueUpdate, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -472,11 +474,11 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="issueUpdate">An <see cref="IssueUpdate"/> instance describing the changes to make to the issue
         /// </param>
-        public IObservable<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate)
+        public IObservable<Issue> Update(long repositoryId, long issueNumber, IssueUpdate issueUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(issueUpdate, nameof(issueUpdate));
 
-            return _client.Update(repositoryId, issueNumber, issueUpdate).ToObservable();
+            return _client.Update(repositoryId, issueNumber, issueUpdate, cancellationToken).ToObservable();
         }
 
 

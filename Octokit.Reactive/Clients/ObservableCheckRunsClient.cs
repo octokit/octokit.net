@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -36,13 +37,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
-        public IObservable<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun)
+        public IObservable<CheckRun> Create(string owner, string name, NewCheckRun newCheckRun, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
 
-            return _client.Create(owner, name, newCheckRun).ToObservable();
+            return _client.Create(owner, name, newCheckRun, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -53,11 +54,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newCheckRun">Details of the Check Run to create</param>
-        public IObservable<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun)
+        public IObservable<CheckRun> Create(long repositoryId, NewCheckRun newCheckRun, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newCheckRun, nameof(newCheckRun));
 
-            return _client.Create(repositoryId, newCheckRun).ToObservable();
+            return _client.Create(repositoryId, newCheckRun, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -70,13 +71,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
-        public IObservable<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate)
+        public IObservable<CheckRun> Update(string owner, string name, long checkRunId, CheckRunUpdate checkRunUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
-            return _client.Update(owner, name, checkRunId, checkRunUpdate).ToObservable();
+            return _client.Update(owner, name, checkRunId, checkRunUpdate, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -88,11 +89,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="checkRunUpdate">The updates to the check run</param>
-        public IObservable<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate)
+        public IObservable<CheckRun> Update(long repositoryId, long checkRunId, CheckRunUpdate checkRunUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(checkRunUpdate, nameof(checkRunUpdate));
 
-            return _client.Update(repositoryId, checkRunId, checkRunUpdate).ToObservable();
+            return _client.Update(repositoryId, checkRunId, checkRunUpdate, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -104,7 +105,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
-        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference)
+        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -121,7 +122,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
-        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference)
+        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -138,14 +139,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest)
+        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return GetAllForReference(owner, name, reference, checkRunRequest, ApiOptions.None);
+            return GetAllForReference(owner, name, reference, checkRunRequest, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -157,12 +158,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest)
+        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return GetAllForReference(repositoryId, reference, checkRunRequest, ApiOptions.None);
+            return GetAllForReference(repositoryId, reference, checkRunRequest, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +177,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        public IObservable<CheckRunsResponse> GetAllForReference(string owner, string name, string reference, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -197,7 +198,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The commit reference (can be a SHA, branch name, or a tag name)</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options)
+        public IObservable<CheckRunsResponse> GetAllForReference(long repositoryId, string reference, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
@@ -215,7 +216,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId)
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -231,7 +232,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
-        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId)
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CancellationToken cancellationToken = default)
         {
             return GetAllForCheckSuite(repositoryId, checkSuiteId, new CheckRunRequest(), ApiOptions.None);
         }
@@ -246,13 +247,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest)
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return GetAllForCheckSuite(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None);
+            return GetAllForCheckSuite(owner, name, checkSuiteId, checkRunRequest, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -264,11 +265,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
-        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest)
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
 
-            return GetAllForCheckSuite(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None);
+            return GetAllForCheckSuite(repositoryId, checkSuiteId, checkRunRequest, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +283,7 @@ namespace Octokit.Reactive
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(string owner, string name, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -302,7 +303,7 @@ namespace Octokit.Reactive
         /// <param name="checkSuiteId">The Id of the check suite</param>
         /// <param name="checkRunRequest">Details to filter the request, such as by check name</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options)
+        public IObservable<CheckRunsResponse> GetAllForCheckSuite(long repositoryId, long checkSuiteId, CheckRunRequest checkRunRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(checkRunRequest, nameof(checkRunRequest));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -319,12 +320,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
-        public IObservable<CheckRun> Get(string owner, string name, long checkRunId)
+        public IObservable<CheckRun> Get(string owner, string name, long checkRunId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, checkRunId).ToObservable();
+            return _client.Get(owner, name, checkRunId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -335,9 +336,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
-        public IObservable<CheckRun> Get(long repositoryId, long checkRunId)
+        public IObservable<CheckRun> Get(long repositoryId, long checkRunId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId, checkRunId).ToObservable();
+            return _client.Get(repositoryId, checkRunId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -349,12 +350,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
-        public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId)
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllAnnotations(owner, name, checkRunId, ApiOptions.None);
+            return GetAllAnnotations(owner, name, checkRunId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -366,9 +367,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <returns></returns>
-        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId)
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId, CancellationToken cancellationToken = default)
         {
-            return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None);
+            return GetAllAnnotations(repositoryId, checkRunId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -381,7 +382,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options)
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(string owner, string name, long checkRunId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -399,11 +400,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="checkRunId">The Id of the check run</param>
         /// <param name="options">Options to change the API response</param>
-        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options)
+        public IObservable<CheckRunAnnotation> GetAllAnnotations(long repositoryId, long checkRunId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, options);
+            return _connection.GetAndFlattenAllPages<CheckRunAnnotation>(ApiUrls.CheckRunAnnotations(repositoryId, checkRunId), null, options, cancellationToken);
         }
     }
 }

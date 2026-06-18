@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -18,7 +19,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestNumber);
+        IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -26,7 +27,7 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestNumber);
+        IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -36,7 +37,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestNumber, ApiOptions options);
+        IObservable<PullRequestReview> GetAll(string owner, string name, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -45,7 +46,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestNumber, ApiOptions options);
+        IObservable<PullRequestReview> GetAll(long repositoryId, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -55,7 +56,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<PullRequestReview> Get(string owner, string name, int pullRequestNumber, long reviewId);
+        IObservable<PullRequestReview> Get(string owner, string name, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -64,7 +65,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<PullRequestReview> Get(long repositoryId, int pullRequestNumber, long reviewId);
+        IObservable<PullRequestReview> Get(long repositoryId, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a pull request review.
@@ -74,7 +75,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="review">The review</param>
-        IObservable<PullRequestReview> Create(string owner, string name, int pullRequestNumber, PullRequestReviewCreate review);
+        IObservable<PullRequestReview> Create(string owner, string name, int pullRequestNumber, PullRequestReviewCreate review, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a pull request review.
@@ -83,7 +84,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="review">The review</param>
-        IObservable<PullRequestReview> Create(long repositoryId, int pullRequestNumber, PullRequestReviewCreate review);
+        IObservable<PullRequestReview> Create(long repositoryId, int pullRequestNumber, PullRequestReviewCreate review, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a pull request review.
@@ -93,7 +94,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<Unit> Delete(string owner, string name, int pullRequestNumber, long reviewId);
+        IObservable<Unit> Delete(string owner, string name, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a pull request review.
@@ -102,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<Unit> Delete(long repositoryId, int pullRequestNumber, long reviewId);
+        IObservable<Unit> Delete(long repositoryId, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Submits a pull request review.
@@ -113,7 +114,7 @@ namespace Octokit.Reactive
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        IObservable<PullRequestReview> Submit(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage);
+        IObservable<PullRequestReview> Submit(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Submits a pull request review.
@@ -123,7 +124,7 @@ namespace Octokit.Reactive
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        IObservable<PullRequestReview> Submit(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage);
+        IObservable<PullRequestReview> Submit(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -134,7 +135,7 @@ namespace Octokit.Reactive
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        IObservable<PullRequestReview> Dismiss(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage);
+        IObservable<PullRequestReview> Dismiss(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -144,7 +145,7 @@ namespace Octokit.Reactive
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        IObservable<PullRequestReview> Dismiss(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage);
+        IObservable<PullRequestReview> Dismiss(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists comments for a single review
@@ -154,7 +155,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId);
+        IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -163,7 +164,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId);
+        IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists comments for a single review
@@ -174,7 +175,7 @@ namespace Octokit.Reactive
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId, ApiOptions options);
+        IObservable<PullRequestReviewComment> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -184,6 +185,6 @@ namespace Octokit.Reactive
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId, ApiOptions options);
+        IObservable<PullRequestReviewComment> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

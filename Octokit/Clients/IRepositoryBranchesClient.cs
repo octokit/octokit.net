@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -22,7 +23,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        Task<IReadOnlyList<Branch>> GetAll(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Branch>> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -31,7 +33,8 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/repos/branches/#list-branches">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
-        Task<IReadOnlyList<Branch>> GetAll(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Branch>> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -42,7 +45,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Branch>> GetAll(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Branch>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the branches for the specified repository.
@@ -52,7 +56,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified branch.
@@ -63,8 +68,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Branch> Get(string owner, string name, string branch);
+        Task<Branch> Get(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified branch.
@@ -74,8 +80,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<Branch> Get(long repositoryId, string branch);
+        Task<Branch> Get(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the branch protection settings for the specified branch
@@ -86,7 +93,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the branch protection settings for the specified branch
@@ -96,7 +104,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update the branch protection settings for the specified branch
@@ -108,7 +117,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        Task<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update the branch protection settings for the specified branch
@@ -119,7 +129,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
-        Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the branch protection settings for the specified branch
@@ -130,7 +141,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> DeleteBranchProtection(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> DeleteBranchProtection(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the branch protection settings for the specified branch
@@ -140,7 +152,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> DeleteBranchProtection(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> DeleteBranchProtection(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks for the specified branch
@@ -151,7 +164,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks for the specified branch
@@ -161,7 +175,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace required status checks for the specified branch
@@ -173,7 +188,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
-        Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace required status checks for the specified branch
@@ -184,7 +200,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
-        Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required status checks for the specified branch
@@ -195,7 +212,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> DeleteRequiredStatusChecks(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> DeleteRequiredStatusChecks(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required status checks for the specified branch
@@ -205,7 +223,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> DeleteRequiredStatusChecks(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> DeleteRequiredStatusChecks(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks contexts for the specified branch
@@ -216,8 +235,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(string owner, string name, string branch);
+        Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the required status checks contexts for the specified branch
@@ -227,8 +247,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(long repositoryId, string branch);
+        Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace the required status checks contexts for the specified branch
@@ -240,7 +261,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
-        Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace the required status checks contexts for the specified branch
@@ -251,7 +273,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
-        Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add the required status checks context for the specified branch
@@ -263,7 +286,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
-        Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add the required status checks contexts for the specified branch
@@ -274,7 +298,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
-        Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the required status checks contexts for the specified branch
@@ -286,7 +311,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
-        Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove the required status checks contexts for the specified branch
@@ -297,7 +323,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
-        Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get required pull request review enforcement of protected branch
@@ -308,7 +335,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get required pull request review enforcement of protected branch
@@ -318,7 +346,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update required pull request review enforcement of protected branch
@@ -330,7 +359,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
-        Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update required pull request review enforcement of protected branch
@@ -341,7 +371,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
-        Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required pull request review enforcement of protected branch
@@ -352,7 +383,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> RemoveReviewEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> RemoveReviewEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove required pull request review enforcement of protected branch
@@ -362,7 +394,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> RemoveReviewEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> RemoveReviewEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get admin enforcement of protected branch
@@ -373,7 +406,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get admin enforcement of protected branch
@@ -383,7 +417,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add admin enforcement to protected branch
@@ -394,7 +429,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add admin enforcement to protected branch
@@ -404,7 +440,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove admin enforcement on protected branch
@@ -415,7 +452,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> RemoveAdminEnforcement(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> RemoveAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove admin enforcement on protected branch
@@ -425,7 +463,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> RemoveAdminEnforcement(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> RemoveAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get restrictions for the specified branch (applies only to Organization owned repositories)
@@ -436,7 +475,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get restrictions for the specified branch (applies only to Organization owned repositories)
@@ -446,7 +486,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove restrictions for the specified branch (applies only to Organization owned repositories)
@@ -457,7 +498,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove restrictions for the specified branch (applies only to Organization owned repositories)
@@ -467,7 +509,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
-        Task<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -478,8 +521,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch);
+        Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -489,8 +533,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch);
+        Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -502,7 +547,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -513,7 +559,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
-        Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -525,7 +572,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
-        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -536,7 +584,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
-        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -548,7 +597,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove team restrictions for the specified branch (applies only to Organization owned repositories)
@@ -559,7 +609,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
-        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -570,8 +621,9 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch);
+        Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -581,8 +633,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 29/08/2017)")]
-        Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch);
+        Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -594,7 +647,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -605,7 +659,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
-        Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -617,7 +672,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -628,7 +684,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
-        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -640,7 +697,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove user restrictions for the specified branch (applies only to Organization owned repositories)
@@ -651,7 +709,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
-        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default);
 
 		/// <summary>
 		/// Renames a branch in a repository
@@ -663,6 +722,7 @@ namespace Octokit
 		/// <param name="repository">The name of the repository</param>
 		/// <param name="branch">The name of the branch to rename</param>
 		/// <param name="newName">The new name of the branch</param>
-		Task<Branch> RenameBranch(string owner, string repository, string branch, string newName);
+		/// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+		Task<Branch> RenameBranch(string owner, string repository, string branch, string newName, CancellationToken cancellationToken = default);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -32,12 +33,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, long issueNumber)
+        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, long issueNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForIssue(owner, name, issueNumber, ApiOptions.None);
+            return GetAllForIssue(owner, name, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -48,9 +49,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, long issueNumber)
+        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None);
+            return GetAllForIssue(repositoryId, issueNumber, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -63,13 +64,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(owner, name, issueNumber), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(owner, name, issueNumber), options, cancellationToken);
         }
 
         /// <summary>
@@ -81,11 +82,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(repositoryId, issueNumber), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(repositoryId, issueNumber), options, cancellationToken);
         }
 
         /// <summary>
@@ -96,12 +97,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<IssueEvent> GetAllForRepository(string owner, string name)
+        public IObservable<IssueEvent> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -111,9 +112,9 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/issues/events/#list-events-for-a-repository
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<IssueEvent> GetAllForRepository(long repositoryId)
+        public IObservable<IssueEvent> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -125,13 +126,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueEvent> GetAllForRepository(string owner, string name, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(owner, name), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -142,11 +143,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<IssueEvent> GetAllForRepository(long repositoryId, ApiOptions options)
+        public IObservable<IssueEvent> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -158,12 +159,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="eventId">The event id</param>
-        public IObservable<IssueEvent> Get(string owner, string name, long eventId)
+        public IObservable<IssueEvent> Get(string owner, string name, long eventId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, eventId).ToObservable();
+            return _client.Get(owner, name, eventId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -174,9 +175,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="eventId">The event id</param>
-        public IObservable<IssueEvent> Get(long repositoryId, long eventId)
+        public IObservable<IssueEvent> Get(long repositoryId, long eventId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId, eventId).ToObservable();
+            return _client.Get(repositoryId, eventId, cancellationToken).ToObservable();
         }
     }
 }

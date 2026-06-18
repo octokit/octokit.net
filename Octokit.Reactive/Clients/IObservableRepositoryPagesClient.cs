@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -20,7 +21,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Page> Get(string owner, string name);
+        IObservable<Page> Get(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the page metadata for a given repository
@@ -30,7 +31,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site">API documentation</a> for more information.
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        IObservable<Page> Get(long repositoryId);
+        IObservable<Page> Get(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -40,7 +41,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetAll(string owner, string name);
+        IObservable<PagesBuild> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -49,7 +50,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetAll(long repositoryId);
+        IObservable<PagesBuild> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -60,7 +61,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetAll(string owner, string name, ApiOptions options);
+        IObservable<PagesBuild> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all build metadata for a given repository
@@ -70,7 +71,7 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-pages-builds">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetAll(long repositoryId, ApiOptions options);
+        IObservable<PagesBuild> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
@@ -80,7 +81,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetLatest(string owner, string name);
+        IObservable<PagesBuild> GetLatest(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the build metadata for the last build for a given repository
@@ -89,7 +90,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#list-latest-pages-build">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> GetLatest(long repositoryId);
+        IObservable<PagesBuild> GetLatest(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Requests your site be built from the latest revision on the default branch for a given repository
@@ -99,7 +100,7 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> RequestPageBuild(string owner, string name);
+        IObservable<PagesBuild> RequestPageBuild(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Requests your site be built from the latest revision on the default branch for a given repository
@@ -108,6 +109,6 @@ namespace Octokit.Reactive
         ///  <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/pages/#request-a-page-build">API documentation</a> for more information.
         /// </remarks>
-        IObservable<PagesBuild> RequestPageBuild(long repositoryId);
+        IObservable<PagesBuild> RequestPageBuild(long repositoryId, CancellationToken cancellationToken = default);
     }
 }

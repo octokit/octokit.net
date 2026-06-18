@@ -1,5 +1,6 @@
 ﻿using Octokit.Reactive.Internal;
 using System;
+using System.Threading;
 using System.Reactive.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -25,9 +26,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#list-project-columns">API documentation</a> for more information.
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
-        public IObservable<ProjectColumn> GetAll(int projectId)
+        public IObservable<ProjectColumn> GetAll(int projectId, CancellationToken cancellationToken = default)
         {
-            return GetAll(projectId, ApiOptions.None);
+            return GetAll(projectId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<ProjectColumn> GetAll(int projectId, ApiOptions options)
+        public IObservable<ProjectColumn> GetAll(int projectId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -54,9 +55,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#get-a-project-column">API documentation</a> for more information.
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
-        public IObservable<ProjectColumn> Get(int columnId)
+        public IObservable<ProjectColumn> Get(int columnId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(columnId).ToObservable();
+            return _client.Get(columnId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -67,11 +68,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="projectId">The id of the project</param>
         /// <param name="newProjectColumn">The column to create</param>
-        public IObservable<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn)
+        public IObservable<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newProjectColumn, nameof(newProjectColumn));
 
-            return _client.Create(projectId, newProjectColumn).ToObservable();
+            return _client.Create(projectId, newProjectColumn, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -82,11 +83,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="projectColumnUpdate">New values to update the column with</param>
-        public IObservable<ProjectColumn> Update(int columnId, ProjectColumnUpdate projectColumnUpdate)
+        public IObservable<ProjectColumn> Update(int columnId, ProjectColumnUpdate projectColumnUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(projectColumnUpdate, nameof(projectColumnUpdate));
 
-            return _client.Update(columnId, projectColumnUpdate).ToObservable();
+            return _client.Update(columnId, projectColumnUpdate, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -96,9 +97,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/projects/columns/#delete-a-project-column">API documentation</a> for more information.
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
-        public IObservable<bool> Delete(int columnId)
+        public IObservable<bool> Delete(int columnId, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(columnId).ToObservable();
+            return _client.Delete(columnId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -109,11 +110,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         /// <param name="position">The position to move the column</param>
-        public IObservable<bool> Move(int columnId, ProjectColumnMove position)
+        public IObservable<bool> Move(int columnId, ProjectColumnMove position, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 
-            return _client.Move(columnId, position).ToObservable();
+            return _client.Move(columnId, position, cancellationToken).ToObservable();
         }
     }
 }

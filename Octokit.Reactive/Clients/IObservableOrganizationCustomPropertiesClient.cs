@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Reactive;
 
 namespace Octokit.Reactive
@@ -18,7 +19,7 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/rest/orgs/custom-properties#get-all-custom-properties-for-an-organization">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
-        IObservable<OrganizationCustomProperty> GetAll(string org);
+        IObservable<OrganizationCustomProperty> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a single custom property by name.
@@ -28,7 +29,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        IObservable<OrganizationCustomProperty> Get(string org, string propertyName);
+        IObservable<OrganizationCustomProperty> Get(string org, string propertyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create new or update existing custom properties for an organization.
@@ -38,7 +39,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="properties">The custom properties to create or update</param>
-        IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties);
+        IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, UpsertOrganizationCustomProperties properties, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create new or update existing custom property for an organization.
@@ -49,7 +50,7 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
         /// <param name="property">The custom property to create or update</param>
-        IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property);
+        IObservable<OrganizationCustomProperty> CreateOrUpdate(string org, string propertyName, UpsertOrganizationCustomProperty property, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a custom property that is defined for an organization.
@@ -59,7 +60,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyName">The name of the custom property</param>
-        IObservable<Unit> Delete(string org, string propertyName);
+        IObservable<Unit> Delete(string org, string propertyName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// A client for GitHub's Organization Custom Property Values API.

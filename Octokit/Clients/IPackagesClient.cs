@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -15,7 +16,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
-        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all packages for an organisations, readable by the current user
@@ -26,7 +28,8 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all packages for an organisations, readable by the current user
@@ -37,7 +40,8 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all packages for an organisations, readable by the current user
@@ -50,7 +54,8 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForOrg(string org, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a specific package for an Organization.
@@ -61,7 +66,8 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task<Package> GetForOrg(string org, PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Package> GetForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a specific package for an Organization.
@@ -72,7 +78,8 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task DeleteForOrg(string org, PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task DeleteForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restore a specific package for an Organization.
@@ -83,7 +90,8 @@ namespace Octokit
         /// <param name="org">Required: Organisation Name</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task RestoreForOrg(string org, PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task RestoreForOrg(string org, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -92,7 +100,8 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/packages#list-packages-for-the-authenticated-users-namespace">API documentation</a> for more details
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
-        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -102,7 +111,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -112,7 +122,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -124,7 +135,8 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForActiveUser(PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific package for a package owned by the authenticated user.
@@ -134,7 +146,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task<Package> GetForActiveUser(PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Package> GetForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a package owned by the authenticated user.
@@ -144,7 +157,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task DeleteForActiveUser(PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task DeleteForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restores a package owned by the authenticated user.
@@ -154,7 +168,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task RestoreForActiveUser(PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task RestoreForActiveUser(PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -164,7 +179,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
-        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -175,7 +191,8 @@ namespace Octokit
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -186,7 +203,8 @@ namespace Octokit
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
-        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists packages owned by the authenticated user within the user's namespace
@@ -199,7 +217,8 @@ namespace Octokit
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageVisibility">Optional: The visibility of the package</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Package>> GetAllForUser(string username, PackageType packageType, PackageVisibility? packageVisibility, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific package metadata for a public package owned by a user.
@@ -210,7 +229,8 @@ namespace Octokit
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task<Package> GetForUser(string username, PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Package> GetForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes an entire package for a user.
@@ -221,7 +241,8 @@ namespace Octokit
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task DeleteForUser(string username, PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task DeleteForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restores an entire package for a user.
@@ -232,6 +253,7 @@ namespace Octokit
         /// <param name="username">Required: Username</param>
         /// <param name="packageType">Required: The type of package</param>
         /// <param name="packageName">Required: The name of the package</param>
-        Task RestoreForUser(string username, PackageType packageType, string packageName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task RestoreForUser(string username, PackageType packageType, string packageName, CancellationToken cancellationToken = default);
     }
 }

@@ -99,7 +99,7 @@ namespace Octokit.AsyncPaginationExtension
       var splitArgs = argSplitRegex.Split(arg).ToArray();
 
       var lambda = arg.Length == 0
-          ? $"t.{name}{templateStr}"
+          ? $"options => t.{name}{templateStr}(options)"
           : $"options => t.{name}{templateStr}({string.Join(' ', splitArgs.Where((_, i) => i % 2 == 1))}, options)";
 
       var docArgs = string.Join(", ", splitArgs.Where((_, i) => i % 2 == 0)).Replace('<', '{').Replace('>', '}');

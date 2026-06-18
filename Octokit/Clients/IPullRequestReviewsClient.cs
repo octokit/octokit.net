@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -18,7 +19,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int pullRequestNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -26,7 +28,8 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/pulls/reviews/#list-reviews-on-a-pull-request</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int pullRequestNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -36,7 +39,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int pullRequestNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReview>> GetAll(string owner, string name, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets reviews for a specified pull request.
@@ -45,7 +49,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int pullRequestNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReview>> GetAll(long repositoryId, int pullRequestNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -55,7 +60,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<PullRequestReview> Get(string owner, string name, int pullRequestNumber, long reviewId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Get(string owner, string name, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single pull request review by ID.
@@ -64,7 +70,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<PullRequestReview> Get(long repositoryId, int pullRequestNumber, long reviewId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Get(long repositoryId, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a pull request review.
@@ -74,7 +81,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="review">The review</param>
-        Task<PullRequestReview> Create(string owner, string name, int pullRequestNumber, PullRequestReviewCreate review);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Create(string owner, string name, int pullRequestNumber, PullRequestReviewCreate review, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a pull request review.
@@ -83,7 +91,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="review">The review</param>
-        Task<PullRequestReview> Create(long repositoryId, int pullRequestNumber, PullRequestReviewCreate review);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Create(long repositoryId, int pullRequestNumber, PullRequestReviewCreate review, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a pull request review.
@@ -93,7 +102,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task Delete(string owner, string name, int pullRequestNumber, long reviewId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(string owner, string name, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a pull request review.
@@ -102,7 +112,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task Delete(long repositoryId, int pullRequestNumber, long reviewId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(long repositoryId, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Submits a pull request review.
@@ -113,7 +124,8 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        Task<PullRequestReview> Submit(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Submit(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Submits a pull request review.
@@ -123,7 +135,8 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="submitMessage">The message and event being submitted for the review</param>
-        Task<PullRequestReview> Submit(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Submit(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewSubmit submitMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -134,7 +147,8 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        Task<PullRequestReview> Dismiss(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Dismiss(string owner, string name, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Dismisses a pull request review.
@@ -144,7 +158,8 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="dismissMessage">The message indicating why the review was dismissed</param>
-        Task<PullRequestReview> Dismiss(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequestReview> Dismiss(long repositoryId, int pullRequestNumber, long reviewId, PullRequestReviewDismiss dismissMessage, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists comments for a single review
@@ -154,7 +169,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists comments for a single review
@@ -163,7 +179,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
-        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists comments for a single review
@@ -174,7 +191,8 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(string owner, string name, int pullRequestNumber, long reviewId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists comments for a single review
@@ -184,6 +202,7 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="reviewId">The pull request review number</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<PullRequestReviewComment>> GetAllComments(long repositoryId, int pullRequestNumber, long reviewId, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

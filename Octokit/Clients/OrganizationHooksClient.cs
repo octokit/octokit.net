@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -21,7 +22,7 @@ namespace Octokit
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         [ManualRoute("GET", "orgs/{org}/hooks")]
-        public Task<IReadOnlyList<OrganizationHook>> GetAll(string org)
+        public Task<IReadOnlyList<OrganizationHook>> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -36,7 +37,7 @@ namespace Octokit
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#list-hooks">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         [ManualRoute("GET", "orgs/{org}/hooks")]
-        public Task<IReadOnlyList<OrganizationHook>> GetAll(string org, ApiOptions options)
+        public Task<IReadOnlyList<OrganizationHook>> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -52,7 +53,7 @@ namespace Octokit
         /// <returns></returns>
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [ManualRoute("GET", "orgs/{org}/hooks/{hook_id}")]
-        public Task<OrganizationHook> Get(string org, int hookId)
+        public Task<OrganizationHook> Get(string org, int hookId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(hookId, nameof(hookId));
@@ -66,7 +67,7 @@ namespace Octokit
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         [ManualRoute("POST", "orgs/{org}/hooks")]
-        public Task<OrganizationHook> Create(string org, NewOrganizationHook hook)
+        public Task<OrganizationHook> Create(string org, NewOrganizationHook hook, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(hook, nameof(hook));
@@ -80,7 +81,7 @@ namespace Octokit
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         [ManualRoute("PATCH", "orgs/{org}/hooks/{hook_id}")]
-        public Task<OrganizationHook> Edit(string org, int hookId, EditOrganizationHook hook)
+        public Task<OrganizationHook> Edit(string org, int hookId, EditOrganizationHook hook, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(hook, nameof(hook));
@@ -94,7 +95,7 @@ namespace Octokit
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#ping-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         [ManualRoute("POST", "orgs/{org}/hooks/{hook_id}/pings")]
-        public Task Ping(string org, int hookId)
+        public Task Ping(string org, int hookId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(hookId, nameof(hookId));
@@ -107,7 +108,7 @@ namespace Octokit
         /// <remarks>See <a href="https://developer.github.com/v3/orgs/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
         /// <returns></returns>
         [ManualRoute("DELETE", "orgs/{org}/hooks/{hook_id}")]
-        public Task Delete(string org, int hookId)
+        public Task Delete(string org, int hookId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(hookId, nameof(hookId));

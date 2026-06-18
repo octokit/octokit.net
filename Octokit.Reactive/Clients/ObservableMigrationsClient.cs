@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
@@ -40,9 +41,9 @@ namespace Octokit.Reactive
         /// <param name="migration">Specifies parameters for the migration in a
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
-        public IObservable<Migration> Start(string org, StartMigrationRequest migration)
+        public IObservable<Migration> Start(string org, StartMigrationRequest migration, CancellationToken cancellationToken = default)
         {
-            return _client.Start(org, migration).ToObservable();
+            return _client.Start(org, migration, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -53,16 +54,16 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
-        public IObservable<Migration> GetAll(string org)
+        public IObservable<Migration> GetAll(string org, CancellationToken cancellationToken = default)
         {
-            return GetAll(org, ApiOptions.None);
+            return GetAll(org, ApiOptions.None, cancellationToken);
         }
 
-        public IObservable<Migration> GetAll(string org, ApiOptions options)
+        public IObservable<Migration> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Migration>(ApiUrls.EnterpriseMigrations(org), null, options);
+            return _connection.GetAndFlattenAllPages<Migration>(ApiUrls.EnterpriseMigrations(org), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -74,9 +75,9 @@ namespace Octokit.Reactive
         /// <param name="org">The organization which is migrating.</param>
         /// <param name="id">Migrations Id of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
-        public IObservable<Migration> Get(string org, long id)
+        public IObservable<Migration> Get(string org, long id, CancellationToken cancellationToken = default)
         {
-            return _client.Get(org, id).ToObservable();
+            return _client.Get(org, id, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -88,9 +89,9 @@ namespace Octokit.Reactive
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns>The binary contents of the archive as a byte array.</returns>
-        public IObservable<byte[]> GetArchive(string org, long id)
+        public IObservable<byte[]> GetArchive(string org, long id, CancellationToken cancellationToken = default)
         {
-            return _client.GetArchive(org, id).ToObservable();
+            return _client.GetArchive(org, id, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -102,9 +103,9 @@ namespace Octokit.Reactive
         /// <param name="org">The organization of which the migration was.</param>
         /// <param name="id">The Id of the migration.</param>
         /// <returns></returns>
-        public IObservable<Unit> DeleteArchive(string org, long id)
+        public IObservable<Unit> DeleteArchive(string org, long id, CancellationToken cancellationToken = default)
         {
-            return _client.DeleteArchive(org, id).ToObservable();
+            return _client.DeleteArchive(org, id, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -117,9 +118,9 @@ namespace Octokit.Reactive
         /// <param name="id">The Id of the migration.</param>
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
-        public IObservable<Unit> UnlockRepository(string org, long id, string repo)
+        public IObservable<Unit> UnlockRepository(string org, long id, string repo, CancellationToken cancellationToken = default)
         {
-            return _client.UnlockRepository(org, id, repo).ToObservable();
+            return _client.UnlockRepository(org, id, repo, cancellationToken).ToObservable();
         }
     }
 }

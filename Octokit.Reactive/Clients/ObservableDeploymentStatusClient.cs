@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive.Clients
 {
@@ -34,12 +35,12 @@ namespace Octokit.Reactive.Clients
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        public IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId)
+        public IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, deploymentId, ApiOptions.None);
+            return GetAll(owner, name, deploymentId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -51,9 +52,9 @@ namespace Octokit.Reactive.Clients
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        public IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId)
+        public IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, deploymentId, ApiOptions.None);
+            return GetAll(repositoryId, deploymentId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId, ApiOptions options)
+        public IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -87,12 +88,12 @@ namespace Octokit.Reactive.Clients
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId, ApiOptions options)
+        public IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<DeploymentStatus>(
-                ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options);
+                ApiUrls.DeploymentStatuses(repositoryId, deploymentId), options, cancellationToken);
         }
 
         /// <summary>
@@ -106,13 +107,13 @@ namespace Octokit.Reactive.Clients
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        public IObservable<DeploymentStatus> Create(string owner, string name, long deploymentId, NewDeploymentStatus newDeploymentStatus)
+        public IObservable<DeploymentStatus> Create(string owner, string name, long deploymentId, NewDeploymentStatus newDeploymentStatus, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
-            return _client.Create(owner, name, deploymentId, newDeploymentStatus).ToObservable();
+            return _client.Create(owner, name, deploymentId, newDeploymentStatus, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -125,11 +126,11 @@ namespace Octokit.Reactive.Clients
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        public IObservable<DeploymentStatus> Create(long repositoryId, long deploymentId, NewDeploymentStatus newDeploymentStatus)
+        public IObservable<DeploymentStatus> Create(long repositoryId, long deploymentId, NewDeploymentStatus newDeploymentStatus, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newDeploymentStatus, nameof(newDeploymentStatus));
 
-            return _client.Create(repositoryId, deploymentId, newDeploymentStatus).ToObservable();
+            return _client.Create(repositoryId, deploymentId, newDeploymentStatus, cancellationToken).ToObservable();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -27,7 +28,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<OrganizationCustomPropertyValues> GetAll(string org)
+        public IObservable<OrganizationCustomPropertyValues> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -42,14 +43,14 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<OrganizationCustomPropertyValues> GetAll(string org, ApiOptions options)
+        public IObservable<OrganizationCustomPropertyValues> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var url = ApiUrls.OrganizationCustomPropertyValues(org);
 
-            return _connection.GetAndFlattenAllPages<OrganizationCustomPropertyValues>(url, options);
+            return _connection.GetAndFlattenAllPages<OrganizationCustomPropertyValues>(url, options, cancellationToken);
         }
 
         /// <summary>
@@ -61,14 +62,14 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="repositoryQuery">Finds repositories in the organization with a query containing one or more search keywords and qualifiers.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<OrganizationCustomPropertyValues> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery)
+        public IObservable<OrganizationCustomPropertyValues> GetAll(string org, OrganizationCustomPropertyValuesRequest repositoryQuery, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(repositoryQuery, nameof(repositoryQuery));
 
             var url = ApiUrls.OrganizationCustomPropertyValues(org);
 
-            return _connection.GetAndFlattenAllPages<OrganizationCustomPropertyValues>(url, repositoryQuery.Parameters);
+            return _connection.GetAndFlattenAllPages<OrganizationCustomPropertyValues>(url, repositoryQuery.Parameters, cancellationToken);
         }
 
         /// <summary>
@@ -82,14 +83,14 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="propertyValues">The custom property values to create or update</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> CreateOrUpdate(string org, UpsertOrganizationCustomPropertyValues propertyValues)
+        public IObservable<Unit> CreateOrUpdate(string org, UpsertOrganizationCustomPropertyValues propertyValues, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(propertyValues, nameof(propertyValues));
             Ensure.ArgumentNotNullOrEmptyEnumerable(propertyValues.Properties, nameof(propertyValues.Properties));
             Ensure.ArgumentNotNullOrEmptyEnumerable(propertyValues.RepositoryNames, nameof(propertyValues.RepositoryNames));
 
-            return _client.CreateOrUpdate(org, propertyValues).ToObservable();
+            return _client.CreateOrUpdate(org, propertyValues, cancellationToken).ToObservable();
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using System.Diagnostics.CodeAnalysis;
 using System;
+using System.Threading;
 
 namespace Octokit
 {
@@ -53,7 +54,8 @@ namespace Octokit
         /// <returns>The specified <see cref="Organization"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get"
             , Justification = "It's fine. Trust us.")]
-        Task<Organization> Get(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<Organization> Get(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="Organization" />s for the current user.
@@ -62,7 +64,8 @@ namespace Octokit
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Method makes a network request")]
-        Task<IReadOnlyList<Organization>> GetAllForCurrent();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Organization>> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="Organization" />s for the current user.
@@ -72,7 +75,8 @@ namespace Octokit
         /// <returns>A list of the current user's <see cref="Organization"/>s.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "Method makes a network request")]
-        Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Organization>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns <see cref="Organization" />s which the specified user is a member of,
@@ -83,7 +87,8 @@ namespace Octokit
         /// A list of the <see cref="Organization"/>s which the specified user is a member
         /// of, where they haven't marked their membership as private
         /// </returns>
-        Task<IReadOnlyList<Organization>> GetAllForUser(string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Organization>> GetAllForUser(string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns <see cref="Organization" />s which the specified user is a member of,
@@ -96,7 +101,8 @@ namespace Octokit
         /// A list of the <see cref="Organization"/>s which the specified user is a member
         /// of, where they haven't marked their membership as private
         /// </returns>
-        Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Organization>> GetAllForUser(string user, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="Organization" />s.
@@ -104,7 +110,8 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the OrganizationRequest.Since parameter for pagination")]
-        Task<IReadOnlyList<Organization>> GetAll();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Organization>> GetAll(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="Organization" />s.
@@ -113,39 +120,44 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A list of <see cref="Organization"/>s.</returns>
         [ExcludeFromPaginationApiOptionsConventionTest("This API call uses the OrganizationRequest.Since parameter for pagination")]
-        Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<IReadOnlyList<Organization>> GetAll(OrganizationRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update the specified organization with data from <see cref="OrganizationUpdate"/>.
         /// </summary>
         /// <param name="org">The name of the organization to update.</param>
         /// <param name="updateRequest"></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="Organization"/></returns>
-        Task<Organization> Update(string org, OrganizationUpdate updateRequest);
+        Task<Organization> Update(string org, OrganizationUpdate updateRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationCredential" />s.
         /// </summary>
         /// <param name="org">The organization name.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
-        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org);
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationCredential" />s.
         /// </summary>
         /// <param name="org">The organization name.</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
-        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, ApiOptions options);
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationCredential" />s.
         /// </summary>
         /// <param name="org">The organization name.</param>
         /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
-        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login);
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationCredential" />s.
@@ -153,7 +165,8 @@ namespace Octokit
         /// <param name="org">The organization name.</param>
         /// <param name="login">Limits the list of credentials authorizations for an organization to a specific login</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>A list of <see cref="OrganizationCredential"/>s.</returns>
-        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, ApiOptions options);
+        Task<IReadOnlyList<OrganizationCredential>> GetAllAuthorizations(string org, string login, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

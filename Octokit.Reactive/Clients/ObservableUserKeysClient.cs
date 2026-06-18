@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
@@ -30,11 +31,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="userName">The @ handle of the user.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
-        public IObservable<PublicKey> GetAll(string userName)
+        public IObservable<PublicKey> GetAll(string userName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
 
-            return GetAll(userName, ApiOptions.None);
+            return GetAll(userName, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -46,12 +47,12 @@ namespace Octokit.Reactive
         /// <param name="userName">The @ handle of the user.</param>
         /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
-        public IObservable<PublicKey> GetAll(string userName, ApiOptions options)
+        public IObservable<PublicKey> GetAll(string userName, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.GetAll(userName, options).ToObservable().SelectMany(k => k);
+            return _client.GetAll(userName, options, cancellationToken).ToObservable().SelectMany(k => k);
         }
 
         /// <summary>
@@ -61,8 +62,7 @@ namespace Octokit.Reactive
         /// https://developer.github.com/v3/users/keys/#list-your-public-keys
         /// </remarks>
         /// <returns>Lists the current user's keys.</returns>
-        public IObservable<PublicKey> GetAllForCurrent()
-        {
+        public IObservable<PublicKey> GetAllForCurrent(CancellationToken cancellationToken = default) {
             return GetAllForCurrent(ApiOptions.None);
         }
 
@@ -74,11 +74,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the current user's keys.</returns>
-        public IObservable<PublicKey> GetAllForCurrent(ApiOptions options)
+        public IObservable<PublicKey> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _client.GetAllForCurrent(options).ToObservable().SelectMany(k => k);
+            return _client.GetAllForCurrent(options, cancellationToken).ToObservable().SelectMany(k => k);
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The Id of the SSH key</param>
         /// <returns>View extended details for a single public key.</returns>
-        public IObservable<PublicKey> Get(long id)
+        public IObservable<PublicKey> Get(long id, CancellationToken cancellationToken = default)
         {
-            return _client.Get(id).ToObservable();
+            return _client.Get(id, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -102,11 +102,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="newKey">The SSH Key contents</param>
         /// <returns>Creates a public key.</returns>
-        public IObservable<PublicKey> Create(NewPublicKey newKey)
+        public IObservable<PublicKey> Create(NewPublicKey newKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newKey, nameof(newKey));
 
-            return _client.Create(newKey).ToObservable();
+            return _client.Create(newKey, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the key to delete</param>
         /// <returns>Removes a public key.</returns>
-        public IObservable<Unit> Delete(long id)
+        public IObservable<Unit> Delete(long id, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(id).ToObservable();
+            return _client.Delete(id, cancellationToken).ToObservable();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using System.Threading;
 namespace Octokit
 {
     /// <summary>
@@ -20,7 +21,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<TreeResponse> Get(string owner, string name, string reference);
+        Task<TreeResponse> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a Tree Response for a given SHA.
@@ -31,7 +32,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
-        Task<TreeResponse> Get(long repositoryId, string reference);
+        Task<TreeResponse> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a Tree Response for a given SHA.
@@ -42,7 +43,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        Task<TreeResponse> GetRecursive(string owner, string name, string reference);
+        Task<TreeResponse> GetRecursive(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a Tree Response for a given SHA.
@@ -52,7 +53,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The SHA that references the tree</param>
-        Task<TreeResponse> GetRecursive(long repositoryId, string reference);
+        Task<TreeResponse> GetRecursive(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new Tree in the specified repo
@@ -63,7 +64,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        Task<TreeResponse> Create(string owner, string name, NewTree newTree);
+        Task<TreeResponse> Create(string owner, string name, NewTree newTree, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new Tree in the specified repo
@@ -73,6 +74,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newTree">The value of the new tree</param>
-        Task<TreeResponse> Create(long repositoryId, NewTree newTree);
+        Task<TreeResponse> Create(long repositoryId, NewTree newTree, CancellationToken cancellationToken = default);
     }
 }

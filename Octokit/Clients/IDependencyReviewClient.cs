@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -23,7 +24,7 @@ namespace Octokit
         /// <param name="head">The head revision</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API.")]
-        Task<IReadOnlyList<DependencyDiff>> GetAll(string owner, string name, string @base, string head);
+        Task<IReadOnlyList<DependencyDiff>> GetAll(string owner, string name, string @base, string head, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="DependencyDiff"/>s for the specified repository.
@@ -34,8 +35,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="base">The base revision</param>
         /// <param name="head">The head revision</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API.")]
-        Task<IReadOnlyList<DependencyDiff>> GetAll(long repositoryId, string @base, string head);
+        Task<IReadOnlyList<DependencyDiff>> GetAll(long repositoryId, string @base, string head, CancellationToken cancellationToken = default);
     }
 }

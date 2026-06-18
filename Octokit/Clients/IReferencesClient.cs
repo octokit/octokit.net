@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -29,7 +30,8 @@ namespace Octokit
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Reference> Get(string owner, string name, string reference);
+        Task<Reference> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a reference for a given repository by reference name
@@ -47,7 +49,8 @@ namespace Octokit
         /// </remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        Task<Reference> Get(long repositoryId, string reference);
+        Task<Reference> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets all references for a given repository
@@ -58,7 +61,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reference>> GetAll(string owner, string name);
+        Task<IReadOnlyList<Reference>> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all references for a given repository
@@ -70,7 +73,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options);
+        Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all references for a given repository
@@ -80,7 +83,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reference>> GetAll(long repositoryId);
+        Task<IReadOnlyList<Reference>> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all references for a given repository
@@ -91,7 +94,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        Task<IReadOnlyList<Reference>> GetAll(long repositoryId, ApiOptions options);
+        Task<IReadOnlyList<Reference>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -108,7 +111,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace);
+        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -126,7 +129,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options);
+        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -142,7 +145,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace);
+        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets references for a given repository by sub-namespace, i.e. "tags" or "heads"
@@ -159,7 +162,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options);
+        Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a reference for a given repository
@@ -176,7 +179,8 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task<Reference> Create(string owner, string name, NewReference reference);
+        Task<Reference> Create(string owner, string name, NewReference reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a reference for a given repository
@@ -187,7 +191,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        Task<Reference> Create(long repositoryId, NewReference reference);
+        Task<Reference> Create(long repositoryId, NewReference reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a reference for a given repository by reference name
@@ -205,7 +210,8 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate);
+        Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a reference for a given repository by reference name
@@ -222,7 +228,8 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate);
+        Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a reference for a given repository by reference name
@@ -239,7 +246,8 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task Delete(string owner, string name, string reference);
+        Task Delete(string owner, string name, string reference, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a reference for a given repository by reference name
@@ -255,6 +263,7 @@ namespace Octokit
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        Task Delete(long repositoryId, string reference);
+        Task Delete(long repositoryId, string reference, CancellationToken cancellationToken = default);
+
     }
 }

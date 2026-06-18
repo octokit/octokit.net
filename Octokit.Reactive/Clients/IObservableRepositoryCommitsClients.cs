@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
+using System.Threading;
+
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -16,15 +18,17 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha1">Used to find all branches where the given commit SHA is the HEAD, or latest commit for the branch</param>
-        IObservable<Branch> BranchesWhereHead(long repositoryId, string sha1);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Branch> BranchesWhereHead(long repositoryId, string sha1, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all pull requests for a given commit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha1">Used to find all branches where the given commit SHA is the HEAD, or latest commit for the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// /// <param name="options">Options for changing the API response</param>
-        IObservable<Branch> BranchesWhereHead(long repositoryId, string sha1, ApiOptions options);
+        IObservable<Branch> BranchesWhereHead(long repositoryId, string sha1, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List pull requests associated with a commit
@@ -32,7 +36,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha1">Used to find all branches where the given commit SHA is the HEAD, or latest commit for the branch</param>
-        IObservable<Branch> BranchesWhereHead(string owner, string name, string sha1);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Branch> BranchesWhereHead(string owner, string name, string sha1, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all pull requests for a given commit
@@ -40,8 +45,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha1">Used to find all branches where the given commit SHA is the HEAD, or latest commit for the branch</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// /// <param name="options">Options for changing the API response</param>
-        IObservable<Branch> BranchesWhereHead(string owner, string name, string sha1, ApiOptions options);
+        IObservable<Branch> BranchesWhereHead(string owner, string name, string sha1, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Compare two references in a repository
@@ -51,7 +57,8 @@ namespace Octokit.Reactive
         /// <param name="base">The reference to use as the base commit</param>
         /// <param name="head">The reference to use as the head commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        IObservable<CompareResult> Compare(string owner, string name, string @base, string head);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<CompareResult> Compare(string owner, string name, string @base, string head, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Compare two references in a repository
@@ -60,7 +67,8 @@ namespace Octokit.Reactive
         /// <param name="base">The reference to use as the base commit</param>
         /// <param name="head">The reference to use as the head commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        IObservable<CompareResult> Compare(long repositoryId, string @base, string head);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<CompareResult> Compare(long repositoryId, string @base, string head, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Compare two references in a repository
@@ -71,7 +79,8 @@ namespace Octokit.Reactive
         /// <param name="head">The reference to use as the head commit</param>
         /// <param name="options">Options for changing the API response</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        IObservable<CompareResult> Compare(string owner, string name, string @base, string head, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<CompareResult> Compare(string owner, string name, string @base, string head, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Compare two references in a repository
@@ -81,7 +90,8 @@ namespace Octokit.Reactive
         /// <param name="head">The reference to use as the head commit</param>
         /// <param name="options">Options for changing the API response</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "base")]
-        IObservable<CompareResult> Compare(long repositoryId, string @base, string head, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<CompareResult> Compare(long repositoryId, string @base, string head, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -91,7 +101,8 @@ namespace Octokit.Reactive
         /// <param name="reference">The reference for the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<GitHubCommit> Get(string owner, string name, string reference);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -100,20 +111,23 @@ namespace Octokit.Reactive
         /// <param name="reference">The reference for the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<GitHubCommit> Get(long repositoryId, string reference);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<GitHubCommit> GetAll(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<GitHubCommit> GetAll(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -121,14 +135,16 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GitHubCommit> GetAll(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GitHubCommit> GetAll(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -136,14 +152,16 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
-        IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
-        IObservable<GitHubCommit> GetAll(long repositoryId, CommitRequest request);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(long repositoryId, CommitRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -152,7 +170,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(string owner, string name, CommitRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all commits for a given repository
@@ -160,7 +179,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to filter list of commits returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GitHubCommit> GetAll(long repositoryId, CommitRequest request, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GitHubCommit> GetAll(long repositoryId, CommitRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the SHA-1 of a commit reference
@@ -168,14 +188,16 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The repository reference</param>
-        IObservable<string> GetSha1(string owner, string name, string reference);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> GetSha1(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the SHA-1 of a commit reference
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The repository reference</param>
-        IObservable<string> GetSha1(long repositoryId, string reference);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<string> GetSha1(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List pull requests associated with a commit
@@ -183,22 +205,25 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha1">Used to find all pull requests containing the provided commit SHA, which can be from any point in the commit history</param>
-        IObservable<CommitPullRequest> PullRequests(string owner, string name, string sha1);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<CommitPullRequest> PullRequests(string owner, string name, string sha1, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all pull requests for a given commit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha1">Used to find all pull requests containing the provided commit SHA, which can be from any point in the commit history</param>
-        IObservable<CommitPullRequest> PullRequests(long repositoryId, string sha1);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<CommitPullRequest> PullRequests(long repositoryId, string sha1, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all pull requests for a given commit
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha1">Used to find all pull requests containing the provided commit SHA, which can be from any point in the commit history</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// /// <param name="options">Options for changing the API response</param>
-        IObservable<CommitPullRequest> PullRequests(long repositoryId, string sha1, ApiOptions options);
+        IObservable<CommitPullRequest> PullRequests(long repositoryId, string sha1, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all pull requests for a given commit
@@ -206,7 +231,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha1">Used to find all pull requests containing the provided commit SHA, which can be from any point in the commit history</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// /// <param name="options">Options for changing the API response</param>
-        IObservable<CommitPullRequest> PullRequests(string owner, string name, string sha1, ApiOptions options);
+        IObservable<CommitPullRequest> PullRequests(string owner, string name, string sha1, ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

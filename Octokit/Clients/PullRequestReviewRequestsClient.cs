@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,12 +26,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
-        public Task<RequestedReviews> Get(string owner, string name, int pullRequestNumber)
+        public Task<RequestedReviews> Get(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<RequestedReviews>(ApiUrls.PullRequestReviewRequests(owner, name, pullRequestNumber));
+            return ApiConnection.Get<RequestedReviews>(ApiUrls.PullRequestReviewRequests(owner, name, pullRequestNumber), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -40,9 +41,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         [ManualRoute("GET", "/repositories/{id}/pulls/{number}/requested_reviewers")]
-        public Task<RequestedReviews> Get(long repositoryId, int pullRequestNumber)
+        public Task<RequestedReviews> Get(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<RequestedReviews>(ApiUrls.PullRequestReviewRequests(repositoryId, pullRequestNumber));
+            return ApiConnection.Get<RequestedReviews>(ApiUrls.PullRequestReviewRequests(repositoryId, pullRequestNumber), cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -54,14 +55,14 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
-        public Task<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users)
+        public Task<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(users, nameof(users));
 
             var endpoint = ApiUrls.PullRequestReviewRequests(owner, name, pullRequestNumber);
-            return ApiConnection.Post<PullRequest>(endpoint, users);
+            return ApiConnection.Post<PullRequest>(endpoint, users, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -72,12 +73,12 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
         [ManualRoute("POST", "/repositories/{id}/pulls/{number}/requested_reviewers")]
-        public Task<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users)
+        public Task<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(users, nameof(users));
 
             var endpoint = ApiUrls.PullRequestReviewRequests(repositoryId, pullRequestNumber);
-            return ApiConnection.Post<PullRequest>(endpoint, users);
+            return ApiConnection.Post<PullRequest>(endpoint, users, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -89,13 +90,13 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers")]
-        public Task Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users)
+        public Task Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(owner, name, pullRequestNumber), users);
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(owner, name, pullRequestNumber), users, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -106,11 +107,11 @@ namespace Octokit
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
         [ManualRoute("DELETE", "/repositories/{id}/pulls/{number}/requested_reviewers")]
-        public Task Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users)
+        public Task Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(repositoryId, pullRequestNumber), users);
+            return ApiConnection.Delete(ApiUrls.PullRequestReviewRequests(repositoryId, pullRequestNumber), users, cancellationToken: cancellationToken);
         }
     }
 }

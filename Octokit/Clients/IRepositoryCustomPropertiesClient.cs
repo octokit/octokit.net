@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -19,8 +20,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="repoName">The name of the repository.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ExcludeFromPaginationApiOptionsConventionTest("Pagination not supported by GitHub API (tested 15/06/2024)")]
-        Task<IReadOnlyList<CustomPropertyValue>> GetAll(string owner, string repoName);
+        Task<IReadOnlyList<CustomPropertyValue>> GetAll(string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create new or update existing custom property values for a repository. Using a value of null for a custom property will remove or 'unset' the property value from the repository.
@@ -31,6 +33,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="repoName">The name of the repository</param>
         /// <param name="propertyValues">The custom property values to create or update</param>
-        Task CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task CreateOrUpdate(string owner, string repoName, UpsertRepositoryCustomPropertyValues propertyValues, CancellationToken cancellationToken = default);
     }
 }

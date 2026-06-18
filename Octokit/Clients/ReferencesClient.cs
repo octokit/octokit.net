@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -36,7 +37,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
-        public Task<Reference> Get(string owner, string name, string reference)
+        public Task<Reference> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -65,7 +66,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/git/refs/{ref}")]
-        public Task<Reference> Get(long repositoryId, string reference)
+        public Task<Reference> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -87,9 +88,9 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs")]
-        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name)
+        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs")]
-        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Reference>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -121,9 +122,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/git/refs")]
-        public Task<IReadOnlyList<Reference>> GetAll(long repositoryId)
+        public Task<IReadOnlyList<Reference>> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/git/refs")]
-        public Task<IReadOnlyList<Reference>> GetAll(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Reference>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -154,9 +155,9 @@ namespace Octokit
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
-        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace)
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, CancellationToken cancellationToken = default)
         {
-            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None);
+            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +177,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/refs/{ref}")]
-        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -201,9 +202,9 @@ namespace Octokit
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/git/refs/{ref}")]
-        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace)
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, CancellationToken cancellationToken = default)
         {
-            return GetAllForSubNamespace(repositoryId, subNamespace, ApiOptions.None);
+            return GetAllForSubNamespace(repositoryId, subNamespace, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -222,7 +223,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("GET", "/repositories/{id}/git/refs/{ref}")]
-        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
+        public Task<IReadOnlyList<Reference>> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -246,7 +247,7 @@ namespace Octokit
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/git/refs")]
-        public Task<Reference> Create(string owner, string name, NewReference reference)
+        public Task<Reference> Create(string owner, string name, NewReference reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -265,11 +266,11 @@ namespace Octokit
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repositories/{id}/git/refs")]
-        public Task<Reference> Create(long repositoryId, NewReference reference)
+        public Task<Reference> Create(long repositoryId, NewReference reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(reference, nameof(reference));
 
-            return ApiConnection.Post<Reference>(ApiUrls.Reference(repositoryId), reference);
+            return ApiConnection.Post<Reference>(ApiUrls.Reference(repositoryId), reference, cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +290,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/git/refs/{ref}")]
-        public Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
+        public Task<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -320,7 +321,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("PATCH", "/repositories/{id}/git/refs/{ref}")]
-        public Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate)
+        public Task<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(referenceUpdate, nameof(referenceUpdate));
@@ -349,7 +350,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/git/refs/{ref}")]
-        public Task Delete(string owner, string name, string reference)
+        public Task Delete(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -378,7 +379,7 @@ namespace Octokit
         /// "heads/main" or "tags/release-1")
         /// </remarks>
         [ManualRoute("DELETE", "/repositories/{id}/git/refs/{ref}")]
-        public Task Delete(long repositoryId, string reference)
+        public Task Delete(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -16,14 +17,15 @@ namespace Octokit.Reactive
         /// <param name="markdown">An arbitrary Markdown document</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
-        IObservable<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown);
+        IObservable<string> RenderArbitraryMarkdown(NewArbitraryMarkdown markdown, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the rendered Markdown for the specified plain-text Markdown document.
         /// </summary>
         /// <param name="markdown">A plain-text Markdown document</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The rendered Markdown.</returns>
-        IObservable<string> RenderRawMarkdown(string markdown);
+        IObservable<string> RenderRawMarkdown(string markdown, CancellationToken cancellationToken = default);
     }
 }

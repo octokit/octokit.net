@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -22,7 +23,7 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<Commit> Get(string owner, string name, string reference);
+        Task<Commit> Get(string owner, string name, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a commit for a given repository by sha reference
@@ -34,7 +35,7 @@ namespace Octokit
         /// <param name="reference">Tha sha reference of the commit</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        Task<Commit> Get(long repositoryId, string reference);
+        Task<Commit> Get(long repositoryId, string reference, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a commit for a given repository
@@ -45,7 +46,7 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
-        Task<Commit> Create(string owner, string name, NewCommit commit);
+        Task<Commit> Create(string owner, string name, NewCommit commit, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a commit for a given repository
@@ -55,6 +56,6 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
-        Task<Commit> Create(long repositoryId, NewCommit commit);
+        Task<Commit> Create(long repositoryId, NewCommit commit, CancellationToken cancellationToken = default);
     }
 }

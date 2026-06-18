@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -28,7 +29,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<IEnumerable<Contributor>> GetContributors(string owner, string name)
+        public IObservable<IEnumerable<Contributor>> GetContributors(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -40,7 +41,7 @@ namespace Octokit.Reactive
         /// Returns a list of <see cref="Contributor"/> for the given repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<IEnumerable<Contributor>> GetContributors(long repositoryId)
+        public IObservable<IEnumerable<Contributor>> GetContributors(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client.Repository.Statistics.GetContributors(repositoryId).ToObservable();
         }
@@ -50,7 +51,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<CommitActivity> GetCommitActivity(string owner, string name)
+        public IObservable<CommitActivity> GetCommitActivity(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -62,7 +63,7 @@ namespace Octokit.Reactive
         /// Returns the last year of commit activity grouped by week.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<CommitActivity> GetCommitActivity(long repositoryId)
+        public IObservable<CommitActivity> GetCommitActivity(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client.Repository.Statistics.GetCommitActivity(repositoryId).ToObservable();
         }
@@ -72,7 +73,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<CodeFrequency> GetCodeFrequency(string owner, string name)
+        public IObservable<CodeFrequency> GetCodeFrequency(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -84,7 +85,7 @@ namespace Octokit.Reactive
         /// Returns a weekly aggregate of the number of additions and deletions pushed to a repository.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<CodeFrequency> GetCodeFrequency(long repositoryId)
+        public IObservable<CodeFrequency> GetCodeFrequency(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client.Repository.Statistics.GetCodeFrequency(repositoryId).ToObservable();
         }
@@ -94,7 +95,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<Participation> GetParticipation(string owner, string name)
+        public IObservable<Participation> GetParticipation(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -106,7 +107,7 @@ namespace Octokit.Reactive
         /// Returns the total commit counts for the owner and total commit counts in total. 
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Participation> GetParticipation(long repositoryId)
+        public IObservable<Participation> GetParticipation(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client.Repository.Statistics.GetParticipation(repositoryId).ToObservable();
         }
@@ -116,7 +117,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<PunchCard> GetPunchCard(string owner, string name)
+        public IObservable<PunchCard> GetPunchCard(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -128,7 +129,7 @@ namespace Octokit.Reactive
         /// Returns a list of the number of commits per hour in each day
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<PunchCard> GetPunchCard(long repositoryId)
+        public IObservable<PunchCard> GetPunchCard(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _client.Repository.Statistics.GetPunchCard(repositoryId).ToObservable();
         }

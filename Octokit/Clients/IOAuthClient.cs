@@ -27,9 +27,9 @@ namespace Octokit
         /// an access token using this method.
         /// </remarks>
         /// <param name="request"></param>
-        /// <param name="concellationToken"></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        Task<OauthToken> CreateAccessToken(OauthTokenRequest request, CancellationToken concellationToken = default);
+        Task<OauthToken> CreateAccessToken(OauthTokenRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Makes a request to initiate the device flow authentication.
@@ -51,16 +51,16 @@ namespace Octokit
         /// </remarks>
         /// <param name="clientId">The client Id you received from GitHub when you registered the application.</param>
         /// <param name="deviceFlowResponse">The response you received from <see cref="InitiateDeviceFlow(OauthDeviceFlowRequest, CancellationToken)"/></param>
-        /// <param name="concellationToken"></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns></returns>
-        Task<OauthToken> CreateAccessTokenForDeviceFlow(string clientId, OauthDeviceFlowResponse deviceFlowResponse, CancellationToken concellationToken = default);
+        Task<OauthToken> CreateAccessTokenForDeviceFlow(string clientId, OauthDeviceFlowResponse deviceFlowResponse, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Makes a request to get an access token using the refresh token returned in <see cref="CreateAccessToken(OauthTokenRequest, CancellationToken)"/>.
         /// </summary>
         /// <param name="request">Token renewal request.</param>
-        /// <param name="concellationToken"></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="OauthToken"/> with the new token set.</returns>
-        Task<OauthToken> CreateAccessTokenFromRenewalToken(OauthTokenRenewalRequest request, CancellationToken concellationToken = default);
+        Task<OauthToken> CreateAccessTokenFromRenewalToken(OauthTokenRenewalRequest request, CancellationToken cancellationToken = default);
     }
 }

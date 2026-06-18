@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -28,9 +29,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <returns>All the public <see cref="Feed"/>s for the particular user.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        public IObservable<Feed> GetFeeds()
+        public IObservable<Feed> GetFeeds(CancellationToken cancellationToken = default)
         {
-            return _client.GetFeeds().ToObservable();
+            return _client.GetFeeds(cancellationToken).ToObservable();
         }
     }
 }

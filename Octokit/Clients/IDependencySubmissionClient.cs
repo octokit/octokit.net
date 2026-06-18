@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -21,7 +22,8 @@ namespace Octokit
         /// <param name="snapshot">The dependency snapshot to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
-        Task<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new dependency snapshot.
@@ -31,8 +33,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="snapshot">The dependency snapshot to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
-        Task<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot);
+        Task<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default);
     }
 }

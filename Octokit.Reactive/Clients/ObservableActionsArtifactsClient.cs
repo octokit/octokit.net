@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.IO;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
@@ -21,33 +22,33 @@ namespace Octokit.Reactive
         }
 
         /// <inheritdoc/>
-        public IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null)
+        public IObservable<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null, CancellationToken cancellationToken = default)
         {
-            return _client.ListArtifacts(owner, repository, listArtifactsRequest).ToObservable();
+            return _client.ListArtifacts(owner, repository, listArtifactsRequest, cancellationToken).ToObservable();
         }
 
         /// <inheritdoc/>
-        public IObservable<Artifact> GetArtifact(string owner, string repository, long artifactId)
+        public IObservable<Artifact> GetArtifact(string owner, string repository, long artifactId, CancellationToken cancellationToken = default)
         {
-            return _client.GetArtifact(owner, repository, artifactId).ToObservable();
+            return _client.GetArtifact(owner, repository, artifactId, cancellationToken).ToObservable();
         }
 
         /// <inheritdoc/>
-        public IObservable<Unit> DeleteArtifact(string owner, string repository, long artifactId)
+        public IObservable<Unit> DeleteArtifact(string owner, string repository, long artifactId, CancellationToken cancellationToken = default)
         {
-            return _client.DeleteArtifact(owner, repository, artifactId).ToObservable();
+            return _client.DeleteArtifact(owner, repository, artifactId, cancellationToken).ToObservable();
         }
 
         /// <inheritdoc/>
-        public IObservable<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat)
+        public IObservable<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat, CancellationToken cancellationToken = default)
         {
-            return _client.DownloadArtifact(owner, repository, artifactId, archiveFormat).ToObservable();
+            return _client.DownloadArtifact(owner, repository, artifactId, archiveFormat, cancellationToken).ToObservable();
         }
         
         /// <inheritdoc/>
-        public IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null)
+        public IObservable<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null, CancellationToken cancellationToken = default)
         {
-            return _client.ListWorkflowArtifacts(owner, repository, runId, listArtifactsRequest).ToObservable();
+            return _client.ListWorkflowArtifacts(owner, repository, runId, listArtifactsRequest, cancellationToken).ToObservable();
         }
     }
 }

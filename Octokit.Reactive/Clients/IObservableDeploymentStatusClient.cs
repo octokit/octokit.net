@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -21,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId);
+        IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the statuses for the given deployment. Any user with pull access to a repository can
@@ -32,7 +33,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
-        IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId);
+        IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the statuses for the given deployment. Any user with pull access to a repository can
@@ -45,7 +46,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId, ApiOptions options);
+        IObservable<DeploymentStatus> GetAll(string owner, string name, long deploymentId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the statuses for the given deployment. Any user with pull access to a repository can
@@ -57,7 +58,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId, ApiOptions options);
+        IObservable<DeploymentStatus> GetAll(long repositoryId, long deploymentId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new status for the given deployment. Users with push access can create deployment
@@ -70,7 +71,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        IObservable<DeploymentStatus> Create(string owner, string name, long deploymentId, NewDeploymentStatus newDeploymentStatus);
+        IObservable<DeploymentStatus> Create(string owner, string name, long deploymentId, NewDeploymentStatus newDeploymentStatus, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new status for the given deployment. Users with push access can create deployment
@@ -82,6 +83,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deploymentId">The id of the deployment.</param>
         /// <param name="newDeploymentStatus">The new deployment status to create.</param>
-        IObservable<DeploymentStatus> Create(long repositoryId, long deploymentId, NewDeploymentStatus newDeploymentStatus);
+        IObservable<DeploymentStatus> Create(long repositoryId, long deploymentId, NewDeploymentStatus newDeploymentStatus, CancellationToken cancellationToken = default);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -29,13 +30,13 @@ namespace Octokit
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/merges")]
-        public Task<Merge> Create(string owner, string name, NewMerge merge)
+        public Task<Merge> Create(string owner, string name, NewMerge merge, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(merge, nameof(merge));
 
-            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge);
+            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -48,11 +49,11 @@ namespace Octokit
         /// <param name="merge">The merge to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repositories/{id}/merges")]
-        public Task<Merge> Create(long repositoryId, NewMerge merge)
+        public Task<Merge> Create(long repositoryId, NewMerge merge, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(merge, nameof(merge));
 
-            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(repositoryId), merge);
+            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(repositoryId), merge, null, null, cancellationToken);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -26,9 +27,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IReadOnlyDictionary{TKey,TValue}"/> of emoji and their URI.</returns>
         [ManualRoute("GET", "/emojis")]
-        public Task<IReadOnlyList<Emoji>> GetAllEmojis()
+        public Task<IReadOnlyList<Emoji>> GetAllEmojis(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis());
+            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis(), ApiOptions.None, cancellationToken);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -27,7 +28,7 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/milestones/{milestone_number}")]
-        public Task<Milestone> Get(string owner, string name, int milestoneNumber)
+        public Task<Milestone> Get(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -43,7 +44,7 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/milestones/{milestone_number}")]
-        public Task<Milestone> Get(long repositoryId, int milestoneNumber)
+        public Task<Milestone> Get(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<Milestone>(ApiUrls.Milestone(repositoryId, milestoneNumber));
         }
@@ -58,7 +59,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -75,7 +76,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
             return GetAllForRepository(repositoryId, new MilestoneRequest());
         }
@@ -91,7 +92,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -110,7 +111,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -128,13 +129,13 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -147,11 +148,11 @@ namespace Octokit
         /// <param name="request">Used to filter and sort the list of Milestones returned</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return GetAllForRepository(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +167,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(string owner, string name, MilestoneRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -188,7 +189,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
         [ManualRoute("GET", "/repositories/{id}/milestones")]
-        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Milestone>> GetAllForRepository(long repositoryId, MilestoneRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -207,7 +208,7 @@ namespace Octokit
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/milestones")]
-        public Task<Milestone> Create(string owner, string name, NewMilestone newMilestone)
+        public Task<Milestone> Create(string owner, string name, NewMilestone newMilestone, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -225,11 +226,11 @@ namespace Octokit
         /// <param name="newMilestone">A <see cref="NewMilestone"/> instance describing the new Milestone to create</param>
         /// <returns></returns>
         [ManualRoute("POST", "/repositories/{id}/milestones")]
-        public Task<Milestone> Create(long repositoryId, NewMilestone newMilestone)
+        public Task<Milestone> Create(long repositoryId, NewMilestone newMilestone, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newMilestone, nameof(newMilestone));
 
-            return ApiConnection.Post<Milestone>(ApiUrls.Milestones(repositoryId), newMilestone);
+            return ApiConnection.Post<Milestone>(ApiUrls.Milestones(repositoryId), newMilestone, cancellationToken);
         }
 
         /// <summary>
@@ -244,7 +245,7 @@ namespace Octokit
         /// </param>
         /// <returns></returns>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/milestones/{milestone_number}")]
-        public Task<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate)
+        public Task<Milestone> Update(string owner, string name, int milestoneNumber, MilestoneUpdate milestoneUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -264,7 +265,7 @@ namespace Octokit
         /// </param>
         /// <returns></returns>
         [ManualRoute("PATCH", "/repositories/{id}/milestones/{milestone_number}")]
-        public Task<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate)
+        public Task<Milestone> Update(long repositoryId, int milestoneNumber, MilestoneUpdate milestoneUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(milestoneUpdate, nameof(milestoneUpdate));
 
@@ -281,7 +282,7 @@ namespace Octokit
         /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/milestones/{milestone_number}")]
-        public Task Delete(string owner, string name, int milestoneNumber)
+        public Task Delete(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -298,7 +299,7 @@ namespace Octokit
         /// <param name="milestoneNumber">The milestone number</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/repositories/{id}/milestones/{milestone_number}")]
-        public Task Delete(long repositoryId, int milestoneNumber)
+        public Task Delete(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Delete(ApiUrls.Milestone(repositoryId, milestoneNumber));
         }

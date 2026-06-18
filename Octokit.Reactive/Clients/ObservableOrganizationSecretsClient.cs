@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -36,11 +37,11 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="SecretsPublicKey"/> instance for the organization public key.</returns>
-        public IObservable<SecretsPublicKey> GetPublicKey(string org)
+        public IObservable<SecretsPublicKey> GetPublicKey(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _client.GetPublicKey(org).ToObservable();
+            return _client.GetPublicKey(org, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -52,11 +53,11 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecretsCollection"/> instance for the list of organization secrets.</returns>
-        public IObservable<OrganizationSecretsCollection> GetAll(string org)
+        public IObservable<OrganizationSecretsCollection> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return _client.GetAll(org).ToObservable();
+            return _client.GetAll(org, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -69,12 +70,12 @@ namespace Octokit.Reactive
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecret"/> instance for the organization secret.</returns>
-        public IObservable<OrganizationSecret> Get(string org, string secretName)
+        public IObservable<OrganizationSecret> Get(string org, string secretName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            return _client.Get(org, secretName).ToObservable();
+            return _client.Get(org, secretName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace Octokit.Reactive
         /// <param name="upsertSecret">The encrypted value, id of the encryption key, and visibility info to upsert</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecret"/> instance for the organization secret that was created or updated.</returns>
-        public IObservable<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret)
+        public IObservable<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
@@ -96,7 +97,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
             Ensure.ArgumentNotNull(upsertSecret.KeyId, nameof(upsertSecret.KeyId));
 
-            return _client.CreateOrUpdate(org, secretName, upsertSecret).ToObservable();
+            return _client.CreateOrUpdate(org, secretName, upsertSecret, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -108,12 +109,12 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(string org, string secretName)
+        public IObservable<Unit> Delete(string org, string secretName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            return _client.Delete(org, secretName).ToObservable();
+            return _client.Delete(org, secretName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -125,12 +126,12 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<OrganizationSecretRepositoryCollection> GetSelectedRepositoriesForSecret(string org, string secretName)
+        public IObservable<OrganizationSecretRepositoryCollection> GetSelectedRepositoriesForSecret(string org, string secretName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            return _client.GetSelectedRepositoriesForSecret(org, secretName).ToObservable();
+            return _client.GetSelectedRepositoriesForSecret(org, secretName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -143,13 +144,13 @@ namespace Octokit.Reactive
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repositories">The list of repositories that should have access to view and use the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories)
+        public IObservable<Unit> SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(repositories, nameof(repositories));
 
-            return _client.SetSelectedRepositoriesForSecret(org, secretName, repositories).ToObservable();
+            return _client.SetSelectedRepositoriesForSecret(org, secretName, repositories, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -162,13 +163,13 @@ namespace Octokit.Reactive
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> AddRepoToOrganizationSecret(string org, string secretName, long repoId)
+        public IObservable<Unit> AddRepoToOrganizationSecret(string org, string secretName, long repoId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(repoId, nameof(repoId));
 
-            return _client.AddRepoToOrganizationSecret(org, secretName, repoId).ToObservable();
+            return _client.AddRepoToOrganizationSecret(org, secretName, repoId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -181,13 +182,13 @@ namespace Octokit.Reactive
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> RemoveRepoFromOrganizationSecret(string org, string secretName, long repoId)
+        public IObservable<Unit> RemoveRepoFromOrganizationSecret(string org, string secretName, long repoId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
             Ensure.ArgumentNotNull(repoId, nameof(repoId));
 
-            return _client.RemoveRepoFromOrganizationSecret(org, secretName, repoId).ToObservable();
+            return _client.RemoveRepoFromOrganizationSecret(org, secretName, repoId, cancellationToken).ToObservable();
         }
     }
 }

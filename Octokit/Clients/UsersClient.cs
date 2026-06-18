@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -56,7 +57,7 @@ namespace Octokit
         /// </summary>
         /// <param name="login">The login name for the user</param>
         [ManualRoute("GET", "/users/{username}")]
-        public Task<User> Get(string login)
+        public Task<User> Get(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
@@ -69,9 +70,9 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         [ManualRoute("GET", "/user")]
-        public Task<User> Current()
+        public Task<User> Current(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<User>(_userEndpoint);
+            return ApiConnection.Get<User>(_userEndpoint, cancellationToken);
         }
 
         /// <summary>
@@ -81,11 +82,11 @@ namespace Octokit
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
         [ManualRoute("PATCH", "/user")]
-        public Task<User> Update(UserUpdate user)
+        public Task<User> Update(UserUpdate user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(user, nameof(user));
 
-            return ApiConnection.Patch<User>(_userEndpoint, user);
+            return ApiConnection.Patch<User>(_userEndpoint, user, cancellationToken);
         }
 
         /// <summary>

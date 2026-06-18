@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -28,7 +29,7 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/dependency-graph/snapshots")]
-        public Task<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot)
+        public Task<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -36,7 +37,7 @@ namespace Octokit
 
             var newDependencySnapshotAsObject = ConvertToJsonObject(snapshot);
 
-            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(owner, name), newDependencySnapshotAsObject);
+            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(owner, name), newDependencySnapshotAsObject, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -50,13 +51,13 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
         [ManualRoute("POST", "/repositories/{id}/dependency-graph/snapshots")]
-        public Task<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot)
+        public Task<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(snapshot, nameof(snapshot));
 
             var newDependencySnapshotAsObject = ConvertToJsonObject(snapshot);
 
-            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(repositoryId), newDependencySnapshotAsObject);
+            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(repositoryId), newDependencySnapshotAsObject, null, null, cancellationToken);
         }
 
         /// <summary>

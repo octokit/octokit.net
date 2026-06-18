@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 namespace Octokit
 {
@@ -29,12 +30,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches")]
-        public Task<IReadOnlyList<Branch>> GetAll(string owner, string name)
+        public Task<IReadOnlyList<Branch>> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -45,9 +46,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/branches")]
-        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId)
+        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -61,13 +62,13 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches")]
-        public Task<IReadOnlyList<Branch>> GetAll(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Branch>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, options);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(owner, name), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -79,11 +80,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/branches")]
-        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Branch>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(repositoryId), null, options);
+            return ApiConnection.GetAll<Branch>(ApiUrls.RepoBranches(repositoryId), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -96,13 +97,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}")]
-        public Task<Branch> Get(string owner, string name, string branch)
+        public Task<Branch> Get(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, name, branch), null);
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -114,11 +115,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}")]
-        public Task<Branch> Get(long repositoryId, string branch)
+        public Task<Branch> Get(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(repositoryId, branch), null);
+            return ApiConnection.Get<Branch>(ApiUrls.RepoBranch(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -131,13 +132,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection")]
-        public Task<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch)
+        public Task<BranchProtectionSettings> GetBranchProtection(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), null);
+            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -149,11 +150,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection")]
-        public Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch)
+        public Task<BranchProtectionSettings> GetBranchProtection(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), null);
+            return ApiConnection.Get<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -167,14 +168,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/branches/{branch}/protection")]
-        public Task<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update)
+        public Task<BranchProtectionSettings> UpdateBranchProtection(string owner, string name, string branch, BranchProtectionSettingsUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), update);
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(owner, name, branch), update, cancellationToken);
         }
 
         /// <summary>
@@ -187,12 +188,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Branch protection settings</param>
         [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection")]
-        public Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update)
+        public Task<BranchProtectionSettings> UpdateBranchProtection(long repositoryId, string branch, BranchProtectionSettingsUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), update);
+            return ApiConnection.Put<BranchProtectionSettings>(ApiUrls.RepoBranchProtection(repositoryId, branch), update, cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +206,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection")]
-        public async Task<bool> DeleteBranchProtection(string owner, string name, string branch)
+        public async Task<bool> DeleteBranchProtection(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -214,7 +215,7 @@ namespace Octokit
             var endpoint = ApiUrls.RepoBranchProtection(owner, name, branch);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -232,14 +233,14 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection")]
-        public async Task<bool> DeleteBranchProtection(long repositoryId, string branch)
+        public async Task<bool> DeleteBranchProtection(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
             var endpoint = ApiUrls.RepoBranchProtection(repositoryId, branch);
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -258,13 +259,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks")]
-        public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch)
+        public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), null);
+            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -276,11 +277,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_status_checks")]
-        public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch)
+        public Task<BranchProtectionRequiredStatusChecks> GetRequiredStatusChecks(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), null);
+            return ApiConnection.Get<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -294,14 +295,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks")]
-        public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update)
+        public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(string owner, string name, string branch, BranchProtectionRequiredStatusChecksUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), update);
+            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(owner, name, branch), update, cancellationToken);
         }
 
         /// <summary>
@@ -314,12 +315,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">Required status checks</param>
         [ManualRoute("PATCH", "/repositories/{id}/branches/{branch}/protection/required_status_checks")]
-        public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update)
+        public Task<BranchProtectionRequiredStatusChecks> UpdateRequiredStatusChecks(long repositoryId, string branch, BranchProtectionRequiredStatusChecksUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), update);
+            return ApiConnection.Patch<BranchProtectionRequiredStatusChecks>(ApiUrls.RepoRequiredStatusChecks(repositoryId, branch), update, cancellationToken);
         }
 
         /// <summary>
@@ -332,7 +333,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks")]
-        public async Task<bool> DeleteRequiredStatusChecks(string owner, string name, string branch)
+        public async Task<bool> DeleteRequiredStatusChecks(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -342,7 +343,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -360,7 +361,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/required_status_checks")]
-        public async Task<bool> DeleteRequiredStatusChecks(long repositoryId, string branch)
+        public async Task<bool> DeleteRequiredStatusChecks(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
@@ -368,7 +369,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -387,13 +388,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(string owner, string name, string branch)
+        public Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), null);
+            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -405,11 +406,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(long repositoryId, string branch)
+        public Task<IReadOnlyList<string>> GetAllRequiredStatusChecksContexts(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), null);
+            return ApiConnection.Get<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -423,14 +424,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts);
+            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, cancellationToken);
         }
 
         /// <summary>
@@ -443,12 +444,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to replace</param>
         [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> UpdateRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts);
+            return ApiConnection.Put<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, cancellationToken);
         }
 
         /// <summary>
@@ -462,14 +463,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts);
+            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, cancellationToken);
         }
 
         /// <summary>
@@ -482,12 +483,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to add</param>
         [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> AddRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts);
+            return ApiConnection.Post<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, cancellationToken);
         }
 
         /// <summary>
@@ -501,14 +502,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(string owner, string name, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts);
+            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(owner, name, branch), contexts, cancellationToken);
         }
 
         /// <summary>
@@ -521,12 +522,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="contexts">The contexts to remove</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/required_status_checks/contexts")]
-        public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts)
+        public Task<IReadOnlyList<string>> DeleteRequiredStatusChecksContexts(long repositoryId, string branch, IReadOnlyList<string> contexts, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(contexts, nameof(contexts));
 
-            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts);
+            return ApiConnection.Delete<IReadOnlyList<string>>(ApiUrls.RepoRequiredStatusChecksContexts(repositoryId, branch), contexts, cancellationToken);
         }
 
         /// <summary>
@@ -539,13 +540,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews")]
-        public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch)
+        public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), null);
+            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -557,11 +558,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_pull_request_reviews")]
-        public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch)
+        public Task<BranchProtectionRequiredReviews> GetReviewEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), null);
+            return ApiConnection.Get<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -575,14 +576,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews")]
-        public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update)
+        public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(string owner, string name, string branch, BranchProtectionRequiredReviewsUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), update);
+            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(owner, name, branch), update, cancellationToken);
         }
 
         /// <summary>
@@ -595,12 +596,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="update">The required pull request review settings</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/required_pull_request_reviews")]
-        public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update)
+        public Task<BranchProtectionRequiredReviews> UpdateReviewEnforcement(long repositoryId, string branch, BranchProtectionRequiredReviewsUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), update);
+            return ApiConnection.Patch<BranchProtectionRequiredReviews>(ApiUrls.RepoProtectedBranchReviewEnforcement(repositoryId, branch), update, cancellationToken);
         }
 
         /// <summary>
@@ -613,7 +614,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews")]
-        public async Task<bool> RemoveReviewEnforcement(string owner, string name, string branch)
+        public async Task<bool> RemoveReviewEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -623,7 +624,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -641,7 +642,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/required_pull_request_reviews")]
-        public async Task<bool> RemoveReviewEnforcement(long repositoryId, string branch)
+        public async Task<bool> RemoveReviewEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
@@ -649,7 +650,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -668,13 +669,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins")]
-        public Task<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch)
+        public Task<EnforceAdmins> GetAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), null);
+            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -686,11 +687,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/enforce_admins")]
-        public Task<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch)
+        public Task<EnforceAdmins> GetAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), null);
+            return ApiConnection.Get<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -703,13 +704,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins")]
-        public Task<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch)
+        public Task<EnforceAdmins> AddAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), new object());
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(owner, name, branch), new object(), cancellationToken);
         }
 
         /// <summary>
@@ -721,11 +722,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/enforce_admins")]
-        public Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch)
+        public Task<EnforceAdmins> AddAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), new object());
+            return ApiConnection.Post<EnforceAdmins>(ApiUrls.RepoProtectedBranchAdminEnforcement(repositoryId, branch), new object(), cancellationToken);
         }
 
         /// <summary>
@@ -738,7 +739,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins")]
-        public async Task<bool> RemoveAdminEnforcement(string owner, string name, string branch)
+        public async Task<bool> RemoveAdminEnforcement(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -748,7 +749,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -766,7 +767,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/enforce_admins")]
-        public async Task<bool> RemoveAdminEnforcement(long repositoryId, string branch)
+        public async Task<bool> RemoveAdminEnforcement(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
@@ -774,7 +775,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -793,13 +794,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions")]
-        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch)
+        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(owner, name, branch), null);
+            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -811,11 +812,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/restrictions")]
-        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch)
+        public Task<BranchProtectionPushRestrictions> GetProtectedBranchRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(repositoryId, branch), null);
+            return ApiConnection.Get<BranchProtectionPushRestrictions>(ApiUrls.RepoRestrictions(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -828,7 +829,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions")]
-        public async Task<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch)
+        public async Task<bool> DeleteProtectedBranchRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -838,7 +839,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -856,7 +857,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/restrictions")]
-        public async Task<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch)
+        public async Task<bool> DeleteProtectedBranchRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
@@ -864,7 +865,7 @@ namespace Octokit
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -883,13 +884,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch)
+        public Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null);
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -901,11 +902,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch)
+        public Task<IReadOnlyList<Team>> GetAllProtectedBranchTeamRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null);
+            return ApiConnection.Get<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -919,14 +920,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams);
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, cancellationToken);
         }
 
         /// <summary>
@@ -939,12 +940,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access</param>
         [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> UpdateProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams);
+            return ApiConnection.Put<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, cancellationToken);
         }
 
         /// <summary>
@@ -958,14 +959,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams);
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, cancellationToken);
         }
 
         /// <summary>
@@ -978,12 +979,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams with push access to add</param>
         [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> AddProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams);
+            return ApiConnection.Post<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, cancellationToken);
         }
 
         /// <summary>
@@ -997,14 +998,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(string owner, string name, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams);
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(owner, name, branch), teams, cancellationToken);
         }
 
         /// <summary>
@@ -1017,12 +1018,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="teams">List of teams to remove</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/restrictions/teams")]
-        public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams)
+        public Task<IReadOnlyList<Team>> DeleteProtectedBranchTeamRestrictions(long repositoryId, string branch, BranchProtectionTeamCollection teams, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(teams, nameof(teams));
 
-            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams);
+            return ApiConnection.Delete<IReadOnlyList<Team>>(ApiUrls.RepoRestrictionsTeams(repositoryId, branch), teams, cancellationToken);
         }
 
         /// <summary>
@@ -1035,13 +1036,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch)
+        public Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(string owner, string name, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), null);
+            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -1053,11 +1054,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="branch">The name of the branch</param>
         [ManualRoute("GET", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch)
+        public Task<IReadOnlyList<User>> GetAllProtectedBranchUserRestrictions(long repositoryId, string branch, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
 
-            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), null);
+            return ApiConnection.Get<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), null, cancellationToken);
         }
 
         /// <summary>
@@ -1071,14 +1072,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
         [ManualRoute("UPDATE", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users);
+            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, cancellationToken);
         }
 
         /// <summary>
@@ -1091,12 +1092,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access</param>
         [ManualRoute("PUT", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> UpdateProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users);
+            return ApiConnection.Put<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, cancellationToken);
         }
 
         /// <summary>
@@ -1110,14 +1111,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users);
+            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, cancellationToken);
         }
 
         /// <summary>
@@ -1130,12 +1131,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to add</param>
         [ManualRoute("POST", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> AddProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users);
+            return ApiConnection.Post<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, cancellationToken);
         }
 
         /// <summary>
@@ -1149,14 +1150,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(string owner, string name, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users);
+            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(owner, name, branch), users, cancellationToken);
         }
 
         /// <summary>
@@ -1169,12 +1170,12 @@ namespace Octokit
         /// <param name="branch">The name of the branch</param>
         /// <param name="users">List of users with push access to remove</param>
         [ManualRoute("DELETE", "/repositories/{id}/branches/{branch}/protection/restrictions/users")]
-        public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users)
+        public Task<IReadOnlyList<User>> DeleteProtectedBranchUserRestrictions(long repositoryId, string branch, BranchProtectionUserCollection users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users);
+            return ApiConnection.Delete<IReadOnlyList<User>>(ApiUrls.RepoRestrictionsUsers(repositoryId, branch), users, cancellationToken);
         }
 
         /// <summary>
@@ -1188,14 +1189,14 @@ namespace Octokit
         /// <param name="branch">The name of the branch to rename</param>
         /// <param name="newName">The new name of the branch</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/branches/{branch}/rename")]
-        public Task<Branch> RenameBranch(string owner, string repository, string branch, string newName)
+        public Task<Branch> RenameBranch(string owner, string repository, string branch, string newName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
             Ensure.ArgumentNotNullOrEmptyString(branch, nameof(branch));
             Ensure.ArgumentNotNullOrEmptyString(newName, nameof(newName));
 
-            return ApiConnection.Post<Branch>(ApiUrls.RepositoryBranchRename(owner, repository, branch), new { new_name = newName });
+            return ApiConnection.Post<Branch>(ApiUrls.RepositoryBranchRename(owner, repository, branch), new { new_name = newName }, cancellationToken);
         }
     }
 }

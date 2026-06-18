@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -25,26 +26,28 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-github-app</remarks>
         /// <param name="slug">The URL-friendly name of your GitHub App. You can find this on the settings page for your GitHub App.</param>
-        Task<GitHubApp> Get(string slug);
+        Task<GitHubApp> Get(string slug, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Returns the GitHub App associated with the authentication credentials used (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-the-authenticated-github-app</remarks>
-        Task<GitHubApp> GetCurrent();
+        Task<GitHubApp> GetCurrent(CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List installations of the authenticated GitHub App (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
-        Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent();
+        Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List installations of the authenticated GitHub App (requires GitHubApp auth).
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/#find-installations</remarks>
-        Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(ApiOptions options);
+        Task<IReadOnlyList<Installation>> GetAllInstallationsForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a single GitHub App Installation (requires GitHubApp auth).
@@ -52,26 +55,30 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
         [Obsolete("This method will be removed in a future release.  Please use GetInstallationForCurrent() instead")]
-        Task<Installation> GetInstallation(long installationId);
+        Task<Installation> GetInstallation(long installationId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Get a single GitHub App Installation (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#get-a-single-installation</remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
-        Task<Installation> GetInstallationForCurrent(long installationId);
+        Task<Installation> GetInstallationForCurrent(long installationId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        Task<InstallationsResponse> GetAllInstallationsForCurrentUser();
+        Task<InstallationsResponse> GetAllInstallationsForCurrentUser(CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List installations for the currently authenticated user (requires GitHubApp User-To-Server Auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#list-installations-for-user</remarks>
-        Task<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options);
+        Task<InstallationsResponse> GetAllInstallationsForCurrentUser(ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Create a time bound access token for a GitHubApp Installation that can be used to access other API endpoints (requires GitHubApp auth).
@@ -82,14 +89,16 @@ namespace Octokit
         /// https://developer.github.com/v3/apps/available-endpoints/
         /// </remarks>
         /// <param name="installationId">The Id of the GitHub App Installation</param>
-        Task<AccessToken> CreateInstallationToken(long installationId);
+        Task<AccessToken> CreateInstallationToken(long installationId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the organization's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-organization-installation</remarks>
         /// <param name="organization">The name of the organization</param>
-        Task<Installation> GetOrganizationInstallationForCurrent(string organization);
+        Task<Installation> GetOrganizationInstallationForCurrent(string organization, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
@@ -97,21 +106,24 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="owner">The owner of the repo</param>
         /// <param name="repo">The name of the repo</param>
-        Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo);
+        Task<Installation> GetRepositoryInstallationForCurrent(string owner, string repo, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the repository's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-repository-installation</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId);
+        Task<Installation> GetRepositoryInstallationForCurrent(long repositoryId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Enables an authenticated GitHub App to find the users's installation information (requires GitHubApp auth).
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/#find-user-installation</remarks>
         /// <param name="user">The name of the user</param>
-        Task<Installation> GetUserInstallationForCurrent(string user);
+        Task<Installation> GetUserInstallationForCurrent(string user, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a GitHub app by completing the handshake necessary when implementing the GitHub App Manifest flow.
@@ -119,6 +131,7 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://docs.github.com/rest/apps/apps#create-a-github-app-from-a-manifest</remarks>
         /// <param name="code">Temporary code in a code parameter.</param>
-        Task<GitHubAppFromManifest> CreateAppFromManifest(string code);
+        Task<GitHubAppFromManifest> CreateAppFromManifest(string code, CancellationToken cancellationToken = default);
+
     }
 }

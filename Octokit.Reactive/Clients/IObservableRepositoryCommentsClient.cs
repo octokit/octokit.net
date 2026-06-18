@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -21,7 +22,8 @@ namespace Octokit.Reactive
         /// <param name="commentId">The comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<CommitComment> Get(string owner, string name, long commentId);
+        IObservable<CommitComment> Get(string owner, string name, long commentId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a single Repository Comment by number.
@@ -31,7 +33,8 @@ namespace Octokit.Reactive
         /// <param name="commentId">The comment id</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<CommitComment> Get(long repositoryId, long commentId);
+        IObservable<CommitComment> Get(long repositoryId, long commentId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a repository.
@@ -39,14 +42,16 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<CommitComment> GetAllForRepository(string owner, string name);
+        IObservable<CommitComment> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a repository.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<CommitComment> GetAllForRepository(long repositoryId);
+        IObservable<CommitComment> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a repository.
@@ -55,7 +60,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options to change the API response</param>
-        IObservable<CommitComment> GetAllForRepository(string owner, string name, ApiOptions options);
+        IObservable<CommitComment> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a repository.
@@ -63,7 +69,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options to change the API response</param>
-        IObservable<CommitComment> GetAllForRepository(long repositoryId, ApiOptions options);
+        IObservable<CommitComment> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
@@ -72,7 +79,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
-        IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha);
+        IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
@@ -80,7 +88,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
-        IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha);
+        IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
@@ -90,7 +99,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
-        IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha, ApiOptions options);
+        IObservable<CommitComment> GetAllForCommit(string owner, string name, string sha, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets Commit Comments for a specified Commit.
@@ -99,7 +109,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha of the commit</param>
         /// <param name="options">Options to change the API response</param>
-        IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha, ApiOptions options);
+        IObservable<CommitComment> GetAllForCommit(long repositoryId, string sha, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new Commit Comment for a specified Commit.
@@ -109,7 +120,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
-        IObservable<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment);
+        IObservable<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new Commit Comment for a specified Commit.
@@ -118,7 +130,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="sha">The sha reference of commit</param>
         /// <param name="newCommitComment">The new comment to add to the commit</param>
-        IObservable<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment);
+        IObservable<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a specified Commit Comment.
@@ -128,7 +141,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        IObservable<CommitComment> Update(string owner, string name, long commentId, string commentUpdate);
+        IObservable<CommitComment> Update(string owner, string name, long commentId, string commentUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Updates a specified Commit Comment.
@@ -137,7 +151,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commentId">The comment id</param>
         /// <param name="commentUpdate">The modified comment</param>
-        IObservable<CommitComment> Update(long repositoryId, long commentId, string commentUpdate);
+        IObservable<CommitComment> Update(long repositoryId, long commentId, string commentUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes the specified Commit Comment
@@ -146,7 +161,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="commentId">The comment id</param>
-        IObservable<Unit> Delete(string owner, string name, long commentId);
+        IObservable<Unit> Delete(string owner, string name, long commentId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes the specified Commit Comment
@@ -154,6 +170,7 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commentId">The comment id</param>
-        IObservable<Unit> Delete(long repositoryId, long commentId);
+        IObservable<Unit> Delete(long repositoryId, long commentId, CancellationToken cancellationToken = default);
+
     }
 }

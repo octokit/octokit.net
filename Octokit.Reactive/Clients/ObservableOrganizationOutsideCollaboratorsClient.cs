@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -31,11 +32,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns>The users</returns>
-        public IObservable<User> GetAll(string org)
+        public IObservable<User> GetAll(string org, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return GetAll(org, ApiOptions.None);
+            return GetAll(org, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -49,12 +50,12 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
-        public IObservable<User> GetAll(string org, ApiOptions options)
+        public IObservable<User> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org), null, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -68,11 +69,11 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <returns>The users</returns>
-        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter)
+        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return GetAll(org, filter, ApiOptions.None);
+            return GetAll(org, filter, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -87,12 +88,12 @@ namespace Octokit.Reactive
         /// <param name="filter">The filter to use when getting the users, <see cref="OrganizationMembersFilter"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The users</returns>
-        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options)
+        public IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.OutsideCollaborators(org, filter), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -106,12 +107,12 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login of the user</param>
         /// <returns></returns>
-        public IObservable<bool> Delete(string org, string user)
+        public IObservable<bool> Delete(string org, string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return _client.Delete(org, user).ToObservable();
+            return _client.Delete(org, user, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -127,12 +128,12 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        public IObservable<bool> ConvertFromMember(string org, string user)
+        public IObservable<bool> ConvertFromMember(string org, string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return _client.ConvertFromMember(org, user).ToObservable();
+            return _client.ConvertFromMember(org, user, cancellationToken).ToObservable();
         }
     }
 }

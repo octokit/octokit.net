@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -24,12 +25,12 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/issues/{issue_number}/lock")]
-        public Task Lock(string owner, string name, long issueNumber, LockReason? lockReason = null)
+        public Task Lock(string owner, string name, long issueNumber, LockReason? lockReason = null, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, issueNumber), lockReason.HasValue ? new { LockReason = lockReason } : new object());
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(owner, name, issueNumber), lockReason.HasValue ? new { LockReason = lockReason } : new object(), null, cancellationToken);
         }
 
         /// <summary>
@@ -40,9 +41,9 @@ namespace Octokit
         /// <param name="issueNumber">The issue number</param>
         /// <param name="lockReason">The reason for locking the issue</param>
         [ManualRoute("PUT", "/repositories/{id}/issues/{number}/lock")]
-        public Task Lock(long repositoryId, long issueNumber, LockReason? lockReason = null)
+        public Task Lock(long repositoryId, long issueNumber, LockReason? lockReason = null, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, issueNumber), lockReason.HasValue ? new { LockReaons = lockReason } : new object());
+            return ApiConnection.Put<Issue>(ApiUrls.IssueLock(repositoryId, issueNumber), lockReason.HasValue ? new { LockReaons = lockReason } : new object(), null, cancellationToken);
         }
 
         /// <summary>
@@ -53,12 +54,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/issues/{issue_number}/lock")]
-        public Task Unlock(string owner, string name, long issueNumber)
+        public Task Unlock(string owner, string name, long issueNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, issueNumber));
+            return ApiConnection.Delete(ApiUrls.IssueLock(owner, name, issueNumber), null, cancellationToken);
         }
 
         /// <summary>
@@ -68,9 +69,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         [ManualRoute("DELETE", "/repositories/{id}/issues/{number}/lock")]
-        public Task Unlock(long repositoryId, long issueNumber)
+        public Task Unlock(long repositoryId, long issueNumber, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, issueNumber));
+            return ApiConnection.Delete(ApiUrls.IssueLock(repositoryId, issueNumber), null, cancellationToken);
         }
     }
 }

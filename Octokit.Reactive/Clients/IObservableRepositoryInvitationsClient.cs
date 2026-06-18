@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -13,7 +14,8 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
         /// <param name="invitationId">The id of the invitation.</param>
-        IObservable<bool> Accept(long invitationId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> Accept(long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Decline a repository invitation.
@@ -22,7 +24,8 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation">API documentation</a> for more information.
         /// </remarks>
         /// <param name="invitationId">The id of the invitation.</param>
-        IObservable<bool> Decline(long invitationId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> Decline(long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a repository invitation.
@@ -32,7 +35,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>
-        IObservable<bool> Delete(long repositoryId, long invitationId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> Delete(long repositoryId, long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -40,8 +44,9 @@ namespace Octokit.Reactive
         /// <remarks>
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<RepositoryInvitation> GetAllForCurrent();
+        IObservable<RepositoryInvitation> GetAllForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all invitations for the current user.
@@ -50,8 +55,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations">API documentation</a> for more information.
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        IObservable<RepositoryInvitation> GetAllForCurrent(ApiOptions options);
+        IObservable<RepositoryInvitation> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the invitations on a repository.
@@ -60,7 +66,8 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
-        IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the invitations on a repository.
@@ -69,8 +76,9 @@ namespace Octokit.Reactive
         /// See the <a href="https://developer.github.com/v3/repos/invitations/#list-invitations-for-a-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
-        /// /// <param name="options">Options for changing the API response</param>
-        IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId, ApiOptions options);
+        /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a repository invitation.
@@ -81,7 +89,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository.</param>
         /// <param name="invitationId">The id of the invitation.</param>
         /// <param name="permissions">The permission to set.</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns><see cref="RepositoryInvitation"/></returns>
-        IObservable<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions);
+        IObservable<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions, CancellationToken cancellationToken = default);
     }
 }

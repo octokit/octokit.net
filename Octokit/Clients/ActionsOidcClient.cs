@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Clients
 {
@@ -22,7 +23,7 @@ namespace Octokit.Clients
 
         /// <inheritdoc/>
         [ManualRoute("GET", "/orgs/{organization}/actions/oidc/customization/sub")]
-        public Task<OrganizationOidcSubjectClaim> GetOrganizationOidcSubjectClaim(string organization)
+        public Task<OrganizationOidcSubjectClaim> GetOrganizationOidcSubjectClaim(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
@@ -31,7 +32,7 @@ namespace Octokit.Clients
 
         /// <inheritdoc/>
         [ManualRoute("PUT", "/orgs/{organization}/actions/oidc/customization/sub")]
-        public Task SetOrganizationOidcSubjectClaim(string organization, OrganizationOidcSubjectClaimRequest oidcSubjectClaim)
+        public Task SetOrganizationOidcSubjectClaim(string organization, OrganizationOidcSubjectClaimRequest oidcSubjectClaim, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(oidcSubjectClaim, nameof(oidcSubjectClaim));
@@ -41,7 +42,7 @@ namespace Octokit.Clients
 
         /// <inheritdoc/>
         [ManualRoute("GET", "/repos/{owner}/{repository}/actions/oidc/customization/sub")]
-        public Task<RepositoryOidcSubjectClaim> GetRepositoryOidcSubjectClaim(string owner, string repository)
+        public Task<RepositoryOidcSubjectClaim> GetRepositoryOidcSubjectClaim(string owner, string repository, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));
@@ -51,7 +52,7 @@ namespace Octokit.Clients
 
         /// <inheritdoc/>
         [ManualRoute("PUT", "/repos/{owner}/{repository}/actions/oidc/customization/sub")]
-        public Task SetRepositoryOidcSubjectClaim(string owner, string repository, RepositoryOidcSubjectClaimRequest oidcSubjectClaim)
+        public Task SetRepositoryOidcSubjectClaim(string owner, string repository, RepositoryOidcSubjectClaimRequest oidcSubjectClaim, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repository, nameof(repository));

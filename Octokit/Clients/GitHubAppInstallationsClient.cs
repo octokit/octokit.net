@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -20,9 +21,9 @@ namespace Octokit
         /// </summary>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         [ManualRoute("GET", "/installation/repositories")]
-        public Task<RepositoriesResponse> GetAllRepositoriesForCurrent()
+        public Task<RepositoriesResponse> GetAllRepositoriesForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllRepositoriesForCurrent(ApiOptions.None);
+            return GetAllRepositoriesForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -31,11 +32,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories</remarks>
         [ManualRoute("GET", "/installation/repositories")]
-        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options)
+        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.InstallationRepositories(), null, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.InstallationRepositories(), null, options, cancellationToken).ConfigureAwait(false);
 
             return new RepositoriesResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,
@@ -48,9 +49,9 @@ namespace Octokit
         /// <param name="installationId">The Id of the installation</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         [ManualRoute("GET", "/user/installation/{id}/repositories")]
-        public Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId)
+        public Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, CancellationToken cancellationToken = default)
         {
-            return GetAllRepositoriesForCurrentUser(installationId, ApiOptions.None);
+            return GetAllRepositoriesForCurrentUser(installationId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -60,11 +61,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation</remarks>
         [ManualRoute("GET", "/user/installation/{id}/repositories")]
-        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options)
+        public async Task<RepositoriesResponse> GetAllRepositoriesForCurrentUser(long installationId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, options).ConfigureAwait(false);
+            var results = await ApiConnection.GetAll<RepositoriesResponse>(ApiUrls.UserInstallationRepositories(installationId), null, options, cancellationToken).ConfigureAwait(false);
 
             return new RepositoriesResponse(
                 results.Count > 0 ? results.Max(x => x.TotalCount) : 0,

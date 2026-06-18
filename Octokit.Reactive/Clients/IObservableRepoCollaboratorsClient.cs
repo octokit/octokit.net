@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -20,7 +21,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(string owner, string name);
+        IObservable<Collaborator> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -30,7 +31,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(long repositoryId);
+        IObservable<Collaborator> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -42,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(string owner, string name, ApiOptions options);
+        IObservable<Collaborator> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -53,7 +54,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(long repositoryId, ApiOptions options);
+        IObservable<Collaborator> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -65,7 +66,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(string owner, string name, RepositoryCollaboratorListRequest request);
+        IObservable<Collaborator> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -76,7 +77,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(long repositoryId, RepositoryCollaboratorListRequest request);
+        IObservable<Collaborator> GetAll(long repositoryId, RepositoryCollaboratorListRequest request, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -89,7 +90,7 @@ namespace Octokit.Reactive
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, ApiOptions options);
+        IObservable<Collaborator> GetAll(string owner, string name, RepositoryCollaboratorListRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the collaborators on a repository.
@@ -101,7 +102,7 @@ namespace Octokit.Reactive
         /// <param name="request">Used to request and filter a list of repository collaborators</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Collaborator> GetAll(long repositoryId, RepositoryCollaboratorListRequest request, ApiOptions options);
+        IObservable<Collaborator> GetAll(long repositoryId, RepositoryCollaboratorListRequest request, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks if a user is a collaborator on a repository.
@@ -113,7 +114,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<bool> IsCollaborator(string owner, string name, string user);
+        IObservable<bool> IsCollaborator(string owner, string name, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks if a user is a collaborator on a repository.
@@ -124,7 +125,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the prospective collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<bool> IsCollaborator(long repositoryId, string user);
+        IObservable<bool> IsCollaborator(long repositoryId, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Review a user's permission level in a repository
@@ -136,7 +137,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<CollaboratorPermissionResponse> ReviewPermission(string owner, string name, string user);
+        IObservable<CollaboratorPermissionResponse> ReviewPermission(string owner, string name, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Review a user's permission level in a repository
@@ -147,7 +148,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the collaborator to check permission for</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<CollaboratorPermissionResponse> ReviewPermission(long repositoryId, string user);
+        IObservable<CollaboratorPermissionResponse> ReviewPermission(long repositoryId, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -159,7 +160,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Add(string owner, string name, string user);
+        IObservable<Unit> Add(string owner, string name, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -172,7 +173,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<RepositoryInvitation> Add(string owner, string name, string user, CollaboratorRequest permission);
+        IObservable<RepositoryInvitation> Add(string owner, string name, string user, CollaboratorRequest permission, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -183,7 +184,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Add(long repositoryId, string user);
+        IObservable<Unit> Add(long repositoryId, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -195,7 +196,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<RepositoryInvitation> Add(long repositoryId, string user, CollaboratorRequest permission);
+        IObservable<RepositoryInvitation> Add(long repositoryId, string user, CollaboratorRequest permission, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Invites a user as a collaborator to a repository.
@@ -206,7 +207,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="user">The username of the prospective collaborator</param>        
-        IObservable<RepositoryInvitation> Invite(string owner, string name, string user);
+        IObservable<RepositoryInvitation> Invite(string owner, string name, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Invites a user as a collaborator to a repository.
@@ -218,7 +219,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="user">The username of the prospective collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>        
-        IObservable<RepositoryInvitation> Invite(string owner, string name, string user, CollaboratorRequest permission);
+        IObservable<RepositoryInvitation> Invite(string owner, string name, string user, CollaboratorRequest permission, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a new collaborator to the repository.
@@ -229,7 +230,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the new collaborator</param>        
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<RepositoryInvitation> Invite(long repositoryId, string user);
+        IObservable<RepositoryInvitation> Invite(long repositoryId, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Invites a user as a collaborator to a repository.
@@ -241,7 +242,7 @@ namespace Octokit.Reactive
         /// <param name="user">Username of the new collaborator</param>
         /// <param name="permission">The permission to set. Only valid on organization-owned repositories.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<RepositoryInvitation> Invite(long repositoryId, string user, CollaboratorRequest permission);
+        IObservable<RepositoryInvitation> Invite(long repositoryId, string user, CollaboratorRequest permission, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a collaborator from the repository.
@@ -253,7 +254,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(string owner, string name, string user);
+        IObservable<Unit> Delete(string owner, string name, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a collaborator from the repository.
@@ -264,6 +265,6 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="user">Username of the removed collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(long repositoryId, string user);
+        IObservable<Unit> Delete(long repositoryId, string user, CancellationToken cancellationToken = default);
     }
 }

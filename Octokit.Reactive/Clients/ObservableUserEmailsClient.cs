@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -32,9 +33,9 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
         /// </remarks>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
-        public IObservable<EmailAddress> GetAll()
+        public IObservable<EmailAddress> GetAll(CancellationToken cancellationToken = default)
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -45,11 +46,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
-        public IObservable<EmailAddress> GetAll(ApiOptions options)
+        public IObservable<EmailAddress> GetAll(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<EmailAddress>(ApiUrls.Emails(), options);
+            return _connection.GetAndFlattenAllPages<EmailAddress>(ApiUrls.Emails(), options, cancellationToken);
         }
 
         /// <summary>

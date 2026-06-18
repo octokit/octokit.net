@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="SecretsPublicKey"/> instance for the repository public key.</returns>
-        IObservable<SecretsPublicKey> GetPublicKey(string owner, string repoName);
+        IObservable<SecretsPublicKey> GetPublicKey(string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the secrets for a repository.
@@ -35,7 +36,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IEnumerable{RepositorySecret}"/> instance for the list of repository secrets.</returns>
-        IObservable<RepositorySecretsCollection> GetAll(string owner, string repoName);
+        IObservable<RepositorySecretsCollection> GetAll(string owner, string repoName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a secret from a repository.
@@ -48,7 +49,7 @@ namespace Octokit.Reactive
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret.</returns>
-        IObservable<RepositorySecret> Get(string owner, string repoName, string secretName);
+        IObservable<RepositorySecret> Get(string owner, string repoName, string secretName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create or update a secret in a repository.
@@ -62,7 +63,7 @@ namespace Octokit.Reactive
         /// <param name="upsertSecret">The encrypted value and id of the encryption key</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositorySecret"/> instance for the repository secret that was created or updated.</returns>
-        IObservable<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret);
+        IObservable<RepositorySecret> CreateOrUpdate(string owner, string repoName, string secretName, UpsertRepositorySecret upsertSecret, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a secret in a repository.
@@ -74,6 +75,6 @@ namespace Octokit.Reactive
         /// <param name="owner">The name of the repository</param>
         /// <param name="secretName">The name of the secret</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(string owner, string repoName, string secretName);
+        IObservable<Unit> Delete(string owner, string repoName, string secretName, CancellationToken cancellationToken = default);
     }
 }

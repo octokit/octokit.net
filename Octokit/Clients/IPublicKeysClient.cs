@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -13,8 +14,10 @@ namespace Octokit
         /// <summary>
         /// Retrieves public keys for validating request signatures.
         /// </summary>
+        /// <param name="keysType"></param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MetaPublicKeys"/> containing public keys for validating request signatures.</returns>
-        Task<MetaPublicKeys> Get(PublicKeyType keysType);
+        Task<MetaPublicKeys> Get(PublicKeyType keysType, CancellationToken cancellationToken = default);
     }
 }

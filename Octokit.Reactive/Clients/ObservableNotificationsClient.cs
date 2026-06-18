@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -28,7 +29,7 @@ namespace Octokit.Reactive
         /// Retrieves all of the <see cref="Notification"/>s for the current user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForCurrent()
+        public IObservable<Notification> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
             return GetAllForCurrent(ApiOptions.None);
         }
@@ -38,7 +39,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForCurrent(ApiOptions options)
+        public IObservable<Notification> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -51,12 +52,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(string owner, string name)
+        public IObservable<Notification> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -64,9 +65,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(long repositoryId)
+        public IObservable<Notification> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -76,13 +77,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(string owner, string name, ApiOptions options)
+        public IObservable<Notification> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(owner, name), options);
+            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(long repositoryId, ApiOptions options)
+        public IObservable<Notification> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -103,11 +104,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForCurrent(NotificationsRequest request)
+        public IObservable<Notification> GetAllForCurrent(NotificationsRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -116,12 +117,12 @@ namespace Octokit.Reactive
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForCurrent(NotificationsRequest request, ApiOptions options)
+        public IObservable<Notification> GetAllForCurrent(NotificationsRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -131,13 +132,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(string owner, string name, NotificationsRequest request)
+        public IObservable<Notification> GetAllForRepository(string owner, string name, NotificationsRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(owner, name, request, ApiOptions.None);
+            return GetAllForRepository(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -146,11 +147,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(long repositoryId, NotificationsRequest request)
+        public IObservable<Notification> GetAllForRepository(long repositoryId, NotificationsRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForRepository(repositoryId, request, ApiOptions.None);
+            return GetAllForRepository(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace Octokit.Reactive
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options)
+        public IObservable<Notification> GetAllForRepository(string owner, string name, NotificationsRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -178,19 +179,19 @@ namespace Octokit.Reactive
         /// <param name="request">Specifies the parameters to filter notifications by</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
-        public IObservable<Notification> GetAllForRepository(long repositoryId, NotificationsRequest request, ApiOptions options)
+        public IObservable<Notification> GetAllForRepository(long repositoryId, NotificationsRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(repositoryId), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Notification>(ApiUrls.Notifications(repositoryId), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
         /// Marks all notifications as read.
         /// </summary>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
-        public IObservable<Unit> MarkAsRead()
+        public IObservable<Unit> MarkAsRead(CancellationToken cancellationToken = default)
         {
             return _notificationsClient.MarkAsRead().ToObservable();
         }
@@ -200,7 +201,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-as-read</remarks>
-        public IObservable<Unit> MarkAsRead(MarkAsReadRequest markAsReadRequest)
+        public IObservable<Unit> MarkAsRead(MarkAsReadRequest markAsReadRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
@@ -213,7 +214,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        public IObservable<Unit> MarkAsReadForRepository(string owner, string name)
+        public IObservable<Unit> MarkAsReadForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -226,7 +227,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        public IObservable<Unit> MarkAsReadForRepository(long repositoryId)
+        public IObservable<Unit> MarkAsReadForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
             return _notificationsClient.MarkAsReadForRepository(repositoryId).ToObservable();
         }
@@ -238,7 +239,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        public IObservable<Unit> MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest)
+        public IObservable<Unit> MarkAsReadForRepository(string owner, string name, MarkAsReadRequest markAsReadRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -253,7 +254,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="markAsReadRequest">The <see cref="MarkAsReadRequest"/> parameter which specifies which notifications to mark.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository</remarks>
-        public IObservable<Unit> MarkAsReadForRepository(long repositoryId, MarkAsReadRequest markAsReadRequest)
+        public IObservable<Unit> MarkAsReadForRepository(long repositoryId, MarkAsReadRequest markAsReadRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(markAsReadRequest, nameof(markAsReadRequest));
 
@@ -265,7 +266,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="notificationId">The Id of the notification to retrieve.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#view-a-single-thread</remarks>
-        public IObservable<Notification> Get(int notificationId)
+        public IObservable<Notification> Get(int notificationId, CancellationToken cancellationToken = default)
         {
             return _notificationsClient.Get(notificationId).ToObservable();
         }
@@ -275,7 +276,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="notificationId">The id of the notification.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read</remarks>
-        public IObservable<Unit> MarkAsRead(int notificationId)
+        public IObservable<Unit> MarkAsRead(int notificationId, CancellationToken cancellationToken = default)
         {
             return _notificationsClient.MarkAsRead(notificationId).ToObservable();
         }
@@ -285,7 +286,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="threadId">The Id of the thread to retrieve subscription status.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#get-a-thread-subscription</remarks>
-        public IObservable<ThreadSubscription> GetThreadSubscription(int threadId)
+        public IObservable<ThreadSubscription> GetThreadSubscription(int threadId, CancellationToken cancellationToken = default)
         {
             return _notificationsClient.GetThreadSubscription(threadId).ToObservable();
         }
@@ -296,7 +297,7 @@ namespace Octokit.Reactive
         /// <param name="threadId">The Id of the thread to update.</param>
         /// <param name="threadSubscription">The subscription parameters to set.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#set-a-thread-subscription</remarks>
-        public IObservable<ThreadSubscription> SetThreadSubscription(int threadId, NewThreadSubscription threadSubscription)
+        public IObservable<ThreadSubscription> SetThreadSubscription(int threadId, NewThreadSubscription threadSubscription, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(threadSubscription, nameof(threadSubscription));
 
@@ -308,7 +309,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="threadId">The Id of the thread to delete subscription from.</param>
         /// <remarks>http://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription</remarks>
-        public IObservable<Unit> DeleteThreadSubscription(int threadId)
+        public IObservable<Unit> DeleteThreadSubscription(int threadId, CancellationToken cancellationToken = default)
         {
             return _notificationsClient.DeleteThreadSubscription(threadId).ToObservable();
         }

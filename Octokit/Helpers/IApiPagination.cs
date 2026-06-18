@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -18,6 +19,6 @@ namespace Octokit
         /// <typeparam name="T">Type of the API resource to get.</typeparam>
         /// <param name="getFirstPage">A function which generates the first request</param>
         /// <param name="uri">The original URI (used only for raising an exception)</param>
-        Task<IReadOnlyList<T>> GetAllPages<T>(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage, Uri uri);
+        Task<IReadOnlyList<T>> GetAllPages<T>(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage, Uri uri, CancellationToken cancellationToken = default);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 
@@ -34,12 +35,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
-        public IObservable<Unit> Rerun(string owner, string name, long jobId)
+        public IObservable<Unit> Rerun(string owner, string name, long jobId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Rerun(owner, name, jobId).ToObservable();
+            return _client.Rerun(owner, name, jobId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -51,12 +52,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The unique identifier of the job.</param>
-        public IObservable<WorkflowJob> Get(string owner, string name, long jobId)
+        public IObservable<WorkflowJob> Get(string owner, string name, long jobId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, jobId).ToObservable();
+            return _client.Get(owner, name, jobId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -68,12 +69,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="jobId">The Id of the workflow job.</param>
-        public IObservable<string> GetLogs(string owner, string name, long jobId)
+        public IObservable<string> GetLogs(string owner, string name, long jobId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetLogs(owner, name, jobId).ToObservable();
+            return _client.GetLogs(owner, name, jobId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -85,12 +86,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
-        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId)
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.List(owner, name, runId).ToObservable();
+            return _client.List(owner, name, runId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -103,13 +104,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
-        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest)
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(workflowRunJobsRequest, nameof(workflowRunJobsRequest));
 
-            return _client.List(owner, name, runId, workflowRunJobsRequest).ToObservable();
+            return _client.List(owner, name, runId, workflowRunJobsRequest, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -123,13 +124,13 @@ namespace Octokit.Reactive
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="workflowRunJobsRequest">Details to filter the request, such as by when completed.</param>
         /// <param name="options">Options to change the API response.</param>
-        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, ApiOptions options)
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, WorkflowRunJobsRequest workflowRunJobsRequest, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(workflowRunJobsRequest, nameof(workflowRunJobsRequest));
 
-            return _client.List(owner, name, runId, workflowRunJobsRequest, options).ToObservable();
+            return _client.List(owner, name, runId, workflowRunJobsRequest, options, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -142,12 +143,12 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository.</param>
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
-        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber)
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.List(owner, name, runId, attemptNumber).ToObservable();
+            return _client.List(owner, name, runId, attemptNumber, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -161,12 +162,12 @@ namespace Octokit.Reactive
         /// <param name="runId">The Id of the workflow run.</param>
         /// <param name="attemptNumber">The attempt number of the workflow run.</param>
         /// <param name="options">Options to change the API response.</param>
-        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, ApiOptions options)
+        public IObservable<WorkflowJobsResponse> List(string owner, string name, long runId, int attemptNumber, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.List(owner, name, runId, attemptNumber, options).ToObservable();
+            return _client.List(owner, name, runId, attemptNumber, options, cancellationToken).ToObservable();
         }
     }
 }

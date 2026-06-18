@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -21,7 +22,7 @@ namespace Octokit.Reactive
         /// <param name="snapshot">The dependency snapshot to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
-        IObservable<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot);
+        IObservable<DependencySnapshotSubmission> Create(string owner, string name, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new dependency snapshot.
@@ -31,9 +32,10 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="snapshot">The dependency snapshot to create</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs</exception>
         /// <returns>A <see cref="DependencySnapshotSubmission"/> instance for the created snapshot</returns>
-        IObservable<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot);
+        IObservable<DependencySnapshotSubmission> Create(long repositoryId, NewDependencySnapshot snapshot, CancellationToken cancellationToken = default);
     }
 }
 

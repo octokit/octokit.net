@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -20,7 +21,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<Deployment> GetAll(string owner, string name);
+        IObservable<Deployment> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -30,7 +31,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/repos/deployments/#list-deployments
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Deployment> GetAll(long repositoryId);
+        IObservable<Deployment> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -42,7 +43,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Deployment> GetAll(string owner, string name, ApiOptions options);
+        IObservable<Deployment> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all the deployments for the specified repository. Any user with pull access
@@ -53,7 +54,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Deployment> GetAll(long repositoryId, ApiOptions options);
+        IObservable<Deployment> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new deployment for the specified repository.
@@ -65,7 +66,7 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        IObservable<Deployment> Create(string owner, string name, NewDeployment newDeployment);
+        IObservable<Deployment> Create(string owner, string name, NewDeployment newDeployment, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new deployment for the specified repository.
@@ -76,7 +77,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newDeployment">A <see cref="NewDeployment"/> instance describing the new deployment to create</param>
-        IObservable<Deployment> Create(long repositoryId, NewDeployment newDeployment);
+        IObservable<Deployment> Create(long repositoryId, NewDeployment newDeployment, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Client for managing deployment status.

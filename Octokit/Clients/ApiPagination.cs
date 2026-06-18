@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace Octokit
 {
@@ -15,7 +16,7 @@ namespace Octokit
     /// </remarks>
     public class ApiPagination : IApiPagination
     {
-        public async Task<IReadOnlyList<T>> GetAllPages<T>(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage, Uri uri)
+        public async Task<IReadOnlyList<T>> GetAllPages<T>(Func<Task<IReadOnlyPagedCollection<T>>> getFirstPage, Uri uri, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(getFirstPage, nameof(getFirstPage));
             try

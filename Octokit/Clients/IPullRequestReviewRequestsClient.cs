@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Octokit
 {
@@ -17,7 +18,8 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        Task<RequestedReviews> Get(string owner, string name, int pullRequestNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<RequestedReviews> Get(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets review requests for a specified pull request.
@@ -25,7 +27,8 @@ namespace Octokit
         /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        Task<RequestedReviews> Get(long repositoryId, int pullRequestNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<RequestedReviews> Get(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates review requests on a pull request for specified users.
@@ -35,7 +38,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        Task<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates review requests on a pull request for specified users.
@@ -44,7 +48,8 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        Task<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes review request for given users on a pull request.
@@ -54,7 +59,8 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        Task Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes review request for given users on a pull request.
@@ -63,6 +69,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        Task Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        Task Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default);
     }
 }

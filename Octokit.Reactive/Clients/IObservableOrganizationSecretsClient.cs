@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -18,9 +19,10 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/en/rest/reference/actions#get-an-organization-public-key">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="SecretsPublicKey"/> instance for the organization public key.</returns>
-        IObservable<SecretsPublicKey> GetPublicKey(string org);
+        IObservable<SecretsPublicKey> GetPublicKey(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the secrets for an organization.
@@ -29,9 +31,10 @@ namespace Octokit.Reactive
         /// See the <a href="https://docs.github.com/en/rest/reference/actions#list-organization-secrets">API documentation</a> for more information.
         /// </remarks>
         /// <param name="org">The name of the organization</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecretsCollection"/> instance for the list of organization secrets.</returns>
-        IObservable<OrganizationSecretsCollection> GetAll(string org);
+        IObservable<OrganizationSecretsCollection> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a secret from an organization.
@@ -41,9 +44,10 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecret"/> instance for the organization secret.</returns>
-        IObservable<OrganizationSecret> Get(string org, string secretName);
+        IObservable<OrganizationSecret> Get(string org, string secretName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create or update a secret in an organization.
@@ -54,9 +58,10 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <param name="upsertSecret">The encrypted value, id of the encryption key, and visibility info to upsert</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="OrganizationSecret"/> instance for the organization secret that was created or updated.</returns>
-        IObservable<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret);
+        IObservable<OrganizationSecret> CreateOrUpdate(string org, string secretName, UpsertOrganizationSecret upsertSecret, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a secret in an organization.
@@ -66,8 +71,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(string org, string secretName);
+        IObservable<Unit> Delete(string org, string secretName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the list of selected sites that have access to a secret.
@@ -77,8 +83,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<OrganizationSecretRepositoryCollection> GetSelectedRepositoriesForSecret(string org, string secretName);
+        IObservable<OrganizationSecretRepositoryCollection> GetSelectedRepositoriesForSecret(string org, string secretName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Set the list of selected sites that have access to a secret.
@@ -89,8 +96,9 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repositories">The list of repositories that should have access to view and use the secret</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories);
+        IObservable<Unit> SetSelectedRepositoriesForSecret(string org, string secretName, SelectedRepositoryCollection repositories, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add a selected site to the visibility list of a secret.
@@ -101,8 +109,9 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> AddRepoToOrganizationSecret(string org, string secretName, long repoId);
+        IObservable<Unit> AddRepoToOrganizationSecret(string org, string secretName, long repoId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// ARemoved a selected site from the visibility list of a secret.
@@ -113,7 +122,8 @@ namespace Octokit.Reactive
         /// <param name="org">The name of the organization</param>
         /// <param name="secretName">The name of the secret</param>
         /// <param name="repoId">The id of the repo to add to the visibility list of the secret</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> RemoveRepoFromOrganizationSecret(string org, string secretName, long repoId);
+        IObservable<Unit> RemoveRepoFromOrganizationSecret(string org, string secretName, long repoId, CancellationToken cancellationToken = default);
     }
 }

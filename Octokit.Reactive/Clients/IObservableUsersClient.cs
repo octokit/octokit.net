@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -11,14 +12,14 @@ namespace Octokit.Reactive
         /// <param name="login">The login name for the user</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "login")]
-        IObservable<User> Get(string login);
+        IObservable<User> Get(string login, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns a <see cref="User"/> for the current authenticated user.
         /// </summary>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        IObservable<User> Current();
+        IObservable<User> Current(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update the specified <see cref="UserUpdate"/>.
@@ -26,7 +27,7 @@ namespace Octokit.Reactive
         /// <param name="user">The login for the user</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="User"/></returns>
-        IObservable<User> Update(UserUpdate user);
+        IObservable<User> Update(UserUpdate user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// A client for GitHub's User Followers API

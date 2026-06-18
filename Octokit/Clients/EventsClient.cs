@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -27,9 +28,9 @@ namespace Octokit
         /// http://developer.github.com/v3/activity/events/#list-public-events
         /// </remarks>
         [ManualRoute("GET", "/events")]
-        public Task<IReadOnlyList<Activity>> GetAll()
+        public Task<IReadOnlyList<Activity>> GetAll(CancellationToken cancellationToken = default)
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -41,11 +42,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All the public <see cref="Activity"/>s for the particular user.</returns>
         [ManualRoute("GET", "/events")]
-        public Task<IReadOnlyList<Activity>> GetAll(ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAll(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.Events(), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events(), options, cancellationToken);
         }
 
         /// <summary>
@@ -57,12 +58,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -73,9 +74,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -88,13 +89,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.Events(owner, name), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -106,11 +107,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.Events(repositoryId), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.Events(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -122,12 +123,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name)
+        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllIssuesForRepository(owner, name, ApiOptions.None);
+            return GetAllIssuesForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -138,9 +139,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         [ManualRoute("GET", "/repositories/{id}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId)
+        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllIssuesForRepository(repositoryId, ApiOptions.None);
+            return GetAllIssuesForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -153,13 +154,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name), options);
+            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -171,11 +172,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/issues/events")]
-        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<IssueEvent>> GetAllIssuesForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), options);
+            return ApiConnection.GetAll<IssueEvent>(ApiUrls.IssuesEvents(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -187,12 +188,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         [ManualRoute("GET", "/networks/{owner}/{name}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name)
+        public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepositoryNetwork(owner, name, ApiOptions.None);
+            return GetAllForRepositoryNetwork(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -205,13 +206,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/networks/{owner}/{name}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllForRepositoryNetwork(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.NetworkEvents(owner, name), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.NetworkEvents(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -222,11 +223,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The name of the organization</param>
         [ManualRoute("GET", "/orgs/{org}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization)
+        public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return GetAllForOrganization(organization, ApiOptions.None);
+            return GetAllForOrganization(organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -238,12 +239,12 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllForOrganization(string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(organization), options, cancellationToken);
         }
 
         /// <summary>
@@ -254,11 +255,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         [ManualRoute("GET", "/users/{username}/received_events")]
-        public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return GetAllUserReceived(user, ApiOptions.None);
+            return GetAllUserReceived(user, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -270,12 +271,12 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/users/{username}/received_events")]
-        public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllUserReceived(string user, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user), options, cancellationToken);
         }
 
         /// <summary>
@@ -286,11 +287,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         [ManualRoute("GET", "/users/{username}/received_events/public")]
-        public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return GetAllUserReceivedPublic(user, ApiOptions.None);
+            return GetAllUserReceivedPublic(user, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -302,12 +303,12 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/users/{username}/received_events/public")]
-        public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllUserReceivedPublic(string user, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.ReceivedEvents(user, true), options, cancellationToken);
         }
 
         /// <summary>
@@ -318,11 +319,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         [ManualRoute("GET", "/users/{username}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return GetAllUserPerformed(user, ApiOptions.None);
+            return GetAllUserPerformed(user, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -334,12 +335,12 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/users/{username}/events")]
-        public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllUserPerformed(string user, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user), options, cancellationToken);
         }
 
         /// <summary>
@@ -350,11 +351,11 @@ namespace Octokit
         /// </remarks>
         /// <param name="user">The login of the user</param>
         [ManualRoute("GET", "/users/{username}/events/public")]
-        public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user)
+        public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return GetAllUserPerformedPublic(user, ApiOptions.None);
+            return GetAllUserPerformedPublic(user, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -366,12 +367,12 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/users/{username}/events/public")]
-        public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllUserPerformedPublic(string user, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user, true), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.PerformedEvents(user, true), options, cancellationToken);
         }
 
         /// <summary>
@@ -383,12 +384,12 @@ namespace Octokit
         /// <param name="user">The login of the user</param>
         /// <param name="organization">The name of the organization</param>
         [ManualRoute("GET", "/users/{username}/events/orgs/{org}")]
-        public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization)
+        public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return GetAllForAnOrganization(user, organization, ApiOptions.None);
+            return GetAllForAnOrganization(user, organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -401,13 +402,13 @@ namespace Octokit
         /// <param name="organization">The name of the organization</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/users/{username}/events/orgs/{org}")]
-        public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, ApiOptions options)
+        public Task<IReadOnlyList<Activity>> GetAllForAnOrganization(string user, string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization), options);
+            return ApiConnection.GetAll<Activity>(ApiUrls.OrganizationEvents(user, organization), options, cancellationToken);
         }
     }
 }

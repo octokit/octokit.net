@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,11 +26,11 @@ namespace Octokit
         /// <param name="userName">The @ handle of the user.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
         [ManualRoute("GET", "/users/{username}/keys")]
-        public Task<IReadOnlyList<PublicKey>> GetAll(string userName)
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
 
-            return GetAll(userName, ApiOptions.None);
+            return GetAll(userName, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace Octokit
         /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the verified public keys for a user.</returns>
         [ManualRoute("GET", "/users/{username}/keys")]
-        public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options)
+        public Task<IReadOnlyList<PublicKey>> GetAll(string userName, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(userName, nameof(userName));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -58,7 +59,7 @@ namespace Octokit
         /// </remarks>
         /// <returns>Lists the current user's keys.</returns>
         [ManualRoute("GET", "/user/keys")]
-        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent()
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
             return GetAllForCurrent(ApiOptions.None);
         }
@@ -72,7 +73,7 @@ namespace Octokit
         /// <param name="options">Options to change API's behavior.</param>
         /// <returns>Lists the current user's keys.</returns>
         [ManualRoute("GET", "/user/keys")]
-        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<PublicKey>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -88,7 +89,7 @@ namespace Octokit
         /// <param name="keyId">The Id of the SSH key</param>
         /// <returns></returns>
         [ManualRoute("GET", "/user/keys/{key_id}")]
-        public Task<PublicKey> Get(long keyId)
+        public Task<PublicKey> Get(long keyId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<PublicKey>(ApiUrls.Keys(keyId));
         }
@@ -102,11 +103,11 @@ namespace Octokit
         /// <param name="newKey">The SSH Key contents</param>
         /// <returns></returns>
         [ManualRoute("POST", "/user/keys")]
-        public Task<PublicKey> Create(NewPublicKey newKey)
+        public Task<PublicKey> Create(NewPublicKey newKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newKey, nameof(newKey));
 
-            return ApiConnection.Post<PublicKey>(ApiUrls.Keys(), newKey);
+            return ApiConnection.Post<PublicKey>(ApiUrls.Keys(), newKey, cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +119,7 @@ namespace Octokit
         /// <param name="keyId">The id of the key to delete</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/user/keys/{key_id}")]
-        public Task Delete(long keyId)
+        public Task Delete(long keyId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Delete(ApiUrls.Keys(keyId));
         }

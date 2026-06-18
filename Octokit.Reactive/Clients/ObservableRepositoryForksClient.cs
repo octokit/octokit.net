@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -35,12 +36,12 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<Repository> GetAll(string owner, string name)
+        public IObservable<Repository> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -50,9 +51,9 @@ namespace Octokit.Reactive
         /// See <a href="http://developer.github.com/v3/repos/forks/#list-forks">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<Repository> GetAll(long repositoryId)
+        public IObservable<Repository> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -64,13 +65,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Repository> GetAll(string owner, string name, ApiOptions options)
+        public IObservable<Repository> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -81,11 +82,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Repository> GetAll(long repositoryId, ApiOptions options)
+        public IObservable<Repository> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -97,13 +98,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        public IObservable<Repository> GetAll(string owner, string name, RepositoryForksListRequest request)
+        public IObservable<Repository> GetAll(string owner, string name, RepositoryForksListRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAll(owner, name, request, ApiOptions.None);
+            return GetAll(owner, name, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -114,11 +115,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
-        public IObservable<Repository> GetAll(long repositoryId, RepositoryForksListRequest request)
+        public IObservable<Repository> GetAll(long repositoryId, RepositoryForksListRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAll(repositoryId, request, ApiOptions.None);
+            return GetAll(repositoryId, request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -131,14 +132,14 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Repository> GetAll(string owner, string name, RepositoryForksListRequest request, ApiOptions options)
+        public IObservable<Repository> GetAll(string owner, string name, RepositoryForksListRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(owner, name), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -150,12 +151,12 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="request">Used to request and filter a list of repository forks</param>
         /// <param name="options">Options for changing the API response</param>
-        public IObservable<Repository> GetAll(long repositoryId, RepositoryForksListRequest request, ApiOptions options)
+        public IObservable<Repository> GetAll(long repositoryId, RepositoryForksListRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.RepositoryForks(repositoryId), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -167,13 +168,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        public IObservable<Repository> Create(string owner, string name, NewRepositoryFork fork)
+        public IObservable<Repository> Create(string owner, string name, NewRepositoryFork fork, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(fork, nameof(fork));
 
-            return _client.Create(owner, name, fork).ToObservable();
+            return _client.Create(owner, name, fork, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -184,11 +185,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="fork">Used to fork a repository</param>
-        public IObservable<Repository> Create(long repositoryId, NewRepositoryFork fork)
+        public IObservable<Repository> Create(long repositoryId, NewRepositoryFork fork, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(fork, nameof(fork));
 
-            return _client.Create(repositoryId, fork).ToObservable();
+            return _client.Create(repositoryId, fork, cancellationToken).ToObservable();
         }
     }
 }

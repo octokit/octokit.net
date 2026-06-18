@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
 
@@ -28,21 +29,21 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        public IObservable<User> GetAllForRepository(string owner, string name)
+        public IObservable<User> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
         /// Gets all the available assignees (owner + collaborators) to which issues may be assigned.
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
-        public IObservable<User> GetAllForRepository(long repositoryId)
+        public IObservable<User> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -51,13 +52,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
-        public IObservable<User> GetAllForRepository(string owner, string name, ApiOptions options)
+        public IObservable<User> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Assignees(owner, name), options);
+            return _connection.GetAndFlattenAllPages<User>(ApiUrls.Assignees(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">The options to change API's behaviour.</param>
-        public IObservable<User> GetAllForRepository(long repositoryId, ApiOptions options)
+        public IObservable<User> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -78,13 +79,13 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        public IObservable<bool> CheckAssignee(string owner, string name, string assignee)
+        public IObservable<bool> CheckAssignee(string owner, string name, string assignee, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(assignee, nameof(assignee));
 
-            return _client.CheckAssignee(owner, name, assignee).ToObservable();
+            return _client.CheckAssignee(owner, name, assignee, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -94,13 +95,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of names of assignees to add</param>
-        public IObservable<Issue> AddAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees)
+        public IObservable<Issue> AddAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(assignees, nameof(assignees));
 
-            return _client.AddAssignees(owner, name, issueNumber, assignees).ToObservable();
+            return _client.AddAssignees(owner, name, issueNumber, assignees, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -111,13 +112,13 @@ namespace Octokit.Reactive
         /// <param name="issueNumber">The issue number</param>
         /// <param name="assignees">List of assignees to remove </param>
         /// <returns></returns>
-        public IObservable<Issue> RemoveAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees)
+        public IObservable<Issue> RemoveAssignees(string owner, string name, long issueNumber, AssigneesUpdate assignees, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(assignees, nameof(assignees));
 
-            return _client.RemoveAssignees(owner, name, issueNumber, assignees).ToObservable();
+            return _client.RemoveAssignees(owner, name, issueNumber, assignees, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -125,11 +126,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assignee">Username of the prospective assignee</param>
-        public IObservable<bool> CheckAssignee(long repositoryId, string assignee)
+        public IObservable<bool> CheckAssignee(long repositoryId, string assignee, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(assignee, nameof(assignee));
 
-            return _client.CheckAssignee(repositoryId, assignee).ToObservable();
+            return _client.CheckAssignee(repositoryId, assignee, cancellationToken).ToObservable();
         }
     }
 }

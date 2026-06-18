@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -19,7 +20,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
-        Task<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId);
+        Task<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Get a self-hosted runner group for an organization
@@ -29,7 +31,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
-        Task<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId);
+        Task<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runner groups for an enterprise
@@ -38,7 +41,8 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-enterprise
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
-        Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise);
+        Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runner groups for an enterprise
@@ -48,7 +52,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options);
+        Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runners groups for an organization
@@ -57,7 +62,8 @@ namespace Octokit
         /// https://docs.github.com/en/enterprise-cloud@latest/rest/actions/self-hosted-runner-groups?apiVersion=2022-11-28#list-self-hosted-runner-groups-for-an-organization
         /// </remarks>
         /// <param name="org">The organization name</param>
-        Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org);
+        Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runners groups for an organization
@@ -67,7 +73,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options);
+        Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runners in a group for an enterprise
@@ -77,7 +84,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
-        Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId);
+        Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runners in a group for an enterprise
@@ -88,7 +96,8 @@ namespace Octokit
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options);
+        Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runners in a group for an organization
@@ -98,7 +107,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="organization">The organization.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
-        Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId);
+        Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List self-hosted runners in a group for an organization
@@ -109,7 +119,8 @@ namespace Octokit
         /// <param name="organization">The organization.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
         /// <param name="options">Options to change the API response.</param>
-        Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options);
+        Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List organization access to a self-hosted runner group in an enterprise
@@ -119,7 +130,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId);
+        Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List organization access to a self-hosted runner group in an enterprise
@@ -130,7 +142,8 @@ namespace Octokit
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options);
+        Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -140,7 +153,8 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
-        Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId);
+        Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// List repository access to a self-hosted runner group in an organization
@@ -151,6 +165,7 @@ namespace Octokit
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
-        Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options);
+        Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default);
+
     }
 }

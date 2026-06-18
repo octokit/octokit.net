@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -20,7 +21,7 @@ namespace Octokit
         /// </remarks>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<EmailAddress>> GetAll();
+        Task<IReadOnlyList<EmailAddress>> GetAll(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all email addresses for the authenticated user.
@@ -31,7 +32,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>The <see cref="EmailAddress"/>es for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
-        Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options);
+        Task<IReadOnlyList<EmailAddress>> GetAll(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds email addresses for the authenticated user.

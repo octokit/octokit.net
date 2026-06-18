@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -26,7 +27,7 @@ namespace Octokit.Reactive
         /// details.
         /// </remarks>
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
-        public IObservable<Authorization> GetAll()
+        public IObservable<Authorization> GetAll(CancellationToken cancellationToken = default)
         {
             return GetAll(ApiOptions.None);
         }
@@ -40,7 +41,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
-        public IObservable<Authorization> GetAll(ApiOptions options)
+        public IObservable<Authorization> GetAll(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -56,9 +57,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the <see cref="Authorization"/></param>
         /// <returns>An <see cref="Authorization"/></returns>
-        public IObservable<Authorization> Get(long id)
+        public IObservable<Authorization> Get(long id, CancellationToken cancellationToken = default)
         {
-            return _client.Get(id).ToObservable();
+            return _client.Get(id, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -77,11 +78,11 @@ namespace Octokit.Reactive
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        public IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization)
+        public IObservable<ApplicationAuthorization> Create(NewAuthorization newAuthorization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
-            return _client.Create(newAuthorization).ToObservable();
+            return _client.Create(newAuthorization, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -103,12 +104,12 @@ namespace Octokit.Reactive
         /// <returns>The created <see cref="Authorization"/>.</returns>
         public IObservable<ApplicationAuthorization> Create(
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode)
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
-            return _client.Create(newAuthorization, twoFactorAuthenticationCode).ToObservable();
+            return _client.Create(newAuthorization, twoFactorAuthenticationCode, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -133,13 +134,13 @@ namespace Octokit.Reactive
         public IObservable<ApplicationAuthorization> Create(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization)
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
             Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
 
-            return _client.Create(clientId, clientSecret, newAuthorization).ToObservable();
+            return _client.Create(clientId, clientSecret, newAuthorization, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -166,14 +167,14 @@ namespace Octokit.Reactive
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode)
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
             Ensure.ArgumentNotNull(newAuthorization, nameof(newAuthorization));
             Ensure.ArgumentNotNullOrEmptyString(twoFactorAuthenticationCode, nameof(twoFactorAuthenticationCode));
 
-            return _client.Create(clientId, clientSecret, newAuthorization, twoFactorAuthenticationCode).ToObservable();
+            return _client.Create(clientId, clientSecret, newAuthorization, twoFactorAuthenticationCode, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace Octokit.Reactive
         public IObservable<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization)
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
@@ -228,7 +229,7 @@ namespace Octokit.Reactive
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode)
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(clientId, nameof(clientId));
             Ensure.ArgumentNotNullOrEmptyString(clientSecret, nameof(clientSecret));
@@ -254,7 +255,7 @@ namespace Octokit.Reactive
         /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
-        public IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken)
+        public IObservable<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
             Ensure.ArgumentNotNullOrEmptyString("accessToken", accessToken);
@@ -273,7 +274,7 @@ namespace Octokit.Reactive
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to reset</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
-        public IObservable<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken)
+        public IObservable<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
             Ensure.ArgumentNotNullOrEmptyString("accessToken", accessToken);
@@ -292,7 +293,7 @@ namespace Octokit.Reactive
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to revoke</param>
         /// <returns></returns>
-        public IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken)
+        public IObservable<Unit> RevokeApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString("clientId", clientId);
             Ensure.ArgumentNotNullOrEmptyString("accessToken", accessToken);
@@ -307,11 +308,11 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Authorization"/></param>
         /// <param name="authorizationUpdate">The changes to make to the authorization</param>
         /// <returns></returns>
-        public IObservable<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate)
+        public IObservable<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(authorizationUpdate, nameof(authorizationUpdate));
 
-            return _client.Update(id, authorizationUpdate).ToObservable();
+            return _client.Update(id, authorizationUpdate, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -327,9 +328,9 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(long id)
+        public IObservable<Unit> Delete(long id, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(id).ToObservable();
+            return _client.Delete(id, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -346,9 +347,9 @@ namespace Octokit.Reactive
         /// Thrown when the current user does not have permission to make the request.
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(long id, string twoFactorAuthenticationCode)
+        public IObservable<Unit> Delete(long id, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(id, twoFactorAuthenticationCode).ToObservable();
+            return _client.Delete(id, twoFactorAuthenticationCode, cancellationToken).ToObservable();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -31,12 +32,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/keys/{number}")]
-        public Task<DeployKey> Get(string owner, string name, int deployKeyId)
+        public Task<DeployKey> Get(string owner, string name, int deployKeyId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(owner, name, deployKeyId));
+            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(owner, name, deployKeyId), cancellationToken);
         }
 
         /// <summary>
@@ -48,9 +49,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key.</param>
         [ManualRoute("GET", "/repositories/{id}/keys/{number}")]
-        public Task<DeployKey> Get(long repositoryId, int deployKeyId)
+        public Task<DeployKey> Get(long repositoryId, int deployKeyId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(repositoryId, deployKeyId));
+            return ApiConnection.Get<DeployKey>(ApiUrls.RepositoryDeployKey(repositoryId, deployKeyId), cancellationToken);
         }
 
         /// <summary>
@@ -62,12 +63,12 @@ namespace Octokit
         /// <param name="owner">The owner of the repository.</param>
         /// <param name="name">The name of the repository.</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/keys")]
-        public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name)
+        public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -78,9 +79,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository.</param>
         [ManualRoute("GET", "/repositories/{id}/keys")]
-        public Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId)
+        public Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -93,13 +94,13 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/keys")]
-        public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<DeployKey>> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options);
+            return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -111,11 +112,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/repositories/{id}/keys")]
-        public Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<DeployKey>> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options);
+            return ApiConnection.GetAll<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -128,7 +129,7 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/keys")]
-        public Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey)
+        public Task<DeployKey> Create(string owner, string name, NewDeployKey newDeployKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -140,7 +141,7 @@ namespace Octokit
             if (string.IsNullOrWhiteSpace(newDeployKey.Key))
                 throw new ArgumentException("The new deploy key's key must not be null.");
 
-            return ApiConnection.Post<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), newDeployKey);
+            return ApiConnection.Post<DeployKey>(ApiUrls.RepositoryDeployKeys(owner, name), newDeployKey, cancellationToken);
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="newDeployKey">The deploy key to create for the repository.</param>
         [ManualRoute("POST", "/repositories/{id}/keys")]
-        public Task<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey)
+        public Task<DeployKey> Create(long repositoryId, NewDeployKey newDeployKey, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newDeployKey, nameof(newDeployKey));
 
@@ -162,7 +163,7 @@ namespace Octokit
             if (string.IsNullOrWhiteSpace(newDeployKey.Key))
                 throw new ArgumentException("The new deploy key's key must not be null.");
 
-            return ApiConnection.Post<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), newDeployKey);
+            return ApiConnection.Post<DeployKey>(ApiUrls.RepositoryDeployKeys(repositoryId), newDeployKey, cancellationToken);
         }
 
         /// <summary>
@@ -175,12 +176,12 @@ namespace Octokit
         /// <param name="name">The name of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key to delete.</param>
         [ManualRoute("DELETE", "/repositories/{id}/keys/{number}")]
-        public Task Delete(string owner, string name, int deployKeyId)
+        public Task Delete(string owner, string name, int deployKeyId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(owner, name, deployKeyId));
+            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(owner, name, deployKeyId), cancellationToken);
         }
 
         /// <summary>
@@ -192,9 +193,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository.</param>
         /// <param name="deployKeyId">The id of the deploy key to delete.</param>
         [ManualRoute("DELETE", "/repositories/{id}/keys/{number}")]
-        public Task Delete(long repositoryId, int deployKeyId)
+        public Task Delete(long repositoryId, int deployKeyId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(repositoryId, deployKeyId));
+            return ApiConnection.Delete(ApiUrls.RepositoryDeployKey(repositoryId, deployKeyId), cancellationToken);
         }
     }
 }

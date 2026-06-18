@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Octokit
 {
@@ -27,7 +28,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
-        Task<IReadOnlyList<Authorization>> GetAll();
+        Task<IReadOnlyList<Authorization>> GetAll(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="Authorization"/>s for the authenticated user.
@@ -44,7 +45,7 @@ namespace Octokit
         /// <returns>A list of <see cref="Authorization"/>s for the authenticated user.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate",
             Justification = "It's an API call, so it's not a property.")]
-        Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options);
+        Task<IReadOnlyList<Authorization>> GetAll(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a specific <see cref="Authorization"/> for the authenticated user.
@@ -61,7 +62,8 @@ namespace Octokit
         /// <returns>The specified <see cref="Authorization"/>.</returns>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "It's fiiiine. It's fine. Trust us.")]
-        Task<Authorization> Get(long id);
+        Task<Authorization> Get(long id, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new personal token for the authenticated user.
@@ -79,7 +81,8 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization);
+        Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new personal token for the authenticated user.
@@ -98,7 +101,8 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The created <see cref="Authorization"/>.</returns>
-        Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization, string twoFactorAuthenticationCode);
+        Task<ApplicationAuthorization> Create(NewAuthorization newAuthorization, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application
@@ -122,7 +126,7 @@ namespace Octokit
         Task<ApplicationAuthorization> Create(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization);
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application
@@ -148,7 +152,7 @@ namespace Octokit
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode);
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already
@@ -172,7 +176,7 @@ namespace Octokit
         Task<ApplicationAuthorization> GetOrCreateApplicationAuthentication(
             string clientId,
             string clientSecret,
-            NewAuthorization newAuthorization);
+            NewAuthorization newAuthorization, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new authorization for the specified OAuth application if an authorization for that application doesn’t already
@@ -198,7 +202,7 @@ namespace Octokit
             string clientId,
             string clientSecret,
             NewAuthorization newAuthorization,
-            string twoFactorAuthenticationCode);
+            string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks the validity of an OAuth token without running afoul of normal rate limits for failed login attempts.
@@ -210,7 +214,8 @@ namespace Octokit
         /// <param name="clientId">Client Id of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to check</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/>.</returns>
-        Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken);
+        Task<ApplicationAuthorization> CheckApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Resets a valid OAuth token for an OAuth application without end user involvement.
@@ -222,7 +227,8 @@ namespace Octokit
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to reset</param>
         /// <returns>The valid <see cref="ApplicationAuthorization"/> with a new OAuth token</returns>
-        Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken);
+        Task<ApplicationAuthorization> ResetApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Revokes a single OAuth token for an OAuth application.
@@ -234,7 +240,7 @@ namespace Octokit
         /// <param name="clientId">ClientID of the OAuth application for the token</param>
         /// <param name="accessToken">The OAuth token to revoke</param>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        Task RevokeApplicationAuthentication(string clientId, string accessToken);
+        Task RevokeApplicationAuthentication(string clientId, string accessToken, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates the specified <see cref="Authorization"/>.
@@ -251,7 +257,8 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>The updated <see cref="Authorization"/>.</returns>
-        Task<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate);
+        Task<Authorization> Update(long id, AuthorizationUpdate authorizationUpdate, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
@@ -267,7 +274,8 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        Task Delete(long id);
+        Task Delete(long id, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes the specified <see cref="Authorization"/>.
@@ -284,6 +292,7 @@ namespace Octokit
         /// </exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Task"/> for the request's execution.</returns>
-        Task Delete(long id, string twoFactorAuthenticationCode);
+        Task Delete(long id, string twoFactorAuthenticationCode, CancellationToken cancellationToken = default);
+
     }
 }

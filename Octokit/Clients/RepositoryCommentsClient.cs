@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -28,7 +29,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments/{comment_id}")]
-        public Task<CommitComment> Get(string owner, string name, long commentId)
+        public Task<CommitComment> Get(string owner, string name, long commentId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -43,7 +44,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#get-a-single-commit-comment</remarks>
         [ManualRoute("GET", "/repositories/{id}/comments/{number}")]
-        public Task<CommitComment> Get(long repositoryId, long commentId)
+        public Task<CommitComment> Get(long repositoryId, long commentId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<CommitComment>(ApiUrls.CommitComment(repositoryId, commentId), null);
         }
@@ -55,12 +56,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name)
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, ApiOptions.None);
+            return GetAllForRepository(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -69,9 +70,9 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         [ManualRoute("GET", "/repositories/{id}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Octokit
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -98,7 +99,7 @@ namespace Octokit
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository</remarks>
         [ManualRoute("GET", "/repositories/{id}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<CommitComment>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -113,13 +114,13 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{commit_sha}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha)
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
-            return GetAllForCommit(owner, name, sha, ApiOptions.None);
+            return GetAllForCommit(owner, name, sha, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -129,11 +130,11 @@ namespace Octokit
         /// <param name="sha">The sha of the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         [ManualRoute("GET", "/repositories/{id}/commits/{commit_sha}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha)
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
 
-            return GetAllForCommit(repositoryId, sha, ApiOptions.None);
+            return GetAllForCommit(repositoryId, sha, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -145,7 +146,7 @@ namespace Octokit
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         [ManualRoute("GET", "/repos/{owner}/{repo}/commits/{commit_sha}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options)
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(string owner, string name, string sha, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -163,7 +164,7 @@ namespace Octokit
         /// <param name="options">Options to change the API response</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#list-comments-for-a-single-commit</remarks>
         [ManualRoute("GET", "/repositories/{id}/commits/{commit_sha}/comments")]
-        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, ApiOptions options)
+        public Task<IReadOnlyList<CommitComment>> GetAllForCommit(long repositoryId, string sha, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -180,7 +181,7 @@ namespace Octokit
         /// <param name="newCommitComment">The new comment to add to the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         [ManualRoute("POST", "/repos/{owner}/{repo}/commits/{commit_sha}/comments")]
-        public Task<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment)
+        public Task<CommitComment> Create(string owner, string name, string sha, NewCommitComment newCommitComment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -198,7 +199,7 @@ namespace Octokit
         /// <param name="newCommitComment">The new comment to add to the commit</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#create-a-commit-comment</remarks>
         [ManualRoute("POST", "/repositories/{id}/commits/{commit_sha}/comments")]
-        public Task<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment)
+        public Task<CommitComment> Create(long repositoryId, string sha, NewCommitComment newCommitComment, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(sha, nameof(sha));
             Ensure.ArgumentNotNull(newCommitComment, nameof(newCommitComment));
@@ -215,7 +216,7 @@ namespace Octokit
         /// <param name="commentUpdate">The modified comment</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}/comments/{comment_id}")]
-        public Task<CommitComment> Update(string owner, string name, long  commentId, string commentUpdate)
+        public Task<CommitComment> Update(string owner, string name, long  commentId, string commentUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -232,7 +233,7 @@ namespace Octokit
         /// <param name="commentUpdate">The modified comment</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#update-a-commit-comment</remarks>
         [ManualRoute("PATCH", "/repositories/{id}/comments/{number}")]
-        public Task<CommitComment> Update(long repositoryId, long commentId, string commentUpdate)
+        public Task<CommitComment> Update(long repositoryId, long commentId, string commentUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(commentUpdate, nameof(commentUpdate));
 
@@ -247,7 +248,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}/comments/{comment_id}")]
-        public Task Delete(string owner, string name, long commentId)
+        public Task Delete(string owner, string name, long commentId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -262,7 +263,7 @@ namespace Octokit
         /// <param name="commentId">The comment id</param>
         /// <remarks>http://developer.github.com/v3/repos/comments/#delete-a-commit-comment</remarks>
         [ManualRoute("DELETE", "/repositories/{id}/comments/{number}")]
-        public Task Delete(long repositoryId, long commentId)
+        public Task Delete(long repositoryId, long commentId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Delete(ApiUrls.CommitComment(repositoryId, commentId));
         }

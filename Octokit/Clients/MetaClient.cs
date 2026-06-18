@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -33,9 +34,9 @@ namespace Octokit
         /// <returns>An <see cref="Meta"/> containing metadata about the GitHub instance.</returns>
         [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         [ManualRoute("GET", "/meta")]
-        public Task<Meta> GetMetadata()
+        public Task<Meta> GetMetadata(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Meta>(ApiUrls.Meta());
+            return ApiConnection.Get<Meta>(ApiUrls.Meta(), null, null, cancellationToken);
         }
     }
 }

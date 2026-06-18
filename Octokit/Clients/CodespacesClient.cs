@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,9 +28,9 @@ namespace Octokit
         /// </summary>
         /// <returns>A codespaces collection</returns>
         [ManualRoute("GET", "/user/codespaces")]
-        public Task<CodespacesCollection> GetAll()
+        public Task<CodespacesCollection> GetAll(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<CodespacesCollection>(ApiUrls.Codespaces());
+            return ApiConnection.Get<CodespacesCollection>(ApiUrls.Codespaces(), null, cancellationToken);
         }
 
         /// <summary>
@@ -39,9 +40,9 @@ namespace Octokit
         /// <param name="repo"></param>
         /// <returns>A codespaces collection</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/codespaces")]
-        public Task<CodespacesCollection> GetForRepository(string owner, string repo)
+        public Task<CodespacesCollection> GetForRepository(string owner, string repo, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<CodespacesCollection>(ApiUrls.CodespacesForRepository(owner, repo));
+            return ApiConnection.Get<CodespacesCollection>(ApiUrls.CodespacesForRepository(owner, repo), null, cancellationToken);
         }
 
         /// <summary>
@@ -50,9 +51,9 @@ namespace Octokit
         /// <param name="codespaceName"></param>
         /// <returns>A codespace</returns>
         [ManualRoute("GET", "/user/codespaces/{codespace_name}")]
-        public Task<Codespace> Get(string codespaceName)
+        public Task<Codespace> Get(string codespaceName, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Codespace>(ApiUrls.Codespace(codespaceName));
+            return ApiConnection.Get<Codespace>(ApiUrls.Codespace(codespaceName), null, cancellationToken);
         }
 
         /// <summary>
@@ -61,9 +62,9 @@ namespace Octokit
         /// <param name="codespaceName"></param>
         /// <returns></returns>
         [ManualRoute("POST", "/user/codespaces/{codespace_name}/start")]
-        public Task<Codespace> Start(string codespaceName)
+        public Task<Codespace> Start(string codespaceName, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post<Codespace>(ApiUrls.CodespaceStart(codespaceName));
+            return ApiConnection.Post<Codespace>(ApiUrls.CodespaceStart(codespaceName), cancellationToken);
         }
 
         /// <summary>
@@ -72,33 +73,33 @@ namespace Octokit
         /// <param name="codespaceName"></param>
         /// <returns></returns>
         [ManualRoute("POST", "/user/codespaces/{codespace_name}/stop")]
-        public Task<Codespace> Stop(string codespaceName)
+        public Task<Codespace> Stop(string codespaceName, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post<Codespace>(ApiUrls.CodespaceStop(codespaceName));
+            return ApiConnection.Post<Codespace>(ApiUrls.CodespaceStop(codespaceName), cancellationToken);
         }
 
         /// <summary>
         /// Returns available machines for the specified repository.
         /// </summary>
         [ManualRoute("GET", "/repos/{repoOwner}/{repoName}/machines")]
-        public Task<MachinesCollection> GetAvailableMachinesForRepo(string repoOwner, string repoName, string reference = null)
+        public Task<MachinesCollection> GetAvailableMachinesForRepo(string repoOwner, string repoName, string reference = null, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(repoOwner, nameof(repoOwner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return ApiConnection.Get<MachinesCollection>(ApiUrls.GetAvailableMachinesForRepo(repoOwner, repoName, reference));
+            return ApiConnection.Get<MachinesCollection>(ApiUrls.GetAvailableMachinesForRepo(repoOwner, repoName, reference), null, cancellationToken);
         }
 
         /// <summary>
         /// Creates a new codespace for the authenticated user.
         /// </summary>
         [ManualRoute("POST", "/repos/{owner}/{repo}/codespaces")]
-        public Task<Codespace> Create(string owner, string repo, NewCodespace newCodespace)
+        public Task<Codespace> Create(string owner, string repo, NewCodespace newCodespace, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));
 
-            return ApiConnection.Post<Codespace>(ApiUrls.CreateCodespace(owner, repo), newCodespace);
+            return ApiConnection.Post<Codespace>(ApiUrls.CreateCodespace(owner, repo), newCodespace, cancellationToken);
         }
     }
 }

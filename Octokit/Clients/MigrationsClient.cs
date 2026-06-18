@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,7 +32,7 @@ namespace Octokit
         /// <see cref="StartMigrationRequest"/> object.</param>
         /// <returns>The started migration.</returns>
         [ManualRoute("POST", "/orgs/{org}/migrations")]
-        public async Task<Migration> Start(string org, StartMigrationRequest migration)
+        public async Task<Migration> Start(string org, StartMigrationRequest migration, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(migration, nameof(migration));
@@ -50,7 +51,7 @@ namespace Octokit
         /// <param name="org">The organization of which to list migrations.</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
         [ManualRoute("GET", "/orgs/{org}/migrations")]
-        public async Task<IReadOnlyList<Migration>> GetAll(string org)
+        public async Task<IReadOnlyList<Migration>> GetAll(string org, CancellationToken cancellationToken = default)
         {
             return await GetAll(org, ApiOptions.None);
         }
@@ -65,7 +66,7 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>List of most recent <see cref="Migration"/>s.</returns>
         [ManualRoute("GET", "/orgs/{org}/migrations")]
-        public async Task<IReadOnlyList<Migration>> GetAll(string org, ApiOptions options)
+        public async Task<IReadOnlyList<Migration>> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -85,7 +86,7 @@ namespace Octokit
         /// <param name="id">Migration Id of the organization.</param>
         /// <returns>A <see cref="Migration"/> object representing the state of migration.</returns>
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}")]
-        public async Task<Migration> Get(string org, long id)
+        public async Task<Migration> Get(string org, long id, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -104,7 +105,7 @@ namespace Octokit
         /// <param name="id">The Id of the migration.</param>
         /// <returns>The binary contents of the archive as a byte array.</returns>
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}/archive")]
-        public async Task<byte[]> GetArchive(string org, long id)
+        public async Task<byte[]> GetArchive(string org, long id, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -124,13 +125,13 @@ namespace Octokit
         /// <param name="id">The Id of the migration.</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/orgs/{org}/migrations/{id}/archive")]
-        public Task DeleteArchive(string org, long id)
+        public Task DeleteArchive(string org, long id, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
             var endpoint = ApiUrls.EnterpriseMigrationArchive(org, id);
 
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +145,7 @@ namespace Octokit
         /// <param name="repo">The repo to unlock.</param>
         /// <returns></returns>
         [ManualRoute("GET", "/orgs/{org}/migrations/{id}/repos/{name}/lock")]
-        public Task UnlockRepository(string org, long id, string repo)
+        public Task UnlockRepository(string org, long id, string repo, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(repo, nameof(repo));

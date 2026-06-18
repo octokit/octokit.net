@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -25,9 +26,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="MetaPublicKeys"/> containing public keys for validating request signatures.</returns>
         [ManualRoute("GET", "/meta/public_keys/{keysType}")]
-        public Task<MetaPublicKeys> Get(PublicKeyType keysType)
+        public Task<MetaPublicKeys> Get(PublicKeyType keysType, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<MetaPublicKeys>(ApiUrls.PublicKeys(keysType));
+            return ApiConnection.Get<MetaPublicKeys>(ApiUrls.PublicKeys(keysType), null, null, cancellationToken);
         }
     }
 }

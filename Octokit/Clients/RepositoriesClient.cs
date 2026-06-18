@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
@@ -58,11 +59,11 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository.</returns>
         [ManualRoute("POST", "/user/repos")]
-        public Task<Repository> Create(NewRepository newRepository)
+        public Task<Repository> Create(NewRepository newRepository, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
 
-            return Create(ApiUrls.Repositories(), null, newRepository);
+            return Create(ApiUrls.Repositories(), null, newRepository, cancellationToken);
         }
 
         /// <summary>
@@ -76,14 +77,14 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/> instance for the created repository</returns>
         [ManualRoute("POST", "/orgs/{org}/repos")]
-        public Task<Repository> Create(string organizationLogin, NewRepository newRepository)
+        public Task<Repository> Create(string organizationLogin, NewRepository newRepository, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(organizationLogin, nameof(organizationLogin));
             Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository);
+            return Create(ApiUrls.OrganizationRepositories(organizationLogin), organizationLogin, newRepository, cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace Octokit
         /// <param name="newRepository"></param>
         /// <returns></returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/generate")]
-        public Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository)
+        public Task<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(templateOwner, nameof(templateOwner));
             Ensure.ArgumentNotNull(templateRepo, nameof(templateRepo));
@@ -102,14 +103,14 @@ namespace Octokit
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return ApiConnection.Post<Repository>(ApiUrls.Repositories(templateOwner, templateRepo), newRepository);
+            return ApiConnection.Post<Repository>(ApiUrls.Repositories(templateOwner, templateRepo), newRepository, cancellationToken);
         }
 
-        async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository)
+        async Task<Repository> Create(Uri url, string organizationLogin, NewRepository newRepository, CancellationToken cancellationToken = default)
         {
             try
             {
-                return await ApiConnection.Post<Repository>(url, newRepository).ConfigureAwait(false);
+                return await ApiConnection.Post<Repository>(url, newRepository, cancellationToken).ConfigureAwait(false);
             }
             catch (ApiValidationException e)
             {
@@ -154,12 +155,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/{owner}/{repo}")]
-        public Task Delete(string owner, string name)
+        public Task Delete(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.Repository(owner, name));
+            return ApiConnection.Delete(ApiUrls.Repository(owner, name), cancellationToken);
         }
 
         /// <summary>
@@ -170,11 +171,12 @@ namespace Octokit
         /// Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repositories/{id}")]
-        public Task Delete(long repositoryId)
+        public Task Delete(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.Repository(repositoryId));
+            return ApiConnection.Delete(ApiUrls.Repository(repositoryId), cancellationToken);
         }
 
         /// <summary>
@@ -188,13 +190,13 @@ namespace Octokit
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
         [ManualRoute("POST", "/repos/{owner}/{repo}/transfer")]
-        public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
+        public Task<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(owner, name), repositoryTransfer);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(owner, name), repositoryTransfer, cancellationToken);
         }
 
         /// <summary>
@@ -207,11 +209,11 @@ namespace Octokit
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
         [ManualRoute("POST", "/repositories/{id}/transfer")]
-        public Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
+        public Task<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(repositoryId), repositoryTransfer);
+            return ApiConnection.Post<Repository>(ApiUrls.RepositoryTransfer(repositoryId), repositoryTransfer, cancellationToken);
         }
 
         /// <summary>
@@ -224,14 +226,14 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/vulnerability-alerts")]
-        public async Task<bool> AreVulnerabilityAlertsEnabled(string owner, string name)
+        public async Task<bool> AreVulnerabilityAlertsEnabled(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.RepositoryVulnerabilityAlerts(owner, name), null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.RepositoryVulnerabilityAlerts(owner, name), null, null, cancellationToken).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)
@@ -248,13 +250,13 @@ namespace Octokit
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         [ManualRoute("PATCH", "/repos/{owner}/{repo}")]
-        public Task<Repository> Edit(string owner, string name, RepositoryUpdate update)
+        public Task<Repository> Edit(string owner, string name, RepositoryUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update);
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(owner, name), update, cancellationToken);
         }
 
         /// <summary>
@@ -264,11 +266,11 @@ namespace Octokit
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
         [ManualRoute("PATCH", "/repositories/{id}")]
-        public Task<Repository> Edit(long repositoryId, RepositoryUpdate update)
+        public Task<Repository> Edit(long repositoryId, RepositoryUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update);
+            return ApiConnection.Patch<Repository>(ApiUrls.Repository(repositoryId), update, cancellationToken);
         }
 
         /// <summary>
@@ -282,12 +284,12 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}")]
-        public Task<Repository> Get(string owner, string name)
+        public Task<Repository> Get(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null);
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(owner, name), null, cancellationToken);
         }
 
         /// <summary>
@@ -297,12 +299,13 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#get">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="Repository"/></returns>
         [ManualRoute("GET", "/repositories/{id}")]
-        public Task<Repository> Get(long repositoryId)
+        public Task<Repository> Get(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId));
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, cancellationToken);
         }
 
         /// <summary>
@@ -316,9 +319,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/repositories")]
-        public Task<IReadOnlyList<Repository>> GetAllPublic()
+        public Task<IReadOnlyList<Repository>> GetAllPublic(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories());
+            return ApiConnection.GetAll<Repository>(ApiUrls.AllPublicRepositories(), cancellationToken);
         }
 
         /// <summary>
@@ -329,17 +332,18 @@ namespace Octokit
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <param name="request">Search parameters of the last repository seen</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/repositories")]
-        public Task<IReadOnlyList<Repository>> GetAllPublic(PublicRepositoryRequest request)
+        public Task<IReadOnlyList<Repository>> GetAllPublic(PublicRepositoryRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return ApiConnection.GetAll<Repository>(url);
+            return ApiConnection.GetAll<Repository>(url, cancellationToken);
         }
 
         /// <summary>
@@ -353,9 +357,9 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/user/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent()
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -369,11 +373,11 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/user/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -388,11 +392,11 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/user/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request)
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -408,12 +412,12 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/user/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAllForCurrent(RepositoryRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -427,11 +431,11 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/user/{username}/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForUser(string login)
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return GetAllForUser(login, ApiOptions.None);
+            return GetAllForUser(login, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -445,12 +449,12 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/user/{username}/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForUser(string login, ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAllForUser(string login, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.Repositories(login), options, cancellationToken);
         }
 
         /// <summary>
@@ -463,11 +467,11 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/orgs/{org}/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization)
+        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return GetAllForOrg(organization, ApiOptions.None);
+            return GetAllForOrg(organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -481,12 +485,12 @@ namespace Octokit
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="IReadOnlyList{Repository}"/> of <see cref="Repository"/>.</returns>
         [ManualRoute("GET", "/orgs/{org}/repos")]
-        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options)
+        public Task<IReadOnlyList<Repository>> GetAllForOrg(string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, options);
+            return ApiConnection.GetAll<Repository>(ApiUrls.OrganizationRepositories(organization), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -636,12 +640,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllContributors(owner, name, false);
+            return GetAllContributors(owner, name, false, cancellationToken);
         }
 
         /// <summary>
@@ -651,11 +655,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-contributors">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllContributors(repositoryId, false);
+            return GetAllContributors(repositoryId, false, cancellationToken);
         }
 
         /// <summary>
@@ -667,15 +672,16 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllContributors(owner, name, false, options);
+            return GetAllContributors(owner, name, false, options, cancellationToken);
         }
 
         /// <summary>
@@ -686,13 +692,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllContributors(repositoryId, false, options);
+            return GetAllContributors(repositoryId, false, options, cancellationToken);
         }
 
         /// <summary>
@@ -704,14 +711,15 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None);
+            return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -722,11 +730,12 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, CancellationToken cancellationToken = default)
         {
-            return GetAllContributors(repositoryId, includeAnonymous, ApiOptions.None);
+            return GetAllContributors(repositoryId, includeAnonymous, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -739,9 +748,10 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -751,7 +761,7 @@ namespace Octokit
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(owner, name), parameters, options);
+            return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(owner, name), parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -763,9 +773,10 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All contributors of the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/contributors")]
-        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options)
+        public Task<IReadOnlyList<RepositoryContributor>> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -773,7 +784,7 @@ namespace Octokit
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(repositoryId), parameters, options);
+            return ApiConnection.GetAll<RepositoryContributor>(ApiUrls.RepositoryContributors(repositoryId), parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -786,11 +797,11 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/topics")]
-        public async Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
+        public async Task<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
-            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null).ConfigureAwait(false);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, cancellationToken).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -802,12 +813,13 @@ namespace Octokit
         /// See the <a href="https://docs.github.com/rest/reference/repos#get-all-repository-topics">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repositories/{id}/topics")]
 
-        public Task<RepositoryTopics> GetAllTopics(long repositoryId)
+        public Task<RepositoryTopics> GetAllTopics(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllTopics(repositoryId, ApiOptions.None);
+            return GetAllTopics(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -819,16 +831,17 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
-        public async Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options)
+        public async Task<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null).ConfigureAwait(false);
+            var data = await ApiConnection.Get<RepositoryTopics>(endpoint, null, cancellationToken).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -841,12 +854,13 @@ namespace Octokit
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics associated with the repository.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/topics")]
 
-        public Task<RepositoryTopics> GetAllTopics(string owner, string name)
+        public Task<RepositoryTopics> GetAllTopics(string owner, string name, CancellationToken cancellationToken = default)
         {
-            return GetAllTopics(owner, name, ApiOptions.None);
+            return GetAllTopics(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -862,14 +876,14 @@ namespace Octokit
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
         [ManualRoute("PUT", "/repos/{owner}/{repo}/topics")]
-        public async Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
+        public async Task<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(owner, name);
-            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, cancellationToken).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -884,14 +898,15 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All topics now associated with the repository.</returns>
         [ManualRoute("PUT", "/repositories/{id}/topics")]
-        public async Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
+        public async Task<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(topics, nameof(topics));
 
             var endpoint = ApiUrls.RepositoryTopics(repositoryId);
-            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics).ConfigureAwait(false);
+            var data = await ApiConnection.Put<RepositoryTopics>(endpoint, topics, cancellationToken).ConfigureAwait(false);
 
             return data ?? new RepositoryTopics();
         }
@@ -906,13 +921,13 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/languages")]
-        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name)
+        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryLanguages(owner, name);
-            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint).ConfigureAwait(false);
+            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint, null, cancellationToken).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
                 (data ?? new Dictionary<string, long>())
@@ -926,12 +941,13 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-languages">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
         [ManualRoute("GET", "/repositories/{id}/languages")]
-        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(long repositoryId)
+        public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(long repositoryId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.RepositoryLanguages(repositoryId);
-            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint).ConfigureAwait(false);
+            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint, null, cancellationToken).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
                 (data ?? new Dictionary<string, long>())
@@ -948,12 +964,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/teams")]
-        public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name)
+        public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllTeams(owner, name, ApiOptions.None);
+            return GetAllTeams(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -963,11 +979,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-teams">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         [ManualRoute("GET", "/repositories/{id}/teams")]
-        public Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId)
+        public Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllTeams(repositoryId, ApiOptions.None);
+            return GetAllTeams(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -979,15 +996,16 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/teams")]
-        public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<Team>> GetAllTeams(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), options);
+            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -998,13 +1016,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
         [ManualRoute("GET", "/repositories/{id}/teams")]
-        public Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<Team>> GetAllTeams(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(repositoryId), options);
+            return ApiConnection.GetAll<Team>(ApiUrls.RepositoryTeams(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -1017,12 +1036,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>All of the repositories tags.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/tags")]
-        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name)
+        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllTags(owner, name, ApiOptions.None);
+            return GetAllTags(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -1032,11 +1051,12 @@ namespace Octokit
         /// See the <a href="http://developer.github.com/v3/repos/#list-tags">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All of the repositories tags.</returns>
         [ManualRoute("GET", "/repositories/{id}/tags")]
-        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId)
+        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllTags(repositoryId, ApiOptions.None);
+            return GetAllTags(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -1048,15 +1068,16 @@ namespace Octokit
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All of the repositories tags.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/tags")]
-        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options)
+        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(owner, name), options);
+            return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -1067,13 +1088,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>All of the repositories tags.</returns>
         [ManualRoute("GET", "/repositories/{id}/tags")]
-        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<RepositoryTag>> GetAllTags(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(repositoryId), options);
+            return ApiConnection.GetAll<RepositoryTag>(ApiUrls.RepositoryTags(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -1086,12 +1108,12 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/license")]
-        public Task<RepositoryContentLicense> GetLicenseContents(string owner, string name)
+        public Task<RepositoryContentLicense> GetLicenseContents(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name));
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name), null, cancellationToken);
         }
 
         /// <summary>
@@ -1101,11 +1123,12 @@ namespace Octokit
         /// See the <a href="https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license">API documentation</a> for more details
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
         [ManualRoute("GET", "/repositories/{id}/license")]
-        public Task<RepositoryContentLicense> GetLicenseContents(long repositoryId)
+        public Task<RepositoryContentLicense> GetLicenseContents(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId));
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId), null, cancellationToken);
         }
 
         /// <summary>
@@ -1115,23 +1138,24 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <returns>Returns the list of errors in the codeowners files</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/codeowners/errors")]
-        public Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name)
+        public Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(owner, name));
+            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(owner, name), null, cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of errors in the codeowners file
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         /// <returns>Returns the list of errors in the codeowners files</returns>
         [ManualRoute("GET", "/repositories/{id}/codeowners/errors")]
-        public Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId)
+        public Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(repositoryId));
+            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(repositoryId), null, cancellationToken);
         }
 
         /// <summary>

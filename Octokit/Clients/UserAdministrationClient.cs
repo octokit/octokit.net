@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -31,13 +32,13 @@ namespace Octokit
         /// <param name="newUser">The <see cref="NewUser"/> object describing the user to create</param>
         /// <returns>The created <see cref="User"/> object</returns>
         [ManualRoute("POST", "/admin/users")]
-        public Task<User> Create(NewUser newUser)
+        public Task<User> Create(NewUser newUser, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newUser, nameof(newUser));
 
             var endpoint = ApiUrls.UserAdministration();
 
-            return ApiConnection.Post<User>(endpoint, newUser);
+            return ApiConnection.Post<User>(endpoint, newUser, cancellationToken);
         }
 
         /// <summary>
@@ -52,14 +53,14 @@ namespace Octokit
         /// <param name="userRename">The <see cref="UserRename"/> request, specifying the new login</param>
         /// <returns>A <see cref="UserRenameResponse"/> object indicating the queued task message and Url to the user</returns>
         [ManualRoute("POST", "/admin/users/{username}")]
-        public Task<UserRenameResponse> Rename(string login, UserRename userRename)
+        public Task<UserRenameResponse> Rename(string login, UserRename userRename, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(userRename, nameof(userRename));
 
             var endpoint = ApiUrls.UserAdministration(login);
 
-            return ApiConnection.Patch<UserRenameResponse>(endpoint, userRename);
+            return ApiConnection.Patch<UserRenameResponse>(endpoint, userRename, cancellationToken);
         }
 
         /// <summary>
@@ -73,14 +74,14 @@ namespace Octokit
         /// <param name="newImpersonationToken">The <see cref="NewImpersonationToken"/> request specifying the required scopes</param>
         /// <returns>An <see cref="Authorization"/> object containing the impersonation token</returns>
         [ManualRoute("POST", "/admin/users/{username}/authorizations")]
-        public Task<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken)
+        public Task<Authorization> CreateImpersonationToken(string login, NewImpersonationToken newImpersonationToken, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(newImpersonationToken, nameof(newImpersonationToken));
 
             var endpoint = ApiUrls.UserAdministrationAuthorization(login);
 
-            return ApiConnection.Post<Authorization>(endpoint, newImpersonationToken);
+            return ApiConnection.Post<Authorization>(endpoint, newImpersonationToken, cancellationToken);
         }
 
         /// <summary>
@@ -93,13 +94,13 @@ namespace Octokit
         /// <param name="login">The user to remove impersonation token from</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/admin/users/{username}/authorizations")]
-        public async Task DeleteImpersonationToken(string login)
+        public async Task DeleteImpersonationToken(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
             var endpoint = ApiUrls.UserAdministrationAuthorization(login);
 
-            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
+            var response = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
@@ -116,11 +117,11 @@ namespace Octokit
         /// <param name="login">The user to promote to administrator.</param>
         /// <returns></returns>
         [ManualRoute("PUT", "/users/{username}/site_admin")]
-        public Task Promote(string login)
+        public Task Promote(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSiteAdmin(login);
-            return ApiConnection.Put(endpoint);
+            return ApiConnection.Put(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -133,11 +134,11 @@ namespace Octokit
         /// <param name="login">The user to demote from administrator.</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/users/{username}/site_admin")]
-        public Task Demote(string login)
+        public Task Demote(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSiteAdmin(login);
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -150,11 +151,11 @@ namespace Octokit
         /// <param name="login">The user to suspend.</param>
         /// <returns></returns>
         [ManualRoute("PUT", "/users/{username}/suspended")]
-        public Task Suspend(string login)
+        public Task Suspend(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSuspension(login);
-            return ApiConnection.Put(endpoint);
+            return ApiConnection.Put(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -167,11 +168,11 @@ namespace Octokit
         /// <param name="login">The user to unsuspend.</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/users/{username}/suspended")]
-        public Task Unsuspend(string login)
+        public Task Unsuspend(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministrationSuspension(login);
-            return ApiConnection.Delete(endpoint);
+            return ApiConnection.Delete(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -183,10 +184,10 @@ namespace Octokit
         /// </remarks>
         /// <returns></returns>
         [ManualRoute("PUT", "/admin/keys")]
-        public Task<IReadOnlyList<PublicKey>> ListAllPublicKeys()
+        public Task<IReadOnlyList<PublicKey>> ListAllPublicKeys(CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.UserAdministrationPublicKeys();
-            return ApiConnection.GetAll<PublicKey>(endpoint);
+            return ApiConnection.GetAll<PublicKey>(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -199,12 +200,12 @@ namespace Octokit
         /// <param name="login">The user to delete</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/admin/users/{username}")]
-        public async Task Delete(string login)
+        public async Task Delete(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             var endpoint = ApiUrls.UserAdministration(login);
 
-            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
+            var response = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);
@@ -221,12 +222,12 @@ namespace Octokit
         /// <param name="keyId">The key to delete</param>
         /// <returns></returns>
         [ManualRoute("DELETE", "/admin/keys/{key_id}")]
-        public async Task DeletePublicKey(int keyId)
+        public async Task DeletePublicKey(int keyId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(keyId, nameof(keyId));
             var endpoint = ApiUrls.UserAdministrationPublicKeys(keyId);
 
-            var response = await Connection.Delete(endpoint).ConfigureAwait(false);
+            var response = await Connection.Delete(endpoint, cancellationToken).ConfigureAwait(false);
             if (response != HttpStatusCode.NoContent)
             {
                 throw new ApiException("Invalid Status Code returned. Expected a 204", response);

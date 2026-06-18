@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -32,14 +33,14 @@ namespace Octokit.Reactive
         /// <param name="base">The base revision</param>
         /// <param name="head">The head revision</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<DependencyDiff> GetAll(string owner, string name, string @base, string head)
+        public IObservable<DependencyDiff> GetAll(string owner, string name, string @base, string head, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return _client.GetAll(owner, name, @base, head).ToObservable().SelectMany(x => x);
+            return _client.GetAll(owner, name, @base, head, cancellationToken).ToObservable().SelectMany(x => x);
         }
 
         /// <summary>
@@ -52,12 +53,12 @@ namespace Octokit.Reactive
         /// <param name="base">The base revision</param>
         /// <param name="head">The head revision</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<DependencyDiff> GetAll(long repositoryId, string @base, string head)
+        public IObservable<DependencyDiff> GetAll(long repositoryId, string @base, string head, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return _client.GetAll(repositoryId, @base, head).ToObservable().SelectMany(x => x);
+            return _client.GetAll(repositoryId, @base, head, cancellationToken).ToObservable().SelectMany(x => x);
         }
     }
 }

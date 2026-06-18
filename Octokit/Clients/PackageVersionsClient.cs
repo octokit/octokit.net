@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -22,7 +23,7 @@ namespace Octokit
         /// <param name="state">Optional: Return packages with a state. Defaults to Active</param>
         /// <param name="options">Optional: Paging options</param>
         [ManualRoute("GET", "/orgs/{org}/packages/{package_type}/{package_name}/versions")]
-        public Task<IReadOnlyList<PackageVersion>> GetAllForOrg(string org, PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null)
+        public Task<IReadOnlyList<PackageVersion>> GetAllForOrg(string org, PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
@@ -31,7 +32,7 @@ namespace Octokit
             var route = ApiUrls.PackageVersionsOrg(org, packageType, packageName);
             var parameters = ParameterBuilder.AddParameter("state", state);
 
-            return ApiConnection.GetAll<PackageVersion>(route, parameters, options);
+            return ApiConnection.GetAll<PackageVersion>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("GET", "/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}")]
-        public Task<PackageVersion> GetForOrg(string org, PackageType packageType, string packageName, int packageVersionId)
+        public Task<PackageVersion> GetForOrg(string org, PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -54,7 +55,7 @@ namespace Octokit
 
             var route = ApiUrls.PackageVersionOrg(org, packageType, packageName, packageVersionId);
 
-            return ApiConnection.Get<PackageVersion>(route);
+            return ApiConnection.Get<PackageVersion>(route, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("DELETE", "/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}")]
-        public Task DeleteForOrg(string org, PackageType packageType, string packageName, int packageVersionId)
+        public Task DeleteForOrg(string org, PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -76,7 +77,7 @@ namespace Octokit
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
             var route = ApiUrls.PackageVersionOrg(org, packageType, packageName, packageVersionId);
-            return ApiConnection.Delete(route);
+            return ApiConnection.Delete(route, cancellationToken);
         }
 
         /// <summary>
@@ -90,15 +91,15 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("POST", "/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore")]
-        public Task RestoreForOrg(string org, PackageType packageType, string packageName, int packageVersionId)
+        public Task RestoreForOrg(string org, PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
             var route = ApiUrls.PackageVersionRestoreOrg(org, packageType, packageName, packageVersionId);
-            
-            return ApiConnection.Post(route);
+
+            return ApiConnection.Post(route, cancellationToken);
         }
         #endregion
 
@@ -114,7 +115,7 @@ namespace Octokit
         /// <param name="state">Optional: Return packages with a state. Defaults to Active</param>
         /// <param name="options">Optional: Paging options</param>
         [ManualRoute("GET", "/user/packages/{package_type}/{package_name}/versions")]
-        public Task<IReadOnlyList<PackageVersion>> GetAllForActiveUser(PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null)
+        public Task<IReadOnlyList<PackageVersion>> GetAllForActiveUser(PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.ApiOptionsNotNull(ref options);
@@ -122,7 +123,7 @@ namespace Octokit
             var route = ApiUrls.PackageVersionsActiveUser(packageType, packageName);
             var parameters = ParameterBuilder.AddParameter("state", state);
 
-            return ApiConnection.GetAll<PackageVersion>(route, parameters, options);
+            return ApiConnection.GetAll<PackageVersion>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -135,15 +136,15 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("GET", "/user/packages/{package_type}/{package_name}/versions/{package_version_id}")]
-        public Task<PackageVersion> GetForActiveUser(PackageType packageType, string packageName, int packageVersionId)
+        public Task<PackageVersion> GetForActiveUser(PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
-            var route = ApiUrls.PackageVersionActiveUser( packageType, packageName, packageVersionId);
+            var route = ApiUrls.PackageVersionActiveUser(packageType, packageName, packageVersionId);
 
-            return ApiConnection.Get<PackageVersion>(route);
+            return ApiConnection.Get<PackageVersion>(route, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -156,14 +157,14 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("DELETE", "/user/packages/{package_type}/{package_name}/versions/{package_version_id}")]
-        public Task DeleteForActiveUser(PackageType packageType, string packageName, int packageVersionId)
+        public Task DeleteForActiveUser(PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
             var route = ApiUrls.PackageVersionActiveUser(packageType, packageName, packageVersionId);
-            return ApiConnection.Delete(route);
+            return ApiConnection.Delete(route, cancellationToken);
         }
 
         /// <summary>
@@ -176,14 +177,14 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("POST", "/user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore")]
-        public Task RestoreForActiveUser(PackageType packageType, string packageName, int packageVersionId)
+        public Task RestoreForActiveUser(PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
             var route = ApiUrls.PackageVersionRestoreActiveUser(packageType, packageName, packageVersionId);
 
-            return ApiConnection.Post(route);
+            return ApiConnection.Post(route, cancellationToken);
         }
         #endregion
 
@@ -200,7 +201,7 @@ namespace Octokit
         /// <param name="state">Optional: Return packages with a state. Defaults to Active</param>
         /// <param name="options">Optional: Paging options</param>
         [ManualRoute("GET", "/users/{username}/packages/{package_type}/{package_name}/versions")]
-        public Task<IReadOnlyList<PackageVersion>> GetAllForUser(string username, PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null)
+        public Task<IReadOnlyList<PackageVersion>> GetAllForUser(string username, PackageType packageType, string packageName, PackageVersionState state = PackageVersionState.Active, ApiOptions options = null, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
@@ -209,7 +210,7 @@ namespace Octokit
             var route = ApiUrls.PackageVersionsUser(username, packageType, packageName);
             var parameters = ParameterBuilder.AddParameter("state", state);
 
-            return ApiConnection.GetAll<PackageVersion>(route, parameters, options);
+            return ApiConnection.GetAll<PackageVersion>(route, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +224,7 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("GET", "/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}")]
-        public Task<PackageVersion> GetForUser(string username, PackageType packageType, string packageName, int packageVersionId)
+        public Task<PackageVersion> GetForUser(string username, PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -232,7 +233,7 @@ namespace Octokit
 
             var route = ApiUrls.PackageVersionUser(username, packageType, packageName, packageVersionId);
 
-            return ApiConnection.Get<PackageVersion>(route);
+            return ApiConnection.Get<PackageVersion>(route, null, null, cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +247,7 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("DELETE", "/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}")]
-        public Task DeleteForUser(string username, PackageType packageType, string packageName, int packageVersionId)
+        public Task DeleteForUser(string username, PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
@@ -254,7 +255,7 @@ namespace Octokit
             Ensure.GreaterThanZero(packageVersionId, nameof(packageVersionId));
 
             var route = ApiUrls.PackageVersionUser(username, packageType, packageName, packageVersionId);
-            return ApiConnection.Delete(route);
+            return ApiConnection.Delete(route, cancellationToken);
         }
 
         /// <summary>
@@ -268,7 +269,7 @@ namespace Octokit
         /// <param name="packageName">Required: The name of the package</param>
         /// <param name="packageVersionId">Required: The id of the package version</param>
         [ManualRoute("POST", "/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore")]
-        public Task RestoreForUser(string username, PackageType packageType, string packageName, int packageVersionId)
+        public Task RestoreForUser(string username, PackageType packageType, string packageName, int packageVersionId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(username, nameof(username));
             Ensure.ArgumentNotNullOrEmptyString(packageName, nameof(packageName));
@@ -276,7 +277,7 @@ namespace Octokit
 
             var route = ApiUrls.PackageVersionRestoreUser(username, packageType, packageName, packageVersionId);
 
-            return ApiConnection.Post(route);
+            return ApiConnection.Post(route, cancellationToken);
         }
         #endregion
     }

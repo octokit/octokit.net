@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -29,7 +30,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
         [ManualRoute("GET", "/repos/{owner}/{repo}/git/commits/{commit_sha}")]
-        public Task<Commit> Get(string owner, string name, string reference)
+        public Task<Commit> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -47,7 +48,7 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">Tha sha reference of the commit</param>
         [ManualRoute("GET", "/repositories/{id}/git/commits/{commit_sha}")]
-        public Task<Commit> Get(long repositoryId, string reference)
+        public Task<Commit> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -64,7 +65,7 @@ namespace Octokit
         /// <param name="name">The name of the repository</param>
         /// <param name="commit">The commit to create</param>
         [ManualRoute("POST", "/repos/{owner}/{repo}/git/commits")]
-        public Task<Commit> Create(string owner, string name, NewCommit commit)
+        public Task<Commit> Create(string owner, string name, NewCommit commit, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -82,11 +83,11 @@ namespace Octokit
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="commit">The commit to create</param>
         [ManualRoute("POST", "/repositories/{id}/git/commits")]
-        public Task<Commit> Create(long repositoryId, NewCommit commit)
+        public Task<Commit> Create(long repositoryId, NewCommit commit, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(commit, nameof(commit));
 
-            return ApiConnection.Post<Commit>(ApiUrls.CreateCommit(repositoryId), commit);
+            return ApiConnection.Post<Commit>(ApiUrls.CreateCommit(repositoryId), commit, cancellationToken);
         }
     }
 }

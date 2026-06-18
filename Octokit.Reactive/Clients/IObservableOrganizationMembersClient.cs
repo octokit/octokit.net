@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reactive;
 
+using System.Threading;
+
 namespace Octokit.Reactive
 {
     public interface IObservableOrganizationMembersClient
@@ -25,7 +27,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -48,7 +51,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -71,7 +75,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org, OrganizationMembersFilter filter);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -95,7 +100,8 @@ namespace Octokit.Reactive
         /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -118,7 +124,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org, OrganizationMembersRole role);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, OrganizationMembersRole role, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -142,7 +149,8 @@ namespace Octokit.Reactive
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org, OrganizationMembersRole role, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, OrganizationMembersRole role, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -166,7 +174,8 @@ namespace Octokit.Reactive
         /// <param name="filter">The members filter, <see cref="OrganizationMembersFilter"/> </param>
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// <para>
@@ -191,7 +200,8 @@ namespace Octokit.Reactive
         /// <param name="role">The role filter to use when getting the users, <see cref="OrganizationMembersRole"/></param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAll(string org, OrganizationMembersFilter filter, OrganizationMembersRole role, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.
@@ -199,7 +209,8 @@ namespace Octokit.Reactive
         /// <remarks>http://developer.github.com/v3/orgs/members/#public-members-list</remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        IObservable<User> GetAllPublic(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAllPublic(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all users who have publicized their membership of the organization.
@@ -208,7 +219,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        IObservable<User> GetAllPublic(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<User> GetAllPublic(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check if a user is, publicly or privately, a member of the organization.
@@ -220,7 +232,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<bool> CheckMember(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> CheckMember(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check is a user is publicly a member of the organization.
@@ -232,7 +245,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<bool> CheckMemberPublic(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> CheckMemberPublic(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a user from the organization, this will also remove them from all teams
@@ -246,7 +260,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<Unit> Delete(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Make the authenticated user's organization membership public.
@@ -259,7 +274,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<bool> Publicize(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> Publicize(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Make the authenticated user's organization membership private.
@@ -272,7 +288,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<Unit> Conceal(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Conceal(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a user's membership with an organization.
@@ -286,7 +303,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<OrganizationMembership> GetOrganizationMembership(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembership> GetOrganizationMembership(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add a user to the organization or update the user's role withing the organization.
@@ -302,7 +320,8 @@ namespace Octokit.Reactive
         /// <param name="addOrUpdateRequest">An <see cref="OrganizationMembershipUpdate"/> instance describing the
         /// changes to make to the user's organization membership</param>
         /// <returns></returns>
-        IObservable<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembership> AddOrUpdateOrganizationMembership(string org, string user, OrganizationMembershipUpdate addOrUpdateRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create an organization invitation for a user
@@ -317,7 +336,8 @@ namespace Octokit.Reactive
         /// <param name="invitationRequest">An <see cref="OrganizationInvitationRequest"/> instance containing the
         /// details of the organization invitation</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembershipInvitation> CreateOrganizationInvitation(string org, OrganizationInvitationRequest invitationRequest, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove a user's membership with an organization.
@@ -331,7 +351,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="user">The login for the user</param>
         /// <returns></returns>
-        IObservable<Unit> RemoveOrganizationMembership(string org, string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> RemoveOrganizationMembership(string org, string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all pending invitations for the organization.
@@ -342,7 +363,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all pending invitations for the organization.
@@ -354,7 +376,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembershipInvitation> GetAllPendingInvitations(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List failed organization invitations.
@@ -365,7 +388,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="org">The login for the organization</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List failed organization invitations.
@@ -377,7 +401,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
-        IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembershipInvitation> GetAllFailedInvitations(string org, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Cancel an organization invitation. In order to cancel an organization invitation, the authenticated user must be an organization owner.
@@ -389,7 +414,8 @@ namespace Octokit.Reactive
         /// <param name="org">The login for the organization</param>
         /// <param name="invitationId">The unique identifier of the invitation</param>
         /// <returns></returns>
-        IObservable<Unit> CancelOrganizationInvitation(string org, long invitationId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> CancelOrganizationInvitation(string org, long invitationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationMembership" />s for the current user.
@@ -400,7 +426,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns></returns>
-        IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Returns all <see cref="OrganizationMembership" />s for the current user.
@@ -412,6 +439,7 @@ namespace Octokit.Reactive
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <param name="options">Options to change API behaviour</param>
         /// <returns></returns>
-        IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<OrganizationMembership> GetAllOrganizationMembershipsForCurrent(ApiOptions options, CancellationToken cancellationToken = default);
     }
 }

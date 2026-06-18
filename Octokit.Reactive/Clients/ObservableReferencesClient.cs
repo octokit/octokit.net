@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Internal;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -34,7 +35,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
-        public IObservable<Reference> Get(string owner, string name, string reference)
+        public IObservable<Reference> Get(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -52,7 +53,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
-        public IObservable<Reference> Get(long repositoryId, string reference)
+        public IObservable<Reference> Get(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
@@ -68,9 +69,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns></returns>
-        public IObservable<Reference> GetAll(string owner, string name)
+        public IObservable<Reference> GetAll(string owner, string name, CancellationToken cancellationToken = default)
         {
-            return GetAll(owner, name, ApiOptions.None);
+            return GetAll(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -83,13 +84,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        public IObservable<Reference> GetAll(string owner, string name, ApiOptions options)
+        public IObservable<Reference> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(owner, name), options);
+            return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -100,9 +101,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns></returns>
-        public IObservable<Reference> GetAll(long repositoryId)
+        public IObservable<Reference> GetAll(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAll(repositoryId, ApiOptions.None);
+            return GetAll(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns></returns>
-        public IObservable<Reference> GetAll(long repositoryId, ApiOptions options)
+        public IObservable<Reference> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -131,9 +132,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        public IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace)
+        public IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, CancellationToken cancellationToken = default)
         {
-            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None);
+            return GetAllForSubNamespace(owner, name, subNamespace, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace Octokit.Reactive
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        public IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options)
+        public IObservable<Reference> GetAllForSubNamespace(string owner, string name, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -176,9 +177,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="subNamespace">The sub-namespace to get references for</param>
         /// <returns></returns>
-        public IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace)
+        public IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, CancellationToken cancellationToken = default)
         {
-            return GetAllForSubNamespace(repositoryId, subNamespace, ApiOptions.None);
+            return GetAllForSubNamespace(repositoryId, subNamespace, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace Octokit.Reactive
         /// "refs/tags/release-1") or the shortened form (omitting "refs/", e.g.
         /// "heads/main" or "tags/release-1")
         /// </remarks>
-        public IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options)
+        public IObservable<Reference> GetAllForSubNamespace(long repositoryId, string subNamespace, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(subNamespace, nameof(subNamespace));
             Ensure.ArgumentNotNull(options, nameof(options));
@@ -206,7 +207,7 @@ namespace Octokit.Reactive
                 subNamespace = subNamespace.Replace("refs/", string.Empty);
             }
 
-            return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(repositoryId, subNamespace), options);
+            return _connection.GetAndFlattenAllPages<Reference>(ApiUrls.Reference(repositoryId, subNamespace), options, cancellationToken);
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        public IObservable<Reference> Create(string owner, string name, NewReference reference)
+        public IObservable<Reference> Create(string owner, string name, NewReference reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -237,7 +238,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The reference to create</param>
         /// <returns></returns>
-        public IObservable<Reference> Create(long repositoryId, NewReference reference)
+        public IObservable<Reference> Create(long repositoryId, NewReference reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(reference, nameof(reference));
 
@@ -255,7 +256,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
-        public IObservable<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate)
+        public IObservable<Reference> Update(string owner, string name, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -275,7 +276,7 @@ namespace Octokit.Reactive
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <param name="referenceUpdate">The updated reference data</param>
         /// <returns></returns>
-        public IObservable<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate)
+        public IObservable<Reference> Update(long repositoryId, string reference, ReferenceUpdate referenceUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
             Ensure.ArgumentNotNull(referenceUpdate, nameof(referenceUpdate));
@@ -293,7 +294,7 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(string owner, string name, string reference)
+        public IObservable<Unit> Delete(string owner, string name, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -311,7 +312,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="reference">The canonical name of the reference without the 'refs/' prefix. e.g. "heads/main" or "tags/release-1"</param>
         /// <returns></returns>
-        public IObservable<Unit> Delete(long repositoryId, string reference)
+        public IObservable<Unit> Delete(long repositoryId, string reference, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 

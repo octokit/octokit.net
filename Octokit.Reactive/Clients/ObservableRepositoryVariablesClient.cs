@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
 using System.Text;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -36,12 +37,12 @@ namespace Octokit.Reactive
         /// <param name="repoName">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariablesCollection"/> instance for the list of repository variables.</returns>
-        public IObservable<RepositoryVariablesCollection> GetAllOrganization(string owner, string repoName)
+        public IObservable<RepositoryVariablesCollection> GetAllOrganization(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return _client.GetAll(owner, repoName).ToObservable();
+            return _client.GetAll(owner, repoName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -54,12 +55,12 @@ namespace Octokit.Reactive
         /// <param name="repoName">The name of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariablesCollection"/> instance for the list of repository variables.</returns>
-        public IObservable<RepositoryVariablesCollection> GetAll(string owner, string repoName)
+        public IObservable<RepositoryVariablesCollection> GetAll(string owner, string repoName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return _client.GetAll(owner, repoName).ToObservable();
+            return _client.GetAll(owner, repoName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -73,13 +74,13 @@ namespace Octokit.Reactive
         /// <param name="variableName">The name of the variable</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository secret.</returns>
-        public IObservable<RepositoryVariable> Get(string owner, string repoName, string variableName)
+        public IObservable<RepositoryVariable> Get(string owner, string repoName, string variableName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(variableName, nameof(variableName));
 
-            return _client.Get(owner, repoName, variableName).ToObservable();
+            return _client.Get(owner, repoName, variableName, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace Octokit.Reactive
         /// <param name="newVariable">The variable to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was created.</returns>
-        public IObservable<RepositoryVariable> Create(string owner, string repoName, Variable newVariable)
+        public IObservable<RepositoryVariable> Create(string owner, string repoName, Variable newVariable, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -101,7 +102,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(newVariable.Name, nameof(newVariable.Name));
             Ensure.ArgumentNotNullOrEmptyString(newVariable.Value, nameof(newVariable.Value));
 
-            return _client.Create(owner, repoName, newVariable).ToObservable();
+            return _client.Create(owner, repoName, newVariable, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Octokit.Reactive
         /// <param name="variable">The variable to update</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>A <see cref="RepositoryVariable"/> instance for the repository variable that was updated.</returns>
-        public IObservable<RepositoryVariable> Update(string owner, string repoName, Variable variable)
+        public IObservable<RepositoryVariable> Update(string owner, string repoName, Variable variable, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
@@ -123,7 +124,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(variable.Name, nameof(variable.Name));
             Ensure.ArgumentNotNullOrEmptyString(variable.Value, nameof(variable.Value));
 
-            return _client.Update(owner, repoName, variable).ToObservable();
+            return _client.Update(owner, repoName, variable, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -136,13 +137,13 @@ namespace Octokit.Reactive
         /// <param name="repoName">The name of the repository</param>
         /// <param name="variableName">The name of the variable</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        public IObservable<Unit> Delete(string owner, string repoName, string variableName)
+        public IObservable<Unit> Delete(string owner, string repoName, string variableName, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
             Ensure.ArgumentNotNullOrEmptyString(variableName, nameof(variableName));
 
-            return _client.Delete(owner, repoName, variableName).ToObservable();
+            return _client.Delete(owner, repoName, variableName, cancellationToken).ToObservable();
         }
     }
 }

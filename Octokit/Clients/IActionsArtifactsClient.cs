@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -17,7 +18,7 @@ namespace Octokit
         /// <param name="owner"></param>
         /// <param name="repository"></param>
         /// <returns></returns>
-        Task<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null);
+        Task<ListArtifactsResponse> ListArtifacts(string owner, string repository, ListArtifactsRequest listArtifactsRequest = null, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Gets the specified artifact
@@ -26,7 +27,7 @@ namespace Octokit
         /// <param name="repository"></param>
         /// <param name="artifactId"></param>
         /// <returns></returns>
-        Task<Artifact> GetArtifact(string owner, string repository, long artifactId);
+        Task<Artifact> GetArtifact(string owner, string repository, long artifactId, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Deletes the specified artifact
@@ -35,7 +36,7 @@ namespace Octokit
         /// <param name="repository"></param>
         /// <param name="artifactId"></param>
         /// <returns></returns>
-        Task DeleteArtifact(string owner, string repository, long artifactId);
+        Task DeleteArtifact(string owner, string repository, long artifactId, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Downloads the specified artifact's contents
@@ -45,7 +46,7 @@ namespace Octokit
         /// <param name="artifactId"></param>
         /// <param name="archiveFormat"></param>
         /// <returns></returns>
-        Task<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat);
+        Task<Stream> DownloadArtifact(string owner, string repository, long artifactId, string archiveFormat, CancellationToken cancellationToken = default);
         
         /// <summary>
         /// Lists the artifacts for a specific workflow run
@@ -54,6 +55,6 @@ namespace Octokit
         /// <param name="repository"></param>
         /// <param name="runId"></param>
         /// <returns></returns>
-        Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null);
+        Task<ListArtifactsResponse> ListWorkflowArtifacts(string owner, string repository, long runId, ListArtifactsRequest listArtifactsRequest = null, CancellationToken cancellationToken = default);
     }
 }

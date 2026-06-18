@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
+using System.Threading;
+
 namespace Octokit.Reactive
 {
     /// <summary>
@@ -21,7 +23,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -31,7 +34,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -43,7 +47,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForIssue(string owner, string name, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the issue.
@@ -54,7 +59,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForIssue(long repositoryId, long issueNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -64,7 +70,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
-        IObservable<Label> GetAllForRepository(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForRepository(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -73,7 +80,8 @@ namespace Octokit.Reactive
         /// See the <a href="http://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository">API documentation</a> for more information.
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
-        IObservable<Label> GetAllForRepository(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -84,7 +92,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForRepository(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForRepository(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all  labels for the repository.
@@ -94,7 +103,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForRepository(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -105,7 +115,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
-        IObservable<Label> GetAllForMilestone(string owner, string name, int milestoneNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForMilestone(string owner, string name, int milestoneNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -115,7 +126,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
-        IObservable<Label> GetAllForMilestone(long repositoryId, int milestoneNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForMilestone(long repositoryId, int milestoneNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -127,7 +139,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForMilestone(string owner, string name, int milestoneNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForMilestone(string owner, string name, int milestoneNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets labels for every issue in a milestone
@@ -138,7 +151,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="milestoneNumber">The number of the milestone</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Label> GetAllForMilestone(long repositoryId, int milestoneNumber, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> GetAllForMilestone(long repositoryId, int milestoneNumber, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single Label by name.
@@ -151,7 +165,8 @@ namespace Octokit.Reactive
         /// <param name="labelName">The name of the label</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<Label> Get(string owner, string name, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> Get(string owner, string name, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single Label by name.
@@ -163,7 +178,8 @@ namespace Octokit.Reactive
         /// <param name="labelName">The name of the label</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
              Justification = "Method makes a network request")]
-        IObservable<Label> Get(long repositoryId, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> Get(long repositoryId, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a label.
@@ -174,7 +190,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        IObservable<Unit> Delete(string owner, string name, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(string owner, string name, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a label.
@@ -184,7 +201,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
-        IObservable<Unit> Delete(long repositoryId, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(long repositoryId, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a label.
@@ -195,7 +213,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
-        IObservable<Label> Create(string owner, string name, NewLabel newLabel);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> Create(string owner, string name, NewLabel newLabel, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a label.
@@ -205,7 +224,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="newLabel">The data for the label to be created</param>
-        IObservable<Label> Create(long repositoryId, NewLabel newLabel);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> Create(long repositoryId, NewLabel newLabel, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a label.
@@ -217,7 +237,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        IObservable<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> Update(string owner, string name, string labelName, LabelUpdate labelUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates a label.
@@ -228,7 +249,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="labelName">The name of the label</param>
         /// <param name="labelUpdate">The data for the label to be updated</param>
-        IObservable<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> Update(long repositoryId, string labelName, LabelUpdate labelUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a label to an issue
@@ -240,7 +262,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        IObservable<Label> AddToIssue(string owner, string name, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> AddToIssue(string owner, string name, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Adds a label to an issue
@@ -251,7 +274,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to add</param>
-        IObservable<Label> AddToIssue(long repositoryId, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> AddToIssue(long repositoryId, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a label from an issue
@@ -263,7 +287,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        IObservable<Label> RemoveFromIssue(string owner, string name, long issueNumber, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> RemoveFromIssue(string owner, string name, long issueNumber, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes a label from an issue
@@ -274,7 +299,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labelName">The name of the label to remove</param>
-        IObservable<Label> RemoveFromIssue(long repositoryId, long issueNumber, string labelName);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> RemoveFromIssue(long repositoryId, long issueNumber, string labelName, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -286,7 +312,8 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        IObservable<Label> ReplaceAllForIssue(string owner, string name, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> ReplaceAllForIssue(string owner, string name, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replaces all labels on the specified issues with the provided labels
@@ -297,7 +324,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
         /// <param name="labels">The names of the labels to set</param>
-        IObservable<Label> ReplaceAllForIssue(long repositoryId, long issueNumber, string[] labels);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Label> ReplaceAllForIssue(long repositoryId, long issueNumber, string[] labels, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -308,7 +336,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Unit> RemoveAllFromIssue(string owner, string name, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> RemoveAllFromIssue(string owner, string name, long issueNumber, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Removes all labels from an issue
@@ -318,6 +347,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="issueNumber">The issue number</param>
-        IObservable<Unit> RemoveAllFromIssue(long repositoryId, long issueNumber);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> RemoveAllFromIssue(long repositoryId, long issueNumber, CancellationToken cancellationToken = default);
     }
 }

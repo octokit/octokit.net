@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -31,10 +32,11 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#get-a-single-gist
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/{gist_id}")]
-        public Task<Gist> Get(string gistId)
+        public Task<Gist> Get(string gistId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Gist>(ApiUrls.Gist(gistId));
+            return ApiConnection.Get<Gist>(ApiUrls.Gist(gistId), null, cancellationToken);
         }
 
         /// <summary>
@@ -44,8 +46,9 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#create-a-gist
         /// </remarks>
         /// <param name="newGist">The new gist to create</param>
-        [ManualRoute("GET", "/gists")]
-        public Task<Gist> Create(NewGist newGist)
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        [ManualRoute("POST", "/gists")]
+        public Task<Gist> Create(NewGist newGist, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newGist, nameof(newGist));
 
@@ -65,7 +68,7 @@ namespace Octokit
                 Files = filesAsJsonObject
             };
 
-            return ApiConnection.Post<Gist>(ApiUrls.Gist(), gist);
+            return ApiConnection.Post<Gist>(ApiUrls.Gist(), gist, cancellationToken);
         }
 
         /// <summary>
@@ -75,10 +78,11 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#fork-a-gist
         /// </remarks>
         /// <param name="gistId">The id of the gist to fork</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("POST", "/gists/{gist_id}/forks")]
-        public Task<Gist> Fork(string gistId)
+        public Task<Gist> Fork(string gistId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post<Gist>(ApiUrls.ForkGist(gistId), new object());
+            return ApiConnection.Post<Gist>(ApiUrls.ForkGist(gistId), new object(), cancellationToken);
         }
 
         /// <summary>
@@ -88,59 +92,63 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#delete-a-gist
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("DELETE", "/gists/{gist_id}")]
-        public Task Delete(string gistId)
+        public Task Delete(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
-            return ApiConnection.Delete(ApiUrls.Gist(gistId));
+            return ApiConnection.Delete(ApiUrls.Gist(gistId), cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously,
+        /// List the authenticated user's gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists")]
-        public Task<IReadOnlyList<Gist>> GetAll()
+        public Task<IReadOnlyList<Gist>> GetAll(CancellationToken cancellationToken = default)
         {
-            return GetAll(ApiOptions.None);
+            return GetAll(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously,
+        /// List the authenticated user's gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists")]
-        public Task<IReadOnlyList<Gist>> GetAll(ApiOptions options)
+        public Task<IReadOnlyList<Gist>> GetAll(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), options);
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), options, cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously,
+        /// List the authenticated user's gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists")]
-        public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since)
+        public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, CancellationToken cancellationToken = default)
         {
-            return GetAll(since, ApiOptions.None);
+            return GetAll(since, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s gists or if called anonymously,
+        /// List the authenticated user's gists or if called anonymously,
         /// this will return all public gists
         /// </summary>
         /// <remarks>
@@ -148,13 +156,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists")]
-        public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, ApiOptions options)
+        public Task<IReadOnlyList<Gist>> GetAll(DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Gist>(ApiUrls.Gist(), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -163,10 +172,11 @@ namespace Octokit
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/public")]
-        public Task<IReadOnlyList<Gist>> GetAllPublic()
+        public Task<IReadOnlyList<Gist>> GetAllPublic(CancellationToken cancellationToken = default)
         {
-            return GetAllPublic(ApiOptions.None);
+            return GetAllPublic(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -176,25 +186,13 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/public")]
-        public Task<IReadOnlyList<Gist>> GetAllPublic(ApiOptions options)
+        public Task<IReadOnlyList<Gist>> GetAllPublic(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), options);
-        }
-
-        /// <summary>
-        /// Lists all public gists
-        /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/gists/#list-gists
-        /// </remarks>
-        /// <param name="since">Only gists updated at or after this time are returned</param>
-        [ManualRoute("GET", "/gists/public")]
-        public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since)
-        {
-            return GetAllPublic(since, ApiOptions.None);
+            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), options, cancellationToken);
         }
 
         /// <summary>
@@ -204,138 +202,161 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/public")]
-        public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options)
+        public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, CancellationToken cancellationToken = default)
+        {
+            return GetAllPublic(since, ApiOptions.None, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        [ManualRoute("GET", "/gists/public")]
+        public Task<IReadOnlyList<Gist>> GetAllPublic(DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Gist>(ApiUrls.PublicGists(), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s starred gists
+        /// List the authenticated user's starred gists
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/starred")]
-        public Task<IReadOnlyList<Gist>> GetAllStarred()
+        public Task<IReadOnlyList<Gist>> GetAllStarred(CancellationToken cancellationToken = default)
         {
-            return GetAllStarred(ApiOptions.None);
+            return GetAllStarred(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s starred gists
+        /// List the authenticated user's starred gists
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/starred")]
-        public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options)
+        public Task<IReadOnlyList<Gist>> GetAllStarred(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), options);
+            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), options, cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s starred gists
+        /// List the authenticated user's starred gists
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/starred")]
-        public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since)
+        public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, CancellationToken cancellationToken = default)
         {
-            return GetAllStarred(since, ApiOptions.None);
+            return GetAllStarred(since, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
-        /// List the authenticated user’s starred gists
+        /// List the authenticated user's starred gists
         /// </summary>
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/starred")]
-        public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, ApiOptions options)
+        public Task<IReadOnlyList<Gist>> GetAllStarred(DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default)
         {
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary(), options);
-        }
-
-        /// <summary>
-        /// List a user's gists
-        /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/gists/#list-gists
-        /// </remarks>
-        /// <param name="user">The user</param>
-        [ManualRoute("GET", "/users/{username}/gists")]
-        public Task<IReadOnlyList<Gist>> GetAllForUser(string user)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
-
-            return GetAllForUser(user, ApiOptions.None);
-        }
-
-        /// <summary>
-        /// List a user's gists
-        /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/gists/#list-gists
-        /// </remarks>
-        /// <param name="user">The user</param>
-        /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/users/{username}/gists")]
-        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
-            Ensure.ArgumentNotNull(options, nameof(options));
-
-            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), options);
-        }
-
-        /// <summary>
-        /// List a user's gists
-        /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/gists/#list-gists
-        /// </remarks>
-        /// <param name="user">The user</param>
-        /// <param name="since">Only gists updated at or after this time are returned</param>
-        [ManualRoute("GET", "/users/{username}/gists")]
-        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
-
-            return GetAllForUser(user, since, ApiOptions.None);
-        }
-
-        /// <summary>
-        /// List a user's gists
-        /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/gists/#list-gists
-        /// </remarks>
-        /// <param name="user">The user</param>
-        /// <param name="since">Only gists updated at or after this time are returned</param>
-        /// <param name="options">Options for changing the API response</param>
-        [ManualRoute("GET", "/users/{username}/gists")]
-        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options)
-        {
-            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
             Ensure.ArgumentNotNull(options, nameof(options));
 
             var request = new GistRequest(since);
-            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary(), options);
+            return ApiConnection.GetAll<Gist>(ApiUrls.StarredGists(), request.ToParametersDictionary(), options, cancellationToken);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        [ManualRoute("GET", "/users/{username}/gists")]
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, CancellationToken cancellationToken = default)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return GetAllForUser(user, ApiOptions.None, cancellationToken);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        [ManualRoute("GET", "/users/{username}/gists")]
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, ApiOptions options, CancellationToken cancellationToken = default)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), options, cancellationToken);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        [ManualRoute("GET", "/users/{username}/gists")]
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, CancellationToken cancellationToken = default)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+
+            return GetAllForUser(user, since, ApiOptions.None, cancellationToken);
+        }
+
+        /// <summary>
+        /// List a user's gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="user">The user</param>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        [ManualRoute("GET", "/users/{username}/gists")]
+        public Task<IReadOnlyList<Gist>> GetAllForUser(string user, DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default)
+        {
+            Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
+            Ensure.ArgumentNotNull(options, nameof(options));
+
+            var request = new GistRequest(since);
+            return ApiConnection.GetAll<Gist>(ApiUrls.UsersGists(user), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -345,12 +366,13 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists-commits
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/{gist_id}/commits")]
-        public Task<IReadOnlyList<GistHistory>> GetAllCommits(string gistId)
+        public Task<IReadOnlyList<GistHistory>> GetAllCommits(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
-            return GetAllCommits(gistId, ApiOptions.None);
+            return GetAllCommits(gistId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -361,13 +383,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/{gist_id}/commits")]
-        public Task<IReadOnlyList<GistHistory>> GetAllCommits(string gistId, ApiOptions options)
+        public Task<IReadOnlyList<GistHistory>> GetAllCommits(string gistId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<GistHistory>(ApiUrls.GistCommits(gistId), options);
+            return ApiConnection.GetAll<GistHistory>(ApiUrls.GistCommits(gistId), options, cancellationToken);
         }
 
         /// <summary>
@@ -377,12 +400,13 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#list-gists-forks
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/{gist_id}/forks")]
-        public Task<IReadOnlyList<GistFork>> GetAllForks(string gistId)
+        public Task<IReadOnlyList<GistFork>> GetAllForks(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
-            return GetAllForks(gistId, ApiOptions.None);
+            return GetAllForks(gistId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -393,13 +417,14 @@ namespace Octokit
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/{gist_id}/forks")]
-        public Task<IReadOnlyList<GistFork>> GetAllForks(string gistId, ApiOptions options)
+        public Task<IReadOnlyList<GistFork>> GetAllForks(string gistId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<GistFork>(ApiUrls.ForkGist(gistId), options);
+            return ApiConnection.GetAll<GistFork>(ApiUrls.ForkGist(gistId), options, cancellationToken);
         }
 
         /// <summary>
@@ -410,8 +435,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
         /// <param name="gistUpdate">The update to the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("PATCH", "/gists/{gist_id}")]
-        public Task<Gist> Edit(string gistId, GistUpdate gistUpdate)
+        public Task<Gist> Edit(string gistId, GistUpdate gistUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
             Ensure.ArgumentNotNull(gistUpdate, nameof(gistUpdate));
@@ -428,7 +454,7 @@ namespace Octokit
                 Files = filesAsJsonObject
             };
 
-            return ApiConnection.Patch<Gist>(ApiUrls.Gist(gistId), gist);
+            return ApiConnection.Patch<Gist>(ApiUrls.Gist(gistId), gist, cancellationToken);
         }
 
         /// <summary>
@@ -438,12 +464,13 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#star-a-gist
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("PUT", "/gists/{gist_id}/star")]
-        public Task Star(string gistId)
+        public Task Star(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
-            return ApiConnection.Put(ApiUrls.StarGist(gistId));
+            return ApiConnection.Put(ApiUrls.StarGist(gistId), cancellationToken);
         }
 
         /// <summary>
@@ -453,12 +480,13 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#unstar-a-gist
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("DELETE", "/gists/{gist_id}/star")]
-        public Task Unstar(string gistId)
+        public Task Unstar(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
-            return ApiConnection.Delete(ApiUrls.StarGist(gistId));
+            return ApiConnection.Delete(ApiUrls.StarGist(gistId), cancellationToken);
         }
 
         /// <summary>
@@ -468,14 +496,15 @@ namespace Octokit
         /// http://developer.github.com/v3/gists/#check-if-a-gist-is-starred
         /// </remarks>
         /// <param name="gistId">The id of the gist</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
         [ManualRoute("GET", "/gists/{gist_id}/star")]
-        public async Task<bool> IsStarred(string gistId)
+        public async Task<bool> IsStarred(string gistId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(gistId, nameof(gistId));
 
             try
             {
-                var response = await Connection.Get<object>(ApiUrls.StarGist(gistId), null, null).ConfigureAwait(false);
+                var response = await Connection.Get<object>(ApiUrls.StarGist(gistId), null, null, cancellationToken).ConfigureAwait(false);
                 return response.HttpResponse.IsTrue();
             }
             catch (NotFoundException)

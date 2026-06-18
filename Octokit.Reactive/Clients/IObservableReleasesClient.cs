@@ -23,7 +23,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="data">The request for generating release notes</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<GeneratedReleaseNotes> GenerateReleaseNotes(string owner, string name, GenerateReleaseNotesRequest data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GeneratedReleaseNotes> GenerateReleaseNotes(string owner, string name, GenerateReleaseNotesRequest data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Generates a <see cref="GeneratedReleaseNotes"/>s for the specified repository with auto generated notes.
@@ -34,7 +35,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">The request for generating release notes</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<GeneratedReleaseNotes> GenerateReleaseNotes(long repositoryId, GenerateReleaseNotesRequest data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GeneratedReleaseNotes> GenerateReleaseNotes(long repositoryId, GenerateReleaseNotesRequest data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
@@ -45,7 +47,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetAll(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> GetAll(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
@@ -55,7 +58,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetAll(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> GetAll(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
@@ -67,7 +71,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetAll(string owner, string name, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="Release"/>s for the specified repository.
@@ -78,7 +83,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetAll(long repositoryId, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
@@ -90,7 +96,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Get(string owner, string name, long id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Get(string owner, string name, long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
@@ -102,7 +109,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="tag">The tag of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Get(string owner, string name, string tag);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Get(string owner, string name, string tag, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
@@ -113,7 +121,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Get(long repositoryId, long id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Get(long repositoryId, long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a single <see cref="Release"/> for the specified repository.
@@ -124,7 +133,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="tag">The tag of the release</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Get(long repositoryId, string tag);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Get(long repositoryId, string tag, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the latest <see cref="Release"/> for the specified repository.
@@ -135,7 +145,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetLatest(string owner, string name);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> GetLatest(string owner, string name, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the latest <see cref="Release"/> for the specified repository.
@@ -145,7 +156,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> GetLatest(long repositoryId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> GetLatest(long repositoryId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.
@@ -157,7 +169,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Create(string owner, string name, NewRelease data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Create(string owner, string name, NewRelease data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new <see cref="Release"/> for the specified repository.
@@ -168,7 +181,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="data">A description of the release to create</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Create(long repositoryId, NewRelease data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Create(long repositoryId, NewRelease data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.
@@ -181,7 +195,8 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Edit(string owner, string name, long id, ReleaseUpdate data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Edit(string owner, string name, long id, ReleaseUpdate data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Edits an existing <see cref="Release"/> for the specified repository.
@@ -193,7 +208,8 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the release</param>
         /// <param name="data">A description of the release to edit</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Release> Edit(long repositoryId, long id, ReleaseUpdate data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Release> Edit(long repositoryId, long id, ReleaseUpdate data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes an existing <see cref="Release"/> for the specified repository.
@@ -205,7 +221,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(string owner, string name, long id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(string owner, string name, long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes an existing <see cref="Release"/> for the specified repository.
@@ -216,7 +233,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the release to delete</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<Unit> Delete(long repositoryId, long id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(long repositoryId, long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -228,7 +246,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<ReleaseAsset> GetAllAssets(string owner, string name, long id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> GetAllAssets(string owner, string name, long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -239,7 +258,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<ReleaseAsset> GetAllAssets(long repositoryId, long id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> GetAllAssets(long repositoryId, long id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -252,7 +272,8 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<ReleaseAsset> GetAllAssets(string owner, string name, long id, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> GetAllAssets(string owner, string name, long id, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets all <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -264,7 +285,8 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the <see cref="Release"/>.</param>
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
-        IObservable<ReleaseAsset> GetAllAssets(long repositoryId, long id, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> GetAllAssets(long repositoryId, long id, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Uploads a <see cref="ReleaseAsset"/> for the specified release.
@@ -287,7 +309,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        IObservable<ReleaseAsset> GetAsset(string owner, string name, int assetId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> GetAsset(string owner, string name, int assetId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specified <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -297,7 +320,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
-        IObservable<ReleaseAsset> GetAsset(long repositoryId, int assetId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> GetAsset(long repositoryId, int assetId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -309,7 +333,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        IObservable<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> EditAsset(string owner, string name, int assetId, ReleaseAssetUpdate data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Edits the <see cref="ReleaseAsset"/> for the specified release of the specified repository.
@@ -320,7 +345,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/></param>
         /// <param name="data">Description of the asset with its amended data</param>
-        IObservable<ReleaseAsset> EditAsset(long repositoryId, int assetId, ReleaseAssetUpdate data);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<ReleaseAsset> EditAsset(long repositoryId, int assetId, ReleaseAssetUpdate data, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
@@ -331,7 +357,8 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
-        IObservable<Unit> DeleteAsset(string owner, string name, int assetId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> DeleteAsset(string owner, string name, int assetId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the specified <see cref="ReleaseAsset"/> from the specified repository
@@ -341,6 +368,7 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="assetId">The id of the <see cref="ReleaseAsset"/>.</param>
-        IObservable<Unit> DeleteAsset(long repositoryId, int assetId);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> DeleteAsset(long repositoryId, int assetId, CancellationToken cancellationToken = default);
     }
 }

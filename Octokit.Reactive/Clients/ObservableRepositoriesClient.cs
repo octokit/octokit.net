@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using Octokit.Reactive.Clients;
 using Octokit.Reactive.Internal;
-
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -51,13 +51,13 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
-        public IObservable<Repository> Create(NewRepository newRepository)
+        public IObservable<Repository> Create(NewRepository newRepository, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return _client.Create(newRepository).ToObservable();
+            return _client.Create(newRepository, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -66,14 +66,14 @@ namespace Octokit.Reactive
         /// <param name="organizationLogin">The login of the organization in which to create the repository</param>
         /// <param name="newRepository">A <see cref="NewRepository"/> instance describing the new repository to create</param>
         /// <returns>An <see cref="IObservable{Repository}"/> instance for the created repository</returns>
-        public IObservable<Repository> Create(string organizationLogin, NewRepository newRepository)
+        public IObservable<Repository> Create(string organizationLogin, NewRepository newRepository, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(organizationLogin, nameof(organizationLogin));
             Ensure.ArgumentNotNull(newRepository, nameof(newRepository));
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return _client.Create(organizationLogin, newRepository).ToObservable();
+            return _client.Create(organizationLogin, newRepository, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Octokit.Reactive
         /// <param name="templateRepo">The name of template repository to work from</param>
         /// <param name="newRepository">A <see cref="NewRepositoryFromTemplate"/> instance describing the new repository to create from a template</param>
         /// <returns></returns>
-        public IObservable<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository)
+        public IObservable<Repository> Generate(string templateOwner, string templateRepo, NewRepositoryFromTemplate newRepository, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(templateOwner, nameof(templateOwner));
             Ensure.ArgumentNotNull(templateRepo, nameof(templateRepo));
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
             if (string.IsNullOrEmpty(newRepository.Name))
                 throw new ArgumentException("The new repository's name must not be null.");
 
-            return _client.Generate(templateOwner, templateRepo, newRepository).ToObservable();
+            return _client.Generate(templateOwner, templateRepo, newRepository, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -101,12 +101,12 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
         /// <returns>An <see cref="IObservable{Unit}"/> for the operation</returns>
-        public IObservable<Unit> Delete(string owner, string name)
+        public IObservable<Unit> Delete(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Delete(owner, name).ToObservable();
+            return _client.Delete(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -115,9 +115,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>Deleting a repository requires admin access. If OAuth is used, the `delete_repo` scope is required.</remarks>
         /// <returns>An <see cref="IObservable{Unit}"/> for the operation</returns>
-        public IObservable<Unit> Delete(long repositoryId)
+        public IObservable<Unit> Delete(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.Delete(repositoryId).ToObservable();
+            return _client.Delete(repositoryId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -130,13 +130,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
-        public IObservable<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer)
+        public IObservable<Repository> Transfer(string owner, string name, RepositoryTransfer repositoryTransfer, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return _client.Transfer(owner, name, repositoryTransfer).ToObservable();
+            return _client.Transfer(owner, name, repositoryTransfer, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -148,11 +148,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The id of the repository</param>
         /// <param name="repositoryTransfer">Repository transfer information</param>
         /// <returns>A <see cref="Repository"/></returns>
-        public IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer)
+        public IObservable<Repository> Transfer(long repositoryId, RepositoryTransfer repositoryTransfer, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(repositoryTransfer, nameof(repositoryTransfer));
 
-            return _client.Transfer(repositoryId, repositoryTransfer).ToObservable();
+            return _client.Transfer(repositoryId, repositoryTransfer, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The current owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A <c>bool</c> indicating if alerts are turned on or not.</returns>
-        public IObservable<bool> AreVulnerabilityAlertsEnabled(string owner, string name)
+        public IObservable<bool> AreVulnerabilityAlertsEnabled(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.AreVulnerabilityAlertsEnabled(owner, name).ToObservable();
+            return _client.AreVulnerabilityAlertsEnabled(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -178,12 +178,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>A <see cref="Repository"/></returns>
-        public IObservable<Repository> Get(string owner, string name)
+        public IObservable<Repository> Get(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name).ToObservable();
+            return _client.Get(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -191,9 +191,9 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>A <see cref="Repository"/></returns>
-        public IObservable<Repository> Get(long repositoryId)
+        public IObservable<Repository> Get(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId).ToObservable();
+            return _client.Get(repositoryId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -203,9 +203,9 @@ namespace Octokit.Reactive
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllPublic()
+        public IObservable<Repository> GetAllPublic(CancellationToken cancellationToken = default)
         {
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories());
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.AllPublicRepositories(), cancellationToken);
         }
 
         /// <summary>
@@ -216,13 +216,13 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="request">Search parameters of the last repository seen</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllPublic(PublicRepositoryRequest request)
+        public IObservable<Repository> GetAllPublic(PublicRepositoryRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
             var url = ApiUrls.AllPublicRepositories(request.Since);
 
-            return _connection.GetAndFlattenAllPages<Repository>(url);
+            return _connection.GetAndFlattenAllPages<Repository>(url, cancellationToken);
         }
 
         /// <summary>
@@ -233,9 +233,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForCurrent()
+        public IObservable<Repository> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -244,11 +244,11 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForCurrent(ApiOptions options)
+        public IObservable<Repository> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), options, cancellationToken);
         }
 
         /// <summary>
@@ -260,11 +260,11 @@ namespace Octokit.Reactive
         /// <param name="request">Search parameters to filter results on</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForCurrent(RepositoryRequest request)
+        public IObservable<Repository> GetAllForCurrent(RepositoryRequest request, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
 
-            return GetAllForCurrent(request, ApiOptions.None);
+            return GetAllForCurrent(request, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -274,12 +274,12 @@ namespace Octokit.Reactive
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="AuthorizationException">Thrown if the client is not authenticated.</exception>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForCurrent(RepositoryRequest request, ApiOptions options)
+        public IObservable<Repository> GetAllForCurrent(RepositoryRequest request, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary());
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(), request.ToParametersDictionary(), cancellationToken);
         }
 
         /// <summary>
@@ -287,11 +287,11 @@ namespace Octokit.Reactive
         /// </summary>
         /// <param name="login">The account name to search for</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForUser(string login)
+        public IObservable<Repository> GetAllForUser(string login, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
 
-            return GetAllForUser(login, ApiOptions.None);
+            return GetAllForUser(login, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -300,12 +300,12 @@ namespace Octokit.Reactive
         /// <param name="login">The account name to search for</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForUser(string login, ApiOptions options)
+        public IObservable<Repository> GetAllForUser(string login, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(login, nameof(login));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), null, options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.Repositories(login), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -315,11 +315,11 @@ namespace Octokit.Reactive
         /// The default page size on GitHub.com is 30.
         /// </remarks>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForOrg(string organization)
+        public IObservable<Repository> GetAllForOrg(string organization, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
-            return GetAllForOrg(organization, ApiOptions.None);
+            return GetAllForOrg(organization, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -328,12 +328,12 @@ namespace Octokit.Reactive
         /// <param name="organization">The organization name to search for</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>A <see cref="IReadOnlyPagedCollection{Repository}"/> of <see cref="Repository"/>.</returns>
-        public IObservable<Repository> GetAllForOrg(string organization, ApiOptions options)
+        public IObservable<Repository> GetAllForOrg(string organization, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), options);
+            return _connection.GetAndFlattenAllPages<Repository>(ApiUrls.OrganizationRepositories(organization), options, cancellationToken);
         }
 
         /// <summary>
@@ -427,12 +427,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllContributors(owner, name, ApiOptions.None);
+            return GetAllContributors(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -443,9 +443,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId)
+        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllContributors(repositoryId, ApiOptions.None);
+            return GetAllContributors(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -458,13 +458,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, ApiOptions options)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllContributors(owner, name, false, options);
+            return GetAllContributors(owner, name, false, options, cancellationToken);
         }
 
         /// <summary>
@@ -476,11 +476,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, ApiOptions options)
+        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllContributors(repositoryId, false, options);
+            return GetAllContributors(repositoryId, false, options, cancellationToken);
         }
 
         /// <summary>
@@ -493,12 +493,12 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None);
+            return GetAllContributors(owner, name, includeAnonymous, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -510,9 +510,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, bool includeAnonymous)
+        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, bool includeAnonymous, CancellationToken cancellationToken = default)
         {
-            return GetAllContributors(repositoryId, includeAnonymous, ApiOptions.None);
+            return GetAllContributors(repositoryId, includeAnonymous, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Octokit.Reactive
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options)
+        public IObservable<RepositoryContributor> GetAllContributors(string owner, string name, bool includeAnonymous, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
@@ -537,7 +537,7 @@ namespace Octokit.Reactive
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters, options);
+            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -550,7 +550,7 @@ namespace Octokit.Reactive
         /// <param name="includeAnonymous">True if anonymous contributors should be included in result; Otherwise false</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All contributors of the repository.</returns>
-        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options)
+        public IObservable<RepositoryContributor> GetAllContributors(long repositoryId, bool includeAnonymous, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -559,7 +559,7 @@ namespace Octokit.Reactive
             if (includeAnonymous)
                 parameters.Add("anon", "1");
 
-            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters, options);
+            return _connection.GetAndFlattenAllPages<RepositoryContributor>(endpoint, parameters, options, cancellationToken);
         }
 
         /// <summary>
@@ -571,14 +571,14 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        public IObservable<RepositoryLanguage> GetAllLanguages(string owner, string name)
+        public IObservable<RepositoryLanguage> GetAllLanguages(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryLanguages(owner, name);
             return _connection
-                .GetAndFlattenAllPages<Tuple<string, long>>(endpoint)
+                .GetAndFlattenAllPages<Tuple<string, long>>(endpoint, cancellationToken)
                 .Select(t => new RepositoryLanguage(t.Item1, t.Item2));
         }
 
@@ -590,11 +590,11 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All languages used in the repository and the number of bytes of each language.</returns>
-        public IObservable<RepositoryLanguage> GetAllLanguages(long repositoryId)
+        public IObservable<RepositoryLanguage> GetAllLanguages(long repositoryId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.RepositoryLanguages(repositoryId);
             return _connection
-                .GetAndFlattenAllPages<Tuple<string, long>>(endpoint)
+                .GetAndFlattenAllPages<Tuple<string, long>>(endpoint, cancellationToken)
                 .Select(t => new RepositoryLanguage(t.Item1, t.Item2));
         }
 
@@ -607,12 +607,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        public IObservable<Team> GetAllTeams(string owner, string name)
+        public IObservable<Team> GetAllTeams(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllTeams(owner, name, ApiOptions.None);
+            return GetAllTeams(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -623,9 +623,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        public IObservable<Team> GetAllTeams(long repositoryId)
+        public IObservable<Team> GetAllTeams(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllTeams(repositoryId, ApiOptions.None);
+            return GetAllTeams(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -638,13 +638,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        public IObservable<Team> GetAllTeams(string owner, string name, ApiOptions options)
+        public IObservable<Team> GetAllTeams(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(owner, name), options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -656,11 +656,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All <see cref="T:Octokit.Team"/>s associated with the repository</returns>
-        public IObservable<Team> GetAllTeams(long repositoryId, ApiOptions options)
+        public IObservable<Team> GetAllTeams(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<Team>(ApiUrls.RepositoryTeams(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -672,12 +672,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All of the repositories tags.</returns>
-        public IObservable<RepositoryTag> GetAllTags(string owner, string name)
+        public IObservable<RepositoryTag> GetAllTags(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllTags(owner, name, ApiOptions.None);
+            return GetAllTags(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -688,9 +688,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>All of the repositories tags.</returns>
-        public IObservable<RepositoryTag> GetAllTags(long repositoryId)
+        public IObservable<RepositoryTag> GetAllTags(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllTags(repositoryId, ApiOptions.None);
+            return GetAllTags(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -703,13 +703,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All of the repositories tags.</returns>
-        public IObservable<RepositoryTag> GetAllTags(string owner, string name, ApiOptions options)
+        public IObservable<RepositoryTag> GetAllTags(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<RepositoryTag>(ApiUrls.RepositoryTags(owner, name), options);
+            return _connection.GetAndFlattenAllPages<RepositoryTag>(ApiUrls.RepositoryTags(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -721,11 +721,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All of the repositories tags.</returns>
-        public IObservable<RepositoryTag> GetAllTags(long repositoryId, ApiOptions options)
+        public IObservable<RepositoryTag> GetAllTags(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<RepositoryTag>(ApiUrls.RepositoryTags(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<RepositoryTag>(ApiUrls.RepositoryTags(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -735,13 +735,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        public IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update)
+        public IObservable<Repository> Edit(string owner, string name, RepositoryUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return _client.Edit(owner, name, update).ToObservable();
+            return _client.Edit(owner, name, update, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -753,12 +753,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
-        public IObservable<RepositoryContentLicense> GetLicenseContents(string owner, string name)
+        public IObservable<RepositoryContentLicense> GetLicenseContents(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetLicenseContents(owner, name).ToObservable();
+            return _client.GetLicenseContents(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -769,9 +769,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>Returns the contents of the repository's license file, if one is detected.</returns>
-        public IObservable<RepositoryContentLicense> GetLicenseContents(long repositoryId)
+        public IObservable<RepositoryContentLicense> GetLicenseContents(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.GetLicenseContents(repositoryId).ToObservable();
+            return _client.GetLicenseContents(repositoryId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -781,12 +781,12 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <returns>Returns the list of errors in the codeowners files</returns>
         [ManualRoute("GET", "/repos/{owner}/{repo}/codeowners/errors")]
-        public IObservable<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name)
+        public IObservable<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(string owner, string name, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.GetAllCodeOwnersErrors(owner, name).ToObservable();
+            return _client.GetAllCodeOwnersErrors(owner, name, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -795,9 +795,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <returns>Returns the list of errors in the codeowners files</returns>
         [ManualRoute("GET", "/repositories/{id}/codeowners/errors")]
-        public IObservable<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId)
+        public IObservable<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return _client.GetAllCodeOwnersErrors(repositoryId).ToObservable();
+            return _client.GetAllCodeOwnersErrors(repositoryId, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -806,11 +806,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="update">New values to update the repository with</param>
         /// <returns>The updated <see cref="T:Octokit.Repository"/></returns>
-        public IObservable<Repository> Edit(long repositoryId, RepositoryUpdate update)
+        public IObservable<Repository> Edit(long repositoryId, RepositoryUpdate update, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(update, nameof(update));
 
-            return _client.Edit(repositoryId, update).ToObservable();
+            return _client.Edit(repositoryId, update, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -821,9 +821,9 @@ namespace Octokit.Reactive
         /// <param name="base">The reference to use as the base commit</param>
         /// <param name="head">The reference to use as the head commit</param>
         /// <returns></returns>
-        public IObservable<CompareResult> Compare(string owner, string name, string @base, string head)
+        public IObservable<CompareResult> Compare(string owner, string name, string @base, string head, CancellationToken cancellationToken = default)
         {
-            return _client.Commit.Compare(owner, name, @base, head).ToObservable();
+            return _client.Commit.Compare(owner, name, @base, head, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -932,9 +932,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options)
+        public IObservable<RepositoryTopics> GetAllTopics(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return _client.GetAllTopics(owner, name, options).ToObservable();
+            return _client.GetAllTopics(owner, name, options, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -946,9 +946,9 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<RepositoryTopics> GetAllTopics(string owner, string name)
+        public IObservable<RepositoryTopics> GetAllTopics(string owner, string name, CancellationToken cancellationToken = default)
         {
-            return GetAllTopics(owner, name, ApiOptions.None);
+            return GetAllTopics(owner, name, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -960,9 +960,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options)
+        public IObservable<RepositoryTopics> GetAllTopics(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
-            return _client.GetAllTopics(repositoryId, options).ToObservable();
+            return _client.GetAllTopics(repositoryId, options, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -973,9 +973,9 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="repositoryId">The ID of the repository</param>
         /// <returns>All topics associated with the repository.</returns>
-        public IObservable<RepositoryTopics> GetAllTopics(long repositoryId)
+        public IObservable<RepositoryTopics> GetAllTopics(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllTopics(repositoryId, ApiOptions.None);
+            return GetAllTopics(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -989,9 +989,9 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The ID of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics)
+        public IObservable<RepositoryTopics> ReplaceAllTopics(long repositoryId, RepositoryTopics topics, CancellationToken cancellationToken = default)
         {
-            return _client.ReplaceAllTopics(repositoryId, topics).ToObservable();
+            return _client.ReplaceAllTopics(repositoryId, topics, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -1006,9 +1006,9 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="topics">The list of topics to associate with the repository</param>
         /// <returns>All topics now associated with the repository.</returns>
-        public IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics)
+        public IObservable<RepositoryTopics> ReplaceAllTopics(string owner, string name, RepositoryTopics topics, CancellationToken cancellationToken = default)
         {
-            return _client.ReplaceAllTopics(owner, name, topics).ToObservable();
+            return _client.ReplaceAllTopics(owner, name, topics, cancellationToken).ToObservable();
         }
     }
 }

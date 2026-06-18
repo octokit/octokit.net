@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Octokit
@@ -21,13 +22,13 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/user/repository_invitations/{invitation_id}")]
-        public async Task<bool> Accept(long invitationId)
+        public async Task<bool> Accept(long invitationId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.UserInvitations(invitationId);
 
             try
             {
-                var httpStatusCode = await Connection.Patch(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Patch(endpoint, null, null, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -45,13 +46,13 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/user/repository_invitations/{invitation_id}")]
-        public async Task<bool> Decline(long invitationId)
+        public async Task<bool> Decline(long invitationId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.UserInvitations(invitationId);
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -70,13 +71,13 @@ namespace Octokit
         /// <param name="invitationId">The id of the invitation</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("DELETE", "/repos/:owner/:repo/invitations/{invitation_id}")]
-        public async Task<bool> Delete(long repositoryId, long invitationId)
+        public async Task<bool> Delete(long repositoryId, long invitationId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.RepositoryInvitations(repositoryId, invitationId);
 
             try
             {
-                var httpStatusCode = await Connection.Delete(endpoint).ConfigureAwait(false);
+                var httpStatusCode = await Connection.Delete(endpoint, null, cancellationToken).ConfigureAwait(false);
                 return httpStatusCode == HttpStatusCode.NoContent;
             }
             catch (NotFoundException)
@@ -93,9 +94,9 @@ namespace Octokit
         /// </remarks>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/user/repository_invitations")]
-        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent()
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(CancellationToken cancellationToken = default)
         {
-            return GetAllForCurrent(ApiOptions.None);
+            return GetAllForCurrent(ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -107,10 +108,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/user/repository_invitations")]
-        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options)
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), options);
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.UserInvitations(), options, cancellationToken);
         }
 
         /// <summary>
@@ -122,9 +123,9 @@ namespace Octokit
         /// <param name="repositoryId">The id of the repository</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repositories/{id}/invitations")]
-        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId)
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, ApiOptions.None);
+            return GetAllForRepository(repositoryId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -137,10 +138,10 @@ namespace Octokit
         /// <param name="options">Options for changing the API response</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("GET", "/repositories/{id}/invitations")]
-        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options)
+        public Task<IReadOnlyList<RepositoryInvitation>> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), options);
+            return ApiConnection.GetAll<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -154,11 +155,11 @@ namespace Octokit
         /// <param name="permissions">The permission for the collaborator</param>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         [ManualRoute("PATCH", "/repositories/{id}/invitations/{invitation_id}")]
-        public Task<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions)
+        public Task<RepositoryInvitation> Edit(long repositoryId, long invitationId, InvitationUpdate permissions, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(permissions, nameof(permissions));
 
-            return ApiConnection.Patch<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId, invitationId), permissions);
+            return ApiConnection.Patch<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId, invitationId), permissions, cancellationToken);
         }
     }
 }

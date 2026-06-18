@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -25,18 +26,18 @@ namespace Octokit.Reactive
         /// List all templates available to pass as an option when creating a repository.
         /// </summary>
         /// <returns>An observable list of gitignore template names.</returns>
-        public IObservable<string> GetAllGitIgnoreTemplates()
+        public IObservable<string> GetAllGitIgnoreTemplates(CancellationToken cancellationToken = default)
         {
-            return _client.GetAllGitIgnoreTemplates().ToObservable().SelectMany(t => t);
+            return _client.GetAllGitIgnoreTemplates(cancellationToken).ToObservable().SelectMany(t => t);
         }
 
         /// <summary>
         /// Retrieves the source for a single GitIgnore template
         /// </summary>
         /// <param name="templateName">Returns the template source for the given template</param>
-        public IObservable<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName)
+        public IObservable<GitIgnoreTemplate> GetGitIgnoreTemplate(string templateName, CancellationToken cancellationToken = default)
         {
-            return _client.GetGitIgnoreTemplate(templateName).ToObservable();
+            return _client.GetGitIgnoreTemplate(templateName, cancellationToken).ToObservable();
         }
     }
 }

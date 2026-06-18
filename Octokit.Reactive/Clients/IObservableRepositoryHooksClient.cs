@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -18,14 +19,16 @@ namespace Octokit.Reactive
         /// <param name="owner">The repository's owner</param>
         /// <param name="name">The repository's name</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> GetAll(string owner, string name);
+        IObservable<RepositoryHook> GetAll(string owner, string name, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets the list of hooks defined for a repository
         /// </summary>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> GetAll(long repositoryId);
+        IObservable<RepositoryHook> GetAll(long repositoryId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets the list of hooks defined for a repository
@@ -34,7 +37,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> GetAll(string owner, string name, ApiOptions options);
+        IObservable<RepositoryHook> GetAll(string owner, string name, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets the list of hooks defined for a repository
@@ -42,7 +46,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="options">Options for changing the API response</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#list">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> GetAll(long repositoryId, ApiOptions options);
+        IObservable<RepositoryHook> GetAll(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a single hook by Id
@@ -52,7 +57,8 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keyworks")]
-        IObservable<RepositoryHook> Get(string owner, string name, int hookId);
+        IObservable<RepositoryHook> Get(string owner, string name, int hookId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Gets a single hook by Id
@@ -61,7 +67,8 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#get-single-hook">API documentation</a> for more information.</remarks>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get", Justification = "This is ok; we're matching HTTP verbs not keyworks")]
-        IObservable<RepositoryHook> Get(long repositoryId, int hookId);
+        IObservable<RepositoryHook> Get(long repositoryId, int hookId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a hook for a repository
@@ -70,7 +77,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> Create(string owner, string name, NewRepositoryHook hook);
+        IObservable<RepositoryHook> Create(string owner, string name, NewRepositoryHook hook, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Creates a hook for a repository
@@ -78,7 +86,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hook">The hook's parameters</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#create-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> Create(long repositoryId, NewRepositoryHook hook);
+        IObservable<RepositoryHook> Create(long repositoryId, NewRepositoryHook hook, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Edits a hook for a repository
@@ -88,7 +97,8 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook);
+        IObservable<RepositoryHook> Edit(string owner, string name, int hookId, EditRepositoryHook hook, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Edits a hook for a repository
@@ -97,7 +107,8 @@ namespace Octokit.Reactive
         /// <param name="hookId">The repository's hook id</param>
         /// <param name="hook">The requested changes to an edit repository hook</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<RepositoryHook> Edit(long repositoryId, int hookId, EditRepositoryHook hook);
+        IObservable<RepositoryHook> Edit(long repositoryId, int hookId, EditRepositoryHook hook, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Tests a hook for a repository
@@ -108,7 +119,8 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
-        IObservable<Unit> Test(string owner, string name, int hookId);
+        IObservable<Unit> Test(string owner, string name, int hookId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Tests a hook for a repository
@@ -118,7 +130,8 @@ namespace Octokit.Reactive
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#test-a-hook">API documentation</a> for more information. 
         /// This will trigger the hook with the latest push to the current repository if the hook is subscribed to push events. If the hook 
         /// is not subscribed to push events, the server will respond with 204 but no test POST will be generated.</remarks>
-        IObservable<Unit> Test(long repositoryId, int hookId);
+        IObservable<Unit> Test(long repositoryId, int hookId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
@@ -127,7 +140,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Ping(string owner, string name, int hookId);
+        IObservable<Unit> Ping(string owner, string name, int hookId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// This will trigger a ping event to be sent to the hook.
@@ -135,7 +149,8 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#edit-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Ping(long repositoryId, int hookId);
+        IObservable<Unit> Ping(long repositoryId, int hookId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a hook for a repository
@@ -144,7 +159,8 @@ namespace Octokit.Reactive
         /// <param name="name">The repository's name</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Delete(string owner, string name, int hookId);
+        IObservable<Unit> Delete(string owner, string name, int hookId, CancellationToken cancellationToken = default);
+
 
         /// <summary>
         /// Deletes a hook for a repository
@@ -152,6 +168,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="hookId">The repository's hook id</param>
         /// <remarks>See <a href="http://developer.github.com/v3/repos/hooks/#delete-a-hook">API documentation</a> for more information.</remarks>
-        IObservable<Unit> Delete(long repositoryId, int hookId);
+        IObservable<Unit> Delete(long repositoryId, int hookId, CancellationToken cancellationToken = default);
+
     }
 }

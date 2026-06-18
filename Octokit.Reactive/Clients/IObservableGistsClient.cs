@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 
+using System.Threading;
+
 namespace Octokit.Reactive
 {
     public interface IObservableGistsClient
@@ -17,7 +19,8 @@ namespace Octokit.Reactive
         /// <param name="id">The id of the gist</param>
         [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Get",
             Justification = "Method makes a network request")]
-        IObservable<Gist> Get(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> Get(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s gists or if called anonymously, 
@@ -26,7 +29,8 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
-        IObservable<Gist> GetAll();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAll(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s gists or if called anonymously, 
@@ -36,17 +40,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAll(ApiOptions options);
-
-        /// <summary>
-        /// List the authenticated user’s gists or if called anonymously, 
-        /// this will return all public gists
-        /// </summary>
-        /// <remarks>
-        /// http://developer.github.com/v3/gists/#list-gists
-        /// </remarks>
-        /// <param name="since">Only gists updated at or after this time are returned</param>
-        IObservable<Gist> GetAll(DateTimeOffset since);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAll(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s gists or if called anonymously, 
@@ -56,8 +51,20 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAll(DateTimeOffset since, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// List the authenticated user’s gists or if called anonymously, 
+        /// this will return all public gists
+        /// </summary>
+        /// <remarks>
+        /// http://developer.github.com/v3/gists/#list-gists
+        /// </remarks>
+        /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAll(DateTimeOffset since, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAll(DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all public gists
@@ -65,7 +72,8 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
-        IObservable<Gist> GetAllPublic();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllPublic(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all public gists
@@ -74,7 +82,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAllPublic(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllPublic(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all public gists
@@ -83,7 +92,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        IObservable<Gist> GetAllPublic(DateTimeOffset since);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllPublic(DateTimeOffset since, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Lists all public gists
@@ -93,7 +103,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAllPublic(DateTimeOffset since, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllPublic(DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s starred gists
@@ -101,7 +112,8 @@ namespace Octokit.Reactive
         /// <remarks>
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
-        IObservable<Gist> GetAllStarred();
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllStarred(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s starred gists
@@ -110,7 +122,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAllStarred(ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllStarred(ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s starred gists
@@ -119,7 +132,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        IObservable<Gist> GetAllStarred(DateTimeOffset since);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllStarred(DateTimeOffset since, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List the authenticated user’s starred gists
@@ -129,7 +143,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAllStarred(DateTimeOffset since, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllStarred(DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a user's gists
@@ -138,7 +153,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists
         /// </remarks>
         /// <param name="user">The user</param>
-        IObservable<Gist> GetAllForUser(string user);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllForUser(string user, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a user's gists
@@ -148,7 +164,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The user</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAllForUser(string user, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllForUser(string user, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a user's gists
@@ -158,7 +175,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="user">The user</param>
         /// <param name="since">Only gists updated at or after this time are returned</param>
-        IObservable<Gist> GetAllForUser(string user, DateTimeOffset since);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllForUser(string user, DateTimeOffset since, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a user's gists
@@ -169,7 +187,8 @@ namespace Octokit.Reactive
         /// <param name="user">The user</param>
         /// <param name="since">Only gists updated at or after this time are returned</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<Gist> GetAllForUser(string user, DateTimeOffset since, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> GetAllForUser(string user, DateTimeOffset since, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List gist commits
@@ -178,7 +197,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists-commits
         /// </remarks>
         /// <param name="id">The id of the gist</param>
-        IObservable<GistHistory> GetAllCommits(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GistHistory> GetAllCommits(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List gist commits
@@ -188,7 +208,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GistHistory> GetAllCommits(string id, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GistHistory> GetAllCommits(string id, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List gist forks
@@ -197,7 +218,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#list-gists-forks
         /// </remarks>
         /// <param name="id">The id of the gist</param>
-        IObservable<GistFork> GetAllForks(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GistFork> GetAllForks(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List gist forks
@@ -207,7 +229,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         /// <param name="options">Options for changing the API response</param>
-        IObservable<GistFork> GetAllForks(string id, ApiOptions options);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<GistFork> GetAllForks(string id, ApiOptions options, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a new gist
@@ -216,7 +239,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#create-a-gist
         /// </remarks>
         /// <param name="newGist">The new gist to create</param>
-        IObservable<Gist> Create(NewGist newGist);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> Create(NewGist newGist, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates a fork of a gist
@@ -225,7 +249,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#fork-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist to fork</param>
-        IObservable<Gist> Fork(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> Fork(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Edits a gist
@@ -235,7 +260,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         /// <param name="gistUpdate">The update to the gist</param>
-        IObservable<Gist> Edit(string id, GistUpdate gistUpdate);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Gist> Edit(string id, GistUpdate gistUpdate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes a gist
@@ -244,7 +270,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#delete-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
-        IObservable<Unit> Delete(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Delete(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Stars a gist
@@ -253,7 +280,8 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#star-a-gist
         /// </remarks>
         /// <param name="id">The id of the gist</param>
-        IObservable<Unit> Star(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Star(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Unstars a gist
@@ -263,7 +291,8 @@ namespace Octokit.Reactive
         /// </remarks>
         /// <param name="id">The id of the gist</param>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Unstar")]
-        IObservable<Unit> Unstar(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<Unit> Unstar(string id, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Checks if the gist is starred
@@ -272,6 +301,7 @@ namespace Octokit.Reactive
         /// http://developer.github.com/v3/gists/#check-if-a-gist-is-starred
         /// </remarks>
         /// <param name="id">The id of the gist</param>
-        IObservable<bool> IsStarred(string id);
+        /// <param name="cancellationToken">An optional token to monitor for cancellation requests</param>
+        IObservable<bool> IsStarred(string id, CancellationToken cancellationToken = default);
     }
 }

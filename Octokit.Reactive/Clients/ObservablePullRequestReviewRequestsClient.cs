@@ -1,6 +1,7 @@
 using System;
 using System.Reactive;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 using Octokit.Reactive.Internal;
 
 namespace Octokit.Reactive
@@ -25,12 +26,12 @@ namespace Octokit.Reactive
         /// <param name="owner">The owner of the repository</param>
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        public IObservable<RequestedReviews> Get(string owner, string name, int pullRequestNumber)
+        public IObservable<RequestedReviews> Get(string owner, string name, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _client.Get(owner, name, pullRequestNumber).ToObservable();
+            return _client.Get(owner, name, pullRequestNumber, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -39,9 +40,9 @@ namespace Octokit.Reactive
         /// <remarks>https://developer.github.com/v3/pulls/review_requests/#list-review-requests</remarks>
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
-        public IObservable<RequestedReviews> Get(long repositoryId, int pullRequestNumber)
+        public IObservable<RequestedReviews> Get(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return _client.Get(repositoryId, pullRequestNumber).ToObservable();
+            return _client.Get(repositoryId, pullRequestNumber, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -52,13 +53,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        public IObservable<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users)
+        public IObservable<PullRequest> Create(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return _client.Create(owner, name, pullRequestNumber, users).ToObservable();
+            return _client.Create(owner, name, pullRequestNumber, users, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -68,11 +69,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of user will be requested for review</param>
-        public IObservable<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users)
+        public IObservable<PullRequest> Create(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return _client.Create(repositoryId, pullRequestNumber, users).ToObservable();
+            return _client.Create(repositoryId, pullRequestNumber, users, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -83,13 +84,13 @@ namespace Octokit.Reactive
         /// <param name="name">The name of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        public IObservable<Unit> Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users)
+        public IObservable<Unit> Delete(string owner, string name, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return _client.Delete(owner, name, pullRequestNumber, users).ToObservable();
+            return _client.Delete(owner, name, pullRequestNumber, users, cancellationToken).ToObservable();
         }
 
         /// <summary>
@@ -99,11 +100,11 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         /// <param name="pullRequestNumber">The pull request number</param>
         /// <param name="users">List of logins of users that will be not longer requested for review</param>
-        public IObservable<Unit> Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users)
+        public IObservable<Unit> Delete(long repositoryId, int pullRequestNumber, PullRequestReviewRequest users, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(users, nameof(users));
 
-            return _client.Delete(repositoryId, pullRequestNumber, users).ToObservable();
+            return _client.Delete(repositoryId, pullRequestNumber, users, cancellationToken).ToObservable();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit
 {
@@ -29,7 +30,7 @@ namespace Octokit
         /// <param name="enterprise">The enterprise name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}")]
-        public async Task<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId)
+        public async Task<RunnerGroup> GetRunnerGroupForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
@@ -45,7 +46,7 @@ namespace Octokit
         /// <param name="org">The organization name.</param>
         /// <param name="runnerGroupId">Unique identifier of the self-hosted runner group.</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}")]
-        public async Task<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId)
+        public async Task<RunnerGroup> GetRunnerGroupForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -60,9 +61,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="enterprise">The enterprise name</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups")]
-        public Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise)
+        public Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupsForEnterprise(enterprise, ApiOptions.None);
+            return ListAllRunnerGroupsForEnterprise(enterprise, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Octokit
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups")]
-        public async Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options)
+        public async Task<RunnerGroupResponse> ListAllRunnerGroupsForEnterprise(string enterprise, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
@@ -94,9 +95,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="org">The organization name</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups")]
-        public Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org)
+        public Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupsForOrganization(org, ApiOptions.None);
+            return ListAllRunnerGroupsForOrganization(org, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Octokit
         /// <param name="org">The organization name</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups")]
-        public async Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options)
+        public async Task<RunnerGroupResponse> ListAllRunnerGroupsForOrganization(string org, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
@@ -130,9 +131,9 @@ namespace Octokit
         /// <param name="enterprise">The enterprise.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners")]
-        public Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId)
+        public Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnersForEnterpriseRunnerGroup(enterprise, runnerGroupId, ApiOptions.None);
+            return ListAllRunnersForEnterpriseRunnerGroup(enterprise, runnerGroupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -145,7 +146,7 @@ namespace Octokit
         /// <param name="runnerGroupId">The runner group ID.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners")]
-        public async Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options)
+        public async Task<RunnerResponse> ListAllRunnersForEnterpriseRunnerGroup(string enterprise, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
@@ -166,9 +167,9 @@ namespace Octokit
         /// <param name="organization">The organization.</param>
         /// <param name="runnerGroupId">The runner group ID.</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}/runners")]
-        public Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId)
+        public Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnersForOrganizationRunnerGroup(organization, runnerGroupId, ApiOptions.None);
+            return ListAllRunnersForOrganizationRunnerGroup(organization, runnerGroupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace Octokit
         /// <param name="runnerGroupId">The runner group ID.</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}/runners")]
-        public async Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options)
+        public async Task<RunnerResponse> ListAllRunnersForOrganizationRunnerGroup(string organization, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(organization, nameof(organization));
 
@@ -203,9 +204,9 @@ namespace Octokit
         /// <param name="enterprise">The enterprise name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations")]
-        public Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId)
+        public Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, ApiOptions.None);
+            return ListAllRunnerGroupOrganizationsForEnterprise(enterprise, runnerGroupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -218,7 +219,7 @@ namespace Octokit
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations")]
-        public async Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options)
+        public async Task<OrganizationsResponse> ListAllRunnerGroupOrganizationsForEnterprise(string enterprise, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(enterprise, nameof(enterprise));
 
@@ -239,9 +240,9 @@ namespace Octokit
         /// <param name="org">The organization name</param>
         /// <param name="runnerGroupId">The runner group id</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories")]
-        public Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId)
+        public Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, CancellationToken cancellationToken = default)
         {
-            return ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, ApiOptions.None);
+            return ListAllRunnerGroupRepositoriesForOrganization(org, runnerGroupId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +255,7 @@ namespace Octokit
         /// <param name="runnerGroupId">The runner group id</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories")]
-        public async Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options)
+        public async Task<RepositoriesResponse> ListAllRunnerGroupRepositoriesForOrganization(string org, long runnerGroupId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 

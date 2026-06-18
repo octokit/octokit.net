@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -25,9 +26,9 @@ namespace Octokit
         /// </remarks>
         /// <param name="projectId">The Id of the project</param>
         [ManualRoute("GET", "/projects/{project_id}/columns")]
-        public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId)
+        public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId, CancellationToken cancellationToken = default)
         {
-            return GetAll(projectId, ApiOptions.None);
+            return GetAll(projectId, ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Octokit
         /// <param name="projectId">The Id of the project</param>
         /// <param name="options">Options for changing the API response</param>
         [ManualRoute("GET", "/projects/{project_id}/columns")]
-        public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId, ApiOptions options)
+        public Task<IReadOnlyList<ProjectColumn>> GetAll(int projectId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
@@ -54,7 +55,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         [ManualRoute("GET", "/projects/columns/{column_id}")]
-        public Task<ProjectColumn> Get(int columnId)
+        public Task<ProjectColumn> Get(int columnId, CancellationToken cancellationToken = default)
         {
             return ApiConnection.Get<ProjectColumn>(ApiUrls.ProjectColumn(columnId), null);
         }
@@ -68,11 +69,11 @@ namespace Octokit
         /// <param name="projectId">The Id of the project</param>
         /// <param name="newProjectColumn">The column to create</param>
         [ManualRoute("POST", "/projects/{project_id}/columns")]
-        public Task<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn)
+        public Task<ProjectColumn> Create(int projectId, NewProjectColumn newProjectColumn, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(newProjectColumn, nameof(newProjectColumn));
 
-            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(projectId), newProjectColumn);
+            return ApiConnection.Post<ProjectColumn>(ApiUrls.ProjectColumns(projectId), newProjectColumn, cancellationToken);
         }
 
         /// <summary>
@@ -84,11 +85,11 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         /// <param name="projectColumnUpdate">New values to update the column with</param>
         [ManualRoute("PATCH", "/projects/columns/{column_id}")]
-        public Task<ProjectColumn> Update(int columnId, ProjectColumnUpdate projectColumnUpdate)
+        public Task<ProjectColumn> Update(int columnId, ProjectColumnUpdate projectColumnUpdate, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(projectColumnUpdate, nameof(projectColumnUpdate));
 
-            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(columnId), projectColumnUpdate);
+            return ApiConnection.Patch<ProjectColumn>(ApiUrls.ProjectColumn(columnId), projectColumnUpdate, cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace Octokit
         /// </remarks>
         /// <param name="columnId">The id of the column</param>
         [ManualRoute("DELETE", "/projects/columns/{column_id}")]
-        public async Task<bool> Delete(int columnId)
+        public async Task<bool> Delete(int columnId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.ProjectColumn(columnId);
             try
@@ -122,7 +123,7 @@ namespace Octokit
         /// <param name="columnId">The id of the column</param>
         /// <param name="position">The position to move the column</param>
         [ManualRoute("POST", "/projects/columns/{column_id}/moves")]
-        public async Task<bool> Move(int columnId, ProjectColumnMove position)
+        public async Task<bool> Move(int columnId, ProjectColumnMove position, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(position, nameof(position));
 

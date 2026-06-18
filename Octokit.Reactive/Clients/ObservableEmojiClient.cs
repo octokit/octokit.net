@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading;
 
 namespace Octokit.Reactive
 {
@@ -26,7 +27,7 @@ namespace Octokit.Reactive
         /// </summary>
         /// <exception cref="ApiException">Thrown when a general API error occurs.</exception>
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
-        public IObservable<Emoji> GetAllEmojis()
+        public IObservable<Emoji> GetAllEmojis(CancellationToken cancellationToken = default)
         {
             return _client.GetAllEmojis().ToObservable().SelectMany(e => e);
         }
