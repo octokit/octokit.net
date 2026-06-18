@@ -6,6 +6,7 @@ using NSubstitute;
 using Octokit.Reactive;
 using Octokit.Tests.Helpers;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -69,7 +70,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -80,7 +81,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -99,7 +100,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -110,7 +111,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -121,7 +122,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -134,7 +135,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, request);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"));
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 request = new RepositoryCollaboratorListRequest
                 {
@@ -144,7 +145,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, request);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"));
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // PageCount is setted => none of options in dictionary
                 request = new RepositoryCollaboratorListRequest
@@ -155,7 +156,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, request);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"));
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -174,7 +175,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 3), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -185,7 +186,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -196,7 +197,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -209,7 +210,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, request);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"));
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "all"), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 request = new RepositoryCollaboratorListRequest
                 {
@@ -219,7 +220,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, request);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"));
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "direct"), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 request = new RepositoryCollaboratorListRequest
                 {
@@ -229,7 +230,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(repositoryId, request);
                 _githubClient.Connection.Received(1)
                     .Get<List<Collaborator>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"));
+                        Arg.Is<IDictionary<string, string>>(d => d["affiliation"] == "outside"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
 

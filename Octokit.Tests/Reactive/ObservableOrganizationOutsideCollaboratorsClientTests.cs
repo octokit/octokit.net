@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -31,7 +32,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -51,7 +52,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators"),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -85,7 +86,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -105,7 +106,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=all"),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -118,7 +119,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -138,7 +139,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/org/outside_collaborators?filter=2fa_disabled"),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
 

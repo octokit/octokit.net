@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -383,7 +384,7 @@ namespace Octokit.Tests.Reactive
                 client.GetReviewHistory("fake", "repo", 123);
 
                 connection.Connection.Received().Get<List<EnvironmentApprovals>>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/actions/runs/123/approvals"),
-                    null);
+                    null, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

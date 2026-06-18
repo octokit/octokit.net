@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -29,7 +30,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<Package>>(
                     new Uri("orgs/fake/packages", UriKind.Relative),
-                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -42,7 +43,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received().Get<List<Package>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages"),
-                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -144,7 +145,7 @@ namespace Octokit.Tests.Reactive
 
                     gitHubClient.Connection.Received(1).Get<List<Package>>(
                         new Uri("user/packages", UriKind.Relative),
-                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 }
 
                 [Fact]
@@ -157,7 +158,7 @@ namespace Octokit.Tests.Reactive
 
                     gitHubClient.Connection.Received().Get<List<Package>>(
                         Arg.Is<Uri>(u => u.ToString() == "user/packages"),
-                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 }
             }
 
@@ -242,7 +243,7 @@ namespace Octokit.Tests.Reactive
 
                     gitHubClient.Connection.Received(1).Get<List<Package>>(
                         new Uri("users/fake/packages", UriKind.Relative),
-                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")));
+                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type")), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 }
 
                 [Fact]
@@ -255,7 +256,7 @@ namespace Octokit.Tests.Reactive
 
                     gitHubClient.Connection.Received().Get<List<Package>>(
                         Arg.Is<Uri>(u => u.ToString() == "users/fake/packages"),
-                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")));
+                        Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("package_type") && d.ContainsKey("visibility")), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 }
 
                 [Fact]

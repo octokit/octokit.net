@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -66,7 +67,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo");
                 githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repos/fake/repo/comments"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -77,7 +78,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1);
                 githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repositories/1/comments"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -95,7 +96,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository("fake", "repo", options);
                 githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repos/fake/repo/comments"),
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -113,7 +114,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForRepository(1, options);
                 githubClient.Connection.Received(1).Get<List<CommitComment>>(Arg.Is<Uri>(uri => uri.ToString() == "repositories/1/comments"),
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -147,7 +148,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCommit("fake", "repo", "sha");
                 githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repos/fake/repo/commits/sha/comments", UriKind.Relative)),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -158,7 +159,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCommit(1, "sha");
                 githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repositories/1/commits/sha/comments", UriKind.Relative)),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -176,7 +177,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCommit("fake", "repo", "sha", options);
                 githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repos/fake/repo/commits/sha/comments", UriKind.Relative)),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -194,7 +195,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllForCommit(1, "sha", options);
                 githubClient.Connection.Received().Get<List<CommitComment>>(Arg.Is(new Uri("repositories/1/commits/sha/comments", UriKind.Relative)),
-                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

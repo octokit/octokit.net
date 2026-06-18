@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -30,7 +31,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<PreReceiveHook>>(
                     new Uri("admin/pre-receive-hooks", UriKind.Relative),
                     Args.EmptyDictionary,
-                    "application/vnd.github.v3+json");
+                    "application/vnd.github.v3+json", Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -51,7 +52,7 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<PreReceiveHook>>(
                     new Uri("admin/pre-receive-hooks", UriKind.Relative),
                     Arg.Is<IDictionary<string, string>>(d => d.Count == 2),
-                    "application/vnd.github.v3+json");
+                    "application/vnd.github.v3+json", Arg.Any<CancellationToken>());
             }
 
             [Fact]

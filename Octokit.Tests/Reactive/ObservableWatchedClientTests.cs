@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -28,7 +29,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableWatchedClient(gitHubClient);
 
                 client.GetAllForCurrent();
-                connection.Received().Get<List<Repository>>(ApiUrls.Watched(), Args.EmptyDictionary);
+                connection.Received().Get<List<Repository>>(ApiUrls.Watched(), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -47,7 +48,7 @@ namespace Octokit.Tests.Reactive
                 };
 
                 client.GetAllForCurrent(options);
-                connection.Received().Get<List<Repository>>(ApiUrls.Watched(), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<Repository>>(ApiUrls.Watched(), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -70,7 +71,7 @@ namespace Octokit.Tests.Reactive
                 var client = new ObservableWatchedClient(gitHubClient);
 
                 client.GetAllForUser("jugglingnutcase");
-                connection.Received().Get<List<Repository>>(ApiUrls.WatchedByUser("jugglingnutcase"), Args.EmptyDictionary);
+                connection.Received().Get<List<Repository>>(ApiUrls.WatchedByUser("jugglingnutcase"), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -89,7 +90,7 @@ namespace Octokit.Tests.Reactive
                 };
 
                 client.GetAllForUser("jugglingnutcase", options);
-                connection.Received().Get<List<Repository>>(ApiUrls.WatchedByUser("jugglingnutcase"), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<Repository>>(ApiUrls.WatchedByUser("jugglingnutcase"), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -118,7 +119,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllWatchers("jugglingnutcase", "katiejamie");
 
-                connection.Received().Get<List<User>>(ApiUrls.Watchers("jugglingnutcase", "katiejamie"), Args.EmptyDictionary);
+                connection.Received().Get<List<User>>(ApiUrls.Watchers("jugglingnutcase", "katiejamie"), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -131,7 +132,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllWatchers(1);
 
-                connection.Received().Get<List<User>>(ApiUrls.Watchers(1), Args.EmptyDictionary);
+                connection.Received().Get<List<User>>(ApiUrls.Watchers(1), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -151,7 +152,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllWatchers("jugglingnutcase", "katiejamie", options);
 
-                connection.Received().Get<List<User>>(ApiUrls.Watchers("jugglingnutcase", "katiejamie"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<User>>(ApiUrls.Watchers("jugglingnutcase", "katiejamie"), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -171,7 +172,7 @@ namespace Octokit.Tests.Reactive
 
                 client.GetAllWatchers(1, options);
 
-                connection.Received().Get<List<User>>(ApiUrls.Watchers(1), Arg.Is<Dictionary<string, string>>(d => d.Count == 2));
+                connection.Received().Get<List<User>>(ApiUrls.Watchers(1), Arg.Is<Dictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

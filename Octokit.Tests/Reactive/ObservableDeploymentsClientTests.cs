@@ -6,6 +6,7 @@ using NSubstitute;
 using Octokit.Reactive.Clients;
 using Octokit.Tests.Helpers;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -60,7 +61,7 @@ namespace Octokit.Tests.Reactive
 
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -72,7 +73,7 @@ namespace Octokit.Tests.Reactive
 
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -91,7 +92,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -102,7 +103,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -113,7 +114,7 @@ namespace Octokit.Tests.Reactive
                 _client.GetAll(owner, name, options);
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -133,7 +134,7 @@ namespace Octokit.Tests.Reactive
 
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -145,7 +146,7 @@ namespace Octokit.Tests.Reactive
 
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -157,7 +158,7 @@ namespace Octokit.Tests.Reactive
 
                 _githubClient.Connection.Received(1)
                     .Get<List<Deployment>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
 

@@ -4,6 +4,7 @@ using System.IO;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -29,7 +30,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll("fake", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<Release>>(
-                    new Uri("repos/fake/repo/releases", UriKind.Relative), Args.EmptyDictionary);
+                    new Uri("repos/fake/repo/releases", UriKind.Relative), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -41,7 +42,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll(1);
 
                 gitHubClient.Connection.Received(1).Get<List<Release>>(
-                    new Uri("repositories/1/releases", UriKind.Relative), Args.EmptyDictionary);
+                    new Uri("repositories/1/releases", UriKind.Relative), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -60,7 +61,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll("fake", "repo", options);
 
                 gitHubClient.Connection.Received(1).Get<List<Release>>(
-                    new Uri("repos/fake/repo/releases", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    new Uri("repos/fake/repo/releases", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -79,7 +80,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll(1, options);
 
                 gitHubClient.Connection.Received(1).Get<List<Release>>(
-                    new Uri("repositories/1/releases", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    new Uri("repositories/1/releases", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -342,7 +343,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllAssets("fake", "repo", 1);
 
                 gitHubClient.Connection.Received(1).Get<List<ReleaseAsset>>(
-                    new Uri("repos/fake/repo/releases/1/assets", UriKind.Relative), Args.EmptyDictionary);
+                    new Uri("repos/fake/repo/releases/1/assets", UriKind.Relative), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -354,7 +355,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllAssets(1, 1);
 
                 gitHubClient.Connection.Received(1).Get<List<ReleaseAsset>>(
-                    new Uri("repositories/1/releases/1/assets", UriKind.Relative), Args.EmptyDictionary);
+                    new Uri("repositories/1/releases/1/assets", UriKind.Relative), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -376,7 +377,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<ReleaseAsset>>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -398,7 +399,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received(1).Get<List<ReleaseAsset>>(
                     Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

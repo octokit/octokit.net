@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -21,7 +22,7 @@ namespace Octokit.Tests.Reactive
                 authEndpoint.GetAll();
 
                 client.Connection.Received(1).Get<List<Authorization>>(Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -33,7 +34,7 @@ namespace Octokit.Tests.Reactive
                 authEndpoint.GetAll(ApiOptions.None);
 
                 client.Connection.Received(1).Get<List<Authorization>>(Arg.Is<Uri>(u => u.ToString() == "authorizations"),
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

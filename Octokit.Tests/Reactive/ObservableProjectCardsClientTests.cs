@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -33,7 +34,7 @@ namespace Octokit.Tests.Reactive
 
                 connection.Received().Get<List<ProjectCard>>(
                     Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -49,7 +50,7 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Uri>(u => u.ToString() == "projects/columns/1/cards"),
                     Arg.Is<Dictionary<string, string>>(x =>
                          x.Count == 1
-                         && x["archived_state"] == "not_archived"));
+                         && x["archived_state"] == "not_archived"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests
 {
@@ -29,7 +30,7 @@ namespace Octokit.Tests
                 client.GetAll();
 
                 github.Connection.Received(1).Get<List<EmailAddress>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -41,7 +42,7 @@ namespace Octokit.Tests
                 client.GetAll(ApiOptions.None);
 
                 github.Connection.Received(1).Get<List<EmailAddress>>(_expectedUri,
-                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                    Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
 

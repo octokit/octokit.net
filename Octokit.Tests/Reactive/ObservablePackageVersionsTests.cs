@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -29,7 +30,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received().Get<List<PackageVersion>>(
                     new Uri("orgs/fake/packages/rubygems/name/versions", UriKind.Relative),
-                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")));
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state")), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -42,7 +43,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHubClient.Connection.Received().Get<List<PackageVersion>>(
                     Arg.Is<Uri>(u => u.ToString() == "orgs/fake/packages/rubygems/name/versions"),
-                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state") && d["state"] == "deleted"));
+                    Arg.Is<Dictionary<string, string>>(d => d.ContainsKey("state") && d["state"] == "deleted"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

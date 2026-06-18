@@ -7,6 +7,7 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 using static Octokit.Internal.TestSetup;
 
@@ -128,11 +129,11 @@ namespace Octokit.Tests.Reactive
                 );
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -140,9 +141,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAll("owner", "name", 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -182,11 +183,11 @@ namespace Octokit.Tests.Reactive
                 );
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -194,9 +195,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAll(1, 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -351,17 +352,17 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"))
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"))
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"))
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -380,15 +381,15 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -434,17 +435,17 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"))
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"))
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"))
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -463,15 +464,15 @@ namespace Octokit.Tests.Reactive
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 3
                         && d["direction"] == "desc"
                         && d["since"] == "2013-11-15T11:43:01Z"
-                        && d["sort"] == "updated"));
+                        && d["sort"] == "updated"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -574,15 +575,15 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"))
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"))
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"))
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -593,13 +594,13 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -644,15 +645,15 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"))
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"))
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
                 gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"))
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewCommentsClient(gitHubClient);
@@ -663,13 +664,13 @@ namespace Octokit.Tests.Reactive
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl,
                     Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>());
                 gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Arg.Is<Dictionary<string, string>>(d => d.Count == 2
                         && d["direction"] == "asc"
-                        && d["sort"] == "created"));
+                        && d["sort"] == "created"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

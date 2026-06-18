@@ -6,6 +6,7 @@ using NSubstitute;
 using Octokit.Reactive;
 using Octokit.Reactive.Internal;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -83,7 +84,7 @@ namespace Octokit.Tests.Reactive
 
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
-                    Arg.Any<Dictionary<string, string>>());
+                    Arg.Any<Dictionary<string, string>>(), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -96,7 +97,7 @@ namespace Octokit.Tests.Reactive
 
                 github.Connection.Received().Get<List<User>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/members"),
-                    Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"));
+                    Arg.Is<Dictionary<string, string>>(d => d["role"] == "maintainer"), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -162,7 +163,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHub.Connection.Received().Get<List<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
-                    Args.EmptyDictionary);
+                    Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -180,7 +181,7 @@ namespace Octokit.Tests.Reactive
 
                 gitHub.Connection.Received().Get<List<Team>>(
                     Arg.Is<Uri>(u => u.ToString() == "teams/1/teams"),
-                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                    Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
 

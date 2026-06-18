@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NSubstitute;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -65,7 +66,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll("user", "repo");
 
                 gitHubClient.Connection.Received(1).Get<List<DeployKey>>(
-                    new Uri("repos/user/repo/keys", UriKind.Relative), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0));
+                    new Uri("repos/user/repo/keys", UriKind.Relative), Arg.Is<Dictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -86,7 +87,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll("user", "repo", options);
                 gitHubClient.Connection.Received(1)
                     .Get<List<DeployKey>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -97,7 +98,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll("user", "repo", options);
                 gitHubClient.Connection.Received(1)
                     .Get<List<DeployKey>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -108,7 +109,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll("user", "repo", options);
                 gitHubClient.Connection.Received(1)
                     .Get<List<DeployKey>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -129,7 +130,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll(1, options);
                 gitHubClient.Connection.Received(1)
                     .Get<List<DeployKey>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // StartPage is setted => only 1 option (StartPage) in dictionary
                 options = new ApiOptions
@@ -140,7 +141,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll(1, options);
                 gitHubClient.Connection.Received(1)
                     .Get<List<DeployKey>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 1), Arg.Any<string>(), Arg.Any<CancellationToken>());
 
                 // PageCount is setted => none of options in dictionary
                 options = new ApiOptions
@@ -151,7 +152,7 @@ namespace Octokit.Tests.Reactive
                 deployKeysClient.GetAll(1, options);
                 gitHubClient.Connection.Received(1)
                     .Get<List<DeployKey>>(Arg.Is<Uri>(u => u.ToString() == expectedUrl),
-                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0));
+                        Arg.Is<IDictionary<string, string>>(dictionary => dictionary.Count == 0), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

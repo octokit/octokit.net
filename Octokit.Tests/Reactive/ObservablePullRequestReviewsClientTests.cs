@@ -7,6 +7,7 @@ using NSubstitute;
 using Octokit.Internal;
 using Octokit.Reactive;
 using Xunit;
+using System.Threading;
 
 using static Octokit.Internal.TestSetup;
 
@@ -129,11 +130,11 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
-                gitHubClient.Connection.Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReview>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReview>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReview>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
@@ -141,9 +142,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAll("owner", "name", 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -184,11 +185,11 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
-                gitHubClient.Connection.Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReview>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReview>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null)
+                gitHubClient.Connection.Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReview>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
@@ -196,9 +197,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAll(1, 7).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(firstPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(secondPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReview>>(thirdPageUrl, Args.EmptyDictionary, null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -524,11 +525,11 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
@@ -536,9 +537,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAllComments("owner", "name", 7, 1).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -579,11 +580,11 @@ namespace Octokit.Tests.Reactive
 
                 var gitHubClient = Substitute.For<IGitHubClient>();
 
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(firstPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(secondPageResponse));
-                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary)
+                gitHubClient.Connection.Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>())
                     .Returns(Task.FromResult<IApiResponse<List<PullRequestReviewComment>>>(lastPageResponse));
 
                 var client = new ObservablePullRequestReviewsClient(gitHubClient);
@@ -591,9 +592,9 @@ namespace Octokit.Tests.Reactive
                 var results = await client.GetAllComments(1, 7, 1).ToArray();
 
                 Assert.Equal(7, results.Length);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary);
-                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary);
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(firstPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(secondPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
+                gitHubClient.Connection.Received(1).Get<List<PullRequestReviewComment>>(thirdPageUrl, Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]

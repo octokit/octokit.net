@@ -6,6 +6,7 @@ using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using Octokit.Reactive.Internal;
 using Xunit;
+using System.Threading;
 
 namespace Octokit.Tests.Reactive
 {
@@ -32,7 +33,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll("org");
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
-                    new Uri("orgs/org/members", UriKind.Relative), Args.EmptyDictionary);
+                    new Uri("orgs/org/members", UriKind.Relative), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -51,7 +52,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAll("org", options);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
-                    new Uri("orgs/org/members", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    new Uri("orgs/org/members", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -96,7 +97,7 @@ namespace Octokit.Tests.Reactive
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, options);
 
                 client.Connection.Received(1).Get<List<User>>(
-                    new Uri("orgs/org/members?filter=2fa_disabled", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    new Uri("orgs/org/members?filter=2fa_disabled", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -114,7 +115,7 @@ namespace Octokit.Tests.Reactive
 
                 orgMembersClient.GetAll("org", OrganizationMembersRole.Member, options);
 
-                client.Connection.Received().Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=member"), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                client.Connection.Received().Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?role=member"), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -132,7 +133,7 @@ namespace Octokit.Tests.Reactive
 
                 orgMembersClient.GetAll("org", OrganizationMembersFilter.TwoFactorAuthenticationDisabled, OrganizationMembersRole.Member, options);
 
-                client.Connection.Received().Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=member"), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                client.Connection.Received().Get<List<User>>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members?filter=2fa_disabled&role=member"), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
         }
 
@@ -147,7 +148,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllPublic("org");
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
-                    new Uri("orgs/org/public_members", UriKind.Relative), Args.EmptyDictionary);
+                    new Uri("orgs/org/public_members", UriKind.Relative), Args.EmptyDictionary, Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -166,7 +167,7 @@ namespace Octokit.Tests.Reactive
                 client.GetAllPublic("org", options);
 
                 gitHubClient.Connection.Received(1).Get<List<User>>(
-                    new Uri("orgs/org/public_members", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2));
+                    new Uri("orgs/org/public_members", UriKind.Relative), Arg.Is<IDictionary<string, string>>(d => d.Count == 2), Arg.Any<string>(), Arg.Any<CancellationToken>());
             }
 
             [Fact]
