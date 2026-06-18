@@ -38,7 +38,7 @@ namespace Octokit
 
             var url = ApiUrls.RepositoryCustomPropertyValues(owner, repoName);
 
-            return ApiConnection.Get<IReadOnlyList<CustomPropertyValue>>(url, null, null, cancellationToken);
+            return ApiConnection.Get<IReadOnlyList<CustomPropertyValue>>(url, null, cancellationToken);
         }
 
         /// <summary>

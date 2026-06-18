@@ -36,7 +36,7 @@ namespace Octokit
         [ManualRoute("GET", "/gists/{gist_id}")]
         public Task<Gist> Get(string gistId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Gist>(ApiUrls.Gist(gistId), null, cancellationToken);
+            return ApiConnection.Get<Gist>(ApiUrls.Gist(gistId), cancellationToken);
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.Releases(owner, name, id);
-            return ApiConnection.Get<Release>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Release>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -101,7 +101,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(tag, nameof(tag));
 
             var endpoint = ApiUrls.Releases(owner, name, tag);
-            return ApiConnection.Get<Release>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Release>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -109,7 +109,7 @@ namespace Octokit
         public Task<Release> Get(long repositoryId, long id, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.Releases(repositoryId, id);
-            return ApiConnection.Get<Release>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Release>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -119,7 +119,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(tag, nameof(tag));
 
             var endpoint = ApiUrls.Releases(repositoryId, tag);
-            return ApiConnection.Get<Release>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Release>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -130,7 +130,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.LatestRelease(owner, name);
-            return ApiConnection.Get<Release>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Release>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -138,7 +138,7 @@ namespace Octokit
         public Task<Release> GetLatest(long repositoryId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.LatestRelease(repositoryId);
-            return ApiConnection.Get<Release>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Release>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -278,7 +278,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.Asset(owner, name, assetId);
-            return ApiConnection.Get<ReleaseAsset>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<ReleaseAsset>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -286,7 +286,7 @@ namespace Octokit
         public Task<ReleaseAsset> GetAsset(long repositoryId, int assetId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.Asset(repositoryId, assetId);
-            return ApiConnection.Get<ReleaseAsset>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<ReleaseAsset>(endpoint, cancellationToken);
         }
 
         /// <inheritdoc/>

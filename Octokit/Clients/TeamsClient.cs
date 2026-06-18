@@ -37,7 +37,7 @@ namespace Octokit
         {
             var endpoint = ApiUrls.Teams(teamId);
 
-            return ApiConnection.Get<Team>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Team>(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Octokit
 
             var endpoint = ApiUrls.TeamMember(teamId, login);
 
-            return ApiConnection.Get<TeamMembershipDetails>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<TeamMembershipDetails>(endpoint, cancellationToken);
         }
 
         /// <summary>
@@ -627,7 +627,7 @@ namespace Octokit
 
             try
             {
-                var response = await ApiConnection.Get<TeamRepository>(endpoint, null, cancellationToken);
+                var response = await ApiConnection.Get<TeamRepository>(endpoint, cancellationToken);
                 return response == null;
             }
             catch (NotFoundException)
@@ -741,7 +741,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(teamId, nameof(teamId));
 
             var endpoint = ApiUrls.TeamsByOrganizationAndSlug(org, teamId);
-            return ApiConnection.Get<Team>(endpoint, null, cancellationToken);
+            return ApiConnection.Get<Team>(endpoint, cancellationToken);
         }
     }
 }

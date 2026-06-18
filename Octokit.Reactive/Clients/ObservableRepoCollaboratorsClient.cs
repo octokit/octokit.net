@@ -75,7 +75,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAll(owner, name, new RepositoryCollaboratorListRequest(), options);
+            return GetAll(owner, name, new RepositoryCollaboratorListRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAll(repositoryId, new RepositoryCollaboratorListRequest(), options);
+            return GetAll(repositoryId, new RepositoryCollaboratorListRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<Collaborator>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<Collaborator>(ApiUrls.RepoCollaborators(owner, name), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>

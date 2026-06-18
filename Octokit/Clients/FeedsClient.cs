@@ -31,7 +31,7 @@ namespace Octokit
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         public Task<Feed> GetFeeds(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Feed>(ApiUrls.Feeds(), null, null, cancellationToken);
+            return ApiConnection.Get<Feed>(ApiUrls.Feeds(), cancellationToken);
         }
     }
 }

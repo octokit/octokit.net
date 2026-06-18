@@ -30,7 +30,7 @@ namespace Octokit
         [ManualRoute("GET", "/user/codespaces")]
         public Task<CodespacesCollection> GetAll(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<CodespacesCollection>(ApiUrls.Codespaces(), null, cancellationToken);
+            return ApiConnection.Get<CodespacesCollection>(ApiUrls.Codespaces(), cancellationToken);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Octokit
         [ManualRoute("GET", "/repos/{owner}/{repo}/codespaces")]
         public Task<CodespacesCollection> GetForRepository(string owner, string repo, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<CodespacesCollection>(ApiUrls.CodespacesForRepository(owner, repo), null, cancellationToken);
+            return ApiConnection.Get<CodespacesCollection>(ApiUrls.CodespacesForRepository(owner, repo), cancellationToken);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Octokit
         [ManualRoute("GET", "/user/codespaces/{codespace_name}")]
         public Task<Codespace> Get(string codespaceName, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Codespace>(ApiUrls.Codespace(codespaceName), null, cancellationToken);
+            return ApiConnection.Get<Codespace>(ApiUrls.Codespace(codespaceName), cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(repoOwner, nameof(repoOwner));
             Ensure.ArgumentNotNullOrEmptyString(repoName, nameof(repoName));
 
-            return ApiConnection.Get<MachinesCollection>(ApiUrls.GetAvailableMachinesForRepo(repoOwner, repoName, reference), null, cancellationToken);
+            return ApiConnection.Get<MachinesCollection>(ApiUrls.GetAvailableMachinesForRepo(repoOwner, repoName, reference), cancellationToken);
         }
 
         /// <summary>

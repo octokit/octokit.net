@@ -36,7 +36,7 @@ namespace Octokit
         [ManualRoute("GET", "/meta")]
         public Task<Meta> GetMetadata(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Meta>(ApiUrls.Meta(), null, null, cancellationToken);
+            return ApiConnection.Get<Meta>(ApiUrls.Meta(), cancellationToken);
         }
     }
 }

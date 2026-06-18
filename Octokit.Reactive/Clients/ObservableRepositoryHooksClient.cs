@@ -75,7 +75,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), options);
+            return _connection.GetAndFlattenAllPages<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), options, cancellationToken);
         }
 
         /// <summary>

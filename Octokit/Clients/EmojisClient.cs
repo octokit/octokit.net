@@ -29,7 +29,7 @@ namespace Octokit
         [ManualRoute("GET", "/emojis")]
         public Task<IReadOnlyList<Emoji>> GetAllEmojis(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis(), ApiOptions.None, cancellationToken);
+            return ApiConnection.GetAll<Emoji>(ApiUrls.Emojis(), cancellationToken);
         }
     }
 }

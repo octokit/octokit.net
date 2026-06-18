@@ -249,7 +249,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Get<Label>(ApiUrls.Label(owner, name, labelName), null, cancellationToken);
+            return ApiConnection.Get<Label>(ApiUrls.Label(owner, name, labelName), cancellationToken);
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(labelName, nameof(labelName));
 
-            return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName), null, cancellationToken);
+            return ApiConnection.Get<Label>(ApiUrls.Label(repositoryId, labelName), cancellationToken);
         }
 
         /// <summary>

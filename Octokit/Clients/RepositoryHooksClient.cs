@@ -61,7 +61,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, name), options);
+            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(owner, name), options, cancellationToken);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), options);
+            return ApiConnection.GetAll<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), options, cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(hook, nameof(hook));
 
-            return ApiConnection.Post<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), hook.ToRequest());
+            return ApiConnection.Post<RepositoryHook>(ApiUrls.RepositoryHooks(repositoryId), hook.ToRequest(), cancellationToken);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(hook, nameof(hook));
 
-            return ApiConnection.Patch<RepositoryHook>(ApiUrls.RepositoryHookById(owner, name, hookId), hook);
+            return ApiConnection.Patch<RepositoryHook>(ApiUrls.RepositoryHookById(owner, name, hookId), hook, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(hook, nameof(hook));
 
-            return ApiConnection.Patch<RepositoryHook>(ApiUrls.RepositoryHookById(repositoryId, hookId), hook);
+            return ApiConnection.Patch<RepositoryHook>(ApiUrls.RepositoryHookById(repositoryId, hookId), hook, cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Post(ApiUrls.RepositoryHookTest(owner, name, hookId));
+            return ApiConnection.Post(ApiUrls.RepositoryHookTest(owner, name, hookId), cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Octokit
         [ManualRoute("POST", "/repositories/{id}/hooks/{hook_id}/tests")]
         public Task Test(long repositoryId, int hookId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post(ApiUrls.RepositoryHookTest(repositoryId, hookId));
+            return ApiConnection.Post(ApiUrls.RepositoryHookTest(repositoryId, hookId), cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Post(ApiUrls.RepositoryHookPing(owner, name, hookId));
+            return ApiConnection.Post(ApiUrls.RepositoryHookPing(owner, name, hookId), cancellationToken);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Octokit
         [ManualRoute("POST", "/repositories/{id}/hooks/{hook_id}/pings")]
         public Task Ping(long repositoryId, int hookId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Post(ApiUrls.RepositoryHookPing(repositoryId, hookId));
+            return ApiConnection.Post(ApiUrls.RepositoryHookPing(repositoryId, hookId), cancellationToken);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Delete(ApiUrls.RepositoryHookById(owner, name, hookId));
+            return ApiConnection.Delete(ApiUrls.RepositoryHookById(owner, name, hookId), cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Octokit
         [ManualRoute("DELETE", "/repositories/{id}/hooks/{hook_id}")]
         public Task Delete(long repositoryId, int hookId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Delete(ApiUrls.RepositoryHookById(repositoryId, hookId));
+            return ApiConnection.Delete(ApiUrls.RepositoryHookById(repositoryId, hookId), cancellationToken);
         }
     }
 }

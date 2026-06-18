@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -480,7 +481,7 @@ namespace Octokit.Tests.Clients
 
                 client.LockUnlock.Lock("fake", "repo", 42);
 
-                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), Arg.Any<object>());
+                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), Arg.Any<object>(), null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -491,7 +492,7 @@ namespace Octokit.Tests.Clients
 
                 client.LockUnlock.Lock(1, 42);
 
-                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), Arg.Any<object>());
+                connection.Received().Put<Issue>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), Arg.Any<object>(), null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -518,7 +519,7 @@ namespace Octokit.Tests.Clients
 
                 client.LockUnlock.Unlock("fake", "repo", 42);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/issues/42/lock"), null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -529,7 +530,7 @@ namespace Octokit.Tests.Clients
 
                 client.LockUnlock.Unlock(1, 42);
 
-                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"));
+                connection.Received().Delete(Arg.Is<Uri>(u => u.ToString() == "repositories/1/issues/42/lock"), null, Arg.Any<CancellationToken>());
             }
 
             [Fact]

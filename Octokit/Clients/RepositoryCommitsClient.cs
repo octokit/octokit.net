@@ -95,7 +95,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(owner, name, @base, head), null, cancellationToken);
+            return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(owner, name, @base, head), cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(repositoryId, @base, head), null, cancellationToken);
+            return ApiConnection.Get<CompareResult>(ApiUrls.RepoCompare(repositoryId, @base, head), cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(owner, name, reference), null, cancellationToken);
+            return ApiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(owner, name, reference), cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(reference, nameof(reference));
 
-            return ApiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(repositoryId, reference), null, cancellationToken);
+            return ApiConnection.Get<GitHubCommit>(ApiUrls.RepositoryCommit(repositoryId, reference), cancellationToken);
         }
 
         /// <summary>

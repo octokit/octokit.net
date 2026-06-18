@@ -501,7 +501,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(user, nameof(user));
 
-            return ApiConnection.Get<OrganizationMembership>(ApiUrls.OrganizationMemberships(org, user), null, cancellationToken);
+            return ApiConnection.Get<OrganizationMembership>(ApiUrls.OrganizationMemberships(org, user), cancellationToken);
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace Octokit
         [ManualRoute("GET", "/rate_limit")]
         public Task<MiscellaneousRateLimit> GetRateLimits(CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit(), null, null, cancellationToken);
+            return ApiConnection.Get<MiscellaneousRateLimit>(ApiUrls.RateLimit(), cancellationToken);
         }
     }
 }

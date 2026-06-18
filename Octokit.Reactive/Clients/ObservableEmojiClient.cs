@@ -29,7 +29,7 @@ namespace Octokit.Reactive
         /// <returns>An <see cref="IObservable{Emoji}"/> of emoji and their URI.</returns>
         public IObservable<Emoji> GetAllEmojis(CancellationToken cancellationToken = default)
         {
-            return _client.GetAllEmojis().ToObservable().SelectMany(e => e);
+            return _client.GetAllEmojis(cancellationToken).ToObservable().SelectMany(e => e);
         }
     }
 }

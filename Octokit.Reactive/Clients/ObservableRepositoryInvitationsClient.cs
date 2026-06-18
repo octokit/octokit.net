@@ -94,7 +94,7 @@ namespace Octokit.Reactive
         public IObservable<RepositoryInvitation> GetAllForCurrent(ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, null, options, cancellationToken);
+            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.UserInvitations(), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Octokit.Reactive
         public IObservable<RepositoryInvitation> GetAllForRepository(long repositoryId, ApiOptions options, CancellationToken cancellationToken = default)
         {
             Ensure.ArgumentNotNull(options, nameof(options));
-            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, null, options, cancellationToken);
+            return _connection.GetAndFlattenAllPages<RepositoryInvitation>(ApiUrls.RepositoryInvitations(repositoryId), null, options, cancellationToken);
         }
     }
 }

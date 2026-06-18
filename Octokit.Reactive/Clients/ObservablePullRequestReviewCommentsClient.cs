@@ -65,7 +65,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, pullRequestNumber), null, options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewComments(owner, name, pullRequestNumber), null, options, cancellationToken);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), ApiOptions.None);
+            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Octokit.Reactive
         /// <param name="repositoryId">The Id of the repository</param>
         public IObservable<PullRequestReviewComment> GetAllForRepository(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None);
+            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), ApiOptions.None, cancellationToken);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), options);
+            return GetAllForRepository(owner, name, new PullRequestReviewCommentRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Octokit.Reactive
         {
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), options);
+            return GetAllForRepository(repositoryId, new PullRequestReviewCommentRequest(), options, cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(request, nameof(request));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), options);
+            return _connection.GetAndFlattenAllPages<PullRequestReviewComment>(ApiUrls.PullRequestReviewCommentsRepository(owner, name), request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>

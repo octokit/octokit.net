@@ -114,7 +114,7 @@ namespace Octokit
 
             var route = ApiUrls.PackageOrg(org, packageType, packageName);
 
-            return ApiConnection.Get<Package>(route, null, cancellationToken);
+            return ApiConnection.Get<Package>(route, cancellationToken);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Octokit
 
             var route = ApiUrls.PackageActiveUser(packageType, packageName);
 
-            return ApiConnection.Get<Package>(route, null, cancellationToken);
+            return ApiConnection.Get<Package>(route, cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Octokit
 
             var route = ApiUrls.PackageUser(username, packageType, packageName);
 
-            return ApiConnection.Get<Package>(route, null, cancellationToken);
+            return ApiConnection.Get<Package>(route, cancellationToken);
         }
 
         /// <summary>

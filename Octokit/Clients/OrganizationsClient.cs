@@ -63,7 +63,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.Get<Organization>(ApiUrls.Organization(org), null, null, cancellationToken);
+            return ApiConnection.Get<Organization>(ApiUrls.Organization(org), cancellationToken);
         }
 
         /// <summary>

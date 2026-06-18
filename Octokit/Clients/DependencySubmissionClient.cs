@@ -37,7 +37,7 @@ namespace Octokit
 
             var newDependencySnapshotAsObject = ConvertToJsonObject(snapshot);
 
-            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(owner, name), newDependencySnapshotAsObject, null, null, cancellationToken);
+            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(owner, name), newDependencySnapshotAsObject, cancellationToken);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Octokit
 
             var newDependencySnapshotAsObject = ConvertToJsonObject(snapshot);
 
-            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(repositoryId), newDependencySnapshotAsObject, null, null, cancellationToken);
+            return ApiConnection.Post<DependencySnapshotSubmission>(ApiUrls.DependencySubmission(repositoryId), newDependencySnapshotAsObject, cancellationToken);
         }
 
         /// <summary>

@@ -42,7 +42,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(owner, name, @base, head), ApiOptions.None, cancellationToken);
+            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(owner, name, @base, head), cancellationToken);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(@base, nameof(@base));
             Ensure.ArgumentNotNullOrEmptyString(head, nameof(head));
 
-            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(repositoryId, @base, head), ApiOptions.None, cancellationToken);
+            return ApiConnection.GetAll<DependencyDiff>(ApiUrls.DependencyReview(repositoryId, @base, head), cancellationToken);
         }
     }
 }

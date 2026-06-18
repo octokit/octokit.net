@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -381,7 +382,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/owner/test/collaborators/user1"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -401,7 +402,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = CreateApiResponse(status);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/collaborators/user1"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -419,7 +420,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = CreateApiResponse(HttpStatusCode.Conflict);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repos/foo/bar/assignees/cody"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -435,7 +436,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = TestSetup.CreateApiResponse(HttpStatusCode.Conflict);
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/assignees/cody"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();

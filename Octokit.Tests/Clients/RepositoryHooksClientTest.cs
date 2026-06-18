@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Xunit;
@@ -114,7 +115,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Get("fake", "repo", 12345678);
 
-                connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678"));
+                connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repos/fake/repo/hooks/12345678"), null, null, Arg.Any<CancellationToken>());
             }
 
             [Fact]
@@ -125,7 +126,7 @@ namespace Octokit.Tests.Clients
 
                 await client.Get(1, 12345678);
 
-                connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/hooks/12345678"));
+                connection.Received().Get<RepositoryHook>(Arg.Is<Uri>(u => u.ToString() == "repositories/1/hooks/12345678"), null, null, Arg.Any<CancellationToken>());
             }
 
             [Fact]

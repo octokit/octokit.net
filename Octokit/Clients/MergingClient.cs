@@ -36,7 +36,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
             Ensure.ArgumentNotNull(merge, nameof(merge));
 
-            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge, null, null, cancellationToken);
+            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(owner, name), merge, cancellationToken);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNull(merge, nameof(merge));
 
-            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(repositoryId), merge, null, null, cancellationToken);
+            return ApiConnection.Post<Merge>(ApiUrls.CreateMerge(repositoryId), merge, cancellationToken);
         }
     }
 }

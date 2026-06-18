@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using NSubstitute.Core.DependencyInjection;
@@ -315,7 +316,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -334,7 +335,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/members/username"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -367,7 +368,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -386,7 +387,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), null, null)
+                connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), null, null, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -443,7 +444,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), Args.Object)
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), Args.Object, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -462,7 +463,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), Args.Object)
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "orgs/org/public_members/username"), Args.Object, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();

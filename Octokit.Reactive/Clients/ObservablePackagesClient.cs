@@ -34,7 +34,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
 
-            return GetAllForOrg(org, packageType, (PackageVisibility?)null);
+            return GetAllForOrg(org, packageType, (PackageVisibility?)null, cancellationToken);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForOrg(org, packageType, null, options);
+            return GetAllForOrg(org, packageType, null, options, cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForActiveUser(packageType, null, options);
+            return GetAllForActiveUser(packageType, null, options, cancellationToken);
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(packageType, nameof(packageType));
             Ensure.ArgumentNotNull(options, nameof(options));
 
-            return GetAllForUser(username, packageType, null, options);
+            return GetAllForUser(username, packageType, null, options, cancellationToken);
         }
 
         /// <summary>

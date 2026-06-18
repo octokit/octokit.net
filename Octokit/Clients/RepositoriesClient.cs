@@ -305,7 +305,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}")]
         public Task<Repository> Get(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), null, cancellationToken);
+            return ApiConnection.Get<Repository>(ApiUrls.Repository(repositoryId), cancellationToken);
         }
 
         /// <summary>
@@ -927,7 +927,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
             var endpoint = ApiUrls.RepositoryLanguages(owner, name);
-            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint, null, cancellationToken).ConfigureAwait(false);
+            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint, cancellationToken).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
                 (data ?? new Dictionary<string, long>())
@@ -947,7 +947,7 @@ namespace Octokit
         public async Task<IReadOnlyList<RepositoryLanguage>> GetAllLanguages(long repositoryId, CancellationToken cancellationToken = default)
         {
             var endpoint = ApiUrls.RepositoryLanguages(repositoryId);
-            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint, null, cancellationToken).ConfigureAwait(false);
+            var data = await ApiConnection.Get<Dictionary<string, long>>(endpoint, cancellationToken).ConfigureAwait(false);
 
             return new ReadOnlyCollection<RepositoryLanguage>(
                 (data ?? new Dictionary<string, long>())
@@ -1113,7 +1113,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name), null, cancellationToken);
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(owner, name), cancellationToken);
         }
 
         /// <summary>
@@ -1128,7 +1128,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/license")]
         public Task<RepositoryContentLicense> GetLicenseContents(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId), null, cancellationToken);
+            return ApiConnection.Get<RepositoryContentLicense>(ApiUrls.RepositoryLicense(repositoryId), cancellationToken);
         }
 
         /// <summary>
@@ -1143,7 +1143,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(owner, name), null, cancellationToken);
+            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(owner, name), cancellationToken);
         }
 
         /// <summary>
@@ -1155,7 +1155,7 @@ namespace Octokit
         [ManualRoute("GET", "/repositories/{id}/codeowners/errors")]
         public Task<RepositoryCodeOwnersErrors> GetAllCodeOwnersErrors(long repositoryId, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(repositoryId), null, cancellationToken);
+            return ApiConnection.Get<RepositoryCodeOwnersErrors>(ApiUrls.RepositoryCodeOwnersErrors(repositoryId), cancellationToken);
         }
 
         /// <summary>

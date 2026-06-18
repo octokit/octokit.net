@@ -187,7 +187,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNull(options, nameof(options));
 
             return _connection.GetAndFlattenAllPages<PullRequest>(ApiUrls.PullRequests(owner, name),
-                request.ToParametersDictionary(), options);
+                request.ToParametersDictionary(), options, cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _connection.GetAndFlattenAllPages<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, pullRequestNumber));
+            return _connection.GetAndFlattenAllPages<PullRequestCommit>(ApiUrls.PullRequestCommits(owner, name, pullRequestNumber), cancellationToken);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Octokit.Reactive
         /// <param name="pullRequestNumber">The pull request number</param>
         public IObservable<PullRequestCommit> Commits(long repositoryId, int pullRequestNumber, CancellationToken cancellationToken = default)
         {
-            return _connection.GetAndFlattenAllPages<PullRequestCommit>(ApiUrls.PullRequestCommits(repositoryId, pullRequestNumber));
+            return _connection.GetAndFlattenAllPages<PullRequestCommit>(ApiUrls.PullRequestCommits(repositoryId, pullRequestNumber), cancellationToken);
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Octokit.Reactive
             Ensure.ArgumentNotNullOrEmptyString(owner, nameof(owner));
             Ensure.ArgumentNotNullOrEmptyString(name, nameof(name));
 
-            return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, pullRequestNumber), options);
+            return _connection.GetAndFlattenAllPages<PullRequestFile>(ApiUrls.PullRequestFiles(owner, name, pullRequestNumber), options, cancellationToken);
         }
 
         /// <summary>

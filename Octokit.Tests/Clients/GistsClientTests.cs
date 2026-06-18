@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -505,7 +506,7 @@ public class GistsClientTests
             var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
             var connection = Substitute.For<IConnection>();
-            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"), null, null)
+            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"), null, null, Arg.Any<CancellationToken>())
                       .Returns(responseTask);
 
             var apiConnection = Substitute.For<IApiConnection>();
@@ -524,7 +525,7 @@ public class GistsClientTests
             var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
             var connection = Substitute.For<IConnection>();
-            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"), null, null)
+            connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "gists/1/star"), null, null, Arg.Any<CancellationToken>())
                       .Returns(responseTask);
 
             var apiConnection = Substitute.For<IApiConnection>();

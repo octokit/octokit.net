@@ -28,7 +28,7 @@ namespace Octokit
         [ManualRoute("GET", "/meta/public_keys/{keysType}")]
         public Task<MetaPublicKeys> Get(PublicKeyType keysType, CancellationToken cancellationToken = default)
         {
-            return ApiConnection.Get<MetaPublicKeys>(ApiUrls.PublicKeys(keysType), null, null, cancellationToken);
+            return ApiConnection.Get<MetaPublicKeys>(ApiUrls.PublicKeys(keysType), cancellationToken);
         }
     }
 }

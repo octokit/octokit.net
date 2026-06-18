@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using NSubstitute;
 using Octokit.Internal;
@@ -209,7 +210,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
-                    null, null).Returns(responseTask);
+                    null, null, Arg.Any<CancellationToken>()).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -226,7 +227,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"),
-                    null, null).Returns(responseTask);
+                    null, null, Arg.Any<CancellationToken>()).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -256,7 +257,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
-                    null, null).Returns(responseTask);
+                    null, null, Arg.Any<CancellationToken>()).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -273,7 +274,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
                 var connection = Substitute.For<IConnection>();
                 connection.Get<object>(Arg.Is<Uri>(u => u.ToString() == "users/alfhenrik/following/alfhenrik-test"),
-                    null, null).Returns(responseTask);
+                    null, null, Arg.Any<CancellationToken>()).Returns(responseTask);
                 var apiConnection = Substitute.For<IApiConnection>();
                 apiConnection.Connection.Returns(connection);
                 var client = new FollowersClient(apiConnection);
@@ -304,7 +305,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"), Args.Object)
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"), Args.Object, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();
@@ -323,7 +324,7 @@ namespace Octokit.Tests.Clients
                 var responseTask = Task.FromResult<IApiResponse<object>>(new ApiResponse<object>(response));
 
                 var connection = Substitute.For<IConnection>();
-                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"), Args.Object)
+                connection.Put<object>(Arg.Is<Uri>(u => u.ToString() == "user/following/alfhenrik"), Args.Object, Arg.Any<CancellationToken>())
                           .Returns(responseTask);
 
                 var apiConnection = Substitute.For<IApiConnection>();

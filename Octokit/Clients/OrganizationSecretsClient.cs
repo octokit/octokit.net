@@ -30,7 +30,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.Get<SecretsPublicKey>(ApiUrls.OrganizationRepositorySecretPublicKey(org), null, cancellationToken);
+            return ApiConnection.Get<SecretsPublicKey>(ApiUrls.OrganizationRepositorySecretPublicKey(org), cancellationToken);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Octokit
         {
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
 
-            return ApiConnection.Get<OrganizationSecretsCollection>(ApiUrls.OrganizationRepositorySecrets(org), null, cancellationToken);
+            return ApiConnection.Get<OrganizationSecretsCollection>(ApiUrls.OrganizationRepositorySecrets(org), cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            return ApiConnection.Get<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), null, cancellationToken);
+            return ApiConnection.Get<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), cancellationToken);
         }
 
         /// <summary>
@@ -90,8 +90,8 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.EncryptedValue, nameof(upsertSecret.EncryptedValue));
             Ensure.ArgumentNotNullOrEmptyString(upsertSecret.Visibility, nameof(upsertSecret.Visibility));
 
-            await ApiConnection.Put<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), upsertSecret, null, cancellationToken);
-            return await ApiConnection.Get<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), null, cancellationToken);
+            await ApiConnection.Put<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), upsertSecret, cancellationToken);
+            return await ApiConnection.Get<OrganizationSecret>(ApiUrls.OrganizationRepositorySecret(org, secretName), cancellationToken);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Octokit
             Ensure.ArgumentNotNullOrEmptyString(org, nameof(org));
             Ensure.ArgumentNotNullOrEmptyString(secretName, nameof(secretName));
 
-            return ApiConnection.Get<OrganizationSecretRepositoryCollection>(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName), null, cancellationToken);
+            return ApiConnection.Get<OrganizationSecretRepositoryCollection>(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName), cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Octokit
             Ensure.ArgumentNotNull(repositories, nameof(repositories));
             Ensure.ArgumentNotNull(repositories.SelectedRepositoryIds, nameof(repositories.SelectedRepositoryIds));
 
-            await ApiConnection.Put<SelectedRepositoryCollection>(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName), repositories, null, cancellationToken);
+            await ApiConnection.Put<SelectedRepositoryCollection>(ApiUrls.OrganizationRepositorySecretRepositories(org, secretName), repositories, cancellationToken);
             return;
         }
 
