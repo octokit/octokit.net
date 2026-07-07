@@ -283,6 +283,22 @@ namespace Octokit.Tests
                 Assert.Equal(new DateTimeOffset(2014, 07, 07, 00, 12, 56, TimeSpan.Zero), result.UpdatedAt);
             }
 
+            [Theory]
+            [InlineData("Enterprise")]
+            [InlineData("enterprise")]
+            public void CanDeserializeEnterpriseOwnedAccount(string type)
+            {
+                var json = "{" +
+                  "\"login\": \"acme-enterprise\"," +
+                  "\"id\": 12345," +
+                  "\"type\": \"" + type + "\"" +
+                "}";
+
+                var result = new SimpleJsonSerializer().Deserialize<User>(json);
+
+                Assert.Equal(AccountType.Enterprise, result.Type);
+            }
+
             [Fact]
             public void DeserializesInheritedProperties()
             {
