@@ -32,6 +32,22 @@ namespace Octokit.Tests.Helpers
             }
         }
 
+        public class TheIsNameWithOwnerFormatMethod
+        {
+            [InlineData("octokit/octokit.net", true)]
+            [InlineData("owner/-repo-starting-with-hyphen", true)]
+            [InlineData("owner/_repo_starting_with_underscore", true)]
+            [InlineData("owner/.github", true)]
+            [InlineData("my-org/my.repo_name-1", true)]
+            [InlineData("haha-business", false)]
+            [InlineData("", false)]
+            [Theory]
+            public void ProperlyDetectsNameWithOwnerStrings(string data, bool expected)
+            {
+                Assert.Equal(expected, data.IsNameWithOwnerFormat());
+            }
+        }
+
         public class TheToRubyCaseMethod
         {
             [Theory]

@@ -139,7 +139,7 @@ namespace Octokit
         // the rule:
         // Username may only contain alphanumeric characters or single hyphens
         // and cannot begin or end with a hyphen
-        static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9.-_]{1,}",
+        static readonly Regex nameWithOwner = new Regex("[a-z0-9.-]{1,}/[a-z0-9_.-]{1,}",
 #if HAS_REGEX_COMPILED_OPTIONS
             RegexOptions.Compiled |
 #endif

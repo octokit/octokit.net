@@ -1587,6 +1587,21 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
+            public void TestingTheRepoQualifier_RepoNameStartingWithHyphen()
+            {
+                var connection = Substitute.For<IApiConnection>();
+                var client = new SearchClient(connection);
+                var request = new SearchIssuesRequest("something");
+                request.Repos.Add("octokit", "-repo-starting-with-hyphen");
+
+                client.SearchIssues(request);
+
+                connection.Received().Get<SearchIssuesResult>(
+                    Arg.Is<Uri>(u => u.ToString() == "search/issues"),
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "something+repo:octokit/-repo-starting-with-hyphen"));
+            }
+
+            [Fact]
             public async Task ErrorOccursWhenSpecifyingInvalidFormatForRepos()
             {
                 var connection = Substitute.For<IApiConnection>();
