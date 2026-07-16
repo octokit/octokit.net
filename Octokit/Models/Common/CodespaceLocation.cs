@@ -4,13 +4,13 @@ namespace Octokit
 {
     public enum CodespaceLocation
     {
-        [Parameter(Value = "EuropeWest")]
-        EuropeWest,
-        [Parameter(Value = "SoutheastAsia")]
-        SoutheastAsia,
-        [Parameter(Value = "UsEast")]
-        UsEast,
-        [Parameter(Value = "UsWest")]
-        UsWest
+        [Parameter(Value = "WestEurope")]
+        WestEurope,
+        [Parameter(Value = "SouthEastAsia")]
+        SouthEastAsia,
+        [Parameter(Value = "EastUs")]
+        EastUs,
+        [Parameter(Value = "WestUs2")]
+        WestUs2
     }
 }

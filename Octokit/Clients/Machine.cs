@@ -11,16 +11,17 @@ namespace Octokit
         public string OperatingSystem { get; private set; }
         public long StorageInBytes { get; private set; }
         public long MemoryInBytes { get; private set; }
-        public long CpuCount { get; private set; }
+        public long CpuCount => Cpus;
+        public long Cpus { get; private set; }
 
-        public Machine(string name, string displayName, string operatingSystem, long storageInBytes, long memoryInBytes, long cpuCount)
+        public Machine(string name, string displayName, string operatingSystem, long storageInBytes, long memoryInBytes, long cpus)
         {
             Name = name;
             DisplayName = displayName;
             OperatingSystem = operatingSystem;
             StorageInBytes = storageInBytes;
             MemoryInBytes = memoryInBytes;
-            CpuCount = cpuCount;
+            Cpus = cpus;
         }
 
         public Machine() { }
