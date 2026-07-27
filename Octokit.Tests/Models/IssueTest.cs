@@ -308,5 +308,21 @@ public class IssueTest
             Assert.Equal("octocat", update.Assignees.FirstOrDefault());
             Assert.Equal(ItemStateReason.Reopened, update.StateReason.GetValueOrDefault());
         }
+
+        [Fact]
+        public void PreservesDuplicateStateReason()
+        {
+            const string json = @"{
+""state"": ""closed"",
+""state_reason"": ""duplicate""
+}";
+            var serializer = new SimpleJsonSerializer();
+            var issue = serializer.Deserialize<Issue>(json);
+
+            var update = issue.ToUpdate();
+
+            Assert.Equal(ItemStateReason.Duplicate, update.StateReason.GetValueOrDefault());
+            Assert.Contains(@"""state_reason"":""duplicate""", serializer.Serialize(update));
+        }
     }
 }

@@ -188,7 +188,13 @@ namespace Octokit
       /// Item reopened.
       /// </summary>
       [Parameter(Value = "reopened")]
-      Reopened
+      Reopened,
+
+      /// <summary>
+      /// Item closed as a duplicate.
+      /// </summary>
+      [Parameter(Value = "duplicate")]
+      Duplicate
     }
 
     /// <summary>
